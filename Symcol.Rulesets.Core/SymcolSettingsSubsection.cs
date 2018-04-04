@@ -36,8 +36,7 @@ namespace Symcol.Rulesets.Core
                     RulesetMultiplayerSelection = new RulesetMultiplayerSelection();
 
                 SymcolMenu.RulesetMultiplayerScreen = RulesetMultiplayerSelection;
-#endif
-#if !SymcolMods
+#else
             Logger.Log("osu.Game mods not installed! Online Multiplayer will not be avalible without them. . .", LoggingTarget.Information, LogLevel.Important);
 #endif
 
