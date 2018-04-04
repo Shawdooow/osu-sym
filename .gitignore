@@ -153,6 +153,8 @@ PublishScripts/
 *.nupkg
 # Nope!
 **/Vitaru.Plot/*
+# Nope2!
+**/Vitaru.Plot-0.7.2/*
 # The packages folder can be ignored because of Package Restore
 **/packages/*
 # except build/, which is used as an MSBuild target.

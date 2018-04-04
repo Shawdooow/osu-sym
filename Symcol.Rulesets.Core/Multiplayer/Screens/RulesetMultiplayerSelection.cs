@@ -11,7 +11,9 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Screens;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Screens;
+#if SymcolMods
 using osu.Game.Screens.Symcol;
+#endif
 
 namespace Symcol.Rulesets.Core.Multiplayer.Screens
 {
