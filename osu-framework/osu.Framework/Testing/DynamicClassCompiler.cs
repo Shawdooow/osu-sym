@@ -28,7 +28,7 @@ namespace osu.Framework.Testing
 
         public Action<Exception> CompilationFailed;
 
-        private FileSystemWatcher fsw;
+        private readonly List<FileSystemWatcher> watchers = new List<FileSystemWatcher>();
 
         private string lastTouchedFile;
 
@@ -52,7 +52,7 @@ namespace osu.Framework.Testing
 
             Task.Run(() =>
             {
-                var basePath = di.Parent?.Parent?.Parent?.FullName;
+                var basePath = di.Parent?.Parent?.Parent?.Parent?.FullName;
 
                 if (!Directory.Exists(basePath))
                     return;
@@ -65,7 +65,7 @@ namespace osu.Framework.Testing
 
                     validDirectories.Add(dir);
 
-                    fsw = new FileSystemWatcher(dir, @"*.cs")
+                    var fsw = new FileSystemWatcher(dir, @"*.cs")
                     {
                         EnableRaisingEvents = true,
                         IncludeSubdirectories = true,
@@ -73,6 +73,8 @@ namespace osu.Framework.Testing
                     };
 
                     fsw.Changed += onChange;
+
+                    watchers.Add(fsw);
                 }
             });
         }
@@ -146,7 +148,7 @@ namespace osu.Framework.Testing
                 DYNAMIC_ASSEMBLY_NAME,
                 requiredFiles.Select(file => CSharpSyntaxTree.ParseText(File.ReadAllText(file), null, file))
                              // Compile the assembly with a new version so that it replaces the existing one
-                             .Concat(new[] { CSharpSyntaxTree.ParseText($"using System.Reflection; [assembly: AssemblyVersion(\"{assemblyVersion}\")]") })
+                             .Append(CSharpSyntaxTree.ParseText($"using System.Reflection; [assembly: AssemblyVersion(\"{assemblyVersion}\")]"))
                 ,
                 references,
                 options

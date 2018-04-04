@@ -5,19 +5,12 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Configuration;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Osu.Multi;
-using Symcol.Rulesets.Core;
-using Symcol.Rulesets.Core.Multiplayer.Screens;
 
 namespace osu.Game.Rulesets.Osu.UI
 {
-    public class OsuSettings : SymcolSettingsSubsection
+    public class OsuSettings : SettingsSubsection
     {
         protected override string Header => "osu!";
-
-        public override RulesetLobbyItem RulesetLobbyItem => osuLobby;
-
-        private readonly OsuLobbyItem osuLobby = new OsuLobbyItem();
 
         [BackgroundDependencyLoader]
         private void load(OsuConfigManager config)

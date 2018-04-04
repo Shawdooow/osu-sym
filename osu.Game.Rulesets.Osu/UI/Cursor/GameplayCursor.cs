@@ -11,11 +11,9 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
+using osu.Game.Skinning;
 using OpenTK;
 using OpenTK.Graphics;
-using Symcol.Rulesets.Core.Multiplayer.Networking;
-using osu.Game.Graphics;
-using Symcol.Rulesets.Core;
 
 namespace osu.Game.Rulesets.Osu.UI.Cursor
 {
@@ -85,113 +83,82 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
 
         public class OsuCursor : Container
         {
-            public readonly RulesetClientInfo RulesetClientInfo;
-
-            private string playerColorHex = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<string>(SymcolSetting.PlayerColor);
-
-            private Container cursorContainer;
-
-            public static Container Thing = new Container() { Anchor = Anchor.Centre, Origin = Anchor.Centre, Alpha = 0 };
+            private Drawable cursorContainer;
 
             private Bindable<double> cursorScale;
             private Bindable<bool> autoCursorScale;
             private Bindable<WorkingBeatmap> beatmap;
 
-            public OsuCursor(RulesetClientInfo client)
-            {
-                RulesetClientInfo = client;
-                Alpha = 0.5f;
-
-                Origin = Anchor.Centre;
-                Size = new Vector2(42);
-            }
-
             public OsuCursor()
             {
-                Colour = OsuColour.FromHex(playerColorHex);
                 Origin = Anchor.Centre;
                 Size = new Vector2(42);
-            }
-
-            protected override void Dispose(bool isDisposing)
-            {
-                if (RulesetClientInfo == null)
-                    Remove(Thing);
-                base.Dispose(isDisposing);
             }
 
             [BackgroundDependencyLoader]
             private void load(OsuConfigManager config, OsuGameBase game)
             {
-                Children = new Drawable[]
+                Child = cursorContainer = new SkinnableDrawable("cursor", _ => new CircularContainer
                 {
-                    cursorContainer = new CircularContainer
+                    RelativeSizeAxes = Axes.Both,
+                    Masking = true,
+                    BorderThickness = Size.X / 6,
+                    BorderColour = Color4.White,
+                    EdgeEffect = new EdgeEffectParameters
                     {
-                        Origin = Anchor.Centre,
-                        Anchor = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both,
-                        Masking = true,
-                        BorderThickness = Size.X / 6,
-                        BorderColour = Color4.White,
-                        EdgeEffect = new EdgeEffectParameters
-                        {
-                            Type = EdgeEffectType.Shadow,
-                            Colour = Color4.Pink.Opacity(0.5f),
-                            Radius = 5,
-                        },
-                        Children = new Drawable[]
-                        {
-                            new Box
-                            {
-                                RelativeSizeAxes = Axes.Both,
-                                Alpha = 0,
-                                AlwaysPresent = true,
-                            },
-                            new CircularContainer
-                            {
-                                Origin = Anchor.Centre,
-                                Anchor = Anchor.Centre,
-                                RelativeSizeAxes = Axes.Both,
-                                Masking = true,
-                                BorderThickness = Size.X / 3,
-                                BorderColour = Color4.White.Opacity(0.5f),
-                                Children = new Drawable[]
-                                {
-                                    new Box
-                                    {
-                                        RelativeSizeAxes = Axes.Both,
-                                        Alpha = 0,
-                                        AlwaysPresent = true,
-                                    },
-                                },
-                            },
-                            new CircularContainer
-                            {
-                                Origin = Anchor.Centre,
-                                Anchor = Anchor.Centre,
-                                RelativeSizeAxes = Axes.Both,
-                                Scale = new Vector2(0.1f),
-                                Masking = true,
-                                Children = new Drawable[]
-                                {
-                                    new Box
-                                    {
-                                        RelativeSizeAxes = Axes.Both,
-                                        Colour = Color4.White,
-                                    },
-                                },
-                            },
-                        }
+                        Type = EdgeEffectType.Shadow,
+                        Colour = Color4.Pink.Opacity(0.5f),
+                        Radius = 5,
                     },
-                };
-                if (RulesetClientInfo == null && Thing.Parent == null)
-                    Add(Thing = new Container() { Anchor = Anchor.Centre, Origin = Anchor.Centre, Alpha = 0 });
-                else if (RulesetClientInfo == null)
-                    if (Thing.Parent is Container parent)
+                    Children = new Drawable[]
                     {
-                        parent.Remove(Thing);
-                        Add(Thing = new Container() { Anchor = Anchor.Centre, Origin = Anchor.Centre, Alpha = 0 });
+                        new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Alpha = 0,
+                            AlwaysPresent = true,
+                        },
+                        new CircularContainer
+                        {
+                            Origin = Anchor.Centre,
+                            Anchor = Anchor.Centre,
+                            RelativeSizeAxes = Axes.Both,
+                            Masking = true,
+                            BorderThickness = Size.X / 3,
+                            BorderColour = Color4.White.Opacity(0.5f),
+                            Children = new Drawable[]
+                            {
+                                new Box
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Alpha = 0,
+                                    AlwaysPresent = true,
+                                },
+                            },
+                        },
+                        new CircularContainer
+                        {
+                            Origin = Anchor.Centre,
+                            Anchor = Anchor.Centre,
+                            RelativeSizeAxes = Axes.Both,
+                            Scale = new Vector2(0.1f),
+                            Masking = true,
+                            Children = new Drawable[]
+                            {
+                                new Box
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Colour = Color4.White,
+                                },
+                            },
+                        },
                     }
+                }, restrictSize: false)
+                {
+                    Origin = Anchor.Centre,
+                    Anchor = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                };
 
                 beatmap = game.Beatmap.GetBoundCopy();
                 beatmap.ValueChanged += v => calculateScale();

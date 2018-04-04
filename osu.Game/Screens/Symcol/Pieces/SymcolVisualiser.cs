@@ -15,6 +15,7 @@ using osu.Framework.Graphics.Primitives;
 
 namespace osu.Game.Screens.Symcol.Pieces
 {
+    /*
     internal class SymcolVisualiser : Drawable
     {
         private readonly Bindable<WorkingBeatmap> beatmap = new Bindable<Beatmaps.WorkingBeatmap>();
@@ -29,7 +30,7 @@ namespace osu.Game.Screens.Symcol.Pieces
 
         private Color4 barColor;
 
-        public override bool HandleInput => false;
+        public override bool IsPresent => false;
 
         private Shader shader;
         private readonly Texture texture;
@@ -159,5 +160,5 @@ namespace osu.Game.Screens.Symcol.Pieces
                 Shader.Unbind();
             }
         }
-    }
+    }*/
 }

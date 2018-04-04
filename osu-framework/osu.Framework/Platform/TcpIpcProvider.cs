@@ -47,7 +47,7 @@ namespace osu.Framework.Platform
             var token = cancelListener.Token;
             try
             {
-                while (true)
+                while (!token.IsCancellationRequested)
                 {
                     while (!listener.Pending())
                     {
@@ -71,6 +71,7 @@ namespace osu.Framework.Platform
                             Trace.Assert(type != null);
                             var msg = new IpcMessage
                             {
+                                // ReSharper disable once PossibleNullReferenceException
                                 Type = type.AssemblyQualifiedName,
                                 Value = JsonConvert.DeserializeObject(
                                     json["Value"].ToString(), type),

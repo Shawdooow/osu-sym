@@ -30,6 +30,7 @@ using osu.Framework.Statistics;
 using osu.Framework.Threading;
 using osu.Framework.Timing;
 using osu.Framework.IO.File;
+using Bitmap = System.Drawing.Bitmap;
 
 namespace osu.Framework.Platform
 {
@@ -98,6 +99,7 @@ namespace osu.Framework.Platform
         public void RegisterThread(GameThread t)
         {
             threads.Add(t);
+            t.Monitor.EnablePerformanceProfiling = performanceLogging;
         }
 
         public GameThread DrawThread;
@@ -317,7 +319,7 @@ namespace osu.Framework.Platform
         {
             if (Window == null) throw new NullReferenceException(nameof(Window));
 
-            var clientRectangle = Window.ClientRectangle;
+            var clientRectangle = new Rectangle(new Point(Window.ClientRectangle.X, Window.ClientRectangle.Y), new Size(Window.ClientSize.Width, Window.ClientSize.Height));
 
             bool complete = false;
 
@@ -528,6 +530,7 @@ namespace osu.Framework.Platform
         private Bindable<string> enabledInputHandlers;
 
         private Bindable<double> cursorSensitivity;
+        private Bindable<bool> performanceLogging;
 
         private void setupConfig()
         {
@@ -613,6 +616,10 @@ namespace osu.Framework.Platform
             };
 
             cursorSensitivity = config.GetBindable<double>(FrameworkSetting.CursorSensitivity);
+
+            performanceLogging = config.GetBindable<bool>(FrameworkSetting.PerformanceLogging);
+            performanceLogging.ValueChanged += enabled => threads.ForEach(t => t.Monitor.EnablePerformanceProfiling = enabled);
+            performanceLogging.TriggerChange();
         }
 
         private void setVSyncMode()

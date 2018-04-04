@@ -12,16 +12,10 @@ using osu.Game.Rulesets.UI;
 using System.Linq;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Osu.Judgements;
-using Symcol.Rulesets.Core;
-using System.Collections.Generic;
-using Symcol.Rulesets.Core.Multiplayer.Networking;
-using static osu.Game.Rulesets.Osu.UI.Cursor.GameplayCursor;
-using osu.Game.Rulesets.Osu.Multi;
-using Symcol.Core.Networking;
 
 namespace osu.Game.Rulesets.Osu.UI
 {
-    public class OsuPlayfield : SymcolPlayfield
+    public class OsuPlayfield : Playfield
     {
         private readonly Container approachCircles;
         private readonly JudgementContainer<DrawableOsuJudgement> judgementLayer;
@@ -30,11 +24,12 @@ namespace osu.Game.Rulesets.Osu.UI
         // Todo: This should not be a thing, but is currently required for the editor
         // https://github.com/ppy/osu-framework/issues/1283
         protected virtual bool ProxyApproachCircles => true;
+        protected virtual bool DisplayJudgements => true;
 
         public static readonly Vector2 BASE_SIZE = new Vector2(512, 384);
 
         public OsuPlayfield()
-            : base(BASE_SIZE)
+            : base(BASE_SIZE.X)
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
@@ -61,8 +56,6 @@ namespace osu.Game.Rulesets.Osu.UI
 
         public override void Add(DrawableHitObject h)
         {
-            h.Depth = (float)h.HitObject.StartTime;
-
             h.OnJudgement += onJudgement;
 
             var c = h as IDrawableHitObjectWithProxiedApproach;
@@ -81,7 +74,7 @@ namespace osu.Game.Rulesets.Osu.UI
 
         private void onJudgement(DrawableHitObject judgedObject, Judgement judgement)
         {
-            if (!judgedObject.DisplayJudgement)
+            if (!judgedObject.DisplayJudgement || !DisplayJudgements)
                 return;
 
             DrawableOsuJudgement explosion = new DrawableOsuJudgement(judgement, judgedObject)
