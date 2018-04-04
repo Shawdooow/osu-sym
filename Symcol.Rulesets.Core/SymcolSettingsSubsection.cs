@@ -1,5 +1,4 @@
-﻿//osu.Game.Screens.Symcol.SymcolMenu
-//Symcol.Rulesets.Core.Multiplayer.Screens.RulesetMultiplayerSelection
+﻿//Symcol.Rulesets.Core.Multiplayer.Screens.RulesetMultiplayerSelection
 #define SymcolMods
 
 using osu.Framework.Allocation;
