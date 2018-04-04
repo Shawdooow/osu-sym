@@ -8,7 +8,6 @@ using Symcol.Rulesets.Core.Wiki;
 using osu.Game.Screens.Symcol;
 using Symcol.Rulesets.Core.Multiplayer.Screens;
 using osu.Framework.Platform;
-using osu.Framework.Logging;
 
 namespace Symcol.Rulesets.Core
 {
