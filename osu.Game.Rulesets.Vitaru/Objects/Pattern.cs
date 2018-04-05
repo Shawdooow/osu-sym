@@ -6,6 +6,7 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Beatmaps;
 using System;
+using osu.Game.Rulesets.Vitaru.Settings;
 
 namespace osu.Game.Rulesets.Vitaru.Objects
 {
@@ -146,19 +147,19 @@ namespace osu.Game.Rulesets.Vitaru.Objects
             switch (PatternID)
             {
                 default:
-                    return Patterns.Wave(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, 1, PatternAngle);
+                    return Patterns.Wave(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
                 case 1:
-                    return Patterns.Wave(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, 1, PatternAngle);
+                    return Patterns.Wave(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
                 case 2:
-                    return Patterns.Line((PatternSpeed * (float)Velocity * 2) * 0.75f, (PatternSpeed * (float)Velocity * 2) * 1.5f, PatternDiameter, PatternDamage, Position, StartTime, 1, PatternAngle);
+                    return Patterns.Line((PatternSpeed * (float)Velocity * 2) * 0.75f, (PatternSpeed * (float)Velocity * 2) * 1.5f, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
                 case 3:
-                    return Patterns.Triangle(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, 1, PatternAngle);
+                    return Patterns.Triangle(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
                 case 4:
-                    return Patterns.Wedge(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, 1, PatternAngle);
+                    return Patterns.Wedge(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
                 case 5:
-                    return Patterns.Circle(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, 1);
+                    return Patterns.Circle(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity);
                 case 6:
-                    return Patterns.Flower(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, Duration, beatLength, 1);
+                    return Patterns.Flower(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, Duration, beatLength, PatternComplexity);
             }
         }
 

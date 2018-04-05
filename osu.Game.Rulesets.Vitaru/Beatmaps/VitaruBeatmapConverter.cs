@@ -32,7 +32,8 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             double complexity = 1;
 
             float ar = calculateAr(beatmap.BeatmapInfo.BaseDifficulty.ApproachRate);
-            float cs = beatmap.BeatmapInfo.BaseDifficulty.CircleSize;
+            float cs = 20 + (beatmap.BeatmapInfo.BaseDifficulty.CircleSize - 4);
+            double speed = 0.25d;
 
             bool isWhistle = samples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
             bool isFinish = samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
@@ -40,9 +41,10 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 
             if (currentGameMode == VitaruGamemode.Dodge)
             {
-                complexity *= 0.5f;
-                cs *= 0.75f;
-                ar *= 0.8f;
+                complexity *= 0.66f;
+                cs *= 0.5f;
+                ar *= 0.5f;
+                speed *= 0.5d;
             }
 
             Pattern p = new Pattern
@@ -53,7 +55,8 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 Samples = original.Samples,
                 PatternComplexity = complexity,
                 PatternTeam = 1,
-                PatternDiameter = 20 + (cs - 4),
+                PatternDiameter = cs,
+                PatternSpeed = speed,
                 NewCombo = comboData?.NewCombo ?? false,
             };
 
