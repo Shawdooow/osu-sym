@@ -21,9 +21,6 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 
         protected override IEnumerable<Type> ValidConversionTypes { get; } = new[] { typeof(IHasPosition) };
 
-        private float ar;
-        private float cs;
-
         protected override IEnumerable<VitaruHitObject> ConvertHitObject(HitObject original, Beatmap beatmap)
         {
             var endTimeData = original as IHasEndTime;
@@ -33,25 +30,30 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             List<SampleInfo> samples = original.Samples;
 
             double complexity = 1;
-            if (currentGameMode == VitaruGamemode.Dodge)
-                complexity = 0.5f;
 
-            ar = calculateAr(beatmap.BeatmapInfo.BaseDifficulty.ApproachRate);
-            cs = calculateCs(beatmap.BeatmapInfo.BaseDifficulty.CircleSize);
+            float ar = calculateAr(beatmap.BeatmapInfo.BaseDifficulty.ApproachRate);
+            float cs = beatmap.BeatmapInfo.BaseDifficulty.CircleSize;
 
             bool isWhistle = samples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
             bool isFinish = samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
             bool isClap = samples.Any(s => s.Name == SampleInfo.HIT_CLAP);
 
+            if (currentGameMode == VitaruGamemode.Dodge)
+            {
+                complexity *= 0.5f;
+                cs *= 0.75f;
+                ar *= 0.8f;
+            }
+
             Pattern p = new Pattern
             {
                 Ar = ar,
-                Cs = cs,
                 StartTime = original.StartTime,
                 Position = positionData?.Position ?? Vector2.Zero,
                 Samples = original.Samples,
                 PatternComplexity = complexity,
                 PatternTeam = 1,
+                PatternDiameter = 20 + (cs - 4),
                 NewCombo = comboData?.NewCombo ?? false,
             };
 
@@ -124,20 +126,14 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
         {
             if (ar >= 5)
             {
-                this.ar = 1200 - ((ar - 5) * 150);
-                return this.ar;
+                ar = 1200 - ((ar - 5) * 150);
+                return ar;
             }
             else
             {
-                this.ar = 1800 - (ar * 120);
-                return this.ar;
+                ar = 1800 - (ar * 120);
+                return ar;
             }
-        }
-
-        private float calculateCs(float cs)
-        {
-            this.cs = cs / 4;
-            return this.cs;
         }
     }
 }

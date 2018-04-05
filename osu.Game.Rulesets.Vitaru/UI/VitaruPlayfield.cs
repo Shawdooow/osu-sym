@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruPlayfield : SymcolPlayfield
     {
-        private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
+        private static readonly Bindable<VitaruGamemode> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
         private readonly Characters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.Characters);
         private readonly bool multiplayer = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
         private bool friendlyPlayerOverride = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.FriendlyPlayerOverride);
@@ -49,9 +49,16 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public virtual bool LoadPlayer => true;
 
-        public static Vector2 BaseSize = new Vector2(512, 820);
-
-        private static Vector2 parentDrawSize = new Vector2(1280, 720);
+        public static Vector2 BaseSize
+        {
+            get
+            {
+                if (currentGameMode == VitaruGamemode.Dodge)
+                    return new Vector2(512, 384);
+                else
+                    return new Vector2(512, 820);
+            }
+        }
 
         public VitaruPlayfield() : base(BaseSize)
         {

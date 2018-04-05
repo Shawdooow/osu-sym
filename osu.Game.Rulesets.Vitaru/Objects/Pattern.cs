@@ -109,7 +109,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects
             foreach (Bullet b in startCircleBullets)
             {
                 b.Ar = Ar;
-                b.Cs = Cs;
 
                 b.NewCombo = NewCombo;
                 b.IndexInCurrentCombo = IndexInCurrentCombo;
@@ -128,7 +127,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                     foreach (Bullet s in sliderBullets)
                     {
                         s.Ar = Ar;
-                        s.Cs = Cs;
 
                         s.NewCombo = NewCombo;
                         s.IndexInCurrentCombo = IndexInCurrentCombo;

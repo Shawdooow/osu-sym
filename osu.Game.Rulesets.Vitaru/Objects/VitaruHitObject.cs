@@ -15,8 +15,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
         public float Ar { get; set; } = -1;
 
-        public float Cs { get; set; } = -1;
-
         public Vector2 Position { get; set; }
 
         public double EndTime { get; set; }

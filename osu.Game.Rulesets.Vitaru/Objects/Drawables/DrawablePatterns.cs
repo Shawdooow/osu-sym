@@ -174,10 +174,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Unload();
 
-            VitaruPlayfield.CharacterField.Remove(enemy);
-            VitaruPlayfield.CharacterField.Remove(energyCircle);
+            if (currentGameMode != VitaruGamemode.Dodge)
+            {
+                VitaruPlayfield.CharacterField.Remove(enemy);
+                enemy.Dispose();
+            }
 
-            enemy.Dispose();
+            VitaruPlayfield.CharacterField.Remove(energyCircle);
             energyCircle.Dispose();
 
             Expire();
