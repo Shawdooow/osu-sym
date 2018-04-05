@@ -28,6 +28,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
         public class VitaruCursor : Container
         {
             private readonly Characters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.Characters);
+            private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
 
             private Container lineContainer;
             private Container circleContainer;
@@ -236,11 +237,14 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
                     }
                 };
 
-                if (currentCharacter == Characters.SakuyaIzayoi | currentCharacter == Characters.AliceMuyart)
-                    speed.Alpha = 0.5f;
+                if (currentGameMode == VitaruGamemode.Touhosu)
+                {
+                    if (currentCharacter == Characters.SakuyaIzayoi || currentCharacter == Characters.AliceMuyart)
+                        speed.Alpha = 0.5f;
 
-                if (currentCharacter == Characters.KokoroHatano)
-                    combo.Alpha = 0.5f;
+                    if (currentCharacter == Characters.KokoroHatano)
+                        combo.Alpha = 0.5f;
+                }
 
                 beatmap = game.Beatmap.GetBoundCopy();
                 beatmap.ValueChanged += v => calculateScale();
@@ -271,7 +275,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
             {
                 base.Update();
 
-                if (VitaruPlayfield.VitaruPlayer != null)
+                if (VitaruPlayfield.VitaruPlayer != null )
                 {
                     if (VitaruPlayfield.VitaruPlayer.Health > VitaruPlayfield.VitaruPlayer.MaxHealth)
                         health.Colour = Color4.Blue;

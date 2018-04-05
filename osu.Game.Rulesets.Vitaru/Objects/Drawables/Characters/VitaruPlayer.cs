@@ -291,6 +291,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     break;
             }
 
+            if (currentGameMode != VitaruGamemode.Touhosu)
+            {
+                MaxHealth = 100;
+                MaxEnergy = 0;
+            }
+
             originalMaxHealth = MaxHealth;
 
             if (currentGameMode == VitaruGamemode.Dodge)
@@ -309,6 +315,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         {
             base.LoadComplete();
 
+            //TODO: Move this
             if (workingBeatmap.Value.BeatmapInfo.OnlineBeatmapID == 221777 && CurrentCharacter == Characters.HongMeiling)
             {
                 MaxHealth = 120;
