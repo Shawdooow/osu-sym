@@ -37,6 +37,7 @@
     <None Remove="Assets\Textures\playerKiaiRight.png" />
     <None Remove="Assets\Textures\playerRight.png" />
     <None Remove="Assets\Textures\reimu.png" />
+    <None Remove="Assets\Textures\reimuGravaruIdle.png" />
     <None Remove="Assets\Textures\reimuKiai.png" />
     <None Remove="Assets\Textures\reimuKiaiRight.png" />
     <None Remove="Assets\Textures\reimuRight.png" />
@@ -81,6 +82,7 @@
     <EmbeddedResource Include="Assets\Textures\playerKiaiRight.png" />
     <EmbeddedResource Include="Assets\Textures\playerRight.png" />
     <EmbeddedResource Include="Assets\Textures\reimu.png" />
+    <EmbeddedResource Include="Assets\Textures\reimuGravaruIdle.png" />
     <EmbeddedResource Include="Assets\Textures\reimuKiai.png" />
     <EmbeddedResource Include="Assets\Textures\reimuKiaiRight.png" />
     <EmbeddedResource Include="Assets\Textures\reimuRight.png" />

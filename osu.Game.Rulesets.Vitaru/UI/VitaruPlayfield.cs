@@ -55,6 +55,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
             {
                 if (currentGameMode == VitaruGamemode.Dodge)
                     return new Vector2(512, 384);
+                else if (currentGameMode == VitaruGamemode.Gravaru)
+                    return new Vector2(384 * 2, 384);
                 else
                     return new Vector2(512, 820);
             }
@@ -65,7 +67,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 
-            if (currentGameMode != VitaruGamemode.Dodge && multiplayer && enemyPlayerCount > 0)
+            if (currentGameMode != VitaruGamemode.Dodge && currentGameMode != VitaruGamemode.Gravaru && multiplayer && enemyPlayerCount > 0)
             {
                 Position = new Vector2(20, 0);
                 Anchor = Anchor.Centre;
@@ -114,7 +116,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                         });
                     }
 
-                if (multiplayer && currentGameMode != VitaruGamemode.Dodge)
+                if (multiplayer && currentGameMode != VitaruGamemode.Dodge && currentGameMode != VitaruGamemode.Gravaru)
                 {
                     switch (friendlyPlayerCount)
                     {
@@ -169,7 +171,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                     CharacterField.Add(player);
 
                 VitaruPlayer.Position = new Vector2(256, 700);
-                if (currentGameMode == VitaruGamemode.Dodge)
+                if (currentGameMode == VitaruGamemode.Dodge || currentGameMode == VitaruGamemode.Gravaru)
                     VitaruPlayer.Position = BaseSize / 2;
             }
         }

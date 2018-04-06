@@ -404,6 +404,10 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         gamemodeDescription.Description.Text = "The default gamemode in this ruleset which is based on the touhou series danmaku games. " +
                         "Allows you to kill enemies while dodging bullets to the beat!";
                         break;
+                    case VitaruGamemode.Gravaru:
+                        gamemodeDescription.Description.Text = "Gravity Enabled!\n" +
+                        "Currently a very incomplete experiance, just messing with gravity physics atm. Stay tuned!";
+                        break;
                     case VitaruGamemode.Dodge:
                         gamemodeDescription.Description.Text = "Completly changes how vitaru is played. " +
                         "The Dodge gamemode changes the playfield to a much shorter rectangle and send bullets your way from all directions while also taking away your ability to shoot!";

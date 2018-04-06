@@ -81,6 +81,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             if (currentGameMode == VitaruGamemode.Dodge)
                 aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 4f / 3f, DrawSize.Y);
+            else if (currentGameMode == VitaruGamemode.Gravaru)
+                aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 2f / 1f, DrawSize.Y);
 
             return new Vector2(aspectSize.X / DrawSize.X, aspectSize.Y / DrawSize.Y);
         }

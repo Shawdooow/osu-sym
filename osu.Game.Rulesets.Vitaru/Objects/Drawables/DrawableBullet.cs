@@ -59,6 +59,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (currentGameMode == VitaruGamemode.Dodge)
                 BulletBounds = new Vector4(-10, -10, 522, 394);
+            else if (currentGameMode == VitaruGamemode.Gravaru)
+                BulletBounds = new Vector4(-10, -10, 384 * 2 + 10, 394);
         }
 
         public DrawableBullet(Bullet bullet, VitaruPlayfield playfield) : base(bullet, playfield)
@@ -72,6 +74,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (currentGameMode == VitaruGamemode.Dodge)
                 BulletBounds = new Vector4(-10, -10, 522, 394);
+            else if (currentGameMode == VitaruGamemode.Gravaru)
+                BulletBounds = new Vector4(-10, -10, 384 * 2 + 10, 394);
         }
 
         protected override void CheckForJudgements(bool userTriggered, double timeOffset)

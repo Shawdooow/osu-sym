@@ -301,6 +301,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
             if (currentGameMode == VitaruGamemode.Dodge)
                 playerBounds = new Vector4(0, 512, 0, 384);
+            else if (currentGameMode == VitaruGamemode.Gravaru)
+                playerBounds = new Vector4(0, 384 * 2, 0, 384);
         }
 
         protected override void LoadAnimationSprites(TextureStore textures, Storage storage)
@@ -309,6 +311,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
             CharacterRightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Right", storage);
             CharacterKiaiRightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "KiaiRight", storage);
+
+            if (currentGameMode == VitaruGamemode.Gravaru)
+                CharacterKiaiStillSprite.Texture = VitaruSkinElement.LoadSkinElement("reimuGravaruIdle", storage);
+        }
+
+        protected override void MovementAnimations()
+        {
+            if (currentGameMode != VitaruGamemode.Gravaru)
+                base.MovementAnimations();
         }
 
         protected override void LoadComplete()
@@ -416,6 +427,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                         ufoContainer.Add(ufo);
                 }
             }
+            else if (currentGameMode == VitaruGamemode.Gravaru)
+            {
+                CharacterKiai.Alpha = 1;
+                CharacterSprite.Alpha = 0;
+            }
         }
 
         protected override void Dispose(bool isDisposing)
@@ -463,7 +479,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
             if (effectPoint.KiaiMode && CharacterSprite.Alpha == 1)
             {
-                if (!Dead)
+                if (!Dead && currentGameMode != VitaruGamemode.Gravaru)
                 {
                     CharacterKiai.FadeInFromZero(timingPoint.BeatLength / 4);
                     CharacterSprite.FadeOutFromOne(timingPoint.BeatLength / 4);
@@ -474,7 +490,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             }
             if(!effectPoint.KiaiMode && CharacterKiai.Alpha == 1)
             {
-                if (!Dead)
+                if (!Dead && currentGameMode != VitaruGamemode.Gravaru)
                 {
                     CharacterSprite.FadeInFromZero(timingPoint.BeatLength);
                     CharacterKiai.FadeOutFromOne(timingPoint.BeatLength);
@@ -1277,6 +1293,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         }
 
         #region Player Input Stuff
+
+        private double gravity = 0;
+        private bool jumped;
+
         /// <summary>
         /// Moves the player based on player input
         /// </summary>
@@ -1440,7 +1460,24 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 }
 
                 if (Actions[VitaruAction.Up])
-                    playerPosition.Y -= yTranslationDistance;
+                {
+                    if (currentGameMode != VitaruGamemode.Gravaru)
+                        playerPosition.Y -= yTranslationDistance;
+                    else if (Position.Y > 184 && !jumped)
+                        playerPosition.Y -= Position.Y * ((float)Clock.ElapsedFrameTime / 800);
+                    else if (Position.Y <= 184 && !jumped)
+                    {
+                        Actions[VitaruAction.Up] = false;
+                        jumped = true;
+                        gravity = 0;
+                    }
+                }
+                else if (currentGameMode == VitaruGamemode.Gravaru)
+                {
+                    gravity += Clock.ElapsedFrameTime / 800;
+                    playerPosition.Y += (float)gravity;
+                }
+
                 if (Actions[VitaruAction.Left])
                     playerPosition.X -= xTranslationDistance;
                 if (Actions[VitaruAction.Down])
@@ -1450,6 +1487,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
                 playerPosition = Vector2.ComponentMin(playerPosition, playerBounds.Yw);
                 playerPosition = Vector2.ComponentMax(playerPosition, playerBounds.Xz);
+
+                if (Position.Y >= 384)
+                    jumped = false;
             }
             Position = playerPosition;
         }

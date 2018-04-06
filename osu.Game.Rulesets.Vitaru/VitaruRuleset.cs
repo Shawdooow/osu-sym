@@ -274,9 +274,10 @@ namespace osu.Game.Rulesets.Vitaru
 
     public enum VitaruGamemode
     {
-        Vitaru,        
+        Vitaru,
+        Gravaru,
         Dodge,
-        Touhosu
+        Touhosu,
     }
 
     public enum ControlScheme

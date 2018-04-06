@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             bool isFinish = samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
             bool isClap = samples.Any(s => s.Name == SampleInfo.HIT_CLAP);
 
-            if (currentGameMode == VitaruGamemode.Dodge)
+            if (currentGameMode == VitaruGamemode.Dodge || currentGameMode == VitaruGamemode.Gravaru)
             {
                 complexity *= 0.66f;
                 cs *= 0.5f;
