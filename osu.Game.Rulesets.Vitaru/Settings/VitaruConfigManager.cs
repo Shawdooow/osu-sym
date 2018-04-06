@@ -21,7 +21,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.GraphicsPresets, GraphicsPresets.Standard);
             Set(VitaruSetting.GameMode, VitaruGamemode.Vitaru);
             Set(VitaruSetting.Characters, Characters.ReimuHakurei);
-            Set(VitaruSetting.EditorConfiguration, EditorConfiguration.Simple);
             Set(VitaruSetting.ComboFire, true);
             Set(VitaruSetting.ShittyMultiplayer, false);
             Set(VitaruSetting.FriendlyPlayerCount, 0, 0, 7);
@@ -75,7 +74,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         GraphicsPresets,
         GameMode,
         Characters,
-        EditorConfiguration,
         ComboFire,
         ShittyMultiplayer,
         FriendlyPlayerCount,

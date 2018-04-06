@@ -89,11 +89,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     LabelText = "Graphics Presets",
                     Bindable = VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets)
                 },
-                new SettingsEnumDropdown<EditorConfiguration>
-                {
-                    LabelText = "Current Editor Configuration",
-                    Bindable = VitaruConfigManager.GetBindable<EditorConfiguration>(VitaruSetting.EditorConfiguration)
-                },
                 new SettingsEnumDropdown<ScoringMetric>
                 {
                     LabelText = "Current Scoring Metric used (Difficulty, Score and PP)",

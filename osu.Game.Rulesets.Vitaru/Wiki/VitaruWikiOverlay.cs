@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
         protected override WikiSection[] Sections => new WikiSection[]
             {
                 new GameplaySection(),
-                new EditorSection(),
+                //new EditorSection(),
                 new RankingSection(),
                 new MultiplayerSection(),
                 new CodeSection(),

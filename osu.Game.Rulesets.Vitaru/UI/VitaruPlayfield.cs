@@ -174,6 +174,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 if (currentGameMode == VitaruGamemode.Dodge || currentGameMode == VitaruGamemode.Gravaru)
                     VitaruPlayer.Position = BaseSize / 2;
             }
+            else
+                VitaruPlayer = null;
         }
 
         protected override void LoadComplete()

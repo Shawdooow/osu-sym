@@ -1,3 +1,4 @@
+using osu.Framework.Graphics.Cursor;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
@@ -17,6 +18,8 @@ namespace osu.Game.Rulesets.Vitaru.Edit
         protected override Playfield CreatePlayfield() => VitaruEditPlayfield;
 
         protected VitaruEditPlayfield VitaruEditPlayfield = new VitaruEditPlayfield();
+
+        protected override CursorContainer CreateCursor() => null;
 
         protected override DrawableHitObject<VitaruHitObject> GetVisualRepresentation(VitaruHitObject h)
         {

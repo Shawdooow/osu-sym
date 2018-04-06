@@ -15,7 +15,25 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
         public float Ar { get; set; } = -1;
 
-        public Vector2 Position { get; set; }
+        public event Action<Vector2> PositionChanged;
+
+        private Vector2 position;
+
+        public Vector2 Position
+        {
+            get => position;
+            set
+            {
+                if (position == value)
+                    return;
+                position = value;
+
+                PositionChanged?.Invoke(value);
+            }
+        }
+
+        public float X => Position.X;
+        public float Y => Position.Y;
 
         public double EndTime { get; set; }
 

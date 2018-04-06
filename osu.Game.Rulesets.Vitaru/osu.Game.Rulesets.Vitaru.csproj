@@ -48,6 +48,8 @@
     <None Remove="Assets\Textures\sakuyaRight.png" />
     <None Remove="Assets\Textures\seal.png" />
     <None Remove="Assets\Textures\sign.png" />
+    <None Remove="Assets\Textures\star.png" />
+    <None Remove="Assets\Textures\starFill.png" />
     <None Remove="Assets\Textures\Vitaru%402x.png" />
     <None Remove="Assets\Textures\VitaruTouhosuModeTrue2560x1440.png" />
     <None Remove="Assets\Textures\vortex.png" />
@@ -93,6 +95,8 @@
     <EmbeddedResource Include="Assets\Textures\sakuyaRight.png" />
     <EmbeddedResource Include="Assets\Textures\seal.png" />
     <EmbeddedResource Include="Assets\Textures\sign.png" />
+    <EmbeddedResource Include="Assets\Textures\star.png" />
+    <EmbeddedResource Include="Assets\Textures\starFill.png" />
     <EmbeddedResource Include="Assets\Textures\Vitaru@2x.png" />
     <EmbeddedResource Include="Assets\Textures\VitaruTouhosuModeTrue2560x1440.png" />
     <EmbeddedResource Include="Assets\Textures\vortex.png" />

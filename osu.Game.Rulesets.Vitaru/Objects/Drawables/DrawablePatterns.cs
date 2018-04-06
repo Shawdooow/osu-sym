@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -16,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         public static int PatternCount;
         private readonly Pattern pattern;
-        private Container energyCircle;
+        private StarPiece starPiece;
 
         private bool done;
 
@@ -31,6 +32,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             AlwaysPresent = true;
 
             this.pattern = pattern;
+
+            Size = new Vector2(30);
+            Position = this.pattern.Position;
 
             if (!pattern.IsSlider && !pattern.IsSpinner)
             {
@@ -54,7 +58,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
                 if (Started && !done)
                 {
-                    energyCircle.Position = pattern.PositionAt(completionProgress);
+                    starPiece.Position = pattern.PositionAt(completionProgress);
                     if (currentGameMode != VitaruGamemode.Dodge)
                         enemy.Position = pattern.PositionAt(completionProgress);
                 }
@@ -78,30 +82,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Load();
 
-            VitaruPlayfield.CharacterField.Add(energyCircle = new Container
+            VitaruPlayfield.CharacterField.Add(starPiece = new StarPiece
             {
                 Alpha = 0,
                 Masking = true,
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.Centre,
-                Size = new Vector2(30),
-                CornerRadius = 30f / 2,
-                BorderThickness = 10,
-                BorderColour = AccentColour,
-
-                Children = new Drawable[]
-                {
-                    new Box
-                    {
-                        RelativeSizeAxes = Axes.Both
-                    }
-                },
-                EdgeEffect = new EdgeEffectParameters
-                {
-                    Type = EdgeEffectType.Shadow,
-                    Colour = AccentColour.Opacity(0.5f),
-                    Radius = Width / 2,
-                }
+                Size = Size,
+                Colour = AccentColour
             });
 
             if (currentGameMode != VitaruGamemode.Dodge)
@@ -123,12 +111,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             }
             else
             {
-                energyCircle.Alpha = 0;
-                energyCircle.FadeIn(Math.Min(HitObject.TimeFadein * 2, HitObject.TimePreempt))
+                starPiece.Alpha = 0;
+                starPiece.FadeIn(Math.Min(HitObject.TimeFadein * 2, HitObject.TimePreempt))
                     .MoveTo(pattern.Position, HitObject.TimePreempt);
             }
 
-            energyCircle.Position = getPatternStartPosition();
+            starPiece.Position = getPatternStartPosition();
 
 
             Position = pattern.Position;
@@ -165,7 +153,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             this.MoveTo(getPatternStartPosition(), HitObject.TimePreempt * 2, Easing.InQuint)
                 .Expire();
 
-            energyCircle.FadeOut(HitObject.TimePreempt / 2)
+            starPiece.FadeOut(HitObject.TimePreempt / 2)
                 .ScaleTo(new Vector2(0.1f), HitObject.TimePreempt / 2)
                 .Expire();
         }
@@ -180,8 +168,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 enemy.Dispose();
             }
 
-            VitaruPlayfield.CharacterField.Remove(energyCircle);
-            energyCircle.Dispose();
+            VitaruPlayfield.CharacterField.Remove(starPiece);
+            starPiece.Dispose();
 
             Expire();
         }
