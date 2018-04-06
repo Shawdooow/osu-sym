@@ -4,6 +4,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
+using OpenTK;
 
 namespace osu.Game.Rulesets.Vitaru.Edit.Layers.Selection.Overlays
 {
@@ -15,8 +16,7 @@ namespace osu.Game.Rulesets.Vitaru.Edit.Layers.Selection.Overlays
             Origin = Anchor.Centre;
 
             Position = pattern.Position;
-            Size = pattern.Size;
-            Scale = pattern.Scale;
+            Size = new Vector2(30);
 
             CornerRadius = Size.X / 2;
 

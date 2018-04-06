@@ -5,10 +5,11 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Types;
 using System;
+using osu.Game.Rulesets.Edit.Types;
 
 namespace osu.Game.Rulesets.Vitaru.Objects
 {
-    public abstract class VitaruHitObject : HitObject, IHasComboInformation
+    public abstract class VitaruHitObject : HitObject, IHasComboInformation, IHasEditablePosition
     {
         public double TimePreempt = 600;
         public double TimeFadein = 400;
@@ -62,5 +63,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
             Scale = (1.0f - 0.7f * (difficulty.CircleSize - 5) / 5) / 2;
         }
+
+        public virtual void OffsetPosition(Vector2 offset) => Position += offset;
     }
 }

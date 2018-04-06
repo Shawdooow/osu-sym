@@ -35,6 +35,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             Size = new Vector2(30);
             Position = this.pattern.Position;
+            Alpha = 0;
+            HitObject.PositionChanged += _ => Position = HitObject.Position;
 
             if (!pattern.IsSlider && !pattern.IsSpinner)
             {
@@ -111,10 +113,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             }
             else
             {
-                starPiece.Alpha = 0;
-                starPiece.FadeIn(Math.Min(HitObject.TimeFadein * 2, HitObject.TimePreempt))
+                starPiece.FadeInFromZero(Math.Min(HitObject.TimeFadein * 2, HitObject.TimePreempt))
                     .MoveTo(pattern.Position, HitObject.TimePreempt);
             }
+
+            this.FadeInFromZero(Math.Min(HitObject.TimeFadein * 2, HitObject.TimePreempt));
 
             starPiece.Position = getPatternStartPosition();
 
@@ -150,7 +153,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     .FadeOut(HitObject.TimeFadein, Easing.InQuint)
                     .Expire();
 
-            this.MoveTo(getPatternStartPosition(), HitObject.TimePreempt * 2, Easing.InQuint)
+            this.FadeOut(HitObject.TimePreempt / 2)
+                .MoveTo(getPatternStartPosition(), HitObject.TimePreempt * 2, Easing.InQuint)
                 .Expire();
 
             starPiece.FadeOut(HitObject.TimePreempt / 2)
