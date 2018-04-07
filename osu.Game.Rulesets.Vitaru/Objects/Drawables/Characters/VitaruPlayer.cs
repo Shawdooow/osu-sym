@@ -651,10 +651,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 {
 
                 }
-                else if (CurrentCharacter == Characters.YuyukoSaigyouji && action == VitaruAction.Spell)
-                {
-
-                }
                 else if (CurrentCharacter == Characters.YuyukoSaigyouji && !Clone && !ghastlytActive && action == VitaruAction.Spell)
                     yuyukoSpell();
                 else if (CurrentCharacter == Characters.YukariYakumo && action == VitaruAction.Spell)
@@ -1463,17 +1459,28 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 {
                     if (currentGameMode != VitaruGamemode.Gravaru)
                         playerPosition.Y -= yTranslationDistance;
-                    else if (Position.Y > 184 && !jumped)
-                        playerPosition.Y -= Position.Y * ((float)Clock.ElapsedFrameTime / 800);
-                    else if (Position.Y <= 184 && !jumped)
+                    else
                     {
-                        Actions[VitaruAction.Up] = false;
-                        jumped = true;
-                        gravity = 0;
+                        if (Position.Y > 184 && !jumped)
+                        {
+                            playerPosition.Y -= Position.Y * ((float)Clock.ElapsedFrameTime / 800);
+                            gravity = 0;
+                        }
+                        else if (Position.Y <= 184 && !jumped)
+                        {
+                            Actions[VitaruAction.Up] = false;
+                            jumped = true;
+                            gravity = 0;
+                        }
                     }
                 }
-                else if (currentGameMode == VitaruGamemode.Gravaru)
+                if (currentGameMode == VitaruGamemode.Gravaru)
                 {
+                    if (Position.Y >= 384)
+                        jumped = false;
+                    else if (!Actions[VitaruAction.Up])
+                        jumped = true;
+
                     gravity += Clock.ElapsedFrameTime / 800;
                     playerPosition.Y += (float)gravity;
                 }
@@ -1487,9 +1494,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
                 playerPosition = Vector2.ComponentMin(playerPosition, playerBounds.Yw);
                 playerPosition = Vector2.ComponentMax(playerPosition, playerBounds.Xz);
-
-                if (Position.Y >= 384)
-                    jumped = false;
             }
             Position = playerPosition;
         }
