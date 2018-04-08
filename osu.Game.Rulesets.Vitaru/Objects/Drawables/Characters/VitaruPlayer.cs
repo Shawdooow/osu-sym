@@ -723,7 +723,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         private void sakuyaSpell(float energyOverride = -1)
         {
-            if (workingBeatmap.Value.BeatmapInfo.OnlineBeatmapID != Map.Map2 || Time.Current < Map.Map2Timestamp6)
+            if (workingBeatmap.Value.BeatmapInfo.OnlineBeatmapID != Map.Map2 || Time.Current < Map.Map2Timestamp6 && !late)
             {
                 if (energyOverride == -1)
                     Energy -= energyRequired;
