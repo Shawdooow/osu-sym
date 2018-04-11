@@ -9,12 +9,21 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 
-namespace osu.Game.Screens.Symcol.Pieces
+namespace osu.Game.Screens.Symcol.CasterBible.Pieces
 {
     public class TeamBox : Container
     {
         private readonly OsuTextFlowContainer players;
+        private readonly OsuTextFlowContainer stats;
         private readonly OsuTextFlowContainer notes;
+
+        private readonly OsuSpriteText playersTitle;
+        private readonly OsuSpriteText statsTitle;
+        private readonly OsuSpriteText notesTitle;
+
+        private float playersOffset => players.Position.Y + players.DrawHeight;
+        private float statsOffset => stats.Position.Y + stats.DrawHeight;
+        private float notesOffset => notes.Position.Y + notes.DrawHeight;
 
         public TeamBox(CasterBibleFileSystem casterBibleFileSystem, Bindable<Country> countree)
         {
@@ -37,13 +46,13 @@ namespace osu.Game.Screens.Symcol.Pieces
                     Colour = Color4.Black,
                     Alpha = 0.8f
                 },
-                new OsuSpriteText
+                playersTitle = new OsuSpriteText
                 {
                     Position = new Vector2(16, 60),
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,
                     TextSize = 32,
-                    Text = "Team Members:"
+                    Text = "Members:"
                 },
                 players = new OsuTextFlowContainer(t => { t.TextSize = 20; })
                 {
@@ -54,17 +63,34 @@ namespace osu.Game.Screens.Symcol.Pieces
                     AutoSizeAxes = Axes.Y,
                     Text = "ree\nree\nree"
                 },
-                new OsuSpriteText
+                statsTitle = new OsuSpriteText
                 {
                     Position = new Vector2(16, 240),
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,
                     TextSize = 32,
-                    Text = "Notes:"
+                    Text = "Stats:"
                 },
                 notes = new OsuTextFlowContainer(t => { t.TextSize = 20; })
                 {
                     Position = new Vector2(16, 280),
+                    Anchor = Anchor.TopLeft,
+                    Origin = Anchor.TopLeft,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Text = "ree\nree\nree"
+                },
+                notesTitle = new OsuSpriteText
+                {
+                    Position = new Vector2(16, 400),
+                    Anchor = Anchor.TopLeft,
+                    Origin = Anchor.TopLeft,
+                    TextSize = 32,
+                    Text = "Additional Notes:"
+                },
+                stats = new OsuTextFlowContainer(t => { t.TextSize = 20; })
+                {
+                    Position = new Vector2(16, 440),
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,
                     RelativeSizeAxes = Axes.X,
@@ -98,6 +124,7 @@ namespace osu.Game.Screens.Symcol.Pieces
                             string[] countryArgsArgs = countryArg.Split('=');
 
                             bool player = false;
+                            bool stat = false;
                             bool note = false;
 
                             foreach (string countryArgArg in countryArgsArgs)
@@ -117,18 +144,33 @@ namespace osu.Game.Screens.Symcol.Pieces
                                     players.Text = s;
                                 }
 
+                                if (countryArgArg == "Stats")
+                                    stat = true;
+                                else if (stat)
+                                    stats.Text = countryArgArg;
+
                                 if (countryArgArg == "Notes")
                                     note = true;
                                 else if (note)
-                                {
                                     notes.Text = countryArgArg;
-                                }
                             }
                         }
                     }
                 }
             };
             countree.TriggerChange();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            int y = 8;
+
+            statsTitle.Y = playersOffset + y;
+            stats.Y = playersOffset + y + 32;
+            notesTitle.Y = statsOffset + y;
+            notes.Y = statsOffset + y + 32;
         }
 
         private class BetterSettingsEnumDropdown<T> : SettingsEnumDropdown<T>

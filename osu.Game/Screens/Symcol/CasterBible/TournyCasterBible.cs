@@ -10,14 +10,21 @@ using osu.Framework.Platform;
 using osu.Framework.Screens;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Backgrounds;
+using osu.Game.Screens.Symcol.CasterBible.Pieces;
 using osu.Game.Screens.Symcol.Pieces;
 using System;
 
-namespace osu.Game.Screens.Symcol.Screens
+namespace osu.Game.Screens.Symcol.CasterBible
 {
     public class TournyCasterBible : Screen
     {
         private CasterBibleFileSystem casterBibleFileSystem;
+
+        private float headerOffset => header.Position.Y + header.DrawHeight;
+
+        private Header header;
+
+        private Container content;
 
         private readonly Bindable<Country> country1 = new Bindable<Country>() { Default = Country.UnitedStates };
         private readonly Bindable<Country> country2 = new Bindable<Country>() { Default = Country.UnitedStates };
@@ -88,7 +95,8 @@ namespace osu.Game.Screens.Symcol.Screens
                         },
                         rightTeam = new TeamBox(casterBibleFileSystem, country2)
                     }
-                }
+                },
+                header = new Header(),
             };
 
             country1.ValueChanged += (value) =>
@@ -125,6 +133,10 @@ namespace osu.Game.Screens.Symcol.Screens
                                     catch
                                     {
                                         Logger.Log("Failed to parse seed! - " + countryArgArg, LoggingTarget.Database, LogLevel.Error);
+
+                                        leftBox.Colour = Color4.Blue;
+                                        leftTriangles.ColourLight = Color4.Blue.Lighten(0.3f);
+                                        leftTriangles.ColourDark = Color4.Blue.Darken(0.3f);
                                     }
                                 }
                             }
@@ -167,6 +179,10 @@ namespace osu.Game.Screens.Symcol.Screens
                                     catch
                                     {
                                         Logger.Log("Failed to parse seed! - " + countryArgArg, LoggingTarget.Database, LogLevel.Error);
+
+                                        rightBox.Colour = Color4.Blue;
+                                        rightTriangles.ColourLight = Color4.Blue.Lighten(0.3f);
+                                        rightTriangles.ColourDark = Color4.Blue.Darken(0.3f);
                                     }
                                 }
                             }
@@ -175,6 +191,13 @@ namespace osu.Game.Screens.Symcol.Screens
                 }
             };
             country2.TriggerChange();
+        }
+
+        protected override void UpdateAfterChildren()
+        {
+            base.UpdateAfterChildren();
+
+            //content.Padding = new MarginPadding { Top = headerOffset };
         }
 
         private Color4 seedColor(int seed)

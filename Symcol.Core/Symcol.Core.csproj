@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Mono.Nat" Version="1.2.24" />
   </ItemGroup>
-  <ItemGroup Label="Project References">
-    <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
+  <ItemGroup>
+    <ProjectReference Include="..\osu-framework\osu.Framework\osu.Framework.csproj" />
   </ItemGroup>
 </Project>

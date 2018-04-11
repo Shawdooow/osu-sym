@@ -3,7 +3,7 @@ using osu.Framework.Platform;
 using System;
 using System.IO;
 
-namespace osu.Game.Screens.Symcol.Pieces
+namespace osu.Game.Screens.Symcol.CasterBible.Pieces
 {
     public class CasterBibleFileSystem
     {
@@ -26,7 +26,7 @@ namespace osu.Game.Screens.Symcol.Pieces
                         string blank = "";
 
                         foreach (Country country in System.Enum.GetValues(typeof(Country)))
-                            blank = blank + country.ToString() + "/" + "Players=/" + "Notes=/" + "Seed=/." + Environment.NewLine;
+                            blank = blank + country.ToString() + "/" + "Players=/" + "Stats=/" + "Notes=/" + "Seed=/." + Environment.NewLine;
 
                         using (Stream stream = storage.GetStream(FileName, FileAccess.Write, FileMode.Create))
                         using (StreamWriter w = new StreamWriter(stream))

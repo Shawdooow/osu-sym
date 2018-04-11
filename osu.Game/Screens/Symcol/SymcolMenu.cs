@@ -148,7 +148,7 @@ namespace osu.Game.Screens.Symcol
                             ButtonColorTop = Color4.Yellow,
                             ButtonColorBottom = Color4.Green,
                             ButtonSize = 100,
-                            Action = delegate { Push(new TournyCasterBible()); },
+                            //Action = delegate { Push(new TournyCasterBible()); },
                             ButtonPosition = new Vector2(40 , -200),
                         },
                         /*
