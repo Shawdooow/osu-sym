@@ -24,7 +24,7 @@ namespace osu.Game.Screens.Symcol.CasterBible
 
         private Header header;
 
-        private Container content;
+        private Container screen;
 
         private readonly Bindable<Country> country1 = new Bindable<Country>() { Default = Country.UnitedStates };
         private readonly Bindable<Country> country2 = new Bindable<Country>() { Default = Country.UnitedStates };
@@ -45,6 +45,43 @@ namespace osu.Game.Screens.Symcol.CasterBible
             casterBibleFileSystem = new CasterBibleFileSystem(storage);
 
             Children = new Drawable[]
+            {
+                screen = new Container
+                {
+                    RelativeSizeAxes = Axes.Both
+                },
+                header = new Header(),
+            };
+
+            header.CurrentBibleScreen.ValueChanged += (value) =>
+            {
+                switch (value)
+                {
+                    case BibleScreen.Teams:
+                        initializeTeamsScreen();
+                        break;
+                }
+            };
+            header.CurrentBibleScreen.TriggerChange();
+        }
+
+        private Color4 seedColor(int seed)
+        {
+            OsuColour color = new OsuColour();
+
+            if (seed <= 8)
+                return color.Green;
+            else if (seed <= 16)
+                return color.Yellow;
+            else if (seed <= 24)
+                return color.Red;
+            else
+                return color.Gray5;
+        }
+
+        private void initializeTeamsScreen()
+        {
+            screen.Children = new Drawable[]
             {
                 leftContainer = new Container
                 {
@@ -95,8 +132,7 @@ namespace osu.Game.Screens.Symcol.CasterBible
                         },
                         rightTeam = new TeamBox(casterBibleFileSystem, country2)
                     }
-                },
-                header = new Header(),
+                }
             };
 
             country1.ValueChanged += (value) =>
@@ -191,27 +227,6 @@ namespace osu.Game.Screens.Symcol.CasterBible
                 }
             };
             country2.TriggerChange();
-        }
-
-        protected override void UpdateAfterChildren()
-        {
-            base.UpdateAfterChildren();
-
-            //content.Padding = new MarginPadding { Top = headerOffset };
-        }
-
-        private Color4 seedColor(int seed)
-        {
-            OsuColour color = new OsuColour();
-
-            if (seed <= 8)
-                return color.Green;
-            else if (seed <= 16)
-                return color.Yellow;
-            else if (seed <= 24)
-                return color.Red;
-            else
-                return color.Gray0;
         }
     }
 }

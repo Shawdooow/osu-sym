@@ -2,11 +2,14 @@
 using OpenTK.Graphics;
 using OpenTK.Input;
 using osu.Framework.Allocation;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input;
 using osu.Framework.Platform;
+using osu.Game.Graphics;
+using osu.Game.Graphics.UserInterface;
 using Symcol.Core.Graphics.Containers;
 using System;
 using System.Collections.Generic;
@@ -18,7 +21,12 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
     {
         private const double transition_time = 500;
 
+        public readonly Bindable<BibleScreen> CurrentBibleScreen = new Bindable<BibleScreen>() { Default = BibleScreen.Teams };
+
+        public readonly OsuTabControl<BibleScreen> TabControl;
+
         private SymcolClickableContainer open;
+        private SymcolClickableContainer edit;
 
         public Header()
         {
@@ -29,6 +37,8 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
             Height = 0.04f;
 
             AlwaysPresent = true;
+
+            OsuColour color = new OsuColour();
 
             Children = new Drawable[]
             {
@@ -41,7 +51,16 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
                 new UTCClock
                 {
                     Anchor = Anchor.CentreRight,
-                    Position = new Vector2(-100, 0)
+                    Position = new Vector2(-200, 0)
+                },
+                TabControl = new OsuTabControl<BibleScreen>
+                {
+                    Position = new Vector2(200, 0),
+                    Anchor = Anchor.TopCentre,
+                    Origin = Anchor.TopCentre,
+                    RelativeSizeAxes = Axes.Both,
+                    Width = 0.4f,
+                    
                 },
                 open = new SymcolClickableContainer
                 {
@@ -57,8 +76,34 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
                         Colour = Color4.Green,
                         Alpha = 0.8f
                     }
+                },
+                edit = new SymcolClickableContainer
+                {
+                    Anchor = Anchor.CentreRight,
+                    Origin = Anchor.CentreRight,
+
+                    RelativeSizeAxes = Axes.Y,
+                    Width = 80,
+                    Action = () => toggleEdit(),
+
+                    Child = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = color.Yellow,
+                        Alpha = 0.8f
+                    }
                 }
             };
+            CurrentBibleScreen.BindTo(TabControl.Current);
+        }
+
+        public Action<bool> OnEditToggle;
+        private bool editMode;
+
+        private void toggleEdit()
+        {
+            editMode = !editMode;
+            OnEditToggle?.Invoke(editMode);
         }
 
         [BackgroundDependencyLoader]
@@ -106,5 +151,12 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
             this.MoveToY(-DrawSize.Y, transition_time, Easing.OutQuint);
             this.FadeOut(transition_time);
         }
+    }
+
+    public enum BibleScreen
+    {
+        Teams,
+        MapPool,
+        MatchResults
     }
 }
