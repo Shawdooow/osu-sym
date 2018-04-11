@@ -354,7 +354,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nDifficulty: Another" +
                         "\nSpell (Ratio [energy:damage/energy/health/weaken] - 1:4/2/1/2): Invasion (WIP)";
                         break;
-                    case Characters.Vaster:
+                    case Characters.VasterLetrunce:
                         stats = "\nMax Health: 120" +
                         "\nMax Energy: 20" +
                         "\nRole: Support" +

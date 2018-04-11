@@ -88,8 +88,12 @@
             "While that would explain her unatural abilities in combat they would not explain her uncanny abitlity to empithize with her \"creations\". " +
             "The only other individual to supposedly be even relativly this old is cold and heartless (perhaps litterally).";
 
-        public const string VasterWiki1 = "\n\n Vaster never really understood the whole \"magic\" thing, he liked to keep things simple. " +
-            "Whats wrong with cutting through all your problems with a sword or just using a gun? " +
-            "He knew exactly why, you have to be on a level playing field to stand a chance.";
+        public const string AliceWiki1 = "\n\nAlice and her husband liked to keep things simple, they weren't really fans of the whole \"magic\" thing. " +
+            "She would only use it when she had to while Vaster was a bit more presumtous and would curse people who even posed a threat. " +
+            "Though she guesses she can't complain, she would never want to forget her one true love.";
+
+        public const string VasterWiki1 = "\n\nVaster never really understood the whole \"magic\" thing, he liked to keep things simple. " +
+            "Whats wrong with cutting through all your problems with a sword or just throwing some knives? " +
+            "His wife was personally a fan of mechatronic, controling robot death machines to deal with your problems.";
     }
 }

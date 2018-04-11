@@ -1890,8 +1890,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         //RanYakumo,
         //[System.ComponentModel.Description("Chen")]
         //Chen,
-        //[System.ComponentModel.Description("Alice Margatroid")]
-        //AliceMargatroid,
+        [System.ComponentModel.Description("Alice Letrunce")]
+        AliceLetrunce,
         //[System.ComponentModel.Description("Komachi Onozuka")]
         //KomachiOnozuka,
         [System.ComponentModel.Description("Byakuren Hijiri")]
@@ -1913,11 +1913,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         [System.ComponentModel.Description("Nue Houjuu")]
         NueHoujuu,
         [System.ComponentModel.Description("Vaster")]
-        Vaster,
-        //[System.ComponentModel.Description("Jorolf")]
-        //Rock,
-        //[System.ComponentModel.Description("mangomizer")]
-        //Mango,
+        VasterLetrunce,
         [System.ComponentModel.Description("Alice Muyart")]
         AliceMuyart,
         [System.ComponentModel.Description("Arysa Muyart")]
