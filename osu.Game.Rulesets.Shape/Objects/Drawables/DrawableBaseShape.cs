@@ -42,41 +42,26 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
 
         protected override void CheckForJudgements(bool userTriggered, double timeOffset)
         {
-            base.CheckForJudgements(userTriggered, timeOffset);
-
-            if (LifetimeStart <= Time.Current)
+            if (!userTriggered || !validKeyPressed)
             {
-                if (!userTriggered)
-                {
-                    if (timeOffset > shape.HitWindowGood)
-                    {
-                        AddJudgement(new ShapeJudgement { Result = HitResult.Miss });
-                        Delete();
-                    }
-                    return;
-                }
-
-                double hitOffset = Math.Abs(timeOffset);
-
-                if (hitOffset > shape.HitWindowMiss)
-                    return;
-
-                if (!validKeyPressed)
+                if (!HitObject.HitWindows.CanBeHit(timeOffset))
                 {
                     AddJudgement(new ShapeJudgement { Result = HitResult.Miss });
                     Delete();
                 }
-                else if (hitOffset < shape.HitWindowGood)
-                {
-                    AddJudgement(new ShapeJudgement { Result = hitOffset < shape.HitWindowGreat ? HitResult.Great : HitResult.Good });
-                    Delete();
-                }
-                else
-                {
-                    AddJudgement(new ShapeJudgement { Result = HitResult.Miss });
-                    Delete();
-                }
-            }   
+                return;
+            }
+
+            var result = HitObject.HitWindows.ResultFor(timeOffset);
+            if (result == HitResult.None)
+                return;
+
+            AddJudgement(new ShapeJudgement
+            {
+                Result = result,
+                PositionOffset = Vector2.Zero //todo: set to correct value
+            });
+            Delete();
         }
 
         public override bool OnPressed(ShapeAction action)
