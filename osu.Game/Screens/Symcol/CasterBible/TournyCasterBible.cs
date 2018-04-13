@@ -15,6 +15,7 @@ using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Backgrounds;
+using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
@@ -129,11 +130,16 @@ namespace osu.Game.Screens.Symcol.CasterBible
 
                     Children = new Drawable[]
                     {
-                        new ScrollContainer
+                        new OsuScrollContainer
                         {
                             RelativeSizeAxes = Axes.Both,
 
-                            Child = mapPoolFlow = new FillFlowContainer()
+                            Child = mapPoolFlow = new FillFlowContainer
+                            {
+                                RelativeSizeAxes = Axes.X,
+                                AutoSizeAxes = Axes.Y,
+                                Direction = FillDirection.Vertical
+                            }
                         }
                     }
                 },
@@ -181,6 +187,9 @@ namespace osu.Game.Screens.Symcol.CasterBible
                 },
             };
 
+            for (int i = 1; i <= 14; i++)
+                mapPoolFlow.Add(new MapDetails(true));
+
             try
             {
                 foreach (string cupName in casterBibleFileSystem.Storage.GetDirectories("Cups"))
@@ -227,135 +236,145 @@ namespace osu.Game.Screens.Symcol.CasterBible
 
                                 currentStage.ValueChanged += (s) =>
                                 {
-                                    try
-                                    {
-                                        Storage stageStorage = cupStorage.GetStorageForDirectory("Bible\\Cups\\" + c + "\\" + y + "\\" + s);
-
-                                        casterBibleFileSystem = new CasterBibleFileSystem(stageStorage, "maps.mango");
-
-                                        mapPoolFlow = new FillFlowContainer
+                                    if (s != "None")
+                                        try
                                         {
-                                            RelativeSizeAxes = Axes.X,
-                                            AutoSizeAxes = Axes.Y,
-                                            Direction = FillDirection.Vertical
-                                        };
+                                            Storage stageStorage = cupStorage.GetStorageForDirectory("Bible\\Cups\\" + c + "\\" + y + "\\" + s);
 
-                                        string[] maps = casterBibleFileSystem.GetFileContent().Split('.');
+                                            casterBibleFileSystem = new CasterBibleFileSystem(stageStorage, "maps.mango");
 
-                                        foreach (string map in maps)
-                                        {
-                                            string[] mapArgs = map.Split('|');
-
-                                            int mapSetID = 0;
-                                            int mapID = 0;
-                                            Mods mod = Mods.NoMod;
-                                            string information = "";
-
-                                            foreach (string mapArg in mapArgs)
+                                            try
                                             {
-                                                string[] mapArgArgs = mapArg.Split('=');
-
-                                                bool setId = false;
-                                                bool id = false;
-                                                bool m = false;
-                                                bool info = false;
-
-                                                foreach (string mapArgArg in mapArgArgs)
+                                                retry:
+                                                foreach (Drawable drawable in mapPoolFlow.Children)
                                                 {
-                                                    try
-                                                    {
-                                                        if (mapArgArg == "BeatmapSetID" || mapArgArg == "\r\nBeatmapSetID")
-                                                            setId = true;
-                                                        if (id)
-                                                            mapSetID = Int32.Parse(mapArgArg);
-                                                    }
-                                                    catch
-                                                    {
-                                                        Logger.Log("Failed to parse BeatmapSetID: " + mapArgArg, LoggingTarget.Database, LogLevel.Error);
-                                                    }
-
-                                                    try
-                                                    {
-                                                        if (mapArgArg == "BeatmapID" || mapArgArg == "\r\nBeatmapID")
-                                                            id = true;
-                                                        if (id)
-                                                            mapID = Int32.Parse(mapArgArg);
-                                                    }
-                                                    catch
-                                                    {
-                                                        Logger.Log("Failed to parse BeatmapID: " + mapArgArg, LoggingTarget.Database, LogLevel.Error);
-                                                    }
-
-                                                    try
-                                                    {
-                                                        if (mapArgArg == "Mod")
-                                                            m = true;
-                                                        if (m)
-                                                            switch (mapArgArg)
-                                                            {
-                                                                case "NM":
-                                                                case "NoMod":
-                                                                    mod = Mods.NoMod;
-                                                                    break;
-                                                                case "HD":
-                                                                case "Hidden":
-                                                                    mod = Mods.Hidden;
-                                                                    break;
-                                                                case "HR":
-                                                                case "HardRock":
-                                                                    mod = Mods.HardRock;
-                                                                    break;
-                                                                case "DT":
-                                                                case "DoubleTime":
-                                                                    mod = Mods.DoubleTime;
-                                                                    break;
-                                                                case "FM":
-                                                                case "FreeMod":
-                                                                    mod = Mods.FreeMod;
-                                                                    break;
-                                                                case "TB":
-                                                                case "TieBreaker":
-                                                                    mod = Mods.TieBreaker;
-                                                                    break;
-                                                            }
-                                                    }
-                                                    catch
-                                                    {
-                                                        Logger.Log("Failed to parse Mod: " + mapArgArg, LoggingTarget.Database, LogLevel.Error);
-                                                    }
-
-                                                    try
-                                                    {
-                                                        if (mapArgArg == "Information")
-                                                            info = true;
-                                                        if (info)
-                                                            information = mapArgArg;
-                                                    }
-                                                    catch
-                                                    {
-                                                        Logger.Log("Failed to parse Information: " + mapArgArg, LoggingTarget.Database, LogLevel.Error);
-                                                    }
+                                                    mapPoolFlow.Remove(drawable);
+                                                    goto retry;
                                                 }
                                             }
+                                            catch
+                                            {
+                                                Logger.Log("Failed to remove all children!", LoggingTarget.Information, LogLevel.Error);
+                                            }
 
-                                            foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
-                                                if (beatmapSet.OnlineBeatmapSetID == mapSetID)
+                                            string[] maps = casterBibleFileSystem.GetFileContent().Split('.');
+
+                                            foreach (string map in maps)
+                                            {
+                                                string[] mapArgs = map.Split('|');
+
+                                                int mapSetID = 0;
+                                                int mapID = 0;
+                                                Mods mod = Mods.NoMod;
+                                                string information = "";
+
+                                                foreach (string mapArg in mapArgs)
                                                 {
-                                                    bool k = false;
-                                                    foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
-                                                        if (beatmap.OnlineBeatmapID == mapID)
+                                                    string[] mapArgArgs = mapArg.Split('=');
+
+                                                    bool setId = false;
+                                                    bool id = false;
+                                                    bool m = false;
+                                                    bool info = false;
+
+                                                    foreach (string mapArgArg in mapArgArgs)
+                                                    {
+                                                        try
                                                         {
-                                                            mapPoolFlow.Add(new MapDetails(beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value)));
-                                                            k = true;
-                                                            break;
+                                                            if (mapArgArg == "BeatmapSetID" || mapArgArg == "\r\nBeatmapSetID")
+                                                                setId = true;
+                                                            else if (setId)
+                                                                mapSetID = Int32.Parse(mapArgArg);
+                                                        }
+                                                        catch
+                                                        {
+                                                            Logger.Log("Failed to parse BeatmapSetID: " + mapArgArg, LoggingTarget.Database, LogLevel.Error);
                                                         }
 
-                                                    if (k)
-                                                        break;
+                                                        try
+                                                        {
+                                                            if (mapArgArg == "BeatmapID" || mapArgArg == "\r\nBeatmapID")
+                                                                id = true;
+                                                            else if (id)
+                                                                mapID = Int32.Parse(mapArgArg);
+                                                        }
+                                                        catch
+                                                        {
+                                                            Logger.Log("Failed to parse BeatmapID: " + mapArgArg, LoggingTarget.Database, LogLevel.Error);
+                                                        }
+
+                                                        try
+                                                        {
+                                                            if (mapArgArg == "Mod")
+                                                                m = true;
+                                                            else if (m)
+                                                                switch (mapArgArg)
+                                                                {
+                                                                    case "NM":
+                                                                    case "NoMod":
+                                                                        mod = Mods.NoMod;
+                                                                        break;
+                                                                    case "HD":
+                                                                    case "Hidden":
+                                                                        mod = Mods.Hidden;
+                                                                        break;
+                                                                    case "HR":
+                                                                    case "HardRock":
+                                                                        mod = Mods.HardRock;
+                                                                        break;
+                                                                    case "DT":
+                                                                    case "DoubleTime":
+                                                                        mod = Mods.DoubleTime;
+                                                                        break;
+                                                                    case "FM":
+                                                                    case "FreeMod":
+                                                                        mod = Mods.FreeMod;
+                                                                        break;
+                                                                    case "TB":
+                                                                    case "TieBreaker":
+                                                                        mod = Mods.TieBreaker;
+                                                                        break;
+                                                                }
+                                                        }
+                                                        catch
+                                                        {
+                                                            Logger.Log("Failed to parse Mod: " + mapArgArg, LoggingTarget.Database, LogLevel.Error);
+                                                        }
+
+                                                        try
+                                                        {
+                                                            if (mapArgArg == "Information")
+                                                                info = true;
+                                                            else if (info)
+                                                                information = mapArgArg;
+                                                        }
+                                                        catch
+                                                        {
+                                                            Logger.Log("Failed to parse Information: " + mapArgArg, LoggingTarget.Database, LogLevel.Error);
+                                                        }
+                                                    }
                                                 }
+
+                                                bool valid = false;
+                                                foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
+                                                    if (beatmapSet.OnlineBeatmapSetID == mapSetID)
+                                                    {
+                                                        foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
+                                                            if (beatmap.OnlineBeatmapID == mapID)
+                                                            {
+                                                                mapPoolFlow.Add(new MapDetails(beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value)));
+                                                                valid = true;
+                                                                break;
+                                                            }
+
+                                                        if (valid)
+                                                            break;
+                                                    }
+                                                if (!valid)
+                                                    mapPoolFlow.Add(new MapDetails(mapSetID));
+                                            }
                                         }
-                                    }
-                                    catch { }
+                                        catch { }
                                 };
                             }
                             catch { }
@@ -600,50 +619,50 @@ namespace osu.Game.Screens.Symcol.CasterBible
 
                 Children = new Drawable[]
                 {
-                beatmapBG = new Sprite
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    RelativeSizeAxes = Axes.Both,
-                    FillMode = FillMode.Fill,
-                },
-                dim = new Box
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = Color4.Black,
-                    Alpha = 0.6f
-                },
-                name = new SpriteText
-                {
-                    Anchor = Anchor.TopLeft,
-                    Origin = Anchor.TopLeft,
-                    Position = new Vector2(10, 0),
-                    Font = @"Exo2.0-SemiBoldItalic",
-                    TextSize = 40
-                },
-                artist = new SpriteText
-                {
-                    Anchor = Anchor.TopLeft,
-                    Origin = Anchor.TopLeft,
-                    Position = new Vector2(10, 38),
-                    Font = @"Exo2.0-MediumItalic",
-                    TextSize = 24
-                },
-                difficulty = new SpriteText
-                {
-                    Anchor = Anchor.TopLeft,
-                    Origin = Anchor.TopLeft,
-                    Position = new Vector2(10, 64),
-                    Font = "Exo2.0-Bold",
-                    TextSize = 16
-                },
-                time = new SpriteText
-                {
-                    Anchor = Anchor.TopLeft,
-                    Origin = Anchor.TopLeft,
-                    Position = new Vector2(10, 84),
-                    TextSize = 16
-                }
+                    beatmapBG = new Sprite
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        FillMode = FillMode.Fill,
+                    },
+                    dim = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Color4.Black,
+                        Alpha = 0.6f
+                    },
+                    name = new SpriteText
+                    {
+                        Anchor = Anchor.TopLeft,
+                        Origin = Anchor.TopLeft,
+                        Position = new Vector2(10, 0),
+                        Font = @"Exo2.0-SemiBoldItalic",
+                        TextSize = 40
+                    },
+                    artist = new SpriteText
+                    {
+                        Anchor = Anchor.TopLeft,
+                        Origin = Anchor.TopLeft,
+                        Position = new Vector2(10, 38),
+                        Font = @"Exo2.0-MediumItalic",
+                        TextSize = 24
+                    },
+                    difficulty = new SpriteText
+                    {
+                        Anchor = Anchor.TopLeft,
+                        Origin = Anchor.TopLeft,
+                        Position = new Vector2(10, 64),
+                        Font = "Exo2.0-Bold",
+                        TextSize = 16
+                    },
+                    time = new SpriteText
+                    {
+                        Anchor = Anchor.TopLeft,
+                        Origin = Anchor.TopLeft,
+                        Position = new Vector2(10, 84),
+                        TextSize = 16
+                    }
                 };
             }
 
