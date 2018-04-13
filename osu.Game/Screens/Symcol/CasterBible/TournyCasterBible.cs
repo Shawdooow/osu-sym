@@ -214,7 +214,7 @@ namespace osu.Game.Screens.Symcol.CasterBible
                                     {
                                         Storage stageStorage = cupStorage.GetStorageForDirectory("Bible\\Cups\\" + c + "\\" + y + "\\" + s);
 
-                                        CasterBibleFileSystem reeeeeeeeeeeeeeee = new CasterBibleFileSystem(stageStorage, "maps.mango");
+                                        casterBibleFileSystem = new CasterBibleFileSystem(stageStorage, "maps.mango");
                                     }
                                     catch { }
                                 };
