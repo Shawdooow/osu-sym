@@ -29,7 +29,7 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
                             string blank = "";
 
                             foreach (Country country in System.Enum.GetValues(typeof(Country)))
-                                blank = blank + country.ToString() + "/" + "Players=/" + "Stats=/" + "Notes=/" + "Seed=/." + Environment.NewLine;
+                                blank = blank + country.ToString() + "/Players=/Stats=/Notes=/Seed=/." + Environment.NewLine;
 
                             using (Stream stream = Storage.GetStream(fileName, FileAccess.Write, FileMode.Create))
                             using (StreamWriter w = new StreamWriter(stream))
@@ -44,8 +44,8 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
                         {
                             string blank = "";
 
-                            for (int i = 0; i < 10; i++)
-                                blank = blank + "BeatmapID=" + i.ToString() + "|" + "Mod=|" + "Information=|." + Environment.NewLine;
+                            for (int i = 1; i <= 14; i++)
+                                blank = blank + "BeatmapSetID=" + i.ToString() + "|BeatmapID=" + i.ToString() + "|Mod=|Information=|." + Environment.NewLine;
 
                             using (Stream stream = Storage.GetStream(fileName, FileAccess.Write, FileMode.Create))
                             using (StreamWriter w = new StreamWriter(stream))
@@ -112,16 +112,10 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
     public enum Mods
     {
         NoMod,
-        NM,
         Hidden,
-        HD,
         HardRock,
-        HR,
         DoubleTime,
-        DT,
         FreeMod,
-        FM,
         TieBreaker,
-        TB,
     }
 }
