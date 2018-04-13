@@ -18,7 +18,7 @@ namespace osu.Game.Screens.Symcol.CasterBible
 {
     public class TournyCasterBible : Screen
     {
-        private CasterBibleFileSystem casterBibleFileSystem;
+        private Storage storage;
 
         private float headerOffset => header.Position.Y + header.DrawHeight;
 
@@ -42,7 +42,7 @@ namespace osu.Game.Screens.Symcol.CasterBible
         [BackgroundDependencyLoader]
         private void load(Storage storage)
         {
-            casterBibleFileSystem = new CasterBibleFileSystem(storage);
+            this.storage = storage;
 
             Children = new Drawable[]
             {
@@ -59,6 +59,12 @@ namespace osu.Game.Screens.Symcol.CasterBible
                 {
                     case BibleScreen.Teams:
                         initializeTeamsScreen();
+                        break;
+                    case BibleScreen.MapPool:
+                        initializeMapPool();
+                        break;
+                    case BibleScreen.MatchResults:
+                        initializeMatchResults();
                         break;
                 }
             };
@@ -79,8 +85,28 @@ namespace osu.Game.Screens.Symcol.CasterBible
                 return color.Gray5;
         }
 
+        private void initializeMapPool()
+        {
+            CasterBibleFileSystem casterBibleFileSystem = new CasterBibleFileSystem(storage, "maps.mango");
+
+            screen.Children = new Drawable[]
+            {
+
+            };
+        }
+
+        private void initializeMatchResults()
+        {
+            screen.Children = new Drawable[]
+            {
+
+            };
+        }
+
         private void initializeTeamsScreen()
         {
+            CasterBibleFileSystem casterBibleFileSystem = new CasterBibleFileSystem(storage, "teams.mango");
+
             screen.Children = new Drawable[]
             {
                 leftContainer = new Container

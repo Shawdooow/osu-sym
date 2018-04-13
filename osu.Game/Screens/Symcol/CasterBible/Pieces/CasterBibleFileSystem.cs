@@ -7,15 +7,16 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
 {
     public class CasterBibleFileSystem
     {
-        public const string FileName = "teams.mango";
-
         private readonly Storage storage;
 
-        public CasterBibleFileSystem(Storage storage)
+        private readonly string fileName;
+
+        public CasterBibleFileSystem(Storage storage, string fileName)
         {
             this.storage = storage;
+            this.fileName = fileName;
 
-            if (!storage.Exists(FileName))
+            if (!storage.Exists(fileName))
             {
                 try
                 {
@@ -28,14 +29,14 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
                         foreach (Country country in System.Enum.GetValues(typeof(Country)))
                             blank = blank + country.ToString() + "/" + "Players=/" + "Stats=/" + "Notes=/" + "Seed=/." + Environment.NewLine;
 
-                        using (Stream stream = storage.GetStream(FileName, FileAccess.Write, FileMode.Create))
+                        using (Stream stream = storage.GetStream(fileName, FileAccess.Write, FileMode.Create))
                         using (StreamWriter w = new StreamWriter(stream))
                             w.WriteLine(blank);
                     }
                 }
                 catch
                 {
-                    Logger.Log("CasterBibleFileSystem - Failed to save world to file\"" + FileName + "\"", LoggingTarget.Database, LogLevel.Error);
+                    Logger.Log("CasterBibleFileSystem - Failed to save to file\"" + fileName + "\"", LoggingTarget.Database, LogLevel.Error);
                 }
             }
         }
@@ -48,14 +49,14 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
                     Logger.Log("CasterBibleFileSystem - storage == null", LoggingTarget.Debug, LogLevel.Error);
                 else
                 {
-                    using (Stream stream = storage.GetStream(FileName, FileAccess.Read, FileMode.Open))
+                    using (Stream stream = storage.GetStream(fileName, FileAccess.Read, FileMode.Open))
                     using (StreamReader r = new StreamReader(stream))
                         return r.ReadToEnd();
                 }
             }
             catch
             {
-                Logger.Log("CasterBibleFileSystem - Failed to load world from file\"" + FileName + "\"", LoggingTarget.Database, LogLevel.Error);
+                Logger.Log("CasterBibleFileSystem - Failed to load from file\"" + fileName + "\"", LoggingTarget.Database, LogLevel.Error);
             }
             return "null";
         }
