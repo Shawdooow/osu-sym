@@ -13,6 +13,7 @@ using osu.Game.Screens.Symcol.Screens.Shawdooow;
 using osu.Framework.Allocation;
 using osu.Framework.IO.Stores;
 using osu.Framework.Graphics.Textures;
+using osu.Game.Screens.Symcol.CasterBible;
 
 namespace osu.Game.Screens.Symcol
 {
@@ -148,7 +149,7 @@ namespace osu.Game.Screens.Symcol
                             ButtonColorTop = Color4.Yellow,
                             ButtonColorBottom = Color4.Green,
                             ButtonSize = 100,
-                            //Action = delegate { Push(new TournyCasterBible()); },
+                            Action = delegate { Push(new TournyCasterBible()); },
                             ButtonPosition = new Vector2(40 , -200),
                         },
                         /*

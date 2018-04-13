@@ -79,7 +79,16 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
 
                     TextSize = textSize,
                     Text = "66"
-                }
+                },
+                new OsuSpriteText
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Position = new Vector2(28 * 2, 0),
+
+                    TextSize = textSize,
+                    Text = "UTC"
+                },
             };
         }
 

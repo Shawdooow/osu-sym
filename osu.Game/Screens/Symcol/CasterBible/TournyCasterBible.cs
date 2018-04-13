@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics;
+﻿using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
@@ -10,13 +11,16 @@ using osu.Framework.Platform;
 using osu.Framework.Screens;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Backgrounds;
+using osu.Game.Overlays.Settings;
 using osu.Game.Screens.Symcol.CasterBible.Pieces;
 using osu.Game.Screens.Symcol.Pieces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace osu.Game.Screens.Symcol.CasterBible
 {
-    public class TournyCasterBible : Screen
+    public class TournyCasterBible : OsuScreen
     {
         private Storage storage;
 
@@ -87,12 +91,181 @@ namespace osu.Game.Screens.Symcol.CasterBible
 
         private void initializeMapPool()
         {
-            CasterBibleFileSystem casterBibleFileSystem = new CasterBibleFileSystem(storage, "maps.mango");
+            CasterBibleFileSystem casterBibleFileSystem = new CasterBibleFileSystem(storage, "teams.mango");
+
+            List<KeyValuePair<string, string>> cups = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("None", "None") };
+
+            SettingsDropdown<string> cup;
+            Bindable<string> currentCup = new Bindable<string>();
+            FillFlowContainer currentCupFlow;
+
+            SettingsDropdown<string> year;
+            Bindable<string> currentYear = new Bindable<string>();
+            FillFlowContainer currentYearFlow;
+
+            SettingsDropdown<string> stage;
+            Bindable<string> currentStage = new Bindable<string>();
 
             screen.Children = new Drawable[]
             {
+                new Container
+                {
+                    Anchor = Anchor.CentreRight,
+                    Origin = Anchor.CentreRight,
 
+                    RelativeSizeAxes = Axes.Both,
+                    Height = 0.96f,
+                    Width = 0.8f,
+
+                    Children = new Drawable[]
+                    {
+                        
+                    }
+                },
+                new Container
+                {
+                    Anchor = Anchor.CentreLeft,
+                    Origin = Anchor.CentreLeft,
+
+                    RelativeSizeAxes = Axes.Both,
+                    Height = 0.96f,
+                    Width = 0.2f,
+
+                    Children = new Drawable[]
+                    {
+                        new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Alpha = 0.8f,
+                            Colour = Color4.Black
+                        },
+                        new FillFlowContainer
+                        {
+                            Direction = FillDirection.Vertical,
+                            Spacing = new Vector2(0, 5),
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y,
+
+                            Children = new Drawable[]
+                            {
+                                cup = new SettingsDropdown<string>
+                                {
+                                    LabelText = "Current Cup"
+                                },
+                                currentCupFlow = new FillFlowContainer
+                                {
+                                    Direction = FillDirection.Vertical,
+                                    RelativeSizeAxes = Axes.X,
+                                    AutoSizeAxes = Axes.Y,
+                                    AutoSizeDuration = 400,
+                                    AutoSizeEasing = Easing.OutQuint,
+                                    Masking = true,
+
+                                    Children = new Drawable[]
+                                    {
+                                        year = new SettingsDropdown<string>
+                                        {
+                                            LabelText = "Current Year"
+                                        },
+                                        currentYearFlow = new FillFlowContainer
+                                        {
+                                            Direction = FillDirection.Vertical,
+                                            RelativeSizeAxes = Axes.X,
+                                            AutoSizeAxes = Axes.Y,
+                                            AutoSizeDuration = 0,
+                                            AutoSizeEasing = Easing.OutQuint,
+                                            Masking = true,
+
+                                            Children = new Drawable[]
+                                            {
+                                                stage = new SettingsDropdown<string>
+                                                {
+                                                    LabelText = "Current Stage"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
             };
+
+            try
+            {
+                foreach (string cupName in casterBibleFileSystem.Storage.GetDirectories("Cups"))
+                {
+                    string[] args = cupName.Split('\\');
+                    cups.Add(new KeyValuePair<string, string>(args.Last(), args.Last()));
+                }
+
+                cup.Items = cups.Distinct().ToList();
+                cup.Bindable = currentCup;
+
+                currentCup.ValueChanged += (c) =>
+                {
+                    try
+                    {
+                        List<KeyValuePair<string, string>> years = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("None", "None") };
+
+                        Storage cupStorage = casterBibleFileSystem.Storage.GetStorageForDirectory("Bible\\Cups\\" + c);
+
+                        foreach (string yearName in cupStorage.GetDirectories(""))
+                        {
+                            string[] args = yearName.Split('\\');
+                            years.Add(new KeyValuePair<string, string>(args.Last(), args.Last()));
+                        }
+
+                        year.Items = years.Distinct().ToList();
+                        year.Bindable = currentYear;
+
+                        currentCupFlow.ClearTransforms();
+                        currentCupFlow.AutoSizeAxes = c != "None" ? Axes.Y : Axes.None;
+
+                        if (c == "None")
+                            currentCupFlow.ResizeHeightTo(0, 0, Easing.OutQuint);
+
+                        currentYear.ValueChanged += (y) =>
+                        {
+                            try
+                            {
+                                List<KeyValuePair<string, string>> stages = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("None", "None") };
+                                Storage yearStorage = cupStorage.GetStorageForDirectory("Bible\\Cups\\" + c + "\\" + y);
+
+                                foreach (string stageName in yearStorage.GetDirectories(""))
+                                {
+                                    string[] args = stageName.Split('\\');
+                                    stages.Add(new KeyValuePair<string, string>(args.Last(), args.Last()));
+                                }
+
+                                stage.Items = stages.Distinct().ToList();
+                                stage.Bindable = currentStage;
+
+                                currentYearFlow.ClearTransforms();
+                                currentYearFlow.AutoSizeAxes = y != "None" ? Axes.Y : Axes.None;
+
+                                if (y == "None")
+                                    currentYearFlow.ResizeHeightTo(0, 0, Easing.OutQuint);
+
+                                currentStage.ValueChanged += (s) =>
+                                {
+                                    try
+                                    {
+                                        Storage stageStorage = cupStorage.GetStorageForDirectory("Bible\\Cups\\" + c + "\\" + y + "\\" + s);
+
+                                        CasterBibleFileSystem reeeeeeeeeeeeeeee = new CasterBibleFileSystem(stageStorage, "maps.mango");
+                                    }
+                                    catch { }
+                                };
+                            }
+                            catch { }
+                        };
+                    }
+                    catch { }
+                };
+            }
+            catch { }
         }
 
         private void initializeMatchResults()

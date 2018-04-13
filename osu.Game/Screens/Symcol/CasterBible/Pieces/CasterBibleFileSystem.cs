@@ -7,31 +7,50 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
 {
     public class CasterBibleFileSystem
     {
-        private readonly Storage storage;
+        public readonly Storage Storage;
 
         private readonly string fileName;
 
         public CasterBibleFileSystem(Storage storage, string fileName)
         {
-            this.storage = storage;
+            Storage = storage.GetStorageForDirectory("Bible");
             this.fileName = fileName;
 
-            if (!storage.Exists(fileName))
+            if (!Storage.Exists(fileName))
             {
                 try
                 {
-                    if (storage == null)
-                        Logger.Log("CasterBibleFileSystem - storage == null", LoggingTarget.Database, LogLevel.Error);
-                    else
+                    if (fileName == "teams.mango")
                     {
-                        string blank = "";
+                        if (Storage == null)
+                            Logger.Log("CasterBibleFileSystem - storage == null", LoggingTarget.Database, LogLevel.Error);
+                        else
+                        {
+                            string blank = "";
 
-                        foreach (Country country in System.Enum.GetValues(typeof(Country)))
-                            blank = blank + country.ToString() + "/" + "Players=/" + "Stats=/" + "Notes=/" + "Seed=/." + Environment.NewLine;
+                            foreach (Country country in System.Enum.GetValues(typeof(Country)))
+                                blank = blank + country.ToString() + "/" + "Players=/" + "Stats=/" + "Notes=/" + "Seed=/." + Environment.NewLine;
 
-                        using (Stream stream = storage.GetStream(fileName, FileAccess.Write, FileMode.Create))
-                        using (StreamWriter w = new StreamWriter(stream))
-                            w.WriteLine(blank);
+                            using (Stream stream = Storage.GetStream(fileName, FileAccess.Write, FileMode.Create))
+                            using (StreamWriter w = new StreamWriter(stream))
+                                w.WriteLine(blank);
+                        }
+                    }
+                    else if (fileName == "maps.mango")
+                    {
+                        if (Storage == null)
+                            Logger.Log("CasterBibleFileSystem - storage == null", LoggingTarget.Database, LogLevel.Error);
+                        else
+                        {
+                            string blank = "";
+
+                            for (int i = 0; i < 10; i++)
+                                blank = blank + "BeatmapID=" + i.ToString() + "|" + "Mod=|" + "Information=|." + Environment.NewLine;
+
+                            using (Stream stream = Storage.GetStream(fileName, FileAccess.Write, FileMode.Create))
+                            using (StreamWriter w = new StreamWriter(stream))
+                                w.WriteLine(blank);
+                        }
                     }
                 }
                 catch
@@ -45,11 +64,11 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
         {
             try
             {
-                if (storage == null)
+                if (Storage == null)
                     Logger.Log("CasterBibleFileSystem - storage == null", LoggingTarget.Debug, LogLevel.Error);
                 else
                 {
-                    using (Stream stream = storage.GetStream(fileName, FileAccess.Read, FileMode.Open))
+                    using (Stream stream = Storage.GetStream(fileName, FileAccess.Read, FileMode.Open))
                     using (StreamReader r = new StreamReader(stream))
                         return r.ReadToEnd();
                 }
@@ -88,5 +107,21 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
         UnitedKingdom,
         UnitedStates,
         Venezuela,
+    }
+
+    public enum Mods
+    {
+        NoMod,
+        NM,
+        Hidden,
+        HD,
+        HardRock,
+        HR,
+        DoubleTime,
+        DT,
+        FreeMod,
+        FM,
+        TieBreaker,
+        TB,
     }
 }

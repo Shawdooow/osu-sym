@@ -113,18 +113,18 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
         }
 
         private bool ctrl;
-        private bool t;
+        private bool u;
 
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (args.Key == Key.T)
-                t = true;
+            if (args.Key == Key.U)
+                u = true;
             if (args.Key == Key.ControlLeft || args.Key == Key.ControlRight)
                 ctrl = true;
 
-            if (t && ctrl && Alpha < 1)
+            if (u && ctrl && Alpha < 1)
                 PopIn();
-            else if (t && ctrl)
+            else if (u && ctrl)
                 PopOut();
 
             return base.OnKeyDown(state, args);
@@ -132,8 +132,8 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
 
         protected override bool OnKeyUp(InputState state, KeyUpEventArgs args)
         {
-            if (args.Key == Key.T)
-                t = false;
+            if (args.Key == Key.U)
+                u = false;
             if (args.Key == Key.ControlLeft || args.Key == Key.ControlRight)
                 ctrl = false;
 
