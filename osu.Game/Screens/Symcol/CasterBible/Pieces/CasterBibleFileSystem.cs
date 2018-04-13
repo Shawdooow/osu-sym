@@ -13,7 +13,7 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
 
         public CasterBibleFileSystem(Storage storage, string fileName)
         {
-            Storage = storage.GetStorageForDirectory("Bible");
+            Storage = storage;
             this.fileName = fileName;
 
             if (!Storage.Exists(fileName))

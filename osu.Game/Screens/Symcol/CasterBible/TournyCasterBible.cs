@@ -91,17 +91,15 @@ namespace osu.Game.Screens.Symcol.CasterBible
 
         private void initializeMapPool()
         {
-            CasterBibleFileSystem casterBibleFileSystem = new CasterBibleFileSystem(storage, "teams.mango");
+            CasterBibleFileSystem casterBibleFileSystem = new CasterBibleFileSystem(storage.GetStorageForDirectory("Bible"), "teams.mango");
 
             List<KeyValuePair<string, string>> cups = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("None", "None") };
 
             SettingsDropdown<string> cup;
             Bindable<string> currentCup = new Bindable<string>();
-            FillFlowContainer currentCupFlow;
 
             SettingsDropdown<string> year;
             Bindable<string> currentYear = new Bindable<string>();
-            FillFlowContainer currentYearFlow;
 
             SettingsDropdown<string> stage;
             Bindable<string> currentStage = new Bindable<string>();
@@ -110,8 +108,8 @@ namespace osu.Game.Screens.Symcol.CasterBible
             {
                 new Container
                 {
-                    Anchor = Anchor.CentreRight,
-                    Origin = Anchor.CentreRight,
+                    Anchor = Anchor.BottomRight,
+                    Origin = Anchor.BottomRight,
 
                     RelativeSizeAxes = Axes.Both,
                     Height = 0.96f,
@@ -124,8 +122,8 @@ namespace osu.Game.Screens.Symcol.CasterBible
                 },
                 new Container
                 {
-                    Anchor = Anchor.CentreLeft,
-                    Origin = Anchor.CentreLeft,
+                    Anchor = Anchor.BottomLeft,
+                    Origin = Anchor.BottomLeft,
 
                     RelativeSizeAxes = Axes.Both,
                     Height = 0.96f,
@@ -152,39 +150,13 @@ namespace osu.Game.Screens.Symcol.CasterBible
                                 {
                                     LabelText = "Current Cup"
                                 },
-                                currentCupFlow = new FillFlowContainer
+                                year = new SettingsDropdown<string>
                                 {
-                                    Direction = FillDirection.Vertical,
-                                    RelativeSizeAxes = Axes.X,
-                                    AutoSizeAxes = Axes.Y,
-                                    AutoSizeDuration = 400,
-                                    AutoSizeEasing = Easing.OutQuint,
-                                    Masking = true,
-
-                                    Children = new Drawable[]
-                                    {
-                                        year = new SettingsDropdown<string>
-                                        {
-                                            LabelText = "Current Year"
-                                        },
-                                        currentYearFlow = new FillFlowContainer
-                                        {
-                                            Direction = FillDirection.Vertical,
-                                            RelativeSizeAxes = Axes.X,
-                                            AutoSizeAxes = Axes.Y,
-                                            AutoSizeDuration = 0,
-                                            AutoSizeEasing = Easing.OutQuint,
-                                            Masking = true,
-
-                                            Children = new Drawable[]
-                                            {
-                                                stage = new SettingsDropdown<string>
-                                                {
-                                                    LabelText = "Current Stage"
-                                                }
-                                            }
-                                        }
-                                    }
+                                    LabelText = "Current Year"
+                                },
+                                stage = new SettingsDropdown<string>
+                                {
+                                    LabelText = "Current Stage"
                                 }
                             }
                         }
@@ -220,12 +192,6 @@ namespace osu.Game.Screens.Symcol.CasterBible
                         year.Items = years.Distinct().ToList();
                         year.Bindable = currentYear;
 
-                        currentCupFlow.ClearTransforms();
-                        currentCupFlow.AutoSizeAxes = c != "None" ? Axes.Y : Axes.None;
-
-                        if (c == "None")
-                            currentCupFlow.ResizeHeightTo(0, 0, Easing.OutQuint);
-
                         currentYear.ValueChanged += (y) =>
                         {
                             try
@@ -241,12 +207,6 @@ namespace osu.Game.Screens.Symcol.CasterBible
 
                                 stage.Items = stages.Distinct().ToList();
                                 stage.Bindable = currentStage;
-
-                                currentYearFlow.ClearTransforms();
-                                currentYearFlow.AutoSizeAxes = y != "None" ? Axes.Y : Axes.None;
-
-                                if (y == "None")
-                                    currentYearFlow.ResizeHeightTo(0, 0, Easing.OutQuint);
 
                                 currentStage.ValueChanged += (s) =>
                                 {
@@ -278,7 +238,7 @@ namespace osu.Game.Screens.Symcol.CasterBible
 
         private void initializeTeamsScreen()
         {
-            CasterBibleFileSystem casterBibleFileSystem = new CasterBibleFileSystem(storage, "teams.mango");
+            CasterBibleFileSystem casterBibleFileSystem = new CasterBibleFileSystem(storage.GetStorageForDirectory("Bible"), "teams.mango");
 
             screen.Children = new Drawable[]
             {
