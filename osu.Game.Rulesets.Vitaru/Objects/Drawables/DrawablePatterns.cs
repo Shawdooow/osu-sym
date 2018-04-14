@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 if (repeat > currentRepeat)
                 {
                     if (repeat < pattern.RepeatCount + 2)
-                        PlaySamples(repeat);
+                        PlaySamples();
                     currentRepeat = repeat;
                 }
 
