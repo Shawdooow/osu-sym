@@ -3,11 +3,16 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 using osu.Game.Rulesets.Vitaru.Settings;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
+using System.Linq;
+using osu.Game.Skinning;
+using osu.Game.Rulesets.Objects.Types;
+using osu.Game.Audio;
+using System.Collections.Generic;
+using osu.Framework.Allocation;
+using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -26,6 +31,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         private readonly double endTime;
         
         private Enemy enemy;
+
+        private AudioManager audio;
 
         public DrawablePattern(Pattern pattern, VitaruPlayfield playfield) : base(pattern, playfield)
         {
@@ -49,6 +56,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             PatternCount++;
         }
 
+        [BackgroundDependencyLoader]
+        private void load(AudioManager audio)
+        {
+            this.audio = audio;
+        }
+
         protected override void Update()
         {
             base.Update();
@@ -56,7 +69,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             if (pattern.IsSlider)
             {
                 double completionProgress = MathHelper.Clamp((Time.Current - pattern.StartTime) / pattern.Duration, 0, 1);
-                int repeat = pattern.RepeatAt(completionProgress);
+                int repeat = pattern.SpanAt(completionProgress);
 
                 if (Started && !done)
                 {
@@ -67,16 +80,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
                 if (repeat > currentRepeat)
                 {
-                    if (repeat < pattern.RepeatCount + 1)
-                        PlaySamples();
+                    if (repeat < pattern.RepeatCount + 2)
+                        PlaySamples(repeat);
                     currentRepeat = repeat;
                 }
 
                 if (pattern.EndTime <= Time.Current && Started && !done)
-                {
-                    PlaySamples();
                     done = true;
-                }
             }
         }
 
@@ -176,6 +186,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             starPiece.Dispose();
 
             Expire();
+        }
+
+        public void PlaySamples(int repeat)
+        {
+            foreach(SampleInfo info in pattern.RepeatSamples[repeat])
+            {
+                SampleChannel sample = audio.Sample.Get($"Gameplay\\{info.Bank}-{info.Name}");
+                sample?.Play();
+            }
         }
 
         private Vector2 getPatternStartPosition()

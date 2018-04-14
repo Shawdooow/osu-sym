@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 p.ControlPoints = curveData.ControlPoints;
                 p.CurveType = curveData.CurveType;
                 p.Distance = curveData.Distance;
-                p.RepeatSamples = curveData.RepeatSamples;
+                p.RepeatSamples = curveData != null ? curveData.RepeatSamples : new List<List<SampleInfo>>(new[] { samples });
                 p.RepeatCount = curveData.RepeatCount;
 
                 p.EnemyHealth = 60;
