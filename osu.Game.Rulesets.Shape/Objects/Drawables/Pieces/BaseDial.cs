@@ -123,8 +123,8 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables.Pieces
 
         public void StartSpinning(float time)
         {
-            box.RotateTo(360, time);
-            arrow.RotateTo(360, time);
+            box?.RotateTo(360, time);
+            arrow?.RotateTo(360, time);
         }
     }
 }
