@@ -2,8 +2,11 @@
 using OpenTK.Graphics;
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
+using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Vitaru.Scoring;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
@@ -69,6 +72,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             Actions[VitaruAction.Right] = false;
             Actions[VitaruAction.Slow] = false;
             Actions[VitaruAction.Shoot] = false;
+        }
+
+        protected override void LoadAnimationSprites(TextureStore textures, Storage storage)
+        {
+            base.LoadAnimationSprites(textures, storage);
+
+            RightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Right", storage);
+            KiaiRightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "KiaiRight", storage);
         }
 
         protected override void OnNewBeat(int beatIndex, TimingControlPoint timingPoint, EffectControlPoint effectPoint, TrackAmplitudes amplitudes)
@@ -163,6 +174,33 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             SpellUpdate();
         }
 
+        protected override void ParseBullet(DrawableBullet bullet)
+        {
+            base.ParseBullet(bullet);
+
+            //Not sure why this offset is needed atm
+            Vector2 object2Pos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this) + new Vector2(6);
+            float distance = (float)Math.Sqrt(Math.Pow(object2Pos.X, 2) + Math.Pow(object2Pos.Y, 2));
+            float edgeDistance = distance - (bullet.Width / 2 + Hitbox.Width / 2);
+
+            if (edgeDistance < 48 && bullet.Bullet.Team != Team)
+                CanHeal = true;
+
+            if (true)//currentScoringMetric == ScoringMetric.Graze)
+            {
+                if (CurrentGameMode == VitaruGamemode.Dodge)
+                    distance *= 1.5f;
+                if (distance <= 64 && bullet.ScoreZone < 300)
+                    bullet.ScoreZone = 300;
+                else if (distance <= 128 && bullet.ScoreZone < 200)
+                    bullet.ScoreZone = 200;
+                else if (distance <= 256 && bullet.ScoreZone < 100)
+                    bullet.ScoreZone = 100;
+                else if (bullet.ScoreZone < 50)
+                    bullet.ScoreZone = 50;
+            }
+        }
+
         protected virtual Vector2 GetNewPlayerPosition(double playerSpeed)
         {
             double yTranslationDistance = playerSpeed * Clock.ElapsedFrameTime * SpeedMultiplier;
@@ -255,7 +293,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         #region Spell Handling
         protected virtual bool SpellActivate(VitaruAction action)
         {
-            if (Energy <= EnergyCost)
+            if (Energy <= EnergyCost && !SpellActive)
             {
                 SpellActive = true;
                 Energy -= EnergyCost;
@@ -307,13 +345,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             if (action == VitaruAction.Right)
                 Actions[VitaruAction.Right] = true;
             if (action == VitaruAction.Slow)
+            {
                 Actions[VitaruAction.Slow] = true;
+                VisibleHitbox.Alpha = 1;
+            }
 
             //Mouse Stuff
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = true;
-
-            SpellActivate(action);
+            if (action == VitaruAction.Spell)
+                SpellActivate(action);
 
             //if (!Puppet)
                 //sendPacket(action);
@@ -341,12 +382,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             if (action == VitaruAction.Right)
                 Actions[VitaruAction.Right] = false;
             if (action == VitaruAction.Slow)
+            {
                 Actions[VitaruAction.Slow] = false;
-
+                VisibleHitbox.Alpha = 0;
+            }
             //Mouse Stuff
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = false;
-            SpellDeactivate(action);
+            if (action == VitaruAction.Spell)
+                SpellDeactivate(action);
 
             //if (!Puppet)
                 //sendPacket(VitaruAction.None, action);

@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         private double currentRate = 1;
 
-        private Bindable<WorkingBeatmap> workingBeatmap;
+        private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
 
         public Sakuya(VitaruPlayfield playfield) : base(playfield)
         {
@@ -66,7 +66,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
             base.SpellUpdate();
 
             if (SpellEndTime >= Time.Current)
-            {
                 if (!SpellActive)
                 {
                     currentRate += (float)Clock.ElapsedFrameTime / 100;
@@ -102,7 +101,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
                     currentRate = originalRate * SetRate;
                     applyToClock(workingBeatmap.Value.Track, currentRate);
                 }
-            }
         }
 
         private void applyToClock(IAdjustableClock clock, double speed)

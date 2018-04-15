@@ -72,47 +72,47 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             }
             if (Position.X > LastX)
             {
-                if (LeftSprite.Texture != null)
+                if (LeftSprite?.Texture != null)
                     LeftSprite.Alpha = 0;
                 if (RightSprite?.Texture != null)
                     RightSprite.Alpha = 1;
-                if (StillSprite.Texture != null)
+                if (StillSprite?.Texture != null)
                     StillSprite.Alpha = 0;
-                if (KiaiLeftSprite.Texture != null)
+                if (KiaiLeftSprite?.Texture != null)
                     KiaiLeftSprite.Alpha = 0;
                 if (KiaiRightSprite?.Texture != null)
                     KiaiRightSprite.Alpha = 1;
-                if (KiaiStillSprite.Texture != null)
+                if (KiaiStillSprite?.Texture != null)
                     KiaiStillSprite.Alpha = 0;
             }
             else if (Position.X < LastX)
             {
-                if (LeftSprite.Texture != null)
+                if (LeftSprite?.Texture != null)
                     LeftSprite.Alpha = 1;
                 if (RightSprite?.Texture != null)
                     RightSprite.Alpha = 0;
-                if (StillSprite.Texture != null)
+                if (StillSprite?.Texture != null)
                     StillSprite.Alpha = 0;
-                if (KiaiLeftSprite.Texture != null)
+                if (KiaiLeftSprite?.Texture != null)
                     KiaiLeftSprite.Alpha = 1;
                 if (KiaiRightSprite?.Texture != null)
                     KiaiRightSprite.Alpha = 0;
-                if (KiaiStillSprite.Texture != null)
+                if (KiaiStillSprite?.Texture != null)
                     KiaiStillSprite.Alpha = 0;
             }
             else
             {
-                if (LeftSprite.Texture != null)
+                if (LeftSprite?.Texture != null)
                     LeftSprite.Alpha = 0;
                 if (RightSprite?.Texture != null)
                     RightSprite.Alpha = 0;
-                if (StillSprite.Texture != null)
+                if (StillSprite?.Texture != null)
                     StillSprite.Alpha = 1;
-                if (KiaiLeftSprite.Texture != null)
+                if (KiaiLeftSprite?.Texture != null)
                     KiaiLeftSprite.Alpha = 0;
                 if (KiaiRightSprite?.Texture != null)
                     KiaiRightSprite.Alpha = 0;
-                if (KiaiStillSprite.Texture != null)
+                if (KiaiStillSprite?.Texture != null)
                     KiaiStillSprite.Alpha = 1;
             }
             LastX = Position.X;
@@ -178,9 +178,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         private void load(TextureStore textures, Storage storage)
         {
             Health = MaxHealth;
-            //Drawable stuff loading
-            Origin = Anchor.Centre;
+
             Anchor = Anchor.TopLeft;
+            Origin = Anchor.Centre;
+
             Children = new Drawable[]
             {
                 Sign = new Sprite

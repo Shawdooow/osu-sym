@@ -240,8 +240,8 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
                 if (currentGameMode == VitaruGamemode.Touhosu)
                 {
-                    //if (currentCharacter == PlayableCharacters.SakuyaIzayoi || currentCharacter == PlayableCharacters.AliceMuyart)
-                    //speed.Alpha = 0.5f;
+                    if (currentCharacter == PlayableCharacters.SakuyaIzayoi)// || currentCharacter == PlayableCharacters.AliceMuyart)
+                    speed.Alpha = 0.5f;
 
                     //if (currentCharacter == PlayableCharacters.KokoroHatano)
                     //combo.Alpha = 0.5f;
