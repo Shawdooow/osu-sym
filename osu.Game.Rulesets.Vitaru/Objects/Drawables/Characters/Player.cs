@@ -293,7 +293,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         #region Spell Handling
         protected virtual bool SpellActivate(VitaruAction action)
         {
-            if (Energy <= EnergyCost && !SpellActive)
+            if (Energy >= EnergyCost && !SpellActive)
             {
                 SpellActive = true;
                 Energy -= EnergyCost;
