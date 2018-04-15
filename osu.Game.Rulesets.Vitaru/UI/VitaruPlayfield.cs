@@ -27,13 +27,15 @@ namespace osu.Game.Rulesets.Vitaru.UI
         private readonly Bindable<int> friendlyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.FriendlyPlayerCount);
         private readonly Bindable<int> enemyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);
 
-        private readonly Player playerOne = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerOne);
-        private readonly Player playerTwo = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerTwo);
-        private readonly Player playerThree = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerThree);
-        private readonly Player playerFour = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerFour);
-        private readonly Player playerFive = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerFive);
-        private readonly Player playerSix = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerSix);
-        private readonly Player playerSeven = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerSeven);
+        /*
+        private readonly PlayableCharacters playerOne = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerOne);
+        private readonly PlayableCharacters playerTwo = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerTwo);
+        private readonly PlayableCharacters playerThree = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerThree);
+        private readonly PlayableCharacters playerFour = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerFour);
+        private readonly PlayableCharacters playerFive = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerFive);
+        private readonly PlayableCharacters playerSix = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerSix);
+        private readonly PlayableCharacters playerSeven = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerSeven);
+        */
 
         public readonly Container BulletField;
         public readonly Container SpellField;
