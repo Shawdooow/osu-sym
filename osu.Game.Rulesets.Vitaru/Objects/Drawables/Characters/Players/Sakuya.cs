@@ -136,13 +136,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
             bool late = true;
 
             if (action == VitaruAction.Increase && !late)
-                SetRate = Math.Min((float)Math.Round(SetRate + 0.2f, 1), 0.8f);
+                SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 0.8d);
             else if (action == VitaruAction.Increase && late)
-                SetRate = Math.Min((float)Math.Round(SetRate + 0.2f, 1), 1.2f);
+                SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 1.2d);
             if (action == VitaruAction.Decrease && !late)
-                SetRate = Math.Max((float)Math.Round(SetRate - 0.2f, 1), 0.4f);
+                SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.4d);
             else if (action == VitaruAction.Decrease && late)
-                SetRate = Math.Max((float)Math.Round(SetRate - 0.2f, 1), 0.2f);
+                SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.2d);
 
             return base.Pressed(action);
         }
