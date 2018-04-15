@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public override double MaxHealth => 80;
 
-        protected override Color4 CharacterColor => Color4.Navy;
+        public override Color4 CharacterColor => Color4.Navy;
 
         public Sakuya(VitaruPlayfield playfield) : base(playfield)
         {

@@ -27,6 +27,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         public Action<VitaruAction> Spell;
 
+        public int ScoreZone = 100;
+
         public Dictionary<VitaruAction, bool> Actions = new Dictionary<VitaruAction, bool>();
 
         //(MinX,MaxX,MinY,MaxY)

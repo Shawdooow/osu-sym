@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.Centre,
                     Depth = 5,
-                    MaxHealth = pattern.EnemyHealth,
+                    //MaxHealth = pattern.EnemyHealth,
                     Team = 1,
                 });
 

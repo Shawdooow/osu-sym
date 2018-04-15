@@ -17,11 +17,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         public static int EnemyCount;
         private readonly DrawablePattern drawablePattern;
 
-        public override double MaxHealth => throw new System.NotImplementedException();
+        public override double MaxHealth => 60;
 
-        protected override string CharacterName => throw new System.NotImplementedException();
+        protected override string CharacterName => "enemy";
 
-        protected override Color4 CharacterColor => throw new System.NotImplementedException();
+        public override Color4 CharacterColor => characterColor;
+
+        protected override float HitboxWidth => 48;
 
         private Color4 characterColor;
 
@@ -33,7 +35,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
             Team = 1;
             characterColor = drawablePattern.AccentColour;
-            HitboxWidth = 48;
         }
 
         protected override void LoadComplete()
@@ -52,45 +53,45 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected override void MovementAnimations()
         {
-            if (CharacterLeftSprite.Texture == null && CharacterRightSprite != null)
+            if (LeftSprite.Texture == null && RightSprite != null)
             {
-                CharacterLeftSprite.Texture = CharacterRightSprite.Texture;
-                CharacterLeftSprite.Size = new Vector2(-CharacterLeftSprite.Size.X, CharacterLeftSprite.Size.Y);
+                LeftSprite.Texture = RightSprite.Texture;
+                LeftSprite.Size = new Vector2(-RightSprite.Size.X, RightSprite.Size.Y);
             }
-            if (CharacterKiaiLeftSprite.Texture == null && CharacterKiaiRightSprite != null)
+            if (KiaiLeftSprite.Texture == null && KiaiRightSprite != null)
             {
-                CharacterKiaiLeftSprite.Texture = CharacterKiaiRightSprite.Texture;
-                CharacterKiaiLeftSprite.Size = new Vector2(-CharacterKiaiLeftSprite.Size.X, CharacterKiaiLeftSprite.Size.Y);
+                KiaiLeftSprite.Texture = KiaiRightSprite.Texture;
+                KiaiLeftSprite.Size = new Vector2(-KiaiRightSprite.Size.X, KiaiRightSprite.Size.Y);
             }
             if (Position.X > LastX)
             {
-                if (CharacterLeftSprite.Texture != null)
-                    CharacterLeftSprite.Alpha = 0;
-                if (CharacterRightSprite?.Texture != null)
-                    CharacterRightSprite.Alpha = 1;
-                if (CharacterStillSprite.Texture != null)
-                    CharacterStillSprite.Alpha = 0;
-                if (CharacterKiaiLeftSprite.Texture != null)
-                    CharacterKiaiLeftSprite.Alpha = 0;
-                if (CharacterKiaiRightSprite?.Texture != null)
-                    CharacterKiaiRightSprite.Alpha = 1;
-                if (CharacterKiaiStillSprite.Texture != null)
-                    CharacterKiaiStillSprite.Alpha = 0;
+                if (LeftSprite.Texture != null)
+                    LeftSprite.Alpha = 0;
+                if (RightSprite?.Texture != null)
+                    RightSprite.Alpha = 1;
+                if (StillSprite.Texture != null)
+                    StillSprite.Alpha = 0;
+                if (KiaiLeftSprite.Texture != null)
+                    KiaiLeftSprite.Alpha = 0;
+                if (KiaiRightSprite?.Texture != null)
+                    KiaiRightSprite.Alpha = 1;
+                if (KiaiStillSprite.Texture != null)
+                    KiaiStillSprite.Alpha = 0;
             }
             else if (Position.X < LastX)
             {
-                if (CharacterLeftSprite.Texture != null)
-                    CharacterLeftSprite.Alpha = 1;
-                if (CharacterRightSprite?.Texture != null)
-                    CharacterRightSprite.Alpha = 0;
-                if (CharacterStillSprite.Texture != null)
-                    CharacterStillSprite.Alpha = 0;
-                if (CharacterKiaiLeftSprite.Texture != null)
-                    CharacterKiaiLeftSprite.Alpha = 1;
-                if (CharacterKiaiRightSprite?.Texture != null)
-                    CharacterKiaiRightSprite.Alpha = 0;
-                if (CharacterKiaiStillSprite.Texture != null)
-                    CharacterKiaiStillSprite.Alpha = 0;
+                if (LeftSprite.Texture != null)
+                    LeftSprite.Alpha = 1;
+                if (RightSprite?.Texture != null)
+                    RightSprite.Alpha = 0;
+                if (StillSprite.Texture != null)
+                    StillSprite.Alpha = 0;
+                if (KiaiLeftSprite.Texture != null)
+                    KiaiLeftSprite.Alpha = 1;
+                if (KiaiRightSprite?.Texture != null)
+                    KiaiRightSprite.Alpha = 0;
+                if (KiaiStillSprite.Texture != null)
+                    KiaiStillSprite.Alpha = 0;
             }
             LastX = Position.X;
         }
@@ -98,23 +99,23 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         protected override void LoadAnimationSprites(TextureStore textures, Storage storage)
         {
             base.LoadAnimationSprites(textures, storage);
-            CharacterRightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName, storage);
-            CharacterKiaiRightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Kiai", storage);
+            RightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName, storage);
+            KiaiRightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Kiai", storage);
         }
 
         protected override void OnNewBeat(int beatIndex, TimingControlPoint timingPoint, EffectControlPoint effectPoint, TrackAmplitudes amplitudes)
         {
             base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
 
-            if (effectPoint.KiaiMode && CharacterSprite.Alpha == 1)
+            if (effectPoint.KiaiMode && SoulContainer.Alpha == 1)
             {
-                CharacterSprite.FadeOutFromOne(timingPoint.BeatLength / 4);
-                CharacterKiai.FadeInFromZero(timingPoint.BeatLength / 4);
+                SoulContainer.FadeOutFromOne(timingPoint.BeatLength / 4);
+                KiaiContainer.FadeInFromZero(timingPoint.BeatLength / 4);
             }
-            if (!effectPoint.KiaiMode && CharacterSprite.Alpha == 0)
+            if (!effectPoint.KiaiMode && SoulContainer.Alpha == 0)
             {
-                CharacterSprite.FadeInFromZero(timingPoint.BeatLength);
-                CharacterKiai.FadeOutFromOne(timingPoint.BeatLength);
+                SoulContainer.FadeInFromZero(timingPoint.BeatLength);
+                KiaiContainer.FadeOutFromOne(timingPoint.BeatLength);
             }
         }
 

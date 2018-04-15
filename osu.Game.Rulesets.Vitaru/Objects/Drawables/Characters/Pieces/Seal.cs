@@ -54,11 +54,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                 },
             };
 
-            switch (vitaruPlayer.CurrentCharacter)
+            switch (vitaruPlayer.PlayableCharacter)
             {
                 default:
                     break;
-                case Players.SakuyaIzayoi:
+                case PlayableCharacters.SakuyaIzayoi:
                     characterSigil.Scale = new Vector2(1.34f);
                     characterSigil.Children = new Drawable[]
                     {
@@ -113,13 +113,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
 
             this.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 0.1f);
 
-            Alpha = vitaruPlayer.Energy / (vitaruPlayer.MaxEnergy * 2);
+            Alpha = (float)vitaruPlayer.Energy / (float)(vitaruPlayer.MaxEnergy * 2);
 
-            switch (vitaruPlayer.CurrentCharacter)
+            switch (vitaruPlayer.PlayableCharacter)
             {
                 default:
                     break;
-                case Players.SakuyaIzayoi:
+                case PlayableCharacters.SakuyaIzayoi:
                     float speed = 0.25f;
                     gear1.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
                     gear2.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);

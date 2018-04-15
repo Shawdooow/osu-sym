@@ -135,7 +135,7 @@ namespace eden.Game.GamePieces
                 value1.Text = "Bullets = " + DrawableBullet.BulletCount.ToString();
                 value2.Text = "Patterns = " + DrawablePattern.PatternCount.ToString();
                 value3.Text = "Enemies = " + Enemy.EnemyCount.ToString();
-                value4.Text = "Energy = " + Player.Energystored.ToString();
+                value4.Text = "Energy = " + VitaruPlayfield.Player?.Energy.ToString();
                 value5.Text = "Fps = " + Clock.FramesPerSecond;
             }
             else if (currentConfiguration == DebugUiConfiguration.PP)

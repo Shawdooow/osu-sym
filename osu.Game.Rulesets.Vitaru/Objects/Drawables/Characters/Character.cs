@@ -35,9 +35,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected abstract string CharacterName { get; }
 
-        protected abstract Color4 CharacterColor { get; }
+        public abstract Color4 CharacterColor { get; }
 
-        public virtual float HitboxWidth { get; } = 4;
+        protected virtual float HitboxWidth { get; } = 4;
 
         public bool Dead { get; protected set; }
 
