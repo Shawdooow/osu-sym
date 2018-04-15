@@ -26,10 +26,13 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces;
 using Vitaru.Plot.Story;
 using Vitaru.Plot.Story.CharacterSpeech;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 
-namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
+namespace osu.Game.Rulesets.Vitaru.Old.Shit
 {
-    public class VitaruPlayer : VitaruCharacter, IKeyBindingHandler<VitaruAction>
+    /*
+    public class OldVitaruPlayerClass : Character, IKeyBindingHandler<VitaruAction>
     {
         #region Fields
         public readonly Characters CurrentCharacter;
@@ -67,12 +70,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         private readonly Container cursor;
 
         //List of all players loaded
-        private readonly static List<VitaruPlayer> playerList = new List<VitaruPlayer>();
+        private readonly static List<OldVitaruPlayerClass> playerList = new List<OldVitaruPlayerClass>();
 
         private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
-        private List<VitaruPlayer> cloneList = new List<VitaruPlayer>();
+        private List<OldVitaruPlayerClass> cloneList = new List<OldVitaruPlayerClass>();
         private readonly List<Crystal> crystalList = new List<Crystal>();
-        private VitaruPlayer parentPlayer;
+        private OldVitaruPlayerClass parentPlayer;
         private const float field_of_view = 60;
         public float SpeedMultiplier = 1;
         private OsuTextFlowContainer textContainer;
@@ -133,7 +136,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         #endregion
 
         #region Loading Stuff
-        public VitaruPlayer(VitaruPlayfield playfield, Characters characterOverride, VitaruPlayer parentPlayer = null) : base(playfield)
+        public OldVitaruPlayerClass(VitaruPlayfield playfield, Characters characterOverride, OldVitaruPlayerClass parentPlayer = null) : base(playfield)
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
@@ -224,11 +227,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     energyRequired = 40;
                     CharacterColor = Color4.Blue;
                     break;
-                    /*
                 case Characters.TenshiHinanai:
                     CharacterColor = Color4.DarkBlue;
                     break;
-                    */
                 case Characters.YuyukoSaigyouji:
                     CharacterColor = Color4.LightBlue;
                     MaxHealth = 80;
@@ -243,7 +244,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     MaxHealth = 80;
                     energyRequired = 4;
                     break;
-                    /*
                 case Characters.Chen:
                     CharacterColor = Color4.Green;
                     CharacterName = "chen";
@@ -254,7 +254,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     energyRequiredPerSecond = 4;
                     energyRequired = 2;
                     break;
-                    */
                 case Characters.KokoroHatano:
                     CharacterColor = Color4.Cyan;
                     MaxEnergy = 36;
@@ -1121,7 +1120,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             Energystored = Energy;
         }
 
-        public override float Damage(float damage)
+        public override double Hurt(float damage)
         {
             if (CurrentCharacter == Characters.Cirno)
             {
@@ -1137,14 +1136,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
                     foreach (Crystal crystal in crystalList)
                         crystal.Pop(1000);
-                    CharacterKiai.FadeOut(100);
-                    CharacterSprite.FadeOut(100);
+                    KiaiContainer.FadeOut(100);
+                    SoulContainer.FadeOut(100);
 
                     return Health = MaxHealth;
                 }
                 return Health;
             }
-            return base.Damage(damage);
+            return base.Hurt(damage);
         }
 
         private void applyToClock(IAdjustableClock clock, float speed)
@@ -1919,4 +1918,5 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         [System.ComponentModel.Description("Arysa Muyart")]
         ArysaMuyart
     }
+    */
 }

@@ -15,21 +15,21 @@ namespace osu.Game.Rulesets.Vitaru.UI
     public class MirrorField : VitaruPlayfield
     {
         private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
-        private Characters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.Characters);
+        private Player currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.Characters);
         private readonly bool multiplayer = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
         private bool enemyPlayerOverride = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.EnemyPlayerOverride);
         private readonly Bindable<int> enemyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);
 
-        private readonly Characters enemyOne = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.EnemyOne);
-        private readonly Characters enemyTwo = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.EnemyTwo);
-        private readonly Characters enemyThree = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.EnemyThree);
-        private readonly Characters enemyFour = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.EnemyFour);
-        private readonly Characters enemyFive = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.EnemyFive);
-        private readonly Characters enemySix = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.EnemySix);
-        private readonly Characters enemySeven = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.EnemySeven);
-        private readonly Characters enemyEight = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.EnemyEight);
+        private readonly Player enemyOne = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyOne);
+        private readonly Player enemyTwo = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyTwo);
+        private readonly Player enemyThree = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyThree);
+        private readonly Player enemyFour = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyFour);
+        private readonly Player enemyFive = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyFive);
+        private readonly Player enemySix = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemySix);
+        private readonly Player enemySeven = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemySeven);
+        private readonly Player enemyEight = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyEight);
 
-        private readonly List<VitaruPlayer> enemyList = new List<VitaruPlayer>();
+        private readonly List<Player> enemyList = new List<Player>();
 
         private readonly VitaruPlayfield vitaruPlayfield;
 
@@ -48,6 +48,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             Rotation = 180;
 
             //Multiplayer testing :P
+            /*
             if (multiplayer && currentGameMode != VitaruGamemode.Dodge)
             {
                 switch (enemyPlayerCount)
@@ -111,6 +112,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 foreach (VitaruPlayer enemy in enemyList)
                     CharacterField.Add(enemy);
             }
+            */
 
             foreach (var o in VitaruBeatmapConverter.HitObjectList)
             {

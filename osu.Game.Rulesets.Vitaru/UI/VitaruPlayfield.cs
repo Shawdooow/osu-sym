@@ -14,25 +14,26 @@ using Symcol.Rulesets.Core;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Framework.Logging;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruPlayfield : SymcolPlayfield
     {
         private static readonly Bindable<VitaruGamemode> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
-        private readonly Characters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.Characters);
+        private readonly PlayableCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.Characters);
         private readonly bool multiplayer = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
         private bool friendlyPlayerOverride = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.FriendlyPlayerOverride);
         private readonly Bindable<int> friendlyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.FriendlyPlayerCount);
         private readonly Bindable<int> enemyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);
 
-        private readonly Characters playerOne = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.PlayerOne);
-        private readonly Characters playerTwo = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.PlayerTwo);
-        private readonly Characters playerThree = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.PlayerThree);
-        private readonly Characters playerFour = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.PlayerFour);
-        private readonly Characters playerFive = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.PlayerFive);
-        private readonly Characters playerSix = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.PlayerSix);
-        private readonly Characters playerSeven = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.PlayerSeven);
+        private readonly Player playerOne = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerOne);
+        private readonly Player playerTwo = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerTwo);
+        private readonly Player playerThree = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerThree);
+        private readonly Player playerFour = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerFour);
+        private readonly Player playerFive = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerFive);
+        private readonly Player playerSix = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerSix);
+        private readonly Player playerSeven = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerSeven);
 
         public readonly Container BulletField;
         public readonly Container SpellField;
@@ -41,11 +42,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public readonly MirrorField Mirrorfield;
 
         private readonly Container judgementLayer;
-        private readonly List<VitaruPlayer> playerList = new List<VitaruPlayer>();
+        private readonly List<Player> playerList = new List<Player>();
 
         public static List<VitaruClientInfo> LoadPlayerList = new List<VitaruClientInfo>();
 
-        public static VitaruPlayer VitaruPlayer;
+        public static Player Player;
 
         public virtual bool LoadPlayer => true;
 
@@ -99,23 +100,31 @@ namespace osu.Game.Rulesets.Vitaru.UI
             {
                 VitaruNetworkingClientHandler vitaruNetworkingClientHandler = RulesetNetworkingClientHandler as VitaruNetworkingClientHandler;
 
+                switch (currentCharacter)
+                {
+                    case PlayableCharacters.SakuyaIzayoi:
+                        playerList.Add(Player = new Sakuya(this));
+                        break;
+                }
+
+                /*
                 if (vitaruNetworkingClientHandler != null)
-                    playerList.Add(VitaruPlayer = new VitaruPlayer(this, currentCharacter) { VitaruNetworkingClientHandler = vitaruNetworkingClientHandler, PlayerID = vitaruNetworkingClientHandler.VitaruClientInfo.IP + vitaruNetworkingClientHandler.VitaruClientInfo.UserID });
+                    playerList.Add(Player = new Player(this, currentCharacter) { VitaruNetworkingClientHandler = vitaruNetworkingClientHandler, PlayerID = vitaruNetworkingClientHandler.VitaruClientInfo.IP + vitaruNetworkingClientHandler.VitaruClientInfo.UserID });
                 else
-                    playerList.Add(VitaruPlayer = new VitaruPlayer(this, currentCharacter));
+                    playerList.Add(Player = new Player(this, currentCharacter));
 
                 foreach (VitaruClientInfo client in LoadPlayerList)
-                    if (client.PlayerInformation.PlayerID != VitaruPlayer.PlayerID)
+                    if (client.PlayerInformation.PlayerID != Player.PlayerID)
                     {
                         Logger.Log("Loading a player recieved from internet!", LoggingTarget.Network, LogLevel.Verbose);
-                        playerList.Add(new VitaruPlayer(this, client.PlayerInformation.Character)
+                        playerList.Add(new Player(this, client.PlayerInformation.Character)
                         {
                             Puppet = true,
                             PlayerID = client.PlayerInformation.PlayerID,
                             VitaruNetworkingClientHandler = vitaruNetworkingClientHandler
                         });
-                    }
-
+                    }*/
+                /*
                 if (multiplayer && currentGameMode != VitaruGamemode.Dodge && currentGameMode != VitaruGamemode.Gravaru)
                 {
                     switch (friendlyPlayerCount)
@@ -166,16 +175,17 @@ namespace osu.Game.Rulesets.Vitaru.UI
                             break;
                     }
                 }
+                */
 
-                foreach (VitaruPlayer player in playerList)
+                foreach (Player player in playerList)
                     CharacterField.Add(player);
 
-                VitaruPlayer.Position = new Vector2(256, 700);
+                Player.Position = new Vector2(256, 700);
                 if (currentGameMode == VitaruGamemode.Dodge || currentGameMode == VitaruGamemode.Gravaru)
-                    VitaruPlayer.Position = BaseSize / 2;
+                    Player.Position = BaseSize / 2;
             }
             else
-                VitaruPlayer = null;
+                Player = null;
         }
 
         protected override void LoadComplete()
@@ -200,13 +210,13 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             var vitaruJudgement = (VitaruJudgement)judgement;
 
-            if (VitaruPlayer != null)
+            if (Player != null)
             {
                 DrawableVitaruJudgement explosion = new DrawableVitaruJudgement(judgement, judgedObject)
                 {
                     Alpha = 0.5f,
                     Origin = Anchor.Centre,
-                    Position = new Vector2(VitaruPlayer.Position.X, VitaruPlayer.Position.Y + 50)
+                    Position = new Vector2(Player.Position.X, Player.Position.Y + 50)
                 };
 
                 judgementLayer.Add(explosion);

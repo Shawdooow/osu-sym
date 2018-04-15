@@ -76,8 +76,8 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
                 Combo = comboResultCounts[vitaruJudgement.Combo];
             }
 
-            if (VitaruPlayfield.VitaruPlayer != null)
-                Health.Value = VitaruPlayfield.VitaruPlayer.Health / VitaruPlayfield.VitaruPlayer.MaxHealth;
+            if (VitaruPlayfield.Player != null)
+                Health.Value = VitaruPlayfield.Player.Health / VitaruPlayfield.Player.MaxHealth;
 
         }
     }

@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
 {
     public class VitaruNetworkingClientHandler : RulesetNetworkingClientHandler, IOnlineComponent
     {
-        private readonly Bindable<Characters> currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.Characters);
+        private readonly Bindable<Player> currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.Characters);
 
         public readonly VitaruClientInfo VitaruClientInfo;
 

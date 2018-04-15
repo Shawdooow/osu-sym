@@ -45,7 +45,6 @@ namespace osu.Game.Rulesets.Vitaru
 
         //Slows the player + reveals hitbox
         Slow,
-        Fast,
 
         //Sakuya
         Increase,

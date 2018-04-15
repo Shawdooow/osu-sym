@@ -13,6 +13,7 @@ using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
 
 namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 {
@@ -27,7 +28,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
         public class VitaruCursor : Container
         {
-            private readonly Characters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.Characters);
+            private readonly Player currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.Characters);
             private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
 
             private Container lineContainer;
@@ -239,11 +240,11 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
                 if (currentGameMode == VitaruGamemode.Touhosu)
                 {
-                    if (currentCharacter == Characters.SakuyaIzayoi || currentCharacter == Characters.AliceMuyart)
-                        speed.Alpha = 0.5f;
+                    //if (currentCharacter == Player.SakuyaIzayoi || currentCharacter == Player.AliceMuyart)
+                        //speed.Alpha = 0.5f;
 
-                    if (currentCharacter == Characters.KokoroHatano)
-                        combo.Alpha = 0.5f;
+                    //if (currentCharacter == Player.KokoroHatano)
+                        //combo.Alpha = 0.5f;
                 }
 
                 beatmap = game.Beatmap.GetBoundCopy();
@@ -275,21 +276,21 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
             {
                 base.Update();
 
-                if (VitaruPlayfield.VitaruPlayer != null )
+                if (VitaruPlayfield.Player != null )
                 {
-                    if (VitaruPlayfield.VitaruPlayer.Health > VitaruPlayfield.VitaruPlayer.MaxHealth)
+                    if (VitaruPlayfield.Player.Health > VitaruPlayfield.Player.MaxHealth)
                         health.Colour = Color4.Blue;
-                    else if (VitaruPlayfield.VitaruPlayer.Health > VitaruPlayfield.VitaruPlayer.MaxHealth / 2)
+                    else if (VitaruPlayfield.Player.Health > VitaruPlayfield.Player.MaxHealth / 2)
                         health.Colour = Color4.Green;
-                    else if (VitaruPlayfield.VitaruPlayer.Health > VitaruPlayfield.VitaruPlayer.MaxHealth / 4)
+                    else if (VitaruPlayfield.Player.Health > VitaruPlayfield.Player.MaxHealth / 4)
                         health.Colour = Color4.Yellow;
                     else
                         health.Colour = Color4.Red;
 
-                    health.Text = ((int)VitaruPlayfield.VitaruPlayer.Health).ToString();
-                    energy.Text = ((int)VitaruPlayfield.VitaruPlayer.Energy).ToString();
-                    speed.Text = VitaruPlayfield.VitaruPlayer.SetRate.ToString();
-                    combo.Text = VitaruPlayfield.VitaruPlayer.Combo.ToString();
+                    health.Text = ((int)VitaruPlayfield.Player.Health).ToString();
+                    energy.Text = ((int)VitaruPlayfield.Player.Energy).ToString();
+                    speed.Text = ((Sakuya)VitaruPlayfield.Player).SetRate.ToString();
+                    //combo.Text = VitaruPlayfield.Player.Combo.ToString();
                 }
             }
         }

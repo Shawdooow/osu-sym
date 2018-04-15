@@ -4,40 +4,53 @@ using OpenTK.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Allocation;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Vitaru.UI;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Extensions.Color4Extensions;
-using Container = osu.Framework.Graphics.Containers.Container;
 using Symcol.Core.GameObjects;
 using osu.Framework.Platform;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 {
-    public abstract class VitaruCharacter : BeatSyncedContainer
+    public abstract class Character : BeatSyncedContainer
     {
-        protected Sprite CharacterStillSprite;
-        protected Sprite CharacterRightSprite;
-        protected Sprite CharacterLeftSprite;
-        protected Sprite CharacterKiaiStillSprite;
-        protected Sprite CharacterKiaiRightSprite;
-        protected Sprite CharacterKiaiLeftSprite;
-        protected Sprite CharacterSign;
-        protected Container CharacterKiai;
-        protected Container CharacterSprite;
-        public Color4 CharacterColor;
-        protected string CharacterName = "null";
-        public float HitboxWidth { get; set; } = 4;
+        #region Fields
+        protected Sprite Sign { get; private set; }
+
+        protected Container KiaiContainer { get; private set; }
+        protected Sprite KiaiStillSprite { get; private set; }
+        protected Sprite KiaiRightSprite { get; private set; }
+        protected Sprite KiaiLeftSprite { get; private set; }
+
+        protected Container SoulContainer { get; private set; }
+        protected Sprite StillSprite { get; private set; }
+        protected Sprite RightSprite { get; private set; }
+        protected Sprite LeftSprite { get; private set; }
+
+        public abstract double MaxHealth { get; }
+
+        public double Health { get; private set; }
+
+        protected abstract string CharacterName { get; }
+
+        protected abstract Color4 CharacterColor { get; }
+
+        public virtual float HitboxWidth { get; } = 4;
+
+        public bool Dead { get; protected set; }
+
+        protected readonly VitaruPlayfield VitaruPlayfield;
+
+        public int Team { get; set; }
         protected CircularContainer VisibleHitbox;
         public SymcolHitbox Hitbox;
         public bool CanHeal = false;
         protected float LastX;
+        #endregion
 
-        protected readonly VitaruPlayfield VitaruPlayfield;
-
-        protected VitaruCharacter(VitaruPlayfield vitaruPlayfield)
+        protected Character(VitaruPlayfield vitaruPlayfield)
         {
             VitaruPlayfield = vitaruPlayfield;
         }
@@ -47,60 +60,60 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         /// </summary>
         protected virtual void MovementAnimations()
         {
-            if (CharacterLeftSprite.Texture == null && CharacterRightSprite != null)
+            if (LeftSprite.Texture == null && RightSprite != null)
             {
-                CharacterLeftSprite.Texture = CharacterRightSprite.Texture;
-                CharacterLeftSprite.Size = new Vector2(-CharacterLeftSprite.Size.X, CharacterLeftSprite.Size.Y);
+                LeftSprite.Texture = RightSprite.Texture;
+                LeftSprite.Size = new Vector2(-RightSprite.Size.X, RightSprite.Size.Y);
             }
-            if (CharacterKiaiLeftSprite.Texture == null && CharacterKiaiRightSprite != null)
+            if (KiaiLeftSprite.Texture == null && KiaiRightSprite != null)
             {
-                CharacterKiaiLeftSprite.Texture = CharacterKiaiRightSprite.Texture;
-                CharacterKiaiLeftSprite.Size = new Vector2(-CharacterKiaiLeftSprite.Size.X, CharacterKiaiLeftSprite.Size.Y);
+                KiaiLeftSprite.Texture = KiaiRightSprite.Texture;
+                KiaiLeftSprite.Size = new Vector2(-KiaiRightSprite.Size.X, KiaiRightSprite.Size.Y);
             }
             if (Position.X > LastX)
             {
-                if (CharacterLeftSprite.Texture != null)
-                    CharacterLeftSprite.Alpha = 0;
-                if (CharacterRightSprite?.Texture != null)
-                    CharacterRightSprite.Alpha = 1;
-                if (CharacterStillSprite.Texture != null)
-                    CharacterStillSprite.Alpha = 0;
-                if (CharacterKiaiLeftSprite.Texture != null)
-                    CharacterKiaiLeftSprite.Alpha = 0;
-                if (CharacterKiaiRightSprite?.Texture != null)
-                    CharacterKiaiRightSprite.Alpha = 1;
-                if (CharacterKiaiStillSprite.Texture != null)
-                    CharacterKiaiStillSprite.Alpha = 0;
+                if (LeftSprite.Texture != null)
+                    LeftSprite.Alpha = 0;
+                if (RightSprite?.Texture != null)
+                    RightSprite.Alpha = 1;
+                if (StillSprite.Texture != null)
+                    StillSprite.Alpha = 0;
+                if (KiaiLeftSprite.Texture != null)
+                    KiaiLeftSprite.Alpha = 0;
+                if (KiaiRightSprite?.Texture != null)
+                    KiaiRightSprite.Alpha = 1;
+                if (KiaiStillSprite.Texture != null)
+                    KiaiStillSprite.Alpha = 0;
             }
             else if (Position.X < LastX)
             {
-                if (CharacterLeftSprite.Texture != null)
-                    CharacterLeftSprite.Alpha = 1;
-                if (CharacterRightSprite?.Texture != null)
-                    CharacterRightSprite.Alpha = 0;
-                if (CharacterStillSprite.Texture != null)
-                    CharacterStillSprite.Alpha = 0;
-                if (CharacterKiaiLeftSprite.Texture != null)
-                    CharacterKiaiLeftSprite.Alpha = 1;
-                if (CharacterKiaiRightSprite?.Texture != null)
-                    CharacterKiaiRightSprite.Alpha = 0;
-                if (CharacterKiaiStillSprite.Texture != null)
-                    CharacterKiaiStillSprite.Alpha = 0;
+                if (LeftSprite.Texture != null)
+                    LeftSprite.Alpha = 1;
+                if (RightSprite?.Texture != null)
+                    RightSprite.Alpha = 0;
+                if (StillSprite.Texture != null)
+                    StillSprite.Alpha = 0;
+                if (KiaiLeftSprite.Texture != null)
+                    KiaiLeftSprite.Alpha = 1;
+                if (KiaiRightSprite?.Texture != null)
+                    KiaiRightSprite.Alpha = 0;
+                if (KiaiStillSprite.Texture != null)
+                    KiaiStillSprite.Alpha = 0;
             }
             else
             {
-                if (CharacterLeftSprite.Texture != null)
-                    CharacterLeftSprite.Alpha = 0;
-                if (CharacterRightSprite?.Texture != null)
-                    CharacterRightSprite.Alpha = 0;
-                if (CharacterStillSprite.Texture != null)
-                    CharacterStillSprite.Alpha = 1;
-                if (CharacterKiaiLeftSprite.Texture != null)
-                    CharacterKiaiLeftSprite.Alpha = 0;
-                if (CharacterKiaiRightSprite?.Texture != null)
-                    CharacterKiaiRightSprite.Alpha = 0;
-                if (CharacterKiaiStillSprite.Texture != null)
-                    CharacterKiaiStillSprite.Alpha = 1;
+                if (LeftSprite.Texture != null)
+                    LeftSprite.Alpha = 0;
+                if (RightSprite?.Texture != null)
+                    RightSprite.Alpha = 0;
+                if (StillSprite.Texture != null)
+                    StillSprite.Alpha = 1;
+                if (KiaiLeftSprite.Texture != null)
+                    KiaiLeftSprite.Alpha = 0;
+                if (KiaiRightSprite?.Texture != null)
+                    KiaiRightSprite.Alpha = 0;
+                if (KiaiStillSprite.Texture != null)
+                    KiaiStillSprite.Alpha = 1;
             }
             LastX = Position.X;
         }
@@ -120,7 +133,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     ParseBullet(bullet);
                     if (Hitbox.HitDetect(Hitbox, bullet.Hitbox))
                     {
-                        Damage(bullet.Bullet.BulletDamage);
+                        Hurt(bullet.Bullet.BulletDamage);
                         bullet.Bullet.BulletDamage = 0;
                         bullet.Hit = true;
                     }
@@ -131,7 +144,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 {
                     if (Hitbox.HitDetect(Hitbox, seekingBullet.Hitbox))
                     {
-                        Damage(seekingBullet.SeekingBullet.BulletDamage);
+                        Hurt(seekingBullet.SeekingBullet.BulletDamage);
                         seekingBullet.SeekingBullet.BulletDamage = 0;
                         seekingBullet.Hit = true;
                     }
@@ -142,7 +155,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     {
                         if (Hitbox.HitDetect(Hitbox, laser.Hitbox))
                         {
-                            Damage(laser.Laser.LaserDamage * (1000 / (float)Clock.ElapsedFrameTime));
+                        Hurt(laser.Laser.LaserDamage * (1000 / (float)Clock.ElapsedFrameTime));
                             laser.Hit = true;
                         }
                     }
@@ -170,14 +183,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             Anchor = Anchor.TopLeft;
             Children = new Drawable[]
             {
-                CharacterSign = new Sprite
+                Sign = new Sprite
                 {
                     Alpha = 0,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Colour = CharacterColor,
                 },
-                CharacterSprite = new Container
+                SoulContainer = new Container
                 {
                     Colour = CharacterColor,
                     Anchor = Anchor.Centre,
@@ -185,19 +198,19 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     Alpha = 1,
                     Children = new Drawable[]
                     {
-                        CharacterStillSprite = new Sprite
+                        StillSprite = new Sprite
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Alpha = 1,
                         },
-                        CharacterRightSprite = new Sprite
+                        RightSprite = new Sprite
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Alpha = 0,
                         },
-                        CharacterLeftSprite = new Sprite
+                        LeftSprite = new Sprite
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
@@ -205,26 +218,26 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                         },
                     }
                 },
-                CharacterKiai = new Container
+                KiaiContainer = new Container
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Alpha = 0,
                     Children = new Drawable[]
                     {
-                        CharacterKiaiStillSprite = new Sprite
+                        KiaiStillSprite = new Sprite
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Alpha = 1,
                         },
-                        CharacterKiaiRightSprite = new Sprite
+                        KiaiRightSprite = new Sprite
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Alpha = 0,
                         },
-                        CharacterKiaiLeftSprite = new Sprite
+                        KiaiLeftSprite = new Sprite
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
@@ -248,7 +261,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     },
                     EdgeEffect = new EdgeEffectParameters
                     {
-                        
+
                         Radius = HitboxWidth / 2,
                         Type = EdgeEffectType.Shadow,
                         Colour = CharacterColor.Opacity(0.5f)
@@ -259,41 +272,19 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             Add(Hitbox = new SymcolHitbox(new Vector2(HitboxWidth)) { Team = Team });
 
             if (CharacterName == "player" || CharacterName == "enemy")
-                CharacterKiai.Colour = CharacterColor;
+                KiaiContainer.Colour = CharacterColor;
 
-            CharacterStillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName, storage);
-            CharacterKiaiStillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Kiai", storage);
-            CharacterSign.Texture = VitaruSkinElement.LoadSkinElement("sign", storage);
+            StillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName, storage);
+            KiaiStillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Kiai", storage);
+            Sign.Texture = VitaruSkinElement.LoadSkinElement("sign", storage);
             LoadAnimationSprites(textures, storage);
         }
-
-        #region eden.Game.GamePieces.Character.cs
-        /// <summary>
-        /// Maximum health this charcter can have
-        /// </summary>
-        public float MaxHealth = 100;
-
-        /// <summary>
-        /// The team this character is on, used mostly for Hitbox
-        /// </summary>
-        public int Team { get; set; }
-
-        /// <summary>
-        /// If this character has hit 0 health
-        /// </summary>
-        public bool Dead;
-
-        /// <summary>
-        /// the amount of health this character has
-        /// </summary>
-        public float Health;
 
         /// <summary>
         /// Removes "damage"
         /// </summary>
         /// <param name="damage"></param>
-        /// <returns></returns>
-        public virtual float Damage(float damage)
+        public virtual double Hurt(float damage)
         {
             Health -= damage;
 
@@ -310,8 +301,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         /// Adds "health"
         /// </summary>
         /// <param name="health"></param>
-        /// <returns></returns>
-        public virtual float Heal(float health)
+        public virtual double Heal(float health)
         {
             if (Health <= 0 && health > 0)
                 Revive();
@@ -324,9 +314,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             return Health;
         }
 
-        /// <summary>
-        /// Called when this character runs out of health
-        /// </summary>
         public virtual void Death()
         {
             Dead = true;
@@ -337,6 +324,5 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         {
             Dead = false;
         }
-        #endregion
     }
 }

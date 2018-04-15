@@ -10,12 +10,13 @@ using osu.Framework.MathUtils;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Framework.Extensions.Color4Extensions;
 using OpenTK.Graphics;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 {
     public class BulletPiece : BeatSyncedContainer
     {
-        private readonly Characters.Characters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Characters.Characters>(VitaruSetting.Characters);
+        private readonly Player currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.Characters);
         private readonly GraphicsPresets currentSkin = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
 
         private Sprite bulletKiai;
@@ -106,8 +107,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                     Colour = drawableBullet.AccentColour.Opacity(0.2f)
                 };
 
-            if (drawableBullet.Bullet.Ghost && currentCharacter == Characters.Characters.YuyukoSaigyouji | currentCharacter == Characters.Characters.AliceMuyart)
-                box.Colour = Color4.Cyan;
+            //if (drawableBullet.Bullet.Ghost && currentCharacter == Player.YuyukoSaigyouji | currentCharacter == Player.AliceMuyart)
+                //box.Colour = Color4.Cyan;
         }
     }
 }

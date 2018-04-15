@@ -9,12 +9,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
 {
     public class Totem : BeatSyncedContainer
     {
-        public readonly VitaruCharacter ParentCharacter;
+        public readonly Character ParentCharacter;
         private readonly VitaruPlayfield vitaruPlayfield;
 
         public float StartAngle { get; set; } = 0;
 
-        public Totem(VitaruCharacter vitaruCharacter, VitaruPlayfield playfield)
+        public Totem(Character vitaruCharacter, VitaruPlayfield playfield)
         {
             ParentCharacter = vitaruCharacter;
             vitaruPlayfield = playfield;

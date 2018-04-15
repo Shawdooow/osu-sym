@@ -1,22 +1,29 @@
 ﻿using OpenTK;
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.Vitaru.UI;
 using osu.Game.Beatmaps.ControlPoints;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Framework.Platform;
+using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 {
-    public class Enemy : VitaruCharacter
+    public class Enemy : Character
     {
         private readonly GraphicsPresets currentSkin = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
 
         public static int EnemyCount;
         private readonly DrawablePattern drawablePattern;
+
+        public override double MaxHealth => throw new System.NotImplementedException();
+
+        protected override string CharacterName => throw new System.NotImplementedException();
+
+        protected override Color4 CharacterColor => throw new System.NotImplementedException();
+
+        private Color4 characterColor;
 
         public Enemy(VitaruPlayfield playfield, Pattern pattern, DrawablePattern drawablePattern) : base(playfield)
         {
@@ -24,9 +31,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
             AlwaysPresent = true;
 
-            CharacterName = "enemy";
             Team = 1;
-            CharacterColor = drawablePattern.AccentColour;
+            characterColor = drawablePattern.AccentColour;
             HitboxWidth = 48;
         }
 

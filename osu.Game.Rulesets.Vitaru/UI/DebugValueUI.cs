@@ -135,12 +135,12 @@ namespace eden.Game.GamePieces
                 value1.Text = "Bullets = " + DrawableBullet.BulletCount.ToString();
                 value2.Text = "Patterns = " + DrawablePattern.PatternCount.ToString();
                 value3.Text = "Enemies = " + Enemy.EnemyCount.ToString();
-                value4.Text = "Energy = " + VitaruPlayer.Energystored.ToString();
+                value4.Text = "Energy = " + Player.Energystored.ToString();
                 value5.Text = "Fps = " + Clock.FramesPerSecond;
             }
             else if (currentConfiguration == DebugUiConfiguration.PP)
             {
-                value1.Text = "PlayerScoreZone = " + VitaruPlayfield.VitaruPlayer.ScoreZone.ToString();
+                value1.Text = "PlayerScoreZone = " + VitaruPlayfield.Player.ScoreZone.ToString();
 
 
                 value4.Text = "CurrentPP = " + VitaruPerformanceCalculator.CurrentPPValue;
@@ -148,7 +148,7 @@ namespace eden.Game.GamePieces
             }
             else if (currentConfiguration == DebugUiConfiguration.LaserStuff)
             {
-                value1.Text = "PlayerHealth = " + VitaruPlayfield.VitaruPlayer.Health.ToString();
+                value1.Text = "PlayerHealth = " + VitaruPlayfield.Player.Health.ToString();
             }
             else if (currentConfiguration == DebugUiConfiguration.Network)
             {

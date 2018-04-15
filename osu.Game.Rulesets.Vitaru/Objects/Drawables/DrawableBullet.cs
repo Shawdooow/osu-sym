@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 if (currentScoringMetric == ScoringMetric.ScoreZones)
                 {
-                    switch (VitaruPlayfield.VitaruPlayer.ScoreZone)
+                    switch (VitaruPlayfield.Player.ScoreZone)
                     {
                         case 0:
                             AddJudgement(new VitaruJudgement { Result = HitResult.Miss });
@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 }
                 else if (currentScoringMetric == ScoringMetric.InverseCatch)
                 {
-                    switch (VitaruPlayfield.VitaruPlayer.ScoreZone)
+                    switch (VitaruPlayfield.Player.ScoreZone)
                     {
                         case 0:
                             AddJudgement(new VitaruJudgement { Result = HitResult.Miss });

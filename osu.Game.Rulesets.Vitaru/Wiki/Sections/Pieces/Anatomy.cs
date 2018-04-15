@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections.Pieces
     /// </summary>
     public class Anatomy : Container
     {
-        private readonly Bindable<Characters> selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.Characters);
+        private readonly Bindable<PlayableCharacters> selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.Characters);
 
         private readonly Sprite characterSprite;
         private readonly CircularContainer hitbox;
@@ -80,93 +80,93 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections.Pieces
                         edgeEffectParameters.Colour = Color4.Gold.Opacity(0.5f);
                         break;
                         */
-                    case Characters.ReimuHakurei:
+                        /*
+                    case PlayableCharacters.ReimuHakurei:
                         characterSprite.Texture = VitaruRuleset.VitaruTextures.Get("reimuKiai");
                         hitbox.BorderColour = Color4.Red;
                         edgeEffectParameters.Colour = Color4.Red.Opacity(0.5f);
                         break;
-                    case Characters.MarisaKirisame:
+                    case PlayableCharacters.MarisaKirisame:
                         characterSprite.Texture = VitaruRuleset.VitaruTextures.Get("marisaKiai");
                         hitbox.BorderColour = Color4.Black;
                         edgeEffectParameters.Colour = Color4.Black.Opacity(0.5f);
                         break;
-                    case Characters.SakuyaIzayoi:
+                        */
+                    case PlayableCharacters.SakuyaIzayoi:
                         characterSprite.Texture = VitaruRuleset.VitaruTextures.Get("sakuyaKiai");
                         hitbox.BorderColour = Color4.Navy;
                         edgeEffectParameters.Colour = Color4.Navy.Opacity(0.5f);
                         break;
-                    case Characters.FlandreScarlet:
+                        /*
+                    case Player.FlandreScarlet:
                         characterSprite.Colour = Color4.Red;
                         hitbox.BorderColour = Color4.Red;
                         edgeEffectParameters.Colour = Color4.Red.Opacity(0.5f);
                         break;
-                    case Characters.RemiliaScarlet:
+                    case Player.RemiliaScarlet:
                         characterSprite.Colour = Color4.Pink;
                         hitbox.BorderColour = Color4.Pink;
                         edgeEffectParameters.Colour = Color4.Pink.Opacity(0.5f);
                         break;
-                    case Characters.Cirno:
+                    case Player.Cirno:
                         characterSprite.Colour = Color4.Blue;
                         hitbox.BorderColour = Color4.Blue;
                         edgeEffectParameters.Colour = Color4.Blue.Opacity(0.5f);
                         break;
-                        /*
                     case Characters.TenshiHinanai:
                         characterSprite.Colour = Color4.DarkBlue;
                         hitbox.BorderColour = Color4.DarkBlue;
                         edgeEffectParameters.Colour = Color4.DarkBlue.Opacity(0.5f);
                         break;
-                        */
-                    case Characters.YukariYakumo:
+                    case Player.YukariYakumo:
                         characterSprite.Colour = Color4.LightBlue;
                         hitbox.BorderColour = Color4.LightBlue;
                         edgeEffectParameters.Colour = Color4.LightBlue.Opacity(0.5f);
                         break;
-                        /*
                     case Characters.Chen:
                         characterSprite.Texture = VitaruRuleset.VitaruTextures.Get("chenKiai");
                         hitbox.BorderColour = Color4.Green;
                         edgeEffectParameters.Colour = Color4.Green.Opacity(0.5f);
                         break;
-                        */
-                    case Characters.Kaguya:
+                    case Player.Kaguya:
                         characterSprite.Texture = VitaruRuleset.VitaruTextures.Get("kaguyaKiai");
                         hitbox.BorderColour = Color4.DarkRed;
                         edgeEffectParameters.Colour = Color4.DarkRed.Opacity(0.5f);
                         break;
-                    case Characters.IbarakiKasen:
+                    case Player.IbarakiKasen:
                         characterSprite.Colour = Color4.YellowGreen;
                         hitbox.BorderColour = Color4.YellowGreen;
                         edgeEffectParameters.Colour = Color4.YellowGreen.Opacity(0.5f);
                         break;
-                    case Characters.NueHoujuu:
+                    case Player.NueHoujuu:
                         characterSprite.Texture = VitaruRuleset.VitaruTextures.Get("nueKiai");
                         hitbox.BorderColour = Color4.DarkGray;
                         edgeEffectParameters.Colour = Color4.DarkGray.Opacity(0.5f);
                         break;
-                    case Characters.AliceMuyart:
+                    case Player.AliceMuyart:
                         if (!VitaruAPIContainer.Shawdooow)
                         {
-                            selectedCharacter.Value = Characters.ReimuHakurei;
-                            character = Characters.ReimuHakurei;
+                            selectedCharacter.Value = Player.ReimuHakurei;
+                            character = Player.ReimuHakurei;
                             goto restart;
                         }
                         characterSprite.Colour = Color4.SkyBlue;
                         hitbox.BorderColour = Color4.SkyBlue;
                         edgeEffectParameters.Colour = Color4.SkyBlue.Opacity(0.5f);
                         break;
-                    case Characters.ArysaMuyart:
+                    case Player.ArysaMuyart:
                         if (!VitaruAPIContainer.Shawdooow)
                         {
-                            selectedCharacter.Value = Characters.ReimuHakurei;
+                            selectedCharacter.Value = Player.ReimuHakurei;
 
-                            character = Characters.ReimuHakurei;
+                            character = Player.ReimuHakurei;
                             goto restart;
                         }
                         characterSprite.Colour = Color4.LightGreen;
                         hitbox.BorderColour = Color4.LightGreen;
                         edgeEffectParameters.Colour = Color4.LightGreen.Opacity(0.5f);
                         break;
+                        */
                 }
             };
             selectedCharacter.TriggerChange();

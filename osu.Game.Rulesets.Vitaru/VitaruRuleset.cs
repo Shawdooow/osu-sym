@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Vitaru
         {
             get
             {
-                for (int i = 0; i <= 6; i++)
+                for (int i = 0; i <= 3; i++)
                     yield return (int)ControlScheme.Vitaru + i;
             }
         }
@@ -60,7 +60,6 @@ namespace osu.Game.Rulesets.Vitaru
                         new KeyBinding(InputKey.D, VitaruAction.Right),
                         new KeyBinding(InputKey.MouseLeft, VitaruAction.Shoot),
                         new KeyBinding(InputKey.Shift, VitaruAction.Slow),
-                        new KeyBinding(InputKey.Space, VitaruAction.Fast),
                     };
                 case ControlScheme.Dodge:
                     return new KeyBinding[]
@@ -95,6 +94,7 @@ namespace osu.Game.Rulesets.Vitaru
                         new KeyBinding(InputKey.Q, VitaruAction.Decrease),
                         new KeyBinding(InputKey.Shift, VitaruAction.Slow),
                     };
+                    /*
                 case ControlScheme.Kokoro:
                     return new KeyBinding[]
                     {
@@ -137,6 +137,7 @@ namespace osu.Game.Rulesets.Vitaru
                         new KeyBinding(InputKey.Q, VitaruAction.Decrease),
                         new KeyBinding(InputKey.Shift, VitaruAction.Slow),
                     };
+                    */
             }
 
             return new KeyBinding[0];
@@ -156,12 +157,12 @@ namespace osu.Game.Rulesets.Vitaru
                     return "Touhosu";
                 case ControlScheme.Sakuya:
                     return "Sakuya";
-                case ControlScheme.Kokoro:
-                    return "Kokoro";
-                case ControlScheme.NueHoujuu:
-                    return "Nue Houjuu";
-                case ControlScheme.AliceMuyart:
-                    return "Alice Muyart";
+                //case ControlScheme.Kokoro:
+                    //return "Kokoro";
+                //case ControlScheme.NueHoujuu:
+                    //return "Nue Houjuu";
+                //case ControlScheme.AliceMuyart:
+                    //return "Alice Muyart";
             }
         }
 
@@ -288,8 +289,8 @@ namespace osu.Game.Rulesets.Vitaru
         Touhosu,
 
         Sakuya,
-        Kokoro,
-        NueHoujuu,
-        AliceMuyart,
+        //Kokoro,
+        //NueHoujuu,
+        //AliceMuyart,
     }
 }

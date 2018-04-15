@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
     {
         private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
 
-        public VitaruCharacter NearestEnemy;
+        public Character NearestEnemy;
 
         private double startTime;
 
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             foreach (Drawable draw in VitaruPlayfield.CharacterField.Children)
             {
-                VitaruCharacter enemy = draw as VitaruCharacter;
+                Character enemy = draw as Character;
                 if (enemy?.Hitbox != null && enemy.Hitbox.Team != SeekingBullet.Team)
                 {
                     if (enemy.Alpha > 0)

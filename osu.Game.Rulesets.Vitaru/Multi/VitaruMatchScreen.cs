@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
 {
     public class VitaruMatchScreen : RulesetMatchScreen
     {
-        private readonly Bindable<Characters> currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.Characters);
+        private readonly Bindable<Player> currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.Characters);
         private readonly Bindable<GraphicsPresets> currentGraphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
         private readonly Bindable<ScoringMetric> currentScoringMetric = VitaruSettings.VitaruConfigManager.GetBindable<ScoringMetric>(VitaruSetting.ScoringMetric);
         private readonly Bindable<VitaruGamemode> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
                             new MultiplayerDropdownEnumOption<GraphicsPresets>(currentGraphics, "Graphics", 3, false),
                             new MultiplayerDropdownEnumOption<ScoringMetric>(currentScoringMetric, "Scoring Metric", 4),
                             new MultiplayerDropdownEnumOption<VitaruGamemode>(currentGameMode, "Vitaru Gamemode", 1),
-                            new MultiplayerDropdownEnumOption<Characters>(currentCharacter, "Character", 2, false),
+                            new MultiplayerDropdownEnumOption<Player>(currentCharacter, "Character", 2, false),
                         }
                     };
             };

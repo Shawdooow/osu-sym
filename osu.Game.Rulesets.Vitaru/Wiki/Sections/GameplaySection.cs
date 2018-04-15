@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         private Bindable<VitaruGamemode> selectedGamemode;
         private Bindable<ScoringMetric> selectedScoring;
-        private Bindable<Characters> selectedCharacter;
+        private Bindable<PlayableCharacters> selectedCharacter;
 
         private Bindable<bool> familiar;
         private Bindable<bool> late;
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         private Bindable<bool> bonded;
         private Bindable<bool> resurrected;
 
-        private WikiOptionEnumExplanation<Characters> characterDescription;
+        private WikiOptionEnumExplanation<PlayableCharacters> characterDescription;
 
         private const string spell_default = "Spell is not implemented yet";
 
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         {
             selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
             selectedScoring = VitaruSettings.VitaruConfigManager.GetBindable<ScoringMetric>(VitaruSetting.ScoringMetric);
-            selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Characters>(VitaruSetting.Characters);
+            selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.Characters);
 
             familiar = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Familiar);
             late = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Late);
@@ -206,7 +206,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 "difficulty to play (Easy, Normal, Hard, Insane, Another, Extra) " +
                 "and their Role in a multiplayer setting (Offense, Defense, Support). " +
                 "Most of it is subjective but ¯\\_(ツ)_/¯"));
-            Content.Add(characterDescription = new WikiOptionEnumExplanation<Characters>(selectedCharacter));
+            Content.Add(characterDescription = new WikiOptionEnumExplanation<PlayableCharacters>(selectedCharacter));
 
             //basically just an ingame wiki for the characters
             selectedCharacter.ValueChanged += character =>
@@ -216,7 +216,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 restart:
                 switch (character)
                 {
-                    case Characters.ReimuHakurei:
+                    /*
+                    case PlayableCharacters.ReimuHakurei:
                         stats = "\nMax Health: 100" +
                         "\nMax Energy: 30" +
                         "\nRole: Offense" +
@@ -231,7 +232,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                                 stats = stats + Background.ReimuWiki2;
                         }
                         break;
-                    case Characters.MarisaKirisame:
+                    case PlayableCharacters.MarisaKirisame:
                         stats = "\nMax Health: 100" +
                         "\nMax Energy: 30" +
                         "\nRole: Offense" +
@@ -241,7 +242,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         if (selectedGamemode.Value == VitaruGamemode.Touhosu && familiar)
                             stats = stats + Background.MarisaWiki1;
                         break;
-                    case Characters.SakuyaIzayoi:
+                        */
+                    case PlayableCharacters.SakuyaIzayoi:
                         stats = "\nMax Health: 80" +
                         "\nMax Energy: 36" +
                         "\nRole: Defense" +
@@ -260,7 +262,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                                 stats = stats + Background.SakuyaWiki3;
                         }
                         break;
-                    case Characters.HongMeiling:
+                        /*
+                    case Player.HongMeiling:
                         stats = "\nMax Health: 0 (when resurrected 20)" +
                         "\nMax Energy: 36" +
                         "\nRole: Defense" +
@@ -270,7 +273,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         if (false)//selectedGamemode.Value == VitaruGamemode.Touhosu && late)
                             stats = stats + Background.HongWiki1;
                         break;
-                    case Characters.FlandreScarlet:
+                    case Player.FlandreScarlet:
                         stats = "\nMax Health: 100" +
                         "\nMax Energy: 80" +
                         "\nRole: Offense" +
@@ -280,7 +283,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         if (false)//selectedGamemode.Value == VitaruGamemode.Touhosu)
                             stats = stats + Background.FlandreWiki1;
                             break;
-                    case Characters.RemiliaScarlet:
+                    case Player.RemiliaScarlet:
                         stats = "\nMax Health: 60" +
                         "\nMax Energy: 60" +
                         "\nRole: Offense" +
@@ -290,21 +293,21 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         if (selectedGamemode.Value == VitaruGamemode.Touhosu && late)
                             stats = stats + Background.RemiliaWiki1;
                         break;
-                    case Characters.Cirno:
+                    case Player.Cirno:
                         stats = "\nMax Health: 80" +
                         "\nMax Energy: 40" +
                         "\nRole: Defense" +
                         "\nDifficulty: Easy" +
                         "\nAbility (40 energy): Shatter";
                         break;
-                    case Characters.YuyukoSaigyouji:
+                    case Player.YuyukoSaigyouji:
                         stats = "\nMax Health: 100" +
                         "\nMax Energy: 20" +
                         "\nRole: Defense" +
                         "\nDifficulty: Normal" +
                         "\nSpell (4 energy, 2 per second): Ghastly Dream";
                         break;
-                    case Characters.YukariYakumo:
+                    case Player.YukariYakumo:
                         stats = "\nMax Health: 80" +
                         "\nMax Energy: 24" +
                         "\nRole: Support" +
@@ -314,7 +317,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         if (selectedGamemode.Value == VitaruGamemode.Touhosu && bonded)
                             stats = stats + Background.YukariWiki1;
                         break;
-                        /*
                     case Characters.SikieikiYamaxanadu:
                         stats = "\nMax Health: 80" +
                         "\nMax Energy: 40" +
@@ -322,15 +324,14 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nDifficulty: ???" +
                         "\nAbility (2 stab, 4 per second of block, 6 swipe, 10 wipe): Judgement (Not Implemented)";
                         break;
-                        */
-                    case Characters.KokoroHatano:
+                    case Player.KokoroHatano:
                         stats = "\nMax Health: 100" +
                         "\nMax Energy: 36" +
                         "\nRole: Offense + Defense" +
                         "\nDifficulty: Extra" +
                         "\nAbility (passive): Last Dance (Buggy?)";
                         break;
-                    case Characters.Kaguya:
+                    case Player.Kaguya:
                         stats = "\nMax Health: 80" +
                         "\nMax Energy: 36" +
                         "\nRole: Support" +
@@ -340,21 +341,21 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         if (false)//selectedGamemode.Value == VitaruGamemode.Touhosu && sacred)
                             stats = stats + "\n\n";
                         break;
-                    case Characters.IbarakiKasen:
+                    case Player.IbarakiKasen:
                         stats = "\nMax Health: 40" +
                         "\nMax Energy: 8" +
                         "\nRole: Offense" +
                         "\nDifficulty: Insane" +
                         "\nSpell (2 energy): Blink (Pending New Spell)";
                         break;
-                    case Characters.NueHoujuu:
+                    case Player.NueHoujuu:
                         stats = "\nMax Health: 80" +
                         "\nMax Energy: 24" +
                         "\nRole: Support" +
                         "\nDifficulty: Another" +
                         "\nSpell (Ratio [energy:damage/energy/health/weaken] - 1:4/2/1/2): Invasion (WIP)";
                         break;
-                    case Characters.VasterLetrunce:
+                    case Player.VasterLetrunce:
                         stats = "\nMax Health: 120" +
                         "\nMax Energy: 20" +
                         "\nRole: Support" +
@@ -364,11 +365,11 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         if (false)//selectedGamemode.Value == VitaruGamemode.Touhosu && past)
                             stats = stats + Background.VasterWiki1;
                         break;
-                    case Characters.AliceMuyart:
+                    case Player.AliceMuyart:
                         if (!VitaruAPIContainer.Shawdooow)
                         {
-                            selectedCharacter.Value = Characters.ReimuHakurei;
-                            character = Characters.ReimuHakurei;
+                            selectedCharacter.Value = Player.ReimuHakurei;
+                            character = Player.ReimuHakurei;
                             goto restart;
                         }
                         stats = "\nMax Health: 200 (x2 Healing)" +
@@ -377,11 +378,11 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nDifficulty: Hard" +
                         "\nSpell: UnNatural";
                         break;
-                    case Characters.ArysaMuyart:
+                    case Player.ArysaMuyart:
                         if (!VitaruAPIContainer.Shawdooow)
                         {
-                            selectedCharacter.Value = Characters.ReimuHakurei;
-                            character = Characters.ReimuHakurei;
+                            selectedCharacter.Value = Player.ReimuHakurei;
+                            character = Player.ReimuHakurei;
                             goto restart;
                         }
                         stats = "\nMax Health: 60" +
@@ -390,6 +391,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nDifficulty: ???" +
                         "\nSpell: Seasonal Shift";
                         break;
+                        */
                 }
 
                 characterDescription.Description.Text = stats;
