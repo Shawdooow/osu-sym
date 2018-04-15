@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
         public class VitaruCursor : Container
         {
-            private readonly Player currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.Characters);
+            private readonly PlayableCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.Characters);
             private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
 
             private Container lineContainer;
@@ -240,11 +240,11 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
                 if (currentGameMode == VitaruGamemode.Touhosu)
                 {
-                    //if (currentCharacter == Player.SakuyaIzayoi || currentCharacter == Player.AliceMuyart)
-                        //speed.Alpha = 0.5f;
+                    //if (currentCharacter == PlayableCharacters.SakuyaIzayoi || currentCharacter == PlayableCharacters.AliceMuyart)
+                    //speed.Alpha = 0.5f;
 
-                    //if (currentCharacter == Player.KokoroHatano)
-                        //combo.Alpha = 0.5f;
+                    //if (currentCharacter == PlayableCharacters.KokoroHatano)
+                    //combo.Alpha = 0.5f;
                 }
 
                 beatmap = game.Beatmap.GetBoundCopy();

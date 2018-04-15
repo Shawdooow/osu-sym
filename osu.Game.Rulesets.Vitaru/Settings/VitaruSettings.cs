@@ -104,6 +104,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     LabelText = "Offline Multiplayer",
                     Bindable = multiplayer
                 },
+                /*
                 multiplayerSettings = new FillFlowContainer
                 {
                     Direction = FillDirection.Vertical,
@@ -136,40 +137,40 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
                             Children = new Drawable[]
                             {
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "PlayerOne override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerOne)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerOne)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "PlayerTwo override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerTwo)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerTwo)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "PlayerThree override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerThree)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerThree)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "PlayerFour override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerFour)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerFour)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "PlayerFive override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerFive)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerFive)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "PlayerSix override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerSix)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerSix)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "PlayerSeven override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.PlayerSeven)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerSeven)
                                 }
                             }
                         },
@@ -194,50 +195,51 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
                             Children = new Drawable[]
                             {
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "EnemyOne override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyOne)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.EnemyOne)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "EnemyTwo override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyTwo)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.EnemyTwo)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "EnemyThree override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyThree)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.EnemyThree)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "EnemyFour override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyFour)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.EnemyFour)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "EnemyFive override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyFive)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.EnemyFive)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "EnemySix override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemySix)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.EnemySix)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "EnemyEight override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemySeven)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.EnemySeven)
                                 },
-                                new SettingsEnumDropdown<Player>
+                                new SettingsEnumDropdown<PlayableCharacters>
                                 {
                                     LabelText = "EnemyEight override",
-                                    Bindable = VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyEight)
+                                    Bindable = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.EnemyEight)
                                 }
                             }
                         },
                     }
                 },
+                */
                 new SettingsButton
                 {
                     Text = "Open In-game Wiki",
@@ -305,6 +307,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             };
             selectedCharacter.TriggerChange();
 
+            /*
             multiplayer.ValueChanged += isVisible =>
             {
                 multiplayerSettings.ClearTransforms();
@@ -334,6 +337,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     enemyPlayerSettings.ResizeHeightTo(0, transition_duration, Easing.OutQuint);
             };
             enemyPlayerOverride.TriggerChange();
+            */
 
             showDebugUi.ValueChanged += isVisible =>
             {

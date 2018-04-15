@@ -1,6 +1,9 @@
 ﻿using OpenTK;
-using OpenTK.Input;
+using OpenTK.Graphics;
+using osu.Framework.Audio.Track;
+using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
+using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
@@ -17,17 +20,17 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected override string CharacterName => PlayableCharacter.ToString();
 
-        public virtual double MaxEnergy { get; protected set; } = 36;
+        public virtual double MaxEnergy { get; } = 36;
 
-        public virtual double EnergyCost { get; protected set; } = 12;
+        public virtual double EnergyCost { get; } = 12;
 
-        public virtual double EnergyCostPerSecond { get; protected set; }
+        public virtual double EnergyCostPerSecond { get; }
 
         public double Energy { get; protected set; }
 
-        public Action<VitaruAction> Spell;
-
         public int ScoreZone = 100;
+
+        public double SpeedMultiplier = 1;
 
         public Dictionary<VitaruAction, bool> Actions = new Dictionary<VitaruAction, bool>();
 
@@ -43,7 +46,19 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             }
         }
 
+        public Action<VitaruAction> Spell;
+
         protected bool SpellActive { get; set; }
+
+        protected double SpellDeActivateTime { get; set; } = double.MinValue;
+
+        protected double SpellEndTime { get; set; } = double.MinValue;
+
+        private double packetTime = double.MinValue;
+        private double lastQuarterBeat = -1;
+        private double nextHalfBeat = -1;
+        private double nextQuarterBeat = -1;
+        private double beatLength = 1000;
         #endregion
 
         public Player(VitaruPlayfield playfield) : base(playfield)
@@ -56,28 +71,108 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             Actions[VitaruAction.Shoot] = false;
         }
 
+        protected override void OnNewBeat(int beatIndex, TimingControlPoint timingPoint, EffectControlPoint effectPoint, TrackAmplitudes amplitudes)
+        {
+            base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
+
+            float amplitudeAdjust = Math.Min(1, 0.4f + amplitudes.Maximum);
+
+            beatLength = timingPoint.BeatLength;
+
+            onHalfBeat();
+            lastQuarterBeat = Time.Current;
+            nextHalfBeat = Time.Current + timingPoint.BeatLength / 2;
+            nextQuarterBeat = Time.Current + timingPoint.BeatLength / 4;
+
+            const double beat_in_time = 60;
+
+            Sign.ScaleTo(1 - 0.02f * amplitudeAdjust, beat_in_time, Easing.Out);
+            using (Sign.BeginDelayedSequence(beat_in_time))
+                Sign.ScaleTo(1, beatLength * 2, Easing.OutQuint);
+
+            if (effectPoint.KiaiMode && CurrentGameMode != VitaruGamemode.Touhosu)
+            {
+                Sign.FadeTo(0.25f * amplitudeAdjust, beat_in_time, Easing.Out);
+                using (Sign.BeginDelayedSequence(beat_in_time))
+                    Sign.FadeOut(beatLength);
+            }
+
+            if (effectPoint.KiaiMode && SoulContainer.Alpha == 1)
+            {
+                if (!Dead && CurrentGameMode != VitaruGamemode.Gravaru)
+                {
+                    KiaiContainer.FadeInFromZero(timingPoint.BeatLength / 4);
+                    SoulContainer.FadeOutFromOne(timingPoint.BeatLength / 4);
+                }
+
+                if (CurrentGameMode != VitaruGamemode.Touhosu)
+                    Sign.FadeTo(0.15f, timingPoint.BeatLength / 4);
+            }
+            if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1)
+            {
+                if (!Dead && CurrentGameMode != VitaruGamemode.Gravaru)
+                {
+                    SoulContainer.FadeInFromZero(timingPoint.BeatLength);
+                    KiaiContainer.FadeOutFromOne(timingPoint.BeatLength);
+                }
+
+                if (CurrentGameMode != VitaruGamemode.Touhosu)
+                    Sign.FadeTo(0f, timingPoint.BeatLength);
+            }
+        }
+
+        private void onHalfBeat()
+        {
+            nextHalfBeat = -1;
+
+            if (Actions[VitaruAction.Shoot])
+                PatternWave();
+        }
+
+        private void onQuarterBeat()
+        {
+            lastQuarterBeat = nextQuarterBeat;
+            nextQuarterBeat += beatLength / 4;
+
+            if (CanHeal)
+            {
+                CanHeal = false;
+
+                Heal(0.5d);
+
+                if (CurrentGameMode != VitaruGamemode.Touhosu)
+                {
+                    Sign.Alpha = 0.2f;
+                    Sign.FadeOut(beatLength / 4);
+                }
+            }
+        }
+
         protected override void Update()
         {
             base.Update();
 
             Position = GetNewPlayerPosition(0.25d);
+
+            if (nextHalfBeat <= Time.Current && nextHalfBeat != -1)
+                onHalfBeat();
+
+            if (nextQuarterBeat <= Time.Current && nextQuarterBeat != -1)
+                onQuarterBeat();
+
+            SpellUpdate();
         }
 
         protected virtual Vector2 GetNewPlayerPosition(double playerSpeed)
         {
-            double yTranslationDistance = playerSpeed * Clock.ElapsedFrameTime;
-            double xTranslationDistance = playerSpeed * Clock.ElapsedFrameTime;
+            double yTranslationDistance = playerSpeed * Clock.ElapsedFrameTime * SpeedMultiplier;
+            double xTranslationDistance = playerSpeed * Clock.ElapsedFrameTime * SpeedMultiplier;
             Vector2 playerPosition = Position;
 
             if (Actions[VitaruAction.Slow])
             {
                 xTranslationDistance /= 2;
                 yTranslationDistance /= 2;
-            }
-            if (false)//Actions[VitaruAction.Fast])
-            {
-                xTranslationDistance *= 2;
-                yTranslationDistance *= 2;
             }
 
             if (Actions[VitaruAction.Up])
@@ -95,11 +190,75 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             return playerPosition;
         }
 
+        #region Shooting Handling
+        private void bulletAddRad(float speed, float angle, Color4 color, SliderType type = SliderType.Straight)
+        {
+            DrawableBullet drawableBullet;
+
+            VitaruPlayfield.BulletField.Add(drawableBullet = new DrawableBullet(new Bullet
+            {
+                StartTime = Time.Current,
+                Position = Position,
+                BulletAngle = angle,
+                BulletSpeed = speed,
+                BulletDiameter = 16,
+                BulletDamage = 20,
+                ColorOverride = color,
+                Team = Team,
+                SliderType = type,
+                Curviness = 0.25f,
+                DummyMode = true,
+                //Ghost = CurrentCharacter == Characters.YuyukoSaigyouji | CurrentCharacter == Characters.AliceMuyart
+            }, VitaruPlayfield));
+
+            //if (vampuric)
+                //drawableBullet.OnHit = () => Heal(0.5f);
+            drawableBullet.MoveTo(Position);
+        }
+
+        protected void PatternWave()
+        {
+            const int numberbullets = 3;
+            float directionModifier = -0.1F;
+            Color4 color = CharacterColor;
+            SliderType type;
+
+            for (int i = 1; i <= numberbullets; i++)
+            {
+                if (i == 1)
+                    type = SliderType.CurveRight;
+                else if (i == 2)
+                    type = SliderType.Straight;
+                else
+                    type = SliderType.CurveLeft;
+
+                //-90 = up
+                bulletAddRad(1, MathHelper.DegreesToRadians(-90) + directionModifier, color, type);
+                directionModifier += 0.1f;
+            }
+        }
+
+        private void patternCircle()
+        {
+            int numberbullets = 8;
+            float directionModifier = (360f / numberbullets);
+            float direction = MathHelper.DegreesToRadians(-90);
+            directionModifier = MathHelper.DegreesToRadians(directionModifier);
+            for (int i = 1; i <= numberbullets; i++)
+            {
+                bulletAddRad(1, direction, CharacterColor);
+                direction += directionModifier;
+            }
+        }
+        #endregion
+
         #region Spell Handling
         protected virtual bool SpellActivate(VitaruAction action)
         {
             if (Energy <= EnergyCost)
             {
+                SpellActive = true;
+                Energy -= EnergyCost;
                 Spell?.Invoke(action);
                 return true;
             }
@@ -114,7 +273,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected virtual void SpellUpdate()
         {
+            if (CanHeal)
+                Energy = Math.Min((float)Clock.ElapsedFrameTime / 500 + Energy, MaxEnergy);
 
+            if (Energy <= 0)
+            {
+                Energy = 0;
+                SpellActive = false;
+            }
         }
         #endregion
 

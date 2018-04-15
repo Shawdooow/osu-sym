@@ -284,7 +284,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         /// Removes "damage"
         /// </summary>
         /// <param name="damage"></param>
-        public virtual double Hurt(float damage)
+        public virtual double Hurt(double damage)
         {
             Health -= damage;
 
@@ -301,7 +301,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         /// Adds "health"
         /// </summary>
         /// <param name="health"></param>
-        public virtual double Heal(float health)
+        public virtual double Heal(double health)
         {
             if (Health <= 0 && health > 0)
                 Revive();

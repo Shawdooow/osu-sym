@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
     public class MirrorField : VitaruPlayfield
     {
         private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
-        private Player currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.Characters);
+        private PlayableCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.Characters);
         private readonly bool multiplayer = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
         private bool enemyPlayerOverride = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.EnemyPlayerOverride);
         private readonly Bindable<int> enemyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);

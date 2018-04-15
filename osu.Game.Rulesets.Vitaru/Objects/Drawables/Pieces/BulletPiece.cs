@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 {
     public class BulletPiece : BeatSyncedContainer
     {
-        private readonly Player currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.Characters);
+        private readonly PlayableCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.Characters);
         private readonly GraphicsPresets currentSkin = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
 
         private Sprite bulletKiai;
@@ -107,8 +107,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                     Colour = drawableBullet.AccentColour.Opacity(0.2f)
                 };
 
-            //if (drawableBullet.Bullet.Ghost && currentCharacter == Player.YuyukoSaigyouji | currentCharacter == Player.AliceMuyart)
-                //box.Colour = Color4.Cyan;
+            //if (drawableBullet.Bullet.Ghost && currentCharacter == PlayableCharacters.YuyukoSaigyouji | currentCharacter == PlayableCharacters.AliceMuyart)
+            //box.Colour = Color4.Cyan;
         }
     }
 }
