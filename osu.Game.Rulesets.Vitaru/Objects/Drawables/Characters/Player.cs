@@ -22,11 +22,25 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected override string CharacterName => PlayableCharacter.ToString();
 
-        public virtual double MaxEnergy { get; } = 36;
+        public const double DefaultHealth = 100;
 
-        public virtual double EnergyCost { get; } = 12;
+        public const double DefaultEnergy = 36;
 
-        public virtual double EnergyCostPerSecond { get; }
+        public const double DefaultEnergyCost = 4;
+
+        public const double DefaultEnergyCostPerSecond = 0;
+
+        public static readonly Color4 DefaultColor = Color4.Yellow;
+
+        public override double MaxHealth => DefaultHealth;
+
+        public virtual double MaxEnergy { get; } = DefaultEnergy;
+
+        public virtual double EnergyCost { get; } = DefaultEnergyCost;
+
+        public virtual double EnergyCostPerSecond { get; } = DefaultEnergyCostPerSecond;
+
+        public override Color4 CharacterColor => DefaultColor;
 
         public double Energy { get; protected set; }
 
@@ -401,19 +415,17 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
     public enum PlayableCharacters
     {
-        /*
         [System.ComponentModel.Description("Reimu Hakurei")]
         ReimuHakurei = 1,
         [System.ComponentModel.Description("Marisa Kirisame")]
         MarisaKirisame,
-        */
         [System.ComponentModel.Description("Sakuya Izayoi")]
         SakuyaIzayoi = 3,
-        /*
         [System.ComponentModel.Description("Flandre Scarlet")]
         FlandreScarlet,
         [System.ComponentModel.Description("Remilia Scarlet")]
         RemiliaScarlet,
+        /*
         [System.ComponentModel.Description("Rinnosuke Morichika")]
         RinnosukeMorichika,
         [System.ComponentModel.Description("Cirno")]

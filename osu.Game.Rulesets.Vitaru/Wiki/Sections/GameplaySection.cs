@@ -35,8 +35,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         private WikiOptionEnumExplanation<PlayableCharacters> characterDescription;
 
-        private const string spell_default = "Spell is not implemented yet";
-
         private Bindable<Mod> selectedMod = new Bindable<Mod> { Default = Mod.Hidden };
 
         private WikiOptionEnumExplanation<Mod> modsDescription;
@@ -211,12 +209,17 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             //basically just an ingame wiki for the characters
             selectedCharacter.ValueChanged += character =>
             {
-                string stats = "\nMax Health: " + 100 + "\nMax Energy: " + 100 + "\n" + spell_default;
+                string stats = "\nMax Health: " + Player.DefaultHealth +
+                        "\nMax Energy: " + Player.DefaultEnergy +
+                        "\nEnergy Cost: " + Player.DefaultEnergyCost +
+                        "\nEnergy Cost per Second: " + Player.DefaultEnergyCostPerSecond +
+                        "\nRole: ???" +
+                        "\nDifficulty: ???" +
+                        "\nSpell: Not Implemented Yet";
 
                 restart:
                 switch (character)
                 {
-                    /*
                     case PlayableCharacters.ReimuHakurei:
                         stats = "\nMax Health: 100" +
                         "\nMax Energy: 30" +
@@ -224,6 +227,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nDifficulty: Easy" +
                         "\nSpell (10 energy): Rune-Seal (Not Implemented)";
 
+                        /*
                         if (selectedGamemode.Value == VitaruGamemode.Touhosu)
                         {
                             stats = stats + Background.ReimuWiki1;
@@ -231,6 +235,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                             if (!familiar)
                                 stats = stats + Background.ReimuWiki2;
                         }
+                        */
                         break;
                     case PlayableCharacters.MarisaKirisame:
                         stats = "\nMax Health: 100" +
@@ -239,10 +244,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nDifficulty: Easy" +
                         "\nSpell (10 energy): Mini-Hakkero (WIP)";
 
-                        if (selectedGamemode.Value == VitaruGamemode.Touhosu && familiar)
-                            stats = stats + Background.MarisaWiki1;
+                        //if (selectedGamemode.Value == VitaruGamemode.Touhosu && familiar)
+                            //stats = stats + Background.MarisaWiki1;
                         break;
-                        */
                     case PlayableCharacters.SakuyaIzayoi:
                         stats = "\nMax Health: " + Sakuya.SakuyaHealth +
                         "\nMax Energy: " + Sakuya.SakuyaEnergy +
