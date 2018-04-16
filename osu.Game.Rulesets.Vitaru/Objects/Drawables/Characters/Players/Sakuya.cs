@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public static readonly Color4 SakuyaColor = Color4.Navy;
 
-        public override PlayableCharacters PlayableCharacter => PlayableCharacters.SakuyaIzayoi;
+        public override SelectableCharacters PlayableCharacter => SelectableCharacters.SakuyaIzayoi;
 
         public override double MaxHealth => SakuyaHealth;
 

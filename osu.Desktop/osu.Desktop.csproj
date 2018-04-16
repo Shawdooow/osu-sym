@@ -31,7 +31,6 @@
     <ProjectReference Include="..\osu-resources\osu.Game.Resources\osu.Game.Resources.csproj" />
     <ProjectReference Include="..\Symcol.Core\Symcol.Core.csproj" />
     <ProjectReference Include="..\Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj" />
-    <ProjectReference Include="..\Vitaru.Plot\Vitaru.Plot.csproj" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.4.0" />
   </ItemGroup>
   <ItemGroup Label="Package References">

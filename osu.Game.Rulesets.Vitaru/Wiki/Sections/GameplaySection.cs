@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         private Bindable<VitaruGamemode> selectedGamemode;
         private Bindable<ScoringMetric> selectedScoring;
-        private Bindable<PlayableCharacters> selectedCharacter;
+        private Bindable<SelectableCharacters> selectedCharacter;
 
         private Bindable<bool> familiar;
         private Bindable<bool> late;
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         private Bindable<bool> bonded;
         private Bindable<bool> resurrected;
 
-        private WikiOptionEnumExplanation<PlayableCharacters> characterDescription;
+        private WikiOptionEnumExplanation<SelectableCharacters> characterDescription;
 
         private Bindable<Mod> selectedMod = new Bindable<Mod> { Default = Mod.Hidden };
 
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         {
             selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
             selectedScoring = VitaruSettings.VitaruConfigManager.GetBindable<ScoringMetric>(VitaruSetting.ScoringMetric);
-            selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.Characters);
+            selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
 
             familiar = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Familiar);
             late = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Late);
@@ -204,7 +204,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 "difficulty to play (Easy, Normal, Hard, Insane, Another, Extra) " +
                 "and their Role in a multiplayer setting (Offense, Defense, Support). " +
                 "Most of it is subjective but ¯\\_(ツ)_/¯"));
-            Content.Add(characterDescription = new WikiOptionEnumExplanation<PlayableCharacters>(selectedCharacter));
+            Content.Add(characterDescription = new WikiOptionEnumExplanation<SelectableCharacters>(selectedCharacter));
 
             //basically just an ingame wiki for the characters
             selectedCharacter.ValueChanged += character =>
@@ -220,7 +220,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 restart:
                 switch (character)
                 {
-                    case PlayableCharacters.ReimuHakurei:
+                    case SelectableCharacters.ReimuHakurei:
                         stats = "\nMax Health: 100" +
                         "\nMax Energy: 30" +
                         "\nRole: Offense" +
@@ -237,7 +237,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         }
                         */
                         break;
-                    case PlayableCharacters.MarisaKirisame:
+                    case SelectableCharacters.MarisaKirisame:
                         stats = "\nMax Health: 100" +
                         "\nMax Energy: 30" +
                         "\nRole: Offense" +
@@ -247,7 +247,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         //if (selectedGamemode.Value == VitaruGamemode.Touhosu && familiar)
                             //stats = stats + Background.MarisaWiki1;
                         break;
-                    case PlayableCharacters.SakuyaIzayoi:
+                    case SelectableCharacters.SakuyaIzayoi:
                         stats = "\nMax Health: " + Sakuya.SakuyaHealth +
                         "\nMax Energy: " + Sakuya.SakuyaEnergy +
                         "\nEnergy Cost: " + Sakuya.SakuyaEnergyCost +

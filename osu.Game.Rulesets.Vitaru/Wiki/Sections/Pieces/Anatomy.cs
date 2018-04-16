@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections.Pieces
     /// </summary>
     public class Anatomy : Container
     {
-        private readonly Bindable<PlayableCharacters> selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.Characters);
+        private readonly Bindable<SelectableCharacters> selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
 
         private readonly Sprite characterSprite;
         private readonly CircularContainer hitbox;
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections.Pieces
                         edgeEffectParameters.Colour = Color4.Black.Opacity(0.5f);
                         break;
                         */
-                    case PlayableCharacters.SakuyaIzayoi:
+                    case SelectableCharacters.SakuyaIzayoi:
                         characterSprite.Texture = VitaruRuleset.VitaruTextures.Get("sakuyaKiai");
                         hitbox.BorderColour = Color4.Navy;
                         edgeEffectParameters.Colour = Color4.Navy.Opacity(0.5f);

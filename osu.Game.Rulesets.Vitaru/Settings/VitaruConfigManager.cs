@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.DebugUIConfiguration, DebugUiConfiguration.PerformanceMetrics);
             Set(VitaruSetting.GraphicsPresets, GraphicsPresets.Standard);
             Set(VitaruSetting.GameMode, VitaruGamemode.Vitaru);
-            Set(VitaruSetting.Characters, PlayableCharacters.SakuyaIzayoi);
+            Set(VitaruSetting.Characters, SelectableCharacters.SakuyaIzayoi);
             Set(VitaruSetting.ComboFire, true);
             Set(VitaruSetting.ShittyMultiplayer, false);
             Set(VitaruSetting.FriendlyPlayerCount, 0, 0, 7);

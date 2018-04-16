@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
             {
                 default:
                     break;
-                case PlayableCharacters.SakuyaIzayoi:
+                case SelectableCharacters.SakuyaIzayoi:
                     characterSigil.Scale = new Vector2(1.34f);
                     characterSigil.Children = new Drawable[]
                     {
@@ -119,7 +119,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
             {
                 default:
                     break;
-                case PlayableCharacters.SakuyaIzayoi:
+                case SelectableCharacters.SakuyaIzayoi:
                     float speed = 0.25f;
                     gear1.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
                     gear2.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);

@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         #region Fields
         protected readonly VitaruGamemode CurrentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
 
-        public abstract PlayableCharacters PlayableCharacter { get; }
+        public abstract SelectableCharacters PlayableCharacter { get; }
 
         protected override string CharacterName => PlayableCharacter.ToString();
 
@@ -413,7 +413,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         #endregion
     }
 
-    public enum PlayableCharacters
+    public enum SelectableCharacters
     {
         [System.ComponentModel.Description("Reimu Hakurei")]
         ReimuHakurei = 1,

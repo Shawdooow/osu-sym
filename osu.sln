@@ -33,8 +33,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Osu.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Vitaru", "osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj", "{AFB8DFD3-B9DD-420A-B8F9-6598223A0439}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vitaru.Plot", "Vitaru.Plot\Vitaru.Plot.csproj", "{EA781767-4EC4-4F85-B780-0FB465634D6F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.Rulesets.Core", "Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj", "{A1CE5AFB-ADFF-4D7F-81FE-4BF9713FFED1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.Core", "Symcol.Core\Symcol.Core.csproj", "{0A1C6456-718F-4076-9638-E2C1F49830F2}"
@@ -107,10 +105,6 @@ Global
 		{AFB8DFD3-B9DD-420A-B8F9-6598223A0439}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFB8DFD3-B9DD-420A-B8F9-6598223A0439}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFB8DFD3-B9DD-420A-B8F9-6598223A0439}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA781767-4EC4-4F85-B780-0FB465634D6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA781767-4EC4-4F85-B780-0FB465634D6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA781767-4EC4-4F85-B780-0FB465634D6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA781767-4EC4-4F85-B780-0FB465634D6F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A1CE5AFB-ADFF-4D7F-81FE-4BF9713FFED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A1CE5AFB-ADFF-4D7F-81FE-4BF9713FFED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1CE5AFB-ADFF-4D7F-81FE-4BF9713FFED1}.Release|Any CPU.ActiveCfg = Release|Any CPU

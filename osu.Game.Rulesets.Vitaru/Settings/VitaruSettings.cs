@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         private static VitaruAPIContainer api;
 
-        private Bindable<PlayableCharacters> selectedCharacter;
+        private Bindable<SelectableCharacters> selectedCharacter;
 
         private FillFlowContainer multiplayerSettings;
         private Bindable<bool> multiplayer;
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Storage skinsStorage = storage.GetStorageForDirectory("Skins");
 
             showDebugUi = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugOverlay);
-            selectedCharacter = VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.Characters);
+            selectedCharacter = VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
             multiplayer = VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
             friendlyPlayerCount = VitaruConfigManager.GetBindable<int>(VitaruSetting.FriendlyPlayerCount);
             friendlyPlayerOverride = VitaruConfigManager.GetBindable<bool>(VitaruSetting.FriendlyPlayerOverride);
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     LabelText = "Vitaru's current gamemode",
                     Bindable = VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode)
                 },
-                new SettingsEnumDropdown<PlayableCharacters>
+                new SettingsEnumDropdown<SelectableCharacters>
                 {
                     LabelText = "Selected Character",
                     Bindable = selectedCharacter
