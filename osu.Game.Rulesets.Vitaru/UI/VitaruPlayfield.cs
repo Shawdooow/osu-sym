@@ -104,6 +104,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
                 switch (currentCharacter)
                 {
+                    case SelectableCharacters.RyukoyHakurei:
+                        playerList.Add(Player = new Ryukoy(this));
+                        break;
+                    case SelectableCharacters.TomajiHakurei:
+                        playerList.Add(Player = new Tomaji(this));
+                        break;
                     case SelectableCharacters.SakuyaIzayoi:
                         playerList.Add(Player = new Sakuya(this));
                         break;

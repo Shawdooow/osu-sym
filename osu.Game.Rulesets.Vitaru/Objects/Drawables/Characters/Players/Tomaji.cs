@@ -10,32 +10,32 @@ using System;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 {
-    public class Sakuya : Player
+    public class Tomaji : Player
     {
         #region Fields
         public double SetRate { get; private set; } = 0.8d;
 
-        public const double SakuyaHealth = 80;
+        public const double TomajiHealth = 80;
 
-        public const double SakuyaEnergy = 24;
+        public const double TomajiEnergy = 24;
 
-        public const double SakuyaEnergyCost = 2;
+        public const double TomajiEnergyCost = 2;
 
-        public const double SakuyaEnergyCostPerSecond = 4;
+        public const double TomajiEnergyCostPerSecond = 4;
 
-        public static readonly Color4 SakuyaColor = Color4.Navy;
+        public static readonly Color4 TomajiColor = Color4.OrangeRed;
 
-        public override SelectableCharacters PlayableCharacter => SelectableCharacters.SakuyaIzayoi;
+        public override SelectableCharacters PlayableCharacter => SelectableCharacters.TomajiHakurei;
 
-        public override double MaxHealth => SakuyaHealth;
+        public override double MaxHealth => TomajiHealth;
 
-        public override double MaxEnergy => SakuyaEnergy;
+        public override double MaxEnergy => TomajiEnergy;
 
-        public override double EnergyCost => SakuyaEnergyCost;
+        public override double EnergyCost => TomajiEnergyCost;
 
-        public override double EnergyCostPerSecond => SakuyaEnergyCostPerSecond;
+        public override double EnergyCostPerSecond => TomajiEnergyCostPerSecond;
 
-        public override Color4 CharacterColor => SakuyaColor;
+        public override Color4 CharacterColor => TomajiColor;
 
         private double originalRate;
 
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
         #endregion
 
-        public Sakuya(VitaruPlayfield playfield) : base(playfield)
+        public Tomaji(VitaruPlayfield playfield) : base(playfield)
         {
             Spell += (action) =>
             {
@@ -62,15 +62,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         private void load(OsuGameBase game)
         {
             workingBeatmap.BindTo(game.Beatmap);
-        }
-
-        //TODO: use new seal system in Player, this should not be neccesary
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            Add(new Seal(this));
-            Remove(Sign);
         }
 
         protected override void SpellUpdate()
@@ -147,14 +138,17 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         {
             bool late = true;
 
-            if (action == VitaruAction.Increase && !late)
-                SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 0.8d);
-            else if (action == VitaruAction.Increase && late)
-                SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 1.2d);
-            if (action == VitaruAction.Decrease && !late)
-                SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.4d);
-            else if (action == VitaruAction.Decrease && late)
-                SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.2d);
+            if (false)
+            {
+                if (action == VitaruAction.Increase && !late)
+                    SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 0.8d);
+                else if (action == VitaruAction.Increase && late)
+                    SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 1.2d);
+                if (action == VitaruAction.Decrease && !late)
+                    SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.4d);
+                else if (action == VitaruAction.Decrease && late)
+                    SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.2d);
+            }
 
             return base.Pressed(action);
         }

@@ -209,195 +209,64 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             //basically just an ingame wiki for the characters
             selectedCharacter.ValueChanged += character =>
             {
+                restart:
+
                 string stats = "\nMax Health: " + Player.DefaultHealth +
                         "\nMax Energy: " + Player.DefaultEnergy +
                         "\nEnergy Cost: " + Player.DefaultEnergyCost +
                         "\nEnergy Cost per Second: " + Player.DefaultEnergyCostPerSecond +
                         "\nRole: ???" +
                         "\nDifficulty: ???" +
-                        "\nSpell: Not Implemented Yet";
+                        "\nAbility: Not Implemented Yet!";
 
-                restart:
                 switch (character)
                 {
                     case SelectableCharacters.ReimuHakurei:
-                        stats = "\nMax Health: 100" +
-                        "\nMax Energy: 30" +
-                        "\nRole: Offense" +
-                        "\nDifficulty: Easy" +
-                        "\nSpell (10 energy): Rune-Seal (Not Implemented)";
-
-                        /*
-                        if (selectedGamemode.Value == VitaruGamemode.Touhosu)
+                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                            stats = Reimu.Background;
+                        else
                         {
-                            stats = stats + Background.ReimuWiki1;
-
-                            if (!familiar)
-                                stats = stats + Background.ReimuWiki2;
+                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
+                            goto restart;
                         }
-                        */
                         break;
-                    case SelectableCharacters.MarisaKirisame:
-                        stats = "\nMax Health: 100" +
-                        "\nMax Energy: 30" +
-                        "\nRole: Offense" +
-                        "\nDifficulty: Easy" +
-                        "\nSpell (10 energy): Mini-Hakkero (WIP)";
+                    case SelectableCharacters.RyukoyHakurei:
+                        stats = "\nMax Health: " + Ryukoy.RyukoyHealth +
+                        "\nMax Energy: " + Ryukoy.RyukoyEnergy +
+                        "\nEnergy Cost: " + Ryukoy.RyukoyEnergyCost +
+                        "\nEnergy Cost per Second: " + Ryukoy.RyukoyEnergyCostPerSecond +
+                        "\nRole: ???" +
+                        "\nDifficulty: ???" +
+                        "\nAbility: Spirit Walker (Not Implemented Yet!)";
 
-                        //if (selectedGamemode.Value == VitaruGamemode.Touhosu && familiar)
-                            //stats = stats + Background.MarisaWiki1;
+                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                        {
+                            stats = stats + "\n\n" + Ryukoy.Background;
+                        }
+                        break;
+                    case SelectableCharacters.TomajiHakurei:
+                        stats = "\nMax Health: " + Tomaji.TomajiHealth +
+                        "\nMax Energy: " + Tomaji.TomajiEnergy +
+                        "\nEnergy Cost: " + Tomaji.TomajiEnergyCost +
+                        "\nEnergy Cost per Second: " + Tomaji.TomajiEnergyCostPerSecond +
+                        "\nRole: ???" +
+                        "\nDifficulty: ???" +
+                        "\nAbility: Time Warden";
+
+                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                        {
+                            stats = stats + "\n\n" + Tomaji.Background;
+                        }
                         break;
                     case SelectableCharacters.SakuyaIzayoi:
-                        stats = "\nMax Health: " + Sakuya.SakuyaHealth +
-                        "\nMax Energy: " + Sakuya.SakuyaEnergy +
-                        "\nEnergy Cost: " + Sakuya.SakuyaEnergyCost +
-                        "\nEnergy Cost per Second: " + Sakuya.SakuyaEnergyCostPerSecond +
-                        "\nRole: Defense" +
-                        "\nDifficulty: Normal" +
-                        "\nSpell: Time-Warden";
-                        break;
-                        /*
-                        if (selectedGamemode.Value == VitaruGamemode.Touhosu)
+                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                            stats = Sakuya.Background;
+                        else
                         {
-                            if (!late)
-                                stats = stats + Background.SakuyaWiki1;
-
-                            if (!late)
-                                stats = stats + Background.SakuyaWiki2;
-
-                            if (late)
-                                stats = stats + Background.SakuyaWiki3;
-                        }
-                        break;
-                    case Player.HongMeiling:
-                        stats = "\nMax Health: 0 (when resurrected 20)" +
-                        "\nMax Energy: 36" +
-                        "\nRole: Defense" +
-                        "\nDifficulty: Time Freeze" +
-                        "\nAbility (passive): Leader (WIP)";
-
-                        if (false)//selectedGamemode.Value == VitaruGamemode.Touhosu && late)
-                            stats = stats + Background.HongWiki1;
-                        break;
-                    case Player.FlandreScarlet:
-                        stats = "\nMax Health: 100" +
-                        "\nMax Energy: 80" +
-                        "\nRole: Offense" +
-                        "\nDifficulty: Easy" +
-                        "\nSpell (40 energy): Taboo";
-
-                        if (false)//selectedGamemode.Value == VitaruGamemode.Touhosu)
-                            stats = stats + Background.FlandreWiki1;
-                            break;
-                    case Player.RemiliaScarlet:
-                        stats = "\nMax Health: 60" +
-                        "\nMax Energy: 60" +
-                        "\nRole: Offense" +
-                        "\nDifficulty: Normal" +
-                        "\nAbility (passive / 0.5 health per hit): Vampuric";
-
-                        if (selectedGamemode.Value == VitaruGamemode.Touhosu && late)
-                            stats = stats + Background.RemiliaWiki1;
-                        break;
-                    case Player.Cirno:
-                        stats = "\nMax Health: 80" +
-                        "\nMax Energy: 40" +
-                        "\nRole: Defense" +
-                        "\nDifficulty: Easy" +
-                        "\nAbility (40 energy): Shatter";
-                        break;
-                    case Player.YuyukoSaigyouji:
-                        stats = "\nMax Health: 100" +
-                        "\nMax Energy: 20" +
-                        "\nRole: Defense" +
-                        "\nDifficulty: Normal" +
-                        "\nSpell (4 energy, 2 per second): Ghastly Dream";
-                        break;
-                    case Player.YukariYakumo:
-                        stats = "\nMax Health: 80" +
-                        "\nMax Energy: 24" +
-                        "\nRole: Support" +
-                        "\nDifficulty: Another" +
-                        "\nAbility (4 energy, 4 per second): Rift (Buggy?)";
-
-                        if (selectedGamemode.Value == VitaruGamemode.Touhosu && bonded)
-                            stats = stats + Background.YukariWiki1;
-                        break;
-                    case Characters.SikieikiYamaxanadu:
-                        stats = "\nMax Health: 80" +
-                        "\nMax Energy: 40" +
-                        "\nRole: Offense + Defense" +
-                        "\nDifficulty: ???" +
-                        "\nAbility (2 stab, 4 per second of block, 6 swipe, 10 wipe): Judgement (Not Implemented)";
-                        break;
-                    case Player.KokoroHatano:
-                        stats = "\nMax Health: 100" +
-                        "\nMax Energy: 36" +
-                        "\nRole: Offense + Defense" +
-                        "\nDifficulty: Extra" +
-                        "\nAbility (passive): Last Dance (Buggy?)";
-                        break;
-                    case Player.Kaguya:
-                        stats = "\nMax Health: 80" +
-                        "\nMax Energy: 36" +
-                        "\nRole: Support" +
-                        "\nDifficulty: Hard" +
-                        "\nSpell (4 energy): Lunar Shift (Not Implemented)";
-
-                        if (false)//selectedGamemode.Value == VitaruGamemode.Touhosu && sacred)
-                            stats = stats + "\n\n";
-                        break;
-                    case Player.IbarakiKasen:
-                        stats = "\nMax Health: 40" +
-                        "\nMax Energy: 8" +
-                        "\nRole: Offense" +
-                        "\nDifficulty: Insane" +
-                        "\nSpell (2 energy): Blink (Pending New Spell)";
-                        break;
-                    case Player.NueHoujuu:
-                        stats = "\nMax Health: 80" +
-                        "\nMax Energy: 24" +
-                        "\nRole: Support" +
-                        "\nDifficulty: Another" +
-                        "\nSpell (Ratio [energy:damage/energy/health/weaken] - 1:4/2/1/2): Invasion (WIP)";
-                        break;
-                    case Player.VasterLetrunce:
-                        stats = "\nMax Health: 120" +
-                        "\nMax Energy: 20" +
-                        "\nRole: Support" +
-                        "\nDifficulty: Easy" +
-                        "\nSpell (2 per second of active): Remembrance (Not Implemented)";
-                        
-                        if (false)//selectedGamemode.Value == VitaruGamemode.Touhosu && past)
-                            stats = stats + Background.VasterWiki1;
-                        break;
-                    case Player.AliceMuyart:
-                        if (!VitaruAPIContainer.Shawdooow)
-                        {
-                            selectedCharacter.Value = Player.ReimuHakurei;
-                            character = Player.ReimuHakurei;
+                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
                             goto restart;
                         }
-                        stats = "\nMax Health: 200 (x2 Healing)" +
-                        "\nMax Energy: 200 (x2 Gain)" +
-                        "\nRole: Offense" +
-                        "\nDifficulty: Hard" +
-                        "\nSpell: UnNatural";
                         break;
-                    case Player.ArysaMuyart:
-                        if (!VitaruAPIContainer.Shawdooow)
-                        {
-                            selectedCharacter.Value = Player.ReimuHakurei;
-                            character = Player.ReimuHakurei;
-                            goto restart;
-                        }
-                        stats = "\nMax Health: 60" +
-                        "\nMax Energy: 80" +
-                        "\nRole: Defense" +
-                        "\nDifficulty: ???" +
-                        "\nSpell: Seasonal Shift";
-                        break;
-                        */
                 }
 
                 characterDescription.Description.Text = stats;

@@ -415,16 +415,32 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
     public enum SelectableCharacters
     {
+        //The Hakurei Family, or whats left of them
         [System.ComponentModel.Description("Reimu Hakurei")]
-        ReimuHakurei = 1,
-        [System.ComponentModel.Description("Marisa Kirisame")]
-        MarisaKirisame,
+        ReimuHakurei,
+        [System.ComponentModel.Description("Ryukoy Hakurei")]
+        RyukoyHakurei,
+        [System.ComponentModel.Description("Tomaji Hakurei")]
+        TomajiHakurei,
+
+        //Hakurei Family Friends, 
         [System.ComponentModel.Description("Sakuya Izayoi")]
-        SakuyaIzayoi = 3,
+        SakuyaIzayoi,
         [System.ComponentModel.Description("Flandre Scarlet")]
         FlandreScarlet,
         [System.ComponentModel.Description("Remilia Scarlet")]
         RemiliaScarlet,
+
+        //Uncle Vaster and Aunty Alice
+        [System.ComponentModel.Description("Alice Letrunce")]
+        AliceLetrunce,
+        [System.ComponentModel.Description("Vaster Letrunce")]
+        VasterLetrunce,
+
+        [System.ComponentModel.Description("Marisa Kirisame")]
+        MarisaKirisame,
+
+        //Old Character list
         /*
         [System.ComponentModel.Description("Rinnosuke Morichika")]
         RinnosukeMorichika,
@@ -440,10 +456,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         //RanYakumo,
         //[System.ComponentModel.Description("Chen")]
         //Chen,
-        [System.ComponentModel.Description("Alice Letrunce")]
-        AliceLetrunce,
-        [System.ComponentModel.Description("Vaster Letrunce")]
-        VasterLetrunce,
         //[System.ComponentModel.Description("Komachi Onozuka")]
         //KomachiOnozuka,
         [System.ComponentModel.Description("Byakuren Hijiri")]
