@@ -6,7 +6,6 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
-using osu.Game.Rulesets.Vitaru.Scoring;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;

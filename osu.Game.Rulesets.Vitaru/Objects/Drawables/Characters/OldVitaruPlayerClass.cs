@@ -24,8 +24,8 @@ using Symcol.Core.Networking;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces;
-using Vitaru.Plot.Story;
-using Vitaru.Plot.Story.CharacterSpeech;
+//using Vitaru.Plot.Story;
+//using Vitaru.Plot.Story.CharacterSpeech;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 

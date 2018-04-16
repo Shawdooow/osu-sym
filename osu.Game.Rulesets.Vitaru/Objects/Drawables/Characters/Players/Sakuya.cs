@@ -14,17 +14,27 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
     {
         public double SetRate { get; private set; } = 0.8d;
 
+        public const double SakuyaHealth = 80;
+
+        public const double SakuyaEnergy = 24;
+
+        public const double SakuyaEnergyCost = 2;
+
+        public const double SakuyaEnergyCostPerSecond = 4;
+
+        public static readonly Color4 SakuyaColor = Color4.Navy;
+
         public override PlayableCharacters PlayableCharacter => PlayableCharacters.SakuyaIzayoi;
 
-        public override double MaxHealth => 80;
+        public override double MaxHealth => SakuyaHealth;
 
-        public override double MaxEnergy => 24;
+        public override double MaxEnergy => SakuyaEnergy;
 
-        public override double EnergyCost => 2;
+        public override double EnergyCost => SakuyaEnergyCost;
 
-        public override double EnergyCostPerSecond => 4;
+        public override double EnergyCostPerSecond => SakuyaEnergyCostPerSecond;
 
-        public override Color4 CharacterColor => Color4.Navy;
+        public override Color4 CharacterColor => SakuyaColor;
 
         private double originalRate;
 

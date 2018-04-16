@@ -11,8 +11,8 @@ using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Rulesets.Vitaru.Scoring;
-using Vitaru.Plot.Story;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
 
 namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 {
@@ -244,12 +244,15 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         break;
                         */
                     case PlayableCharacters.SakuyaIzayoi:
-                        stats = "\nMax Health: 80" +
-                        "\nMax Energy: 36" +
+                        stats = "\nMax Health: " + Sakuya.SakuyaHealth +
+                        "\nMax Energy: " + Sakuya.SakuyaEnergy +
+                        "\nEnergy Cost: " + Sakuya.SakuyaEnergyCost +
+                        "\nEnergy Cost per Second: " + Sakuya.SakuyaEnergyCostPerSecond +
                         "\nRole: Defense" +
                         "\nDifficulty: Normal" +
-                        "\nSpell (6 energy, 3 per second): Time-Warden";
-
+                        "\nSpell: Time-Warden";
+                        break;
+                        /*
                         if (selectedGamemode.Value == VitaruGamemode.Touhosu)
                         {
                             if (!late)
@@ -262,7 +265,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                                 stats = stats + Background.SakuyaWiki3;
                         }
                         break;
-                        /*
                     case Player.HongMeiling:
                         stats = "\nMax Health: 0 (when resurrected 20)" +
                         "\nMax Energy: 36" +
