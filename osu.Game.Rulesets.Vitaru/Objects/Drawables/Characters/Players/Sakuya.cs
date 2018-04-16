@@ -12,6 +12,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 {
     public class Sakuya : Player
     {
+        #region Fields
         public double SetRate { get; private set; } = 0.8d;
 
         public const double SakuyaHealth = 80;
@@ -41,6 +42,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         private double currentRate = 1;
 
         private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
+        #endregion
 
         public Sakuya(VitaruPlayfield playfield) : base(playfield)
         {

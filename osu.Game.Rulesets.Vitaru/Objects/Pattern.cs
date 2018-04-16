@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         //Radians
         public double PatternAngle { get; set; } = Math.PI / 2;
         public double PatternDiameter { get; set; } = 20;
-        public double PatternDamage { get; set; } = 10;
+        public double PatternDamage { get; set; } = 20;
         public int PatternTeam { get; set; } = 1;
         private double beatLength;
         #endregion

@@ -148,7 +148,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             {
                 CanHeal = false;
 
-                Heal(0.5d);
+                Heal(1d);
 
                 if (CurrentGameMode != VitaruGamemode.Touhosu)
                 {

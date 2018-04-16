@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 p.IsSpinner = true;
                 p.PatternSpeed = 0.3f;
                 p.EnemyHealth = 180;
-                p.PatternDamage = 5;
+                p.PatternDamage = 10;
                 p.PatternID = 6;
                 p.EndTime = endTimeData.EndTime;
             }
