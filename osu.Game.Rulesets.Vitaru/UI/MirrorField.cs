@@ -20,16 +20,16 @@ namespace osu.Game.Rulesets.Vitaru.UI
         private bool enemyPlayerOverride = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.EnemyPlayerOverride);
         private readonly Bindable<int> enemyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);
 
-        private readonly Player enemyOne = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyOne);
-        private readonly Player enemyTwo = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyTwo);
-        private readonly Player enemyThree = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyThree);
-        private readonly Player enemyFour = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyFour);
-        private readonly Player enemyFive = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyFive);
-        private readonly Player enemySix = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemySix);
-        private readonly Player enemySeven = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemySeven);
-        private readonly Player enemyEight = VitaruSettings.VitaruConfigManager.GetBindable<Player>(VitaruSetting.EnemyEight);
+        private readonly SelectableCharacters enemyOne = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyOne);
+        private readonly SelectableCharacters enemyTwo = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyTwo);
+        private readonly SelectableCharacters enemyThree = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyThree);
+        private readonly SelectableCharacters enemyFour = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyFour);
+        private readonly SelectableCharacters enemyFive = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyFive);
+        private readonly SelectableCharacters enemySix = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemySix);
+        private readonly SelectableCharacters enemySeven = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemySeven);
+        private readonly SelectableCharacters enemyEight = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyEight);
 
-        private readonly List<Player> enemyList = new List<Player>();
+        private readonly List<VitaruPlayer> enemyList = new List<VitaruPlayer>();
 
         private readonly VitaruPlayfield vitaruPlayfield;
 

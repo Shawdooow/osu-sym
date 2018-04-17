@@ -10,7 +10,7 @@ using System;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 {
-    public class Tomaji : Player
+    public class Tomaji : VitaruPlayer
     {
         #region Fields
         public double SetRate { get; private set; } = 0.8d;

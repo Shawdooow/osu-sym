@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 {
-    public abstract class Player : Character, IKeyBindingHandler<VitaruAction>
+    public abstract class VitaruPlayer : Character, IKeyBindingHandler<VitaruAction>
     {
         #region Fields
         protected readonly VitaruGamemode CurrentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         private double beatLength = 1000;
         #endregion
 
-        public Player(VitaruPlayfield playfield) : base(playfield)
+        public VitaruPlayer(VitaruPlayfield playfield) : base(playfield)
         {
             Actions[VitaruAction.Up] = false;
             Actions[VitaruAction.Down] = false;

@@ -3,7 +3,7 @@ using osu.Game.Rulesets.Vitaru.UI;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 {
-    public class Ryukoy : Player
+    public class Ryukoy : VitaruPlayer
     {
         #region Fields
         public const double RyukoyHealth = 80;

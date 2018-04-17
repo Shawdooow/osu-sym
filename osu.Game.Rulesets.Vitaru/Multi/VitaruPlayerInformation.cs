@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
     {
         public string PlayerID = "0";
 
-        public VitaruPlayer Character;
+        public SelectableCharacters Character;
 
         public float PlayerX;
 
