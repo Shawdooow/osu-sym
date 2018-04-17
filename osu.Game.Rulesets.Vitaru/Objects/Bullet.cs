@@ -15,9 +15,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
         public bool DummyMode { get; set; }
 
-        public float BulletDamage { get; set; } = 10;
-        public float BulletSpeed { get; set; } = 1f;
-        public float BulletDiameter { get; set; } = 16f;
+        public double BulletDamage { get; set; } = 10;
+        public double BulletSpeed { get; set; } = 1f;
+        public double BulletDiameter { get; set; } = 16f;
         public double BulletAngle { get; set; }
         public bool DynamicBulletVelocity { get; set; }
         public bool Piercing { get; set; }
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         public bool ObeyBoundries { get; } = true;
         public bool Ghost { get; set; }
 
-        public float Curviness
+        public double Curviness
         {
             get { return curviness; }
             set
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
             }
         }
 
-        private float curviness = 1;
+        private double curviness = 1;
 
         public SliderType SliderType
         {
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                             {
                                 Position,
                                 new Vector2((float)Math.Cos((BulletAngle + offset) - 0.4f) * 1000 + Position.X, (float)Math.Sin((BulletAngle + offset) - 0.4f) * 1000 + Position.Y),
-                                new Vector2((float)Math.Cos(BulletAngle + offset) * (2000 / Curviness) + Position.X, (float)Math.Sin(BulletAngle + offset) * (2000 / Curviness) + Position.Y),
+                                new Vector2((float)Math.Cos(BulletAngle + offset) * (float)(2000 / Curviness) + Position.X, (float)Math.Sin(BulletAngle + offset) * (float)(2000 / Curviness) + Position.Y),
                             },
                         };
                         break;
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                             {
                                 Position,
                                 new Vector2((float)Math.Cos((BulletAngle - offset) + 0.4f) * 1000 + Position.X, (float)Math.Sin((BulletAngle - offset) + 0.4f) * 1000 + Position.Y),
-                                new Vector2((float)Math.Cos(BulletAngle - offset) * (2000 / Curviness) + Position.X, (float)Math.Sin(BulletAngle - offset) * (2000 / Curviness) + Position.Y),
+                                new Vector2((float)Math.Cos(BulletAngle - offset) * (float)(2000 / Curviness) + Position.X, (float)Math.Sin(BulletAngle - offset) * (float)(2000 / Curviness) + Position.Y),
                             },
                         };
                         break;

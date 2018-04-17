@@ -267,6 +267,24 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                             goto restart;
                         }
                         break;
+                    case SelectableCharacters.RemiliaScarlet:
+                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                            stats = Remilia.Background;
+                        else
+                        {
+                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
+                            goto restart;
+                        }
+                        break;
+                    case SelectableCharacters.FlandreScarlet:
+                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                            stats = Flandre.Background;
+                        else
+                        {
+                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
+                            goto restart;
+                        }
+                        break;
                 }
 
                 characterDescription.Description.Text = stats;

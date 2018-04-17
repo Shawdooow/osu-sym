@@ -183,13 +183,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             base.Load();
 
             Alpha = 0;
-            Size = new Vector2(Bullet.BulletDiameter);
+            Size = new Vector2((float)Bullet.BulletDiameter);
             Scale = new Vector2(0.1f);
 
             Children = new Drawable[]
             {
                 bulletPiece = new BulletPiece(this),
-                Hitbox = new SymcolHitbox(new Vector2(Bullet.BulletDiameter), Shape.Circle)
+                Hitbox = new SymcolHitbox(new Vector2((float)Bullet.BulletDiameter), Shape.Circle)
                 {
                     Team = Bullet.Team,
                     HitDetection = false

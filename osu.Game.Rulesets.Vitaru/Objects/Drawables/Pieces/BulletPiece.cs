@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
         {
             base.LoadComplete();
 
-            Size = new Vector2(drawableBullet.Bullet.BulletDiameter + 12);
+            Size = new Vector2((float)drawableBullet.Bullet.BulletDiameter + 12);
 
             if (currentSkin != GraphicsPresets.HighPerformanceCompetitive && currentSkin != GraphicsPresets.HighPerformance)
                 Child = bulletKiai = new Sprite
@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
             if (currentSkin != GraphicsPresets.HighPerformanceCompetitive && currentSkin != GraphicsPresets.HighPerformance)
                 circle.EdgeEffect = new EdgeEffectParameters
                 {
-                    Radius = drawableBullet.Bullet.BulletDiameter,
+                    Radius = (float)drawableBullet.Bullet.BulletDiameter,
                     Type = EdgeEffectType.Shadow,
                     Colour = drawableBullet.AccentColour.Opacity(0.2f)
                 };

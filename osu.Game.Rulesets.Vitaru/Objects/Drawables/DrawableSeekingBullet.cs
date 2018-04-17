@@ -85,16 +85,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             }
         }
 
-        public float enemyRelativePositionAngle()
+        public double enemyRelativePositionAngle()
         {
             //Returns a Radian
-            float enemyAngle = (float)Math.Atan2((NearestEnemy.Position.Y - Position.Y), (NearestEnemy.Position.X - Position.X));
+            double enemyAngle = Math.Atan2((NearestEnemy.Position.Y - Position.Y), (NearestEnemy.Position.X - Position.X));
             return enemyAngle;
         }
 
-        private Vector2 getBulletVelocity(float angle)
+        private Vector2 getBulletVelocity(double angle)
         {
-            Vector2 velocity = new Vector2(SeekingBullet.BulletSpeed * (float)Math.Cos(angle), SeekingBullet.BulletSpeed * (float)Math.Sin(angle));
+            Vector2 velocity = new Vector2((float)SeekingBullet.BulletSpeed * (float)Math.Cos(angle), (float)SeekingBullet.BulletSpeed * (float)Math.Sin(angle));
             return velocity;
         }
 

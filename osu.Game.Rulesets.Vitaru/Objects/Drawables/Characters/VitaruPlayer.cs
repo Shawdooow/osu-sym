@@ -2,6 +2,8 @@
 using OpenTK.Graphics;
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Platform;
@@ -10,6 +12,7 @@ using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 using System.Collections.Generic;
+using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 {
@@ -70,6 +73,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected double SpellEndTime { get; set; } = double.MinValue;
 
+        protected readonly Container Cursor;
+
         private double packetTime = double.MinValue;
         private double lastQuarterBeat = -1;
         private double nextHalfBeat = -1;
@@ -85,6 +90,21 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             Actions[VitaruAction.Right] = false;
             Actions[VitaruAction.Slow] = false;
             Actions[VitaruAction.Shoot] = false;
+
+            VitaruPlayfield.CharacterField.Add(Cursor = new Container
+            {
+                Anchor = Anchor.TopLeft,
+                Origin = Anchor.Centre,
+                Size = new Vector2(4),
+                CornerRadius = 2,
+                Alpha = 0.2f,
+                Masking = true,
+
+                Child = new Box
+                {
+                    RelativeSizeAxes = Axes.Both
+                }
+            });
         }
 
         protected override void LoadAnimationSprites(TextureStore textures, Storage storage)
@@ -177,6 +197,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             base.Update();
 
             Position = GetNewPlayerPosition(0.25d);
+            Cursor.Position = VitaruCursor.CenterCircle.ToSpaceOfOtherDrawable(Vector2.Zero, Parent) + new Vector2(6);
 
             if (nextHalfBeat <= Time.Current && nextHalfBeat != -1)
                 onHalfBeat();
@@ -242,7 +263,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         }
 
         #region Shooting Handling
-        private void bulletAddRad(float speed, float angle, Color4 color, SliderType type = SliderType.Straight)
+        private void bulletAddRad(double speed, double angle, Color4 color, SliderType type = SliderType.Straight)
         {
             DrawableBullet drawableBullet;
 
@@ -257,7 +278,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 ColorOverride = color,
                 Team = Team,
                 SliderType = type,
-                Curviness = 0.25f,
+                Curviness = 0.25d,
                 DummyMode = true,
                 //Ghost = CurrentCharacter == Characters.YuyukoSaigyouji | CurrentCharacter == Characters.AliceMuyart
             }, VitaruPlayfield));
@@ -270,9 +291,17 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         protected void PatternWave()
         {
             const int numberbullets = 3;
-            float directionModifier = -0.1F;
+            double directionModifier = -0.2d;
             Color4 color = CharacterColor;
             SliderType type;
+
+            double cursorAngle = 0;
+
+            if (Actions[VitaruAction.Slow])
+            {
+                cursorAngle = (MathHelper.RadiansToDegrees(Math.Atan2((Cursor.Position.Y - Position.Y), (Cursor.Position.X - Position.X))) + 90 + Rotation) - 12;
+                directionModifier = 0.1d;
+            }
 
             for (int i = 1; i <= numberbullets; i++)
             {
@@ -284,16 +313,20 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     type = SliderType.CurveLeft;
 
                 //-90 = up
-                bulletAddRad(1, MathHelper.DegreesToRadians(-90) + directionModifier, color, type);
-                directionModifier += 0.1f;
+                bulletAddRad(1, MathHelper.DegreesToRadians(-90 + cursorAngle) + directionModifier, color, type);
+
+                if (Actions[VitaruAction.Slow])
+                    directionModifier += 0.1d;
+                else
+                    directionModifier += 0.2d;
             }
         }
 
         private void patternCircle()
         {
             int numberbullets = 8;
-            float directionModifier = (360f / numberbullets);
-            float direction = MathHelper.DegreesToRadians(-90);
+            double directionModifier = (360f / numberbullets);
+            double direction = MathHelper.DegreesToRadians(-90);
             directionModifier = MathHelper.DegreesToRadians(directionModifier);
             for (int i = 1; i <= numberbullets; i++)
             {
