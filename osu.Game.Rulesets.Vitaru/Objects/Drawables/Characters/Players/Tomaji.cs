@@ -134,6 +134,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
             SpeedMultiplier = 1 / speed;
         }
 
+        //Currently ripped straight from old Sakuya, needs updating
         protected override bool Pressed(VitaruAction action)
         {
             bool late = true;
@@ -154,7 +155,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         }
 
         #region Touhosu Story Content
-        public const string Background = "";
+        public const string Background = "Tomaji has always been over shadowed by his older sister Ryukoy who is next in line to be the Hakurei Maiden, though he has never minded. " +
+            "";
         #endregion
     }
 }

@@ -145,15 +145,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         protected override bool Pressed(VitaruAction action)
         {
-            bool late = true;
-
-            if (action == VitaruAction.Increase && !late)
-                SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 0.8d);
-            else if (action == VitaruAction.Increase && late)
+            if (action == VitaruAction.Increase)
                 SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 1.2d);
-            if (action == VitaruAction.Decrease && !late)
-                SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.4d);
-            else if (action == VitaruAction.Decrease && late)
+            if (action == VitaruAction.Decrease)
                 SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.2d);
 
             return base.Pressed(action);
