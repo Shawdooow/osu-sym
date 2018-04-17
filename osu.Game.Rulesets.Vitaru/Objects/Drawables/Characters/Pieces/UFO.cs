@@ -10,13 +10,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
 {
     public class UFO : BeatSyncedContainer
     {
-        public readonly Player ParentNue;
+        public readonly VitaruPlayer ParentNue;
         public readonly UFOType UFOType;
         private readonly Color4 color;
 
-        public Player AttachedPlayer;
+        public VitaruPlayer AttachedPlayer;
 
-        public UFO(Player player, UFOType type)
+        public UFO(VitaruPlayer player, UFOType type)
         {
             ParentNue = player;
             UFOType = type;

@@ -211,10 +211,10 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             {
                 restart:
 
-                string stats = "\nMax Health: " + Player.DefaultHealth +
-                        "\nMax Energy: " + Player.DefaultEnergy +
-                        "\nEnergy Cost: " + Player.DefaultEnergyCost +
-                        "\nEnergy Cost per Second: " + Player.DefaultEnergyCostPerSecond +
+                string stats = "\nMax Health: " + VitaruPlayer.DefaultHealth +
+                        "\nMax Energy: " + VitaruPlayer.DefaultEnergy +
+                        "\nEnergy Cost: " + VitaruPlayer.DefaultEnergyCost +
+                        "\nEnergy Cost per Second: " + VitaruPlayer.DefaultEnergyCostPerSecond +
                         "\nRole: ???" +
                         "\nDifficulty: ???" +
                         "\nAbility: Not Implemented Yet!";

@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
     {
         private readonly Container characterSigil;
 
-        private readonly Player vitaruPlayer;
+        private readonly VitaruPlayer vitaruPlayer;
 
         private readonly Sprite gear1;
         private readonly Sprite gear2;
@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
         private readonly Sprite gear4;
         private readonly Sprite gear5;
 
-        public Seal(Player character)
+        public Seal(VitaruPlayer character)
         {
             vitaruPlayer = character;
 

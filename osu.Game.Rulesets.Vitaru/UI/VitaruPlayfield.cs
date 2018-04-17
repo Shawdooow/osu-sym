@@ -44,11 +44,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public readonly MirrorField Mirrorfield;
 
         private readonly Container judgementLayer;
-        private readonly List<Player> playerList = new List<Player>();
+        private readonly List<VitaruPlayer> playerList = new List<VitaruPlayer>();
 
         public static List<VitaruClientInfo> LoadPlayerList = new List<VitaruClientInfo>();
 
-        public static Player Player;
+        public static VitaruPlayer Player;
 
         public virtual bool LoadPlayer => true;
 
@@ -185,7 +185,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 }
                 */
 
-                foreach (Player player in playerList)
+                foreach (VitaruPlayer player in playerList)
                     CharacterField.Add(player);
 
                 Player.Position = new Vector2(256, 700);
