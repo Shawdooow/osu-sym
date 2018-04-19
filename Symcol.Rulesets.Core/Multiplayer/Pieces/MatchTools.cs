@@ -1,4 +1,8 @@
-﻿using OpenTK;
+﻿//Symcol.Rulesets.Core.Multiplayer.Screens.RulesetMultiplayerSelection
+//Symcol.Rulesets.Core.SymcolSettingsSubsection
+//#define SymcolMods
+
+using OpenTK;
 using OpenTK.Graphics;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
@@ -11,10 +15,11 @@ using osu.Framework.MathUtils;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
+#if SymcolMods
 using osu.Game.Screens.Symcol.Pieces;
+#endif
 using Symcol.Rulesets.Core.Multiplayer.Options;
 using System;
 using System.Diagnostics;
@@ -106,12 +111,14 @@ namespace Symcol.Rulesets.Core.Multiplayer.Pieces
                         SelectedContent.Child = new Container
                         {
                             RelativeSizeAxes = Axes.Both,
+#if SymcolMods
                             Child = new HitSoundBoard
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 ButtonSize = 80
                             }
+#endif
                         };
                         break;
                 }

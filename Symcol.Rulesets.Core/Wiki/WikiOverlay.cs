@@ -7,12 +7,11 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Overlays;
 using System.Linq;
 
 namespace Symcol.Rulesets.Core.Wiki
 {
-    public abstract class WikiOverlay : WaveOverlayContainer
+    public abstract class WikiOverlay : WaveContainer
     {
         protected abstract WikiHeader Header { get; }
         protected abstract WikiSection[] Sections { get; }

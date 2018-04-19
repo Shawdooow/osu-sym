@@ -1,5 +1,6 @@
 ﻿//Symcol.Rulesets.Core.SymcolSettingsSubsection
-#define SymcolMods
+//Symcol.Rulesets.Core.Multiplayer.Pieces
+//#define SymcolMods
 
 using OpenTK;
 using OpenTK.Graphics;

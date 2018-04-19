@@ -1,13 +1,17 @@
 ﻿//Symcol.Rulesets.Core.Multiplayer.Screens.RulesetMultiplayerSelection
-#define SymcolMods
+//Symcol.Rulesets.Core.Multiplayer.Pieces
+//#define SymcolMods
 
 using osu.Framework.Allocation;
 using osu.Game;
 using osu.Game.Overlays.Settings;
 using Symcol.Rulesets.Core.Wiki;
+#if SymcolMods
 using osu.Game.Screens.Symcol;
+#endif
 using Symcol.Rulesets.Core.Multiplayer.Screens;
 using osu.Framework.Platform;
+using osu.Framework.Logging;
 
 namespace Symcol.Rulesets.Core
 {
