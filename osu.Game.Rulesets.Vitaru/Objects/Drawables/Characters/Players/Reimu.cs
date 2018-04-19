@@ -10,9 +10,9 @@
             "Ever since he died it has been quiet, Reimu has no idea what happened that day but seemingly all the fairies disappeard. " +
             "The shrine has remained uncontested for nearly sixteen years. " +
             "It made her uneasy that soon her oldest would be taking over. " +
-            "She felt that this was the \"Calm before the storm\" as they say, and she was by no means a fighter if it comes down to it. " +
-            "All she can do is pray, age not only changes your prespective but also your body. " +
-            "Reimu might have been feared by many back in the day, but she certainly is not capable of what she used to be.";
+            "Ryukoy was by no means a fighter, if she ever got into trouble it likely wouldn't end well. " +
+            "All Reimu can do is pray, age not only changes your prespective but also your body. " +
+            "She might have been feared by many back in the day, but she certainly is not capable of what she used to be anymore.";
         #endregion
     }
 }
