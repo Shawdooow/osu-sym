@@ -262,6 +262,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             return playerPosition;
         }
 
+        protected override void Death()
+        {
+            //base.Death();
+        }
+
         #region Shooting Handling
         private void bulletAddRad(double speed, double angle, Color4 color, SliderType type = SliderType.Straight)
         {

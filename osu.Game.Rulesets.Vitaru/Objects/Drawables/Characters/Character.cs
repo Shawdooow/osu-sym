@@ -315,13 +315,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             return Health;
         }
 
-        public virtual void Death()
+        protected virtual void Death()
         {
             Dead = true;
             Expire();
         }
 
-        public virtual void Revive()
+        protected virtual void Revive()
         {
             Dead = false;
         }
