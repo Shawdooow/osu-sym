@@ -289,7 +289,15 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
                     health.Text = ((int)VitaruPlayfield.Player.Health).ToString();
                     energy.Text = ((int)VitaruPlayfield.Player.Energy).ToString();
-                    speed.Text = ((Sakuya)VitaruPlayfield.Player).SetRate.ToString();
+                    switch (currentCharacter)
+                    {
+                        case SelectableCharacters.SakuyaIzayoi:
+                            speed.Text = ((Sakuya)VitaruPlayfield.Player).SetRate.ToString();
+                            break;
+                        case SelectableCharacters.TomajiHakurei:
+                            speed.Text = ((Tomaji)VitaruPlayfield.Player).SetRate.ToString();
+                            break;
+                    }
                     //combo.Text = VitaruPlayfield.Player.Combo.ToString();
                 }
             }

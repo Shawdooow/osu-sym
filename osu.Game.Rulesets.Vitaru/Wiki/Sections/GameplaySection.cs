@@ -219,7 +219,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nDifficulty: ???" +
                         "\nAbility: Not Implemented Yet!";
 
-                switch (character)
+                switch (selectedCharacter.Value)
                 {
                     case SelectableCharacters.ReimuHakurei:
                         if (selectedGamemode == VitaruGamemode.Touhosu)
