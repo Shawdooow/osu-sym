@@ -478,6 +478,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         [System.ComponentModel.Description("Marisa Kirisame")]
         MarisaKirisame,
 
+        [System.ComponentModel.Description("Shaka Zulu")]
+        ShakaZulu,
+
         //Old Character list
         /*
         [System.ComponentModel.Description("Rinnosuke Morichika")]
