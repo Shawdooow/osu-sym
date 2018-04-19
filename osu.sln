@@ -31,6 +31,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Taiko.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Osu.Tests", "osu.Game.Rulesets.Osu.Tests\osu.Game.Rulesets.Osu.Tests.csproj", "{6A2D5D58-0261-4A75-BE84-2BE8B076B7C2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Vitaru", "osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj", "{11ABDA60-7CD2-430A-826B-ACEB225C49BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Shape", "osu.Game.Rulesets.Shape\osu.Game.Rulesets.Shape.csproj", "{211DF84A-FE5D-4717-9B54-54F229785717}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +95,14 @@ Global
 		{6A2D5D58-0261-4A75-BE84-2BE8B076B7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A2D5D58-0261-4A75-BE84-2BE8B076B7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A2D5D58-0261-4A75-BE84-2BE8B076B7C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11ABDA60-7CD2-430A-826B-ACEB225C49BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11ABDA60-7CD2-430A-826B-ACEB225C49BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11ABDA60-7CD2-430A-826B-ACEB225C49BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11ABDA60-7CD2-430A-826B-ACEB225C49BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{211DF84A-FE5D-4717-9B54-54F229785717}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{211DF84A-FE5D-4717-9B54-54F229785717}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{211DF84A-FE5D-4717-9B54-54F229785717}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{211DF84A-FE5D-4717-9B54-54F229785717}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

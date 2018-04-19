@@ -14,9 +14,6 @@
     <EmbeddedResource Include="Assets\Textures\icon.png" />
   </ItemGroup>
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj" />
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
-    <ProjectReference Include="..\Symcol.Core\Symcol.Core.csproj" />
-    <ProjectReference Include="..\Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj" />
   </ItemGroup>
 </Project>
