@@ -9,7 +9,7 @@ namespace osu.Game.Tests.Visual
 {
     public abstract class OsuTestCase : TestCase
     {
-        protected override ITestCaseTestRunner CreateRunner() => new OsuTestreeCaseTestRunner();
+        protected override ITestCaseTestRunner CreateRunner() => new OsuTestCaseTestRunner();
 
         public class OsuTestCaseTestRunner : OsuGameBase, ITestCaseTestRunner
         {
