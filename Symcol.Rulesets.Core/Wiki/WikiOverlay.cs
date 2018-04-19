@@ -7,11 +7,12 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using System.Linq;
 
 namespace Symcol.Rulesets.Core.Wiki
 {
-    public abstract class WikiOverlay : WaveContainer
+    public abstract class WikiOverlay : WaveOverlayContainer
     {
         protected abstract WikiHeader Header { get; }
         protected abstract WikiSection[] Sections { get; }
@@ -24,10 +25,10 @@ namespace Symcol.Rulesets.Core.Wiki
 
         public WikiOverlay()
         {
-            FirstWaveColour = OsuColour.Gray(0.4f);
-            SecondWaveColour = OsuColour.Gray(0.3f);
-            ThirdWaveColour = OsuColour.Gray(0.2f);
-            FourthWaveColour = OsuColour.Gray(0.1f);
+            Waves.FirstWaveColour = OsuColour.Gray(0.4f);
+            Waves.SecondWaveColour = OsuColour.Gray(0.3f);
+            Waves.ThirdWaveColour = OsuColour.Gray(0.2f);
+            Waves.FourthWaveColour = OsuColour.Gray(0.1f);
 
             RelativeSizeAxes = Axes.Both;
             RelativePositionAxes = Axes.Both;
@@ -110,13 +111,13 @@ namespace Symcol.Rulesets.Core.Wiki
         protected override void PopIn()
         {
             base.PopIn();
-            FadeEdgeEffectTo(0.5f, APPEAR_DURATION, Easing.In);
+            FadeEdgeEffectTo(0.5f, WaveContainer.APPEAR_DURATION, Easing.In);
         }
 
         protected override void PopOut()
         {
             base.PopOut();
-            FadeEdgeEffectTo(0, DISAPPEAR_DURATION, Easing.Out);
+            FadeEdgeEffectTo(0, WaveContainer.DISAPPEAR_DURATION, Easing.Out);
         }
 
         private class WikiTabControl : PageTabControl<WikiSection>
