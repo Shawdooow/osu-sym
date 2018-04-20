@@ -1,6 +1,6 @@
 ﻿//Symcol.Rulesets.Core.Multiplayer.Screens.RulesetMultiplayerSelection
-//Symcol.Rulesets.Core.Multiplayer.Pieces
-//#define SymcolMods
+//Symcol.Rulesets.Core.Multiplayer.Pieces.MatchTools
+#define SymcolMods
 
 using osu.Framework.Allocation;
 using osu.Game;
