@@ -391,7 +391,7 @@ namespace osu.Framework.Platform
                 bootstrapSceneGraph(game);
 
                 frameSyncMode.TriggerChange();
-                enabledInputHandlers.TriggerChange();
+                ignoredInputHandlers.TriggerChange();
 
                 try
                 {
@@ -522,7 +522,7 @@ namespace osu.Framework.Platform
 
         private Bindable<FrameSync> frameSyncMode;
 
-        private Bindable<string> enabledInputHandlers;
+        private Bindable<string> ignoredInputHandlers;
 
         private Bindable<double> cursorSensitivity;
         private Bindable<bool> performanceLogging;
@@ -579,33 +579,25 @@ namespace osu.Framework.Platform
                 if (UpdateThread != null) UpdateThread.ActiveHz = updateLimiter;
             };
 
-            enabledInputHandlers = config.GetBindable<string>(FrameworkSetting.ActiveInputHandlers);
-            enabledInputHandlers.ValueChanged += enabledString =>
+            ignoredInputHandlers = config.GetBindable<string>(FrameworkSetting.IgnoredInputHandlers);
+            ignoredInputHandlers.ValueChanged += ignoredString =>
             {
-                var configHandlers = enabledString.Split(' ').Where(s => !string.IsNullOrWhiteSpace(s));
-                bool useDefaults = !configHandlers.Any();
+                var configIgnores = ignoredString.Split(' ').Where(s => !string.IsNullOrWhiteSpace(s));
 
-                // make sure all the handlers in the configuration file are available, else reset to sane defaults.
-                foreach (string handler in configHandlers)
-                {
-                    if (AvailableInputHandlers.All(h => h.ToString() != handler))
-                    {
-                        useDefaults = true;
-                        break;
-                    }
-                }
+                // for now, we always want at least one handler disabled (don't want raw and non-raw mouse at once).
+                bool restoreDefaults = !configIgnores.Any();
 
-                if (useDefaults)
+                if (restoreDefaults)
                 {
                     resetInputHandlers();
-                    enabledInputHandlers.Value = string.Join(" ", AvailableInputHandlers.Where(h => h.Enabled).Select(h => h.ToString()));
+                    ignoredInputHandlers.Value = string.Join(" ", AvailableInputHandlers.Where(h => !h.Enabled).Select(h => h.ToString()));
                 }
                 else
                 {
                     foreach (var handler in AvailableInputHandlers)
                     {
                         var handlerType = handler.ToString();
-                        handler.Enabled.Value = configHandlers.Any(ch => ch == handlerType);
+                        handler.Enabled.Value = configIgnores.All(ch => ch != handlerType);
                     }
                 }
             };

@@ -27,9 +27,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         public readonly SettingsButton JoinGameButton;
 
         public readonly Container NewGame;
-        //protected readonly TextBox HostIP;
         protected readonly TextBox HostPort;
-        //protected readonly TextBox PublicIp;
         protected readonly TextBox Ip;
 
         public readonly Container JoinIP;
@@ -72,7 +70,11 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Masking = true,
-                    Size = new Vector2(400, 300),
+                    Size = new Vector2(400, 60),
+
+                    CornerRadius = 10,
+                    BorderColour = Color4.White,
+                    BorderThickness = 6,
 
                     Children = new Drawable[]
                     {
@@ -81,66 +83,25 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
                             Colour = Color4.Blue,
                             RelativeSizeAxes = Axes.Both
                         },
-                        new Box
-                        {
-                            Anchor = Anchor.TopRight,
-                            Origin = Anchor.TopRight,
-                            Colour = Color4.Black,
-                            Alpha = 0.9f,
-                            RelativeSizeAxes = Axes.X,
-                            Width = 0.48f,
-                            Height = 20,
-                        },
                         HostPort = new TextBox
                         {
-                            Anchor = Anchor.TopRight,
-                            Origin = Anchor.TopRight,
+                            Anchor = Anchor.CentreRight,
+                            Origin = Anchor.CentreRight,
+                            Position = new Vector2(-12, 0),
                             RelativeSizeAxes = Axes.X,
-                            Width = 0.48f,
+                            Width = 0.42f,
                             Height = 20,
                             Text = "25570"
                         },
-                        /*
-                        new Box
-                        {
-                            Anchor = Anchor.TopLeft,
-                            Origin = Anchor.TopLeft,
-                            Colour = Color4.Black,
-                            Alpha = 0.9f,
-                            RelativeSizeAxes = Axes.X,
-                            Position = new Vector2(0, 22),
-                            Width = 0.48f,
-                            Height = 20,
-                        },
-                        PublicIp = new TextBox
-                        {
-                            Anchor = Anchor.TopLeft,
-                            Origin = Anchor.TopLeft,
-                            RelativeSizeAxes = Axes.X,
-                            Position = new Vector2(0, 22),
-                            Width = 0.48f,
-                            Height = 20,
-                            Text = "You're Public IP Address"
-                        },
-                        */
-                        new Box
-                        {
-                            Anchor = Anchor.TopLeft,
-                            Origin = Anchor.TopLeft,
-                            Colour = Color4.Black,
-                            Alpha = 0.9f,
-                            RelativeSizeAxes = Axes.X,
-                            Width = 0.48f,
-                            Height = 20,
-                        },
                         Ip = new TextBox
                         {
-                            Anchor = Anchor.TopLeft,
-                            Origin = Anchor.TopLeft,
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreLeft,
+                            Position = new Vector2(12, 0),
                             RelativeSizeAxes = Axes.X,
-                            Width = 0.48f,
+                            Width = 0.42f,
                             Height = 20,
-                            Text = "You're Local IP Address"
+                            Text = "IP Address"
                         }
                     }
                 }

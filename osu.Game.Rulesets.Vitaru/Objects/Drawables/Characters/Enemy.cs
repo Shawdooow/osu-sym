@@ -119,7 +119,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             }
         }
 
-        public override void Death()
+        protected override void Death()
         {
             Dead = true;
             Hitbox.HitDetection = false;
