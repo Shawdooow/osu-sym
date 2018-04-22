@@ -56,33 +56,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\bulletKiai.png" />
-    <EmbeddedResource Include="Assets\Textures\chen.png" />
-    <EmbeddedResource Include="Assets\Textures\chenKiai.png" />
-    <EmbeddedResource Include="Assets\Textures\chenKiaiRight.png" />
-    <EmbeddedResource Include="Assets\Textures\chenRight.png" />
-    <EmbeddedResource Include="Assets\Textures\crystal.png" />
     <EmbeddedResource Include="Assets\Textures\enemy.png" />
     <EmbeddedResource Include="Assets\Textures\enemyKiai.png" />
     <EmbeddedResource Include="Assets\Textures\gearLarge.png" />
     <EmbeddedResource Include="Assets\Textures\gearMedium.png" />
     <EmbeddedResource Include="Assets\Textures\gearSmall.png" />
     <EmbeddedResource Include="Assets\Textures\icon.png" />
-    <EmbeddedResource Include="Assets\Textures\kaguya.png" />
-    <EmbeddedResource Include="Assets\Textures\kaguyaKiai.png" />
-    <EmbeddedResource Include="Assets\Textures\kaguyaKiaiRight.png" />
-    <EmbeddedResource Include="Assets\Textures\kaguyaRight.png" />
     <EmbeddedResource Include="Assets\Textures\marisa.png" />
     <EmbeddedResource Include="Assets\Textures\marisaKiai.png" />
     <EmbeddedResource Include="Assets\Textures\marisaKiaiRight.png" />
     <EmbeddedResource Include="Assets\Textures\marisaRight.png" />
-    <EmbeddedResource Include="Assets\Textures\nue.png" />
-    <EmbeddedResource Include="Assets\Textures\nueKiai.png" />
-    <EmbeddedResource Include="Assets\Textures\nueKiaiRight.png" />
-    <EmbeddedResource Include="Assets\Textures\nueRight.png" />
-    <EmbeddedResource Include="Assets\Textures\player.png" />
-    <EmbeddedResource Include="Assets\Textures\playerKiai.png" />
-    <EmbeddedResource Include="Assets\Textures\playerKiaiRight.png" />
-    <EmbeddedResource Include="Assets\Textures\playerRight.png" />
     <EmbeddedResource Include="Assets\Textures\reimu.png" />
     <EmbeddedResource Include="Assets\Textures\reimuGravaruIdle.png" />
     <EmbeddedResource Include="Assets\Textures\reimuKiai.png" />
@@ -99,7 +82,6 @@
     <EmbeddedResource Include="Assets\Textures\starFill.png" />
     <EmbeddedResource Include="Assets\Textures\Vitaru@2x.png" />
     <EmbeddedResource Include="Assets\Textures\VitaruTouhosuModeTrue2560x1440.png" />
-    <EmbeddedResource Include="Assets\Textures\vortex.png" />
   </ItemGroup>
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
