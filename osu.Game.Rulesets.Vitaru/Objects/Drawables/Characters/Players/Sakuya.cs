@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
     public class Sakuya : VitaruPlayer
     {
         #region Fields
-        public double SetRate { get; private set; } = 0.8d;
+        public double SetRate { get; private set; } = 0.75d;
 
         public const double SakuyaHealth = 80;
 
@@ -62,15 +62,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         private void load(OsuGameBase game)
         {
             workingBeatmap.BindTo(game.Beatmap);
-        }
-
-        //TODO: use new seal system in Player, this should not be neccesary
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            Add(new Seal(this));
-            Remove(Sign);
         }
 
         protected override void SpellUpdate()
@@ -146,9 +137,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         protected override bool Pressed(VitaruAction action)
         {
             if (action == VitaruAction.Increase)
-                SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 1.2d);
+                SetRate = Math.Min(Math.Round(SetRate + 0.25d, 2), 1.5d);
             if (action == VitaruAction.Decrease)
-                SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.2d);
+                SetRate = Math.Max(Math.Round(SetRate - 0.25d, 2), 0.25d);
 
             return base.Pressed(action);
         }

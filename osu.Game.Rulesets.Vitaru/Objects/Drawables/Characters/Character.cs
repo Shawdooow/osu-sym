@@ -11,13 +11,14 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Extensions.Color4Extensions;
 using Symcol.Core.GameObjects;
 using osu.Framework.Platform;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 {
     public abstract class Character : BeatSyncedContainer
     {
         #region Fields
-        protected Sprite Sign { get; private set; }
+        protected Seal Seal { get; private set; }
 
         protected Container KiaiContainer { get; private set; }
         protected Sprite KiaiStillSprite { get; private set; }
@@ -184,13 +185,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
             Children = new Drawable[]
             {
-                Sign = new Sprite
-                {
-                    Alpha = 0,
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Colour = CharacterColor,
-                },
+                Seal = new Seal(this),
                 SoulContainer = new Container
                 {
                     Colour = CharacterColor,
@@ -277,7 +272,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
             StillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName, storage);
             KiaiStillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Kiai", storage);
-            Sign.Texture = VitaruSkinElement.LoadSkinElement("sign", storage);
             LoadAnimationSprites(textures, storage);
         }
 

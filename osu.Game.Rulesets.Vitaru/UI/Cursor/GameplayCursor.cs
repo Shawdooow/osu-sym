@@ -14,10 +14,13 @@ using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
+using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Graphics.Effects;
+using osu.Framework.MathUtils;
 
 namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 {
-    public class GameplayCursor : CursorContainer, IKeyBindingHandler<VitaruAction>
+    public class GameplayCursor : CursorContainer
     {
         protected override Drawable CreateCursor() => new VitaruCursor();
 
@@ -34,11 +37,6 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
             private Container lineContainer;
             private Container circleContainer;
             public static CircularContainer CenterCircle;
-
-            private SpriteText health;
-            private SpriteText energy;
-            private SpriteText speed;
-            private SpriteText combo;
 
             private Bindable<double> cursorScale;
             private Bindable<bool> autoCursorScale;
@@ -199,49 +197,13 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
                                 }
                             }
                         }
-                    },
-                    health = new SpriteText
-                    {
-                        Alpha = 0.5f,
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Position = new Vector2(-40, 0),
-                        Colour = Color4.Green,
-                        Text = "null"
-                    },
-                    energy = new SpriteText
-                    {
-                        Alpha = 0.5f,
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Position = new Vector2(40, 0),
-                        Colour = Color4.Blue,
-                        Text = "null"
-                    },
-                    speed = new SpriteText
-                    {
-                        Alpha = 0f,
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Position = new Vector2(0, -40),
-                        Colour = Color4.Yellow,
-                        Text = "null"
-                    },
-                    combo = new SpriteText
-                    {
-                        Alpha = 0f,
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Position = new Vector2(0, 40),
-                        Colour = osu.Pink,
-                        Text = "null"
                     }
                 };
 
                 if (currentGameMode == VitaruGamemode.Touhosu)
                 {
-                    if (currentCharacter == SelectableCharacters.SakuyaIzayoi)// || currentCharacter == PlayableCharacters.AliceMuyart)
-                    speed.Alpha = 0.5f;
+                    //if (currentCharacter == SelectableCharacters.SakuyaIzayoi)// || currentCharacter == PlayableCharacters.AliceMuyart)
+                        //speed.Alpha = 0.5f;
 
                     //if (currentCharacter == PlayableCharacters.KokoroHatano)
                     //combo.Alpha = 0.5f;
@@ -278,39 +240,18 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
                 if (VitaruPlayfield.Player != null )
                 {
-                    if (VitaruPlayfield.Player.Health > VitaruPlayfield.Player.MaxHealth)
-                        health.Colour = Color4.Blue;
-                    else if (VitaruPlayfield.Player.Health > VitaruPlayfield.Player.MaxHealth / 2)
-                        health.Colour = Color4.Green;
-                    else if (VitaruPlayfield.Player.Health > VitaruPlayfield.Player.MaxHealth / 4)
-                        health.Colour = Color4.Yellow;
-                    else
-                        health.Colour = Color4.Red;
-
-                    health.Text = ((int)VitaruPlayfield.Player.Health).ToString();
-                    energy.Text = ((int)VitaruPlayfield.Player.Energy).ToString();
                     switch (currentCharacter)
                     {
                         case SelectableCharacters.SakuyaIzayoi:
-                            speed.Text = ((Sakuya)VitaruPlayfield.Player).SetRate.ToString();
+                            //speed.Text = ((Sakuya)VitaruPlayfield.Player).SetRate.ToString();
                             break;
                         case SelectableCharacters.TomajiHakurei:
-                            speed.Text = ((Tomaji)VitaruPlayfield.Player).SetRate.ToString();
+                            //speed.Text = ((Tomaji)VitaruPlayfield.Player).SetRate.ToString();
                             break;
                     }
                     //combo.Text = VitaruPlayfield.Player.Combo.ToString();
                 }
             }
-        }
-
-        public bool OnPressed(VitaruAction action)
-        {
-            return false;
-        }
-
-        public bool OnReleased(VitaruAction action)
-        {
-            return false;
         }
     }
 }

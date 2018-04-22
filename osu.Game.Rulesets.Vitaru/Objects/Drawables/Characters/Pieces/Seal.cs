@@ -4,106 +4,209 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Extensions.Color4Extensions;
 using OpenTK;
+using osu.Game.Rulesets.Vitaru.UI;
+using osu.Framework.Allocation;
+using osu.Framework.Platform;
+using osu.Framework.Graphics.UserInterface;
+using osu.Framework.MathUtils;
+using osu.Framework.Graphics.Effects;
+using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
 {
     public class Seal : Container
     {
-        private readonly Container characterSigil;
+        public Container Sign { get; private set; }
 
-        private readonly VitaruPlayer vitaruPlayer;
+        private CircularContainer characterSigil;
 
-        private readonly Sprite gear1;
-        private readonly Sprite gear2;
-        private readonly Sprite gear3;
-        private readonly Sprite gear4;
-        private readonly Sprite gear5;
+        private CircularProgress health;
+        private CircularProgress energy;
 
-        public Seal(VitaruPlayer character)
+        private readonly OsuColour osu = new OsuColour();
+
+        private Character character;
+
+        private Sprite gear1;
+        private Sprite gear2;
+        private Sprite gear3;
+        private Sprite gear4;
+        private Sprite gear5;
+
+        public Seal(Character character)
         {
-            vitaruPlayer = character;
+            this.character = character;
+        }
 
-            Color4 lightColor = vitaruPlayer.CharacterColor.Lighten(0.5f);
-            Color4 darkColor = vitaruPlayer.CharacterColor.Darken(0.5f);
-
-            Scale = new Vector2(0.6f);
-
-            AutoSizeAxes = Axes.Both;
-            Anchor = Anchor.Centre;
-            Origin = Anchor.Centre;
-
-            AlwaysPresent = true;
-            Alpha = 0.5f;
-
-            Children = new Drawable[]
+        [BackgroundDependencyLoader]
+        private void load(Storage storage)
+        {
+            if (character is VitaruPlayer v)
             {
-                characterSigil = new Container
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Masking = true,
-                    Size = new Vector2(90),
-                    CornerRadius = 45
-                },
-                new Sprite
-                {
-                    Colour = vitaruPlayer.CharacterColor,
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Texture = VitaruRuleset.VitaruTextures.Get("seal"),
-                },
-            };
+                Color4 lightColor = v.CharacterColor.Lighten(0.5f);
+                Color4 darkColor = v.CharacterColor.Darken(0.5f);
 
-            switch (vitaruPlayer.PlayableCharacter)
-            {
-                default:
-                    break;
-                case SelectableCharacters.SakuyaIzayoi:
-                    characterSigil.Scale = new Vector2(1.34f);
-                    characterSigil.Children = new Drawable[]
+                Size = new Vector2(90);
+
+                Anchor = Anchor.Centre;
+                Origin = Anchor.Centre;
+
+                AlwaysPresent = true;
+
+                Children = new Drawable[]
+                {
+                    Sign = new Container
                     {
-                        gear1 = new Sprite
+                        RelativeSizeAxes = Axes.Both,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+
+                        Size = new Vector2(0.6f),
+
+                        Alpha = 0,
+                        AlwaysPresent = true,
+
+                        Children = new Drawable[]
                         {
-                            Colour = lightColor,
+                            characterSigil = new CircularContainer
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Masking = true,
+                            },
+                            new Sprite
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                                Size = new Vector2(2f),
+
+                                Colour = v.CharacterColor,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Texture = VitaruSkinElement.LoadSkinElement("seal", storage),
+                            }
+                        }
+                    },
+                    new Container
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Alpha = 0.2f,
+                        Size = new Vector2(1.5f),
+                        Padding = new MarginPadding(-Blur.KernelSize(5)),
+                        Child = (health = new CircularProgress
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            InnerRadius = 0.05f,
+                        }).WithEffect(new GlowEffect
+                        {
+                            Colour = osu.Green,
+                            Strength = 2,
+                            PadExtent = true
+                        }),
+                    },
+                    new Container
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Alpha = 0.2f,
+                        Size = new Vector2(1.75f),
+                        Padding = new MarginPadding(-Blur.KernelSize(5)),
+                        Child = (energy = new CircularProgress
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            InnerRadius = 0.05f,
+                        }).WithEffect(new GlowEffect
+                        {
+                            Colour = osu.Blue,
+                            Strength = 2,
+                            PadExtent = true
+                        }),
+                    },
+                };
+
+                switch (v.PlayableCharacter)
+                {
+                    default:
+                        break;
+                    case SelectableCharacters.SakuyaIzayoi:
+                        characterSigil.Children = new Drawable[]
+                        {
+                            gear1 = new Sprite
+                            {
+                                Colour = lightColor,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Texture = VitaruSkinElement.LoadSkinElement("gearSmall", storage),
+                                Position = new Vector2(-41, 10),
+                            },
+                            gear2 = new Sprite
+                            {
+                                Colour = v.CharacterColor,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Texture = VitaruSkinElement.LoadSkinElement("gearMedium", storage),
+                                Position = new Vector2(-4, 16),
+                            },
+                            gear3 = new Sprite
+                            {
+                                Colour = darkColor,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Texture = VitaruSkinElement.LoadSkinElement("gearLarge", storage),
+                                Position = new Vector2(-16, -34),
+                            },
+                            gear4 = new Sprite
+                            {
+                                Colour = v.CharacterColor,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Texture = VitaruSkinElement.LoadSkinElement("gearMedium", storage),
+                                Position = new Vector2(35, -40),
+                            },
+                            gear5 = new Sprite
+                            {
+                                Colour = lightColor,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Texture = VitaruSkinElement.LoadSkinElement("gearSmall", storage),
+                                Position = new Vector2(33, 8),
+                            },
+                        };
+                        break;
+                }
+            }
+            else
+            {
+                Scale = new Vector2(0.6f);
+
+                AutoSizeAxes = Axes.Both;
+                Anchor = Anchor.Centre;
+                Origin = Anchor.Centre;
+
+                AlwaysPresent = true;
+
+                Children = new Drawable[]
+                {
+                    Sign = new Container
+                    {
+                        AutoSizeAxes = Axes.Both,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+
+                        Alpha = 0,
+
+                        Child = new Sprite
+                        {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Texture = VitaruRuleset.VitaruTextures.Get("gearSmall"),
-                            Position = new Vector2(-41, 10),
-                        },
-                        gear2 = new Sprite
-                        {
-                            Colour = vitaruPlayer.CharacterColor,
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Texture = VitaruRuleset.VitaruTextures.Get("gearMedium"),
-                            Position = new Vector2(-4, 16),
-                        },
-                        gear3 = new Sprite
-                        {
-                            Colour = darkColor,
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Texture = VitaruRuleset.VitaruTextures.Get("gearLarge"),
-                            Position = new Vector2(-16, -34),
-                        },
-                        gear4 = new Sprite
-                        {
-                            Colour = vitaruPlayer.CharacterColor,
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Texture = VitaruRuleset.VitaruTextures.Get("gearMedium"),
-                            Position = new Vector2(35, -40),
-                        },
-                        gear5 = new Sprite
-                        {
-                            Colour = lightColor,
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Texture = VitaruRuleset.VitaruTextures.Get("gearSmall"),
-                            Position = new Vector2(33, 8),
-                        },
-                    };
-                    break;
+                            Colour = character.CharacterColor,
+                            Texture = VitaruSkinElement.LoadSkinElement("sign", storage)
+                        }
+                    }
+                };
             }
         }
 
@@ -111,22 +214,37 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
         {
             base.Update();
 
-            this.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 0.1f);
+            Sign.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 0.1f);
 
-            Alpha = (float)vitaruPlayer.Energy / (float)(vitaruPlayer.MaxEnergy * 2);
-
-            switch (vitaruPlayer.PlayableCharacter)
+            if (character is VitaruPlayer v)
             {
-                default:
-                    break;
-                case SelectableCharacters.SakuyaIzayoi:
-                    float speed = 0.25f;
-                    gear1.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
-                    gear2.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);
-                    gear3.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * speed);
-                    gear4.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);
-                    gear5.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
-                    break;
+                Sign.Alpha = (float)v.Energy / (float)(v.MaxEnergy * 2);
+
+                if (v.Health > v.MaxHealth)
+                    health.Colour = osu.Blue;
+                else if (v.Health > v.MaxHealth / 2)
+                    health.Colour = osu.Green;
+                else if (v.Health > v.MaxHealth / 4)
+                    health.Colour = osu.Yellow;
+                else
+                    health.Colour = osu.Red;
+
+                health.Current.Value = v.Health / v.MaxHealth;
+                energy.Current.Value = v.Energy / v.MaxEnergy;
+
+                switch (v.PlayableCharacter)
+                {
+                    default:
+                        break;
+                    case SelectableCharacters.SakuyaIzayoi:
+                        float speed = 0.25f;
+                        gear1.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
+                        gear2.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);
+                        gear3.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * speed);
+                        gear4.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);
+                        gear5.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
+                        break;
+                }
             }
         }
     }

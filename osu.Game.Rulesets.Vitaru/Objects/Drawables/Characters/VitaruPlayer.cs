@@ -130,15 +130,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
             const double beat_in_time = 60;
 
-            Sign.ScaleTo(1 - 0.02f * amplitudeAdjust, beat_in_time, Easing.Out);
-            using (Sign.BeginDelayedSequence(beat_in_time))
-                Sign.ScaleTo(1, beatLength * 2, Easing.OutQuint);
+            Seal.Sign.ScaleTo(1 - 0.02f * amplitudeAdjust, beat_in_time, Easing.Out);
+            using (Seal.Sign.BeginDelayedSequence(beat_in_time))
+                Seal.Sign.ScaleTo(1, beatLength * 2, Easing.OutQuint);
 
             if (effectPoint.KiaiMode && CurrentGameMode != VitaruGamemode.Touhosu)
             {
-                Sign.FadeTo(0.25f * amplitudeAdjust, beat_in_time, Easing.Out);
-                using (Sign.BeginDelayedSequence(beat_in_time))
-                    Sign.FadeOut(beatLength);
+                Seal.Sign.FadeTo(0.25f * amplitudeAdjust, beat_in_time, Easing.Out);
+                using (Seal.Sign.BeginDelayedSequence(beat_in_time))
+                    Seal.Sign.FadeOut(beatLength);
             }
 
             if (effectPoint.KiaiMode && SoulContainer.Alpha == 1)
@@ -150,7 +150,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 }
 
                 if (CurrentGameMode != VitaruGamemode.Touhosu)
-                    Sign.FadeTo(0.15f, timingPoint.BeatLength / 4);
+                    Seal.Sign.FadeTo(0.15f, timingPoint.BeatLength / 4);
             }
             if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1)
             {
@@ -161,7 +161,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 }
 
                 if (CurrentGameMode != VitaruGamemode.Touhosu)
-                    Sign.FadeTo(0f, timingPoint.BeatLength);
+                    Seal.Sign.FadeTo(0f, timingPoint.BeatLength);
             }
         }
 
@@ -186,8 +186,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
                 if (CurrentGameMode != VitaruGamemode.Touhosu)
                 {
-                    Sign.Alpha = 0.2f;
-                    Sign.FadeOut(beatLength / 4);
+                    Seal.Sign.Alpha = 0.2f;
+                    Seal.Sign.FadeOut(beatLength / 4);
                 }
             }
         }
