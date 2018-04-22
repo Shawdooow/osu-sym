@@ -147,19 +147,19 @@ namespace osu.Game.Rulesets.Vitaru.Objects
             switch (PatternID)
             {
                 default:
-                    return UsablePatterns.Wave(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
+                    return BulletPatterns.Wave(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
                 case 1:
-                    return UsablePatterns.Wave(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
+                    return BulletPatterns.Wave(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
                 case 2:
-                    return UsablePatterns.Line((PatternSpeed * (float)Velocity * 2) * 0.75f, (PatternSpeed * (float)Velocity * 2) * 1.5f, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
+                    return BulletPatterns.Line((PatternSpeed * (float)Velocity * 2) * 0.75f, (PatternSpeed * (float)Velocity * 2) * 1.5f, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
                 case 3:
-                    return UsablePatterns.Triangle(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
+                    return BulletPatterns.Triangle(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
                 case 4:
-                    return UsablePatterns.Wedge(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
+                    return BulletPatterns.Wedge(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity, PatternAngle);
                 case 5:
-                    return UsablePatterns.Circle(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity);
+                    return BulletPatterns.Circle(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, PatternComplexity);
                 case 6:
-                    return UsablePatterns.Flower(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, Duration, beatLength, PatternComplexity);
+                    return BulletPatterns.Flower(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, Position, StartTime, Duration, beatLength, PatternComplexity);
             }
         }
 

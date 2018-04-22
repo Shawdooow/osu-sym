@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Vitaru.Objects
 {
-    public class UsablePatterns
+    public class BulletPatterns
     {
         public static List<Bullet> Wave(double speed, double diameter, double damage, Vector2 position, double startTime, double complexity = 1, double angle = Math.PI / 2, int team = 1)
         {
@@ -214,7 +214,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         direction += Math.PI / 2;
 
                 }
-                direction += 0.3d;
+                direction += Math.PI / 4;
             }
 
             return bullets;

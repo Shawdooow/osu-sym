@@ -8,6 +8,7 @@ using System;
 using osu.Game.Audio;
 using System.Linq;
 using osu.Game.Rulesets.Vitaru.Settings;
+using osu.Game.Beatmaps.ControlPoints;
 
 namespace osu.Game.Rulesets.Vitaru.Beatmaps
 {
@@ -27,17 +28,28 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             var positionData = original as IHasPosition;
             var comboData = original as IHasCombo;
 
-            List<SampleInfo> samples = original.Samples;
-
             double complexity = 1;
 
             float ar = calculateAr(beatmap.BeatmapInfo.BaseDifficulty.ApproachRate);
             float cs = 20 + (beatmap.BeatmapInfo.BaseDifficulty.CircleSize - 4);
             double speed = 0.25d;
 
-            bool isWhistle = samples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
-            bool isFinish = samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
-            bool isClap = samples.Any(s => s.Name == SampleInfo.HIT_CLAP);
+            SampleControlPoint controlPoint = beatmap.ControlPointInfo.SamplePointAt(original.StartTime);
+
+            bool isDrum = controlPoint.SampleBank == "drum";
+            bool isSoft = controlPoint.SampleBank == "soft";
+
+            if (original.Samples.Any(s => s.Bank != null))
+            {
+                if (original.Samples.Any(s => s.Name == "drums"))
+                    isDrum = true;
+                if (original.Samples.Any(s => s.Name == "soft"))
+                    isSoft = true;
+            }
+
+            bool isWhistle = original.Samples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
+            bool isFinish = original.Samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
+            bool isClap = original.Samples.Any(s => s.Name == SampleInfo.HIT_CLAP);
 
             if (currentGameMode == VitaruGamemode.Dodge || currentGameMode == VitaruGamemode.Gravaru)
             {
@@ -45,6 +57,42 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 cs *= 0.5f;
                 ar *= 0.5f;
                 speed *= 0.5d;
+            }
+
+            int patternID = 1;
+
+            if (isDrum)
+            {
+                if (isWhistle)
+                    patternID = 3;
+                else if (isFinish)
+                    patternID = 4;
+                else if (isClap)
+                    patternID = 5;
+                else
+                    patternID = 1;
+            }
+            else if (isSoft)
+            {
+                if (isWhistle)
+                    patternID = 2;
+                else if (isFinish)
+                    patternID = 4;
+                else if (isClap)
+                    patternID = 5;
+                else
+                    patternID = 1;
+            }
+            else
+            {
+                if (isWhistle)
+                    patternID = 3;
+                else if (isFinish)
+                    patternID = 4;
+                else if (isClap)
+                    patternID = 5;
+                else
+                    patternID = 1;
             }
 
             Pattern p = new Pattern
@@ -57,6 +105,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 PatternTeam = 1,
                 PatternDiameter = cs,
                 PatternSpeed = speed,
+                PatternID = patternID,
                 NewCombo = comboData?.NewCombo ?? false,
             };
 
@@ -66,28 +115,12 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 p.ControlPoints = curveData.ControlPoints;
                 p.CurveType = curveData.CurveType;
                 p.Distance = curveData.Distance;
-                p.RepeatSamples = curveData != null ? curveData.RepeatSamples : new List<List<SampleInfo>>(new[] { samples });
+                p.RepeatSamples = curveData != null ? curveData.RepeatSamples : new List<List<SampleInfo>>(new[] { original.Samples });
                 p.RepeatCount = curveData.RepeatCount;
-
                 p.EnemyHealth = 60;
 
                 if (isWhistle)
-                {
                     p.PatternSpeed = 0.4f;
-                    p.PatternID = 3;
-                }
-                else if (isFinish)
-                {
-                    p.PatternID = 4;
-                }
-                else if (isClap)
-                {
-                    p.PatternID = 5;
-                }
-                else
-                {
-                    p.PatternID = 1;
-                }
             }
             else if (endTimeData != null)
             {
@@ -99,25 +132,8 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 p.EndTime = endTimeData.EndTime;
             }
             else
-            {
                 if (isWhistle)
-                {
                     p.PatternSpeed = 0.5f;
-                    p.PatternID = 3;
-                }
-                else if (isFinish)
-                {
-                    p.PatternID = 4;
-                }
-                else if (isClap)
-                {
-                    p.PatternID = 5;
-                }
-                else
-                {
-                    p.PatternID = 1;
-                }
-            }
 
             if (multiplayer && enemyPlayerCount > 0)
                 HitObjectList.Add(p);
