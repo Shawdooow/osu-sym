@@ -1,9 +1,7 @@
 ﻿using eden.Game.GamePieces;
 using osu.Framework.Configuration;
 using osu.Framework.Platform;
-using osu.Game.Rulesets.Vitaru.Edit;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
-using osu.Game.Rulesets.Vitaru.Scoring;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
@@ -15,13 +13,14 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         protected override void InitialiseDefaults()
         {
-            Set(VitaruSetting.ScoringMetric, ScoringMetric.Graze);
             Set(VitaruSetting.DebugOverlay, false);
             Set(VitaruSetting.DebugUIConfiguration, DebugUiConfiguration.PerformanceMetrics);
             Set(VitaruSetting.GraphicsPresets, GraphicsPresets.Standard);
             Set(VitaruSetting.GameMode, VitaruGamemode.Vitaru);
             Set(VitaruSetting.Characters, SelectableCharacters.SakuyaIzayoi);
-            Set(VitaruSetting.ComboFire, true);
+
+            //Leaks like crazy atm
+            Set(VitaruSetting.ComboFire, false);
             Set(VitaruSetting.ShittyMultiplayer, false);
             Set(VitaruSetting.FriendlyPlayerCount, 0, 0, 7);
             Set(VitaruSetting.FriendlyPlayerOverride, false);
@@ -52,17 +51,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.VectorVideos, true);
             Set(VitaruSetting.Skin, "default");
 
-            //Touhosu
-            Set(VitaruSetting.Familiar, false);
-            Set(VitaruSetting.Late, false);
-            Set(VitaruSetting.LastDance, false);
-            Set(VitaruSetting.Insane, true);
-            Set(VitaruSetting.Awoken, false);
-            Set(VitaruSetting.Sacred, false);
-            Set(VitaruSetting.Resurrected, false);
-            Set(VitaruSetting.Bonded, false);
-            Set(VitaruSetting.Revenge, false);
-
             //Online Multiplayer
             Set(VitaruSetting.HostIP, "Host IP Address");
             Set(VitaruSetting.LocalIP, "Your Local IP Address");
@@ -72,7 +60,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
     public enum VitaruSetting
     {
-        ScoringMetric,
         DebugOverlay,
         DebugUIConfiguration,
         GraphicsPresets,
@@ -107,17 +94,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         VectorVideos,
         Skin,
 
-        //Touhosu
-        Familiar,
-        Late,
-        LastDance,
-        Insane,
-        Awoken,
-        Sacred,
-        Resurrected,
-        Bonded,
-        Revenge,
-
         HostIP,
         LocalIP,
     }
@@ -126,7 +102,5 @@ namespace osu.Game.Rulesets.Vitaru.Settings
     {
         HighPerformance,
         Standard,
-        StandardCompetitive,
-        HighPerformanceCompetitive
     }
 }

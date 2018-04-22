@@ -40,9 +40,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         protected override void LoadComplete()
         {
             EnemyCount++;
-
-            if (currentSkin == GraphicsPresets.StandardCompetitive | currentSkin == GraphicsPresets.HighPerformanceCompetitive)
-                VisibleHitbox.Alpha = 0.5f;
         }
 
         protected override void Dispose(bool isDisposing)

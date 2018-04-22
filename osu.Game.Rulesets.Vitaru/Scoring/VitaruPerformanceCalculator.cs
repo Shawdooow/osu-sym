@@ -5,16 +5,11 @@ using osu.Game.Rulesets.Vitaru.Objects;
 using System;
 using osu.Game.Rulesets.Vitaru.Beatmaps;
 using osu.Game.Rulesets.Mods;
-using System.Linq;
-using osu.Game.Rulesets.Vitaru.Mods;
-using osu.Game.Rulesets.Vitaru.Settings;
 
 namespace osu.Game.Rulesets.Vitaru.Scoring
 {
     public class VitaruPerformanceCalculator : PerformanceCalculator<VitaruHitObject>
     {
-        private readonly ScoringMetric currentScoringMetric = VitaruSettings.VitaruConfigManager.GetBindable<ScoringMetric>(VitaruSetting.ScoringMetric);
-
         private const float pp_multiplier = 1f;
 
         public static float CurrentPPValue = 0;
@@ -37,20 +32,9 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
             double cs = Beatmap.BeatmapInfo.BaseDifficulty.CircleSize;
 
             int count300 = Convert.ToInt32(Score.Statistics[HitResult.Great]);
-            int count200 = Convert.ToInt32(Score.Statistics[HitResult.Good]);
-            int count100 = Convert.ToInt32(Score.Statistics[HitResult.Meh]);
-            //int count10 = Convert.ToInt32(Score.Statistics[HitResult.Tick]);
+            int count100 = Convert.ToInt32(Score.Statistics[HitResult.Good]);
+            int count50 = Convert.ToInt32(Score.Statistics[HitResult.Meh]);
             int countMiss = Convert.ToInt32(Score.Statistics[HitResult.Miss]);
-
-            if (currentScoringMetric == ScoringMetric.ScoreZones)
-            {
-                // Don't count scores made with supposedly unranked mods
-                if (mods.Any(m => !m.Ranked))
-                    difficulty = 0;
-
-                if (mods.Any(m => m is VitaruModNoFail))
-                    difficulty *= 0.90f;
-            }
 
             return difficulty * Score.TotalScore * pp_multiplier;
         }

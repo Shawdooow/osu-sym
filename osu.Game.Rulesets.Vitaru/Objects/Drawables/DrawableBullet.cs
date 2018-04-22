@@ -15,7 +15,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
     { 
         public static int BulletCount;
 
-        private readonly ScoringMetric currentScoringMetric = VitaruSettings.VitaruConfigManager.GetBindable<ScoringMetric>(VitaruSetting.ScoringMetric);
         private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
 
         //Used like a multiple (useful for spells in multiplayer)
@@ -84,62 +83,20 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (returnJudgement)
             {
-                if (currentScoringMetric == ScoringMetric.ScoreZones)
+                switch (ScoreZone)
                 {
-                    switch (VitaruPlayfield.Player.ScoreZone)
-                    {
-                        case 0:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Miss });
-                            break;
-                        case 100:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Ok });
-                            break;
-                        case 200:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Good });
-                            break;
-                        case 300:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Great });
-                            break;
-                    }
-                }
-                else if (currentScoringMetric == ScoringMetric.InverseCatch)
-                {
-                    switch (VitaruPlayfield.Player.ScoreZone)
-                    {
-                        case 0:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Miss });
-                            break;
-                        case 100:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Great });
-                            break;
-                        case 200:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Great });
-                            break;
-                        case 300:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Great });
-                            break;
-                    }
-                }
-                else if (currentScoringMetric == ScoringMetric.Graze)
-                {
-                    switch (ScoreZone)
-                    {
-                        case 0:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Miss });
-                            break;
-                        case 50:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Meh });
-                            break;
-                        case 100:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Ok });
-                            break;
-                        case 200:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Good });
-                            break;
-                        case 300:
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Great });
-                            break;
-                    }
+                    case 0:
+                        AddJudgement(new VitaruJudgement { Result = HitResult.Miss });
+                        break;
+                    case 50:
+                        AddJudgement(new VitaruJudgement { Result = HitResult.Meh });
+                        break;
+                    case 100:
+                        AddJudgement(new VitaruJudgement { Result = HitResult.Good });
+                        break;
+                    case 300:
+                        AddJudgement(new VitaruJudgement { Result = HitResult.Great });
+                        break;
                 }
             }
 

@@ -89,20 +89,15 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     LabelText = "Graphics Presets",
                     Bindable = VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets)
                 },
-                new SettingsEnumDropdown<ScoringMetric>
-                {
-                    LabelText = "Current Scoring Metric used (Difficulty, Score and PP)",
-                    Bindable = VitaruConfigManager.GetBindable<ScoringMetric>(VitaruSetting.ScoringMetric)
-                },
                 new SettingsCheckbox
                 {
                     LabelText = "Enable ComboFire",
-                    Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire)
+                    //Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire)
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Offline Multiplayer",
-                    Bindable = multiplayer
+                    //Bindable = multiplayer
                 },
                 /*
                 multiplayerSettings = new FillFlowContainer

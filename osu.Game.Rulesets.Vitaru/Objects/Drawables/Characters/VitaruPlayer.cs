@@ -224,10 +224,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             {
                 if (CurrentGameMode == VitaruGamemode.Dodge)
                     distance *= 1.5f;
-                if (distance <= 64 && bullet.ScoreZone < 300)
+                if (distance <= 128 && bullet.ScoreZone < 300)
                     bullet.ScoreZone = 300;
-                else if (distance <= 128 && bullet.ScoreZone < 200)
-                    bullet.ScoreZone = 200;
                 else if (distance <= 256 && bullet.ScoreZone < 100)
                     bullet.ScoreZone = 100;
                 else if (bullet.ScoreZone < 50)

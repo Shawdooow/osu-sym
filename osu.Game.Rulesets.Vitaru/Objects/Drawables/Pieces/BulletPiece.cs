@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
         {
             base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
 
-            if (currentSkin != GraphicsPresets.HighPerformanceCompetitive && currentSkin != GraphicsPresets.HighPerformance)
+            if (currentSkin != GraphicsPresets.HighPerformance)
             {
                 if (effectPoint.KiaiMode && bulletKiai.Alpha == 0)
                     bulletKiai.FadeInFromZero(timingPoint.BeatLength / 4);
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
         {
             base.Update();
 
-            if (currentSkin != GraphicsPresets.HighPerformanceCompetitive && currentSkin != GraphicsPresets.HighPerformance && bulletKiai.Alpha > 0)
+            if (currentSkin != GraphicsPresets.HighPerformance && bulletKiai.Alpha > 0)
             {
                 if (randomRotateDirection)
                     bulletKiai.Rotation += (float)(Clock.ElapsedFrameTime / 1000 * 90) * randomRotationValue;
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 
             Size = new Vector2((float)drawableBullet.Bullet.BulletDiameter + 12);
 
-            if (currentSkin != GraphicsPresets.HighPerformanceCompetitive && currentSkin != GraphicsPresets.HighPerformance)
+            if (currentSkin != GraphicsPresets.HighPerformance)
                 Child = bulletKiai = new Sprite
                 {
                     //Just to look nice for the time being, will fix the sprite later
@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                 }
             });
 
-            if (currentSkin != GraphicsPresets.HighPerformanceCompetitive && currentSkin != GraphicsPresets.HighPerformance)
+            if (currentSkin != GraphicsPresets.HighPerformance)
                 circle.EdgeEffect = new EdgeEffectParameters
                 {
                     Radius = (float)drawableBullet.Bullet.BulletDiameter,

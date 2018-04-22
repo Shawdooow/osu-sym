@@ -21,17 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         public override string Title => "Gameplay";
 
         private Bindable<VitaruGamemode> selectedGamemode;
-        private Bindable<ScoringMetric> selectedScoring;
         private Bindable<SelectableCharacters> selectedCharacter;
-
-        private Bindable<bool> familiar;
-        private Bindable<bool> late;
-        private Bindable<bool> lastDance;
-        private Bindable<bool> insane;
-        private Bindable<bool> awoken;
-        private Bindable<bool> sacred;
-        private Bindable<bool> bonded;
-        private Bindable<bool> resurrected;
 
         private WikiOptionEnumExplanation<SelectableCharacters> characterDescription;
 
@@ -39,23 +29,12 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         private WikiOptionEnumExplanation<Mod> modsDescription;
         private WikiOptionEnumExplanation<VitaruGamemode> gamemodeDescription;
-        private WikiOptionEnumExplanation<ScoringMetric> scoringDescription;
 
         [BackgroundDependencyLoader]
         private void load()
         {
             selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
-            selectedScoring = VitaruSettings.VitaruConfigManager.GetBindable<ScoringMetric>(VitaruSetting.ScoringMetric);
             selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
-
-            familiar = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Familiar);
-            late = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Late);
-            lastDance = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.LastDance);
-            insane = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Insane);
-            awoken = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Awoken);
-            sacred = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Sacred);
-            bonded = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Bonded);
-            resurrected = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.Resurrected);
 
             Content.Add(new WikiParagraph("Your objective in vitaru is simple, don't get hit by the bullets flying at you, although this is easier said than done."));
 
@@ -190,9 +169,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "What is the same in all 3 of the gamemodes however, is that you will be dodging bullets to the beat to stay alive."));
             Content.Add(gamemodeDescription = new WikiOptionEnumExplanation<VitaruGamemode>(selectedGamemode));
             Content.Add(new WikiSubSectionHeader("Scoring"));
-            Content.Add(new WikiParagraph("Scoring done on a per-bullet level and can be done in different ways depending on what you have selected. " +
-                        "When vitaru move out of alpha and into beta this will be locked to one metric, the best one."));
-            Content.Add(scoringDescription = new WikiOptionEnumExplanation<ScoringMetric>(selectedScoring));
+            Content.Add(new WikiParagraph("Score per bullet is based on how close it got to hitting you, the closer a bullet got the more score it will give."));
             Content.Add(new WikiSubSectionHeader("Mods"));
             Content.Add(new WikiParagraph("Mods affect gameplay just like the other rulesets in the game, but here is how they affect vitaru so you aren't scratching your head trying to figure it out just by playing with it."));
             Content.Add(modsDescription = new WikiOptionEnumExplanation<Mod>(selectedMod));
@@ -316,23 +293,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 selectedCharacter.TriggerChange();
             };
             selectedGamemode.TriggerChange();
-
-            selectedScoring.ValueChanged += scoring =>
-            {
-                switch (scoring)
-                {
-                    case ScoringMetric.Graze:
-                        scoringDescription.Description.Text = "Score per bullet is based on how close it got to hitting you, the closer a bullet got the more score it will give.";
-                        break;
-                    case ScoringMetric.ScoreZones:
-                        scoringDescription.Description.Text = "Based on where you are located on the screen, the closer to the center the more score you will get.";
-                        break;
-                    case ScoringMetric.InverseCatch:
-                        scoringDescription.Description.Text = "Quite litterally the opposite of catch, if a bullet doesn't hit you its a Perfect";
-                        break;
-                }
-            };
-            selectedScoring.TriggerChange();
 
             selectedMod.ValueChanged += mod =>
             {

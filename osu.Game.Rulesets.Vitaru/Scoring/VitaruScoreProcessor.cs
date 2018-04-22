@@ -8,15 +8,12 @@ using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.UI;
-using osu.Game.Rulesets.Vitaru.Settings;
 using System.Linq;
 
 namespace osu.Game.Rulesets.Vitaru.Scoring
 {
     internal class VitaruScoreProcessor : ScoreProcessor<VitaruHitObject>
     {
-        private readonly ScoringMetric currentScoringMetric = VitaruSettings.VitaruConfigManager.GetBindable<ScoringMetric>(VitaruSetting.ScoringMetric);
-
         public new static int Combo;
 
         public VitaruScoreProcessor(RulesetContainer<VitaruHitObject> rulesetContainer)
@@ -28,10 +25,7 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
         {
             base.Reset(storeResults);
 
-            Health.Value = 1;
             Combo = 0;
-
-            TotalScore.Value = 0;
 
             scoreResultCounts.Clear();
             comboResultCounts.Clear();
@@ -46,9 +40,9 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
             {
                 var pattern = obj as Pattern;
                 foreach (var unused in pattern.NestedHitObjects.OfType<Bullet>())
-                    AddJudgement(new VitaruJudgement { Result = HitResult.Perfect });
+                    AddJudgement(new VitaruJudgement { Result = HitResult.Great });
                 foreach (var unused in pattern.NestedHitObjects.OfType<Laser>())
-                    AddJudgement(new VitaruJudgement { Result = HitResult.Perfect });
+                    AddJudgement(new VitaruJudgement { Result = HitResult.Great });
             }
         }
 
@@ -58,7 +52,6 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
 
             score.Statistics[HitResult.Great] = scoreResultCounts.GetOrDefault(HitResult.Great);
             score.Statistics[HitResult.Good] = scoreResultCounts.GetOrDefault(HitResult.Good);
-            score.Statistics[HitResult.Ok] = scoreResultCounts.GetOrDefault(HitResult.Ok);
             score.Statistics[HitResult.Meh] = scoreResultCounts.GetOrDefault(HitResult.Meh);
             score.Statistics[HitResult.Miss] = scoreResultCounts.GetOrDefault(HitResult.Miss);
         }
@@ -80,12 +73,5 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
                 Health.Value = VitaruPlayfield.Player.Health / VitaruPlayfield.Player.MaxHealth;
 
         }
-    }
-
-    public enum ScoringMetric
-    {
-        Graze,
-        ScoreZones,
-        InverseCatch
     }
 }
