@@ -220,17 +220,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             if (edgeDistance < 64 && bullet.Bullet.Team != Team)
                 CanHeal = true;
 
-            if (true)//currentScoringMetric == ScoringMetric.Graze)
-            {
-                if (CurrentGameMode == VitaruGamemode.Dodge)
-                    distance *= 1.5f;
-                if (distance <= 128 && bullet.ScoreZone < 300)
-                    bullet.ScoreZone = 300;
-                else if (distance <= 256 && bullet.ScoreZone < 100)
-                    bullet.ScoreZone = 100;
-                else if (bullet.ScoreZone < 50)
-                    bullet.ScoreZone = 50;
-            }
+            if (CurrentGameMode == VitaruGamemode.Dodge)
+                edgeDistance *= 1.5f;
+
+            if (edgeDistance <= 64 && bullet.ScoreZone < 300)
+                bullet.ScoreZone = 300;
+            else if (edgeDistance <= 128 && bullet.ScoreZone < 100)
+                bullet.ScoreZone = 100;
+            else if (bullet.ScoreZone < 50)
+                bullet.ScoreZone = 50;
         }
 
         protected virtual Vector2 GetNewPlayerPosition(double playerSpeed)
