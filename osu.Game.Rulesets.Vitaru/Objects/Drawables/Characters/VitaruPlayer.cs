@@ -217,7 +217,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             float distance = (float)Math.Sqrt(Math.Pow(object2Pos.X, 2) + Math.Pow(object2Pos.Y, 2));
             float edgeDistance = distance - (bullet.Width / 2 + Hitbox.Width / 2);
 
-            if (edgeDistance < 48 && bullet.Bullet.Team != Team)
+            if (edgeDistance < 64 && bullet.Bullet.Team != Team)
                 CanHeal = true;
 
             if (true)//currentScoringMetric == ScoringMetric.Graze)
