@@ -224,7 +224,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 {
                     Alpha = 0.5f,
                     Origin = Anchor.Centre,
-                    Position = new Vector2(Player.Position.X, Player.Position.Y + 50)
+                    Position = judgedObject.Position
                 };
 
                 judgementLayer.Add(explosion);
