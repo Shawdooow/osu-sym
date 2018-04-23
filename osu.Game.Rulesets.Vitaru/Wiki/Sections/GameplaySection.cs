@@ -165,22 +165,23 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 }
             });
             Content.Add(new WikiSubSectionHeader("Gamemodes"));
-            Content.Add(new WikiParagraph("This ruleset has multiple gamemodes built in, similar to how Mania can have different key amounts but instead of just increasing the lanes these change how bullets will be coming at you. " +
-                        "What is the same in all 3 of the gamemodes however, is that you will be dodging bullets to the beat to stay alive."));
+            Content.Add(new WikiParagraph("This ruleset has multiple gamemodes built in, similar to how Mania can have different key amounts. " +
+                "However instead of just increasing the lanes these change how bullets will be coming at you. " +
+                "What is the same in all 3 of the gamemodes however, is that you will be dodging bullets to the beat to stay alive."));
             Content.Add(gamemodeDescription = new WikiOptionEnumExplanation<VitaruGamemode>(selectedGamemode));
             Content.Add(new WikiSubSectionHeader("Scoring"));
-            Content.Add(new WikiParagraph("Score per bullet is based on how close it got to hitting you, the closer a bullet got the more score it will give."));
+            Content.Add(new WikiParagraph("Score per bullet is based on how close it got to hitting you, the closer a bullet got the more score it will give. The \"Great\" area is about the same size as the green health ring, " +
+                "the \"Good\" is twice that and \"Meh\" is infinite (so by default a bullet gives meh unless you got close)."));
             Content.Add(new WikiSubSectionHeader("Mods"));
             Content.Add(new WikiParagraph("Mods affect gameplay just like the other rulesets in the game, but here is how they affect vitaru so you aren't scratching your head trying to figure it out just by playing with it."));
             Content.Add(modsDescription = new WikiOptionEnumExplanation<Mod>(selectedMod));
             Content.Add(new WikiSubSectionHeader("Characters"));
-            Content.Add(new WikiParagraph("Selecting a different character in dodge or vitaru should only change what you look like " +
-                "(however I am sure that some parts of Touhosu slip into them at this stage in the ruleset's development). " +
+            Content.Add(new WikiParagraph("Selecting a different character in anything except Touhosu should only change what you look like " +
+                "(however I am sure that some parts of Touhosu slip out at this stage in the ruleset's development). " +
                 "In Touhosu however, this will change a number of stats listed below. " +
                 "I also listed their " +
                 "difficulty to play (Easy, Normal, Hard, Insane, Another, Extra) " +
-                "and their Role in a multiplayer setting (Offense, Defense, Support). " +
-                "Most of it is subjective but ¯\\_(ツ)_/¯"));
+                "and their Role in a multiplayer setting (Offense, Defense, Support)."));
             Content.Add(characterDescription = new WikiOptionEnumExplanation<SelectableCharacters>(selectedCharacter));
 
             //basically just an ingame wiki for the characters
@@ -188,8 +189,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             {
                 restart:
 
-                string stats = "\nMax Health: " + VitaruPlayer.DefaultHealth +
-                        "\nMax Energy: " + VitaruPlayer.DefaultEnergy +
+                string stats = "\nHealth: " + VitaruPlayer.DefaultHealth +
+                        "\nEnergy: " + VitaruPlayer.DefaultEnergy +
                         "\nEnergy Cost: " + VitaruPlayer.DefaultEnergyCost +
                         "\nEnergy Cost per Second: " + VitaruPlayer.DefaultEnergyCostPerSecond +
                         "\nRole: ???" +
@@ -208,8 +209,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         }
                         break;
                     case SelectableCharacters.RyukoyHakurei:
-                        stats = "\nMax Health: " + Ryukoy.RyukoyHealth +
-                        "\nMax Energy: " + Ryukoy.RyukoyEnergy +
+                        stats = "\nHealth: " + Ryukoy.RyukoyHealth +
+                        "\nEnergy: " + Ryukoy.RyukoyEnergy +
                         "\nEnergy Cost: " + Ryukoy.RyukoyEnergyCost +
                         "\nEnergy Cost per Second: " + Ryukoy.RyukoyEnergyCostPerSecond +
                         "\nRole: ???" +
@@ -222,8 +223,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         }
                         break;
                     case SelectableCharacters.TomajiHakurei:
-                        stats = "\nMax Health: " + Tomaji.TomajiHealth +
-                        "\nMax Energy: " + Tomaji.TomajiEnergy +
+                        stats = "\nHealth: " + Tomaji.TomajiHealth +
+                        "\nEnergy: " + Tomaji.TomajiEnergy +
                         "\nEnergy Cost: " + Tomaji.TomajiEnergyCost +
                         "\nEnergy Cost per Second: " + Tomaji.TomajiEnergyCostPerSecond +
                         "\nRole: ???" +
@@ -237,7 +238,16 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         break;
                     case SelectableCharacters.SakuyaIzayoi:
                         if (selectedGamemode == VitaruGamemode.Touhosu)
-                            stats = Sakuya.Background;
+                        {
+                            stats = "\nHealth: " + Sakuya.SakuyaHealth +
+                            "\nEnergy: " + Sakuya.SakuyaEnergy +
+                            "\nEnergy Cost: " + Sakuya.SakuyaEnergyCost +
+                            "\nEnergy Cost per Second: " + Sakuya.SakuyaEnergyCostPerSecond +
+                            "\nRole: ???" +
+                            "\nDifficulty: ???" +
+                            "\nAbility: Time Warden" + 
+                            "\n\n" + Sakuya.Background;
+                        }
                         else
                         {
                             selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;

@@ -35,8 +35,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "Where:\n" +
                         "difficulty = map star rating\n" +
                         "Score.TotalScore = score you got\n" +
-                        "pp_multiplier = some number of my choosing. This will NEVER change EVER and be the same for EVERY play EVER!\n\n" +
-                        "Personally I feel this is how all gamemodes should do it but ¯\\_(ツ)_/¯";
+                        "pp_multiplier = some number of my choosing. This will NEVER change EVER and will be the same for EVERY play EVER!";
                         break;
                 }
             };

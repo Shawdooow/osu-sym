@@ -4,7 +4,6 @@ using osu.Framework.Audio;
 using osu.Framework.Configuration;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 
@@ -15,9 +14,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         #region Fields
         public double SetRate { get; private set; } = 0.8d;
 
-        public const double TomajiHealth = 80;
+        public const double TomajiHealth = 40;
 
-        public const double TomajiEnergy = 24;
+        public const double TomajiEnergy = 18;
 
         public const double TomajiEnergyCost = 2;
 

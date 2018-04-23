@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         [BackgroundDependencyLoader]
         private void load()
         {
-            Content.Add(new WikiParagraph("The ranking proccess will be very similar to standard at the beginning, where you ask someone qualified to qualify your map and they take a look and either qualify it or tell you why they won't qualify it. (This is of course assuming ruleset creators get to decide how things work, if we don't vitaru simply won't get ranked)"));
+            Content.Add(new WikiParagraph("The ranking proccess will be very similar to osu! standard back in 2007, where you ask someone qualified to qualify your map and they take a look and either qualify it or tell you why they won't qualify it."));
             Content.Add(new WikiSubSectionHeader("The Rules"));
             Content.Add(new WikiParagraph("There will be rules of course, although don't expect much as I am one of those people who think aspire level maps are perfectly rankable. In addition to the \"obvious\" stuff like correct timing and acceptable metadata (that usually apply to all maps regardless of ruleset) you're map must meet the following criteria:\n\n" +
                         "Criteria 1: Your map must be passable without getting hit at all. I know converts don't always follow this rule but there isn't much that can be done about that.\n" +

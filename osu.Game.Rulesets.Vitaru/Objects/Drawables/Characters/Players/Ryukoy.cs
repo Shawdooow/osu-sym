@@ -6,11 +6,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
     public class Ryukoy : VitaruPlayer
     {
         #region Fields
-        public const double RyukoyHealth = 80;
+        public const double RyukoyHealth = 60;
 
-        public const double RyukoyEnergy = 36;
+        public const double RyukoyEnergy = 24;
 
-        public const double RyukoyEnergyCost = 2;
+        public const double RyukoyEnergyCost = 12;
 
         public const double RyukoyEnergyCostPerSecond = 0;
 
