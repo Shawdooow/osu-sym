@@ -12,6 +12,7 @@ using osu.Game.Online.API;
 using osu.Game.Users;
 using Symcol.Core.Networking;
 using Symcol.Rulesets.Core.Multiplayer.Networking;
+using Symcol.Rulesets.Core.Rulesets;
 
 namespace Symcol.Rulesets.Core.Multiplayer.Pieces
 {

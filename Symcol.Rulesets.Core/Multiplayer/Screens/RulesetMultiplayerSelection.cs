@@ -15,6 +15,7 @@ using osu.Game.Screens;
 #if SymcolMods
 using osu.Game.Screens.Symcol;
 #endif
+using Symcol.Rulesets.Core.Rulesets;
 
 namespace Symcol.Rulesets.Core.Multiplayer.Screens
 {
