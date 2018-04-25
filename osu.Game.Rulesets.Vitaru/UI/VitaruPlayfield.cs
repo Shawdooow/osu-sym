@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
 using Symcol.Rulesets.Core.Rulesets;
 using osu.Framework.Graphics.Effects;
-using OpenTK.Graphics;
+using osu.Framework.Logging;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -202,6 +202,18 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
                 AbstractionLevel.ValueChanged += (value) =>
                 {
+                    try
+                    {
+                        BufferedContainer a = (BufferedContainer)FullAbstraction.Parent;
+                        BufferedContainer b = (BufferedContainer)HalfOut.Parent;
+                        BufferedContainer c = (BufferedContainer)QuarterOut.Parent;
+
+                        a.Masking = false;
+                        b.Masking = false;
+                        c.Masking = false;
+                    }
+                    catch { Logger.Log("Type Casting Failed!", LoggingTarget.Runtime, LogLevel.Error); }
+
                     List<Drawable> q = new List<Drawable>();
                     List<Drawable> h = new List<Drawable>();
                     List<Drawable> f = new List<Drawable>();
