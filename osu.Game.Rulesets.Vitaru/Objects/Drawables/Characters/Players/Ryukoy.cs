@@ -31,10 +31,27 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public Ryukoy(VitaruPlayfield playfield) : base(playfield)
         {
-            Spell += (action) =>
-            {
+        }
 
-            };
+        protected override void SpellUpdate()
+        {
+            base.SpellUpdate();
+        }
+
+        protected override bool Pressed(VitaruAction action)
+        {
+            if (action == VitaruAction.Spell)
+                VitaruPlayfield.VitaruInputManager.ToggleBlur();
+
+            return base.Pressed(action);
+        }
+
+        protected override bool Released(VitaruAction action)
+        {
+            if (action == VitaruAction.Spell)
+                VitaruPlayfield.VitaruInputManager.ToggleBlur();
+
+            return base.Released(action);
         }
 
         #region Touhosu Story Content

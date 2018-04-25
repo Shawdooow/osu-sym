@@ -116,24 +116,24 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         private void applyToClock(IAdjustableClock clock, double speed)
         {
-            if (VitaruInputManager.Shade != null)
+            if (VitaruPlayfield.VitaruInputManager.Shade != null)
             {
                 if (speed > 1)
                 {
-                    VitaruInputManager.Shade.Colour = Color4.Cyan;
-                    VitaruInputManager.Shade.Alpha = (float)(speed - 1) * 0.05f;
+                    VitaruPlayfield.VitaruInputManager.Shade.Colour = Color4.Cyan;
+                    VitaruPlayfield.VitaruInputManager.Shade.Alpha = (float)(speed - 1) * 0.05f;
                 }
                 else if (speed == 1)
-                    VitaruInputManager.Shade.Alpha = 0;
+                    VitaruPlayfield.VitaruInputManager.Shade.Alpha = 0;
                 else if (speed < 1 && speed > 0)
                 {
-                    VitaruInputManager.Shade.Colour = Color4.Orange;
-                    VitaruInputManager.Shade.Alpha = (float)(1 - speed) * 0.05f;
+                    VitaruPlayfield.VitaruInputManager.Shade.Colour = Color4.Orange;
+                    VitaruPlayfield.VitaruInputManager.Shade.Alpha = (float)(1 - speed) * 0.05f;
                 }
                 else if (speed < 0)
                 {
-                    VitaruInputManager.Shade.Colour = Color4.Purple;
-                    VitaruInputManager.Shade.Alpha = (float)-speed * 0.1f;
+                    VitaruPlayfield.VitaruInputManager.Shade.Colour = Color4.Purple;
+                    VitaruPlayfield.VitaruInputManager.Shade.Alpha = (float)-speed * 0.1f;
                 }
             }
 

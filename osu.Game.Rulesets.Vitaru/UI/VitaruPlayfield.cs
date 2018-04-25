@@ -36,6 +36,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
         private readonly PlayableCharacters playerSeven = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerSeven);
         */
 
+        public readonly VitaruInputManager VitaruInputManager;
+
         public readonly Container BulletField;
         public readonly Container SpellField;
         public readonly Container CharacterField;
@@ -66,6 +68,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public VitaruPlayfield(VitaruInputManager vitaruInput) : base(BaseSize)
         {
+            VitaruInputManager = vitaruInput;
+
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 

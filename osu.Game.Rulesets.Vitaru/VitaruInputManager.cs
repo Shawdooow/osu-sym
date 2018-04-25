@@ -2,13 +2,16 @@
 using OpenTK;
 using OpenTK.Graphics;
 using osu.Framework.Configuration;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Rulesets.Core.Rulesets;
+using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Vitaru
 {
@@ -20,7 +23,9 @@ namespace osu.Game.Rulesets.Vitaru
 
         protected override bool VectorVideo => VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.VectorVideos);
 
-        public static Box Shade;
+        protected Container<Drawable> BlurContainer = new Container<Drawable> { RelativeSizeAxes = Axes.Both, Masking = false, AlwaysPresent = true, Name = "BlurContainer" };
+
+        public readonly Box Shade;
 
         public VitaruInputManager(RulesetInfo ruleset, int variant) : base(ruleset, variant, SimultaneousBindingMode.Unique)
         {
@@ -32,32 +37,45 @@ namespace osu.Game.Rulesets.Vitaru
 
             if (false)//comboFire)
                 Add(new ComboFire());
+
+            Add(BlurContainer.WithEffect(new GlowEffect
+            {
+                Strength = 1f,
+                BlurSigma = new Vector2(8),
+                Colour = Color4.Cyan.Opacity(0.5f)
+            }));
         }
 
         bool blured;
         public void ToggleBlur()
         {
+            List<Drawable> drawables = new List<Drawable>();
+
             if (!blured)
+            {
                 foreach (Drawable drawable in Children)
+                    if (drawable != BlurContainer.Parent)
+                        drawables.Add(drawable);
+
+                foreach (Drawable drawable in drawables)
                 {
                     Remove(drawable);
-                    Add(drawable.WithEffect(new GlowEffect
-                    {
-                        Strength = 10,
-                    }));
+                    BlurContainer.Add(drawable);
                 }
+            }
             else
-                foreach (Drawable drawable in Children)
+            {
+                foreach (Drawable drawable in BlurContainer.Children)
+                    drawables.Add(drawable);
+
+                foreach (Drawable drawable in drawables)
                 {
-                    Remove(drawable);
-                    Add(drawable.WithEffect(new GlowEffect
-                    {
-                        Strength = 0,
-                    }));
+                    BlurContainer.Remove(drawable);
+                    Add(drawable);
                 }
+            }
 
             blured = !blured;
-
         }
     }
 
