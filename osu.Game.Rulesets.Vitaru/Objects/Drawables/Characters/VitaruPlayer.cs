@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         public virtual double EnergyCostPerSecond { get; } = DefaultEnergyCostPerSecond;
 
-        public override Color4 CharacterColor => DefaultColor;
+        public override Color4 PrimaryColor => DefaultColor;
 
         public double Energy { get; protected set; }
 
@@ -293,7 +293,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         {
             const int numberbullets = 3;
             double directionModifier = -0.2d;
-            Color4 color = CharacterColor;
+            Color4 color = PrimaryColor;
             SliderType type;
 
             double cursorAngle = 0;
@@ -320,19 +320,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     directionModifier += 0.1d;
                 else
                     directionModifier += 0.2d;
-            }
-        }
-
-        private void patternCircle()
-        {
-            int numberbullets = 8;
-            double directionModifier = (360f / numberbullets);
-            double direction = MathHelper.DegreesToRadians(-90);
-            directionModifier = MathHelper.DegreesToRadians(directionModifier);
-            for (int i = 1; i <= numberbullets; i++)
-            {
-                bulletAddRad(1, direction, CharacterColor);
-                direction += directionModifier;
             }
         }
         #endregion

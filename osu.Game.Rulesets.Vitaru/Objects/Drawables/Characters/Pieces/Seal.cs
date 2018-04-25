@@ -23,8 +23,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
         private CircularProgress health;
         private CircularProgress energy;
 
-        private readonly OsuColour osu = new OsuColour();
-
         private Character character;
 
         private Sprite gear1;
@@ -43,8 +41,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
         {
             if (character is VitaruPlayer v)
             {
-                Color4 lightColor = v.CharacterColor.Lighten(0.5f);
-                Color4 darkColor = v.CharacterColor.Darken(0.5f);
+                Color4 lightColor = v.PrimaryColor.Lighten(0.5f);
+                Color4 darkColor = v.PrimaryColor.Darken(0.5f);
 
                 Size = new Vector2(90);
 
@@ -80,7 +78,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                                 RelativeSizeAxes = Axes.Both,
                                 Size = new Vector2(2f),
 
-                                Colour = v.CharacterColor,
+                                Colour = v.PrimaryColor,
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Texture = VitaruSkinElement.LoadSkinElement("seal", storage),
@@ -99,9 +97,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                         {
                             RelativeSizeAxes = Axes.Both,
                             InnerRadius = 0.05f,
+                            Colour = v.ComplementaryColor
                         }).WithEffect(new GlowEffect
                         {
-                            Colour = osu.Green,
+                            Colour = v.ComplementaryColor,
                             Strength = 2,
                             PadExtent = true
                         }),
@@ -118,9 +117,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                         {
                             RelativeSizeAxes = Axes.Both,
                             InnerRadius = 0.05f,
+                            Colour = v.SecondaryColor
                         }).WithEffect(new GlowEffect
                         {
-                            Colour = osu.Blue,
+                            Colour = v.SecondaryColor,
                             Strength = 2,
                             PadExtent = true
                         }),
@@ -144,7 +144,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                             },
                             gear2 = new Sprite
                             {
-                                Colour = v.CharacterColor,
+                                Colour = v.PrimaryColor,
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Texture = VitaruSkinElement.LoadSkinElement("gearMedium", storage),
@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                             },
                             gear4 = new Sprite
                             {
-                                Colour = v.CharacterColor,
+                                Colour = v.PrimaryColor,
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Texture = VitaruSkinElement.LoadSkinElement("gearMedium", storage),
@@ -202,7 +202,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Colour = character.CharacterColor,
+                            Colour = character.PrimaryColor,
                             Texture = VitaruSkinElement.LoadSkinElement("sign", storage)
                         }
                     }
@@ -219,15 +219,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
             if (character is VitaruPlayer v)
             {
                 Sign.Alpha = (float)v.Energy / (float)(v.MaxEnergy * 2);
-
-                if (v.Health > v.MaxHealth)
-                    health.Colour = osu.Blue;
-                else if (v.Health > v.MaxHealth / 2)
-                    health.Colour = osu.Green;
-                else if (v.Health > v.MaxHealth / 4)
-                    health.Colour = osu.Yellow;
-                else
-                    health.Colour = osu.Red;
 
                 health.Current.Value = v.Health / v.MaxHealth;
                 energy.Current.Value = v.Energy / v.MaxEnergy;

@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public override double EnergyCostPerSecond => TomajiEnergyCostPerSecond;
 
-        public override Color4 CharacterColor => TomajiColor;
+        public override Color4 PrimaryColor => TomajiColor;
 
         private double originalRate;
 

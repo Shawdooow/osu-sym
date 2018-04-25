@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public override double EnergyCostPerSecond => RyukoyEnergyCostPerSecond;
 
-        public override Color4 CharacterColor => RyukoyColor;
+        public override Color4 PrimaryColor => RyukoyColor;
         #endregion
 
         public Ryukoy(VitaruPlayfield playfield) : base(playfield)

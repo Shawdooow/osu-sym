@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected override string CharacterName => "enemy";
 
-        public override Color4 CharacterColor => characterColor;
+        public override Color4 PrimaryColor => characterColor;
 
         protected override float HitboxWidth => 48;
 

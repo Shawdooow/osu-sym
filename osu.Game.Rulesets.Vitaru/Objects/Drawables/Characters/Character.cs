@@ -36,7 +36,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected abstract string CharacterName { get; }
 
-        public abstract Color4 CharacterColor { get; }
+        public virtual Color4 PrimaryColor { get; } = Color4.Green;
+
+        public virtual Color4 SecondaryColor { get; } = Color4.LightBlue;
+
+        public virtual Color4 ComplementaryColor { get; } = Color4.LightGreen;
 
         protected virtual float HitboxWidth { get; } = 4;
 
@@ -188,7 +192,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 Seal = new Seal(this),
                 SoulContainer = new Container
                 {
-                    Colour = CharacterColor,
+                    Colour = PrimaryColor,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Alpha = 1,
@@ -247,7 +251,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                     Origin = Anchor.Centre,
                     Alpha = 0,
                     Size = new Vector2(HitboxWidth + HitboxWidth / 4),
-                    BorderColour = CharacterColor,
+                    BorderColour = PrimaryColor,
                     BorderThickness = HitboxWidth / 4,
                     Masking = true,
 
@@ -260,7 +264,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
                         Radius = HitboxWidth / 2,
                         Type = EdgeEffectType.Shadow,
-                        Colour = CharacterColor.Opacity(0.5f)
+                        Colour = PrimaryColor.Opacity(0.5f)
                     }
                 }
             };
@@ -268,7 +272,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             Add(Hitbox = new SymcolHitbox(new Vector2(HitboxWidth)) { Team = Team });
 
             if (CharacterName == "player" || CharacterName == "enemy")
-                KiaiContainer.Colour = CharacterColor;
+                KiaiContainer.Colour = PrimaryColor;
 
             StillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName, storage);
             KiaiStillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Kiai", storage);

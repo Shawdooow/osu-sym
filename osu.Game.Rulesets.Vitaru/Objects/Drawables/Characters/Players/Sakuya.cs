@@ -6,6 +6,7 @@ using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
+using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 {
@@ -22,7 +23,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public const double SakuyaEnergyCostPerSecond = 4;
 
-        public static readonly Color4 SakuyaColor = Color4.Navy;
+        public static readonly Color4 SakuyaPrimaryColor = Color4.Navy;
+
+        public static readonly Color4 SakuyaSecondaryColor = OsuColour.FromHex("#92a0dd");
+
+        public static readonly Color4 SakuyaComplementaryColor = OsuColour.FromHex("#d6d6d6");
 
         public override SelectableCharacters PlayableCharacter => SelectableCharacters.SakuyaIzayoi;
 
@@ -34,7 +39,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public override double EnergyCostPerSecond => SakuyaEnergyCostPerSecond;
 
-        public override Color4 CharacterColor => SakuyaColor;
+        public override Color4 PrimaryColor => SakuyaPrimaryColor;
+
+        public override Color4 SecondaryColor => SakuyaSecondaryColor;
+
+        public override Color4 ComplementaryColor => SakuyaComplementaryColor;
 
         private double originalRate;
 

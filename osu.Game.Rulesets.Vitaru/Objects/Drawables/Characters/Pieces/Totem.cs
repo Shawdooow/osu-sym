@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                 Team = ParentCharacter.Team,
                 BulletSpeed = 0.8f,
                 BulletDamage = 5,
-                ColorOverride = ParentCharacter.CharacterColor,
+                ColorOverride = ParentCharacter.PrimaryColor,
                 StartAngle = StartAngle,
             }, vitaruPlayfield));
             s.MoveTo(ToSpaceOfOtherDrawable(new Vector2(0, 0), s));
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
             Origin = Anchor.Centre;
             Anchor = Anchor.Centre;
             BorderThickness = 2;
-            BorderColour = ParentCharacter.CharacterColor;
+            BorderColour = ParentCharacter.PrimaryColor;
             CornerRadius = 3;
             Child= new Box
             {
