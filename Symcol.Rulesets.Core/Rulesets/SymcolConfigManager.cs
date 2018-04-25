@@ -1,7 +1,7 @@
 ﻿using osu.Framework.Configuration;
 using osu.Framework.Platform;
 
-namespace Symcol.Rulesets.Core
+namespace Symcol.Rulesets.Core.Rulesets
 {
     public class SymcolConfigManager : IniConfigManager<SymcolSetting>
     {

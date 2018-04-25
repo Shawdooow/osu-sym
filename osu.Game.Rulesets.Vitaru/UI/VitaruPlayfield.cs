@@ -10,11 +10,10 @@ using osu.Framework.Graphics.Cursor;
 using osu.Game.Rulesets.Vitaru.UI.Cursor;
 using osu.Framework.Configuration;
 using System.Collections.Generic;
-using Symcol.Rulesets.Core;
 using osu.Game.Rulesets.Vitaru.Multi;
-using osu.Framework.Logging;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
+using Symcol.Rulesets.Core.Rulesets;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {

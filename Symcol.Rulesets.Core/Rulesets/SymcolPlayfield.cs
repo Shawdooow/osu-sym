@@ -2,7 +2,7 @@
 using osu.Game.Rulesets.UI;
 using Symcol.Rulesets.Core.Multiplayer.Networking;
 
-namespace Symcol.Rulesets.Core
+namespace Symcol.Rulesets.Core.Rulesets
 {
     public class SymcolPlayfield : Playfield
     {

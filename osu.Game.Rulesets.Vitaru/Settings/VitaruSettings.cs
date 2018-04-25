@@ -1,5 +1,4 @@
-﻿using OpenTK;
-using osu.Framework.Allocation;
+﻿using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -8,14 +7,12 @@ using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Overlays.Settings;
 using System.Collections.Generic;
 using System.Linq;
-using Symcol.Rulesets.Core;
 using Symcol.Rulesets.Core.Wiki;
 using osu.Game.Rulesets.Vitaru.Wiki;
-using osu.Game.Rulesets.Vitaru.Scoring;
-using osu.Game.Rulesets.Vitaru.Edit;
 using Symcol.Rulesets.Core.Multiplayer.Screens;
 using eden.Game.GamePieces;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
+using Symcol.Rulesets.Core.Rulesets;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {

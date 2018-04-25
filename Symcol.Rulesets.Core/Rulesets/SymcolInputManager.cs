@@ -1,10 +1,9 @@
-﻿using osu.Framework.Graphics.Containers;
-using osu.Framework.Input.Bindings;
+﻿using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets;
 using osu.Game.Rulesets.UI;
 using Symcol.Rulesets.Core.VectorVideos;
 
-namespace Symcol.Rulesets.Core
+namespace Symcol.Rulesets.Core.Rulesets
 {
     public class SymcolInputManager<T> : RulesetInputManager<T>
         where T : struct

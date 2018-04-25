@@ -6,10 +6,10 @@ using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.Networking;
-using Symcol.Rulesets.Core;
 using Symcol.Rulesets.Core.Multiplayer.Options;
 using Symcol.Rulesets.Core.Multiplayer.Pieces;
 using Symcol.Rulesets.Core.Multiplayer.Screens;
+using Symcol.Rulesets.Core.Rulesets;
 using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Vitaru.Multi

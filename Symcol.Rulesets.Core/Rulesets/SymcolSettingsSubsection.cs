@@ -8,12 +8,13 @@ using osu.Game.Overlays.Settings;
 using Symcol.Rulesets.Core.Wiki;
 #if SymcolMods
 using osu.Game.Screens.Symcol;
+#else
+using osu.Framework.Logging;
 #endif
 using Symcol.Rulesets.Core.Multiplayer.Screens;
 using osu.Framework.Platform;
-using osu.Framework.Logging;
 
-namespace Symcol.Rulesets.Core
+namespace Symcol.Rulesets.Core.Rulesets
 {
     public abstract class SymcolSettingsSubsection : SettingsSubsection
     {

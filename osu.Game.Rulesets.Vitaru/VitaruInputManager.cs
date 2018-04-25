@@ -4,7 +4,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
-using Symcol.Rulesets.Core;
+using Symcol.Rulesets.Core.Rulesets;
 
 namespace osu.Game.Rulesets.Vitaru
 {
