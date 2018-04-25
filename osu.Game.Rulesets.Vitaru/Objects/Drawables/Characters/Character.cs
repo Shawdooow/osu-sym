@@ -48,6 +48,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected readonly VitaruPlayfield VitaruPlayfield;
 
+        public int Abstraction { get; set; }
+
         public int Team { get; set; }
         protected CircularContainer VisibleHitbox;
         public SymcolHitbox Hitbox;
@@ -130,7 +132,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             if (Health <= 0 && !Dead)
                 Death();
 
-            foreach (Drawable draw in VitaruPlayfield.BulletField)
+            foreach (Drawable draw in VitaruPlayfield.GameField.Current)
             {
                 DrawableBullet bullet = draw as DrawableBullet;
                 if (bullet?.Hitbox != null)

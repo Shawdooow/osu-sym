@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 return ControlScheme.Dodge;
             else
             {
-                if (currentCharacter == SelectableCharacters.SakuyaIzayoi)
+                if (currentCharacter == SelectableCharacters.SakuyaIzayoi || currentCharacter == SelectableCharacters.RyukoyHakurei || currentCharacter == SelectableCharacters.TomajiHakurei)
                     return ControlScheme.Sakuya;
                 //else if (currentCharacter == Player.KokoroHatano)
                     //return ControlScheme.Kokoro;

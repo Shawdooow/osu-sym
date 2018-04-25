@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Load();
 
-            VitaruPlayfield.CharacterField.Add(starPiece = new StarPiece
+            VitaruPlayfield.GameField.Add(starPiece = new StarPiece
             {
                 Alpha = 0,
                 Masking = true,
@@ -107,7 +107,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             if (currentGameMode != VitaruGamemode.Dodge)
             {
                 //load the enemy
-                VitaruPlayfield.CharacterField.Add(enemy = new Enemy(VitaruPlayfield, pattern, this)
+                VitaruPlayfield.GameField.Add(enemy = new Enemy(VitaruPlayfield, pattern, this)
                 {
                     Alpha = 0,
                     Anchor = Anchor.TopLeft,
@@ -140,7 +140,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 Bullet b = (Bullet)o;
                 DrawableBullet drawableBullet = new DrawableBullet(b, this, VitaruPlayfield);
-                VitaruPlayfield.BulletField.Add(drawableBullet);
+                VitaruPlayfield.GameField.Add(drawableBullet);
                 AddNested(drawableBullet);
             }
         }
@@ -178,11 +178,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (currentGameMode != VitaruGamemode.Dodge)
             {
-                VitaruPlayfield.CharacterField.Remove(enemy);
+                VitaruPlayfield.GameField.Remove(enemy);
                 enemy.Dispose();
             }
 
-            VitaruPlayfield.CharacterField.Remove(starPiece);
+            VitaruPlayfield.GameField.Remove(starPiece);
             starPiece.Dispose();
 
             Expire();

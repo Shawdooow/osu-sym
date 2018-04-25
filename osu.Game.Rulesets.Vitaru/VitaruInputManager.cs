@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Vitaru
 
             Add(BlurContainer.WithEffect(new GlowEffect
             {
-                Strength = 1f,
+                Strength = 2f,
                 BlurSigma = new Vector2(8),
                 Colour = Color4.Cyan.Opacity(0.5f)
             }));

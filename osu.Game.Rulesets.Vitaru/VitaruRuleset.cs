@@ -94,50 +94,6 @@ namespace osu.Game.Rulesets.Vitaru
                         new KeyBinding(InputKey.Q, VitaruAction.Decrease),
                         new KeyBinding(InputKey.Shift, VitaruAction.Slow),
                     };
-                    /*
-                case ControlScheme.Kokoro:
-                    return new KeyBinding[]
-                    {
-                        new KeyBinding(InputKey.W, VitaruAction.Up),
-                        new KeyBinding(InputKey.S, VitaruAction.Down),
-                        new KeyBinding(InputKey.A, VitaruAction.Left),
-                        new KeyBinding(InputKey.D, VitaruAction.Right),
-                        new KeyBinding(InputKey.MouseLeft, VitaruAction.Shoot),
-                        new KeyBinding(InputKey.MouseRight, VitaruAction.Spell),
-                        new KeyBinding(InputKey.E, VitaruAction.RightShoot),
-                        new KeyBinding(InputKey.Q, VitaruAction.LeftShoot),
-                        new KeyBinding(InputKey.Shift, VitaruAction.Slow),
-                    };
-                case ControlScheme.NueHoujuu:
-                    return new KeyBinding[]
-                    {
-                        new KeyBinding(InputKey.W, VitaruAction.Up),
-                        new KeyBinding(InputKey.S, VitaruAction.Down),
-                        new KeyBinding(InputKey.A, VitaruAction.Left),
-                        new KeyBinding(InputKey.D, VitaruAction.Right),
-                        new KeyBinding(InputKey.MouseLeft, VitaruAction.Shoot),
-                        new KeyBinding(InputKey.MouseRight, VitaruAction.Spell),
-                        new KeyBinding(InputKey.MouseMiddle, VitaruAction.Spell2),
-                        new KeyBinding(InputKey.E, VitaruAction.Spell3),
-                        new KeyBinding(InputKey.Q, VitaruAction.Spell4),
-                        new KeyBinding(InputKey.Shift, VitaruAction.Slow),
-                    };
-                case ControlScheme.AliceMuyart:
-                    return new KeyBinding[]
-                    {
-                        new KeyBinding(InputKey.W, VitaruAction.Up),
-                        new KeyBinding(InputKey.S, VitaruAction.Down),
-                        new KeyBinding(InputKey.A, VitaruAction.Left),
-                        new KeyBinding(InputKey.D, VitaruAction.Right),
-                        new KeyBinding(InputKey.MouseLeft, VitaruAction.Shoot),
-                        new KeyBinding(InputKey.MouseRight, VitaruAction.Spell),
-                        new KeyBinding(InputKey.MouseButton1, VitaruAction.Spell2),
-                        new KeyBinding(InputKey.MouseButton2, VitaruAction.Spell3),
-                        new KeyBinding(InputKey.E, VitaruAction.Increase),
-                        new KeyBinding(InputKey.Q, VitaruAction.Decrease),
-                        new KeyBinding(InputKey.Shift, VitaruAction.Slow),
-                    };
-                    */
             }
 
             return new KeyBinding[0];
@@ -157,12 +113,6 @@ namespace osu.Game.Rulesets.Vitaru
                     return "Touhosu";
                 case ControlScheme.Sakuya:
                     return "Sakuya";
-                //case ControlScheme.Kokoro:
-                    //return "Kokoro";
-                //case ControlScheme.NueHoujuu:
-                    //return "Nue Houjuu";
-                //case ControlScheme.AliceMuyart:
-                    //return "Alice Muyart";
             }
         }
 

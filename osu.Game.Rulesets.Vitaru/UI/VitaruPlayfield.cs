@@ -14,6 +14,8 @@ using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
 using Symcol.Rulesets.Core.Rulesets;
+using osu.Framework.Graphics.Effects;
+using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -26,21 +28,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
         private readonly Bindable<int> friendlyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.FriendlyPlayerCount);
         private readonly Bindable<int> enemyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);
 
-        /*
-        private readonly PlayableCharacters playerOne = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerOne);
-        private readonly PlayableCharacters playerTwo = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerTwo);
-        private readonly PlayableCharacters playerThree = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerThree);
-        private readonly PlayableCharacters playerFour = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerFour);
-        private readonly PlayableCharacters playerFive = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerFive);
-        private readonly PlayableCharacters playerSix = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerSix);
-        private readonly PlayableCharacters playerSeven = VitaruSettings.VitaruConfigManager.GetBindable<PlayableCharacters>(VitaruSetting.PlayerSeven);
-        */
-
         public readonly VitaruInputManager VitaruInputManager;
 
-        public readonly Container BulletField;
-        public readonly Container SpellField;
-        public readonly Container CharacterField;
+        public readonly AbstractionField GameField;
 
         public readonly MirrorField Mirrorfield;
 
@@ -81,20 +71,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 Add(Mirrorfield = new MirrorField(this, vitaruInput));
             }
 
+            Bindable<int> abstraction = new Bindable<int>() { Value = 0 };
+
             AddRange(new Drawable[]
             {
-                CharacterField = new Container
-                {
-                    RelativeSizeAxes = Axes.Both
-                },
-                BulletField = new Container
-                {
-                    RelativeSizeAxes = Axes.Both
-                },
-                SpellField = new Container
-                {
-                    RelativeSizeAxes = Axes.Both
-                },
+                GameField = new AbstractionField(abstraction),
                 judgementLayer = new Container
                 {
                     RelativeSizeAxes = Axes.Both
@@ -108,7 +89,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 switch (currentCharacter)
                 {
                     case SelectableCharacters.RyukoyHakurei:
-                        playerList.Add(Player = new Ryukoy(this));
+                        playerList.Add(Player = new Ryukoy(this, abstraction));
                         break;
                     case SelectableCharacters.TomajiHakurei:
                         playerList.Add(Player = new Tomaji(this));
@@ -135,61 +116,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
                             VitaruNetworkingClientHandler = vitaruNetworkingClientHandler
                         });
                     }*/
-                /*
-                if (multiplayer && currentGameMode != VitaruGamemode.Dodge && currentGameMode != VitaruGamemode.Gravaru)
-                {
-                    switch (friendlyPlayerCount)
-                    {
-                        case 0:
-                            break;
-                        case 1:
-                            playerList.Add(new VitaruPlayer(this, playerOne) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512f / 2), Auto = true, Bot = true });
-                            break;
-                        case 2:
-                            playerList.Add(new VitaruPlayer(this, playerOne) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512 - 200, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerTwo) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(200, 700), Auto = true, Bot = true });
-                            break;
-                        case 3:
-                            playerList.Add(new VitaruPlayer(this, playerOne) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(0, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerTwo) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(200, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerThree) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512f / 2, 700), Auto = true, Bot = true });
-                            break;
-                        case 4:
-                            playerList.Add(new VitaruPlayer(this, playerOne) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(0, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerTwo) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(200, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerThree) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512 - 200, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerFour) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512, 700), Auto = true, Bot = true });
-                            break;
-                        case 5:
-                            playerList.Add(new VitaruPlayer(this, playerOne) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(0, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerTwo) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(200, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerThree) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512f / 2, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerFour) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512 - 200, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerFive) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512, 700), Auto = true, Bot = true });
-                            break;
-                        case 6:
-                            playerList.Add(new VitaruPlayer(this, playerOne) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(0, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerTwo) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(150, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerThree) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(250, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerFour) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512 - 250, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerFive) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512 - 150, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerSix) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512, 700), Auto = true, Bot = true });
-                            break;
-                        case 7:
-                            playerList.Add(new VitaruPlayer(this, playerOne) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(0, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerTwo) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(125, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerThree) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(200, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerFour) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512f / 2, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerFive) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512 - 200, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerSix) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512 - 125, 700), Auto = true, Bot = true });
-                            playerList.Add(new VitaruPlayer(this, playerSeven) { Anchor = Anchor.Centre, Origin = Anchor.Centre, Position = new Vector2(512, 700), Auto = true, Bot = true });
-                            break;
-                    }
-                }
-                */
 
                 foreach (VitaruPlayer player in playerList)
-                    CharacterField.Add(player);
+                    GameField.Add(player);
 
                 Player.Position = new Vector2(256, 700);
                 if (currentGameMode == VitaruGamemode.Dodge || currentGameMode == VitaruGamemode.Gravaru)
@@ -235,5 +164,174 @@ namespace osu.Game.Rulesets.Vitaru.UI
         }
 
         protected virtual CursorContainer CreateCursor() => new GameplayCursor();
+
+        public class AbstractionField : Container
+        {
+            public readonly Bindable<int> AbstractionLevel;
+
+            public Container Current = new Container { RelativeSizeAxes = Axes.Both };
+            public Container QuarterOut = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.5f };
+            public Container HalfOut = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.25f };
+            public Container FullAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.125f };
+
+            public AbstractionField(Bindable<int> abstraction)
+            {
+                AbstractionLevel = abstraction;
+
+                RelativeSizeAxes = Axes.Both;
+
+                Children = new Drawable[]
+                {
+                    FullAbstraction.WithEffect(new GlowEffect
+                    {
+                        Strength = 8f,
+                        BlurSigma = new Vector2(16)
+                    }),
+                    HalfOut.WithEffect(new GlowEffect
+                    {
+                        Strength = 4f,
+                        BlurSigma = new Vector2(8)
+                    }),
+                    QuarterOut.WithEffect(new GlowEffect
+                    {
+                        Strength = 2f,
+                        BlurSigma = new Vector2(4)
+                    }),
+                    Current
+                };
+
+                AbstractionLevel.ValueChanged += (value) =>
+                {
+                    List<Drawable> q = new List<Drawable>();
+                    List<Drawable> h = new List<Drawable>();
+                    List<Drawable> f = new List<Drawable>();
+
+                    foreach (Drawable draw in QuarterOut)
+                        q.Add(draw);
+
+                    foreach (Drawable draw in HalfOut)
+                        h.Add(draw);
+
+                    foreach (Drawable draw in FullAbstraction)
+                        f.Add(draw);
+
+                    foreach (Drawable draw in q)
+                    {
+                        QuarterOut.Remove(draw);
+                        Current.Add(draw);
+                    }
+
+                    foreach (Drawable draw in h)
+                    {
+                        HalfOut.Remove(draw);
+                        Current.Add(draw);
+                    }
+
+                    foreach (Drawable draw in f)
+                    {
+                        FullAbstraction.Remove(draw);
+                        Current.Add(draw);
+                    }
+
+                    if (value >= 1)
+                    {
+                        List<Drawable> quarter = new List<Drawable>();
+
+                        foreach (Drawable draw in Current)
+                        {
+                            if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value)
+                                quarter.Add(bullet);
+                            if (draw is VitaruPlayer player && player.Abstraction < value)
+                                quarter.Add(player);
+                            if (draw is Enemy enemy && enemy.Abstraction < value)
+                                quarter.Add(enemy);
+                        }
+
+                        foreach (Drawable draw in quarter)
+                        {
+                            Current.Remove(draw);
+                            QuarterOut.Add(draw);
+                        }
+                    }
+                    if (value >= 2)
+                    {
+                        List<Drawable> half = new List<Drawable>();
+
+                        foreach (Drawable draw in QuarterOut)
+                        {
+                            if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value - 1)
+                                half.Add(bullet);
+                            if (draw is VitaruPlayer player && player.Abstraction < value - 1)
+                                half.Add(player);
+                            if (draw is Enemy enemy && enemy.Abstraction < value - 1)
+                                half.Add(enemy);
+                        }
+
+                        foreach (Drawable draw in half)
+                        {
+                            QuarterOut.Remove(draw);
+                            HalfOut.Add(draw);
+                        }
+                    }
+                    if (value >= 3)
+                    {
+                        List<Drawable> full = new List<Drawable>();
+
+                        foreach (Drawable draw in HalfOut)
+                        {
+                            if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value - 2)
+                                full.Add(bullet);
+
+                            if (draw is VitaruPlayer player && player.Abstraction < value - 2)
+                                full.Add(player);
+
+                            if (draw is Enemy enemy && enemy.Abstraction < value - 2)
+                                full.Add(enemy);
+                        }
+
+                        foreach (Drawable draw in full)
+                        {
+                            HalfOut.Remove(draw);
+                            FullAbstraction.Add(draw);
+                        }
+                    }
+                };
+                AbstractionLevel.TriggerChange();
+            }
+
+            public void Add (Drawable drawable)
+            {
+                Current.Add(drawable);
+                AbstractionLevel.TriggerChange();
+            }
+
+            public void Remove (Drawable drawable)
+            {
+                foreach (Drawable draw in Current)
+                    if (draw == drawable)
+                    {
+                        Current.Remove(drawable);
+                        return;
+                    }
+                foreach (Drawable draw in QuarterOut)
+                    if (draw == drawable)
+                    {
+                        QuarterOut.Remove(drawable);
+                        return;
+                    }
+                foreach (Drawable draw in HalfOut)
+                    if (draw == drawable)
+                    {
+                        HalfOut.Remove(drawable);
+                        return;
+                    }
+                foreach (Drawable draw in FullAbstraction)
+                    if (draw == drawable)
+                    {
+                        FullAbstraction.Remove(drawable);
+                        return;
+                    }
+            }
+        }
     }
 }

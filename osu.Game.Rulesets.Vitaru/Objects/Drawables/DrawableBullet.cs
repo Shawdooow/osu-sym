@@ -4,7 +4,6 @@ using System;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Game.Rulesets.Vitaru.Settings;
-using osu.Game.Rulesets.Vitaru.Scoring;
 using osu.Game.Rulesets.Vitaru.UI;
 using osu.Game.Rulesets.Scoring;
 using Symcol.Core.GameObjects;
@@ -29,7 +28,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public bool ReturnGreat = false;
 
         //Can be set for the Graze ScoringMetric
-        public int ScoreZone;
+        public int ScoreZone = 50;
 
         //Should be set to true when a character is hit
         public bool Hit;
@@ -181,7 +180,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             bulletPiece.Dispose();
             Hitbox.Dispose();
 
-            VitaruPlayfield.BulletField.Remove(this);
+            VitaruPlayfield.GameField.Remove(this);
             Dispose();
         }
 

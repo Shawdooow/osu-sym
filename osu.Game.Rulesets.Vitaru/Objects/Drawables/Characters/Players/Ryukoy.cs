@@ -1,5 +1,7 @@
 ﻿using OpenTK.Graphics;
+using osu.Framework.Configuration;
 using osu.Game.Rulesets.Vitaru.UI;
+using System;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 {
@@ -27,10 +29,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         public override double EnergyCostPerSecond => RyukoyEnergyCostPerSecond;
 
         public override Color4 PrimaryColor => RyukoyColor;
+
+        private readonly Bindable<int> abstraction;
         #endregion
 
-        public Ryukoy(VitaruPlayfield playfield) : base(playfield)
+        public Ryukoy(VitaruPlayfield playfield, Bindable<int> abstraction) : base(playfield)
         {
+            this.abstraction = abstraction;
+            Abstraction = 3;
         }
 
         protected override void SpellUpdate()
@@ -40,18 +46,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         protected override bool Pressed(VitaruAction action)
         {
-            if (action == VitaruAction.Spell)
-                VitaruPlayfield.VitaruInputManager.ToggleBlur();
+            if (action == VitaruAction.Increase)
+                abstraction.Value = Math.Min(abstraction.Value + 1, 3);
+            if (action == VitaruAction.Decrease)
+                abstraction.Value = Math.Max(abstraction.Value - 1, 0);
 
             return base.Pressed(action);
-        }
-
-        protected override bool Released(VitaruAction action)
-        {
-            if (action == VitaruAction.Spell)
-                VitaruPlayfield.VitaruInputManager.ToggleBlur();
-
-            return base.Released(action);
         }
 
         #region Touhosu Story Content

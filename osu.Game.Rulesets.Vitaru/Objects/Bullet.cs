@@ -24,7 +24,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         public int Team { get; set; } = -1;
         public bool ShootPlayer { get; set; }
         public bool ObeyBoundries { get; } = true;
-        public bool Ghost { get; set; }
+
+        public int Abstraction { get; set; }
 
         public double Curviness
         {

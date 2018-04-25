@@ -75,7 +75,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected readonly Container Cursor;
 
-        private double packetTime = double.MinValue;
         private double lastQuarterBeat = -1;
         private double nextHalfBeat = -1;
         private double nextQuarterBeat = -1;
@@ -91,7 +90,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             Actions[VitaruAction.Slow] = false;
             Actions[VitaruAction.Shoot] = false;
 
-            VitaruPlayfield.CharacterField.Add(Cursor = new Container
+            VitaruPlayfield.GameField.Add(Cursor = new Container
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.Centre,
@@ -227,8 +226,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 bullet.ScoreZone = 300;
             else if (edgeDistance <= 128 && bullet.ScoreZone < 100)
                 bullet.ScoreZone = 100;
-            else if (bullet.ScoreZone < 50)
-                bullet.ScoreZone = 50;
         }
 
         protected virtual Vector2 GetNewPlayerPosition(double playerSpeed)
@@ -268,7 +265,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         {
             DrawableBullet drawableBullet;
 
-            VitaruPlayfield.BulletField.Add(drawableBullet = new DrawableBullet(new Bullet
+            VitaruPlayfield.GameField.Add(drawableBullet = new DrawableBullet(new Bullet
             {
                 StartTime = Time.Current,
                 Position = Position,
@@ -281,6 +278,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 SliderType = type,
                 Curviness = 0.25d,
                 DummyMode = true,
+                Abstraction = 3,
                 //Ghost = CurrentCharacter == Characters.YuyukoSaigyouji | CurrentCharacter == Characters.AliceMuyart
             }, VitaruPlayfield));
 
