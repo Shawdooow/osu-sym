@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             }
         }
 
-        public VitaruPlayfield() : base(BaseSize)
+        public VitaruPlayfield(VitaruInputManager vitaruInput) : base(BaseSize)
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 Position = new Vector2(20, 0);
                 Anchor = Anchor.Centre;
                 Origin = Anchor.CentreLeft;
-                Add(Mirrorfield = new MirrorField(this));
+                Add(Mirrorfield = new MirrorField(this, vitaruInput));
             }
 
             AddRange(new Drawable[]

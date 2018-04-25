@@ -147,9 +147,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
             if (action == VitaruAction.Increase)
             {
                 if (Actions[VitaruAction.Slow])
-                    SetRate = Math.Min(Math.Round(SetRate + 0.05d, 2), 1.5d);
+                    SetRate = Math.Min(Math.Round(SetRate + 0.05d, 2), 2d);
                 else
-                    SetRate = Math.Min(Math.Round(SetRate + 0.25d, 2), 1.5d);
+                    SetRate = Math.Min(Math.Round(SetRate + 0.25d, 2), 2d);
             }
             if (action == VitaruAction.Decrease)
             {

@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Vitaru.Edit
 
         protected override CursorContainer CreateCursor() => null;
 
-        public VitaruEditPlayfield()
+        public VitaruEditPlayfield(VitaruInputManager vitaruInput) : base (vitaruInput)
         {
         }
     }

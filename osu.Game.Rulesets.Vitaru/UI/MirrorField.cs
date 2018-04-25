@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         private readonly VitaruPlayfield vitaruPlayfield;
 
-        public MirrorField(VitaruPlayfield vitaruPlayfield) : base()
+        public MirrorField(VitaruPlayfield vitaruPlayfield, VitaruInputManager vitaruInput) : base (vitaruInput)
         {
             this.vitaruPlayfield = vitaruPlayfield;
         }

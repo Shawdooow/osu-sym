@@ -13,11 +13,12 @@ namespace osu.Game.Rulesets.Vitaru.Edit
         public VitaruEditRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap, bool isForCurrentRuleset)
             : base(ruleset, beatmap, isForCurrentRuleset)
         {
+            VitaruEditPlayfield = new VitaruEditPlayfield((VitaruInputManager)KeyBindingInputManager);
         }
 
         protected override Playfield CreatePlayfield() => VitaruEditPlayfield;
 
-        protected VitaruEditPlayfield VitaruEditPlayfield = new VitaruEditPlayfield();
+        protected VitaruEditPlayfield VitaruEditPlayfield;
 
         protected override CursorContainer CreateCursor() => null;
 

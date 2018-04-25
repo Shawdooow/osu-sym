@@ -20,6 +20,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public VitaruRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap, bool isForCurrentRuleset)
             : base(ruleset, beatmap, isForCurrentRuleset)
         {
+            VitaruPlayfield = new VitaruPlayfield((VitaruInputManager)KeyBindingInputManager);
         }
 
         protected override CursorContainer CreateCursor() => new GameplayCursor();
@@ -32,7 +33,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         protected override Playfield CreatePlayfield() => VitaruPlayfield;
 
-        protected VitaruPlayfield VitaruPlayfield = new VitaruPlayfield();
+        protected VitaruPlayfield VitaruPlayfield;
 
         public override int Variant => (int)variant();
 

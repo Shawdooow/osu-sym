@@ -1,5 +1,9 @@
 ﻿using eden.Game.GamePieces;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Configuration;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.Vitaru.Settings;
@@ -21,11 +25,39 @@ namespace osu.Game.Rulesets.Vitaru
         public VitaruInputManager(RulesetInfo ruleset, int variant) : base(ruleset, variant, SimultaneousBindingMode.Unique)
         {
             if (graphics.Value == GraphicsPresets.Standard)
-                Add(Shade = new Box { RelativeSizeAxes = Framework.Graphics.Axes.Both, Alpha = 0, Colour = OpenTK.Graphics.Color4.Orange});
+                Add(Shade = new Box { RelativeSizeAxes = Axes.Both, Alpha = 0, Colour = Color4.Orange });
+
             if (debugUI)
-                Add(new DebugValueUI { Anchor = Framework.Graphics.Anchor.CentreLeft, Origin = Framework.Graphics.Anchor.CentreLeft, Position = new OpenTK.Vector2(10, 0)});
-            if (comboFire)
+                Add(new DebugValueUI { Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, Position = new Vector2(10, 0) });
+
+            if (false)//comboFire)
                 Add(new ComboFire());
+        }
+
+        bool blured;
+        public void ToggleBlur()
+        {
+            if (!blured)
+                foreach (Drawable drawable in Children)
+                {
+                    Remove(drawable);
+                    Add(drawable.WithEffect(new GlowEffect
+                    {
+                        Strength = 10,
+                    }));
+                }
+            else
+                foreach (Drawable drawable in Children)
+                {
+                    Remove(drawable);
+                    Add(drawable.WithEffect(new GlowEffect
+                    {
+                        Strength = 0,
+                    }));
+                }
+
+            blured = !blured;
+
         }
     }
 

@@ -31,6 +31,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public Ryukoy(VitaruPlayfield playfield) : base(playfield)
         {
+            Spell += (action) =>
+            {
+
+            };
         }
 
         #region Touhosu Story Content
