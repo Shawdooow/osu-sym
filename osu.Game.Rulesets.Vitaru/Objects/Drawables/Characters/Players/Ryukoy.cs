@@ -12,9 +12,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public const double RyukoyEnergy = 24;
 
-        public const double RyukoyEnergyCost = 12;
+        public const double RyukoyEnergyCost = 2;
 
-        public const double RyukoyEnergyCostPerSecond = 0;
+        public const double RyukoyEnergyCostPerSecond = 4;
 
         public static readonly Color4 RyukoyColor = Color4.MediumPurple;
 
@@ -30,6 +30,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public override Color4 PrimaryColor => RyukoyColor;
 
+        private int level = 1;
+
         private readonly Bindable<int> abstraction;
         #endregion
 
@@ -37,19 +39,33 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         {
             this.abstraction = abstraction;
             Abstraction = 3;
+
+            Spell += (input) =>
+            {
+                abstraction.Value = level;
+            };
         }
 
         protected override void SpellUpdate()
         {
             base.SpellUpdate();
+
+            if (SpellActive)
+            {
+                Energy -= Clock.ElapsedFrameTime / 1000 * (1 - 1 / level) * EnergyCostPerSecond;
+
+                abstraction.Value = level;
+            }
+            else
+                abstraction.Value = 0;
         }
 
         protected override bool Pressed(VitaruAction action)
         {
             if (action == VitaruAction.Increase)
-                abstraction.Value = Math.Min(abstraction.Value + 1, 3);
+                level = Math.Min(abstraction.Value + 1, 3);
             if (action == VitaruAction.Decrease)
-                abstraction.Value = Math.Max(abstraction.Value - 1, 0);
+                level = Math.Max(abstraction.Value - 1, 0);
 
             return base.Pressed(action);
         }

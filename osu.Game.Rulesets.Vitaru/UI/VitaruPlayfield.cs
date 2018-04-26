@@ -170,8 +170,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
             public readonly Bindable<int> AbstractionLevel;
 
             public Container Current = new Container { RelativeSizeAxes = Axes.Both };
-            public Container QuarterOut = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.5f };
-            public Container HalfOut = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.25f };
+            public Container QuarterAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.5f };
+            public Container HalfAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.25f };
             public Container FullAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.125f };
 
             public AbstractionField(Bindable<int> abstraction)
@@ -187,12 +187,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
                         Strength = 8f,
                         BlurSigma = new Vector2(16)
                     }),
-                    HalfOut.WithEffect(new GlowEffect
+                    HalfAbstraction.WithEffect(new GlowEffect
                     {
                         Strength = 4f,
                         BlurSigma = new Vector2(8)
                     }),
-                    QuarterOut.WithEffect(new GlowEffect
+                    QuarterAbstraction.WithEffect(new GlowEffect
                     {
                         Strength = 2f,
                         BlurSigma = new Vector2(4)
@@ -202,26 +202,14 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
                 AbstractionLevel.ValueChanged += (value) =>
                 {
-                    try
-                    {
-                        BufferedContainer a = (BufferedContainer)FullAbstraction.Parent;
-                        BufferedContainer b = (BufferedContainer)HalfOut.Parent;
-                        BufferedContainer c = (BufferedContainer)QuarterOut.Parent;
-
-                        a.Masking = false;
-                        b.Masking = false;
-                        c.Masking = false;
-                    }
-                    catch { Logger.Log("Type Casting Failed!", LoggingTarget.Runtime, LogLevel.Error); }
-
                     List<Drawable> q = new List<Drawable>();
                     List<Drawable> h = new List<Drawable>();
                     List<Drawable> f = new List<Drawable>();
 
-                    foreach (Drawable draw in QuarterOut)
+                    foreach (Drawable draw in QuarterAbstraction)
                         q.Add(draw);
 
-                    foreach (Drawable draw in HalfOut)
+                    foreach (Drawable draw in HalfAbstraction)
                         h.Add(draw);
 
                     foreach (Drawable draw in FullAbstraction)
@@ -229,13 +217,13 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
                     foreach (Drawable draw in q)
                     {
-                        QuarterOut.Remove(draw);
+                        QuarterAbstraction.Remove(draw);
                         Current.Add(draw);
                     }
 
                     foreach (Drawable draw in h)
                     {
-                        HalfOut.Remove(draw);
+                        HalfAbstraction.Remove(draw);
                         Current.Add(draw);
                     }
 
@@ -262,14 +250,14 @@ namespace osu.Game.Rulesets.Vitaru.UI
                         foreach (Drawable draw in quarter)
                         {
                             Current.Remove(draw);
-                            QuarterOut.Add(draw);
+                            QuarterAbstraction.Add(draw);
                         }
                     }
                     if (value >= 2)
                     {
                         List<Drawable> half = new List<Drawable>();
 
-                        foreach (Drawable draw in QuarterOut)
+                        foreach (Drawable draw in QuarterAbstraction)
                         {
                             if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value - 1)
                                 half.Add(bullet);
@@ -281,15 +269,15 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
                         foreach (Drawable draw in half)
                         {
-                            QuarterOut.Remove(draw);
-                            HalfOut.Add(draw);
+                            QuarterAbstraction.Remove(draw);
+                            HalfAbstraction.Add(draw);
                         }
                     }
                     if (value >= 3)
                     {
                         List<Drawable> full = new List<Drawable>();
 
-                        foreach (Drawable draw in HalfOut)
+                        foreach (Drawable draw in HalfAbstraction)
                         {
                             if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value - 2)
                                 full.Add(bullet);
@@ -303,7 +291,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
                         foreach (Drawable draw in full)
                         {
-                            HalfOut.Remove(draw);
+                            HalfAbstraction.Remove(draw);
                             FullAbstraction.Add(draw);
                         }
                     }
@@ -325,16 +313,16 @@ namespace osu.Game.Rulesets.Vitaru.UI
                         Current.Remove(drawable);
                         return;
                     }
-                foreach (Drawable draw in QuarterOut)
+                foreach (Drawable draw in QuarterAbstraction)
                     if (draw == drawable)
                     {
-                        QuarterOut.Remove(drawable);
+                        QuarterAbstraction.Remove(drawable);
                         return;
                     }
-                foreach (Drawable draw in HalfOut)
+                foreach (Drawable draw in HalfAbstraction)
                     if (draw == drawable)
                     {
-                        HalfOut.Remove(drawable);
+                        HalfAbstraction.Remove(drawable);
                         return;
                     }
                 foreach (Drawable draw in FullAbstraction)

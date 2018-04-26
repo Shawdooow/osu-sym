@@ -195,6 +195,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         {
             base.Update();
 
+            foreach (Drawable draw in VitaruPlayfield.GameField.QuarterAbstraction)
+                if (draw is DrawableBullet bullet && bullet.Hitbox != null)
+                    ParseBullet(bullet);
+
+            foreach (Drawable draw in VitaruPlayfield.GameField.HalfAbstraction)
+                if (draw is DrawableBullet bullet && bullet.Hitbox != null)
+                    ParseBullet(bullet);
+
+            foreach (Drawable draw in VitaruPlayfield.GameField.FullAbstraction)
+                if (draw is DrawableBullet bullet && bullet.Hitbox != null)
+                    ParseBullet(bullet);
+
             Position = GetNewPlayerPosition(0.25d);
             Cursor.Position = VitaruCursor.CenterCircle.ToSpaceOfOtherDrawable(Vector2.Zero, Parent) + new Vector2(6);
 
@@ -279,7 +291,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 Curviness = 0.25d,
                 DummyMode = true,
                 Abstraction = 3,
-                //Ghost = CurrentCharacter == Characters.YuyukoSaigyouji | CurrentCharacter == Characters.AliceMuyart
             }, VitaruPlayfield));
 
             //if (vampuric)
