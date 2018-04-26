@@ -158,15 +158,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
                 }
 
                 DrawableLaser laser = draw as DrawableLaser;
-                    if (laser?.Hitbox != null)
+                if (laser?.Hitbox != null)
+                {
+                    if (Hitbox.HitDetect(Hitbox, laser.Hitbox))
                     {
-                        if (Hitbox.HitDetect(Hitbox, laser.Hitbox))
-                        {
-                        Hurt(laser.Laser.LaserDamage * (1000 / (float)Clock.ElapsedFrameTime));
-                            laser.Hit = true;
-                        }
+                    Hurt(laser.Laser.LaserDamage * (1000 / (float)Clock.ElapsedFrameTime));
+                        laser.Hit = true;
                     }
                 }
+            }
 
             MovementAnimations();
         }
