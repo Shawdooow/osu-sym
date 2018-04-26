@@ -213,9 +213,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nEnergy: " + Ryukoy.RyukoyEnergy +
                         "\nEnergy Cost: " + Ryukoy.RyukoyEnergyCost +
                         "\nEnergy Cost per Second: " + Ryukoy.RyukoyEnergyCostPerSecond +
-                        "\nRole: ???" +
-                        "\nDifficulty: ???" +
-                        "\nAbility: Spirit Walker (Not Implemented Yet!)";
+                        "\nRole: Offense + Defense" +
+                        "\nDifficulty: Insane" +
+                        "\nAbility: Spirit Walker";
 
                         if (selectedGamemode == VitaruGamemode.Touhosu)
                         {
@@ -227,9 +227,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nEnergy: " + Tomaji.TomajiEnergy +
                         "\nEnergy Cost: " + Tomaji.TomajiEnergyCost +
                         "\nEnergy Cost per Second: " + Tomaji.TomajiEnergyCostPerSecond +
-                        "\nRole: ???" +
-                        "\nDifficulty: ???" +
-                        "\nAbility: Time Warden";
+                        "\nRole: Defense + Support" +
+                        "\nDifficulty: Hard" +
+                        "\nAbility: Time Shift";
 
                         if (selectedGamemode == VitaruGamemode.Touhosu)
                         {
@@ -243,9 +243,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                             "\nEnergy: " + Sakuya.SakuyaEnergy +
                             "\nEnergy Cost: " + Sakuya.SakuyaEnergyCost +
                             "\nEnergy Cost per Second: " + Sakuya.SakuyaEnergyCostPerSecond +
-                            "\nRole: ???" +
-                            "\nDifficulty: ???" +
-                            "\nAbility: Time Warden" + 
+                            "\nRole: Offense + Defense" +
+                            "\nDifficulty: Normal" +
+                            "\nAbility: Time Keeper" + 
                             "\n\n" + Sakuya.Background;
                         }
                         else
