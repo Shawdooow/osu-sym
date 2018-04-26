@@ -6,7 +6,6 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Beatmaps;
 using System;
-using osu.Game.Rulesets.Vitaru.Settings;
 
 namespace osu.Game.Rulesets.Vitaru.Objects
 {
@@ -110,6 +109,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects
             foreach (Bullet b in startCircleBullets)
             {
                 b.Ar = Ar;
+
+                if (IsSpinner)
+                    b.Abstraction = 2;
+                else if (!IsSlider)
+                    b.Abstraction = 1;
 
                 b.NewCombo = NewCombo;
                 b.IndexInCurrentCombo = IndexInCurrentCombo;
