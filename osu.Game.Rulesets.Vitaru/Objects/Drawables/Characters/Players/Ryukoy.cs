@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public const double RyukoyEnergyCost = 2;
 
-        public const double RyukoyEnergyCostPerSecond = 4;
+        public const double RyukoyEnergyCostPerSecond = 6;
 
         public static readonly Color4 RyukoyColor = Color4.MediumPurple;
 
@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
             if (SpellActive)
             {
-                Energy -= Clock.ElapsedFrameTime / 1000 * (1 - 1 / level) * EnergyCostPerSecond;
+                Energy -= (Clock.ElapsedFrameTime / 1000) * EnergyCostPerSecond * (level * 0.25f);
 
                 abstraction.Value = level;
             }

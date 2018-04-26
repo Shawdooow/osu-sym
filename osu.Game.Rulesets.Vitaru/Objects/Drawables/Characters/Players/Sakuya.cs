@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
                     else if (currentRate >= 1)
                         energyDrainMultiplier = currentRate - 1;
 
-                    Energy -= Clock.ElapsedFrameTime / 1000 * (1 / currentRate) * EnergyCostPerSecond * energyDrainMultiplier;
+                    Energy -= (Clock.ElapsedFrameTime / 1000) * (1 / currentRate) * energyDrainMultiplier * EnergyCostPerSecond;
 
                     if (currentRate > 0)
                         SpellEndTime = Time.Current + 2000;
