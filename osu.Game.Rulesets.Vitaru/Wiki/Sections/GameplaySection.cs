@@ -6,12 +6,12 @@ using Symcol.Rulesets.Core.Wiki;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.Containers;
 using OpenTK;
-using osu.Game.Rulesets.Vitaru.Wiki.Sections.Pieces;
 using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
+using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 {
@@ -60,87 +60,79 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             Content.Add(new WikiSubSectionHeader("Anatomy"));
             Content.Add(new WikiParagraph("Lets get you familiar with the anatomy of the Player first. " +
                         "Unfortunetly I have not had time to implement squishy insides so for now we are just going to go over the basics.\n"));
-            Content.Add(new Container
-            {
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.TopCentre,
-                AutoSizeAxes = Axes.Y,
-                RelativeSizeAxes = Axes.X,
-
-                Children = new Drawable[]
-                {
-                    new Anatomy
-                    {
-                        Position = new Vector2(-20, 0),
-                    },
-                    new OsuTextFlowContainer(t => { t.TextSize = 20; })
-                    {
-                        Anchor = Anchor.CentreLeft,
-                        Origin = Anchor.CentreLeft,
-                        Width = 400,
-                        AutoSizeAxes = Axes.Y,
-                        Text = "On the right we have the Player, I also have revealed the hitbox so I can explain why thats the only part that actually matters. " +
+            Content.Add(new WikiSplitColum(
+                new WikiParagraph("On the right we have the Player, I also have revealed the hitbox so I can explain why thats the only part that actually matters. " +
                         "First, see that little white dot with the colored ring in the middle of the player? Thats the hitbox. " +
-                        "You only take damage if that white part gets hit, bullets will pass right over the rest of the player without actually harming you in any way, infact that heals you!\n"
-                    }
-                }
-            });
-            Content.Add(new Container
-            {
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.TopCentre,
-                AutoSizeAxes = Axes.Y,
-                RelativeSizeAxes = Axes.X,
-
-                Children = new Drawable[]
+                        "You only take damage if that white part gets hit, bullets will pass right over the rest of the player without actually harming you in any way, infact that heals you!"),
+                new Container
                 {
-                    //Just a bullet
-                    new CircularContainer
-                    {
-                        Position = new Vector2(20, 0),
-                        Anchor = Anchor.CentreLeft,
-                        Origin = Anchor.CentreLeft,
-                        Scale = new Vector2(2),
-                        Size = new Vector2(16),
-                        BorderThickness = 16 / 4,
-                        BorderColour = Color4.Green,
-                        Masking = true,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
 
-                        Child = new Box
+                    Children = new Drawable[]
+                    {
+                        new Sprite
                         {
-                            RelativeSizeAxes = Axes.Both
+                            Scale = new Vector2(2),
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Texture = VitaruRuleset.VitaruTextures.Get(SelectableCharacters.SakuyaIzayoi.ToString() + "Kiai")
                         },
-                        EdgeEffect = new EdgeEffectParameters
+                        new CircularContainer
                         {
-                            Radius = 4,
-                            Type = EdgeEffectType.Shadow,
-                            Colour = Color4.Green.Opacity(0.5f)
-                        }
-                    },
-                    new OsuTextFlowContainer(t => { t.TextSize = 20; })
-                    {
-                        Anchor = Anchor.CentreRight,
-                        Origin = Anchor.CentreRight,
-                        Width = 400,
-                        AutoSizeAxes = Axes.Y,
-                        Text = "On the left we have a bullet. Bullets are pretty simple, see the white circle in the middle? If that touches the white circle in your hitbox you take damage.\n"
-                    }
-                }
-            });
-            Content.Add(new Container
-            {
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.TopCentre,
-                AutoSizeAxes = Axes.Y,
-                RelativeSizeAxes = Axes.X,
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Scale = new Vector2(2),
+                            Size = new Vector2(4),
+                            BorderThickness = 4 / 3,
+                            BorderColour = Color4.Navy,
+                            Masking = true,
 
-                Children = new Drawable[]
+                            Child = new Box
+                            {
+                                RelativeSizeAxes = Axes.Both
+                            },
+                            EdgeEffect = new EdgeEffectParameters
+                            {
+                                Radius = 4,
+                                Type = EdgeEffectType.Shadow,
+                                Colour = Color4.Navy.Opacity(0.5f)
+                            }
+                        }
+                    }
+                }));
+            Content.Add(new WikiSplitColum(
+                new CircularContainer
                 {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Scale = new Vector2(2),
+                    Size = new Vector2(16),
+                    BorderThickness = 16 / 4,
+                    BorderColour = Color4.Green,
+                    Masking = true,
+
+                    Child = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both
+                    },
+                    EdgeEffect = new EdgeEffectParameters
+                    {
+                        Radius = 4,
+                        Type = EdgeEffectType.Shadow,
+                        Colour = Color4.Green.Opacity(0.5f)
+                    }
+                },
+                new WikiParagraph("On the left we have a bullet. Bullets are pretty simple, " +
+                "see the white circle in the middle? If that touches the white circle in your hitbox you take damage.")));
+            Content.Add(new WikiSplitColum(
+                new WikiParagraph("On the right here is a laser. " +
+                        "Basically they work like a bullet in that the white rectangle in the middle is the actual dangerous part " +
+                        "but unlike a bullet their damage will be spread out for as long as you are getting hit."),
                     new Container
                     {
-                        Anchor = Anchor.CentreRight,
-                        Origin = Anchor.CentreRight,
-                        Position = new Vector2(-80, 0),
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         Size = new Vector2(200, 40),
                         Masking = true,
                         CornerRadius = 16,
@@ -151,18 +143,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         {
                             RelativeSizeAxes = Axes.Both
                         }
-                    },
-                    new OsuTextFlowContainer(t => { t.TextSize = 20; })
-                    {
-                        Anchor = Anchor.CentreLeft,
-                        Origin = Anchor.CentreLeft,
-                        Width = 400,
-                        AutoSizeAxes = Axes.Y,
-                        Text = "On the right here is a laser. " +
-                        "Basically they work like a bullet in that the white rectangle in the middle is the actual dangerous part but unlike a bullet their damage will be spread out for as long as you are getting hit."
-                    }
-                }
-            });
+                    }));
             Content.Add(new WikiSubSectionHeader("Gamemodes"));
             Content.Add(new WikiParagraph("This ruleset has multiple gamemodes built in, similar to how Mania can have different key amounts. " +
                 "However instead of just increasing the lanes these change how bullets will be coming at you. " +
