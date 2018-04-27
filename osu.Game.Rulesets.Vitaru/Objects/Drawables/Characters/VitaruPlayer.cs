@@ -242,9 +242,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         protected virtual Vector2 GetNewPlayerPosition(double playerSpeed)
         {
+            Vector2 playerPosition = Position;
+
             double yTranslationDistance = playerSpeed * Clock.ElapsedFrameTime * SpeedMultiplier;
             double xTranslationDistance = playerSpeed * Clock.ElapsedFrameTime * SpeedMultiplier;
-            Vector2 playerPosition = Position;
 
             if (Actions[VitaruAction.Slow])
             {

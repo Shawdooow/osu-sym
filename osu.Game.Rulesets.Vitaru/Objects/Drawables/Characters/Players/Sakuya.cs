@@ -139,6 +139,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
             if (clock is IHasPitchAdjust pitchAdjust)
                 pitchAdjust.PitchAdjust = speed;
+
             SpeedMultiplier = 1 / speed;
         }
 
