@@ -299,13 +299,13 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 AbstractionLevel.TriggerChange();
             }
 
-            public void Add (Drawable drawable)
+            public new void Add (Drawable drawable)
             {
                 Current.Add(drawable);
                 AbstractionLevel.TriggerChange();
             }
 
-            public void Remove (Drawable drawable)
+            public new void Remove (Drawable drawable)
             {
                 foreach (Drawable draw in Current)
                     if (draw == drawable)

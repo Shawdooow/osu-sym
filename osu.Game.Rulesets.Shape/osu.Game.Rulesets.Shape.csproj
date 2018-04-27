@@ -9,9 +9,13 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\Textures\icon.png" />
+    <None Remove="Assets\Textures\shape bg.png" />
+    <None Remove="Assets\Textures\shape%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\icon.png" />
+    <EmbeddedResource Include="Assets\Textures\shape bg.png" />
+    <EmbeddedResource Include="Assets\Textures\shape@2x.png" />
   </ItemGroup>
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />

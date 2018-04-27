@@ -34,14 +34,14 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         private Bindable<SelectableCharacters> selectedCharacter;
 
-        private FillFlowContainer multiplayerSettings;
+        //private FillFlowContainer multiplayerSettings;
         private Bindable<bool> multiplayer;
         private Bindable<int> friendlyPlayerCount;
         private Bindable<bool> friendlyPlayerOverride;
-        private FillFlowContainer friendlyPlayerSettings;
+        //private FillFlowContainer friendlyPlayerSettings;
         private Bindable<int> enemyPlayerCount;
         private Bindable<bool> enemyPlayerOverride;
-        private FillFlowContainer enemyPlayerSettings;
+        //private FillFlowContainer enemyPlayerSettings;
 
         private FillFlowContainer debugUiSettings;
         private Bindable<bool> showDebugUi;

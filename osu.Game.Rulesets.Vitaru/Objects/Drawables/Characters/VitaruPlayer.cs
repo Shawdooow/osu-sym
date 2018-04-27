@@ -372,8 +372,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         {
             if (true)//!Bot && !Puppet)
                 return Pressed(action);
-            else
-                return false;
+            //else
+                //return false;
         }
 
         protected virtual bool Pressed(VitaruAction action)

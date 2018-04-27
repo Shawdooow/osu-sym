@@ -23,15 +23,17 @@ namespace Symcol.Rulesets.Core.Multiplayer.Options
             };
         }
 
-        private class BetterSettingsEnumDropdown<T> : SettingsEnumDropdown<T>
+        private class BetterSettingsEnumDropdown<J> : SettingsEnumDropdown<J>
+            where J : struct
         {
-            protected override Drawable CreateControl() => new BetterOsuEnumDropdown<T>
+            protected override Drawable CreateControl() => new BetterOsuEnumDropdown<J>
             {
                 Margin = new MarginPadding { Top = 5 },
                 RelativeSizeAxes = Axes.X,
             };
 
-            private class BetterOsuEnumDropdown<T> : OsuEnumDropdown<T>
+            private class BetterOsuEnumDropdown<I> : OsuEnumDropdown<I>
+                where I : struct
             {
                 public BetterOsuEnumDropdown()
                 {

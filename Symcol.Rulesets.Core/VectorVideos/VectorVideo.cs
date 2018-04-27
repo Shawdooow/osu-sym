@@ -16,7 +16,7 @@ namespace Symcol.Rulesets.Core.VectorVideos
         protected void LoadContent(string args)
         {
             string[] parameters = args.Split(',');
-
+            /*
             ObjectType objectType = ObjectType.CircleVisualizer;
             Anchor anchor = Anchor.Centre;
             Anchor origin = Anchor.Centre;
@@ -41,6 +41,7 @@ namespace Symcol.Rulesets.Core.VectorVideos
                         }
                 }
             }
+            */
         }
 
         private void loadLogoVisualizer()

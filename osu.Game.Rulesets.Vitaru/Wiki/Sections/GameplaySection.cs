@@ -10,7 +10,6 @@ using osu.Game.Rulesets.Vitaru.Wiki.Sections.Pieces;
 using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
-using osu.Game.Rulesets.Vitaru.Scoring;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
 
