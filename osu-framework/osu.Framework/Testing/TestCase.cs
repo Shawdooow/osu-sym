@@ -16,6 +16,7 @@ using osu.Framework.Threading;
 using OpenTK;
 using OpenTK.Graphics;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace osu.Framework.Testing
 {
@@ -32,10 +33,13 @@ namespace osu.Framework.Testing
         private GameHost host;
         private Task runTask;
         private ITestCaseTestRunner runner;
+        private bool isNUnitRunning;
 
         [OneTimeSetUp]
         public void SetupGameHost()
         {
+            isNUnitRunning = true;
+
             host = new HeadlessGameHost($"test-{Guid.NewGuid()}", realtime: false);
             runner = CreateRunner();
 
@@ -43,6 +47,11 @@ namespace osu.Framework.Testing
                 throw new InvalidCastException($"The test runner must be a {nameof(Game)}.");
 
             runTask = Task.Factory.StartNew(() => host.Run(game), TaskCreationOptions.LongRunning);
+            while (!game.IsLoaded)
+            {
+                checkForErrors();
+                Thread.Sleep(10);
+            }
         }
 
         [OneTimeTearDown]
@@ -69,12 +78,23 @@ namespace osu.Framework.Testing
         [SetUp]
         public void SetupTest()
         {
-            if (TestContext.CurrentContext.Test.MethodName != nameof(TestConstructor))
+            if (isNUnitRunning && TestContext.CurrentContext.Test.MethodName != nameof(TestConstructor))
                 StepsContainer.Clear();
         }
 
         [TearDown]
-        public void RunTests() => runner.RunTestBlocking(this);
+        public void RunTests()
+        {
+            checkForErrors();
+            runner.RunTestBlocking(this);
+            checkForErrors();
+        }
+
+        private void checkForErrors()
+        {
+            if (runTask.Exception != null)
+                throw runTask.Exception;
+        }
 
         /// <summary>
         /// Most derived usages of this start with TestCase. This will be removed for display purposes.
@@ -152,13 +172,18 @@ namespace osu.Framework.Testing
 
         public void RunAllSteps(Action onCompletion = null, Action<Exception> onError = null)
         {
-            stepRunner?.Cancel();
-            foreach (var step in StepsContainer.OfType<StepButton>())
-                step.Reset();
+            // schedule once as we want to ensure we have run our LoadComplete before atttempting to execute steps.
+            // a user may be adding a step in LoadComplete.
+            Schedule(() =>
+            {
+                stepRunner?.Cancel();
+                foreach (var step in StepsContainer.OfType<StepButton>())
+                    step.Reset();
 
-            actionIndex = -1;
-            actionRepetition = 0;
-            runNextStep(onCompletion, onError);
+                actionIndex = -1;
+                actionRepetition = 0;
+                runNextStep(onCompletion, onError);
+            });
         }
 
         public void RunFirstStep()
