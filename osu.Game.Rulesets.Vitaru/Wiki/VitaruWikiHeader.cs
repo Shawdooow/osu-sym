@@ -22,6 +22,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
 
         protected override string DiscordInvite => $@"https://discord.gg/GqFstZF";
 
-        protected override Texture HeaderBackground => VitaruRuleset.VitaruTextures.Get("VitaruTouhosuModeTrue2560x1440");
+        protected override Texture HeaderBackground => VitaruRuleset.VitaruTextures.Get("vitaru spring 2018");
     }
 }
