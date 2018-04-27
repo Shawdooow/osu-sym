@@ -6,6 +6,26 @@ namespace Symcol.Rulesets.Core.Wiki
 {
     public class WikiParagraph : Container
     {
+        public string Text
+        {
+            get
+            {
+                return text;
+            }
+            set
+            {
+                if (value != text)
+                {
+                    text = value;
+                    osuTextFlowContainer.Text = value;
+                }
+            }
+        }
+
+        private string text;
+
+        private OsuTextFlowContainer osuTextFlowContainer;
+
         public WikiParagraph(string text, float textsize = 20)
         {
             paragraphNoMarkdown(text, textsize);
@@ -33,7 +53,7 @@ namespace Symcol.Rulesets.Core.Wiki
             AutoSizeAxes = Axes.Y;
             RelativeSizeAxes = Axes.X;
 
-            Child = new OsuTextFlowContainer(t => { t.TextSize = textsize; })
+            Child = osuTextFlowContainer = new OsuTextFlowContainer(t => { t.TextSize = textsize; })
             {
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.TopCentre,
@@ -50,7 +70,7 @@ namespace Symcol.Rulesets.Core.Wiki
             AutoSizeAxes = Axes.Y;
             RelativeSizeAxes = Axes.X;
 
-            Child = new OsuTextFlowContainer(t => { t.TextSize = textsize; })
+            Child = osuTextFlowContainer = new OsuTextFlowContainer(t => { t.TextSize = textsize; })
             {
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.TopCentre,
