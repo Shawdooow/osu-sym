@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace osu.Game.Screens.Symcol.CasterBible
 {
@@ -355,23 +356,26 @@ namespace osu.Game.Screens.Symcol.CasterBible
                                                     }
                                                 }
 
-                                                bool valid = false;
-                                                foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
-                                                    if (beatmapSet.OnlineBeatmapSetID == mapSetID)
-                                                    {
-                                                        foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
-                                                            if (beatmap.OnlineBeatmapID == mapID)
-                                                            {
-                                                                mapPoolFlow.Add(new MapDetails(beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value)));
-                                                                valid = true;
-                                                                break;
-                                                            }
+                                                Task.Factory.StartNew(() =>
+                                                {
+                                                    bool valid = false;
+                                                    foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
+                                                        if (beatmapSet.OnlineBeatmapSetID == mapSetID)
+                                                        {
+                                                            foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
+                                                                if (beatmap.OnlineBeatmapID == mapID)
+                                                                {
+                                                                    mapPoolFlow.Add(new MapDetails(beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value)));
+                                                                    valid = true;
+                                                                    break;
+                                                                }
 
-                                                        if (valid)
-                                                            break;
-                                                    }
-                                                if (!valid)
-                                                    mapPoolFlow.Add(new MapDetails(mapSetID));
+                                                            if (valid)
+                                                                break;
+                                                        }
+                                                    if (!valid)
+                                                        mapPoolFlow.Add(new MapDetails(mapSetID));
+                                                }, TaskCreationOptions.LongRunning);
                                             }
                                         }
                                         catch { }
