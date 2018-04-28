@@ -1,5 +1,5 @@
 ﻿//Symcol.Rulesets.Core.Multiplayer.Screens.RulesetMultiplayerSelection
-//Symcol.Rulesets.Core.SymcolSettingsSubsection
+//Symcol.Rulesets.Core.Rulesets.SymcolSettingsSubsection
 #define SymcolMods
 
 using OpenTK;

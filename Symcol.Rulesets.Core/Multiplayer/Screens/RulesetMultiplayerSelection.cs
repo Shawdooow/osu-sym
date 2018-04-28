@@ -1,4 +1,4 @@
-﻿//Symcol.Rulesets.Core.SymcolSettingsSubsection
+﻿//Symcol.Rulesets.Core.Rulesets.SymcolSettingsSubsection
 //Symcol.Rulesets.Core.Multiplayer.Pieces.MatchTools
 #define SymcolMods
 
