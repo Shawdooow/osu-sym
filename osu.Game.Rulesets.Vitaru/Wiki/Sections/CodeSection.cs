@@ -26,20 +26,21 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
             selectedEquations.ValueChanged += equations =>
             {
+                leftParagraph.Text = "Check back later!";
+                rightParagraph.Text = "Check back later!";
+
                 switch (equations)
                 {
-                    default:
-                        leftParagraph.Text = "Check back later!";
-                        break;
                     case Code.Difficulty:
                         leftParagraph.Text = "I honestly have no idea how it works or if it actually does. It appears to work so I ain't gonna go back in there till people complain.";
                         break;
                     case Code.PP:
-                        leftParagraph.Text = "Equation: pp = difficulty * Score.TotalScore * pp_multiplier;\n\n" +
-                        "Where:\n" +
+                        leftParagraph.Text = "Where:\n" +
                         "difficulty = map star rating\n" +
                         "Score.TotalScore = score you got\n" +
                         "pp_multiplier = some number of my choosing. This will NEVER change EVER and will be the same for EVERY play EVER!";
+
+                        rightParagraph.Text = "pp = difficulty * Score.TotalScore * pp_multiplier;";
                         break;
                     case Code.Player:
                         leftParagraph.Text = "Basically we are checking where the bullet is relative to the player's hitbox (which would be (0, 0)) and seeing how far away the edge of the bullet is to the edge of the hitbox. " +
