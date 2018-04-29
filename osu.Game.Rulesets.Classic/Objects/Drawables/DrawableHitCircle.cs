@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 number = new NumberPiece
                 {
                     AlwaysPresent = true,
-                    Text = h is Spinner ? 0 : (HitObject.ComboIndex + 1)
+                    Text = h is Spinner ? 0 : (HitObject.IndexInCurrentCombo + 1)
                 },
                 ring = new RingPiece { AlwaysPresent = true },
                 ApproachCircle = new ApproachCircle
