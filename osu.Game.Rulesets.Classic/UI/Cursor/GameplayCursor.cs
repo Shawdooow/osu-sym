@@ -12,7 +12,6 @@ using osu.Game.Configuration;
 using OpenTK;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Platform;
-using osu.Game.Rulesets.Classic.Settings;
 
 namespace osu.Game.Rulesets.Classic.UI.Cursor
 {
@@ -22,12 +21,65 @@ namespace osu.Game.Rulesets.Classic.UI.Cursor
 
         public static Vector2 CursorPosition;
 
+        protected override Container<Drawable> Content => fadeContainer;
+
+        private readonly Container<Drawable> fadeContainer;
+
         public GameplayCursor()
         {
-            Add(new CursorTrail { Depth = 1 });
+            InternalChild = fadeContainer = new Container
+            {
+                RelativeSizeAxes = Axes.Both,
+                Children = new Drawable[]
+                {
+                    new CursorTrail { Depth = 1 }
+                }
+            };
         }
 
         private int downCount;
+
+        public bool OnPressed(ClassicAction action)
+        {
+            switch (action)
+            {
+                case ClassicAction.LeftButton:
+                case ClassicAction.RightButton:
+                    downCount++;
+                    ActiveCursor.ScaleTo(1).ScaleTo(1.2f, 100, Easing.OutQuad);
+                    break;
+            }
+
+            return false;
+        }
+
+        public bool OnReleased(ClassicAction action)
+        {
+            switch (action)
+            {
+                case ClassicAction.LeftButton:
+                case ClassicAction.RightButton:
+                    if (--downCount == 0)
+                        ActiveCursor.ScaleTo(1, 200, Easing.OutQuad);
+                    break;
+            }
+
+            return false;
+        }
+
+        public override bool HandleMouseInput => true; // OverlayContainer will set this false when we go hidden, but we always want to receive input.
+
+        protected override void PopIn()
+        {
+            fadeContainer.FadeTo(1, 300, Easing.OutQuint);
+            ActiveCursor.ScaleTo(1, 400, Easing.OutQuint);
+        }
+
+        protected override void PopOut()
+        {
+            fadeContainer.FadeTo(0.05f, 450, Easing.OutQuint);
+            ActiveCursor.ScaleTo(0.8f, 450, Easing.OutQuint);
+        }
 
         public class ClassicCursor : Container
         {
@@ -98,34 +150,6 @@ namespace osu.Game.Rulesets.Classic.UI.Cursor
                 cursor.Scale = new Vector2(scale);
                 cursorMiddle.Scale = new Vector2(scale);
             }
-        }
-
-        public bool OnPressed(ClassicAction action)
-        {
-            switch (action)
-            {
-                case ClassicAction.LeftButton:
-                case ClassicAction.RightButton:
-                    downCount++;
-                    ActiveCursor.ScaleTo(1).ScaleTo(1.2f, 100, Easing.OutQuad);
-                    break;
-            }
-
-            return false;
-        }
-
-        public bool OnReleased(ClassicAction action)
-        {
-            switch (action)
-            {
-                case ClassicAction.LeftButton:
-                case ClassicAction.RightButton:
-                    if (--downCount == 0)
-                        ActiveCursor.ScaleTo(1, 200, Easing.OutQuad);
-                    break;
-            }
-
-            return false;
         }
     }
 }
