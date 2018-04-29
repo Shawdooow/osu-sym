@@ -138,7 +138,6 @@ namespace osu.Game.Rulesets.Classic.Objects
                         Position = Curve.PositionAt(distanceProgress),
                         StackHeight = StackHeight,
                         Scale = Scale,
-                        ComboColour = ComboColour,
                         Samples = sampleList
                     });
                 }
@@ -160,7 +159,6 @@ namespace osu.Game.Rulesets.Classic.Objects
                     Position = Curve.PositionAt(repeat % 2),
                     StackHeight = StackHeight,
                     Scale = Scale,
-                    ComboColour = ComboColour,
                     Samples = new List<SampleInfo>(RepeatSamples[repeatIndex])
                 });
             }

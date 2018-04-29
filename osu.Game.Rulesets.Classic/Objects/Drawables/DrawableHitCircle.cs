@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Classic.Judgements;
 using osu.Game.Rulesets.Classic.Beatmaps;
 using osu.Game.Rulesets.Classic.UI;
 using osu.Game.Rulesets.Scoring;
+using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -39,7 +40,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             {
                 circle = new CirclePiece
                 {
-                    Colour = AccentColour,
                     Hit = () =>
                     {
                         if (AllJudged)
@@ -58,12 +58,22 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 ApproachCircle = new ApproachCircle
                 {
                     Alpha = 0,
-                    Colour = AccentColour
                 }
             };
 
             //may not be so correct
             Size = circle.DrawSize;
+        }
+
+        public override Color4 AccentColour
+        {
+            get { return base.AccentColour; }
+            set
+            {
+                base.AccentColour = value;
+                circle.Colour = AccentColour;
+                ApproachCircle.Colour = AccentColour;
+            }
         }
 
         protected override void CheckForJudgements(bool userTriggered, double timeOffset)

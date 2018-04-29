@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Classic.Judgements;
 using osu.Game.Rulesets.Classic.UI;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Objects.Types;
+using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -39,7 +40,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             {
                 Body = new SliderBody(s)
                 {
-                    AccentColour = AccentColour,
                     PathWidth = s.Scale * 64,
                 },
                 ticks = new Container<DrawableSliderTick>(),
@@ -47,14 +47,12 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 Ball = new SliderBall(s)
                 {
                     Scale = new Vector2(s.Scale),
-                    AccentColour = AccentColour
                 },
                 initialCircle = new DrawableHitCircle(new HitCircle
                 {
                     StartTime = s.StartTime,
                     ComboIndex = s.ComboIndex,
                     Scale = s.Scale,
-                    ComboColour = s.ComboColour,
                     ID = s.ID,
                     SliderStartCircle = true,
                     Hidden = HitObject.Hidden,
@@ -109,6 +107,17 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 repeatPoints.Add(drawableRepeatPoint);
                 components.Add(drawableRepeatPoint);
                 AddNested(drawableRepeatPoint);
+            }
+        }
+
+        public override Color4 AccentColour
+        {
+            get { return base.AccentColour; }
+            set
+            {
+                base.AccentColour = value;
+                Body.AccentColour = AccentColour;
+                Ball.AccentColour = AccentColour;
             }
         }
 

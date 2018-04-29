@@ -5,13 +5,12 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects;
 using OpenTK;
 using osu.Game.Rulesets.Objects.Types;
-using OpenTK.Graphics;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Rulesets.Classic.Objects
 {
-    public abstract class ClassicHitObject : HitObject, IHasCombo, IHasPosition
+    public abstract class ClassicHitObject : HitObject, IHasComboInformation
     {
         public const double OBJECT_RADIUS = 64;
 
@@ -49,9 +48,13 @@ namespace osu.Game.Rulesets.Classic.Objects
 
         public int ID { get; set; }
 
-        public Color4 ComboColour { get; set; } = Color4.Gray;
         public virtual bool NewCombo { get; set; }
+
+        public int IndexInCurrentCombo { get; set; }
+
         public int ComboIndex { get; set; }
+
+        public bool LastInCombo { get; set; }
 
         public double HitWindowFor(HitResult result)
         {

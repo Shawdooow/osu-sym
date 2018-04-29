@@ -35,7 +35,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     RelativeSizeAxes = Axes.Both,
-                    Colour = h.Hold.ComboColour
                 },
             };
             progress.Current.BindTo(Progress);

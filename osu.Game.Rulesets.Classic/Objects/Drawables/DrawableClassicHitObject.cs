@@ -6,6 +6,9 @@ using osu.Game.Rulesets.Objects.Drawables;
 using osu.Framework.Graphics;
 using System.Linq;
 using Symcol.Rulesets.Core.HitObjects;
+using osu.Game.Skinning;
+using osu.Game.Rulesets.Objects.Types;
+using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -16,7 +19,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
         protected DrawableClassicHitObject(ClassicHitObject hitObject)
             : base(hitObject)
         {
-            AccentColour = HitObject.ComboColour;
             Alpha = 0;
         }
 
@@ -33,6 +35,14 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 using (BeginDelayedSequence(HitObject.TimePreempt + (Judgements.FirstOrDefault()?.TimeOffset ?? 0), true))
                     UpdateCurrentState(state);
             }
+        }
+
+        protected override void SkinChanged(ISkinSource skin, bool allowFallback)
+        {
+            base.SkinChanged(skin, allowFallback);
+
+            if (HitObject is IHasComboInformation combo)
+                AccentColour = skin.GetValue<SkinConfiguration, Color4>(s => s.ComboColours.Count > 0 ? s.ComboColours[combo.ComboIndex % s.ComboColours.Count] : (Color4?)null) ?? Color4.White;
         }
 
         protected virtual void UpdateInitialState()

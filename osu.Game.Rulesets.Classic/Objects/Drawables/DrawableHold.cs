@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Classic.UI;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Scoring;
+using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -50,7 +51,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     Origin = Anchor.Centre,
                     Depth = 3,
                     Position = h.StackedPosition,
-                    Colour = h.ComboColour,
                     Alpha = 0.5f,
                     Masking = true,
                     Children = new Drawable[]
@@ -70,7 +70,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     ComboIndex = h.ComboIndex,
                     Position = h.StackedPosition,
                     Scale = h.Scale,
-                    ComboColour = h.ComboColour,
                     ID = h.ID,
                     SliderStartCircle = true,
                     Hidden = HitObject.Hidden,
@@ -123,6 +122,17 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
                 repeatPoints.Add(drawableRepeatPoint);
                 AddNested(drawableRepeatPoint);
+            }
+        }
+
+        public override Color4 AccentColour
+        {
+            get { return base.AccentColour; }
+            set
+            {
+                base.AccentColour = value;
+                progressCircle.Colour = AccentColour;
+                preProgressCircle.Colour = AccentColour;
             }
         }
 

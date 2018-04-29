@@ -125,7 +125,6 @@ namespace osu.Game.Rulesets.Classic.Objects
                         Position = Position,
                         StackHeight = StackHeight,
                         Scale = Scale,
-                        ComboColour = ComboColour,
                         Samples = new List<SampleInfo>(Samples.Select(s => new SampleInfo
                         {
                             Bank = s.Bank,
@@ -157,7 +156,6 @@ namespace osu.Game.Rulesets.Classic.Objects
                         Position = Position,
                         StackHeight = StackHeight,
                         Scale = Scale,
-                        ComboColour = ComboColour,
                         Samples = new List<SampleInfo>(RepeatSamples[repeat])
                     });
                 }
