@@ -5,10 +5,11 @@ using System.ComponentModel;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Framework.Graphics;
 using System.Linq;
+using Symcol.Rulesets.Core.HitObjects;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
-    public class DrawableClassicHitObject : DrawableHitObject<ClassicHitObject>
+    public class DrawableClassicHitObject : DrawableSymcolHitObject<ClassicHitObject>
     {
         public const float TIME_FADEOUT = 500;
 

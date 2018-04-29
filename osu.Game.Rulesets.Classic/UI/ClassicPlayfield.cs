@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Classic.UI
             var osuJudgement = (ClassicJudgement)judgement;
             var osuObject = (ClassicHitObject)judgedObject.HitObject;
 
-            DrawableClassicJudgement explosion = new DrawableClassicJudgement(osuJudgement)
+            DrawableClassicJudgement explosion = new DrawableClassicJudgement(osuJudgement, judgedObject)
             {
                 Origin = Anchor.Centre,
                 Position = osuObject.StackedEndPosition + osuJudgement.PositionOffset

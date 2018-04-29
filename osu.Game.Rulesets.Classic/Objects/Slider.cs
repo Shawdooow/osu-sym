@@ -23,7 +23,8 @@ namespace osu.Game.Rulesets.Classic.Objects
         public double EndTime => StartTime + this.SpanCount() * Curve.Distance / Velocity;
         public double Duration => EndTime - StartTime;
 
-        public override Vector2 EndPosition => this.PositionAt(1);
+        public Vector2 StackedPositionAt(double t) => StackedPosition + this.CurvePositionAt(t);
+        public override Vector2 EndPosition => Position + this.CurvePositionAt(1);
 
         public SliderCurve Curve { get; } = new SliderCurve();
 

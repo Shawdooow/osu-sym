@@ -3,13 +3,13 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Classic.Judgements;
 using OpenTK;
 using osu.Game.Rulesets.Judgements;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Classic.UI;
 using osu.Game.Rulesets.Scoring;
+using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -17,8 +17,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
     {
         private Sprite sprite;
 
-        public DrawableClassicJudgement(ClassicJudgement judgement)
-            : base(judgement)
+        public DrawableClassicJudgement(Judgement judgement, DrawableHitObject judgedObject)
+            : base(judgement, judgedObject)
         {
             Masking = false;
         }

@@ -112,7 +112,7 @@ namespace osu.Game.Rulesets.Classic
 
         public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap, Mod[] mods = null) => new ClassicDifficultyCalculator(beatmap, mods);
 
-        public override int LegacyID => 6;
+        public override int? LegacyID => 6;
 
         public override string Description => "classic!";
 

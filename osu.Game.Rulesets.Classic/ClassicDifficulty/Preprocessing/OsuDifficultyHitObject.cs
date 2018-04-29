@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Circles.OsuDifficulty.Preprocessing
             float approxFollowCircleRadius = (float)(slider.Radius * 3);
             var computeVertex = new Action<double>(t =>
             {
-                var diff = slider.PositionAt(t) - slider.LazyEndPosition.Value;
+                var diff = slider.Curve.PositionAt(t) - slider.LazyEndPosition.Value;
                 float dist = diff.Length;
 
                 if (dist > approxFollowCircleRadius)

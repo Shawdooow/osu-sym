@@ -5,9 +5,9 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
 using osu.Game.Overlays.Settings;
-using Symcol.Rulesets.Core;
 using osu.Game.Rulesets.Classic.Wiki;
 using Symcol.Rulesets.Core.Wiki;
+using Symcol.Rulesets.Core.Rulesets;
 
 namespace osu.Game.Rulesets.Classic.Settings
 {

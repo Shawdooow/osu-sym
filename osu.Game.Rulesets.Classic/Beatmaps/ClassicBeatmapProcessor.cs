@@ -5,7 +5,6 @@ using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Classic.Objects;
-using osu.Game.Rulesets.Classic.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Classic.Beatmaps
 {
@@ -14,24 +13,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
         public override void PostProcess(Beatmap<ClassicHitObject> beatmap)
         {
             applyStacking(beatmap);
-
-            if (beatmap.ComboColors.Count == 0)
-                return;
-
-            int comboIndex = 0;
-            int colourIndex = 0;
-
-            foreach (var obj in beatmap.HitObjects)
-            {
-                if (obj.NewCombo)
-                {
-                    comboIndex = 0;
-                    colourIndex = (colourIndex + 1) % beatmap.ComboColors.Count;
-                }
-
-                obj.ComboIndex = comboIndex++;
-                obj.ComboColour = beatmap.ComboColors[colourIndex];
-            }
+            base.PostProcess(beatmap);
         }
 
         private void applyStacking(Beatmap<ClassicHitObject> beatmap)

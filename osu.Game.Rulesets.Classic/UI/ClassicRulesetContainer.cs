@@ -15,6 +15,7 @@ using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Replays;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Rulesets.Classic.UI.Cursor;
+using osu.Game.Input.Handlers;
 
 namespace osu.Game.Rulesets.Classic.UI
 {
@@ -57,7 +58,7 @@ namespace osu.Game.Rulesets.Classic.UI
             return null;
         }
 
-        protected override FramedReplayInputHandler CreateReplayInputHandler(Replay replay) => new ClassicReplayInputHandler(replay);
+        protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new ClassicReplayInputHandler(replay);
 
         protected override Vector2 GetAspectAdjustedSize() => new Vector2(0.75f);
     }
