@@ -33,12 +33,13 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
         {
             slider = s;
 
+            Position = s.StackedPosition;
+
             Children = new Drawable[]
             {
                 Body = new SliderBody(s)
                 {
                     AccentColour = AccentColour,
-                    Position = s.StackedPosition,
                     PathWidth = s.Scale * 64,
                 },
                 ticks = new Container<DrawableSliderTick>(),
@@ -51,7 +52,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 initialCircle = new DrawableHitCircle(new HitCircle
                 {
                     StartTime = s.StartTime,
-                    Position = s.StackedPosition,
                     ComboIndex = s.ComboIndex,
                     Scale = s.Scale,
                     ComboColour = s.ComboColour,
