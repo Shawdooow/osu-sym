@@ -26,17 +26,6 @@ namespace osu.Game.Rulesets.Classic.UI
 
         public static readonly Vector2 BASE_SIZE = new Vector2(512, 384);
 
-        public override Vector2 Size
-        {
-            get
-            {
-                var parentSize = Parent.DrawSize;
-                var aspectSize = parentSize.X * 0.75f < parentSize.Y ? new Vector2(parentSize.X, parentSize.X * 0.75f) : new Vector2(parentSize.Y * 4f / 3f, parentSize.Y);
-
-                return new Vector2(aspectSize.X / parentSize.X, aspectSize.Y / parentSize.Y) * base.Size;
-            }
-        }
-
         public ClassicPlayfield() : base(BASE_SIZE.X)
         {
             Anchor = Anchor.Centre;
