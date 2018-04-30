@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
                 if (client is VitaruClientInfo vitaruClientInfo)
                     VitaruPlayfield.LoadPlayerList.Add(vitaruClientInfo);
 
-            Push(new MultiPlayer(VitaruNetworkingClientHandler, playerList));
+            base.Load(playerList);
         }
     }
 }

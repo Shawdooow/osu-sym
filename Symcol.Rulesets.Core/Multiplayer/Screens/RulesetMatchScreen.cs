@@ -1,5 +1,6 @@
 ﻿using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Logging;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Overlays.Settings;
@@ -128,6 +129,11 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
 
         protected virtual void Load(List<ClientInfo> playerList)
         {
+            if (MatchTools.SelectedBeatmap != null)
+                Beatmap.Value = MatchTools.SelectedBeatmap;
+            else
+                Logger.Log("Match strated for a map we don't have!", LoggingTarget.Network, LogLevel.Error);
+
             Push(new MultiPlayer(RulesetNetworkingClientHandler, playerList));
         }
 

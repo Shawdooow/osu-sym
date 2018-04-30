@@ -43,7 +43,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Pieces
 
         public readonly Container SoundBoard;
 
-        private WorkingBeatmap selectedBeatmap;
+        public WorkingBeatmap SelectedBeatmap { get; private set; }
 
         private int selectedBeatmapSetID;
 
@@ -89,8 +89,8 @@ namespace Symcol.Rulesets.Core.Multiplayer.Pieces
                 switch (value)
                 {
                     case MatchScreenMode.MapDetails:
-                        if (selectedBeatmap != null)
-                            SelectedContent.Child = new MapDetailsSection(selectedBeatmap);
+                        if (SelectedBeatmap != null)
+                            SelectedContent.Child = new MapDetailsSection(SelectedBeatmap);
                         else if (selectedBeatmapSetID != 0)
                             SelectedContent.Child = new MapDetailsSection(selectedBeatmapSetID);
                         else
@@ -134,16 +134,16 @@ namespace Symcol.Rulesets.Core.Multiplayer.Pieces
                 return;
             }
 
-            selectedBeatmap = workingBeatmap;
+            SelectedBeatmap = workingBeatmap;
             selectedBeatmapSetID = (int)workingBeatmap.BeatmapSetInfo.OnlineBeatmapSetID;
 
             if (Mode.Value == MatchScreenMode.MapDetails)
-                SelectedContent.Child = new MapDetailsSection(selectedBeatmap);
+                SelectedContent.Child = new MapDetailsSection(SelectedBeatmap);
         }
 
         public void MapChange(int onlineBeatmapSetID)
         {
-            selectedBeatmap = null;
+            SelectedBeatmap = null;
             selectedBeatmapSetID = onlineBeatmapSetID;
 
             if (Mode.Value == MatchScreenMode.MapDetails)
@@ -367,13 +367,13 @@ namespace Symcol.Rulesets.Core.Multiplayer.Pieces
 
     public enum MatchScreenMode
     {
-        [System.ComponentModel.Description("Map Details")]
-        MapDetails,
-        [System.ComponentModel.Description("Match Settings")]
-        MatchSettings,
+        [System.ComponentModel.Description("Sound Board")]
+        SoundBoard,
         [System.ComponentModel.Description("Ruleset Settings")]
         RulesetSettings,
-        [System.ComponentModel.Description("Sound Board")]
-        SoundBoard
+        [System.ComponentModel.Description("Match Settings")]
+        MatchSettings,
+        [System.ComponentModel.Description("Map Details")]
+        MapDetails
     }
 }
