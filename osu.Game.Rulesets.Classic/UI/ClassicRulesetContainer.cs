@@ -40,21 +40,18 @@ namespace osu.Game.Rulesets.Classic.UI
 
         protected override DrawableHitObject<ClassicHitObject> GetVisualRepresentation(ClassicHitObject h)
         {
-            var circle = h as HitCircle;
-            if (circle != null)
+            if (h is HitCircle circle)
                 return new DrawableHitCircle(circle);
 
-            var slider = h as Slider;
-            if (slider != null)
+            if (h is Slider slider)
                 return new DrawableSlider(slider);
 
-            var hold = h as Hold;
-            if (hold != null)
+            if (h is Hold hold)
                 return new DrawableHold(hold);
 
-            var spinner = h as Spinner;
-            if (spinner != null)
+            if (h is Spinner spinner)
                 return new DrawableSpinner(spinner);
+
             return null;
         }
 
@@ -62,7 +59,7 @@ namespace osu.Game.Rulesets.Classic.UI
 
         protected override Vector2 GetAspectAdjustedSize()
         {
-            var aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 4f / 3f, DrawSize.Y);
+            var aspectSize = DrawSize.X * 0.9f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.9f) : new Vector2(DrawSize.Y * 4f / 3f, DrawSize.Y);
             return new Vector2(aspectSize.X / DrawSize.X, aspectSize.Y / DrawSize.Y);
         }
     }

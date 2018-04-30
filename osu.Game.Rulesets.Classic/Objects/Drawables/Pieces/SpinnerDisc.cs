@@ -31,6 +31,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
             spinner = s;
 
             RelativeSizeAxes = Axes.Both;
+            AlwaysPresent = true;
 
             Children = new Drawable[]
             {

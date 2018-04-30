@@ -68,6 +68,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     //todo: avoid creating this temporary HitCircle.
                     StartTime = h.StartTime,
                     ComboIndex = h.ComboIndex,
+                    IndexInCurrentCombo = h.IndexInCurrentCombo,
                     Position = h.StackedPosition,
                     Scale = h.Scale,
                     ID = h.ID,

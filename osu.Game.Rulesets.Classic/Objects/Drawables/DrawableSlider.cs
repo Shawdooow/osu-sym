@@ -52,6 +52,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 {
                     StartTime = s.StartTime,
                     ComboIndex = s.ComboIndex,
+                    IndexInCurrentCombo = s.IndexInCurrentCombo,
                     Scale = s.Scale,
                     ID = s.ID,
                     SliderStartCircle = true,

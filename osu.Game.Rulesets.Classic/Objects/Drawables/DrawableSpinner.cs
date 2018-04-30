@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             RelativeSizeAxes = Axes.Both;
 
             // we are slightly bigger than our parent, to clip the top and bottom of the circle
-            Height = 1.3f;
+            Height = 0.8f;
 
             spinner = s;
 
