@@ -97,7 +97,11 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         public MultiPlayer(RulesetNetworkingClientHandler rulesetNetworkingClientHandler, List<ClientInfo> playerList)//, WorkingBeatmap beatmap = null)
         {
             RulesetNetworkingClientHandler = rulesetNetworkingClientHandler;
-            RulesetNetworkingClientHandler.OnAbort = () => Exit();
+            RulesetNetworkingClientHandler.OnAbort = () =>
+            {
+                if (IsCurrentScreen)
+                    Exit();
+            };
             RulesetNetworkingClientHandler.StartGame = () => start();
             this.playerList = playerList;
         }
@@ -266,7 +270,8 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
                     };
                     scoreProcessor.PopulateScore(score);
                     score.User = RulesetContainer.Replay?.User ?? api.LocalUser.Value;
-                    Push(new Results(score));
+                    //Push(new Results(score));
+                    Exit();
                 });
             }
         }
@@ -375,7 +380,6 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         public void BackOut()
         {
             RulesetNetworkingClientHandler.AbortGame();
-            RulesetNetworkingClientHandler.OnAbort();
         }
 
         protected override bool OnWheel(InputState state) => mouseWheelDisabled.Value;

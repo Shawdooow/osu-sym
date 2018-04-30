@@ -37,8 +37,10 @@ namespace osu.Game.Rulesets.Vitaru.Multi
             RulesetNetworkingClientHandler = VitaruNetworkingClientHandler;
             Add(RulesetNetworkingClientHandler);
 
-            List<ClientInfo> list = new List<ClientInfo>();
-            list.Add(RulesetNetworkingClientHandler.RulesetClientInfo);
+            List<ClientInfo> list = new List<ClientInfo>
+            {
+                RulesetNetworkingClientHandler.RulesetClientInfo
+            };
 
             JoinMatch(list);
         }

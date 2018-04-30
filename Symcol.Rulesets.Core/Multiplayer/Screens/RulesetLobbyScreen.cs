@@ -108,18 +108,6 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
             };
         }
 
-        protected override void OnEntering(Screen last)
-        {
-            base.OnEntering(last);
-            MakeCurrent();
-        }
-
-        protected override void OnResuming(Screen last)
-        {
-            base.OnResuming(last);
-            MakeCurrent();
-        }
-
         protected override bool OnExiting(Screen next)
         {
             if (RulesetNetworkingClientHandler != null)
@@ -161,7 +149,6 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         protected virtual void JoinMatch(List<ClientInfo> clientInfos)
         {
             Remove(RulesetNetworkingClientHandler);
-            MakeCurrent();
             Push(MatchScreen);
         }
     }

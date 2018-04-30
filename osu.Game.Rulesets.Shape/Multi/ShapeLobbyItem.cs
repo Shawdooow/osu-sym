@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Shape.Multi
 
         public override string RulesetName => "Shape!";
 
-        //public override Texture Background => ShapeRuleset.ShapeTextures.Get("VitaruTouhosuModeTrue2560x1440");
+        public override Texture Background => ShapeRuleset.ShapeTextures.Get("shape bg");
 
         public override RulesetLobbyScreen RulesetLobbyScreen => new ShapeLobbyScreen();
     }

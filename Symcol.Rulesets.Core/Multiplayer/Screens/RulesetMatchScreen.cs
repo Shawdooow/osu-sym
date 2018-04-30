@@ -100,7 +100,6 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         protected override void OnEntering(Screen last)
         {
             base.OnEntering(last);
-            MakeCurrent();
             Add(RulesetNetworkingClientHandler);
             RulesetNetworkingClientHandler.OnLoadGame = (i) => Load(i);
         }
@@ -108,7 +107,6 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         protected override void OnResuming(Screen last)
         {
             base.OnResuming(last);
-            MakeCurrent();
             if (RulesetNetworkingClientHandler != null)
                 Add(RulesetNetworkingClientHandler);
         }
@@ -130,14 +128,12 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
 
         protected virtual void Load(List<ClientInfo> playerList)
         {
-            MakeCurrent();
             Push(new MultiPlayer(RulesetNetworkingClientHandler, playerList));
         }
 
         private void openSongSelect()
         {
             MatchSongSelect songSelect = new MatchSongSelect(RulesetNetworkingClientHandler);
-            MakeCurrent();
             Push(songSelect);
             songSelect.Action = () => RulesetNetworkingClientHandler.SetMap(songSelect.SelectedMap);
         }

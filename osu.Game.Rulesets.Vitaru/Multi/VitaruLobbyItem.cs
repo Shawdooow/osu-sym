@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
 
         public override string RulesetName => "Vitaru!";
 
-        public override Texture Background => VitaruRuleset.VitaruTextures.Get("VitaruTouhosuModeTrue2560x1440");
+        public override Texture Background => VitaruRuleset.VitaruTextures.Get("vitaru spring 2018");
 
         public override RulesetLobbyScreen RulesetLobbyScreen => new VitaruLobbyScreen();
     }
