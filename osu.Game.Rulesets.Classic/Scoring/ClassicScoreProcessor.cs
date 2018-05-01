@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Classic.UI;
 using System.Linq;
+using System;
 
 namespace osu.Game.Rulesets.Classic.Scoring
 {
@@ -107,17 +108,17 @@ namespace osu.Game.Rulesets.Classic.Scoring
             switch (judgement.Result)
             {
                 case HitResult.Great:
-                    ClassicUi.CurrentHealth += (10.2 - hpDrainRate) * 0.03;
+                    ClassicUi.CurrentHealth = Math.Min(ClassicUi.CurrentHealth + (10.2 - hpDrainRate) * 0.03, 1);
                     Health.Value = ClassicUi.CurrentHealth;
                     break;
 
                 case HitResult.Good:
-                    ClassicUi.CurrentHealth += (8 - hpDrainRate) * 0.02;
+                    ClassicUi.CurrentHealth = Math.Min(ClassicUi.CurrentHealth + (8 - hpDrainRate) * 0.02, 1);
                     Health.Value = ClassicUi.CurrentHealth;
                     break;
 
                 case HitResult.Meh:
-                    ClassicUi.CurrentHealth += (4 - hpDrainRate) * 0.01;
+                    ClassicUi.CurrentHealth = Math.Min(ClassicUi.CurrentHealth + (4 - hpDrainRate) * 0.01, 1);
                     Health.Value = ClassicUi.CurrentHealth;
                     break;
 
@@ -126,7 +127,7 @@ namespace osu.Game.Rulesets.Classic.Scoring
                     break;*/
 
                 case HitResult.Miss:
-                    ClassicUi.CurrentHealth -= hpDrainRate * 0.03;
+                    ClassicUi.CurrentHealth = Math.Max(ClassicUi.CurrentHealth + hpDrainRate * 0.03, 0);
                     Health.Value = ClassicUi.CurrentHealth;
                     break;
             }

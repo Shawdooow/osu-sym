@@ -40,6 +40,7 @@
     <None Remove="Assets\Textures\inputoverlay-background%402x.png" />
     <None Remove="Assets\Textures\inputoverlay-key%402x.png" />
     <None Remove="Assets\Textures\lighting%402x.png" />
+    <None Remove="Assets\Textures\osu!classic Thumbnail.png" />
     <None Remove="Assets\Textures\particle100%402x.png" />
     <None Remove="Assets\Textures\particle300%402x.png" />
     <None Remove="Assets\Textures\particle50%402x.png" />
@@ -142,6 +143,7 @@
     <EmbeddedResource Include="Assets\Textures\inputoverlay-background@2x.png" />
     <EmbeddedResource Include="Assets\Textures\inputoverlay-key@2x.png" />
     <EmbeddedResource Include="Assets\Textures\lighting@2x.png" />
+    <EmbeddedResource Include="Assets\Textures\osu!classic Thumbnail.png" />
     <EmbeddedResource Include="Assets\Textures\particle100@2x.png" />
     <EmbeddedResource Include="Assets\Textures\particle300@2x.png" />
     <EmbeddedResource Include="Assets\Textures\particle50@2x.png" />

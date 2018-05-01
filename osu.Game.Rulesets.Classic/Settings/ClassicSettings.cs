@@ -8,6 +8,8 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Classic.Wiki;
 using Symcol.Rulesets.Core.Wiki;
 using Symcol.Rulesets.Core.Rulesets;
+using Symcol.Rulesets.Core.Multiplayer.Screens;
+using osu.Game.Rulesets.Classic.Multi;
 
 namespace osu.Game.Rulesets.Classic.Settings
 {
@@ -23,6 +25,10 @@ namespace osu.Game.Rulesets.Classic.Settings
         public override WikiOverlay Wiki => classicWiki;
 
         private readonly ClassicWikiOverlay classicWiki = new ClassicWikiOverlay();
+
+        public override RulesetLobbyItem RulesetLobbyItem => classicLobby;
+
+        private readonly ClassicLobbyItem classicLobby = new ClassicLobbyItem();
 
         [BackgroundDependencyLoader]
         private void load(GameHost host, Storage storage)
