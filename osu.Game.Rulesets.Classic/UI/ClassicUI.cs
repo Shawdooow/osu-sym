@@ -4,6 +4,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Platform;
+using System;
 
 namespace osu.Game.Rulesets.Classic.UI
 {
@@ -84,7 +85,7 @@ namespace osu.Game.Rulesets.Classic.UI
                 CurrentHealth = 1;
 
             if (BreakStartTime > Time.Current)
-                CurrentHealth = CurrentHealth - ((float)Clock.ElapsedFrameTime / (1000 * drainAmount));
+                CurrentHealth = Math.Max(CurrentHealth - ((float)Clock.ElapsedFrameTime / (1000 * drainAmount)), 0);
 
             scoreBarBar.ResizeTo(new Vector2(scoreBarBarSprite.Size.X * (float)CurrentHealth, scoreBarBarSprite.Size.Y));
             scoreBarMarker.MoveTo(new Vector2(scoreBarBarSprite.Size.X * (float)CurrentHealth + 10, scoreBarMarker.Position.Y));

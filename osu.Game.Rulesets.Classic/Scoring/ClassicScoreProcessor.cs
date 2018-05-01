@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Classic.Scoring
                     break;*/
 
                 case HitResult.Miss:
-                    ClassicUi.CurrentHealth = Math.Max(ClassicUi.CurrentHealth + hpDrainRate * 0.03, 0);
+                    ClassicUi.CurrentHealth = Math.Max(ClassicUi.CurrentHealth - hpDrainRate * 0.03, 0);
                     Health.Value = ClassicUi.CurrentHealth;
                     break;
             }
