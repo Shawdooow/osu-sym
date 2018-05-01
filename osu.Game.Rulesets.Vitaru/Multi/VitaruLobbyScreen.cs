@@ -1,5 +1,4 @@
 ﻿using osu.Framework.Configuration;
-using osu.Game.Rulesets.Vitaru.Settings;
 using Symcol.Core.Networking;
 using Symcol.Rulesets.Core.Multiplayer.Screens;
 using System;
@@ -14,17 +13,6 @@ namespace osu.Game.Rulesets.Vitaru.Multi
         public VitaruNetworkingClientHandler VitaruNetworkingClientHandler;
 
         public override RulesetMatchScreen MatchScreen => new VitaruMatchScreen(VitaruNetworkingClientHandler);
-
-        private readonly Bindable<string> hostIP = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.HostIP);
-        private readonly Bindable<string> localIP = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.LocalIP);
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            //HostIP.Text = hostIP;
-            Ip.Text = localIP;
-        }
 
         protected override void HostGame()
         {
@@ -56,14 +44,6 @@ namespace osu.Game.Rulesets.Vitaru.Multi
             VitaruNetworkingClientHandler.OnConnectedToHost += (p) => JoinMatch(p);
             RulesetNetworkingClientHandler = VitaruNetworkingClientHandler;
             Add(RulesetNetworkingClientHandler);
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            //hostIP.Value = HostIP.Text;
-            localIP.Value = Ip.Text;
-
-            base.Dispose(isDisposing);
         }
     }
 }

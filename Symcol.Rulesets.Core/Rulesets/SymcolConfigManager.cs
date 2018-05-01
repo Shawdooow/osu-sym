@@ -12,11 +12,15 @@ namespace Symcol.Rulesets.Core.Rulesets
         protected override void InitialiseDefaults()
         {
             Set(SymcolSetting.PlayerColor, "#ffffff");
+            Set(SymcolSetting.IP, "IP Address");
+            Set(SymcolSetting.Port, 25570);
         }
     }
 
     public enum SymcolSetting
     {
-        PlayerColor
+        PlayerColor,
+        IP,
+        Port
     }
 }

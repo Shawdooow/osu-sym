@@ -50,10 +50,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             Set(VitaruSetting.VectorVideos, true);
             Set(VitaruSetting.Skin, "default");
-
-            //Online Multiplayer
-            Set(VitaruSetting.HostIP, "Host IP Address");
-            Set(VitaruSetting.LocalIP, "Your Local IP Address");
         }
 
     }
@@ -93,9 +89,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         VectorVideos,
         Skin,
-
-        HostIP,
-        LocalIP,
     }
 
     public enum GraphicsPresets

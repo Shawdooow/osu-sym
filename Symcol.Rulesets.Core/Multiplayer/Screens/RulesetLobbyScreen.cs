@@ -11,6 +11,8 @@ using osu.Framework.Screens;
 using System.Collections.Generic;
 using Symcol.Core.Networking;
 using Symcol.Rulesets.Core.Multiplayer.Networking;
+using osu.Framework.Configuration;
+using Symcol.Rulesets.Core.Rulesets;
 
 namespace Symcol.Rulesets.Core.Multiplayer.Screens
 {
@@ -31,6 +33,9 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         protected readonly TextBox Ip;
 
         public readonly Container JoinIP;
+
+        private readonly Bindable<string> ip = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<string>(SymcolSetting.IP);
+        private readonly Bindable<int> port = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<int>(SymcolSetting.Port);
 
         public RulesetLobbyScreen()
         {
@@ -108,6 +113,14 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
             };
         }
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            Ip.Text = ip;
+            HostPort.Text = port.Value.ToString();
+        }
+
         protected override bool OnExiting(Screen next)
         {
             if (RulesetNetworkingClientHandler != null)
@@ -150,6 +163,14 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         {
             Remove(RulesetNetworkingClientHandler);
             Push(MatchScreen);
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            ip.Value = Ip.Text;
+            port.Value = Int32.Parse(HostPort.Text);
+
+            base.Dispose(isDisposing);
         }
     }
 }

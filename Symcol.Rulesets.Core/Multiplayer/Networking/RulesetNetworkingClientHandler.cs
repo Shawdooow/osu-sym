@@ -41,6 +41,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Networking
             {
                 packet = new RulesetPacket(RulesetClientInfo)
                 {
+                    SetMap = true,
                     OnlineBeatmapSetID = (int)map.BeatmapSetInfo.OnlineBeatmapSetID,
                     OnlineBeatmapID = (int)map.BeatmapInfo.OnlineBeatmapID
                 };
@@ -49,9 +50,14 @@ namespace Symcol.Rulesets.Core.Multiplayer.Networking
             }
             catch
             {
-                packet = new RulesetPacket(RulesetClientInfo);
+                packet = new RulesetPacket(RulesetClientInfo)
+                {
+                    SetMap = true,
+                    BeatmapName = map.Metadata.Title,
+                    BeatmapDifficulty = map.BeatmapInfo.Version
+                };
                 SendToInMatchClients(packet);
-                return;
+                OnMapChange?.Invoke(osu.Beatmap.Value);
             }
         }
 

@@ -141,7 +141,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         {
             MatchSongSelect songSelect = new MatchSongSelect(RulesetNetworkingClientHandler);
             Push(songSelect);
-            songSelect.Action = () => RulesetNetworkingClientHandler.SetMap(songSelect.SelectedMap);
+            songSelect.SelectionFinalised = (map) => RulesetNetworkingClientHandler.SetMap(map);
         }
     }
 }

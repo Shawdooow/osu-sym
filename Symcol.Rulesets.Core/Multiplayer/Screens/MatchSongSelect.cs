@@ -9,13 +9,11 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
 {
     public class MatchSongSelect : SongSelect
     {
-        public WorkingBeatmap SelectedMap;
-
         private bool exiting;
 
         protected override BackgroundScreen CreateBackground() => null;
 
-        public Action Action;
+        public Action<WorkingBeatmap> SelectionFinalised;
 
         public readonly RulesetNetworkingClientHandler RulesetNetworkingClientHandler;
 
@@ -34,9 +32,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         {
             if (!exiting)
             {
-                RulesetNetworkingClientHandler.OnMapChange?.Invoke(null);
-                SelectedMap = Beatmap.Value;
-                Action();
+                SelectionFinalised(Beatmap.Value);
                 exiting = true;
                 Remove(RulesetNetworkingClientHandler);
                 Exit();
