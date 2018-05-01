@@ -135,7 +135,11 @@ namespace Symcol.Rulesets.Core.Multiplayer.Pieces
             }
 
             SelectedBeatmap = workingBeatmap;
-            selectedBeatmapSetID = (int)workingBeatmap.BeatmapSetInfo.OnlineBeatmapSetID;
+            try
+            {
+                selectedBeatmapSetID = (int)workingBeatmap.BeatmapSetInfo.OnlineBeatmapSetID;
+            }
+            catch { selectedBeatmapSetID = -1; }
 
             if (Mode.Value == MatchScreenMode.MapDetails)
                 SelectedContent.Child = new MapDetailsSection(SelectedBeatmap);
