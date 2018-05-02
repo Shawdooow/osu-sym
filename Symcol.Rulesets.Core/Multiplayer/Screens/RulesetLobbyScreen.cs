@@ -18,8 +18,6 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
 {
     public abstract class RulesetLobbyScreen : OsuScreen
     {
-        public abstract string RulesetName { get; }
-
         public abstract RulesetMatchScreen MatchScreen { get; }
 
         public RulesetNetworkingClientHandler RulesetNetworkingClientHandler;

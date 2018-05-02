@@ -64,9 +64,10 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
 
             RulesetNetworkingClientHandler.OnPacketReceive += (Packet packet) =>
             {
-                if (packet is RulesetPacket rulesetPacket && rulesetPacket.OnlineBeatmapID != -1)
+                if (packet is RulesetPacket rulesetPacket && rulesetPacket.SetMap)
+                {
                     foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
-                        if (beatmapSet.OnlineBeatmapSetID == rulesetPacket.OnlineBeatmapSetID)
+                        if (rulesetPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == rulesetPacket.OnlineBeatmapSetID)
                         {
                             foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
                                 if (beatmap.OnlineBeatmapID == rulesetPacket.OnlineBeatmapID)
@@ -75,12 +76,26 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
                                     Beatmap.Value.Track.Start();
                                     MatchTools.MapChange(Beatmap);
                                     RulesetNetworkingClientHandler.OnMapChange?.Invoke(Beatmap);
-                                    break;
+                                    return;
                                 }
                             break;
                         }
-                        else
-                            MatchTools.MapChange(rulesetPacket.OnlineBeatmapSetID);
+                        else if (rulesetPacket.BeatmapName == beatmapSet.Metadata.Title && rulesetPacket.Mapper == beatmapSet.Metadata.Author.Username)
+                        {
+                            foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
+                                if (rulesetPacket.BeatmapDifficulty == beatmap.Version)
+                                {
+                                    Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
+                                    Beatmap.Value.Track.Start();
+                                    MatchTools.MapChange(Beatmap);
+                                    RulesetNetworkingClientHandler.OnMapChange?.Invoke(Beatmap);
+                                    return;
+                                }
+                            break;
+                        }
+
+                    MatchTools.MapChange(rulesetPacket.OnlineBeatmapSetID);
+                }
             };
 
             RulesetNetworkingClientHandler.OnMapChange += (beatmap) => MatchTools.MapChange(beatmap);

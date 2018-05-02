@@ -18,6 +18,8 @@ namespace Symcol.Rulesets.Core.Multiplayer.Networking
 
         public string BeatmapName;
 
+        public string Mapper;
+
         public string BeatmapDifficulty;
 
         public bool HaveMap;

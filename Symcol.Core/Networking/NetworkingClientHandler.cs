@@ -493,12 +493,14 @@ namespace Symcol.Core.Networking
         /// <param name="packet"></param>
         public void SendToConnectingClients(Packet packet)
         {
-            if (SendClient == null)
+            if (ClientType == ClientType.Host || ClientType == ClientType.Server)
                 foreach (ClientInfo clientInfo in ConnectingClients)
                 {
                     NetworkingClient client = new NetworkingClient(true, clientInfo.IP, clientInfo.Port);
                     client.SendPacket(packet);
                 }
+            else
+                Logger.Log("Tried to send packets to connecting peers, we are a peer!", LoggingTarget.Network, LogLevel.Error);
         }
 
         /// <summary>
@@ -507,12 +509,14 @@ namespace Symcol.Core.Networking
         /// <param name="packet"></param>
         public void SendToConnectedClients(Packet packet)
         {
-            if (SendClient == null)
+            if (ClientType == ClientType.Host || ClientType == ClientType.Server)
                 foreach (ClientInfo clientInfo in ConncetedClients)
                 {
                     NetworkingClient client = new NetworkingClient(true, clientInfo.IP, clientInfo.Port);
                     client.SendPacket(packet);
                 }
+            else
+                Logger.Log("Tried to send packets to connected peers, we are a peer!", LoggingTarget.Network, LogLevel.Error);
         }
 
         /// <summary>
@@ -521,12 +525,14 @@ namespace Symcol.Core.Networking
         /// <param name="packet"></param>
         public void SendToInMatchClients(Packet packet)
         {
-            if (SendClient == null)
+            if (ClientType == ClientType.Host || ClientType == ClientType.Server)
                 foreach (ClientInfo clientInfo in InMatchClients)
                 {
                     NetworkingClient client = new NetworkingClient(true, clientInfo.IP, clientInfo.Port);
                     client.SendPacket(packet);
                 }
+            else
+                Logger.Log("Tried to send packets to in match peers, we are a peer!", LoggingTarget.Network, LogLevel.Error);
         }
 
         /// <summary>
@@ -535,12 +541,14 @@ namespace Symcol.Core.Networking
         /// <param name="packet"></param>
         public void SendToLoadedClients(Packet packet)
         {
-            if (SendClient == null)
+            if (ClientType == ClientType.Host || ClientType == ClientType.Server)
                 foreach (ClientInfo clientInfo in LoadedClients)
                 {
                     NetworkingClient client = new NetworkingClient(true, clientInfo.IP, clientInfo.Port);
                     client.SendPacket(packet);
                 }
+            else
+                Logger.Log("Tried to send packets to loaded peers, we are a peer!", LoggingTarget.Network, LogLevel.Error);
         }
 
         /// <summary>
@@ -563,7 +571,7 @@ namespace Symcol.Core.Networking
         /// <param name="packet"></param>
         public void SendToAllClients(Packet packet)
         {
-            if (SendClient == null)
+            if (ClientType == ClientType.Host || ClientType == ClientType.Server)
             {
                 SendToConnectingClients(packet);
                 SendToConnectedClients(packet);
@@ -577,7 +585,7 @@ namespace Symcol.Core.Networking
         /// <param name="playerID"></param>
         public void ShareWithOtherPeers(Packet packet)
         {
-            if (SendClient == null)
+            if (ClientType == ClientType.Host || ClientType == ClientType.Server)
                 foreach (ClientInfo clientInfo in ConncetedClients)
                     if (packet.ClientInfo.IP != clientInfo.IP)
                     {
@@ -620,7 +628,7 @@ namespace Symcol.Core.Networking
             InGame = false;
             Loaded = false;
 
-            if (SendClient == null)
+            if (ClientType == ClientType.Host || ClientType == ClientType.Server)
             {
                 SendToConnectingClients(packet);
                 SendToConnectedClients(packet);
@@ -637,7 +645,7 @@ namespace Symcol.Core.Networking
         {
             ReceiveClient?.Clear();
 
-            if (SendClient != null)
+            if (ClientType == ClientType.Peer)
             {
                 SendToHost(new BasicPacket(ClientInfo) { Disconnect = true });
                 SendClient.Clear();

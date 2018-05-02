@@ -54,7 +54,8 @@ namespace Symcol.Rulesets.Core.Multiplayer.Networking
                 {
                     SetMap = true,
                     BeatmapName = map.Metadata.Title,
-                    BeatmapDifficulty = map.BeatmapInfo.Version
+                    BeatmapDifficulty = map.BeatmapInfo.Version,
+                    Mapper = map.Metadata.Author.Username
                 };
                 SendToInMatchClients(packet);
                 OnMapChange?.Invoke(osu.Beatmap.Value);
