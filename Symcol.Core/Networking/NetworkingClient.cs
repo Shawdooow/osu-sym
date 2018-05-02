@@ -41,6 +41,7 @@ namespace Symcol.Core.Networking
                 {
                     NatMapping.NatDevice.CreatePortMap(NatMapping.UdpMapping);
                     IP = NatMapping.NatDevice.LocalAddress.ToString();
+                    OnStartedUPnPMapping?.Invoke();
                 }
 
                 if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())

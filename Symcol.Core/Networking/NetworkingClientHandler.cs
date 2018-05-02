@@ -209,7 +209,7 @@ namespace Symcol.Core.Networking
 
                     if (packet.Connect)
                     {
-                        packet.ClientInfo.StartedTestConnectionTime = Time.Current;
+                        packet.ClientInfo.LastConnectionTime = Time.Current;
                         ConnectingClients.Add(packet.ClientInfo);
 
                         NetworkingClient client = new NetworkingClient(true, packet.ClientInfo.IP, packet.ClientInfo.Port);
