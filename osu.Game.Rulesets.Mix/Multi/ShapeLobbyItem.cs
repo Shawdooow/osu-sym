@@ -6,7 +6,7 @@ namespace osu.Game.Rulesets.Shape.Multi
 {
     public class ShapeLobbyItem : RulesetLobbyItem
     {
-        public override Texture Icon => ShapeRuleset.MixTextures.Get("icon");
+        public override Texture Icon => MixRuleset.MixTextures.Get("icon");
 
         public override string RulesetName => "Mix!";
 

@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.Rulesets.Core", "Sym
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Classic", "osu.Game.Rulesets.Classic\osu.Game.Rulesets.Classic.csproj", "{F76CCE1D-36BE-4041-9B9C-870ABA913657}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Mix", "osu.Game.Rulesets.Mix\osu.Game.Rulesets.Mix.csproj", "{DA20C031-F370-4262-8743-4A8F52B499BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,10 @@ Global
 		{F76CCE1D-36BE-4041-9B9C-870ABA913657}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F76CCE1D-36BE-4041-9B9C-870ABA913657}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F76CCE1D-36BE-4041-9B9C-870ABA913657}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA20C031-F370-4262-8743-4A8F52B499BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA20C031-F370-4262-8743-4A8F52B499BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA20C031-F370-4262-8743-4A8F52B499BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA20C031-F370-4262-8743-4A8F52B499BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

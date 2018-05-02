@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Shape.Settings;
 
 namespace osu.Game.Rulesets.Shape
 {
-    public class ShapeRuleset : Ruleset
+    public class MixRuleset : Ruleset
     {
         public override Drawable CreateIcon() => new Sprite { Texture = MixTextures.Get("icon") };
 
@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Shape
         public static TextureStore MixTextures;
         public static AudioManager ShapeClassicAudio;
 
-        public ShapeRuleset(RulesetInfo rulesetInfo)
+        public MixRuleset(RulesetInfo rulesetInfo)
             : base(rulesetInfo)
         {
             MixResources = new ResourceStore<byte[]>();
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Shape
 
         public override string ShortName => "mix";
 
-        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap, Mod[] mods = null) => new ShapeDifficultyCalculator(beatmap, mods);
+        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap, Mod[] mods = null) => new MixDifficultyCalculator(beatmap, mods);
 
         public override SettingsSubsection CreateSettings() => new ShapeSettings();
 

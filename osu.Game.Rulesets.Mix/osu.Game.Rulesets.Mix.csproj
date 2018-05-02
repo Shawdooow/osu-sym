@@ -14,8 +14,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\icon.png" />
-    <EmbeddedResource Include="Assets\Textures\shape bg.png" />
-    <EmbeddedResource Include="Assets\Textures\shape@2x.png" />
   </ItemGroup>
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />

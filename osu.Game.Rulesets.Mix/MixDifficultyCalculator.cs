@@ -9,16 +9,16 @@ using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Shape
 {
-    public class ShapeDifficultyCalculator : DifficultyCalculator<ShapeHitObject>
+    public class MixDifficultyCalculator : DifficultyCalculator<ShapeHitObject>
     {
         private const double star_scaling_factor = 0.0675;
         private const double extreme_scaling_factor = 0.5;
 
         internal List<ShapeHitObjectDifficulty> DifficultyHitObjects = new List<ShapeHitObjectDifficulty>();
 
-        public ShapeDifficultyCalculator(Beatmap beatmap, Mod[] mods) : base(beatmap, mods) { }
+        public MixDifficultyCalculator(Beatmap beatmap, Mod[] mods) : base(beatmap, mods) { }
 
-        public ShapeDifficultyCalculator(Beatmap beatmap) : base(beatmap) { }
+        public MixDifficultyCalculator(Beatmap beatmap) : base(beatmap) { }
 
         protected override void PreprocessHitObjects()
         {

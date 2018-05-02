@@ -4,9 +4,9 @@ using System.ComponentModel;
 
 namespace osu.Game.Rulesets.Shape
 {
-    class ShapeInputManager : RulesetInputManager<ShapeAction>
+    class MixInputManager : RulesetInputManager<ShapeAction>
     {
-        public ShapeInputManager(RulesetInfo ruleset) : base(ruleset, 0, SimultaneousBindingMode.Unique)
+        public MixInputManager(RulesetInfo ruleset) : base(ruleset, 0, SimultaneousBindingMode.Unique)
         {
         }
     }
