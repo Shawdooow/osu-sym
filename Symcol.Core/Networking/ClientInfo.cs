@@ -17,7 +17,5 @@ namespace Symcol.Core.Networking
         public int ConncetionTryCount;
 
         public double LastConnectionTime;
-
-        public double StartedTestConnectionTime;
     }
 }
