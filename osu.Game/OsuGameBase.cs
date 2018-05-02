@@ -77,11 +77,11 @@ namespace osu.Game
         {
             get
             {
-                if (!IsDeployedBuild)
-                    return @"local " + (DebugUtils.IsDebug ? @"debug" : @"release");
+                //if (!IsDeployedBuild)
+                    //return @"local " + (DebugUtils.IsDebug ? @"debug" : @"release");
 
                 var assembly = AssemblyName;
-                return $@"{assembly.Version.Major}.{assembly.Version.Minor}.{assembly.Version.Build}";
+                return $@"2018.502.0";
             }
         }
 

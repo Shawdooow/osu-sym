@@ -77,7 +77,7 @@ namespace osu.Desktop.Overlays
                             TextSize = 12,
                             Colour = colours.Yellow,
                             Font = @"Venera",
-                            Text = @"Development Build"
+                            Text = @"Symcol Modded Build"
                         },
                         new Sprite
                         {
@@ -100,7 +100,7 @@ namespace osu.Desktop.Overlays
 
             var version = game.Version;
             var lastVersion = config.Get<string>(OsuSetting.Version);
-            if (game.IsDeployedBuild && version != lastVersion)
+            if (/*game.IsDeployedBuild &&*/ version != lastVersion)
             {
                 config.Set(OsuSetting.Version, version);
 
