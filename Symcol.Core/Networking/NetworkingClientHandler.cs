@@ -124,8 +124,9 @@ namespace Symcol.Core.Networking
                     break;
                 case ClientType.Peer:
                     ReceiveClient = new NetworkingClient(false, ip, port);
+                    ReceiveClient.OnStartedUPnPMapping += () => { connectionStartTime = Time.Current; };
+
                     SendClient = new NetworkingClient(true, ip, port);
-                    SendClient.OnStartedUPnPMapping += () => { connectionStartTime = Time.Current; };
                     break;
                 case ClientType.Server:
                     throw new NotImplementedException();
@@ -145,7 +146,7 @@ namespace Symcol.Core.Networking
         {
             base.Update();
 
-            if (Time.Current >= connectionStartTime || Time.Current >= 2000 && ConnectionStatues == ConnectionStatues.Disconnected)
+            if (Time.Current >= connectionStartTime || Time.Current >= 2000 && ClientType == ClientType.Peer)
                 ConnectToHost();
 
             PacketRestart:

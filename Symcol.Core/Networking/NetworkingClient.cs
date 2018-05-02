@@ -29,8 +29,9 @@ namespace Symcol.Core.Networking
 
         public NetworkingClient(bool send, string ip, int port = 25570)
         {
-            Port = port;
+            Send = send;
             IP = ip;
+            Port = port;
 
             NatMapping = new NatMapping(new Mapping(Protocol.Udp, Port, Port));
 
@@ -48,15 +49,12 @@ namespace Symcol.Core.Networking
                     NatUtility.DeviceLost += deviceLost;
                     NatUtility.StartDiscovery();
                 }
-            }
 
-            if (send)
-                UdpClient = new UdpClient(IP, Port);
-            else
-            {
                 UdpClient = new UdpClient(Port);
                 EndPoint = new IPEndPoint(IPAddress.Any, Port);
             }
+            else
+                UdpClient = new UdpClient(IP, Port);
         }
 
         private void deviceFound(object sender, DeviceEventArgs args)
@@ -154,12 +152,13 @@ namespace Symcol.Core.Networking
             if (UdpClient != null)
                 UdpClient.Dispose();
 
-            foreach (INatDevice device in NatMapping.NatDevices)
-                try
-                {
-                    device.DeletePortMap(NatMapping.UdpMapping);
-                }
-                catch { Logger.Log("Error trying to release port mapping!", LoggingTarget.Network, LogLevel.Error); }
+            if (!Send)
+                foreach (INatDevice device in NatMapping.NatDevices)
+                    try
+                    {
+                        device.DeletePortMap(NatMapping.UdpMapping);
+                    }
+                    catch { Logger.Log("Error trying to release port mapping!", LoggingTarget.Network, LogLevel.Error); }
         }
     }
 }
