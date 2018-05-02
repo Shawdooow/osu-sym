@@ -1,5 +1,4 @@
-﻿using osu.Framework.Configuration;
-using Symcol.Core.Networking;
+﻿using Symcol.Core.Networking;
 using Symcol.Rulesets.Core.Multiplayer.Screens;
 using System;
 using System.Collections.Generic;
@@ -8,8 +7,6 @@ namespace osu.Game.Rulesets.Vitaru.Multi
 {
     public class VitaruLobbyScreen : RulesetLobbyScreen
     {
-        public override string RulesetName => "vitaru";
-
         public VitaruNetworkingClientHandler VitaruNetworkingClientHandler;
 
         public override RulesetMatchScreen MatchScreen => new VitaruMatchScreen(VitaruNetworkingClientHandler);
