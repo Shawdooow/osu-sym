@@ -278,7 +278,7 @@ namespace Symcol.Core.Networking
                         foreach (ClientInfo client in ConnectingClients)
                             if (client.IP == packet.ClientInfo.IP)
                             {
-                                client.Ping = (int)Time.Current - (int)client.StartedTestConnectionTime;
+                                client.Ping = (int)Time.Current - (int)client.LastConnectionTime;
                                 ConnectingClients.Remove(client);
                                 ConncetedClients.Add(client);
                                 InMatchClients.Add(client);
@@ -291,7 +291,7 @@ namespace Symcol.Core.Networking
                         foreach (ClientInfo client in ConncetedClients)
                             if (client.IP == packet.ClientInfo.IP)
                             {
-                                client.Ping = (int)Time.Current - (int)client.StartedTestConnectionTime;
+                                client.Ping = (int)Time.Current - (int)client.LastConnectionTime;
                                 client.LastConnectionTime = Time.Current;
                                 client.ConncetionTryCount = 0;
                                 Logger.Log("Successfully maintained connection to a Client! Ping: " + client.Ping, LoggingTarget.Network, LogLevel.Verbose);
@@ -359,10 +359,7 @@ namespace Symcol.Core.Networking
             foreach (ClientInfo client in ConnectingClients)
             {
                 if (client.LastConnectionTime + TimeOutTime / 10 <= Time.Current && client.ConncetionTryCount == 0)
-                {
-                    client.StartedTestConnectionTime = Time.Current;
                     TestConnection(client);
-                }
 
                 if (client.LastConnectionTime + TimeOutTime / 6 <= Time.Current && client.ConncetionTryCount == 1)
                     TestConnection(client);
@@ -370,7 +367,7 @@ namespace Symcol.Core.Networking
                 if (client.LastConnectionTime + TimeOutTime / 3 <= Time.Current && client.ConncetionTryCount == 2)
                     TestConnection(client);
 
-                if (client.StartedTestConnectionTime + TimeOutTime <= Time.Current)
+                if (client.LastConnectionTime + TimeOutTime <= Time.Current)
                 {
                     ConnectingClients.Remove(client);
                     Logger.Log("Connection to a connecting client lost! - " + client.IP + ":" + client.Port, LoggingTarget.Network, LogLevel.Error);
@@ -381,10 +378,7 @@ namespace Symcol.Core.Networking
             foreach (ClientInfo client in ConncetedClients)
             {
                 if (client.LastConnectionTime + TimeOutTime / 6 <= Time.Current && client.ConncetionTryCount == 0)
-                {
-                    client.StartedTestConnectionTime = Time.Current;
                     TestConnection(client);
-                }
 
                 if (client.LastConnectionTime + TimeOutTime / 3 <= Time.Current && client.ConncetionTryCount == 1)
                     TestConnection(client);
@@ -392,7 +386,7 @@ namespace Symcol.Core.Networking
                 if (client.LastConnectionTime + TimeOutTime / 2 <= Time.Current && client.ConncetionTryCount == 2)
                     TestConnection(client);
 
-                if (client.StartedTestConnectionTime + TimeOutTime <= Time.Current)
+                if (client.LastConnectionTime + TimeOutTime <= Time.Current)
                 {
                     ConncetedClients.Remove(client);
                     InGameClients.Remove(client);
