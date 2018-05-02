@@ -64,7 +64,7 @@ namespace Symcol.Core.Networking
         {
             INatDevice device = args.Device;
 
-            if (NatMapping.NatDevice.LocalAddress == device.LocalAddress)
+            if (NatMapping.NatDevice?.LocalAddress == device.LocalAddress)
                 return;
 
             device.CreatePortMap(NatMapping.UdpMapping);
