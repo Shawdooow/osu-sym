@@ -106,13 +106,13 @@ namespace osu.Game.Overlays
                     if (State == Visibility.Hidden)
                         Show();
                     else
-                        volumeMeterMaster.Decrease();
+                        volumeMeterMaster?.Decrease();
                     return true;
                 case GlobalAction.IncreaseVolume:
                     if (State == Visibility.Hidden)
                         Show();
                     else
-                        volumeMeterMaster.Increase();
+                        volumeMeterMaster?.Increase();
                     return true;
                 case GlobalAction.ToggleMute:
                     Show();
