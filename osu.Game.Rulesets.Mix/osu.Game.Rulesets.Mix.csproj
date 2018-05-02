@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\osu.Game.props" />
+  <PropertyGroup Label="Project">
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Description>hit the shapes. to the beat.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\Textures\icon.png" />
+    <None Remove="Assets\Textures\shape bg.png" />
+    <None Remove="Assets\Textures\shape%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\icon.png" />
+    <EmbeddedResource Include="Assets\Textures\shape bg.png" />
+    <EmbeddedResource Include="Assets\Textures\shape@2x.png" />
+  </ItemGroup>
+  <ItemGroup Label="Project References">
+    <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
+    <ProjectReference Include="..\Symcol.Core\Symcol.Core.csproj" />
+    <ProjectReference Include="..\Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj" />
+  </ItemGroup>
+</Project>

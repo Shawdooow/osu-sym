@@ -180,7 +180,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
             return bullets;
         }
 
-        public static List<Bullet> Flower(double speed, double diameter, double damage, Vector2 position, double startTime, double duration, double beatLength = 500, double complexity = 1, int team = 1, int arms = 8)
+        public static List<Bullet> Flower(double speed, double diameter, double damage, Vector2 position, double startTime, double duration, double beatLength = 500, double complexity = 1, int team = 1, int arms = 16)
         {
             List<Bullet> bullets = new List<Bullet>();
 
@@ -211,10 +211,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                     });
 
                     if (i % 2 == 0)
-                        direction += Math.PI / 2;
+                        direction += Math.PI / (arms / 4);
 
                 }
-                direction += Math.PI / 4;
+                direction += Math.PI / (arms / 2);
             }
 
             return bullets;
