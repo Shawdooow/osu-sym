@@ -5,6 +5,7 @@ using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Settings;
 using Symcol.Core.Networking;
 using Symcol.Rulesets.Core.Multiplayer.Networking;
+using Symcol.Rulesets.Core.Rulesets;
 
 namespace osu.Game.Rulesets.Vitaru.Multi
 {
@@ -60,10 +61,13 @@ namespace osu.Game.Rulesets.Vitaru.Multi
             switch (state)
             {
                 default:
-                    VitaruClientInfo.Username = "";
-                    VitaruClientInfo.UserID = -1;
+                    VitaruClientInfo.Username = SymcolSettingsSubsection.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
+                    VitaruClientInfo.UserID = SymcolSettingsSubsection.SymcolConfigManager.Get<int>(SymcolSetting.SavedUserID);
                     break;
                 case APIState.Online:
+                    SymcolSettingsSubsection.SymcolConfigManager.Set(SymcolSetting.SavedName, api.LocalUser.Value.Username);
+                    SymcolSettingsSubsection.SymcolConfigManager.Set(SymcolSetting.SavedUserID, api.LocalUser.Value.Id);
+
                     VitaruClientInfo.Username = api.LocalUser.Value.Username;
                     VitaruClientInfo.UserID = api.LocalUser.Value.Id;
                     VitaruClientInfo.UserCountry = api.LocalUser.Value.Country.FullName;

@@ -14,6 +14,8 @@ namespace Symcol.Rulesets.Core.Rulesets
             Set(SymcolSetting.PlayerColor, "#ffffff");
             Set(SymcolSetting.IP, "IP Address");
             Set(SymcolSetting.Port, 25570);
+            Set(SymcolSetting.SavedName, "Guest");
+            Set(SymcolSetting.SavedUserID, -1);
         }
     }
 
@@ -21,6 +23,8 @@ namespace Symcol.Rulesets.Core.Rulesets
     {
         PlayerColor,
         IP,
-        Port
+        Port,
+        SavedName,
+        SavedUserID
     }
 }

@@ -16,13 +16,11 @@ using Symcol.Rulesets.Core.Rulesets;
 
 namespace Symcol.Rulesets.Core.Multiplayer.Pieces
 {
-    public class Chat : Container, IOnlineComponent
+    public class Chat : Container
     {
         private readonly RulesetNetworkingClientHandler rulesetNetworkingClientHandler;
 
         private string playerColorHex = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<string>(SymcolSetting.PlayerColor);
-
-        private User user;
 
         private readonly FillFlowContainer<ChatMessage> messageContainer;
         private readonly OsuTextBox textBox;
@@ -101,49 +99,25 @@ namespace Symcol.Rulesets.Core.Multiplayer.Pieces
             if (message == "" | message == " ")
                 return;
 
-            if (user != null)
+            try
             {
-                try
-                {
-                    OsuColour.FromHex(playerColorHex);
-                }
-                catch
-                {
-                    playerColorHex = "#ffffff";
-                }
-
-                ChatPacket packet = new ChatPacket(rulesetNetworkingClientHandler.ClientInfo)
-                {
-                    Author = user.Username,
-                    AuthorColor = playerColorHex,
-                    Message = message,
-                };
-
-                rulesetNetworkingClientHandler.SendToHost(packet);
-                rulesetNetworkingClientHandler.SendToInMatchClients(packet);
-                Add(packet);
+                OsuColour.FromHex(playerColorHex);
             }
-            else
-                Logger.Log("You must be logged in to message!", LoggingTarget.Network, LogLevel.Error);
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(APIAccess api)
-        {
-            api.Register(this);
-        }
-
-        public void APIStateChanged(APIAccess api, APIState state)
-        {
-            switch (state)
+            catch
             {
-                default:
-                    user = null;
-                    break;
-                case APIState.Online:
-                    user = api.LocalUser.Value;
-                    break;
+                playerColorHex = "#ffffff";
             }
+
+            ChatPacket packet = new ChatPacket(rulesetNetworkingClientHandler.ClientInfo)
+            {
+                Author = SymcolSettingsSubsection.SymcolConfigManager.Get<string>(SymcolSetting.SavedName),
+                AuthorColor = playerColorHex,
+                Message = message,
+            };
+
+            rulesetNetworkingClientHandler.SendToHost(packet);
+            rulesetNetworkingClientHandler.SendToInMatchClients(packet);
+            Add(packet);
         }
     }
 }

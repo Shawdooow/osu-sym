@@ -16,7 +16,6 @@ namespace Symcol.Rulesets.Core.Multiplayer.Networking
 
         public ChatPacket(ClientInfo clientInfo) : base(clientInfo)
         {
-
         }
     }
 }

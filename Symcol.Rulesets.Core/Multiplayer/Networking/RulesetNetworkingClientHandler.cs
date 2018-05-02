@@ -3,6 +3,7 @@ using osu.Game;
 using osu.Game.Beatmaps;
 using osu.Game.Online.API;
 using Symcol.Core.Networking;
+using Symcol.Rulesets.Core.Rulesets;
 using System;
 
 namespace Symcol.Rulesets.Core.Multiplayer.Networking
@@ -74,10 +75,13 @@ namespace Symcol.Rulesets.Core.Multiplayer.Networking
             switch (state)
             {
                 default:
-                    RulesetClientInfo.Username = "";
-                    RulesetClientInfo.UserID = -1;
+                    RulesetClientInfo.Username = SymcolSettingsSubsection.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
+                    RulesetClientInfo.UserID = SymcolSettingsSubsection.SymcolConfigManager.Get<int>(SymcolSetting.SavedUserID);
                     break;
                 case APIState.Online:
+                    SymcolSettingsSubsection.SymcolConfigManager.Set(SymcolSetting.SavedName, api.LocalUser.Value.Username);
+                    SymcolSettingsSubsection.SymcolConfigManager.Set(SymcolSetting.SavedUserID, api.LocalUser.Value.Id);
+
                     RulesetClientInfo.Username = api.LocalUser.Value.Username;
                     RulesetClientInfo.UserID = api.LocalUser.Value.Id;
                     RulesetClientInfo.UserCountry = api.LocalUser.Value.Country.FullName;
