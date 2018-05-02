@@ -111,7 +111,7 @@ namespace Symcol.Core.Networking
 
         private double upnpMappingStartTime = double.MaxValue;
 
-        private double connectionStartTime = double.MaxValue;
+        private double constructionTime = double.MaxValue;
 
         public NetworkingClientHandler(ClientType type, string ip, int port = 25570)
         {
@@ -127,8 +127,6 @@ namespace Symcol.Core.Networking
                 case ClientType.Peer:
                     ReceiveClient = new NetworkingClient(false, ip, port);
                     ReceiveClient.OnStartedUPnPMapping += () => { upnpMappingStartTime = Time.Current; };
-                    connectionStartTime = Time.Current;
-
                     SendClient = new NetworkingClient(true, ip, port);
                     break;
                 case ClientType.Server:
@@ -145,13 +143,20 @@ namespace Symcol.Core.Networking
                 };
         }
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            constructionTime = Time.Current;
+        }
+
         protected override void Update()
         {
             base.Update();
 
             if (Time.Current >= upnpMappingStartTime + 2000 && ClientType == ClientType.Peer)
                 ConnectToHost();
-            else if (Time.Current >= connectionStartTime + 3000 && ClientType == ClientType.Peer)
+            else if (Time.Current >= constructionTime + 3000 && ClientType == ClientType.Peer)
                 ConnectToHost();
 
             PacketRestart:
@@ -465,7 +470,7 @@ namespace Symcol.Core.Networking
         public virtual void ConnectToHost()
         {
             upnpMappingStartTime = double.MaxValue;
-            connectionStartTime = double.MaxValue;
+            constructionTime = double.MaxValue;
 
             ConnectionStatues = ConnectionStatues.Connecting;
             SendToHost(new BasicPacket(ClientInfo) { Connect = true });
