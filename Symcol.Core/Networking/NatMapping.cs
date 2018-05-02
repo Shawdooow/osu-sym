@@ -1,5 +1,4 @@
 ﻿using Mono.Nat;
-using System.Collections.Generic;
 
 namespace Symcol.Core.Networking
 {
@@ -7,7 +6,7 @@ namespace Symcol.Core.Networking
     {
         public readonly Mapping UdpMapping;
 
-        public static readonly List<INatDevice> NatDevices = new List<INatDevice>();
+        public static INatDevice NatDevice;
 
         public NatMapping(Mapping mapping)
         {

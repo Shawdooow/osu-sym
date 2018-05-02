@@ -37,8 +37,11 @@ namespace Symcol.Core.Networking
 
             if (!send)
             {
-                foreach (INatDevice device in NatMapping.NatDevices)
-                    device.CreatePortMap(NatMapping.UdpMapping);
+                if (NatMapping.NatDevice != null)
+                {
+                    NatMapping.NatDevice.CreatePortMap(NatMapping.UdpMapping);
+                    IP = NatMapping.NatDevice.LocalAddress.ToString();
+                }
 
                 if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
                     Logger.Log("No Network Connection Detected!", LoggingTarget.Network, LogLevel.Error);
@@ -61,12 +64,11 @@ namespace Symcol.Core.Networking
         {
             INatDevice device = args.Device;
 
-            foreach (INatDevice d in NatMapping.NatDevices)
-                if (d.LocalAddress == device.LocalAddress)
-                    return;
+            if (NatMapping.NatDevice.LocalAddress == device.LocalAddress)
+                return;
 
             device.CreatePortMap(NatMapping.UdpMapping);
-            NatMapping.NatDevices.Add(device);
+            NatMapping.NatDevice = device;
 
             if (OnStartedUPnPMapping != null)
             {
@@ -78,8 +80,11 @@ namespace Symcol.Core.Networking
         private void deviceLost(object sender, DeviceEventArgs args)
         {
             INatDevice device = args.Device;
-            device.DeletePortMap(NatMapping.UdpMapping);
-            NatMapping.NatDevices.Remove(device);
+            if (NatMapping.NatDevice.LocalAddress == device.LocalAddress)
+            {
+                NatMapping.NatDevice.DeletePortMap(NatMapping.UdpMapping);
+                NatMapping.NatDevice = null;
+            }
         }
 
         private void sendByte(byte[] data)
@@ -153,12 +158,11 @@ namespace Symcol.Core.Networking
                 UdpClient.Dispose();
 
             if (!Send)
-                foreach (INatDevice device in NatMapping.NatDevices)
-                    try
-                    {
-                        device.DeletePortMap(NatMapping.UdpMapping);
-                    }
-                    catch { Logger.Log("Error trying to release port mapping!", LoggingTarget.Network, LogLevel.Error); }
+                try
+                {
+                    NatMapping.NatDevice?.DeletePortMap(NatMapping.UdpMapping);
+                }
+                catch { Logger.Log("Error trying to release port mapping!", LoggingTarget.Network, LogLevel.Error); }
         }
     }
 }
