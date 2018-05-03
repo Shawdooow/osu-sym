@@ -4,14 +4,14 @@ using System.ComponentModel;
 
 namespace osu.Game.Rulesets.Mix
 {
-    class MixInputManager : RulesetInputManager<ShapeAction>
+    class MixInputManager : RulesetInputManager<MixAction>
     {
         public MixInputManager(RulesetInfo ruleset) : base(ruleset, 0, SimultaneousBindingMode.Unique)
         {
         }
     }
 
-    public enum ShapeAction
+    public enum MixAction
     {
         //Movement
         [Description("West Left")]

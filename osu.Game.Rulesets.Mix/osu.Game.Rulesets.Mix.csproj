@@ -5,13 +5,10 @@
     <OutputType>Library</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Description>hit the shapes. to the beat.</Description>
+    <Description>mix the music. to the beat.</Description>
+    <Copyright>Symcol 2018</Copyright>
+    <Company>Symcol</Company>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Assets\Textures\icon.png" />
-    <None Remove="Assets\Textures\shape bg.png" />
-    <None Remove="Assets\Textures\shape%402x.png" />
-  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\icon.png" />
   </ItemGroup>

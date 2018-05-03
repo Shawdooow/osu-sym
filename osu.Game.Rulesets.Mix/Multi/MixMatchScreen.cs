@@ -5,11 +5,11 @@ namespace osu.Game.Rulesets.Mix.Multi
 {
     public class MixMatchScreen : RulesetMatchScreen
     {
-        public readonly RulesetNetworkingClientHandler ShapeNetworkingClientHandler;
+        public readonly RulesetNetworkingClientHandler MixNetworkingClientHandler;
 
-        public MixMatchScreen(RulesetNetworkingClientHandler shapeNetworkingClientHandler) : base(shapeNetworkingClientHandler)
+        public MixMatchScreen(RulesetNetworkingClientHandler mixNetworkingClientHandler) : base(mixNetworkingClientHandler)
         {
-            ShapeNetworkingClientHandler = shapeNetworkingClientHandler;
+            MixNetworkingClientHandler = mixNetworkingClientHandler;
         }
     }
 }

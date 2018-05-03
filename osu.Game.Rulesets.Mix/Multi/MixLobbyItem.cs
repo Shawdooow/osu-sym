@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Mix.Multi
 
         public override string RulesetName => "Mix!";
 
-        //public override Texture Background => ShapeRuleset.ShapeTextures.Get("shape bg");
+        //public override Texture Background => MixRuleset.MixTextures.Get("shape bg");
 
         public override RulesetLobbyScreen RulesetLobbyScreen => new MixLobbyScreen();
     }

@@ -5,7 +5,6 @@ using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Mix.Mods;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
-using osu.Framework.Audio;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -20,7 +19,6 @@ namespace osu.Game.Rulesets.Mix
 
         public static ResourceStore<byte[]> MixResources;
         public static TextureStore MixTextures;
-        public static AudioManager ShapeClassicAudio;
 
         public MixRuleset(RulesetInfo rulesetInfo)
             : base(rulesetInfo)
@@ -32,7 +30,7 @@ namespace osu.Game.Rulesets.Mix
             MixTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
         }
 
-        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap, bool isForCurrentRuleset) => new ShapeRulesetContainer(this, beatmap, isForCurrentRuleset);
+        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap, bool isForCurrentRuleset) => new MixRulesetContainer(this, beatmap, isForCurrentRuleset);
 
         public override int? LegacyID => 7;
 
@@ -46,14 +44,14 @@ namespace osu.Game.Rulesets.Mix
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
-            new KeyBinding(InputKey.A, ShapeAction.EastLeftButton),
-            new KeyBinding(InputKey.S, ShapeAction.WestLeftButton),
-            new KeyBinding(InputKey.D, ShapeAction.NorthLeftButton),
-            new KeyBinding(InputKey.F, ShapeAction.SouthLeftButton),
-            new KeyBinding(InputKey.J, ShapeAction.SouthRightButton),
-            new KeyBinding(InputKey.K, ShapeAction.NorthRightButton),
-            new KeyBinding(InputKey.L, ShapeAction.WestRightButton),
-            new KeyBinding(InputKey.Semicolon, ShapeAction.EastRightButton),
+            new KeyBinding(InputKey.A, MixAction.EastLeftButton),
+            new KeyBinding(InputKey.S, MixAction.WestLeftButton),
+            new KeyBinding(InputKey.D, MixAction.NorthLeftButton),
+            new KeyBinding(InputKey.F, MixAction.SouthLeftButton),
+            new KeyBinding(InputKey.J, MixAction.SouthRightButton),
+            new KeyBinding(InputKey.K, MixAction.NorthRightButton),
+            new KeyBinding(InputKey.L, MixAction.WestRightButton),
+            new KeyBinding(InputKey.Semicolon, MixAction.EastRightButton),
         };
 
         public override IEnumerable<Mod> GetModsFor(ModType type)

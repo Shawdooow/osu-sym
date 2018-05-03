@@ -1,5 +1,4 @@
 ﻿using osu.Game.Rulesets.UI;
-using osu.Game.Rulesets.Mix.Judgements;
 using osu.Game.Rulesets.Mix.Objects;
 using osu.Game.Rulesets.Mix.Objects.Drawables;
 using osu.Game.Rulesets.Mix.Beatmaps;
@@ -10,13 +9,12 @@ using osu.Game.Rulesets.Scoring;
 using OpenTK;
 using osu.Game.Rulesets.Mix.Scoring;
 using osu.Framework.Input;
-using System;
 
 namespace osu.Game.Rulesets.Mix
 {
-    internal class ShapeRulesetContainer : RulesetContainer<MixHitObject>
+    internal class MixRulesetContainer : RulesetContainer<MixHitObject>
     {
-        public ShapeRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap, bool isForCurrentRuleset)
+        public MixRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap, bool isForCurrentRuleset)
             : base(ruleset, beatmap, isForCurrentRuleset)
         {
         }
@@ -27,14 +25,13 @@ namespace osu.Game.Rulesets.Mix
 
         protected override BeatmapProcessor<MixHitObject> CreateBeatmapProcessor() => new MixBeatmapProcessor();
 
-        protected override Playfield CreatePlayfield() => new ShapePlayfield();
+        protected override Playfield CreatePlayfield() => new MixPlayfield();
 
         public override PassThroughInputManager CreateInputManager() => new MixInputManager(Ruleset.RulesetInfo);
 
         protected override DrawableHitObject<MixHitObject> GetVisualRepresentation(MixHitObject h)
         {
-            var shape = h as BaseShape;
-            if (shape != null)
+            if (h is BaseShape shape)
                 return new DrawableBaseShape(shape);
             return null;
         }

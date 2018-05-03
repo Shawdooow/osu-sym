@@ -7,7 +7,7 @@ using Symcol.Rulesets.Core.HitObjects;
 
 namespace osu.Game.Rulesets.Mix.Objects.Drawables
 {
-    public abstract class DrawableMixHitObject<ShapeObject> : DrawableSymcolHitObject<MixHitObject>, IKeyBindingHandler<ShapeAction>
+    public abstract class DrawableMixHitObject<ShapeObject> : DrawableSymcolHitObject<MixHitObject>, IKeyBindingHandler<MixAction>
         where ShapeObject : MixHitObject
     {
         public float TIME_PREEMPT = 800;
@@ -34,9 +34,9 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables
 
         }
 
-        public abstract bool OnPressed(ShapeAction action);
+        public abstract bool OnPressed(MixAction action);
 
-        public virtual bool OnReleased(ShapeAction action) => false;
+        public virtual bool OnReleased(MixAction action) => false;
     }
 
     public enum ComboResult

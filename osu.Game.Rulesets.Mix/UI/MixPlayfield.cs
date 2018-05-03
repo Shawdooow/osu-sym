@@ -10,9 +10,9 @@ using osu.Game.Rulesets.Judgements;
 
 namespace osu.Game.Rulesets.Mix.UI
 {
-    public class ShapePlayfield : Playfield
+    public class MixPlayfield : Playfield
     {
-        private Container shapePlayfield;
+        private Container mixPlayfield;
         private readonly Container judgementLayer;
 
         //public override bool ProvidingUserCursor => false;
@@ -30,14 +30,14 @@ namespace osu.Game.Rulesets.Mix.UI
             }
         }
 
-        public ShapePlayfield() : base(BASE_SIZE.X)
+        public MixPlayfield() : base(BASE_SIZE.X)
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 
             AddRange(new Drawable[]
             {
-                shapePlayfield = new Container
+                mixPlayfield = new Container
                 {
                     RelativeSizeAxes = Axes.Both,
                     Depth = -3,
@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Mix.UI
 
             IDrawableHitObjectWithProxiedApproach c = h as IDrawableHitObjectWithProxiedApproach;
             if (c != null)
-                shapePlayfield.Add(c.ProxiedLayer.CreateProxy());
+                mixPlayfield.Add(c.ProxiedLayer.CreateProxy());
 
             base.Add(h);
         }

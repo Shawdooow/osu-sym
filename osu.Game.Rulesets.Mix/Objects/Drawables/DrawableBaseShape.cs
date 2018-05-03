@@ -64,26 +64,26 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables
             Delete();
         }
 
-        public override bool OnPressed(ShapeAction action)
+        public override bool OnPressed(MixAction action)
         {
             if (LifetimeStart <= Time.Current)
             {
                 switch (shape.ShapeID)
                 {
                     case 1:
-                        ShapeAction[] hitActionsNorth = { ShapeAction.SouthLeftButton, ShapeAction.SouthRightButton };
+                        MixAction[] hitActionsNorth = { MixAction.SouthLeftButton, MixAction.SouthRightButton };
                         validKeyPressed = hitActionsNorth.Contains(action);
                         return UpdateJudgement(true);
                     case 2:
-                        ShapeAction[] hitActionsSouth = { ShapeAction.WestLeftButton, ShapeAction.WestRightButton };
+                        MixAction[] hitActionsSouth = { MixAction.WestLeftButton, MixAction.WestRightButton };
                         validKeyPressed = hitActionsSouth.Contains(action);
                         return UpdateJudgement(true);
                     case 3:
-                        ShapeAction[] hitActionsWest = { ShapeAction.EastLeftButton, ShapeAction.EastRightButton };
+                        MixAction[] hitActionsWest = { MixAction.EastLeftButton, MixAction.EastRightButton };
                         validKeyPressed = hitActionsWest.Contains(action);
                         return UpdateJudgement(true);
                     case 4:
-                        ShapeAction[] hitActionsEast = { ShapeAction.NorthLeftButton, ShapeAction.NorthRightButton };
+                        MixAction[] hitActionsEast = { MixAction.NorthLeftButton, MixAction.NorthRightButton };
                         validKeyPressed = hitActionsEast.Contains(action);
                         return UpdateJudgement(true);
                 }

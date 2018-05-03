@@ -93,7 +93,6 @@ namespace osu.Game.Rulesets.Mix.Objects
                     return Math.Pow(distance, 0.99);
             }
 
-            Debug.Assert(false, "Invalid Shape difficulty hit object type.");
             return 0;
         }
 

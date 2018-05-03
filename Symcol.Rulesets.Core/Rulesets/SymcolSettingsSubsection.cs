@@ -32,7 +32,6 @@ namespace Symcol.Rulesets.Core.Rulesets
 
         public SymcolSettingsSubsection()
         {
-
 #if SymcolMods
                 if (RulesetLobbyItem != null)
                     RulesetMultiplayerSelection.LobbyItems.Add(RulesetLobbyItem);
@@ -44,7 +43,6 @@ namespace Symcol.Rulesets.Core.Rulesets
 #else
             Logger.Log("osu.Game mods not installed! Online Multiplayer will not be avalible without them. . .", LoggingTarget.Information, LogLevel.Important);
 #endif
-
         }
 
         [BackgroundDependencyLoader]
