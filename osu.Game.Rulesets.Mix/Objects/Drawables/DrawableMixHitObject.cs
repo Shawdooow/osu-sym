@@ -1,20 +1,20 @@
 ﻿using osu.Game.Rulesets.Objects.Drawables;
 using System;
 using System.ComponentModel;
-using osu.Game.Rulesets.Shape.Judgements;
+using osu.Game.Rulesets.Mix.Judgements;
 using osu.Framework.Input.Bindings;
 using Symcol.Rulesets.Core.HitObjects;
 
-namespace osu.Game.Rulesets.Shape.Objects.Drawables
+namespace osu.Game.Rulesets.Mix.Objects.Drawables
 {
-    public abstract class DrawableShapeHitObject<ShapeObject> : DrawableSymcolHitObject<ShapeHitObject>, IKeyBindingHandler<ShapeAction>
-        where ShapeObject : ShapeHitObject
+    public abstract class DrawableMixHitObject<ShapeObject> : DrawableSymcolHitObject<MixHitObject>, IKeyBindingHandler<ShapeAction>
+        where ShapeObject : MixHitObject
     {
         public float TIME_PREEMPT = 800;
         public float TIME_FADEIN = 400;
         public float TIME_FADEOUT = 400;
 
-        public DrawableShapeHitObject(ShapeHitObject hitObject)
+        public DrawableMixHitObject(MixHitObject hitObject)
             : base(hitObject)
         {
         }

@@ -1,15 +1,15 @@
 ﻿using osu.Framework.Graphics;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Shape.Judgements;
+using osu.Game.Rulesets.Mix.Judgements;
 using OpenTK;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Scoring;
 
-namespace osu.Game.Rulesets.Shape.Objects.Drawables
+namespace osu.Game.Rulesets.Mix.Objects.Drawables
 {
-    public class DrawableShapeJudgement : DrawableJudgement
+    public class DrawableMixJudgement : DrawableJudgement
     {
-        public DrawableShapeJudgement(Judgement judgement, DrawableHitObject judgedObject)
+        public DrawableMixJudgement(Judgement judgement, DrawableHitObject judgedObject)
             : base(judgement, judgedObject)
         {
         }

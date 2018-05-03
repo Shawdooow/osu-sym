@@ -1,4 +1,4 @@
-﻿namespace osu.Game.Rulesets.Shape.Objects
+﻿namespace osu.Game.Rulesets.Mix.Objects
 {
     public enum HitObjectType
     {

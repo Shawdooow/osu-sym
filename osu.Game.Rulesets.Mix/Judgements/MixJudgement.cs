@@ -1,12 +1,11 @@
 ﻿using System;
 using OpenTK;
 using osu.Game.Rulesets.Judgements;
-using osu.Game.Rulesets.Shape.Objects.Drawables;
-using osu.Framework.Extensions;
+using osu.Game.Rulesets.Mix.Objects.Drawables;
 
-namespace osu.Game.Rulesets.Shape.Judgements
+namespace osu.Game.Rulesets.Mix.Judgements
 {
-    public class ShapeJudgement : Judgement
+    public class MixJudgement : Judgement
     {
         /// <summary>
         /// The positional hit offset.

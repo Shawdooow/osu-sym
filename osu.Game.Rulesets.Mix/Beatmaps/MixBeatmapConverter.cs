@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects;
-using osu.Game.Rulesets.Shape.Objects;
+using osu.Game.Rulesets.Mix.Objects;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Objects.Types;
 using System;
@@ -9,9 +9,9 @@ using osu.Game.Audio;
 using System.Linq;
 using osu.Game.Beatmaps.ControlPoints;
 
-namespace osu.Game.Rulesets.Shape.Beatmaps
+namespace osu.Game.Rulesets.Mix.Beatmaps
 {
-    internal class ShapeBeatmapConverter : BeatmapConverter<ShapeHitObject>
+    internal class MixBeatmapConverter : BeatmapConverter<MixHitObject>
     {
         protected override IEnumerable<Type> ValidConversionTypes { get; } = new[] { typeof(HitObject) };
 
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Shape.Beatmaps
         /// </summary>
         private const float shape_base_distance = 100;
 
-        protected override IEnumerable<ShapeHitObject> ConvertHitObject(HitObject original, Beatmap beatmap)
+        protected override IEnumerable<MixHitObject> ConvertHitObject(HitObject original, Beatmap beatmap)
         {
             var endTimeData = original as IHasEndTime;
             var positionData = original as IHasPosition;

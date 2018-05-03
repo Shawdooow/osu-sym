@@ -2,7 +2,7 @@
 using osu.Game.Users;
 using Symcol.Rulesets.Core.Wiki;
 
-namespace osu.Game.Rulesets.Shape.Wiki
+namespace osu.Game.Rulesets.Mix.Wiki
 {
     public class MixWikiHeader : WikiHeader
     {

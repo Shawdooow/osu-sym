@@ -2,16 +2,16 @@
 using OpenTK.Graphics;
 using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
-using osu.Game.Rulesets.Shape.Objects.Drawables.Pieces;
+using osu.Game.Rulesets.Mix.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Shape.Judgements;
+using osu.Game.Rulesets.Mix.Judgements;
 using System.Linq;
 using System;
 using osu.Game.Rulesets.Scoring;
 
-namespace osu.Game.Rulesets.Shape.Objects.Drawables
+namespace osu.Game.Rulesets.Mix.Objects.Drawables
 {
-    public class DrawableBaseShape : DrawableShapeHitObject<ShapeHitObject>
+    public class DrawableBaseShape : DrawableMixHitObject<MixHitObject>
     {
         private BaseDial baseDial;
         private ShapeCircle circle;
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
             {
                 if (!HitObject.HitWindows.CanBeHit(timeOffset))
                 {
-                    AddJudgement(new ShapeJudgement { Result = HitResult.Miss });
+                    AddJudgement(new MixJudgement { Result = HitResult.Miss });
                     Delete();
                 }
                 return;
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
             if (result == HitResult.None)
                 return;
 
-            AddJudgement(new ShapeJudgement
+            AddJudgement(new MixJudgement
             {
                 Result = result,
                 PositionOffset = Vector2.Zero //todo: set to correct value

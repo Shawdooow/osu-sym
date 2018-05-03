@@ -1,14 +1,14 @@
 ﻿using osu.Framework.Graphics;
-using osu.Game.Rulesets.Shape.Objects;
-using osu.Game.Rulesets.Shape.Objects.Drawables;
+using osu.Game.Rulesets.Mix.Objects;
+using osu.Game.Rulesets.Mix.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using OpenTK;
-using osu.Game.Rulesets.Shape.Judgements;
+using osu.Game.Rulesets.Mix.Judgements;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Judgements;
 
-namespace osu.Game.Rulesets.Shape.UI
+namespace osu.Game.Rulesets.Mix.UI
 {
     public class ShapePlayfield : Playfield
     {
@@ -66,10 +66,10 @@ namespace osu.Game.Rulesets.Shape.UI
 
         private void onJudgement(DrawableHitObject judgedObject, Judgement judgement)
         {
-            var shapeJudgement = (ShapeJudgement)judgement;
-            var shapeObject = (ShapeHitObject)judgedObject.HitObject;
+            var shapeJudgement = (MixJudgement)judgement;
+            var shapeObject = (MixHitObject)judgedObject.HitObject;
 
-            DrawableShapeJudgement explosion = new DrawableShapeJudgement(shapeJudgement, judgedObject)
+            DrawableMixJudgement explosion = new DrawableMixJudgement(shapeJudgement, judgedObject)
             {
                 Scale = new Vector2(0.5f),
                 Alpha = 0.5f,

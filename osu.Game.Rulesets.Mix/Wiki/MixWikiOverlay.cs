@@ -1,7 +1,7 @@
-﻿using osu.Game.Rulesets.Shape.Wiki.Sections;
+﻿using osu.Game.Rulesets.Mix.Wiki.Sections;
 using Symcol.Rulesets.Core.Wiki;
 
-namespace osu.Game.Rulesets.Shape.Wiki
+namespace osu.Game.Rulesets.Mix.Wiki
 {
     public class MixWikiOverlay : WikiOverlay
     {

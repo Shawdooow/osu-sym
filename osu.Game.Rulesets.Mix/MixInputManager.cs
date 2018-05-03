@@ -2,7 +2,7 @@
 using osu.Game.Rulesets.UI;
 using System.ComponentModel;
 
-namespace osu.Game.Rulesets.Shape
+namespace osu.Game.Rulesets.Mix
 {
     class MixInputManager : RulesetInputManager<ShapeAction>
     {

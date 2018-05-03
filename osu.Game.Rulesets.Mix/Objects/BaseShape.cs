@@ -1,15 +1,8 @@
 ﻿using OpenTK;
-using osu.Game.Beatmaps;
-using osu.Game.Beatmaps.ControlPoints;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace osu.Game.Rulesets.Shape.Objects
+namespace osu.Game.Rulesets.Mix.Objects
 {
-    public class BaseShape : ShapeHitObject
+    public class BaseShape : MixHitObject
     {
         public override HitObjectType Type => HitObjectType.Shape;
         public Vector2 StartPosition { get; set; }

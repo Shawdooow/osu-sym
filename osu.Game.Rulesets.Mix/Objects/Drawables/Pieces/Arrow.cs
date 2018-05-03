@@ -5,7 +5,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 
-namespace osu.Game.Rulesets.Shape.Objects.Drawables.Pieces
+namespace osu.Game.Rulesets.Mix.Objects.Drawables.Pieces
 {
     //The cat in the hat is the creepiest fucker you will ever meet
     public class Arrow : Container

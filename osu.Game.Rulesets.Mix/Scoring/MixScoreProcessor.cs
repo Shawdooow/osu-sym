@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
 using osu.Framework.Extensions;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Shape.Judgements;
-using osu.Game.Rulesets.Shape.Objects;
-using osu.Game.Rulesets.Shape.Objects.Drawables;
+using osu.Game.Rulesets.Mix.Judgements;
+using osu.Game.Rulesets.Mix.Objects;
+using osu.Game.Rulesets.Mix.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
 
-namespace osu.Game.Rulesets.Shape.Scoring
+namespace osu.Game.Rulesets.Mix.Scoring
 {
-    internal class ShapeScoreProcessor : ScoreProcessor<ShapeHitObject>
+    internal class MixScoreProcessor : ScoreProcessor<MixHitObject>
     {
-        public ShapeScoreProcessor()
+        public MixScoreProcessor()
         {
         }
 
-        public ShapeScoreProcessor(RulesetContainer<ShapeHitObject> rulesetContainer)
+        public MixScoreProcessor(RulesetContainer<MixHitObject> rulesetContainer)
             : base(rulesetContainer)
         {
         }
@@ -52,14 +52,14 @@ namespace osu.Game.Rulesets.Shape.Scoring
             score.Statistics[HitResult.Miss] = scoreResultCounts.GetOrDefault(HitResult.Miss);
         }
 
-        protected override void SimulateAutoplay(Beatmap<ShapeHitObject> beatmap)
+        protected override void SimulateAutoplay(Beatmap<MixHitObject> beatmap)
         {
             hpDrainRate = beatmap.BeatmapInfo.BaseDifficulty.DrainRate;
             totalAccurateJudgements = beatmap.HitObjects.Count;
 
             foreach (var unused in beatmap.HitObjects)
             {
-                AddJudgement(new ShapeJudgement { Result = HitResult.Perfect });
+                AddJudgement(new MixJudgement { Result = HitResult.Perfect });
             }
         }
 
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Shape.Scoring
         {
             base.OnNewJudgement(judgement);
 
-            var shapeJudgement = (ShapeJudgement)judgement;
+            var shapeJudgement = (MixJudgement)judgement;
 
             if (judgement != null)
             {

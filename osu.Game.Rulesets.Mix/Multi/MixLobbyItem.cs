@@ -1,10 +1,10 @@
 ﻿using osu.Framework.Graphics.Textures;
-using osu.Game.Rulesets.Shape;
+using osu.Game.Rulesets.Mix;
 using Symcol.Rulesets.Core.Multiplayer.Screens;
 
-namespace osu.Game.Rulesets.Shape.Multi
+namespace osu.Game.Rulesets.Mix.Multi
 {
-    public class ShapeLobbyItem : RulesetLobbyItem
+    public class MixLobbyItem : RulesetLobbyItem
     {
         public override Texture Icon => MixRuleset.MixTextures.Get("icon");
 
@@ -12,6 +12,6 @@ namespace osu.Game.Rulesets.Shape.Multi
 
         //public override Texture Background => ShapeRuleset.ShapeTextures.Get("shape bg");
 
-        public override RulesetLobbyScreen RulesetLobbyScreen => new ShapeLobbyScreen();
+        public override RulesetLobbyScreen RulesetLobbyScreen => new MixLobbyScreen();
     }
 }

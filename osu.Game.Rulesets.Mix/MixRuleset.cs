@@ -2,7 +2,7 @@
 using osu.Game.Rulesets.UI;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Mods;
-using osu.Game.Rulesets.Shape.Mods;
+using osu.Game.Rulesets.Mix.Mods;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Audio;
@@ -10,9 +10,9 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Shape.Settings;
+using osu.Game.Rulesets.Mix.Settings;
 
-namespace osu.Game.Rulesets.Shape
+namespace osu.Game.Rulesets.Mix
 {
     public class MixRuleset : Ruleset
     {
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Shape
 
         public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap, Mod[] mods = null) => new MixDifficultyCalculator(beatmap, mods);
 
-        public override SettingsSubsection CreateSettings() => new ShapeSettings();
+        public override SettingsSubsection CreateSettings() => new MixSettings();
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
@@ -63,14 +63,14 @@ namespace osu.Game.Rulesets.Shape
                 case ModType.DifficultyReduction:
                     return new Mod[]
                     {
-                        new ShapeModEasy(),
-                        new ShapeModNoFail(),
+                        new MixModEasy(),
+                        new MixModNoFail(),
                         new MultiMod
                         {
                             Mods = new Mod[]
                             {
-                                new ShapeModHalfTime(),
-                                new ShapeModDaycore(),
+                                new MixModHalfTime(),
+                                new MixModDaycore(),
                             },
                         },
                     };
@@ -78,22 +78,22 @@ namespace osu.Game.Rulesets.Shape
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
-                        new ShapeModHardRock(),
-                        new ShapeModSuddenDeath(),
+                        new MixModHardRock(),
+                        new MixModSuddenDeath(),
                         new MultiMod
                         {
                             Mods = new Mod[]
                             {
-                                new ShapeModDoubleTime(),
-                                new ShapeModNightcore(),
+                                new MixModDoubleTime(),
+                                new MixModNightcore(),
                             },
                         },
                         new MultiMod
                         {
                             Mods = new Mod[]
                             {
-                                new ShapeModHidden(),
-                                new ShapeModFlashlight(),
+                                new MixModHidden(),
+                                new MixModFlashlight(),
                             },
                         },
                     };
@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Shape
                 case ModType.Special:
                     return new Mod[]
                     {
-                        new ShapeRelax()
+                        new MixRelax()
                     };
                 default : return new Mod[] { };
             }

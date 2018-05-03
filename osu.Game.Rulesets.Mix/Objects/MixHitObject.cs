@@ -1,14 +1,14 @@
 ﻿using osu.Game.Rulesets.Objects;
 using OpenTK;
-using osu.Game.Rulesets.Shape.Objects.Drawables;
+using osu.Game.Rulesets.Mix.Objects.Drawables;
 using OpenTK.Graphics;
 using osu.Game.Database;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Beatmaps;
 
-namespace osu.Game.Rulesets.Shape.Objects
+namespace osu.Game.Rulesets.Mix.Objects
 {
-    public abstract class ShapeHitObject : HitObject
+    public abstract class MixHitObject : HitObject
     {
         public const double HitboxSize = 8;
 

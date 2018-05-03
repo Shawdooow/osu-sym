@@ -3,9 +3,9 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 
-namespace osu.Game.Rulesets.Shape.Objects
+namespace osu.Game.Rulesets.Mix.Objects
 {
-    internal class ShapeHitObjectDifficulty
+    internal class MixHitObjectDifficulty
     {
         /// <summary>
         /// Factor by how much speed / aim strain decays per second.
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Shape.Objects
         /// </summary>
         private const double almost_diameter = 90;
 
-        internal ShapeHitObject BaseHitObject;
+        internal MixHitObject BaseHitObject;
         internal double[] Strains = { 1, 1 };
 
         internal int MaxCombo = 1;
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Shape.Objects
         private Vector2 startPosition = new Vector2(0);
         private Vector2 endPosition;
 
-        internal ShapeHitObjectDifficulty(ShapeHitObject baseHitObject)
+        internal MixHitObjectDifficulty(MixHitObject baseHitObject)
         {
             BaseHitObject = baseHitObject;
             float hitboxRadius = baseHitObject.Scale * 64;
@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Shape.Objects
                 endPosition = startPosition;
         }
 
-        internal void CalculateStrains(ShapeHitObjectDifficulty previousHitObject, double timeRate)
+        internal void CalculateStrains(MixHitObjectDifficulty previousHitObject, double timeRate)
         {
             calculateSpecificStrain(previousHitObject, MixDifficultyCalculator.DifficultyType.Speed, timeRate);
             calculateSpecificStrain(previousHitObject, MixDifficultyCalculator.DifficultyType.Aim, timeRate);
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Shape.Objects
             return 0;
         }
 
-        private void calculateSpecificStrain(ShapeHitObjectDifficulty previousHitObject, MixDifficultyCalculator.DifficultyType type, double timeRate)
+        private void calculateSpecificStrain(MixHitObjectDifficulty previousHitObject, MixDifficultyCalculator.DifficultyType type, double timeRate)
         {
             double addition = 0;
             double timeElapsed = (BaseHitObject.StartTime - previousHitObject.BaseHitObject.StartTime) / timeRate;
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Shape.Objects
             Strains[(int)type] = previousHitObject.Strains[(int)type] * decay + addition;
         }
 
-        internal double DistanceTo(ShapeHitObjectDifficulty other)
+        internal double DistanceTo(MixHitObjectDifficulty other)
         {
             // Scale the distance by hitbox size.
             return (startPosition - other.endPosition).Length * scalingFactor;
