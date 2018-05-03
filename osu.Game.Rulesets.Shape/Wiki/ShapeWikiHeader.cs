@@ -6,7 +6,7 @@ namespace osu.Game.Rulesets.Shape.Wiki
 {
     public class ShapeWikiHeader : WikiHeader
     {
-        protected override Texture RulesetIcon => ShapeRuleset.ShapeTextures.Get("shape@2x");
+        protected override Texture RulesetIcon => ShapeRuleset.ShapeTextures.Get("icon@2x");
 
         protected override Texture HeaderBackground => ShapeRuleset.ShapeTextures.Get("shape bg");
 

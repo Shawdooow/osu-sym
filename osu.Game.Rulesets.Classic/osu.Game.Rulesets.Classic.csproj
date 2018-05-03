@@ -36,6 +36,7 @@
     <None Remove="Assets\Textures\hitcircle%402x.png" />
     <None Remove="Assets\Textures\hitcircleoverlay%402x.png" />
     <None Remove="Assets\Textures\hitcircleselect%402x.png" />
+    <None Remove="Assets\Textures\icon%402x.png" />
     <None Remove="Assets\Textures\icon.png" />
     <None Remove="Assets\Textures\inputoverlay-background%402x.png" />
     <None Remove="Assets\Textures\inputoverlay-key%402x.png" />
@@ -140,6 +141,7 @@
     <EmbeddedResource Include="Assets\Textures\hitcircleoverlay@2x.png" />
     <EmbeddedResource Include="Assets\Textures\hitcircleselect@2x.png" />
     <EmbeddedResource Include="Assets\Textures\icon.png" />
+    <EmbeddedResource Include="Assets\Textures\icon@2x.png" />
     <EmbeddedResource Include="Assets\Textures\inputoverlay-background@2x.png" />
     <EmbeddedResource Include="Assets\Textures\inputoverlay-key@2x.png" />
     <EmbeddedResource Include="Assets\Textures\lighting@2x.png" />

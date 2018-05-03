@@ -1,16 +1,16 @@
 ﻿using osu.Framework.Graphics;
 using osu.Game.Rulesets.Mix.Objects;
 using osu.Game.Rulesets.Mix.Objects.Drawables;
-using osu.Game.Rulesets.UI;
 using OpenTK;
 using osu.Game.Rulesets.Mix.Judgements;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.UI.Scrolling;
 
 namespace osu.Game.Rulesets.Mix.UI
 {
-    public class MixPlayfield : Playfield
+    public class MixPlayfield : ScrollingPlayfield
     {
         private Container mixPlayfield;
         private readonly Container judgementLayer;
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Mix.UI
             }
         }
 
-        public MixPlayfield() : base(BASE_SIZE.X)
+        public MixPlayfield() : base(ScrollingDirection.Left)
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
@@ -47,7 +47,6 @@ namespace osu.Game.Rulesets.Mix.UI
                     RelativeSizeAxes = Axes.Both,
                     Depth = -2,
                 },
-                //Will need custom UI like vitaru does it
             });
         }
 

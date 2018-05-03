@@ -6,7 +6,7 @@ namespace osu.Game.Rulesets.Shape.Multi
 {
     public class ShapeLobbyItem : RulesetLobbyItem
     {
-        public override Texture Icon => ShapeRuleset.ShapeTextures.Get("icon");
+        public override Texture Icon => ShapeRuleset.ShapeTextures.Get("icon@2x");
 
         public override string RulesetName => "Shape!";
 

@@ -6,11 +6,11 @@ namespace osu.Game.Rulesets.Mix.Multi
 {
     public class MixLobbyItem : RulesetLobbyItem
     {
-        public override Texture Icon => MixRuleset.MixTextures.Get("icon");
+        public override Texture Icon => MixRuleset.MixTextures.Get("icon@2x");
 
         public override string RulesetName => "Mix!";
 
-        //public override Texture Background => MixRuleset.MixTextures.Get("shape bg");
+        public override Texture Background => MixRuleset.MixTextures.Get("mix BG");
 
         public override RulesetLobbyScreen RulesetLobbyScreen => new MixLobbyScreen();
     }

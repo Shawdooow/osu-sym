@@ -6,14 +6,14 @@ namespace osu.Game.Rulesets.Mix.Wiki
 {
     public class MixWikiHeader : WikiHeader
     {
-        protected override Texture RulesetIcon => MixRuleset.MixTextures.Get("icon");
+        protected override Texture RulesetIcon => MixRuleset.MixTextures.Get("icon@2x");
 
-        //protected override Texture HeaderBackground => MixRuleset.MixTextures.Get("shape bg");
+        protected override Texture HeaderBackground => MixRuleset.MixTextures.Get("mix BG");
 
         protected override string RulesetName => "mix";
 
         protected override string RulesetDescription => "Mix! is a 3rd party ruleset developed for osu!lazer. " +
-            "Think of like twenty-four color taiko in a way.";
+            "Think of it like twelve color taiko in a way, by default a map will have twelve different hitsounds and each gets its own button.";
 
         protected override string RulesetUrl => $@"https://github.com/Symcol/osu/tree/symcol/osu.Game.Rulesets.Mix";
 

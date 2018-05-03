@@ -20,6 +20,7 @@
     <None Remove="Assets\Textures\gearMedium.png" />
     <None Remove="Assets\Textures\gearSmall.png" />
     <None Remove="Assets\Textures\icon.png" />
+    <None Remove="Assets\Textures\icon@2x.png" />
     <None Remove="Assets\Textures\kaguya.png" />
     <None Remove="Assets\Textures\kaguyaKiai.png" />
     <None Remove="Assets\Textures\kaguyaKiaiRight.png" />
@@ -51,7 +52,6 @@
     <None Remove="Assets\Textures\star.png" />
     <None Remove="Assets\Textures\starFill.png" />
     <None Remove="Assets\Textures\vitaru spring 2018.png" />
-    <None Remove="Assets\Textures\Vitaru%402x.png" />
     <None Remove="Assets\Textures\VitaruTouhosuModeTrue2560x1440.png" />
     <None Remove="Assets\Textures\vortex.png" />
   </ItemGroup>
@@ -82,7 +82,7 @@
     <EmbeddedResource Include="Assets\Textures\star.png" />
     <EmbeddedResource Include="Assets\Textures\starFill.png" />
     <EmbeddedResource Include="Assets\Textures\vitaru spring 2018.png" />
-    <EmbeddedResource Include="Assets\Textures\Vitaru@2x.png" />
+    <EmbeddedResource Include="Assets\Textures\icon%402x.png" />
   </ItemGroup>
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />

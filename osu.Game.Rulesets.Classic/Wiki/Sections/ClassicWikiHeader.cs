@@ -6,7 +6,7 @@ namespace osu.Game.Rulesets.Classic.Wiki
 {
     public class ClassicWikiHeader : WikiHeader
     {
-        protected override Texture RulesetIcon => ClassicRuleset.ClassicTextures.Get("icon");
+        protected override Texture RulesetIcon => ClassicRuleset.ClassicTextures.Get("icon@2x");
 
         protected override string RulesetName => "classic";
 

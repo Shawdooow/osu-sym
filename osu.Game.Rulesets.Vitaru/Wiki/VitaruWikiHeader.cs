@@ -6,7 +6,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
 {
     public class VitaruWikiHeader : WikiHeader
     {
-        protected override Texture RulesetIcon => VitaruRuleset.VitaruTextures.Get("Vitaru@2x");
+        protected override Texture RulesetIcon => VitaruRuleset.VitaruTextures.Get("icon@2x");
 
         protected override string RulesetName => "vitaru";
 

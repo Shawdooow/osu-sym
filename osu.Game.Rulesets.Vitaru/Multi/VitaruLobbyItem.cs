@@ -5,7 +5,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
 {
     public class VitaruLobbyItem : RulesetLobbyItem
     {
-        public override Texture Icon => VitaruRuleset.VitaruTextures.Get("Vitaru@2x");
+        public override Texture Icon => VitaruRuleset.VitaruTextures.Get("icon@2x");
 
         public override string RulesetName => "Vitaru!";
 
