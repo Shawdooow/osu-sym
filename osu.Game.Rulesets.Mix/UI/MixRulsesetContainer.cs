@@ -9,6 +9,7 @@ using osu.Game.Rulesets.Scoring;
 using OpenTK;
 using osu.Game.Rulesets.Mix.Scoring;
 using osu.Framework.Input;
+using osu.Framework.Graphics;
 
 namespace osu.Game.Rulesets.Mix
 {
@@ -25,17 +26,29 @@ namespace osu.Game.Rulesets.Mix
 
         protected override BeatmapProcessor<MixHitObject> CreateBeatmapProcessor() => new MixBeatmapProcessor();
 
-        protected override Playfield CreatePlayfield() => new MixPlayfield();
+        protected override Playfield CreatePlayfield() => new MixPlayfield
+        {
+            Anchor = Anchor.CentreLeft,
+            Origin = Anchor.CentreLeft
+        };
 
         public override PassThroughInputManager CreateInputManager() => new MixInputManager(Ruleset.RulesetInfo);
 
         protected override DrawableHitObject<MixHitObject> GetVisualRepresentation(MixHitObject h)
         {
-            if (h is BaseShape shape)
-                return new DrawableBaseShape(shape);
+            if (h is MixNote note)
+                return new DrawableMixNote(note);
             return null;
         }
 
-        protected override Vector2 GetAspectAdjustedSize() => new Vector2(0.75f);
+        protected override Vector2 GetAspectAdjustedSize()
+        {
+            const float default_relative_height = MixPlayfield.DEFAULT_HEIGHT / 768;
+            const float default_aspect = 16f / 9f;
+
+            float aspectAdjust = MathHelper.Clamp(DrawWidth / DrawHeight, 0.4f, 4) / default_aspect;
+
+            return new Vector2(1, default_relative_height * aspectAdjust);
+        }
     }
 }

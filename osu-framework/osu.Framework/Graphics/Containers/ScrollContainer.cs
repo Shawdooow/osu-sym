@@ -271,7 +271,7 @@ namespace osu.Framework.Graphics.Containers
 
         protected override bool OnDrag(InputState state)
         {
-            Trace.Assert(IsDragging, "We should never receive OnDrag if we are not dragging.");
+            //Trace.Assert(IsDragging, "We should never receive OnDrag if we are not dragging.");
 
             double currentTime = Time.Current;
             double timeDelta = currentTime - lastDragTime;
@@ -287,7 +287,7 @@ namespace osu.Framework.Graphics.Containers
             float scrollOffset = -childDelta[ScrollDim];
             float clampedScrollOffset = Clamp(target + scrollOffset) - Clamp(target);
 
-            Debug.Assert(Precision.AlmostBigger(Math.Abs(scrollOffset), clampedScrollOffset * Math.Sign(scrollOffset)));
+            //Debug.Assert(Precision.AlmostBigger(Math.Abs(scrollOffset), clampedScrollOffset * Math.Sign(scrollOffset)));
 
             // If we are dragging past the extent of the scrollable area, half the offset
             // such that the user can feel it.
@@ -299,7 +299,7 @@ namespace osu.Framework.Graphics.Containers
 
         protected override bool OnDragEnd(InputState state)
         {
-            Trace.Assert(IsDragging, "We should never receive OnDragEnd if we are not dragging.");
+            //Trace.Assert(IsDragging, "We should never receive OnDragEnd if we are not dragging.");
 
             IsDragging = false;
 

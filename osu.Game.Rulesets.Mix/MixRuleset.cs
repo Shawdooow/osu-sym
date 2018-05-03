@@ -44,14 +44,35 @@ namespace osu.Game.Rulesets.Mix
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
-            new KeyBinding(InputKey.A, MixAction.EastLeftButton),
-            new KeyBinding(InputKey.S, MixAction.WestLeftButton),
-            new KeyBinding(InputKey.D, MixAction.NorthLeftButton),
-            new KeyBinding(InputKey.F, MixAction.SouthLeftButton),
-            new KeyBinding(InputKey.J, MixAction.SouthRightButton),
-            new KeyBinding(InputKey.K, MixAction.NorthRightButton),
-            new KeyBinding(InputKey.L, MixAction.WestRightButton),
-            new KeyBinding(InputKey.Semicolon, MixAction.EastRightButton),
+            new KeyBinding(InputKey.Number1, MixAction.NormalNormalLeft),
+            new KeyBinding(InputKey.Number2, MixAction.NormalWhistleLeft),
+            new KeyBinding(InputKey.Number3, MixAction.NormalFinishLeft),
+            new KeyBinding(InputKey.Number4, MixAction.NormalClapLeft),
+
+            new KeyBinding(InputKey.Q, MixAction.DrumNormalLeft),
+            new KeyBinding(InputKey.W, MixAction.DrumWhistleLeft),
+            new KeyBinding(InputKey.E, MixAction.DrumFinishLeft),
+            new KeyBinding(InputKey.R, MixAction.DrumClapLeft),
+
+            new KeyBinding(InputKey.A, MixAction.SoftNormalLeft),
+            new KeyBinding(InputKey.S, MixAction.SoftWhistleLeft),
+            new KeyBinding(InputKey.D, MixAction.SoftFinishLeft),
+            new KeyBinding(InputKey.F, MixAction.SoftClapLeft),
+
+            new KeyBinding(InputKey.Number7, MixAction.NormalNormalRight),
+            new KeyBinding(InputKey.Number8, MixAction.NormalWhistleRight),
+            new KeyBinding(InputKey.Number9, MixAction.NormalFinishRight),
+            new KeyBinding(InputKey.Number0, MixAction.NormalClapRight),
+
+            new KeyBinding(InputKey.U, MixAction.DrumNormalRight),
+            new KeyBinding(InputKey.I, MixAction.DrumWhistleRight),
+            new KeyBinding(InputKey.O, MixAction.DrumFinishRight),
+            new KeyBinding(InputKey.P, MixAction.DrumClapRight),
+
+            new KeyBinding(InputKey.J, MixAction.SoftNormalRight),
+            new KeyBinding(InputKey.K, MixAction.SoftWhistleRight),
+            new KeyBinding(InputKey.L, MixAction.SoftFinishRight),
+            new KeyBinding(InputKey.Semicolon, MixAction.SoftClapRight),
         };
 
         public override IEnumerable<Mod> GetModsFor(ModType type)

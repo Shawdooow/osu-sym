@@ -7,58 +7,31 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.UI.Scrolling;
+using OpenTK.Graphics;
+using osu.Framework.Graphics.Shapes;
 
 namespace osu.Game.Rulesets.Mix.UI
 {
     public class MixPlayfield : ScrollingPlayfield
     {
-        private Container mixPlayfield;
-        private readonly Container judgementLayer;
-
-        //public override bool ProvidingUserCursor => false;
-
-        public static readonly Vector2 BASE_SIZE = new Vector2(512, 384);
-
-        public override Vector2 Size
-        {
-            get
-            {
-                var parentSize = Parent.DrawSize;
-                var aspectSize = parentSize.X * 0.75f < parentSize.Y ? new Vector2(parentSize.X, parentSize.X * 0.75f) : new Vector2(parentSize.Y * 4f / 3f, parentSize.Y);
-
-                return new Vector2(aspectSize.X / parentSize.X, aspectSize.Y / parentSize.Y) * base.Size;
-            }
-        }
+        public const float DEFAULT_HEIGHT = 120;
 
         public MixPlayfield() : base(ScrollingDirection.Left)
         {
-            Anchor = Anchor.Centre;
-            Origin = Anchor.Centre;
-
             AddRange(new Drawable[]
             {
-                mixPlayfield = new Container
+                new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Depth = -3,
-                },
-                judgementLayer = new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Depth = -2,
-                },
+                    Colour = Color4.Black,
+                    Alpha = 0.8f,
+                }
             });
         }
 
         public override void Add(DrawableHitObject h)
         {
-            h.Depth = (float)h.HitObject.StartTime;
-
             h.OnJudgement += onJudgement;
-
-            IDrawableHitObjectWithProxiedApproach c = h as IDrawableHitObjectWithProxiedApproach;
-            if (c != null)
-                mixPlayfield.Add(c.ProxiedLayer.CreateProxy());
 
             base.Add(h);
         }
@@ -76,7 +49,7 @@ namespace osu.Game.Rulesets.Mix.UI
                 Position = judgedObject.Position,
             };
 
-            judgementLayer.Add(explosion);
+            //judgementLayer.Add(explosion);
         }
     }
 }

@@ -52,17 +52,8 @@ namespace osu.Game.Rulesets.Mix.Objects
         internal MixHitObjectDifficulty(MixHitObject baseHitObject)
         {
             BaseHitObject = baseHitObject;
-            float hitboxRadius = baseHitObject.Scale * 64;
 
             // We will scale everything by this factor, so we can assume a uniform HitboxSize among beatmaps.
-            scalingFactor = 52.0f / hitboxRadius;
-            if (hitboxRadius < 4)
-            {
-                float smallHitboxBonus = Math.Min(30.0f - hitboxRadius, 5.0f) / 50.0f;
-                scalingFactor *= 1.0f + smallHitboxBonus;
-            }
-
-            else
                 endPosition = startPosition;
         }
 

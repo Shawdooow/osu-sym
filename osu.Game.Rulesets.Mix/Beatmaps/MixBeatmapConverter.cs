@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Mix.Beatmaps
             var positionData = original as IHasPosition;
             var comboData = original as IHasCombo;
 
-            List<SampleInfo> samples = original.Samples;
+            SampleControlPoint controlPoint = beatmap.ControlPointInfo.SamplePointAt(original.StartTime);
 
             if (original is IHasCurve curveData)
             {
@@ -68,115 +68,59 @@ namespace osu.Game.Rulesets.Mix.Beatmaps
                 // If the drum roll is to be split into hit circles, assume the ticks are 1/8 spaced within the duration of one beat
                 double tickSpacing = Math.Min(speedAdjustedBeatLength / beatmap.BeatmapInfo.BaseDifficulty.SliderTickRate, shapeDuration / spans);
 
-                List<List<SampleInfo>> allSamples = curveData != null ? curveData.RepeatSamples : new List<List<SampleInfo>>(new[] { samples });
+                List<List<SampleInfo>> allSamples = curveData != null ? curveData.RepeatSamples : new List<List<SampleInfo>>(new[] { original.Samples });
 
                 int i = 0;
                 for (double j = original.StartTime; j <= original.StartTime + shapeDuration + tickSpacing / 8; j += tickSpacing)
                 {
                     List<SampleInfo> currentSamples = allSamples[i];
 
+                    bool isDrum = controlPoint.SampleBank == "drum";
+                    bool isSoft = controlPoint.SampleBank == "soft";
+
+                    if (currentSamples.Any(s => s.Bank != null))
+                    {
+                        if (currentSamples.Any(s => s.Name == "drums"))
+                            isDrum = true;
+                        if (currentSamples.Any(s => s.Name == "soft"))
+                            isSoft = true;
+                    }
+
                     bool isSquare = currentSamples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
                     bool isTriangle = currentSamples.Any(s => s.Name == SampleInfo.HIT_FINISH);
                     bool isX = currentSamples.Any(s => s.Name == SampleInfo.HIT_CLAP);
 
-                    if (isSquare)
+                    yield return new MixNote
                     {
-                        yield return new BaseShape
-                        {
-                            StartTime = j,
-                            StartPosition = positionData?.Position ?? Vector2.Zero,
-                            Samples = currentSamples,
-                            NewCombo = comboData?.NewCombo ?? false,
-                            ShapeID = 2,
-                        };
-                    }
-                    else if (isTriangle)
-                    {
-                        yield return new BaseShape
-                        {
-                            StartTime = j,
-                            StartPosition = positionData?.Position ?? Vector2.Zero,
-                            Samples = currentSamples,
-                            NewCombo = comboData?.NewCombo ?? false,
-                            ShapeID = 3,
-                        };
-                    }
-                    else if (isX)
-                    {
-                        yield return new BaseShape
-                        {
-                            StartTime = j,
-                            StartPosition = positionData?.Position ?? Vector2.Zero,
-                            Samples = currentSamples,
-                            NewCombo = comboData?.NewCombo ?? false,
-                            ShapeID = 4,
-                        };
-                    }
-                    else
-                    {
-                        yield return new BaseShape
-                        {
-                            StartTime = j,
-                            StartPosition = positionData?.Position ?? Vector2.Zero,
-                            Samples = currentSamples,
-                            NewCombo = comboData?.NewCombo ?? false,
-                            ShapeID = 1,
-                        };
-                    }
+                        StartTime = j,
+                        Samples = currentSamples,
+                    };
 
                     i = (i + 1) % allSamples.Count;
                 }
             }
             else
             {
-                bool isSquare = samples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
-                bool isTriangle = samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
-                bool isX = samples.Any(s => s.Name == SampleInfo.HIT_CLAP);
+                bool isDrum = controlPoint.SampleBank == "drum";
+                bool isSoft = controlPoint.SampleBank == "soft";
 
-                if (isSquare)
+                if (original.Samples.Any(s => s.Bank != null))
                 {
-                    yield return new BaseShape
-                    {
-                        StartTime = original.StartTime,
-                        StartPosition = positionData?.Position ?? Vector2.Zero,
-                        Samples = original.Samples,
-                        NewCombo = comboData?.NewCombo ?? false,
-                        ShapeID = 2,
-                    };
+                    if (original.Samples.Any(s => s.Name == "drums"))
+                        isDrum = true;
+                    if (original.Samples.Any(s => s.Name == "soft"))
+                        isSoft = true;
                 }
-                else if (isTriangle)
+
+                bool isSquare = original.Samples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
+                bool isTriangle = original.Samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
+                bool isX = original.Samples.Any(s => s.Name == SampleInfo.HIT_CLAP);
+
+                yield return new MixNote
                 {
-                    yield return new BaseShape
-                    {
-                        StartTime = original.StartTime,
-                        StartPosition = positionData?.Position ?? Vector2.Zero,
-                        Samples = original.Samples,
-                        NewCombo = comboData?.NewCombo ?? false,
-                        ShapeID = 3,
-                    };
-                }
-                else if (isX)
-                {
-                    yield return new BaseShape
-                    {
-                        StartTime = original.StartTime,
-                        StartPosition = positionData?.Position ?? Vector2.Zero,
-                        Samples = original.Samples,
-                        NewCombo = comboData?.NewCombo ?? false,
-                        ShapeID = 4,
-                    };
-                }
-                else
-                {
-                    yield return new BaseShape
-                    {
-                        StartTime = original.StartTime,
-                        StartPosition = positionData?.Position ?? Vector2.Zero,
-                        Samples = original.Samples,
-                        NewCombo = comboData?.NewCombo ?? false,
-                        ShapeID = 1,
-                    };
-                }
+                    StartTime = original.StartTime,
+                    Samples = original.Samples,
+                };
             }
         }
     }

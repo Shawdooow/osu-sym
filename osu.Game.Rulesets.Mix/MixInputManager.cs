@@ -13,22 +13,34 @@ namespace osu.Game.Rulesets.Mix
 
     public enum MixAction
     {
-        //Movement
-        [Description("West Left")]
-        WestLeftButton,
-        [Description("West Right")]
-        WestRightButton,
-        [Description("East Left")]
-        EastLeftButton,
-        [Description("East Right")]
-        EastRightButton,
-        [Description("North Left")]
-         NorthLeftButton,
-        [Description("North Right")]
-        NorthRightButton,
-        [Description("South Left")]
-        SouthLeftButton,
-        [Description("South Right")]
-        SouthRightButton,
+        NormalNormalLeft,
+        NormalWhistleLeft,
+        NormalFinishLeft,
+        NormalClapLeft,
+
+        DrumNormalLeft,
+        DrumWhistleLeft,
+        DrumFinishLeft,
+        DrumClapLeft,
+
+        SoftNormalLeft,
+        SoftWhistleLeft,
+        SoftFinishLeft,
+        SoftClapLeft,
+
+        NormalNormalRight,
+        NormalWhistleRight,
+        NormalFinishRight,
+        NormalClapRight,
+
+        DrumNormalRight,
+        DrumWhistleRight,
+        DrumFinishRight,
+        DrumClapRight,
+
+        SoftNormalRight,
+        SoftWhistleRight,
+        SoftFinishRight,
+        SoftClapRight,
     }
 }
