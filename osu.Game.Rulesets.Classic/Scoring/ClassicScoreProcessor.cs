@@ -108,17 +108,17 @@ namespace osu.Game.Rulesets.Classic.Scoring
             switch (judgement.Result)
             {
                 case HitResult.Great:
-                    ClassicUi.CurrentHealth = Math.Min(ClassicUi.CurrentHealth + (10.2 - hpDrainRate) * 0.03, 1);
+                    ClassicUi.CurrentHealth = Math.Min(ClassicUi.CurrentHealth + (10.2 - hpDrainRate) * 0.02, 1);
                     Health.Value = ClassicUi.CurrentHealth;
                     break;
 
                 case HitResult.Good:
-                    ClassicUi.CurrentHealth = Math.Min(ClassicUi.CurrentHealth + (8 - hpDrainRate) * 0.02, 1);
+                    ClassicUi.CurrentHealth = Math.Min(ClassicUi.CurrentHealth + (8 - hpDrainRate) * 0.01, 1);
                     Health.Value = ClassicUi.CurrentHealth;
                     break;
 
                 case HitResult.Meh:
-                    ClassicUi.CurrentHealth = Math.Min(ClassicUi.CurrentHealth + (4 - hpDrainRate) * 0.01, 1);
+                    ClassicUi.CurrentHealth = Math.Min(ClassicUi.CurrentHealth + (4 - hpDrainRate) * 0.005, 1);
                     Health.Value = ClassicUi.CurrentHealth;
                     break;
 
