@@ -36,8 +36,7 @@ namespace osu.Game.Rulesets.Classic.Scoring
 
             foreach (var obj in beatmap.HitObjects)
             {
-                var slider = obj as Slider;
-                if (slider != null)
+                if (obj is Slider slider)
                 {
                     // Ticks
                     foreach (var unused in slider.NestedHitObjects.OfType<SliderTick>())
@@ -48,8 +47,7 @@ namespace osu.Game.Rulesets.Classic.Scoring
                         AddJudgement(new ClassicJudgement { Result = HitResult.Great });
                 }
 
-                var hold = obj as Hold;
-                if (hold != null)
+                if (obj is Hold hold)
                 {
                     // Ticks
                     foreach (var unused in hold.NestedHitObjects.OfType<SliderTick>())
