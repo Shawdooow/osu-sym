@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables
 
         public override bool OnPressed(MixAction action)
         {
-            throw new System.NotImplementedException();
+            return false;
         }
     }
 }
