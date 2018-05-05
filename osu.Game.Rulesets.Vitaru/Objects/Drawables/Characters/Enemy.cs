@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         public override double MaxHealth => 60;
 
-        protected override string CharacterName => "enemy";
+        public override string CharacterName => "enemy";
 
         public override Color4 PrimaryColor => characterColor;
 

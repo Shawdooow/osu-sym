@@ -13,6 +13,8 @@ using Symcol.Rulesets.Core.Multiplayer.Screens;
 using eden.Game.GamePieces;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using Symcol.Rulesets.Core.Rulesets;
+using System;
+using Symcol.Core.Extentions;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
@@ -32,7 +34,10 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         private static VitaruAPIContainer api;
 
-        private Bindable<SelectableCharacters> selectedCharacter;
+        private Bindable<VitaruGamemode> gamemode;
+
+        private SettingsDropdown<string> character;
+        private Bindable<string> selectedCharacter;
 
         //private FillFlowContainer multiplayerSettings;
         private Bindable<bool> multiplayer;
@@ -61,26 +66,52 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             Storage skinsStorage = storage.GetStorageForDirectory("Skins");
 
+            gamemode = VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
             showDebugUi = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugOverlay);
-            selectedCharacter = VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
+            selectedCharacter = VitaruConfigManager.GetBindable<string>(VitaruSetting.Characters);
             multiplayer = VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
             friendlyPlayerCount = VitaruConfigManager.GetBindable<int>(VitaruSetting.FriendlyPlayerCount);
             friendlyPlayerOverride = VitaruConfigManager.GetBindable<bool>(VitaruSetting.FriendlyPlayerOverride);
             enemyPlayerCount = VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);
             enemyPlayerOverride = VitaruConfigManager.GetBindable<bool>(VitaruSetting.EnemyPlayerOverride);
 
+            character = new SettingsDropdown<string>
+            {
+                LabelText = "Selected Character",
+                Bindable = selectedCharacter
+            };
+
+            List<KeyValuePair<string, string>> vitaruCharacters = new List<KeyValuePair<string, string>>();
+
+            foreach (VitaruCharacters character in Enum.GetValues(typeof(VitaruCharacters)))
+            {
+                vitaruCharacters.Add(new KeyValuePair<string, string>(EnumExtentions.GetDescription(character), character.ToString()));
+            }
+
+            List<KeyValuePair<string, string>> touhosuCharacters = new List<KeyValuePair<string, string>>();
+
+            foreach (TouhosuCharacters character in Enum.GetValues(typeof(TouhosuCharacters)))
+            {
+                touhosuCharacters.Add(new KeyValuePair<string, string>(EnumExtentions.GetDescription(character), character.ToString()));
+            }
+
+            gamemode.ValueChanged += (value) =>
+            {
+                if (value == VitaruGamemode.Touhosu)
+                    character.Items = touhosuCharacters;
+                else
+                    character.Items = vitaruCharacters;
+            };
+            gamemode.TriggerChange();
+
             Children = new Drawable[]
             {
                 new SettingsEnumDropdown<VitaruGamemode>
                 {
                     LabelText = "Vitaru's current gamemode",
-                    Bindable = VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode)
+                    Bindable = gamemode
                 },
-                new SettingsEnumDropdown<SelectableCharacters>
-                {
-                    LabelText = "Selected Character",
-                    Bindable = selectedCharacter
-                },
+                character,
                 new SettingsEnumDropdown<GraphicsPresets>
                 {
                     LabelText = "Graphics Presets",
@@ -285,19 +316,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                 currentSkin.ValueChanged += skin => { VitaruConfigManager.Set(VitaruSetting.Skin, skin); };
             }
             catch { }
-
-            //basically just an ingame wiki for the characters
-            selectedCharacter.ValueChanged += character =>
-            {
-                /*
-                if (character == Player.AliceMuyart | character == Player.ArysaMuyart && !VitaruAPIContainer.Shawdooow)
-                {
-                    selectedCharacter.Value = Player.ReimuHakurei;
-                    character = Player.ReimuHakurei;
-                }
-                */
-            };
-            selectedCharacter.TriggerChange();
 
             /*
             multiplayer.ValueChanged += isVisible =>

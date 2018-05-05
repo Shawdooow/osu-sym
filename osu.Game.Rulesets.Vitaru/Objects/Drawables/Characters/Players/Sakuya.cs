@@ -15,6 +15,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         #region Fields
         public double SetRate { get; private set; } = 0.75d;
 
+        public const string SakuyaName = "SakuyaIzayoi";
+
         public const double SakuyaHealth = 100;
 
         public const double SakuyaEnergy = 36;
@@ -29,7 +31,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public static readonly Color4 SakuyaComplementaryColor = OsuColour.FromHex("#d6d6d6");
 
-        public override SelectableCharacters PlayableCharacter => SelectableCharacters.SakuyaIzayoi;
+        public override string CharacterName => SakuyaName;
 
         public override double MaxHealth => SakuyaHealth;
 

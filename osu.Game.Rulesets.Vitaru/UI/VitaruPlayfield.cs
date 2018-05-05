@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
     public class VitaruPlayfield : SymcolPlayfield
     {
         private static readonly Bindable<VitaruGamemode> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
-        private readonly SelectableCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
+        private readonly string currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Characters);
         private readonly bool multiplayer = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
         private bool friendlyPlayerOverride = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.FriendlyPlayerOverride);
         private readonly Bindable<int> friendlyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.FriendlyPlayerCount);
@@ -88,13 +88,13 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
                 switch (currentCharacter)
                 {
-                    case SelectableCharacters.RyukoyHakurei:
+                    case Ryukoy.RyukoyName:
                         playerList.Add(Player = new Ryukoy(this, abstraction));
                         break;
-                    case SelectableCharacters.TomajiHakurei:
+                    case Tomaji.TomajiName:
                         playerList.Add(Player = new Tomaji(this));
                         break;
-                    case SelectableCharacters.SakuyaIzayoi:
+                    case Sakuya.SakuyaName:
                         playerList.Add(Player = new Sakuya(this));
                         break;
                 }

@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
 {
     public class VitaruMatchScreen : RulesetMatchScreen
     {
-        private readonly Bindable<SelectableCharacters> currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
+        private readonly Bindable<TouhosuCharacters> currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.Characters);
         private readonly Bindable<GraphicsPresets> currentGraphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
         private readonly Bindable<VitaruGamemode> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
         private readonly Bindable<bool> comboFire = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire);
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
                             new MultiplayerToggleOption(comboFire, "Enable Combo Fire", 4, false),
                             new MultiplayerDropdownEnumOption<GraphicsPresets>(currentGraphics, "Graphics", 3, false),
                             new MultiplayerDropdownEnumOption<VitaruGamemode>(currentGameMode, "Vitaru Gamemode", 1),
-                            new MultiplayerDropdownEnumOption<SelectableCharacters>(currentCharacter, "Character", 2, false),
+                            new MultiplayerDropdownEnumOption<TouhosuCharacters>(currentCharacter, "Character", 2, false),
                         }
                     };
             };

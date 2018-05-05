@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
     {
         public string PlayerID = "0";
 
-        public SelectableCharacters Character;
+        public TouhosuCharacters Character;
 
         public float PlayerX;
 

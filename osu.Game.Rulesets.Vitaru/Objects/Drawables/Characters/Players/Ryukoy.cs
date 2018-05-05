@@ -8,6 +8,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
     public class Ryukoy : VitaruPlayer
     {
         #region Fields
+        public const string RyukoyName = "RyukoyHakurei";
+
         public const double RyukoyHealth = 60;
 
         public const double RyukoyEnergy = 24;
@@ -18,7 +20,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public static readonly Color4 RyukoyColor = Color4.MediumPurple;
 
-        public override SelectableCharacters PlayableCharacter => SelectableCharacters.RyukoyHakurei;
+        public override string CharacterName => RyukoyName;
 
         public override double MaxHealth => RyukoyHealth;
 

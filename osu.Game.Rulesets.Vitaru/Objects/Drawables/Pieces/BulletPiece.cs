@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 {
     public class BulletPiece : BeatSyncedContainer
     {
-        private readonly SelectableCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
+        private readonly TouhosuCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.Characters);
         private readonly GraphicsPresets currentSkin = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
 
         private Sprite bulletKiai;

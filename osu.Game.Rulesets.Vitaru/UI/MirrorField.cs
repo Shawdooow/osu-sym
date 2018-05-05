@@ -15,19 +15,19 @@ namespace osu.Game.Rulesets.Vitaru.UI
     public class MirrorField : VitaruPlayfield
     {
         private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
-        private SelectableCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
+        private TouhosuCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.Characters);
         private readonly bool multiplayer = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
         private bool enemyPlayerOverride = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.EnemyPlayerOverride);
         private readonly Bindable<int> enemyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);
 
-        private readonly SelectableCharacters enemyOne = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyOne);
-        private readonly SelectableCharacters enemyTwo = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyTwo);
-        private readonly SelectableCharacters enemyThree = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyThree);
-        private readonly SelectableCharacters enemyFour = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyFour);
-        private readonly SelectableCharacters enemyFive = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyFive);
-        private readonly SelectableCharacters enemySix = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemySix);
-        private readonly SelectableCharacters enemySeven = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemySeven);
-        private readonly SelectableCharacters enemyEight = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.EnemyEight);
+        private readonly TouhosuCharacters enemyOne = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.EnemyOne);
+        private readonly TouhosuCharacters enemyTwo = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.EnemyTwo);
+        private readonly TouhosuCharacters enemyThree = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.EnemyThree);
+        private readonly TouhosuCharacters enemyFour = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.EnemyFour);
+        private readonly TouhosuCharacters enemyFive = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.EnemyFive);
+        private readonly TouhosuCharacters enemySix = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.EnemySix);
+        private readonly TouhosuCharacters enemySeven = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.EnemySeven);
+        private readonly TouhosuCharacters enemyEight = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.EnemyEight);
 
         private readonly List<VitaruPlayer> enemyList = new List<VitaruPlayer>();
 
