@@ -4,14 +4,13 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Vitaru.Settings;
 using Symcol.Rulesets.Core.Wiki;
 using osu.Framework.Graphics;
-using osu.Game.Graphics.Containers;
 using OpenTK;
 using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Vitaru.Characters;
+using osu.Game.Rulesets.Vitaru.Characters.Players;
 
 namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 {
@@ -19,21 +18,21 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
     {
         public override string Title => "Gameplay";
 
-        private Bindable<VitaruGamemode> selectedGamemode;
-        private Bindable<SelectableCharacters> selectedCharacter;
+        private Bindable<Gamemodes> selectedGamemode;
+        private Bindable<TouhosuCharacters> selectedTouhosuCharacter;
 
-        private WikiOptionEnumExplanation<SelectableCharacters> characterDescription;
+        private WikiOptionEnumExplanation<TouhosuCharacters> touhosuCharacterDescription;
 
         private Bindable<Mod> selectedMod = new Bindable<Mod> { Default = Mod.Hidden };
 
         private WikiOptionEnumExplanation<Mod> modsDescription;
-        private WikiOptionEnumExplanation<VitaruGamemode> gamemodeDescription;
+        private WikiOptionEnumExplanation<Gamemodes> gamemodeDescription;
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
-            selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
+            selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+            selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
 
             Content.Add(new WikiParagraph("Your objective in vitaru is simple, don't get hit by the bullets flying at you, although this is easier said than done."));
 
@@ -76,7 +75,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                             Scale = new Vector2(2),
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Texture = VitaruRuleset.VitaruTextures.Get(SelectableCharacters.SakuyaIzayoi.ToString() + "Kiai")
+                            Texture = VitaruRuleset.VitaruTextures.Get(TouhosuCharacters.SakuyaIzayoi.ToString() + "Kiai")
                         },
                         new CircularContainer
                         {
@@ -148,7 +147,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             Content.Add(new WikiParagraph("This ruleset has multiple gamemodes built in, similar to how Mania can have different key amounts. " +
                 "However instead of just increasing the lanes these change how bullets will be coming at you. " +
                 "What is the same in all 3 of the gamemodes however, is that you will be dodging bullets to the beat to stay alive."));
-            Content.Add(gamemodeDescription = new WikiOptionEnumExplanation<VitaruGamemode>(selectedGamemode));
+            Content.Add(gamemodeDescription = new WikiOptionEnumExplanation<Gamemodes>(selectedGamemode));
             Content.Add(new WikiSubSectionHeader("Scoring"));
             Content.Add(new WikiParagraph("Score per bullet is based on how close it got to hitting you, the closer a bullet got the more score it will give. The \"Great\" area is about the same size as the green health ring, " +
                 "the \"Good\" is twice that and \"Meh\" is infinite (so by default a bullet gives meh unless you got close)."));
@@ -162,33 +161,33 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 "I also listed their " +
                 "difficulty to play (Easy, Normal, Hard, Insane, Another, Extra) " +
                 "and their Role in a multiplayer setting (Offense, Defense, Support)."));
-            Content.Add(characterDescription = new WikiOptionEnumExplanation<SelectableCharacters>(selectedCharacter));
+            Content.Add(touhosuCharacterDescription = new WikiOptionEnumExplanation<TouhosuCharacters>(selectedTouhosuCharacter));
 
             //basically just an ingame wiki for the characters
-            selectedCharacter.ValueChanged += character =>
+            selectedTouhosuCharacter.ValueChanged += character =>
             {
                 restart:
 
-                string stats = "\nHealth: " + VitaruPlayer.DefaultHealth +
-                        "\nEnergy: " + VitaruPlayer.DefaultEnergy +
-                        "\nEnergy Cost: " + VitaruPlayer.DefaultEnergyCost +
-                        "\nEnergy Cost per Second: " + VitaruPlayer.DefaultEnergyCostPerSecond +
+                string stats = "\nHealth: " + Player.DefaultHealth +
+                        "\nEnergy: " + TouhosuPlayer.DefaultEnergy +
+                        "\nEnergy Cost: " + TouhosuPlayer.DefaultEnergyCost +
+                        "\nEnergy Cost per Second: " + TouhosuPlayer.DefaultEnergyCostPerSecond +
                         "\nRole: ???" +
                         "\nDifficulty: ???" +
                         "\nAbility: Not Implemented Yet!";
 
-                switch (selectedCharacter.Value)
+                switch (character)
                 {
-                    case SelectableCharacters.ReimuHakurei:
-                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                    case TouhosuCharacters.ReimuHakurei:
+                        if (selectedGamemode == Gamemodes.Touhosu)
                             stats = Reimu.Background;
                         else
                         {
-                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
+                            character = TouhosuCharacters.RyukoyHakurei;
                             goto restart;
                         }
                         break;
-                    case SelectableCharacters.RyukoyHakurei:
+                    case TouhosuCharacters.RyukoyHakurei:
                         stats = "\nHealth: " + Ryukoy.RyukoyHealth +
                         "\nEnergy: " + Ryukoy.RyukoyEnergy +
                         "\nEnergy Cost: " + Ryukoy.RyukoyEnergyCost +
@@ -197,12 +196,12 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nDifficulty: Insane" +
                         "\nAbility: Spirit Walker";
 
-                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                        if (selectedGamemode == Gamemodes.Touhosu)
                         {
                             stats = stats + "\n\n" + Ryukoy.Background;
                         }
                         break;
-                    case SelectableCharacters.TomajiHakurei:
+                    case TouhosuCharacters.TomajiHakurei:
                         stats = "\nHealth: " + Tomaji.TomajiHealth +
                         "\nEnergy: " + Tomaji.TomajiEnergy +
                         "\nEnergy Cost: " + Tomaji.TomajiEnergyCost +
@@ -211,13 +210,13 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nDifficulty: Hard" +
                         "\nAbility: Time Shift";
 
-                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                        if (selectedGamemode == Gamemodes.Touhosu)
                         {
                             stats = stats + "\n\n" + Tomaji.Background;
                         }
                         break;
-                    case SelectableCharacters.SakuyaIzayoi:
-                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                    case TouhosuCharacters.SakuyaIzayoi:
+                        if (selectedGamemode == Gamemodes.Touhosu)
                         {
                             stats = "\nHealth: " + Sakuya.SakuyaHealth +
                             "\nEnergy: " + Sakuya.SakuyaEnergy +
@@ -230,57 +229,39 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         }
                         else
                         {
-                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
-                            goto restart;
-                        }
-                        break;
-                    case SelectableCharacters.RemiliaScarlet:
-                        if (selectedGamemode == VitaruGamemode.Touhosu)
-                            stats = Remilia.Background;
-                        else
-                        {
-                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
-                            goto restart;
-                        }
-                        break;
-                    case SelectableCharacters.FlandreScarlet:
-                        if (selectedGamemode == VitaruGamemode.Touhosu)
-                            stats = Flandre.Background;
-                        else
-                        {
-                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
+                            character = TouhosuCharacters.RyukoyHakurei;
                             goto restart;
                         }
                         break;
                 }
 
-                characterDescription.Description.Text = stats;
+                touhosuCharacterDescription.Description.Text = stats;
             };
-            selectedCharacter.TriggerChange();
+            selectedTouhosuCharacter.TriggerChange();
 
             selectedGamemode.ValueChanged += gamemode =>
             {
                 switch (gamemode)
                 {
-                    case VitaruGamemode.Vitaru:
+                    case Gamemodes.Vitaru:
                         gamemodeDescription.Description.Text = "The default gamemode in this ruleset which is based on the touhou series danmaku games. " +
                         "Allows you to kill enemies while dodging bullets to the beat!";
                         break;
-                    case VitaruGamemode.Gravaru:
+                    case Gamemodes.Gravaru:
                         gamemodeDescription.Description.Text = "Gravity Enabled!\n" +
                         "Currently a very incomplete experiance, just messing with gravity physics atm. Stay tuned!";
                         break;
-                    case VitaruGamemode.Dodge:
+                    case Gamemodes.Dodge:
                         gamemodeDescription.Description.Text = "Completly changes how vitaru is played. " +
                         "The Dodge gamemode changes the playfield to a much shorter rectangle and send bullets your way from all directions while also taking away your ability to shoot!";
                         break;
-                    case VitaruGamemode.Touhosu:
+                    case Gamemodes.Touhosu:
                         gamemodeDescription.Description.Text = "The \"amplified\" gamemode. Touhosu mode is everything Vitaru is and so much more. " +
                         "Selecting different characters no longer just changes your skin but also your stats and allows you to use spells!\n\n" +
                         "Also allows you to start story mode.";
                         break;
                 }
-                selectedCharacter.TriggerChange();
+                selectedTouhosuCharacter.TriggerChange();
             };
             selectedGamemode.TriggerChange();
 

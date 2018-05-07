@@ -5,18 +5,13 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Bindings;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
 using OpenTK;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
-using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Graphics.Effects;
-using osu.Framework.MathUtils;
+using osu.Game.Rulesets.Vitaru.Characters;
 
 namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 {
@@ -31,8 +26,8 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
         public class VitaruCursor : Container
         {
-            private readonly SelectableCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
-            private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
+            private TouhosuCharacters selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
+            private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
             private Container lineContainer;
             private Container circleContainer;
@@ -200,7 +195,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
                     }
                 };
 
-                if (currentGameMode == VitaruGamemode.Touhosu)
+                if (currentGameMode == Gamemodes.Touhosu)
                 {
                     //if (currentCharacter == SelectableCharacters.SakuyaIzayoi)// || currentCharacter == PlayableCharacters.AliceMuyart)
                         //speed.Alpha = 0.5f;
@@ -240,12 +235,12 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
                 if (VitaruPlayfield.Player != null )
                 {
-                    switch (currentCharacter)
+                    switch (selectedTouhosuCharacter)
                     {
-                        case SelectableCharacters.SakuyaIzayoi:
+                        case TouhosuCharacters.SakuyaIzayoi:
                             //speed.Text = ((Sakuya)VitaruPlayfield.Player).SetRate.ToString();
                             break;
-                        case SelectableCharacters.TomajiHakurei:
+                        case TouhosuCharacters.TomajiHakurei:
                             //speed.Text = ((Tomaji)VitaruPlayfield.Player).SetRate.ToString();
                             break;
                     }

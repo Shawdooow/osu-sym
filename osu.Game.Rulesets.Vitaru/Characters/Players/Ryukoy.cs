@@ -3,9 +3,9 @@ using osu.Framework.Configuration;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 
-namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
+namespace osu.Game.Rulesets.Vitaru.Characters.Players
 {
-    public class Ryukoy : VitaruPlayer
+    public class Ryukoy : TouhosuPlayer
     {
         #region Fields
         public const double RyukoyHealth = 60;
@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public static readonly Color4 RyukoyColor = Color4.MediumPurple;
 
-        public override SelectableCharacters PlayableCharacter => SelectableCharacters.RyukoyHakurei;
+        public override TouhosuCharacters PlayableCharacter => TouhosuCharacters.RyukoyHakurei;
 
         public override double MaxHealth => RyukoyHealth;
 

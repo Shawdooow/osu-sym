@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
     { 
         public static int BulletCount;
 
-        private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
+        private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         //Used like a multiple (useful for spells in multiplayer)
         public static float BulletSpeedModifier = 1;
@@ -55,9 +55,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Bullet = bullet;
             this.drawablePattern = drawablePattern;
 
-            if (currentGameMode == VitaruGamemode.Dodge)
+            if (currentGameMode == Gamemodes.Dodge)
                 BulletBounds = new Vector4(-10, -10, 522, 394);
-            else if (currentGameMode == VitaruGamemode.Gravaru)
+            else if (currentGameMode == Gamemodes.Gravaru)
                 BulletBounds = new Vector4(-10, -10, 384 * 2 + 10, 394);
         }
 
@@ -70,9 +70,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             Bullet = bullet;
 
-            if (currentGameMode == VitaruGamemode.Dodge)
+            if (currentGameMode == Gamemodes.Dodge)
                 BulletBounds = new Vector4(-10, -10, 522, 394);
-            else if (currentGameMode == VitaruGamemode.Gravaru)
+            else if (currentGameMode == Gamemodes.Gravaru)
                 BulletBounds = new Vector4(-10, -10, 384 * 2 + 10, 394);
         }
 

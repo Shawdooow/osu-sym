@@ -1,6 +1,6 @@
-﻿namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
+﻿namespace osu.Game.Rulesets.Vitaru.Characters.Players
 {
-    public class Remilia
+    public class Flandre
     {
         #region Touhosu Story Content
         public const string Background = "";

@@ -11,22 +11,17 @@ using osu.Game.Rulesets.Vitaru.UI.Cursor;
 using osu.Framework.Configuration;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Vitaru.Multi;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
 using Symcol.Rulesets.Core.Rulesets;
 using osu.Framework.Graphics.Effects;
-using osu.Framework.Logging;
+using osu.Game.Rulesets.Vitaru.Characters;
+using osu.Game.Rulesets.Vitaru.Characters.Players;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruPlayfield : SymcolPlayfield
     {
-        private static readonly Bindable<VitaruGamemode> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
-        private readonly SelectableCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
-        private readonly bool multiplayer = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
-        private bool friendlyPlayerOverride = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.FriendlyPlayerOverride);
-        private readonly Bindable<int> friendlyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.FriendlyPlayerCount);
-        private readonly Bindable<int> enemyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);
+        private static readonly Bindable<Gamemodes> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private readonly TouhosuCharacters selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
 
         public readonly VitaruInputManager VitaruInputManager;
 
@@ -35,11 +30,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public readonly MirrorField Mirrorfield;
 
         private readonly Container judgementLayer;
-        private readonly List<VitaruPlayer> playerList = new List<VitaruPlayer>();
+        private readonly List<Player> playerList = new List<Player>();
 
         public static List<VitaruClientInfo> LoadPlayerList = new List<VitaruClientInfo>();
 
-        public static VitaruPlayer Player;
+        public static Player Player;
 
         public virtual bool LoadPlayer => true;
 
@@ -47,9 +42,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             get
             {
-                if (currentGameMode == VitaruGamemode.Dodge)
+                if (currentGameMode == Gamemodes.Dodge)
                     return new Vector2(512, 384);
-                else if (currentGameMode == VitaruGamemode.Gravaru)
+                else if (currentGameMode == Gamemodes.Gravaru)
                     return new Vector2(384 * 2, 384);
                 else
                     return new Vector2(512, 820);
@@ -62,14 +57,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
-
-            if (currentGameMode != VitaruGamemode.Dodge && currentGameMode != VitaruGamemode.Gravaru && multiplayer && enemyPlayerCount > 0)
-            {
-                Position = new Vector2(20, 0);
-                Anchor = Anchor.Centre;
-                Origin = Anchor.CentreLeft;
-                Add(Mirrorfield = new MirrorField(this, vitaruInput));
-            }
 
             Bindable<int> abstraction = new Bindable<int>() { Value = 0 };
 
@@ -86,15 +73,15 @@ namespace osu.Game.Rulesets.Vitaru.UI
             {
                 VitaruNetworkingClientHandler vitaruNetworkingClientHandler = RulesetNetworkingClientHandler as VitaruNetworkingClientHandler;
 
-                switch (currentCharacter)
+                switch (selectedTouhosuCharacter)
                 {
-                    case SelectableCharacters.RyukoyHakurei:
+                    case TouhosuCharacters.RyukoyHakurei:
                         playerList.Add(Player = new Ryukoy(this, abstraction));
                         break;
-                    case SelectableCharacters.TomajiHakurei:
+                    case TouhosuCharacters.TomajiHakurei:
                         playerList.Add(Player = new Tomaji(this));
                         break;
-                    case SelectableCharacters.SakuyaIzayoi:
+                    case TouhosuCharacters.SakuyaIzayoi:
                         playerList.Add(Player = new Sakuya(this));
                         break;
                 }
@@ -117,11 +104,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
                         });
                     }*/
 
-                foreach (VitaruPlayer player in playerList)
+                foreach (Player player in playerList)
                     GameField.Add(player);
 
                 Player.Position = new Vector2(256, 700);
-                if (currentGameMode == VitaruGamemode.Dodge || currentGameMode == VitaruGamemode.Gravaru)
+                if (currentGameMode == Gamemodes.Dodge || currentGameMode == Gamemodes.Gravaru)
                     Player.Position = BaseSize / 2;
             }
             else

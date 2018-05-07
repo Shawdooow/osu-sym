@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 {
     internal class VitaruBeatmapConverter : BeatmapConverter<VitaruHitObject>
     {
-        private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
+        private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
         private readonly bool multiplayer = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
         private readonly int enemyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);
 
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             bool isFinish = original.Samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
             bool isClap = original.Samples.Any(s => s.Name == SampleInfo.HIT_CLAP);
 
-            if (currentGameMode == VitaruGamemode.Dodge || currentGameMode == VitaruGamemode.Gravaru)
+            if (currentGameMode == Gamemodes.Dodge || currentGameMode == Gamemodes.Gravaru)
             {
                 complexity *= 0.66f;
                 cs *= 0.5f;

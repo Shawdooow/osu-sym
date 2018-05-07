@@ -12,7 +12,7 @@ using osu.Framework.MathUtils;
 using osu.Framework.Graphics.Effects;
 using osu.Game.Graphics;
 
-namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
+namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
 {
     public class Seal : Container
     {
@@ -39,10 +39,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
         [BackgroundDependencyLoader]
         private void load(Storage storage)
         {
-            if (character is VitaruPlayer v)
+            if (character is TouhosuPlayer t)
             {
-                Color4 lightColor = v.PrimaryColor.Lighten(0.5f);
-                Color4 darkColor = v.PrimaryColor.Darken(0.5f);
+                Color4 lightColor = t.PrimaryColor.Lighten(0.5f);
+                Color4 darkColor = t.PrimaryColor.Darken(0.5f);
 
                 Size = new Vector2(90);
 
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                                 RelativeSizeAxes = Axes.Both,
                                 Size = new Vector2(2f),
 
-                                Colour = v.PrimaryColor,
+                                Colour = t.PrimaryColor,
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Texture = VitaruSkinElement.LoadSkinElement("seal", storage),
@@ -97,10 +97,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                         {
                             RelativeSizeAxes = Axes.Both,
                             InnerRadius = 0.05f,
-                            Colour = v.ComplementaryColor
+                            Colour = t.ComplementaryColor
                         }).WithEffect(new GlowEffect
                         {
-                            Colour = v.ComplementaryColor,
+                            Colour = t.ComplementaryColor,
                             Strength = 2,
                             PadExtent = true
                         }),
@@ -117,21 +117,21 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                         {
                             RelativeSizeAxes = Axes.Both,
                             InnerRadius = 0.05f,
-                            Colour = v.SecondaryColor
+                            Colour = t.SecondaryColor
                         }).WithEffect(new GlowEffect
                         {
-                            Colour = v.SecondaryColor,
+                            Colour = t.SecondaryColor,
                             Strength = 2,
                             PadExtent = true
                         }),
                     },
                 };
 
-                switch (v.PlayableCharacter)
+                switch (t.PlayableCharacter)
                 {
                     default:
                         break;
-                    case SelectableCharacters.SakuyaIzayoi:
+                    case TouhosuCharacters.SakuyaIzayoi:
                         characterSigil.Children = new Drawable[]
                         {
                             gear1 = new Sprite
@@ -144,7 +144,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                             },
                             gear2 = new Sprite
                             {
-                                Colour = v.PrimaryColor,
+                                Colour = t.PrimaryColor,
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Texture = VitaruSkinElement.LoadSkinElement("gearMedium", storage),
@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                             },
                             gear4 = new Sprite
                             {
-                                Colour = v.PrimaryColor,
+                                Colour = t.PrimaryColor,
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Texture = VitaruSkinElement.LoadSkinElement("gearMedium", storage),
@@ -216,18 +216,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
 
             Sign.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 0.1f);
 
-            if (character is VitaruPlayer v)
+            if (character is TouhosuPlayer t)
             {
-                Sign.Alpha = (float)v.Energy / (float)(v.MaxEnergy * 2);
+                Sign.Alpha = (float)t.Energy / (float)(t.MaxEnergy * 2);
 
-                health.Current.Value = v.Health / v.MaxHealth;
-                energy.Current.Value = v.Energy / v.MaxEnergy;
+                health.Current.Value = t.Health / t.MaxHealth;
+                energy.Current.Value = t.Energy / t.MaxEnergy;
 
-                switch (v.PlayableCharacter)
+                switch (t.PlayableCharacter)
                 {
                     default:
                         break;
-                    case SelectableCharacters.SakuyaIzayoi:
+                    case TouhosuCharacters.SakuyaIzayoi:
                         float speed = 0.25f;
                         gear1.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
                         gear2.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);

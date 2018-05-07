@@ -11,9 +11,10 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Extensions.Color4Extensions;
 using Symcol.Core.GameObjects;
 using osu.Framework.Platform;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Characters.Pieces;
 
-namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
+namespace osu.Game.Rulesets.Vitaru.Characters
 {
     public abstract class Character : BeatSyncedContainer
     {

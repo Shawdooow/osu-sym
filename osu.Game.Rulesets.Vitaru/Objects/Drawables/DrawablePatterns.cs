@@ -3,22 +3,19 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 using osu.Game.Rulesets.Vitaru.Settings;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
-using System.Linq;
-using osu.Game.Skinning;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Audio;
-using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
+using osu.Game.Rulesets.Vitaru.Characters;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawablePattern : DrawableVitaruHitObject
     {
-        private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
+        private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         public static int PatternCount;
         private readonly Pattern pattern;
@@ -74,7 +71,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 if (Started && !done)
                 {
                     starPiece.Position = pattern.PositionAt(completionProgress);
-                    if (currentGameMode != VitaruGamemode.Dodge)
+                    if (currentGameMode != Gamemodes.Dodge)
                         enemy.Position = pattern.PositionAt(completionProgress);
                 }
 
@@ -104,7 +101,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 Colour = AccentColour
             });
 
-            if (currentGameMode != VitaruGamemode.Dodge)
+            if (currentGameMode != Gamemodes.Dodge)
             {
                 //load the enemy
                 VitaruPlayfield.GameField.Add(enemy = new Enemy(VitaruPlayfield, pattern, this)
@@ -161,7 +158,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.End();
 
-            if (currentGameMode != VitaruGamemode.Dodge)
+            if (currentGameMode != Gamemodes.Dodge)
                 enemy.MoveTo(getPatternStartPosition(), HitObject.TimePreempt * 2, Easing.InQuint)
                     .Delay(HitObject.TimePreempt * 2 - HitObject.TimeFadein)
                     .ScaleTo(new Vector2(0.5f), HitObject.TimeFadein, Easing.InQuint)
@@ -181,7 +178,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Unload();
 
-            if (currentGameMode != VitaruGamemode.Dodge)
+            if (currentGameMode != Gamemodes.Dodge)
             {
                 VitaruPlayfield.GameField.Remove(enemy);
                 enemy.Dispose();

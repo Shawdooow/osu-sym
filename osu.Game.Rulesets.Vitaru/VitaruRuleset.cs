@@ -223,7 +223,7 @@ namespace osu.Game.Rulesets.Vitaru
         }
     }
 
-    public enum VitaruGamemode
+    public enum Gamemodes
     {
         Vitaru,
         Gravaru,

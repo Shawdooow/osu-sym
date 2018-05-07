@@ -2,7 +2,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
+using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.Networking;
@@ -16,9 +16,9 @@ namespace osu.Game.Rulesets.Vitaru.Multi
 {
     public class VitaruMatchScreen : RulesetMatchScreen
     {
-        private readonly Bindable<SelectableCharacters> currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
+        private Bindable<TouhosuCharacters> selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
         private readonly Bindable<GraphicsPresets> currentGraphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
-        private readonly Bindable<VitaruGamemode> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
+        private readonly Bindable<Gamemodes> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
         private readonly Bindable<bool> comboFire = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire);
 
         public readonly VitaruNetworkingClientHandler VitaruNetworkingClientHandler;
@@ -42,8 +42,8 @@ namespace osu.Game.Rulesets.Vitaru.Multi
                         {
                             new MultiplayerToggleOption(comboFire, "Enable Combo Fire", 4, false),
                             new MultiplayerDropdownEnumOption<GraphicsPresets>(currentGraphics, "Graphics", 3, false),
-                            new MultiplayerDropdownEnumOption<VitaruGamemode>(currentGameMode, "Vitaru Gamemode", 1),
-                            new MultiplayerDropdownEnumOption<SelectableCharacters>(currentCharacter, "Character", 2, false),
+                            new MultiplayerDropdownEnumOption<Gamemodes>(currentGameMode, "Vitaru Gamemode", 1),
+                            new MultiplayerDropdownEnumOption<TouhosuCharacters>(selectedTouhosuCharacter, "Character", 2, false),
                         }
                     };
             };

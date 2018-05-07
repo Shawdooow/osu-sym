@@ -1,7 +1,7 @@
 ﻿using eden.Game.GamePieces;
 using osu.Framework.Configuration;
 using osu.Framework.Platform;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
+using osu.Game.Rulesets.Vitaru.Characters;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
@@ -16,8 +16,9 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.DebugOverlay, false);
             Set(VitaruSetting.DebugUIConfiguration, DebugUiConfiguration.PerformanceMetrics);
             Set(VitaruSetting.GraphicsPresets, GraphicsPresets.Standard);
-            Set(VitaruSetting.GameMode, VitaruGamemode.Vitaru);
-            Set(VitaruSetting.Characters, SelectableCharacters.SakuyaIzayoi);
+            Set(VitaruSetting.GameMode, Gamemodes.Vitaru);
+            Set(VitaruSetting.VitaruCharacter, VitaruCharacters.Alex);
+            Set(VitaruSetting.TouhosuCharacter, TouhosuCharacters.SakuyaIzayoi);
 
             //Leaks like crazy atm
             Set(VitaruSetting.ComboFire, false);
@@ -56,11 +57,12 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
     public enum VitaruSetting
     {
+        GameMode,
+        VitaruCharacter,
+        TouhosuCharacter,
         DebugOverlay,
         DebugUIConfiguration,
         GraphicsPresets,
-        GameMode,
-        Characters,
         ComboFire,
         ShittyMultiplayer,
         FriendlyPlayerCount,

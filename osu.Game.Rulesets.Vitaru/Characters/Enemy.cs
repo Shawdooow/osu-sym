@@ -7,8 +7,10 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Framework.Platform;
 using OpenTK.Graphics;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Objects;
 
-namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
+namespace osu.Game.Rulesets.Vitaru.Characters
 {
     public class Enemy : Character
     {

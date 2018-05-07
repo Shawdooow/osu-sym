@@ -4,7 +4,7 @@ using osu.Framework.MathUtils;
 using osu.Game.Graphics.Containers;
 using OpenTK;
 
-namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
+namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
 {
     public class Crystal : BeatSyncedContainer
     {

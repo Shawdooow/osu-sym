@@ -8,44 +8,28 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Vitaru.Objects;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 using System.Collections.Generic;
 using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
 
-namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
+namespace osu.Game.Rulesets.Vitaru.Characters
 {
-    public abstract class VitaruPlayer : Character, IKeyBindingHandler<VitaruAction>
+    public abstract class Player : Character, IKeyBindingHandler<VitaruAction>
     {
         #region Fields
-        protected readonly VitaruGamemode CurrentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
-
-        public abstract SelectableCharacters PlayableCharacter { get; }
-
-        protected override string CharacterName => PlayableCharacter.ToString();
+        protected readonly Gamemodes CurrentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         public const double DefaultHealth = 100;
-
-        public const double DefaultEnergy = 36;
-
-        public const double DefaultEnergyCost = 4;
-
-        public const double DefaultEnergyCostPerSecond = 0;
 
         public static readonly Color4 DefaultColor = Color4.Yellow;
 
         public override double MaxHealth => DefaultHealth;
 
-        public virtual double MaxEnergy { get; } = DefaultEnergy;
-
-        public virtual double EnergyCost { get; } = DefaultEnergyCost;
-
-        public virtual double EnergyCostPerSecond { get; } = DefaultEnergyCostPerSecond;
-
         public override Color4 PrimaryColor => DefaultColor;
-
-        public double Energy { get; protected set; }
 
         public int ScoreZone = 100;
 
@@ -58,20 +42,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         {
             get
             {
-                if (CurrentGameMode == VitaruGamemode.Touhosu)
+                if (CurrentGameMode == Gamemodes.Touhosu)
                     return new Vector4(0, 512, 0, 820);
                 else
                     return new Vector4(0, 512, 0, 820);
             }
         }
-
-        public Action<VitaruAction> Spell;
-
-        protected bool SpellActive { get; set; }
-
-        protected double SpellDeActivateTime { get; set; } = double.MinValue;
-
-        protected double SpellEndTime { get; set; } = double.MinValue;
 
         protected readonly Container Cursor;
 
@@ -81,7 +57,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         private double beatLength = 1000;
         #endregion
 
-        public VitaruPlayer(VitaruPlayfield playfield) : base(playfield)
+        public Player(VitaruPlayfield playfield) : base(playfield)
         {
             Actions[VitaruAction.Up] = false;
             Actions[VitaruAction.Down] = false;
@@ -133,7 +109,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             using (Seal.Sign.BeginDelayedSequence(beat_in_time))
                 Seal.Sign.ScaleTo(1, beatLength * 2, Easing.OutQuint);
 
-            if (effectPoint.KiaiMode && CurrentGameMode != VitaruGamemode.Touhosu)
+            if (effectPoint.KiaiMode && CurrentGameMode != Gamemodes.Touhosu)
             {
                 Seal.Sign.FadeTo(0.25f * amplitudeAdjust, beat_in_time, Easing.Out);
                 using (Seal.Sign.BeginDelayedSequence(beat_in_time))
@@ -142,24 +118,24 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
             if (effectPoint.KiaiMode && SoulContainer.Alpha == 1)
             {
-                if (!Dead && CurrentGameMode != VitaruGamemode.Gravaru)
+                if (!Dead && CurrentGameMode != Gamemodes.Gravaru)
                 {
                     KiaiContainer.FadeInFromZero(timingPoint.BeatLength / 4);
                     SoulContainer.FadeOutFromOne(timingPoint.BeatLength / 4);
                 }
 
-                if (CurrentGameMode != VitaruGamemode.Touhosu)
+                if (CurrentGameMode != Gamemodes.Touhosu)
                     Seal.Sign.FadeTo(0.15f, timingPoint.BeatLength / 4);
             }
             if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1)
             {
-                if (!Dead && CurrentGameMode != VitaruGamemode.Gravaru)
+                if (!Dead && CurrentGameMode != Gamemodes.Gravaru)
                 {
                     SoulContainer.FadeInFromZero(timingPoint.BeatLength);
                     KiaiContainer.FadeOutFromOne(timingPoint.BeatLength);
                 }
 
-                if (CurrentGameMode != VitaruGamemode.Touhosu)
+                if (CurrentGameMode != Gamemodes.Touhosu)
                     Seal.Sign.FadeTo(0f, timingPoint.BeatLength);
             }
         }
@@ -183,7 +159,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
                 Heal(1d);
 
-                if (CurrentGameMode != VitaruGamemode.Touhosu)
+                if (CurrentGameMode != Gamemodes.Touhosu)
                 {
                     Seal.Sign.Alpha = 0.2f;
                     Seal.Sign.FadeOut(beatLength / 4);
@@ -215,8 +191,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
             if (nextQuarterBeat <= Time.Current && nextQuarterBeat != -1)
                 onQuarterBeat();
-
-            SpellUpdate();
         }
 
         protected override void ParseBullet(DrawableBullet bullet)
@@ -231,7 +205,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             if (edgeDistance < 64 && bullet.Bullet.Team != Team)
                 CanHeal = true;
 
-            if (CurrentGameMode == VitaruGamemode.Dodge)
+            if (CurrentGameMode == Gamemodes.Dodge)
                 edgeDistance *= 1.5f;
 
             if (edgeDistance <= 64 && bullet.ScoreZone < 300)
@@ -295,7 +269,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             }, VitaruPlayfield));
 
             //if (vampuric)
-                //drawableBullet.OnHit = () => Heal(0.5f);
+            //drawableBullet.OnHit = () => Heal(0.5f);
             drawableBullet.MoveTo(Position);
         }
 
@@ -334,38 +308,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         }
         #endregion
 
-        #region Spell Handling
-        protected virtual bool SpellActivate(VitaruAction action)
-        {
-            if (Energy >= EnergyCost && !SpellActive)
-            {
-                SpellActive = true;
-                Energy -= EnergyCost;
-                Spell?.Invoke(action);
-                return true;
-            }
-            else
-                return false;
-        }
-
-        protected virtual void SpellDeactivate(VitaruAction action)
-        {
-            SpellActive = false;
-        }
-
-        protected virtual void SpellUpdate()
-        {
-            if (CanHeal)
-                Energy = Math.Min((float)Clock.ElapsedFrameTime / 500 + Energy, MaxEnergy);
-
-            if (Energy <= 0)
-            {
-                Energy = 0;
-                SpellActive = false;
-            }
-        }
-        #endregion
-
         #region Input Handling
         public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => true;
 
@@ -374,7 +316,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             if (true)//!Bot && !Puppet)
                 return Pressed(action);
             //else
-                //return false;
+            //return false;
         }
 
         protected virtual bool Pressed(VitaruAction action)
@@ -397,11 +339,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             //Mouse Stuff
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = true;
-            if (action == VitaruAction.Spell)
-                SpellActivate(action);
 
             //if (!Puppet)
-                //sendPacket(action);
+            //sendPacket(action);
 
             return true;
         }
@@ -433,87 +373,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
             //Mouse Stuff
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = false;
-            if (action == VitaruAction.Spell)
-                SpellDeactivate(action);
 
             //if (!Puppet)
-                //sendPacket(VitaruAction.None, action);
+            //sendPacket(VitaruAction.None, action);
 
             return true;
         }
         #endregion
-    }
-
-    public enum SelectableCharacters
-    {
-        //The Hakurei Family, or whats left of them
-        [System.ComponentModel.Description("Reimu Hakurei")]
-        ReimuHakurei,
-        [System.ComponentModel.Description("Ryukoy Hakurei")]
-        RyukoyHakurei,
-        [System.ComponentModel.Description("Tomaji Hakurei")]
-        TomajiHakurei,
-
-        //Hakurei Family Friends, 
-        [System.ComponentModel.Description("Sakuya Izayoi")]
-        SakuyaIzayoi,
-        [System.ComponentModel.Description("Flandre Scarlet")]
-        FlandreScarlet,
-        [System.ComponentModel.Description("Remilia Scarlet")]
-        RemiliaScarlet,
-
-        //Uncle Vaster and Aunty Alice
-        [System.ComponentModel.Description("Alice Letrunce")]
-        AliceLetrunce,
-        [System.ComponentModel.Description("Vaster Letrunce")]
-        VasterLetrunce,
-
-        [System.ComponentModel.Description("Marisa Kirisame")]
-        MarisaKirisame,
-
-        [System.ComponentModel.Description("Shaka Zulu")]
-        ShakaZulu,
-
-        //Old Character list
-        /*
-        [System.ComponentModel.Description("Rinnosuke Morichika")]
-        RinnosukeMorichika,
-        [System.ComponentModel.Description("Cirno")]
-        Cirno,
-        //[System.ComponentModel.Description("Tenshi Hinanai")]
-        //TenshiHinanai,
-        [System.ComponentModel.Description("Yuyuko Saigyouji")]
-        YuyukoSaigyouji,
-        [System.ComponentModel.Description("Yukari Yakumo")]
-        YukariYakumo,
-        //[System.ComponentModel.Description("Ran Yakumo")]
-        //RanYakumo,
-        //[System.ComponentModel.Description("Chen")]
-        //Chen,
-        //[System.ComponentModel.Description("Komachi Onozuka")]
-        //KomachiOnozuka,
-        [System.ComponentModel.Description("Byakuren Hijiri")]
-        ByakurenHijiri,
-        //[System.ComponentModel.Description("Rumia")]
-        //Rumia,
-        //[System.ComponentModel.Description("Sikieiki Yamaxanadu")]
-        //SikieikiYamaxanadu,
-        //[System.ComponentModel.Description("Suwako Moriya")]
-        //SuwakoMoriya,
-        //[System.ComponentModel.Description("Youmu Konpaku")]
-        //YoumuKonpaku,
-        [System.ComponentModel.Description("Kokoro Hatano")]
-        KokoroHatano,
-        [System.ComponentModel.Description("Kaguya")]
-        Kaguya,
-        [System.ComponentModel.Description("Ibaraki Kasen")]
-        IbarakiKasen,
-        [System.ComponentModel.Description("Nue Houjuu")]
-        NueHoujuu,
-        [System.ComponentModel.Description("Alice Muyart")]
-        AliceMuyart,
-        [System.ComponentModel.Description("Arysa Muyart")]
-        ArysaMuyart
-        */
     }
 }

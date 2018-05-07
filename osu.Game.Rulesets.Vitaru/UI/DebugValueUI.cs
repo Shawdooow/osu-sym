@@ -5,8 +5,8 @@ using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
 using osu.Game.Rulesets.Vitaru.Scoring;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
@@ -135,7 +135,7 @@ namespace eden.Game.GamePieces
                 value1.Text = "Bullets = " + DrawableBullet.BulletCount.ToString();
                 value2.Text = "Patterns = " + DrawablePattern.PatternCount.ToString();
                 value3.Text = "Enemies = " + Enemy.EnemyCount.ToString();
-                value4.Text = "Energy = " + VitaruPlayfield.Player?.Energy.ToString();
+                //value4.Text = "Energy = " + (TouhosuPlayer)VitaruPlayfield.Player?.Energy.ToString();
                 value5.Text = "Fps = " + Clock.FramesPerSecond;
             }
             else if (currentConfiguration == DebugUiConfiguration.PP)

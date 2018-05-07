@@ -11,7 +11,7 @@ using OpenTK;
 using osu.Game.Rulesets.Vitaru.UI.Cursor;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Rulesets.Vitaru.Settings;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
+using osu.Game.Rulesets.Vitaru.Characters;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -37,18 +37,18 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public override int Variant => (int)variant();
 
-        private readonly SelectableCharacters currentCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
-        private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
+        private TouhosuCharacters selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
+        private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         private ControlScheme variant()
         {
-            if (currentGameMode == VitaruGamemode.Vitaru)
+            if (currentGameMode == Gamemodes.Vitaru)
                 return ControlScheme.Vitaru;
-            else if (currentGameMode == VitaruGamemode.Dodge)
+            else if (currentGameMode == Gamemodes.Dodge)
                 return ControlScheme.Dodge;
             else
             {
-                if (currentCharacter == SelectableCharacters.SakuyaIzayoi || currentCharacter == SelectableCharacters.RyukoyHakurei || currentCharacter == SelectableCharacters.TomajiHakurei)
+                if (selectedTouhosuCharacter == TouhosuCharacters.SakuyaIzayoi || selectedTouhosuCharacter == TouhosuCharacters.RyukoyHakurei || selectedTouhosuCharacter == TouhosuCharacters.TomajiHakurei)
                     return ControlScheme.Sakuya;
                 //else if (currentCharacter == Player.KokoroHatano)
                     //return ControlScheme.Kokoro;
@@ -80,9 +80,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             var aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 10f / 16f, DrawSize.Y);
 
-            if (currentGameMode == VitaruGamemode.Dodge)
+            if (currentGameMode == Gamemodes.Dodge)
                 aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 4f / 3f, DrawSize.Y);
-            else if (currentGameMode == VitaruGamemode.Gravaru)
+            else if (currentGameMode == Gamemodes.Gravaru)
                 aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 2f / 1f, DrawSize.Y);
 
             return new Vector2(aspectSize.X / DrawSize.X, aspectSize.Y / DrawSize.Y);

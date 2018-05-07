@@ -1,4 +1,4 @@
-﻿namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
+﻿namespace osu.Game.Rulesets.Vitaru.Characters.Players
 {
     public class Reimu
     {

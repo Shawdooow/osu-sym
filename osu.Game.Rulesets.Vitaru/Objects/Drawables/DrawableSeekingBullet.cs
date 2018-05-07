@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters;
+using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableSeekingBullet : DrawableVitaruHitObject
     {
-        private readonly VitaruGamemode currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
+        private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         public Character NearestEnemy;
 
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             SeekingBullet = seekingBullet;
 
-            if (currentGameMode == VitaruGamemode.Dodge)
+            if (currentGameMode == Gamemodes.Dodge)
                 BulletBounds = new Vector4(-10, -10, 522, 394);
 
             Children = new Drawable[]
