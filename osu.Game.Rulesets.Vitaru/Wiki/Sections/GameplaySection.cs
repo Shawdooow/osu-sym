@@ -20,9 +20,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         public override string Title => "Gameplay";
 
         private Bindable<VitaruGamemode> selectedGamemode;
-        private Bindable<string> selectedCharacter;
+        private Bindable<SelectableCharacters> selectedCharacter;
 
-        private WikiOptionEnumExplanation<TouhosuCharacters> characterDescription;
+        private WikiOptionEnumExplanation<SelectableCharacters> characterDescription;
 
         private Bindable<Mod> selectedMod = new Bindable<Mod> { Default = Mod.Hidden };
 
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         private void load()
         {
             selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
-            selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Characters);
+            selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<SelectableCharacters>(VitaruSetting.Characters);
 
             Content.Add(new WikiParagraph("Your objective in vitaru is simple, don't get hit by the bullets flying at you, although this is easier said than done."));
 
@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                             Scale = new Vector2(2),
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Texture = VitaruRuleset.VitaruTextures.Get(TouhosuCharacters.SakuyaIzayoi.ToString() + "Kiai")
+                            Texture = VitaruRuleset.VitaruTextures.Get(SelectableCharacters.SakuyaIzayoi.ToString() + "Kiai")
                         },
                         new CircularContainer
                         {
@@ -162,7 +162,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 "I also listed their " +
                 "difficulty to play (Easy, Normal, Hard, Insane, Another, Extra) " +
                 "and their Role in a multiplayer setting (Offense, Defense, Support)."));
-            //Content.Add(characterDescription = new WikiOptionExplanation<string>(selectedCharacter, characters));
+            Content.Add(characterDescription = new WikiOptionEnumExplanation<SelectableCharacters>(selectedCharacter));
 
             //basically just an ingame wiki for the characters
             selectedCharacter.ValueChanged += character =>
@@ -179,16 +179,16 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
                 switch (selectedCharacter.Value)
                 {
-                    case "ReimuHakurei":
+                    case SelectableCharacters.ReimuHakurei:
                         if (selectedGamemode == VitaruGamemode.Touhosu)
                             stats = Reimu.Background;
                         else
                         {
-                            selectedCharacter.Value = "Alex";
+                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
                             goto restart;
                         }
                         break;
-                    case Ryukoy.RyukoyName:
+                    case SelectableCharacters.RyukoyHakurei:
                         stats = "\nHealth: " + Ryukoy.RyukoyHealth +
                         "\nEnergy: " + Ryukoy.RyukoyEnergy +
                         "\nEnergy Cost: " + Ryukoy.RyukoyEnergyCost +
@@ -202,7 +202,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                             stats = stats + "\n\n" + Ryukoy.Background;
                         }
                         break;
-                    case Tomaji.TomajiName:
+                    case SelectableCharacters.TomajiHakurei:
                         stats = "\nHealth: " + Tomaji.TomajiHealth +
                         "\nEnergy: " + Tomaji.TomajiEnergy +
                         "\nEnergy Cost: " + Tomaji.TomajiEnergyCost +
@@ -216,7 +216,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                             stats = stats + "\n\n" + Tomaji.Background;
                         }
                         break;
-                    case "SakuyaIzayoi":
+                    case SelectableCharacters.SakuyaIzayoi:
                         if (selectedGamemode == VitaruGamemode.Touhosu)
                         {
                             stats = "\nHealth: " + Sakuya.SakuyaHealth +
@@ -230,7 +230,25 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         }
                         else
                         {
-                            selectedCharacter.Value = "Alex";
+                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
+                            goto restart;
+                        }
+                        break;
+                    case SelectableCharacters.RemiliaScarlet:
+                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                            stats = Remilia.Background;
+                        else
+                        {
+                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
+                            goto restart;
+                        }
+                        break;
+                    case SelectableCharacters.FlandreScarlet:
+                        if (selectedGamemode == VitaruGamemode.Touhosu)
+                            stats = Flandre.Background;
+                        else
+                        {
+                            selectedCharacter.Value = SelectableCharacters.RyukoyHakurei;
                             goto restart;
                         }
                         break;
@@ -245,7 +263,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 switch (gamemode)
                 {
                     case VitaruGamemode.Vitaru:
-                        gamemodeDescription.Description.Text = "The default gamemode in this ruleset which is based on the touhou series of danmaku games. " +
+                        gamemodeDescription.Description.Text = "The default gamemode in this ruleset which is based on the touhou series danmaku games. " +
                         "Allows you to kill enemies while dodging bullets to the beat!";
                         break;
                     case VitaruGamemode.Gravaru:

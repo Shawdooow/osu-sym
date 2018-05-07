@@ -14,8 +14,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
         #region Fields
         public double SetRate { get; private set; } = 0.8d;
 
-        public const string TomajiName = "TomajiHakurei";
-
         public const double TomajiHealth = 40;
 
         public const double TomajiEnergy = 18;
@@ -26,7 +24,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players
 
         public static readonly Color4 TomajiColor = Color4.OrangeRed;
 
-        public override string CharacterName => TomajiName;
+        public override SelectableCharacters PlayableCharacter => SelectableCharacters.TomajiHakurei;
 
         public override double MaxHealth => TomajiHealth;
 

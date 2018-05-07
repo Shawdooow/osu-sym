@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
 
         public double Health { get; private set; }
 
-        public abstract string CharacterName { get; }
+        protected abstract string CharacterName { get; }
 
         public virtual Color4 PrimaryColor { get; } = Color4.Green;
 

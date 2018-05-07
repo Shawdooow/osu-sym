@@ -11,7 +11,6 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.MathUtils;
 using osu.Framework.Graphics.Effects;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Players;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
 {
@@ -128,11 +127,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                     },
                 };
 
-                switch (v.CharacterName)
+                switch (v.PlayableCharacter)
                 {
                     default:
                         break;
-                    case Sakuya.SakuyaName:
+                    case SelectableCharacters.SakuyaIzayoi:
                         characterSigil.Children = new Drawable[]
                         {
                             gear1 = new Sprite
@@ -224,11 +223,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters.Pieces
                 health.Current.Value = v.Health / v.MaxHealth;
                 energy.Current.Value = v.Energy / v.MaxEnergy;
 
-                switch (v.CharacterName)
+                switch (v.PlayableCharacter)
                 {
                     default:
                         break;
-                    case Sakuya.SakuyaName:
+                    case SelectableCharacters.SakuyaIzayoi:
                         float speed = 0.25f;
                         gear1.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
                         gear2.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);

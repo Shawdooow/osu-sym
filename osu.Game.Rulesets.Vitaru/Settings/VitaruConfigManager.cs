@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.DebugUIConfiguration, DebugUiConfiguration.PerformanceMetrics);
             Set(VitaruSetting.GraphicsPresets, GraphicsPresets.Standard);
             Set(VitaruSetting.GameMode, VitaruGamemode.Vitaru);
-            Set(VitaruSetting.Characters, "Alex");
+            Set(VitaruSetting.Characters, SelectableCharacters.SakuyaIzayoi);
 
             //Leaks like crazy atm
             Set(VitaruSetting.ComboFire, false);

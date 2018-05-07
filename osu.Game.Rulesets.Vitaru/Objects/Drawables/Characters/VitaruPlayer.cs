@@ -21,6 +21,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         #region Fields
         protected readonly VitaruGamemode CurrentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<VitaruGamemode>(VitaruSetting.GameMode);
 
+        public abstract SelectableCharacters PlayableCharacter { get; }
+
+        protected override string CharacterName => PlayableCharacter.ToString();
+
         public const double DefaultHealth = 100;
 
         public const double DefaultEnergy = 36;
@@ -440,13 +444,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         #endregion
     }
 
-    public enum VitaruCharacters
-    {
-        [System.ComponentModel.Description("Alex")]
-        Alex,
-    }
-
-    public enum TouhosuCharacters
+    public enum SelectableCharacters
     {
         //The Hakurei Family, or whats left of them
         [System.ComponentModel.Description("Reimu Hakurei")]
@@ -459,5 +457,63 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Characters
         //Hakurei Family Friends, 
         [System.ComponentModel.Description("Sakuya Izayoi")]
         SakuyaIzayoi,
+        [System.ComponentModel.Description("Flandre Scarlet")]
+        FlandreScarlet,
+        [System.ComponentModel.Description("Remilia Scarlet")]
+        RemiliaScarlet,
+
+        //Uncle Vaster and Aunty Alice
+        [System.ComponentModel.Description("Alice Letrunce")]
+        AliceLetrunce,
+        [System.ComponentModel.Description("Vaster Letrunce")]
+        VasterLetrunce,
+
+        [System.ComponentModel.Description("Marisa Kirisame")]
+        MarisaKirisame,
+
+        [System.ComponentModel.Description("Shaka Zulu")]
+        ShakaZulu,
+
+        //Old Character list
+        /*
+        [System.ComponentModel.Description("Rinnosuke Morichika")]
+        RinnosukeMorichika,
+        [System.ComponentModel.Description("Cirno")]
+        Cirno,
+        //[System.ComponentModel.Description("Tenshi Hinanai")]
+        //TenshiHinanai,
+        [System.ComponentModel.Description("Yuyuko Saigyouji")]
+        YuyukoSaigyouji,
+        [System.ComponentModel.Description("Yukari Yakumo")]
+        YukariYakumo,
+        //[System.ComponentModel.Description("Ran Yakumo")]
+        //RanYakumo,
+        //[System.ComponentModel.Description("Chen")]
+        //Chen,
+        //[System.ComponentModel.Description("Komachi Onozuka")]
+        //KomachiOnozuka,
+        [System.ComponentModel.Description("Byakuren Hijiri")]
+        ByakurenHijiri,
+        //[System.ComponentModel.Description("Rumia")]
+        //Rumia,
+        //[System.ComponentModel.Description("Sikieiki Yamaxanadu")]
+        //SikieikiYamaxanadu,
+        //[System.ComponentModel.Description("Suwako Moriya")]
+        //SuwakoMoriya,
+        //[System.ComponentModel.Description("Youmu Konpaku")]
+        //YoumuKonpaku,
+        [System.ComponentModel.Description("Kokoro Hatano")]
+        KokoroHatano,
+        [System.ComponentModel.Description("Kaguya")]
+        Kaguya,
+        [System.ComponentModel.Description("Ibaraki Kasen")]
+        IbarakiKasen,
+        [System.ComponentModel.Description("Nue Houjuu")]
+        NueHoujuu,
+        [System.ComponentModel.Description("Alice Muyart")]
+        AliceMuyart,
+        [System.ComponentModel.Description("Arysa Muyart")]
+        ArysaMuyart
+        */
     }
 }
