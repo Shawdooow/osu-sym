@@ -148,7 +148,7 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
                             Depth = -1,
                             ShapeID = shape.ShapeID,
                         },
-                        triangle = new ShapeTriangle(shape) { Depth = -2, Colour = OsuColour.FromHex("#37ff14"), },
+                        triangle = new ShapeTriangle(shape) { Depth = -2, Colour = OsuColour.FromHex("#21b5ff"), },
                     };
                     break;
                 case 4:
