@@ -8,14 +8,22 @@
     <Description>hit the shapes. to the beat.</Description>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Textures\circle.png" />
     <None Remove="Assets\Textures\icon.png" />
     <None Remove="Assets\Textures\icon@2x.png" />
     <None Remove="Assets\Textures\shape bg.png" />
+    <None Remove="Assets\Textures\star.png" />
+    <None Remove="Assets\Textures\trianlge.png" />
+    <None Remove="Assets\Textures\x.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\circle.png" />
     <EmbeddedResource Include="Assets\Textures\icon.png" />
     <EmbeddedResource Include="Assets\Textures\shape bg.png" />
     <EmbeddedResource Include="Assets\Textures\icon%402x.png" />
+    <EmbeddedResource Include="Assets\Textures\star.png" />
+    <EmbeddedResource Include="Assets\Textures\trianlge.png" />
+    <EmbeddedResource Include="Assets\Textures\x.png" />
   </ItemGroup>
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />

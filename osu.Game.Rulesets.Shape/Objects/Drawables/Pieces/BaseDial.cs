@@ -3,16 +3,9 @@ using OpenTK.Graphics;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using osu.Framework.Audio.Track;
 using osu.Game.Beatmaps.ControlPoints;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Allocation;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Shapes;
 
 namespace osu.Game.Rulesets.Shape.Objects.Drawables.Pieces

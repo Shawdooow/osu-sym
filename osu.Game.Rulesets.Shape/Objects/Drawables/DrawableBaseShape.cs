@@ -8,6 +8,7 @@ using osu.Game.Rulesets.Shape.Judgements;
 using System.Linq;
 using System;
 using osu.Game.Rulesets.Scoring;
+using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Shape.Objects.Drawables
 {
@@ -125,7 +126,7 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
                             Depth = -1,
                             ShapeID = shape.ShapeID,
                         },
-                        circle = new ShapeCircle(shape) { Depth = -2, Colour = Color4.Red, },
+                        circle = new ShapeCircle(shape) { Depth = -2, Colour = OsuColour.FromHex("#fffb14") },
                     };
                     break;
                 case 2:
@@ -136,7 +137,7 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
                             Depth = -1,
                             ShapeID = shape.ShapeID,
                         },
-                        square = new ShapeSquare(shape) { Depth = -2, Colour = Color4.Violet, },
+                        square = new ShapeSquare(shape) { Depth = -2, Colour = OsuColour.FromHex("#ff2414"), },
                     };
                     break;
                 case 3:
@@ -147,7 +148,7 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
                             Depth = -1,
                             ShapeID = shape.ShapeID,
                         },
-                        triangle = new ShapeTriangle(shape) { Depth = -2, Colour = Color4.Green, },
+                        triangle = new ShapeTriangle(shape) { Depth = -2, Colour = OsuColour.FromHex("#37ff14"), },
                     };
                     break;
                 case 4:
@@ -158,7 +159,7 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
                             Depth = -1,
                             ShapeID = shape.ShapeID,
                         },
-                        x = new ShapeX(shape) { Depth = -2, Colour = Color4.Blue, },
+                        x = new ShapeX(shape) { Depth = -2, Colour = OsuColour.FromHex("#a814ff"), },
                     };
                     break;
             }

@@ -1,9 +1,8 @@
 ﻿using OpenTK;
-using OpenTK.Graphics;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Shape.Objects.Drawables.Pieces
 {
@@ -20,14 +19,18 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables.Pieces
         protected override void LoadComplete()
         {
             base.LoadComplete();
+
+            Size = new Vector2(shape.ShapeSize * 1.25f);
+
+            Origin = Anchor.Centre;
+            Anchor = Anchor.Centre;
+
             Children = new Drawable[]
             {
-                triangle = new Triangle
+                new Sprite
                 {
-                    Size = new Vector2(shape.ShapeSize),
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    Depth = -2,
+                    RelativeSizeAxes = Axes.Both,
+                    Texture = ShapeRuleset.ShapeTextures.Get("trianlge")
                 }
             };
         }
