@@ -25,11 +25,15 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         public readonly VitaruPlayer Player;
 
-        protected override string CharacterName => Player.Name.ToString();
+        protected override string CharacterName => Player.Character.ToString();
 
         public override double MaxHealth => Player.MaxHealth;
 
         public override Color4 PrimaryColor => Player.PrimaryColor;
+
+        public override Color4 SecondaryColor => Player.SecondaryColor;
+
+        public override Color4 ComplementaryColor => Player.ComplementaryColor;
 
         public int ScoreZone = 100;
 
