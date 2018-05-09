@@ -281,10 +281,7 @@ namespace osu.Game.Screens.Symcol.Screens
                     pitchAdjust.PitchAdjust = clockPitch.Bindable.Value;
                     pitch = pitchAdjust.PitchAdjust;
 
-                    if (clockSpeed.Bindable.Value < 1)
-                        clock.Rate = clockSpeed.Bindable.Value + ((clockSpeed.Bindable.Value - 1) * -0.5f);
-                    else
-                        clock.Rate = clockSpeed.Bindable.Value - ((clockSpeed.Bindable.Value - 1) / 2);
+                    clock.Rate = clockSpeed.Bindable.Value;
 
                     speed = clock.Rate;
                 }

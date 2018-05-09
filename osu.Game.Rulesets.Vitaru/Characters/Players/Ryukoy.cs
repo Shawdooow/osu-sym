@@ -1,5 +1,9 @@
 ﻿using OpenTK.Graphics;
+using osu.Framework.Allocation;
+using osu.Framework.Audio;
 using osu.Framework.Configuration;
+using osu.Framework.Timing;
+using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 
@@ -8,6 +12,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
     public class Ryukoy : TouhosuPlayer
     {
         #region Fields
+        private double setPitch = 0.9d;
+
         public const double RyukoyHealth = 60;
 
         public const double RyukoyEnergy = 24;
@@ -32,6 +38,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
 
         private int level = 1;
 
+        private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
+
         private readonly Bindable<int> abstraction;
         #endregion
 
@@ -46,6 +54,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
             };
         }
 
+        [BackgroundDependencyLoader]
+        private void load(OsuGameBase game)
+        {
+            workingBeatmap.BindTo(game.Beatmap);
+        }
+
         protected override void SpellUpdate()
         {
             base.SpellUpdate();
@@ -55,9 +69,25 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
                 Energy -= (Clock.ElapsedFrameTime / 1000) * EnergyCostPerSecond * (level * 0.25f);
 
                 abstraction.Value = level;
+                applyToClock(workingBeatmap.Value.Track, setPitch);
             }
             else
                 abstraction.Value = 0;
+        }
+
+        private void applyToClock(IAdjustableClock clock, double pitch)
+        {
+            if (clock is IHasPitchAdjust pitchAdjust)
+            {
+                pitchAdjust.PitchAdjust = pitch;
+
+                if (setPitch > 1)
+                    clock.Rate = (1 - (pitch - 1) / 2);
+                else if (setPitch < 1)
+                    clock.Rate = (1 + (pitch - 1) * -2);
+                else
+                    clock.Rate = 1;
+            }
         }
 
         protected override bool Pressed(VitaruAction action)
@@ -66,6 +96,19 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
                 level = Math.Min(abstraction.Value + 1, 3);
             if (action == VitaruAction.Decrease)
                 level = Math.Max(abstraction.Value - 1, 0);
+
+            switch (level)
+            {
+                case 1:
+                    setPitch = 0.9d;
+                    break;
+                case 2:
+                    setPitch = 1.2d;
+                    break;
+                case 3:
+                    setPitch = 0.8d;
+                    break;
+            }
 
             return base.Pressed(action);
         }

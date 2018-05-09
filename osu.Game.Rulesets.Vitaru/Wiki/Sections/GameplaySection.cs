@@ -194,7 +194,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "\nEnergy Cost per Second: " + Ryukoy.RyukoyEnergyCostPerSecond +
                         "\nRole: Offense + Defense" +
                         "\nDifficulty: Insane" +
-                        "\nAbility: Spirit Walker";
+                        "\nAbility: Out of Tune";
 
                         if (selectedGamemode == Gamemodes.Touhosu)
                         {
