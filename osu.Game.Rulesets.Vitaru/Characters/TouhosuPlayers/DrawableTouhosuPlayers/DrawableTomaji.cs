@@ -6,44 +6,13 @@ using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
-using osu.Game.Graphics;
 
-namespace osu.Game.Rulesets.Vitaru.Characters.Players
+namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
 {
-    public class Sakuya : TouhosuPlayer
+    public class DrawableTomaji : DrawableTouhosuPlayer
     {
         #region Fields
-        public double SetRate { get; private set; } = 0.75d;
-
-        public const double SakuyaHealth = 100;
-
-        public const double SakuyaEnergy = 36;
-
-        public const double SakuyaEnergyCost = 2;
-
-        public const double SakuyaEnergyCostPerSecond = 4;
-
-        public static readonly Color4 SakuyaPrimaryColor = Color4.Navy;
-
-        public static readonly Color4 SakuyaSecondaryColor = OsuColour.FromHex("#92a0dd");
-
-        public static readonly Color4 SakuyaComplementaryColor = OsuColour.FromHex("#d6d6d6");
-
-        public override TouhosuCharacters PlayableCharacter => TouhosuCharacters.SakuyaIzayoi;
-
-        public override double MaxHealth => SakuyaHealth;
-
-        public override double MaxEnergy => SakuyaEnergy;
-
-        public override double EnergyCost => SakuyaEnergyCost;
-
-        public override double EnergyCostPerSecond => SakuyaEnergyCostPerSecond;
-
-        public override Color4 PrimaryColor => SakuyaPrimaryColor;
-
-        public override Color4 SecondaryColor => SakuyaSecondaryColor;
-
-        public override Color4 ComplementaryColor => SakuyaComplementaryColor;
+        public double SetRate { get; private set; } = 0.8d;
 
         private double originalRate;
 
@@ -52,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
         private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
         #endregion
 
-        public Sakuya(VitaruPlayfield playfield) : base(playfield)
+        public DrawableTomaji(VitaruPlayfield playfield) : base(playfield, new Tomaji())
         {
             Spell += (action) =>
             {
@@ -102,7 +71,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
                     else if (currentRate >= 1)
                         energyDrainMultiplier = currentRate - 1;
 
-                    Energy -= (Clock.ElapsedFrameTime / 1000) * (1 / currentRate) * energyDrainMultiplier * EnergyCostPerSecond;
+                    Energy -= Clock.ElapsedFrameTime / 1000 * (1 / currentRate) * TouhosuPlayer.EnergyCostPerSecond * energyDrainMultiplier;
 
                     if (currentRate > 0)
                         SpellEndTime = Time.Current + 2000;
@@ -139,32 +108,34 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
 
             if (clock is IHasPitchAdjust pitchAdjust)
                 pitchAdjust.PitchAdjust = speed;
-
             SpeedMultiplier = 1 / speed;
         }
 
+        //Currently ripped straight from old Sakuya, needs updating
         protected override bool Pressed(VitaruAction action)
         {
-            if (action == VitaruAction.Increase)
+            bool late = true;
+
+            if (false)
             {
-                if (Actions[VitaruAction.Slow])
-                    SetRate = Math.Min(Math.Round(SetRate + 0.05d, 2), 2d);
-                else
-                    SetRate = Math.Min(Math.Round(SetRate + 0.25d, 2), 2d);
-            }
-            if (action == VitaruAction.Decrease)
-            {
-                if (Actions[VitaruAction.Slow])
-                    SetRate = Math.Max(Math.Round(SetRate - 0.05d, 2), 0.25d);
-                else
-                    SetRate = Math.Max(Math.Round(SetRate - 0.25d, 2), 0.25d);
+                if (action == VitaruAction.Increase && !late)
+                    SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 0.8d);
+                else if (action == VitaruAction.Increase && late)
+                    SetRate = Math.Min(Math.Round(SetRate + 0.2d, 1), 1.2d);
+                if (action == VitaruAction.Decrease && !late)
+                    SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.4d);
+                else if (action == VitaruAction.Decrease && late)
+                    SetRate = Math.Max(Math.Round(SetRate - 0.2d, 1), 0.2d);
             }
 
             return base.Pressed(action);
         }
 
         #region Touhosu Story Content
-        public const string Background = "";
+        public const string Background = "Tomaji has always been over shadowed by his older sister Ryukoy who is next in line to be the Hakurei Maiden, though he has never minded. " +
+            "He had the option to take of to some exotic place far away if he wanted, but he didn't. " +
+            "Despite having the entire world to explore he would be happy standing at his sister's side as any kind of help that he could be. " +
+            "To him family was the most important and he knew she felt the same way. Even thought she would wear the title they would share the burden.";
         #endregion
     }
 }

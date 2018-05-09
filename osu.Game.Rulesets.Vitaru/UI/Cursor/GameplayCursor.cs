@@ -8,10 +8,9 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
 using OpenTK;
-using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Vitaru.Characters;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 {

@@ -10,7 +10,9 @@ using osu.Framework.Platform;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.MathUtils;
 using osu.Framework.Graphics.Effects;
-using osu.Game.Graphics;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
 {
@@ -39,7 +41,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
         [BackgroundDependencyLoader]
         private void load(Storage storage)
         {
-            if (character is TouhosuPlayer t)
+            if (character is DrawableTouhosuPlayer t)
             {
                 Color4 lightColor = t.PrimaryColor.Lighten(0.5f);
                 Color4 darkColor = t.PrimaryColor.Darken(0.5f);
@@ -127,7 +129,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                     },
                 };
 
-                switch (t.PlayableCharacter)
+                switch (t.TouhosuPlayer.Character)
                 {
                     default:
                         break;
@@ -216,14 +218,14 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
 
             Sign.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 0.1f);
 
-            if (character is TouhosuPlayer t)
+            if (character is DrawableTouhosuPlayer t)
             {
-                Sign.Alpha = (float)t.Energy / (float)(t.MaxEnergy * 2);
+                Sign.Alpha = (float)t.Energy / (float)(t.TouhosuPlayer.MaxEnergy * 2);
 
                 health.Current.Value = t.Health / t.MaxHealth;
-                energy.Current.Value = t.Energy / t.MaxEnergy;
+                energy.Current.Value = t.Energy / t.TouhosuPlayer.MaxEnergy;
 
-                switch (t.PlayableCharacter)
+                switch (t.TouhosuPlayer.Character)
                 {
                     default:
                         break;

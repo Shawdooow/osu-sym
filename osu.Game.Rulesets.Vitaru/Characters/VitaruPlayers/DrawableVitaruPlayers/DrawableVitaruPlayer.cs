@@ -16,20 +16,20 @@ using System;
 using System.Collections.Generic;
 using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
 
-namespace osu.Game.Rulesets.Vitaru.Characters
+namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers
 {
-    public abstract class Player : Character, IKeyBindingHandler<VitaruAction>
+    public abstract class DrawableVitaruPlayer : Character, IKeyBindingHandler<VitaruAction>
     {
         #region Fields
         protected readonly Gamemodes CurrentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
-        public const double DefaultHealth = 100;
+        public readonly VitaruPlayer Player;
 
-        public static readonly Color4 DefaultColor = Color4.Yellow;
+        protected override string CharacterName => Player.Name.ToString();
 
-        public override double MaxHealth => DefaultHealth;
+        public override double MaxHealth => Player.MaxHealth;
 
-        public override Color4 PrimaryColor => DefaultColor;
+        public override Color4 PrimaryColor => Player.PrimaryColor;
 
         public int ScoreZone = 100;
 
@@ -57,8 +57,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         private double beatLength = 1000;
         #endregion
 
-        public Player(VitaruPlayfield playfield) : base(playfield)
+        public DrawableVitaruPlayer(VitaruPlayfield playfield, VitaruPlayer player) : base(playfield)
         {
+            Player = player;
+
             Actions[VitaruAction.Up] = false;
             Actions[VitaruAction.Down] = false;
             Actions[VitaruAction.Left] = false;
@@ -382,3 +384,4 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         #endregion
     }
 }
+

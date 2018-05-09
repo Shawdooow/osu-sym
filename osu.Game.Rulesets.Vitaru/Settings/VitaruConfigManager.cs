@@ -1,7 +1,8 @@
 ﻿using eden.Game.GamePieces;
 using osu.Framework.Configuration;
 using osu.Framework.Platform;
-using osu.Game.Rulesets.Vitaru.Characters;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {

@@ -1,9 +1,9 @@
-﻿namespace osu.Game.Rulesets.Vitaru.Characters.Players
+﻿namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 {
-    public class Reimu
+    public class Reimu : TouhosuPlayer
     {
         #region Touhosu Story Content
-        public const string Background = "When she was young Reimu feared the idea of having kids after how much trouble her mother would tease she was. " +
+        public override string Background => "When she was young Reimu feared the idea of having kids after how much trouble her mother would tease she was. " +
             "However age has a funny way of changing peoples views, one day she met a nice guy. " +
             "Twenty years later despite being a widow she still has her two beautiful children, a girl and a boy. " +
             "The girl reminds her of herself, while the boy of him. " +

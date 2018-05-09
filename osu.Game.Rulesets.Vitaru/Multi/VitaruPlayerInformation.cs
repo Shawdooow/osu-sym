@@ -1,4 +1,4 @@
-﻿using osu.Game.Rulesets.Vitaru.Characters;
+﻿using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using System;
 
 namespace osu.Game.Rulesets.Vitaru.Multi

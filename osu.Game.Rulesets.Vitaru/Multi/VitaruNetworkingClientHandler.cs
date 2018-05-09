@@ -1,7 +1,7 @@
 ﻿using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Game.Online.API;
-using osu.Game.Rulesets.Vitaru.Characters;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Settings;
 using Symcol.Core.Networking;
 using Symcol.Rulesets.Core.Multiplayer.Networking;

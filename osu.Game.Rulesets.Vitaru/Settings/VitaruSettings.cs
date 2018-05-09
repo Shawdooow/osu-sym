@@ -12,7 +12,8 @@ using osu.Game.Rulesets.Vitaru.Wiki;
 using Symcol.Rulesets.Core.Multiplayer.Screens;
 using eden.Game.GamePieces;
 using Symcol.Rulesets.Core.Rulesets;
-using osu.Game.Rulesets.Vitaru.Characters;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {

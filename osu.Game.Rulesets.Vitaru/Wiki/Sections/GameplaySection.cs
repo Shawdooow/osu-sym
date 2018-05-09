@@ -9,8 +9,7 @@ using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Vitaru.Characters;
-using osu.Game.Rulesets.Vitaru.Characters.Players;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 {
@@ -166,74 +165,32 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             //basically just an ingame wiki for the characters
             selectedTouhosuCharacter.ValueChanged += character =>
             {
-                restart:
-
-                string stats = "\nHealth: " + Player.DefaultHealth +
-                        "\nEnergy: " + TouhosuPlayer.DefaultEnergy +
-                        "\nEnergy Cost: " + TouhosuPlayer.DefaultEnergyCost +
-                        "\nEnergy Cost per Second: " + TouhosuPlayer.DefaultEnergyCostPerSecond +
-                        "\nRole: ???" +
-                        "\nDifficulty: ???" +
-                        "\nAbility: Not Implemented Yet!";
+                TouhosuPlayer touhosuCharacter = new TouhosuPlayer();
 
                 switch (character)
                 {
                     case TouhosuCharacters.ReimuHakurei:
-                        if (selectedGamemode == Gamemodes.Touhosu)
-                            stats = Reimu.Background;
-                        else
-                        {
-                            character = TouhosuCharacters.RyukoyHakurei;
-                            goto restart;
-                        }
+                        touhosuCharacter = new Reimu();
                         break;
                     case TouhosuCharacters.RyukoyHakurei:
-                        stats = "\nHealth: " + Ryukoy.RyukoyHealth +
-                        "\nEnergy: " + Ryukoy.RyukoyEnergy +
-                        "\nEnergy Cost: " + Ryukoy.RyukoyEnergyCost +
-                        "\nEnergy Cost per Second: " + Ryukoy.RyukoyEnergyCostPerSecond +
-                        "\nRole: Offense + Defense" +
-                        "\nDifficulty: Insane" +
-                        "\nAbility: Out of Tune";
-
-                        if (selectedGamemode == Gamemodes.Touhosu)
-                        {
-                            stats = stats + "\n\n" + Ryukoy.Background;
-                        }
+                        touhosuCharacter = new Ryukoy();
                         break;
                     case TouhosuCharacters.TomajiHakurei:
-                        stats = "\nHealth: " + Tomaji.TomajiHealth +
-                        "\nEnergy: " + Tomaji.TomajiEnergy +
-                        "\nEnergy Cost: " + Tomaji.TomajiEnergyCost +
-                        "\nEnergy Cost per Second: " + Tomaji.TomajiEnergyCostPerSecond +
-                        "\nRole: Defense + Support" +
-                        "\nDifficulty: Hard" +
-                        "\nAbility: Time Shift";
-
-                        if (selectedGamemode == Gamemodes.Touhosu)
-                        {
-                            stats = stats + "\n\n" + Tomaji.Background;
-                        }
+                        touhosuCharacter = new Tomaji();
                         break;
                     case TouhosuCharacters.SakuyaIzayoi:
-                        if (selectedGamemode == Gamemodes.Touhosu)
-                        {
-                            stats = "\nHealth: " + Sakuya.SakuyaHealth +
-                            "\nEnergy: " + Sakuya.SakuyaEnergy +
-                            "\nEnergy Cost: " + Sakuya.SakuyaEnergyCost +
-                            "\nEnergy Cost per Second: " + Sakuya.SakuyaEnergyCostPerSecond +
-                            "\nRole: Offense + Defense" +
-                            "\nDifficulty: Normal" +
-                            "\nAbility: Time Keeper" + 
-                            "\n\n" + Sakuya.Background;
-                        }
-                        else
-                        {
-                            character = TouhosuCharacters.RyukoyHakurei;
-                            goto restart;
-                        }
+                        touhosuCharacter = new Sakuya();
                         break;
                 }
+
+                string stats = "\nHealth: " + touhosuCharacter.MaxHealth +
+                "\nEnergy: " + touhosuCharacter.MaxEnergy +
+                "\nEnergy Cost: " + touhosuCharacter.EnergyCost +
+                "\nEnergy Cost per Second: " + touhosuCharacter.EnergyCostPerSecond +
+                "\nRole: ???" +
+                "\nDifficulty: ???" +
+                "\nAbility: Not Implemented Yet!\n\n" +
+                touhosuCharacter.Background;
 
                 touhosuCharacterDescription.Description.Text = stats;
             };
@@ -256,9 +213,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "The Dodge gamemode changes the playfield to a much shorter rectangle and send bullets your way from all directions while also taking away your ability to shoot!";
                         break;
                     case Gamemodes.Touhosu:
-                        gamemodeDescription.Description.Text = "The \"amplified\" gamemode. Touhosu mode is everything Vitaru is and so much more. " +
-                        "Selecting different characters no longer just changes your skin but also your stats and allows you to use spells!\n\n" +
-                        "Also allows you to start story mode.";
+                        gamemodeDescription.Description.Text = "The \"amplified\" gamemode. Touhosu mode is everything base Vitaru is and so much more. " +
+                        "Selecting different characters no longer just changes your skin but also your stats and your spell!";
                         break;
                 }
                 selectedTouhosuCharacter.TriggerChange();

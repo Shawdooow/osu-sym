@@ -7,34 +7,12 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 
-namespace osu.Game.Rulesets.Vitaru.Characters.Players
+namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
 {
-    public class Ryukoy : TouhosuPlayer
+    public class DrawableRyukoy : DrawableTouhosuPlayer
     {
         #region Fields
         private double setPitch = 0.9d;
-
-        public const double RyukoyHealth = 60;
-
-        public const double RyukoyEnergy = 24;
-
-        public const double RyukoyEnergyCost = 2;
-
-        public const double RyukoyEnergyCostPerSecond = 6;
-
-        public static readonly Color4 RyukoyColor = Color4.MediumPurple;
-
-        public override TouhosuCharacters PlayableCharacter => TouhosuCharacters.RyukoyHakurei;
-
-        public override double MaxHealth => RyukoyHealth;
-
-        public override double MaxEnergy => RyukoyEnergy;
-
-        public override double EnergyCost => RyukoyEnergyCost;
-
-        public override double EnergyCostPerSecond => RyukoyEnergyCostPerSecond;
-
-        public override Color4 PrimaryColor => RyukoyColor;
 
         private int level = 1;
 
@@ -43,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
         private readonly Bindable<int> abstraction;
         #endregion
 
-        public Ryukoy(VitaruPlayfield playfield, Bindable<int> abstraction) : base(playfield)
+        public DrawableRyukoy(VitaruPlayfield playfield, Bindable<int> abstraction) : base(playfield, new Ryukoy())
         {
             this.abstraction = abstraction;
             Abstraction = 3;
@@ -66,7 +44,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
 
             if (SpellActive)
             {
-                Energy -= (Clock.ElapsedFrameTime / 1000) * EnergyCostPerSecond * (level * 0.25f);
+                Energy -= (Clock.ElapsedFrameTime / 1000) * TouhosuPlayer.EnergyCostPerSecond * (level * 0.25f);
 
                 abstraction.Value = level;
                 applyToClock(workingBeatmap.Value.Track, setPitch);

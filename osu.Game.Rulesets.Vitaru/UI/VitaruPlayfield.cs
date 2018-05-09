@@ -14,10 +14,10 @@ using osu.Game.Rulesets.Vitaru.Multi;
 using Symcol.Rulesets.Core.Rulesets;
 using osu.Framework.Graphics.Effects;
 using osu.Game.Rulesets.Vitaru.Characters;
-using osu.Game.Rulesets.Vitaru.Characters.Players;
-using OpenTK.Graphics;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -33,11 +33,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public readonly MirrorField Mirrorfield;
 
         private readonly Container judgementLayer;
-        private readonly List<Player> playerList = new List<Player>();
+        private readonly List<DrawableVitaruPlayer> playerList = new List<DrawableVitaruPlayer>();
 
         public static List<VitaruClientInfo> LoadPlayerList = new List<VitaruClientInfo>();
 
-        public static Player Player;
+        public static DrawableVitaruPlayer Player;
 
         public virtual bool LoadPlayer => true;
 
@@ -79,13 +79,13 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 switch (selectedTouhosuCharacter)
                 {
                     case TouhosuCharacters.RyukoyHakurei:
-                        playerList.Add(Player = new Ryukoy(this, abstraction));
+                        playerList.Add(Player = new DrawableRyukoy(this, abstraction));
                         break;
                     case TouhosuCharacters.TomajiHakurei:
-                        playerList.Add(Player = new Tomaji(this));
+                        playerList.Add(Player = new DrawableTomaji(this));
                         break;
                     case TouhosuCharacters.SakuyaIzayoi:
-                        playerList.Add(Player = new Sakuya(this));
+                        playerList.Add(Player = new DrawableSakuya(this));
                         break;
                 }
 
@@ -107,7 +107,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                         });
                     }*/
 
-                foreach (Player player in playerList)
+                foreach (DrawableVitaruPlayer player in playerList)
                     GameField.Add(player);
 
                 Player.Position = new Vector2(256, 700);
@@ -231,7 +231,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                         {
                             if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value)
                                 quarter.Add(bullet);
-                            if (draw is VitaruPlayer player && player.Abstraction < value)
+                            if (draw is DrawableVitaruPlayer player && player.Abstraction < value)
                                 quarter.Add(player);
                             if (draw is Enemy enemy && enemy.Abstraction < value)
                                 quarter.Add(enemy);
@@ -251,7 +251,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                         {
                             if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value - 1)
                                 half.Add(bullet);
-                            if (draw is VitaruPlayer player && player.Abstraction < value - 1)
+                            if (draw is DrawableVitaruPlayer player && player.Abstraction < value - 1)
                                 half.Add(player);
                             if (draw is Enemy enemy && enemy.Abstraction < value - 1)
                                 half.Add(enemy);
@@ -272,7 +272,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                             if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value - 2)
                                 full.Add(bullet);
 
-                            if (draw is VitaruPlayer player && player.Abstraction < value - 2)
+                            if (draw is DrawableVitaruPlayer player && player.Abstraction < value - 2)
                                 full.Add(player);
 
                             if (draw is Enemy enemy && enemy.Abstraction < value - 2)

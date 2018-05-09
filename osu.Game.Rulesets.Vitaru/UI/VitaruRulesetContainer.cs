@@ -11,7 +11,7 @@ using OpenTK;
 using osu.Game.Rulesets.Vitaru.UI.Cursor;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Rulesets.Vitaru.Settings;
-using osu.Game.Rulesets.Vitaru.Characters;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {

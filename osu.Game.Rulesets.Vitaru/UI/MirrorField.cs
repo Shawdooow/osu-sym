@@ -1,5 +1,4 @@
 ﻿using OpenTK;
-using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Beatmaps;
@@ -8,7 +7,7 @@ using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Settings;
 using System.Collections.Generic;
 using osu.Game.Audio;
-using osu.Game.Rulesets.Vitaru.Characters;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -16,7 +15,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
     {
         private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
-        private readonly List<VitaruPlayer> enemyList = new List<VitaruPlayer>();
+        private readonly List<DrawableVitaruPlayer> enemyList = new List<DrawableVitaruPlayer>();
 
         private readonly VitaruPlayfield vitaruPlayfield;
 
