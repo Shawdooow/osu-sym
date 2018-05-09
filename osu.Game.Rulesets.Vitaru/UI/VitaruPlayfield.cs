@@ -15,6 +15,9 @@ using Symcol.Rulesets.Core.Rulesets;
 using osu.Framework.Graphics.Effects;
 using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Rulesets.Vitaru.Characters.Players;
+using OpenTK.Graphics;
+using osu.Framework.Extensions.Color4Extensions;
+using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -157,9 +160,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
             public readonly Bindable<int> AbstractionLevel;
 
             public Container Current = new Container { RelativeSizeAxes = Axes.Both };
-            public Container QuarterAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.5f };
-            public Container HalfAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.25f };
-            public Container FullAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.125f };
+            public Container QuarterAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.5f, Colour = OsuColour.FromHex("#ffe6d1") };
+            public Container HalfAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.25f, Colour = OsuColour.FromHex("#bff5ff") };
+            public Container FullAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.125f, Colour = OsuColour.FromHex("#d191ff") };
 
             public AbstractionField(Bindable<int> abstraction)
             {

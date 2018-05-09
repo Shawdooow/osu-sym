@@ -72,7 +72,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
                 applyToClock(workingBeatmap.Value.Track, setPitch);
             }
             else
+            {
+                applyToClock(workingBeatmap.Value.Track, 1);
                 abstraction.Value = 0;
+            }
         }
 
         private void applyToClock(IAdjustableClock clock, double pitch)
@@ -93,12 +96,15 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Players
         protected override bool Pressed(VitaruAction action)
         {
             if (action == VitaruAction.Increase)
-                level = Math.Min(abstraction.Value + 1, 3);
+                level = Math.Min(level + 1, 3);
             if (action == VitaruAction.Decrease)
-                level = Math.Max(abstraction.Value - 1, 0);
+                level = Math.Max(level - 1, 0);
 
             switch (level)
             {
+                case 0:
+                    setPitch = 1;
+                    break;
                 case 1:
                     setPitch = 0.9d;
                     break;
