@@ -69,6 +69,7 @@ namespace osu.Game.Screens.Symcol.Screens
                             Anchor = Anchor.Centre,
                             LabelText = "Pitch",
                             Bindable = ClockPitch,
+                            KeyboardStep = 0.05f,
                         },
                         clockSpeed = new SettingsSlider<double>
                         {
@@ -76,6 +77,7 @@ namespace osu.Game.Screens.Symcol.Screens
                             Anchor = Anchor.Centre,
                             LabelText = "Clock Speed",
                             Bindable = ClockSpeed,
+                            KeyboardStep = 0.05f
                         },
                         new SettingsCheckbox
                         {
