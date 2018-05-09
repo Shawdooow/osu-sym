@@ -14,6 +14,8 @@ using osu.Framework.Allocation;
 using osu.Framework.IO.Stores;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Screens.Symcol.CasterBible;
+using osu.Game.Graphics;
+using osu.Game.Screens.Evast;
 
 namespace osu.Game.Screens.Symcol
 {
@@ -151,6 +153,18 @@ namespace osu.Game.Screens.Symcol
                             ButtonSize = 100,
                             Action = delegate { Push(new TournyCasterBible()); },
                             ButtonPosition = new Vector2(40 , -200),
+                        },
+
+                        new SymcolButton
+                        {
+                            ButtonName = "Evast's",
+                            Origin = Anchor.Centre,
+                            Anchor = Anchor.Centre,
+                            ButtonColorTop = OsuColour.FromHex("#7b30ff"),
+                            ButtonColorBottom = OsuColour.FromHex("#d230ff"),
+                            ButtonSize = 90,
+                            Action = delegate { Push(new MoreScreen()); },
+                            ButtonPosition = new Vector2(20 , 200),
                         },
                         /*
                         new SymcolButton

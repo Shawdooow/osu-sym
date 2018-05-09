@@ -23,6 +23,7 @@ using osu.Game.Screens.Play;
 using osu.Game.Screens.Backgrounds;
 using osu.Game.Configuration;
 using OpenTK.Input;
+using osu.Game.Screens.Evast.Visualizers;
 
 namespace osu.Game.Screens.Symcol.Screens
 {
@@ -39,8 +40,6 @@ namespace osu.Game.Screens.Symcol.Screens
         protected override BackgroundScreen CreateBackground() => new BackgroundScreenBeatmap(Beatmap);
         private bool suspended = false;
         private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
-
-        private OsuScreen player;
 
         [BackgroundDependencyLoader]
         private void load(AudioManager audio, OsuConfigManager config, OsuGameBase game)
@@ -96,7 +95,7 @@ namespace osu.Game.Screens.Symcol.Screens
                     ButtonColorTop = Color4.DarkBlue,
                     ButtonColorBottom = Color4.Blue,
                     ButtonSize = 40,
-                    Action = play,
+                    Action = () => Push(new Player()),
                     Position = new Vector2(-60 , -100),
                 },
                 new SymcolButton
@@ -108,8 +107,8 @@ namespace osu.Game.Screens.Symcol.Screens
                     ButtonColorTop = Color4.DarkBlue,
                     ButtonColorBottom = Color4.Blue,
                     ButtonSize = 40,
-                    Action = evastBackground,
-                    Position = new Vector2(60 , 100),
+                    Action = () => Push(new Visualizer()),
+                    Position = new Vector2(60 , -100),
                 },
 
                 //Sounds Bar
@@ -167,13 +166,6 @@ namespace osu.Game.Screens.Symcol.Screens
                     Bind = Key.C
                 },
             };
-        }
-
-        private void play()
-        {
-            if (player != null) return;
-
-            LoadComponentAsync(player = new PlayerLoader(new Player()), l => Push(player));
         }
 
         private void evastBackground()
