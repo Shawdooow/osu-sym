@@ -23,6 +23,14 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override Color4 ComplementaryColor => OsuColour.FromHex("#d6d6d6");
 
+        public override string Spell => "Time Keeper";
+
+        public override Role Role => Role.Defense;
+
+        public override Difficulty Difficulty => Difficulty.Normal;
+
         public override string Background => "";
+
+        public override bool Implemented => true;
     }
 }

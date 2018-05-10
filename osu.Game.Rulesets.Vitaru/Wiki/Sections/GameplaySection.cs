@@ -14,6 +14,7 @@ using osu.Game.Overlays.Settings;
 using System.Collections.Generic;
 using System.Linq;
 using Symcol.Core.Extentions;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 {
@@ -232,32 +233,48 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             //basically just an ingame wiki for the characters
             selectedCharacter.ValueChanged += character =>
             {
-                TouhosuPlayer touhosuCharacter = new TouhosuPlayer();
+                VitaruPlayer vitaruPlayer = new VitaruPlayer();
+                TouhosuPlayer touhosuPlayer = new TouhosuPlayer();
 
                 switch (character)
                 {
+                    case "Alex":
+                        vitaruPlayer = new Alex();
+                        break;
                     case "ReimuHakurei":
-                        touhosuCharacter = new Reimu();
+                        touhosuPlayer = new Reimu();
                         break;
                     case "RyukoyHakurei":
-                        touhosuCharacter = new Ryukoy();
+                        touhosuPlayer = new Ryukoy();
                         break;
                     case"TomajiHakurei":
-                        touhosuCharacter = new Tomaji();
+                        touhosuPlayer = new Tomaji();
                         break;
                     case "SakuyaIzayoi":
-                        touhosuCharacter = new Sakuya();
+                        touhosuPlayer = new Sakuya();
                         break;
                 }
 
-                string stats = "\nHealth: " + touhosuCharacter.MaxHealth +
-                "\nEnergy: " + touhosuCharacter.MaxEnergy +
-                "\nEnergy Cost: " + touhosuCharacter.EnergyCost +
-                "\nEnergy Cost per Second: " + touhosuCharacter.EnergyCostPerSecond +
-                "\nRole: ???" +
-                "\nDifficulty: ???" +
-                "\nAbility: Not Implemented Yet!\n\n" +
-                touhosuCharacter.Background;
+                string stats = vitaruPlayer.Background;
+
+                if (selectedGamemode.Value == Gamemodes.Touhosu)
+                {
+                    stats = "";
+
+                    if (!touhosuPlayer.Implemented)
+                        stats = "WARNING: Character not marked as Implemented! (Character may be incomplete)\n\n\n";
+
+                    stats = stats + "Stats:\n\n" +
+                    "-Health: " + touhosuPlayer.MaxHealth +
+                    "\n-Energy: " + touhosuPlayer.MaxEnergy +
+                    "\n-Energy Cost: " + touhosuPlayer.EnergyCost +
+                    "\n-Energy Cost per Second: " + touhosuPlayer.EnergyCostPerSecond +
+                    "\n-Role: " + touhosuPlayer.Role +
+                    "\n-Difficulty: " + touhosuPlayer.Difficulty + 
+                    "\n-Spell: " + touhosuPlayer.Spell +
+                    "\n\nCharacter Background:\n\n" + touhosuPlayer.Background;
+                }
+
 
                 characterDescription.Text = stats;
             };
