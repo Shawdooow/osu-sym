@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
                 Remove(RulesetNetworkingClientHandler);
                 VitaruNetworkingClientHandler.Dispose();
             }
-            VitaruNetworkingClientHandler = new VitaruNetworkingClientHandler(ClientType.Host, Ip.Text, Int32.Parse(HostPort.Text));
+            VitaruNetworkingClientHandler = new VitaruNetworkingClientHandler(ClientType.Host, LocalIp.Text, Int32.Parse(LocalPort.Text));
             RulesetNetworkingClientHandler = VitaruNetworkingClientHandler;
             Add(RulesetNetworkingClientHandler);
 
@@ -30,14 +30,14 @@ namespace osu.Game.Rulesets.Vitaru.Multi
             JoinMatch(list);
         }
 
-        protected override void DirectConnect()
+        protected override void JoinGame()
         {
             if (RulesetNetworkingClientHandler != null)
             {
                 Remove(RulesetNetworkingClientHandler);
                 VitaruNetworkingClientHandler.Dispose();
             }
-            VitaruNetworkingClientHandler = new VitaruNetworkingClientHandler(ClientType.Peer, Ip.Text, Int32.Parse(HostPort.Text));
+            VitaruNetworkingClientHandler = new VitaruNetworkingClientHandler(ClientType.Peer, HostIp.Text, Int32.Parse(HostPort.Text));
             VitaruNetworkingClientHandler.OnConnectedToHost += (p) => JoinMatch(p);
             RulesetNetworkingClientHandler = VitaruNetworkingClientHandler;
             Add(RulesetNetworkingClientHandler);

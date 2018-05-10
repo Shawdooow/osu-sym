@@ -13,6 +13,7 @@ using Symcol.Core.Networking;
 using Symcol.Rulesets.Core.Multiplayer.Networking;
 using osu.Framework.Configuration;
 using Symcol.Rulesets.Core.Rulesets;
+using osu.Framework.Graphics.Colour;
 
 namespace Symcol.Rulesets.Core.Multiplayer.Screens
 {
@@ -27,13 +28,18 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         public readonly SettingsButton JoinGameButton;
 
         public readonly Container NewGame;
+
+        protected readonly TextBox LocalPort;
+        protected readonly TextBox LocalIp;
         protected readonly TextBox HostPort;
-        protected readonly TextBox Ip;
+        protected readonly TextBox HostIp;
 
         public readonly Container JoinIP;
 
-        private readonly Bindable<string> ip = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<string>(SymcolSetting.IP);
-        private readonly Bindable<int> port = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<int>(SymcolSetting.Port);
+        private readonly Bindable<string> hostip = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<string>(SymcolSetting.HostIP);
+        private readonly Bindable<string> localip = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<string>(SymcolSetting.LocalIP);
+        private readonly Bindable<int> hostport = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<int>(SymcolSetting.HostPort);
+        private readonly Bindable<int> localport = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<int>(SymcolSetting.LocalPort);
 
         public RulesetLobbyScreen()
         {
@@ -46,33 +52,29 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
+                    Position = new Vector2(12, -12),
                     RelativeSizeAxes = Axes.X,
                     Width = 0.3f,
                     Text = "Host Game",
                     Action = HostGame
                 },
-                DirectConnectButton = new SettingsButton
-                {
-                    Anchor = Anchor.BottomCentre,
-                    Origin = Anchor.BottomCentre,
-                    RelativeSizeAxes = Axes.X,
-                    Width = 0.3f,
-                    Text = "Direct Connect",
-                    Action = DirectConnect
-                },
                 JoinGameButton = new SettingsButton
                 {
                     Anchor = Anchor.BottomRight,
                     Origin = Anchor.BottomRight,
+                    Position = new Vector2(-12, -12),
                     RelativeSizeAxes = Axes.X,
                     Width = 0.3f,
-                    Text = "Join Game"
+                    Text = "Join Game",
+                    Action = JoinGame
                 },
                 NewGame = new Container
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Masking = true,
+
+                    Position = new Vector2(0, -40),
                     Size = new Vector2(400, 60),
 
                     CornerRadius = 10,
@@ -83,7 +85,49 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
                     {
                         new Box
                         {
-                            Colour = Color4.Blue,
+                            Colour = ColourInfo.GradientVertical(Color4.DarkGreen, Color4.Green),
+                            RelativeSizeAxes = Axes.Both
+                        },
+                        LocalPort = new TextBox
+                        {
+                            Anchor = Anchor.CentreRight,
+                            Origin = Anchor.CentreRight,
+                            Position = new Vector2(-12, 0),
+                            RelativeSizeAxes = Axes.X,
+                            Width = 0.42f,
+                            Height = 20,
+                            Text = "25570"
+                        },
+                        LocalIp = new TextBox
+                        {
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreLeft,
+                            Position = new Vector2(12, 0),
+                            RelativeSizeAxes = Axes.X,
+                            Width = 0.42f,
+                            Height = 20,
+                            Text = "Local IP Address"
+                        }
+                    }
+                },
+                NewGame = new Container
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Masking = true,
+
+                    Position = new Vector2(0, 40),
+                    Size = new Vector2(400, 60),
+
+                    CornerRadius = 10,
+                    BorderColour = Color4.White,
+                    BorderThickness = 6,
+
+                    Children = new Drawable[]
+                    {
+                        new Box
+                        {
+                            Colour = ColourInfo.GradientVertical(Color4.DarkBlue, Color4.Blue),
                             RelativeSizeAxes = Axes.Both
                         },
                         HostPort = new TextBox
@@ -96,7 +140,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
                             Height = 20,
                             Text = "25570"
                         },
-                        Ip = new TextBox
+                        HostIp = new TextBox
                         {
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
@@ -104,7 +148,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
                             RelativeSizeAxes = Axes.X,
                             Width = 0.42f,
                             Height = 20,
-                            Text = "IP Address"
+                            Text = "Host's IP Address"
                         }
                     }
                 }
@@ -115,8 +159,10 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         {
             base.LoadComplete();
 
-            Ip.Text = ip;
-            HostPort.Text = port.Value.ToString();
+            LocalIp.Text = localip;
+            LocalPort.Text = localport.Value.ToString();
+            HostIp.Text = hostip;
+            HostPort.Text = hostport.Value.ToString();
         }
 
         protected override bool OnExiting(Screen next)
@@ -137,7 +183,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
                 Remove(RulesetNetworkingClientHandler);
                 RulesetNetworkingClientHandler.Dispose();
             }
-            Add(RulesetNetworkingClientHandler = new RulesetNetworkingClientHandler(ClientType.Host, Ip.Text, Int32.Parse(HostPort.Text)));
+            Add(RulesetNetworkingClientHandler = new RulesetNetworkingClientHandler(ClientType.Host, LocalIp.Text, Int32.Parse(LocalPort.Text)));
 
             List<ClientInfo> list = new List<ClientInfo>();
             list.Add(RulesetNetworkingClientHandler.RulesetClientInfo);
@@ -145,14 +191,14 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
             JoinMatch(list);
         }
 
-        protected virtual void DirectConnect()
+        protected virtual void JoinGame()
         {
             if (RulesetNetworkingClientHandler != null)
             {
                 Remove(RulesetNetworkingClientHandler);
                 RulesetNetworkingClientHandler.Dispose();
             }
-            Add(RulesetNetworkingClientHandler = new RulesetNetworkingClientHandler(ClientType.Peer, Ip.Text, Int32.Parse(HostPort.Text)));
+            Add(RulesetNetworkingClientHandler = new RulesetNetworkingClientHandler(ClientType.Peer, HostIp.Text, Int32.Parse(HostPort.Text)));
 
             RulesetNetworkingClientHandler.OnConnectedToHost += (p) => JoinMatch(p);
         }
@@ -165,8 +211,10 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
 
         protected override void Dispose(bool isDisposing)
         {
-            ip.Value = Ip.Text;
-            port.Value = Int32.Parse(HostPort.Text);
+            localip.Value = LocalIp.Text;
+            localport.Value = Int32.Parse(LocalPort.Text);
+            hostip.Value = HostIp.Text;
+            hostport.Value = Int32.Parse(HostPort.Text);
 
             base.Dispose(isDisposing);
         }

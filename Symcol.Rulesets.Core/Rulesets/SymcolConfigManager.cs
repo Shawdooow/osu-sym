@@ -12,8 +12,10 @@ namespace Symcol.Rulesets.Core.Rulesets
         protected override void InitialiseDefaults()
         {
             Set(SymcolSetting.PlayerColor, "#ffffff");
-            Set(SymcolSetting.IP, "IP Address");
-            Set(SymcolSetting.Port, 25570);
+            Set(SymcolSetting.HostIP, "Host's IP Address");
+            Set(SymcolSetting.LocalIP, "Local IP Address");
+            Set(SymcolSetting.HostPort, 25570);
+            Set(SymcolSetting.LocalPort, 25570);
             Set(SymcolSetting.SavedName, "Guest");
             Set(SymcolSetting.SavedUserID, -1);
         }
@@ -22,8 +24,10 @@ namespace Symcol.Rulesets.Core.Rulesets
     public enum SymcolSetting
     {
         PlayerColor,
-        IP,
-        Port,
+        HostIP,
+        LocalIP,
+        HostPort,
+        LocalPort,
         SavedName,
         SavedUserID
     }
