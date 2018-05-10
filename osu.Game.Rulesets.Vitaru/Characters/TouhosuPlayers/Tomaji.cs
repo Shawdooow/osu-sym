@@ -2,6 +2,8 @@
 {
     public class Tomaji : TouhosuPlayer
     {
+        public override string Name => "Tomaji Hakurei";
+
         public override double MaxHealth => 60;
 
         public override double MaxEnergy => base.MaxEnergy;

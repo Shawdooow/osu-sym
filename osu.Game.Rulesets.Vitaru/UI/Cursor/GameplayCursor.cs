@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
         public class VitaruCursor : Container
         {
-            private TouhosuCharacters selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
+            private string selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
             private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
             private Container lineContainer;
@@ -234,12 +234,12 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
                 if (VitaruPlayfield.Player != null )
                 {
-                    switch (selectedTouhosuCharacter)
+                    switch (selectedCharacter)
                     {
-                        case TouhosuCharacters.SakuyaIzayoi:
+                        case "SakuyaIzayoi":
                             //speed.Text = ((Sakuya)VitaruPlayfield.Player).SetRate.ToString();
                             break;
-                        case TouhosuCharacters.TomajiHakurei:
+                        case "TomajiHakurei":
                             //speed.Text = ((Tomaji)VitaruPlayfield.Player).SetRate.ToString();
                             break;
                     }

@@ -15,7 +15,6 @@ using Symcol.Rulesets.Core.Rulesets;
 using osu.Framework.Graphics.Effects;
 using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 
@@ -24,7 +23,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
     public class VitaruPlayfield : SymcolPlayfield
     {
         private static readonly Bindable<Gamemodes> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
-        private readonly TouhosuCharacters selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
+        private readonly string selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
         public readonly VitaruInputManager VitaruInputManager;
 
@@ -76,15 +75,15 @@ namespace osu.Game.Rulesets.Vitaru.UI
             {
                 VitaruNetworkingClientHandler vitaruNetworkingClientHandler = RulesetNetworkingClientHandler as VitaruNetworkingClientHandler;
 
-                switch (selectedTouhosuCharacter)
+                switch (selectedCharacter)
                 {
-                    case TouhosuCharacters.RyukoyHakurei:
+                    case "RyukoyHakurei":
                         playerList.Add(Player = new DrawableRyukoy(this, abstraction));
                         break;
-                    case TouhosuCharacters.TomajiHakurei:
+                    case "TomajiHakurei":
                         playerList.Add(Player = new DrawableTomaji(this));
                         break;
-                    case TouhosuCharacters.SakuyaIzayoi:
+                    case "SakuyaIzayoi":
                         playerList.Add(Player = new DrawableSakuya(this));
                         break;
                 }

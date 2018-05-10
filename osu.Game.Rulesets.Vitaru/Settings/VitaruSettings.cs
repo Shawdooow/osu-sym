@@ -33,8 +33,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         private static VitaruAPIContainer api;
 
-        private Bindable<VitaruCharacters> selectedVitaruCharacter;
-        private Bindable<TouhosuCharacters> selectedTouhosuCharacter;
+        private Bindable<string> selectedCharacter;
 
         private FillFlowContainer debugUiSettings;
         private Bindable<bool> showDebugUi;
@@ -51,8 +50,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             showDebugUi = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugOverlay);
 
-            selectedVitaruCharacter = VitaruConfigManager.GetBindable<VitaruCharacters>(VitaruSetting.VitaruCharacter);
-            selectedTouhosuCharacter = VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
+            selectedCharacter = VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
             Children = new Drawable[]
             {
@@ -61,16 +59,13 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     LabelText = "Vitaru's current gamemode",
                     Bindable = VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode)
                 },
-                new SettingsEnumDropdown<VitaruCharacters>
+                /*
+                new SettingsDropdown<string>
                 {
-                    LabelText = "Selected Vitaru Character",
-                    Bindable = selectedVitaruCharacter
+                    LabelText = "Selected Character",
+                    Bindable = selectedCharacter
                 },
-                new SettingsEnumDropdown<TouhosuCharacters>
-                {
-                    LabelText = "Selected Touhosu Character",
-                    Bindable = selectedTouhosuCharacter
-                },
+                */
                 new SettingsEnumDropdown<GraphicsPresets>
                 {
                     LabelText = "Graphics Presets",

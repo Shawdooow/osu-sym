@@ -1,7 +1,6 @@
 ﻿using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Game.Online.API;
-using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Settings;
 using Symcol.Core.Networking;
 using Symcol.Rulesets.Core.Multiplayer.Networking;
@@ -11,7 +10,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
 {
     public class VitaruNetworkingClientHandler : RulesetNetworkingClientHandler, IOnlineComponent
     {
-        private Bindable<TouhosuCharacters> selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
+        private Bindable<string> selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
         public readonly VitaruClientInfo VitaruClientInfo;
 
@@ -27,12 +26,12 @@ namespace osu.Game.Rulesets.Vitaru.Multi
             RulesetClientInfo = VitaruClientInfo;
             ClientInfo = RulesetClientInfo;
 
-            selectedTouhosuCharacter.ValueChanged += character =>
+            selectedCharacter.ValueChanged += character =>
             {
                 VitaruClientInfo.PlayerInformation.Character = character;
                 SendToHost(new VitaruPacket(VitaruClientInfo) { ChangeCharacter = true });
             };
-            selectedTouhosuCharacter.TriggerChange();
+            selectedCharacter.TriggerChange();
 
             OnPacketReceive += (Packet packet) =>
             {

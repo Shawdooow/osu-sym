@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public override int Variant => (int)variant();
 
-        private TouhosuCharacters selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
+        private string selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
         private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         private ControlScheme variant()
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 return ControlScheme.Dodge;
             else
             {
-                if (selectedTouhosuCharacter == TouhosuCharacters.SakuyaIzayoi || selectedTouhosuCharacter == TouhosuCharacters.RyukoyHakurei || selectedTouhosuCharacter == TouhosuCharacters.TomajiHakurei)
+                if (selectedCharacter == "SakuyaIzayoi" || selectedCharacter == "RyukoyHakurei" || selectedCharacter == "TomajiHakurei")
                     return ControlScheme.Sakuya;
                 //else if (currentCharacter == Player.KokoroHatano)
                     //return ControlScheme.Kokoro;

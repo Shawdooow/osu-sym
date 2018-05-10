@@ -129,11 +129,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                     },
                 };
 
-                switch (t.TouhosuPlayer.Character)
+                switch (t.TouhosuPlayer.Name)
                 {
                     default:
                         break;
-                    case TouhosuCharacters.SakuyaIzayoi:
+                    case "SakuyaIzayoi":
                         characterSigil.Children = new Drawable[]
                         {
                             gear1 = new Sprite
@@ -225,11 +225,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                 health.Current.Value = t.Health / t.MaxHealth;
                 energy.Current.Value = t.Energy / t.TouhosuPlayer.MaxEnergy;
 
-                switch (t.TouhosuPlayer.Character)
+                switch (t.TouhosuPlayer.Name)
                 {
                     default:
                         break;
-                    case TouhosuCharacters.SakuyaIzayoi:
+                    case "SakuyaIzayoi":
                         float speed = 0.25f;
                         gear1.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
                         gear2.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);

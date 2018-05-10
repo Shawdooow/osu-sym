@@ -1,11 +1,10 @@
 ﻿using OpenTK.Graphics;
-using System.ComponentModel;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers
 {
     public class VitaruPlayer
     {
-        public virtual VitaruCharacters Character => VitaruCharacters.Alex;
+        public virtual string Name { get; } = "Alex";
 
         public virtual double MaxHealth => 80;
 
@@ -14,12 +13,5 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers
         public virtual Color4 SecondaryColor { get; } = Color4.LightBlue;
 
         public virtual Color4 ComplementaryColor { get; } = Color4.LightGreen;
-    }
-
-    //TODO: This shouldn't be neccesary
-    public enum VitaruCharacters
-    {
-        [Description("Alex")]
-        Alex,
     }
 }

@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
     {
         public readonly TouhosuPlayer TouhosuPlayer;
 
-        protected override string CharacterName => TouhosuPlayer.Character.ToString();
+        protected override string CharacterName => TouhosuPlayer.Name;
 
         public double Energy { get; protected set; }
 

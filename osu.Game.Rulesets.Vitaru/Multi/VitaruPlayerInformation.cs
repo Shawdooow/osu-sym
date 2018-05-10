@@ -1,5 +1,4 @@
-﻿using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
-using System;
+﻿using System;
 
 namespace osu.Game.Rulesets.Vitaru.Multi
 {
@@ -8,7 +7,7 @@ namespace osu.Game.Rulesets.Vitaru.Multi
     {
         public string PlayerID = "0";
 
-        public TouhosuCharacters Character;
+        public string Character;
 
         public float PlayerX;
 

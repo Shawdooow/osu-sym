@@ -18,9 +18,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         public override string Title => "Gameplay";
 
         private Bindable<Gamemodes> selectedGamemode;
-        private Bindable<TouhosuCharacters> selectedTouhosuCharacter;
+        private Bindable<string> selectedCharacter;
 
-        private WikiOptionEnumExplanation<TouhosuCharacters> touhosuCharacterDescription;
+        private WikiOptionExplanation<string> characterDescription;
 
         private Bindable<Mod> selectedMod = new Bindable<Mod> { Default = Mod.Hidden };
 
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         private void load()
         {
             selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
-            selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<TouhosuCharacters>(VitaruSetting.TouhosuCharacter);
+            selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
             Content.Add(new WikiParagraph("Your objective in vitaru is simple, don't get hit by the bullets flying at you, although this is easier said than done."));
 
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                             Scale = new Vector2(2),
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Texture = VitaruRuleset.VitaruTextures.Get(TouhosuCharacters.SakuyaIzayoi.ToString() + "Kiai")
+                            Texture = VitaruRuleset.VitaruTextures.Get("SakuyaIzayoiKiai")
                         },
                         new CircularContainer
                         {
@@ -160,25 +160,25 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 "I also listed their " +
                 "difficulty to play (Easy, Normal, Hard, Insane, Another, Extra) " +
                 "and their Role in a multiplayer setting (Offense, Defense, Support)."));
-            Content.Add(touhosuCharacterDescription = new WikiOptionEnumExplanation<TouhosuCharacters>(selectedTouhosuCharacter));
+            //Content.Add(characterDescription = new WikiOptionExplanation<string>(selectedCharacter));
 
             //basically just an ingame wiki for the characters
-            selectedTouhosuCharacter.ValueChanged += character =>
+            selectedCharacter.ValueChanged += character =>
             {
                 TouhosuPlayer touhosuCharacter = new TouhosuPlayer();
 
                 switch (character)
                 {
-                    case TouhosuCharacters.ReimuHakurei:
+                    case "ReimuHakurei":
                         touhosuCharacter = new Reimu();
                         break;
-                    case TouhosuCharacters.RyukoyHakurei:
+                    case "RyukoyHakurei":
                         touhosuCharacter = new Ryukoy();
                         break;
-                    case TouhosuCharacters.TomajiHakurei:
+                    case"TomajiHakurei":
                         touhosuCharacter = new Tomaji();
                         break;
-                    case TouhosuCharacters.SakuyaIzayoi:
+                    case "SakuyaIzayoi":
                         touhosuCharacter = new Sakuya();
                         break;
                 }
@@ -192,9 +192,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 "\nAbility: Not Implemented Yet!\n\n" +
                 touhosuCharacter.Background;
 
-                touhosuCharacterDescription.Description.Text = stats;
+                //characterDescription.Description.Text = stats;
             };
-            selectedTouhosuCharacter.TriggerChange();
+            selectedCharacter.TriggerChange();
 
             selectedGamemode.ValueChanged += gamemode =>
             {
@@ -217,7 +217,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "Selecting different characters no longer just changes your skin but also your stats and your spell!";
                         break;
                 }
-                selectedTouhosuCharacter.TriggerChange();
+                selectedCharacter.TriggerChange();
             };
             selectedGamemode.TriggerChange();
 

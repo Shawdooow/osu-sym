@@ -18,8 +18,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.DebugUIConfiguration, DebugUiConfiguration.PerformanceMetrics);
             Set(VitaruSetting.GraphicsPresets, GraphicsPresets.Standard);
             Set(VitaruSetting.GameMode, Gamemodes.Vitaru);
-            Set(VitaruSetting.VitaruCharacter, VitaruCharacters.Alex);
-            Set(VitaruSetting.TouhosuCharacter, TouhosuCharacters.SakuyaIzayoi);
+            Set(VitaruSetting.Character, "SakuyaIzayoi");
 
             //Leaks like crazy atm
             Set(VitaruSetting.ComboFire, false);
@@ -59,8 +58,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
     public enum VitaruSetting
     {
         GameMode,
-        VitaruCharacter,
-        TouhosuCharacter,
+        Character,
         DebugOverlay,
         DebugUIConfiguration,
         GraphicsPresets,
