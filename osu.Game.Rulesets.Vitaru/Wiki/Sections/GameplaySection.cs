@@ -10,6 +10,10 @@ using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
+using osu.Game.Overlays.Settings;
+using System.Collections.Generic;
+using System.Linq;
+using Symcol.Core.Extentions;
 
 namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 {
@@ -18,9 +22,17 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         public override string Title => "Gameplay";
 
         private Bindable<Gamemodes> selectedGamemode;
+
         private Bindable<string> selectedCharacter;
 
-        private WikiOptionExplanation<string> characterDescription;
+        private FillFlowContainer vitaruCharacter;
+        private SettingsDropdown<string> vitaruCharacterDropdown;
+        private Bindable<string> selectedVitaruCharacter;
+        private FillFlowContainer touhosuCharacter;
+        private SettingsDropdown<string> touhosuCharacterDropdown;
+        private Bindable<string> selectedTouhosuCharacter;
+
+        private WikiParagraph characterDescription;
 
         private Bindable<Mod> selectedMod = new Bindable<Mod> { Default = Mod.Hidden };
 
@@ -31,7 +43,20 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         private void load()
         {
             selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+
             selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+            selectedVitaruCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.VitaruCharacter);
+            selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.TouhosuCharacter);
+
+            List<KeyValuePair<string, string>> vitaruItems = new List<KeyValuePair<string, string>>();
+            foreach (VitaruCharacters character in System.Enum.GetValues(typeof(VitaruCharacters)))
+                vitaruItems.Add(new KeyValuePair<string, string>(character.GetDescription(), character.ToString()));
+            selectedVitaruCharacter.ValueChanged += character => { VitaruSettings.VitaruConfigManager.Set(VitaruSetting.VitaruCharacter, character); VitaruSettings.VitaruConfigManager.Set(VitaruSetting.Character, character); };
+
+            List<KeyValuePair<string, string>> touhosuItems = new List<KeyValuePair<string, string>>();
+            foreach (TouhosuCharacters character in System.Enum.GetValues(typeof(TouhosuCharacters)))
+                touhosuItems.Add(new KeyValuePair<string, string>(character.GetDescription(), character.ToString()));
+            selectedTouhosuCharacter.ValueChanged += character => { VitaruSettings.VitaruConfigManager.Set(VitaruSetting.TouhosuCharacter, character); VitaruSettings.VitaruConfigManager.Set(VitaruSetting.Character, character); };
 
             Content.Add(new WikiParagraph("Your objective in vitaru is simple, don't get hit by the bullets flying at you, although this is easier said than done."));
 
@@ -160,7 +185,54 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 "I also listed their " +
                 "difficulty to play (Easy, Normal, Hard, Insane, Another, Extra) " +
                 "and their Role in a multiplayer setting (Offense, Defense, Support)."));
-            //Content.Add(characterDescription = new WikiOptionExplanation<string>(selectedCharacter));
+            Content.Add(new WikiSplitColum(
+                new Container
+                {
+                    Anchor = Anchor.TopLeft,
+                    Origin = Anchor.TopLeft,
+
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+
+                    Children = new Drawable[]
+                    {
+                        vitaruCharacter = new FillFlowContainer
+                        {
+                            Direction = FillDirection.Vertical,
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y,
+                            AutoSizeDuration = 0,
+                            AutoSizeEasing = Easing.OutQuint,
+                            Masking = true,
+
+                            Child = vitaruCharacterDropdown = new SettingsDropdown<string>
+                            {
+                                LabelText = "Selected Vitaru Character",
+                                Items = vitaruItems.Distinct().ToList()
+                            },
+                        },
+                        touhosuCharacter = new FillFlowContainer
+                        {
+                            Direction = FillDirection.Vertical,
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y,
+                            AutoSizeDuration = 0,
+                            AutoSizeEasing = Easing.OutQuint,
+                            Masking = true,
+
+                            Child = touhosuCharacterDropdown = new SettingsDropdown<string>
+                            {
+                                LabelText = "Selected Touhosu Character",
+                                Items = touhosuItems.Distinct().ToList()
+                            },
+                        },
+                    }
+                },
+                characterDescription = new WikiParagraph("Whoops! You should not be seeing this text. . .")
+                ));
+
+            vitaruCharacterDropdown.Bindable = selectedVitaruCharacter;
+            touhosuCharacterDropdown.Bindable = selectedTouhosuCharacter;
 
             //basically just an ingame wiki for the characters
             selectedCharacter.ValueChanged += character =>
@@ -192,7 +264,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 "\nAbility: Not Implemented Yet!\n\n" +
                 touhosuCharacter.Background;
 
-                //characterDescription.Description.Text = stats;
+                characterDescription.Text = stats;
             };
             selectedCharacter.TriggerChange();
 
@@ -217,7 +289,29 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "Selecting different characters no longer just changes your skin but also your stats and your spell!";
                         break;
                 }
-                selectedCharacter.TriggerChange();
+
+                if (gamemode == Gamemodes.Touhosu)
+                {
+                    touhosuCharacter.ClearTransforms();
+                    touhosuCharacter.AutoSizeAxes = Axes.Y;
+
+                    vitaruCharacter.ClearTransforms();
+                    vitaruCharacter.AutoSizeAxes = Axes.None;
+                    vitaruCharacter.ResizeHeightTo(0, 0, Easing.OutQuint);
+
+                    selectedCharacter.Value = selectedTouhosuCharacter.Value;
+                }
+                else
+                {
+                    vitaruCharacter.ClearTransforms();
+                    vitaruCharacter.AutoSizeAxes = Axes.Y;
+
+                    touhosuCharacter.ClearTransforms();
+                    touhosuCharacter.AutoSizeAxes = Axes.None;
+                    touhosuCharacter.ResizeHeightTo(0, 0, Easing.OutQuint);
+
+                    selectedCharacter.Value = selectedVitaruCharacter.Value;
+                }
             };
             selectedGamemode.TriggerChange();
 
