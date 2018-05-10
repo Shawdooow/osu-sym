@@ -137,10 +137,10 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     AutoSizeEasing = Easing.OutQuint,
                     Masking = true,
 
-                    Child = new SettingsEnumDropdown<DebugUiConfiguration>
+                    Child = new SettingsEnumDropdown<DebugConfiguration>
                     {
-                        LabelText = "What will be displayed on the DebugUI In-Game",
-                        Bindable = VitaruConfigManager.GetBindable<DebugUiConfiguration>(VitaruSetting.DebugUIConfiguration)
+                        LabelText = "In-Game Debug UI Configuration",
+                        Bindable = VitaruConfigManager.GetBindable<DebugConfiguration>(VitaruSetting.DebugConfiguration)
                     }
                 },
             };
@@ -150,7 +150,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             selectedGamemode.ValueChanged += value =>
             {
-                if (value == Gamemodes.Touhosu)
+                if (value == Gamemodes.Touhosu && VitaruAPIContainer.Shawdooow)
                 {
                     touhosuCharacter.ClearTransforms();
                     touhosuCharacter.AutoSizeAxes = Axes.Y;

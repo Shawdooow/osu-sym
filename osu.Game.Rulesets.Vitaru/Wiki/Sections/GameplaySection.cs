@@ -179,12 +179,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             Content.Add(new WikiParagraph("Mods affect gameplay just like the other rulesets in the game, but here is how they affect vitaru so you aren't scratching your head trying to figure it out just by playing with it."));
             Content.Add(modsDescription = new WikiOptionEnumExplanation<Mod>(selectedMod));
             Content.Add(new WikiSubSectionHeader("Characters"));
-            Content.Add(new WikiParagraph("Selecting a different character in anything except Touhosu should only change what you look like " +
-                "(however I am sure that some parts of Touhosu slip out at this stage in the ruleset's development). " +
-                "In Touhosu however, this will change a number of stats listed below. " +
-                "I also listed their " +
-                "difficulty to play (Easy, Normal, Hard, Insane, Another, Extra) " +
-                "and their Role in a multiplayer setting (Offense, Defense, Support)."));
+            Content.Add(new WikiParagraph("Selecting a different character is purely cosmetic."));
             Content.Add(new WikiSplitColum(
                 new Container
                 {
@@ -290,7 +285,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         break;
                 }
 
-                if (gamemode == Gamemodes.Touhosu)
+                if (gamemode == Gamemodes.Touhosu && VitaruAPIContainer.Shawdooow)
                 {
                     touhosuCharacter.ClearTransforms();
                     touhosuCharacter.AutoSizeAxes = Axes.Y;

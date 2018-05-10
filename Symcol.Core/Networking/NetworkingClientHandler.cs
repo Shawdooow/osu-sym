@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Symcol.Core.Networking
 {
-    //TODO: This NEEDS its own clock to avoid fuckery later on with DoubleTime and HalfTime
+    //TODO: This NEEDS its own clock to avoid fuckery later on with modified clock speeds
     public class NetworkingClientHandler : Container
     {
         //30 Seconds by default

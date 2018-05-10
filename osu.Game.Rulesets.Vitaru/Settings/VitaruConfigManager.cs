@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         protected override void InitialiseDefaults()
         {
             Set(VitaruSetting.DebugOverlay, false);
-            Set(VitaruSetting.DebugUIConfiguration, DebugUiConfiguration.PerformanceMetrics);
+            Set(VitaruSetting.DebugConfiguration, DebugConfiguration.PerformanceMetrics);
             Set(VitaruSetting.GraphicsPresets, GraphicsPresets.Standard);
             Set(VitaruSetting.GameMode, Gamemodes.Vitaru);
             Set(VitaruSetting.Character, "Alex");
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         VitaruCharacter,
         TouhosuCharacter,
         DebugOverlay,
-        DebugUIConfiguration,
+        DebugConfiguration,
         GraphicsPresets,
         ComboFire,
         ShittyMultiplayer,

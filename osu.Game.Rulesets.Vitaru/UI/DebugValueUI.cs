@@ -18,7 +18,7 @@ namespace eden.Game.GamePieces
     /// </summary>
     public class DebugValueUI : Container
     {
-        private DebugUiConfiguration currentConfiguration = VitaruSettings.VitaruConfigManager.GetBindable<DebugUiConfiguration>(VitaruSetting.DebugUIConfiguration);
+        private DebugConfiguration currentConfiguration = VitaruSettings.VitaruConfigManager.GetBindable<DebugConfiguration>(VitaruSetting.DebugConfiguration);
 
         //Debug section
         private Container debugContainer;
@@ -130,7 +130,7 @@ namespace eden.Game.GamePieces
         {
             base.Update();
 
-            if (currentConfiguration == DebugUiConfiguration.PerformanceMetrics)
+            if (currentConfiguration == DebugConfiguration.PerformanceMetrics)
             {
                 value1.Text = "Bullets = " + DrawableBullet.BulletCount.ToString();
                 value2.Text = "Patterns = " + DrawablePattern.PatternCount.ToString();
@@ -138,7 +138,7 @@ namespace eden.Game.GamePieces
                 //value4.Text = "Energy = " + (TouhosuPlayer)VitaruPlayfield.Player?.Energy.ToString();
                 value5.Text = "Fps = " + Clock.FramesPerSecond;
             }
-            else if (currentConfiguration == DebugUiConfiguration.PP)
+            else if (currentConfiguration == DebugConfiguration.PP)
             {
                 value1.Text = "PlayerScoreZone = " + VitaruPlayfield.Player.ScoreZone.ToString();
 
@@ -146,11 +146,11 @@ namespace eden.Game.GamePieces
                 value4.Text = "CurrentPP = " + VitaruPerformanceCalculator.CurrentPPValue;
                 value5.Text = "MaxPP = " + VitaruPerformanceCalculator.MaxPPValue;
             }
-            else if (currentConfiguration == DebugUiConfiguration.LaserStuff)
+            else if (currentConfiguration == DebugConfiguration.LaserStuff)
             {
                 value1.Text = "PlayerHealth = " + VitaruPlayfield.Player.Health.ToString();
             }
-            else if (currentConfiguration == DebugUiConfiguration.Network)
+            else if (currentConfiguration == DebugConfiguration.Network)
             {
 
             }
@@ -165,7 +165,7 @@ namespace eden.Game.GamePieces
         }
     }
 
-    public enum DebugUiConfiguration
+    public enum DebugConfiguration
     {
         LaserStuff,
         Network,
