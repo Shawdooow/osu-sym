@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         public readonly VitaruPlayer Player;
 
-        protected override string CharacterName => Player.Name;
+        protected override string CharacterName => Player.FileName;
 
         public override double MaxHealth => Player.MaxHealth;
 
