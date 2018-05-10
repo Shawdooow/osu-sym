@@ -18,7 +18,7 @@ using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers
 {
-    public abstract class DrawableVitaruPlayer : Character, IKeyBindingHandler<VitaruAction>
+    public class DrawableVitaruPlayer : Character, IKeyBindingHandler<VitaruAction>
     {
         #region Fields
         protected readonly Gamemodes CurrentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);

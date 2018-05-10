@@ -17,6 +17,8 @@ using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -77,6 +79,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
                 switch (selectedCharacter)
                 {
+                    case "Alex":
+                        playerList.Add(Player = new DrawableVitaruPlayer(this, new Alex()));
+                        break;
+                    case "ReimuHakurei":
+                        playerList.Add(Player = new DrawableTouhosuPlayer(this, new Reimu()));
+                        break;
                     case "RyukoyHakurei":
                         playerList.Add(Player = new DrawableRyukoy(this, abstraction));
                         break;

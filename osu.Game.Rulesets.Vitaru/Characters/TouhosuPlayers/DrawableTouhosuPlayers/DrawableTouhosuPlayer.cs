@@ -4,7 +4,7 @@ using System;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
 {
-    public abstract class DrawableTouhosuPlayer : DrawableVitaruPlayer
+    public class DrawableTouhosuPlayer : DrawableVitaruPlayer
     {
         public readonly TouhosuPlayer TouhosuPlayer;
 
