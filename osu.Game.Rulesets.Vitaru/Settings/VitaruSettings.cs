@@ -150,7 +150,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             selectedGamemode.ValueChanged += value =>
             {
-                if (value == Gamemodes.Touhosu && VitaruAPIContainer.Shawdooow)
+                if (value == Gamemodes.Touhosu)
                 {
                     touhosuCharacter.ClearTransforms();
                     touhosuCharacter.AutoSizeAxes = Axes.Y;

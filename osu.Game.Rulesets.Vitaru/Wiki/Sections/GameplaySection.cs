@@ -285,7 +285,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         break;
                 }
 
-                if (gamemode == Gamemodes.Touhosu && VitaruAPIContainer.Shawdooow)
+                if (gamemode == Gamemodes.Touhosu)
                 {
                     touhosuCharacter.ClearTransforms();
                     touhosuCharacter.AutoSizeAxes = Axes.Y;
