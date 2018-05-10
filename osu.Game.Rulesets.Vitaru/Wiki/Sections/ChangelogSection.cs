@@ -13,15 +13,17 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         private const string fileExtention = ".vitaru";
 
-        private const string version_changelog = "-Implemented cumulative changelog (only versions you install and run will be added here, they are text files in your osu! storage)\n" +
+        private const string version_changelog = "-Implemented cumulative changelog\n" +
             "-Fix character hiearchy\n" +
-            "-custom character support prep (characterName.vitaru in your map or something)\n" +
+            "-Custom character support prep (characterName.vitaru in your map or something)\n" +
             "-Fix several multiplayer crashes";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)
         {
             Storage changelogStorage = storage.GetStorageForDirectory("vitaru");
+
+            Content.Add(new WikiParagraph("This changelog is cumulative, meaning only versions you install and run will be added here. They are saved as text files in your osu! storage"));
 
             if (!changelogStorage.Exists(VitaruRuleset.RulesetVersion + fileExtention))
             {
