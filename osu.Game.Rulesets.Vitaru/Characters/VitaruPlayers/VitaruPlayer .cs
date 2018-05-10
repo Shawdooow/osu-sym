@@ -6,6 +6,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers
     {
         public virtual string Name { get; } = "Alex";
 
+        public virtual string FileName { get; } = "Alex";
+
         public virtual double MaxHealth => 80;
 
         public virtual Color4 PrimaryColor { get; } = Color4.Green;

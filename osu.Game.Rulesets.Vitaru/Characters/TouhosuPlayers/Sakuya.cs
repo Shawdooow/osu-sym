@@ -5,7 +5,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 {
     public class Sakuya : TouhosuPlayer
     {
-        public override string Name => "SakuyaIzayoi";
+        public override string Name => "Sakuya Izayoi";
+
+        public override string FileName => "SakuyaIzayoi";
 
         public override double MaxHealth => 100;
 
