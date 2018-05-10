@@ -15,6 +15,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
                 new MultiplayerSection(),
                 new CodeSection(),
                 new CreditsSection(),
+                new ChangelogSection()
             };
     }
 }
