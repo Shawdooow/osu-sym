@@ -191,6 +191,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,
 
+                    Position = new Vector2(-10, 0),
+
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
 
@@ -207,7 +209,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
                             Child = vitaruCharacterDropdown = new SettingsDropdown<string>
                             {
-                                LabelText = "Selected Vitaru Character",
                                 Items = vitaruItems.Distinct().ToList()
                             },
                         },
@@ -222,7 +223,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
                             Child = touhosuCharacterDropdown = new SettingsDropdown<string>
                             {
-                                LabelText = "Selected Touhosu Character",
                                 Items = touhosuItems.Distinct().ToList()
                             },
                         },
