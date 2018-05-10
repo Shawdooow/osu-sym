@@ -25,10 +25,7 @@ namespace osu.Game.Rulesets.Vitaru
 {
     public class VitaruRuleset : Ruleset
     {
-        /// <summary>
-        /// Used for Online Multiplayer compatibility
-        /// </summary>
-        public const string RulesetVersion = "0.7.6";
+        public const string RulesetVersion = "0.7.7";
 
         public override int? LegacyID => 4; 
 

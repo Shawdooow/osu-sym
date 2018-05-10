@@ -66,7 +66,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "Circle Size (CS) affects bullet size.\n" +
                         "Accuracy (OD) affects how large the graze box is / how forgiving the score zones are.\n" +
                         "Health Drain (HP) affects nothing atm (will affect how much damage bullets do to you).\n" +
-                        "Approach Rate (AR) affects enemy enter + leave speeds.\n\n" +
+                        "Approach Rate (AR) affects enemy enter + leave speeds.\n" +
+                        "Slider Velocity (SV) affects bullet speeds.\n" +
+                        "Hitsounds affect the pattern that will be thrown, see the \"Patterns\" subsection for more\n\n" +
                         "Object positions are mapped to the top half of the playfield (or whole playfield for dodge) in the same orientation as standard."));
 
             Content.Add(new WikiSubSectionHeader("Controls"));
@@ -77,9 +79,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "D = Right\n" +
                         "Shift = Slow the player to half speed and show the hitbox.\n" +
                         //"Space = Speed up to twice as fast (vitaru gamemode only)\n" +
-                        "Left Mouse = Shoot (while in vitaru or touhosu mode)\n" +
-                        "Right mouse = Spell (while in touhosu mode)\n\n" +
-                        "Some individual character's spells will use additional binds, those will be listed in their spell's description under the \"Characters\" section."));
+                        "Left Mouse = Shoot (while in vitaru or touhosu mode)"));
 
             Content.Add(new WikiSubSectionHeader("Anatomy"));
             Content.Add(new WikiParagraph("Lets get you familiar with the anatomy of the Player first. " +
@@ -180,7 +180,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             Content.Add(new WikiParagraph("Mods affect gameplay just like the other rulesets in the game, but here is how they affect vitaru so you aren't scratching your head trying to figure it out just by playing with it."));
             Content.Add(modsDescription = new WikiOptionEnumExplanation<Mod>(selectedMod));
             Content.Add(new WikiSubSectionHeader("Characters"));
-            Content.Add(new WikiParagraph("Selecting a different character is purely cosmetic."));
+            Content.Add(new WikiParagraph("Selecting a different character is purely cosmetic, except in Touhosu mode. " +
+                "In touhosu mode your stats will also be changed and are listed here when set to touhosu mode."));
             Content.Add(new WikiSplitColum(
                 new Container
                 {
@@ -224,7 +225,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         },
                     }
                 },
-                characterDescription = new WikiParagraph("Whoops! You should not be seeing this text. . .")
+                characterDescription = new WikiParagraph("Erm, looks like you found a spooky easter egg! Please go tell Shawdooow you broke something. . .")
                 ));
 
             vitaruCharacterDropdown.Bindable = selectedVitaruCharacter;
@@ -333,24 +334,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                 {
                     default:
                         modsDescription.Description.Text = "Check back later!";
-                        break;
-                    case Mod.Easy:
-                        modsDescription.Description.Text = "Bullets are smaller (Singleplayer only),\n" +
-                        "You deal more damage (Multiplayer only),\n" +
-                        "You take less damage,\n" +
-                        "In Touhosu mode you will generate energy faster.";
-                        break;
-                    case Mod.Hidden:
-                        modsDescription.Description.Text = "Bullets fade out over time";
-                        break;
-                    case Mod.Flashlight:
-                        modsDescription.Description.Text = "Bullets are only visable near you";
-                        break;
-                    case Mod.HardRock:
-                        modsDescription.Description.Text = "You deal less damage (Singleplayer only),\n" +
-                        "Your Hitbox is larger,\n" +
-                        "You take more damage,\n" +
-                        "In Touhosu mode you will generate energy slower.";
                         break;
                 }
             };
