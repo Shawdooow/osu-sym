@@ -13,14 +13,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         private const string file_extention = ".vitaru";
 
-        private const string version_changelog = "-Tweak changelog section code to be a bit easier to use (getting ready to absract it for all rulesets to use)\n" +
-            "-Update wiki to be more accurate + hide some sections\n" +
-            "-Fix wedge pattern\n" +
-            "-Made circle pattern harder (increased default bullet count from 8 to 12)\n" +
-            //"-Made wave pattern harder (increased default bullet count from 5 to 7)\n" +
-            "-Nerf Sakuya's energy drain per second (increased from 4 to 6)\n" +
-            "-Show current clock rate for Sakuya\n" +
-            "-Change characters who use energy over time to rather than also having a initiation cost by default a minimum energy to start (still listed on wiki and in code as EnergyCost for now)";
+        private const string version_changelog = "-Co-op online multiplayer";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)

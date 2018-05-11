@@ -8,10 +8,12 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
+using Symcol.Core.Networking;
 using System;
 using System.Collections.Generic;
 using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
@@ -55,15 +57,25 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         protected readonly Container Cursor;
 
+        protected readonly VitaruNetworkingClientHandler VitaruNetworkingClientHandler;
+
+        /// <summary>
+        /// Are we a slave over the net?
+        /// </summary>
+        public bool Puppet;
+
+        public string PlayerID;
+
         private double lastQuarterBeat = -1;
         private double nextHalfBeat = -1;
         private double nextQuarterBeat = -1;
         private double beatLength = 1000;
         #endregion
 
-        public DrawableVitaruPlayer(VitaruPlayfield playfield, VitaruPlayer player) : base(playfield)
+        public DrawableVitaruPlayer(VitaruPlayfield playfield, VitaruPlayer player, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield)
         {
             Player = player;
+            VitaruNetworkingClientHandler = vitaruNetworkingClientHandler;
 
             Actions[VitaruAction.Up] = false;
             Actions[VitaruAction.Down] = false;
@@ -190,7 +202,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                     ParseBullet(bullet);
 
             Position = GetNewPlayerPosition(0.25d);
-            Cursor.Position = VitaruCursor.CenterCircle.ToSpaceOfOtherDrawable(Vector2.Zero, Parent) + new Vector2(6);
+
+            if (!Puppet)
+                Cursor.Position = VitaruCursor.CenterCircle.ToSpaceOfOtherDrawable(Vector2.Zero, Parent) + new Vector2(6);
 
             if (nextHalfBeat <= Time.Current && nextHalfBeat != -1)
                 onHalfBeat();
@@ -384,6 +398,56 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             //sendPacket(VitaruAction.None, action);
 
             return true;
+        }
+        #endregion
+
+        #region Networking Handling
+        private void sendPacket(VitaruAction pressedAction = VitaruAction.None, VitaruAction releasedAction = VitaruAction.None)
+        {
+            if (VitaruNetworkingClientHandler != null && !Puppet)
+            {
+                VitaruPlayerInformation playerInformation = new VitaruPlayerInformation
+                {
+                    Character = Player.FileName,
+                    CursorX = Cursor.Position.X,
+                    CursorY = Cursor.Position.Y,
+                    PlayerX = Position.X,
+                    PlayerY = Position.Y,
+                    PlayerID = PlayerID,
+                    PressedAction = pressedAction,
+                    ReleasedAction = releasedAction,
+                };
+
+                ClientInfo clientInfo = new ClientInfo
+                {
+                    IP = VitaruNetworkingClientHandler.ClientInfo.IP,
+                    Port = VitaruNetworkingClientHandler.ClientInfo.Port
+                };
+
+                VitaruInMatchPacket packet = new VitaruInMatchPacket(clientInfo) { PlayerInformation = playerInformation };
+
+                VitaruNetworkingClientHandler.SendToHost(packet);
+                VitaruNetworkingClientHandler.SendToInGameClients(packet);
+            }
+        }
+
+        private void packetReceived(Packet p)
+        {
+            if (p is VitaruInMatchPacket packet && Puppet)
+            {
+                VitaruNetworkingClientHandler.ShareWithOtherPeers(packet);
+
+                if (packet.PlayerInformation.PlayerID == PlayerID)
+                {
+                    Position = new Vector2(packet.PlayerInformation.PlayerX, packet.PlayerInformation.PlayerY);
+                    Cursor.Position = new Vector2(packet.PlayerInformation.CursorX, packet.PlayerInformation.CursorY);
+
+                    if (packet.PlayerInformation.PressedAction != VitaruAction.None)
+                        Pressed(packet.PlayerInformation.PressedAction);
+                    if (packet.PlayerInformation.ReleasedAction != VitaruAction.None)
+                        Released(packet.PlayerInformation.ReleasedAction);
+                }
+            }
         }
         #endregion
     }

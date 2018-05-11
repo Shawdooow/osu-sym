@@ -1,4 +1,5 @@
 ﻿using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 
@@ -18,7 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         protected double SpellEndTime { get; set; } = double.MinValue;
 
-        public DrawableTouhosuPlayer(VitaruPlayfield playfield, TouhosuPlayer player) : base(playfield, player)
+        public DrawableTouhosuPlayer(VitaruPlayfield playfield, TouhosuPlayer player, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, player, vitaruNetworkingClientHandler)
         {
             TouhosuPlayer = player;
         }

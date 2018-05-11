@@ -4,6 +4,7 @@ using osu.Framework.Audio;
 using osu.Framework.Configuration;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 
@@ -21,7 +22,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         private readonly Bindable<int> abstraction;
         #endregion
 
-        public DrawableRyukoy(VitaruPlayfield playfield, Bindable<int> abstraction) : base(playfield, new Ryukoy())
+        public DrawableRyukoy(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler, Bindable<int> abstraction) : base(playfield, new Ryukoy(), vitaruNetworkingClientHandler)
         {
             this.abstraction = abstraction;
             Abstraction = 3;

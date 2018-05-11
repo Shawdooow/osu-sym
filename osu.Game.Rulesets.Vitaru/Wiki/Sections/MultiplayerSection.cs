@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             Content.Add(new WikiParagraph("Vitaru comes equiped with both online and offline multiplayer (offline with bots*, \"split screen\" shall appear in the future)."));
             Content.Add(new WikiSubSectionHeader("Offline (Currently Disabled for Updates)"));
             Content.Add(new WikiParagraph("Currently Offline is in very early stages of development."));
-            Content.Add(new WikiSubSectionHeader("Online (Currently Disabled for Updates)"));
+            Content.Add(new WikiSubSectionHeader("Online"));
             Content.Add(new WikiParagraph("Vitaru now comes equiped with online multiplayer (provided you have the required osu.Game Symcol mods)."));
         }
     }

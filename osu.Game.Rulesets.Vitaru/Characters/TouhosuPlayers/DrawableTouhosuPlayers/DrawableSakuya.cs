@@ -4,6 +4,7 @@ using osu.Framework.Audio;
 using osu.Framework.Configuration;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 
@@ -21,7 +22,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
         #endregion
 
-        public DrawableSakuya(VitaruPlayfield playfield) : base(playfield, new Sakuya())
+        public DrawableSakuya(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Sakuya(), vitaruNetworkingClientHandler)
         {
             Spell += (action) =>
             {

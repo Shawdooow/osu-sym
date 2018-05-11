@@ -13,9 +13,9 @@ namespace osu.Game.Rulesets.Vitaru.Multi
 
         public float PlayerY;
 
-        public float MouseX;
+        public float CursorX;
 
-        public float MouseY;
+        public float CursorY;
 
         public float ClockSpeed;
 
