@@ -117,12 +117,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                 halfOfBullets = (bulletCount - 1) / 2;
 
             double directionModifier = ((Math.PI / 2) / (bulletCount - 1));
-            double directionModifierModifier = (directionModifier / halfOfBullets);
             double direction = angle - Math.PI / 4;
 
             double speedModifier = ((speed * 1.5f) - (speed * 0.75f)) / bulletCount;
-
-            speed *= 0.8f;
 
             for (int i = 1; i <= bulletCount; i++)
             {
@@ -131,23 +128,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                     StartTime = startTime,
                     Position = position,
                     BulletSpeed = (float)speed,
-                    BulletAngle = direction,
+                    BulletAngle = i % 2 == 0 ? (angle - direction) : (angle + direction),
                     BulletDiameter = (float)diameter,
                     BulletDamage = (float)damage,
                     Team = team,
                 });
 
-                if (i <= halfOfBullets)
-                {
-                    speed += speedModifier;
-                    direction += directionModifier;
-                    directionModifier -= directionModifierModifier;
-                }
-                else
+                if (i % 2 == 0)
                 {
                     speed -= speedModifier;
-                    direction += directionModifier;
-                    directionModifier += directionModifierModifier;
+                    direction -= directionModifier;
                 }
             }
 
@@ -158,7 +148,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         {
             List<Bullet> bullets = new List<Bullet>();
 
-            int bulletCount = (int)(complexity * 8);
+            int bulletCount = (int)(complexity * 16);
             double directionModifier = ((Math.PI * 2) / bulletCount);
             double direction = Math.PI / 2;
 

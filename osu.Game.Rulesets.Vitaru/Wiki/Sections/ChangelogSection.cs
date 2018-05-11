@@ -14,7 +14,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         private const string file_extention = ".vitaru";
 
         private const string version_changelog = "-Tweak changelog section code to be a bit easier to use (getting ready to absract it for all rulesets to use)\n" +
-            "-Update wiki to be more accurate + hide some sections";
+            "-Update wiki to be more accurate + hide some sections\n" +
+            "-Fix wedge pattern\n" +
+            "-Made circle pattern harder by default (doubled amount of bullets in it)";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)

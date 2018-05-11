@@ -61,15 +61,17 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
             Content.Add(new WikiParagraph("Your objective in vitaru is simple, don't get hit by the bullets flying at you, although this is easier said than done."));
 
-            Content.Add(new WikiSubSectionHeader("Converts - Difficulty"));
-            Content.Add(new WikiParagraph("The way vitaru converts standard maps to vitaru maps.\n\n" +
-                        "Circle Size (CS) affects bullet size.\n" +
+            Content.Add(new WikiSubSectionHeader("Converts (Standard => Vitaru)"));
+            Content.Add(new WikiParagraph("Circle Size (CS) affects bullet size.\n" +
                         "Accuracy (OD) affects how large the graze box is / how forgiving the score zones are.\n" +
                         "Health Drain (HP) affects nothing atm (will affect how much damage bullets do to you).\n" +
                         "Approach Rate (AR) affects enemy enter + leave speeds.\n" +
                         "Slider Velocity (SV) affects bullet speeds.\n" +
                         "Hitsounds affect the pattern that will be thrown, see the \"Patterns\" subsection for more\n\n" +
                         "Object positions are mapped to the top half of the playfield (or whole playfield for dodge) in the same orientation as standard."));
+
+            Content.Add(new WikiSubSectionHeader("Patterns"));
+            Content.Add(new WikiParagraph("Check back later!"));
 
             Content.Add(new WikiSubSectionHeader("Controls"));
             Content.Add(new WikiParagraph("Controls by default will probably be the most confortable and fitting for all of the gamemodes in this ruleset (if they aren't / weren't they will be changed before release).\n\n" +
