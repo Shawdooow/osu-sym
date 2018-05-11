@@ -271,7 +271,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                     "-Health: " + touhosuPlayer.MaxHealth +
                     "\n-Energy: " + touhosuPlayer.MaxEnergy +
                     "\n-Energy Cost: " + touhosuPlayer.EnergyCost +
-                    "\n-Energy Cost per Second: " + touhosuPlayer.EnergyCostPerSecond +
+                    "\n-Energy Drain Rate: " + touhosuPlayer.EnergyDrainRate +
                     "\n-Role: " + touhosuPlayer.Role +
                     "\n-Difficulty: " + touhosuPlayer.Difficulty + 
                     "\n-Spell: " + touhosuPlayer.Spell +

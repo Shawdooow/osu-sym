@@ -36,7 +36,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
             if (Energy >= TouhosuPlayer.EnergyCost && !SpellActive)
             {
                 SpellActive = true;
-                Energy -= TouhosuPlayer.EnergyCost;
+
+                if (TouhosuPlayer.EnergyDrainRate == 0)
+                    Energy -= TouhosuPlayer.EnergyCost;
+
                 Spell?.Invoke(action);
                 return true;
             }

@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                     else if (currentRate >= 1)
                         energyDrainMultiplier = currentRate - 1;
 
-                    Energy -= Clock.ElapsedFrameTime / 1000 * (1 / currentRate) * TouhosuPlayer.EnergyCostPerSecond * energyDrainMultiplier;
+                    Energy -= Clock.ElapsedFrameTime / 1000 * (1 / currentRate) * TouhosuPlayer.EnergyDrainRate * energyDrainMultiplier;
 
                     if (currentRate > 0)
                         SpellEndTime = Time.Current + 2000;

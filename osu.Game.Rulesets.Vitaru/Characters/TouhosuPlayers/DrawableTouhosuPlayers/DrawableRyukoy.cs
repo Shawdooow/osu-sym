@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
             if (SpellActive)
             {
-                Energy -= (Clock.ElapsedFrameTime / 1000) * TouhosuPlayer.EnergyCostPerSecond * (level * 0.25f);
+                Energy -= (Clock.ElapsedFrameTime / 1000) * TouhosuPlayer.EnergyDrainRate * (level * 0.25f);
 
                 abstraction.Value = level;
                 applyToClock(workingBeatmap.Value.Track, setPitch);

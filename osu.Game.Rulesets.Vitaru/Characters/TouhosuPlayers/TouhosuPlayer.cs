@@ -4,11 +4,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 {
     public class TouhosuPlayer : VitaruPlayer
     {
-        public virtual double MaxEnergy { get; } = 24;
+        public virtual double MaxEnergy { get; } = 0;
 
-        public virtual double EnergyCost { get; } = 2;
+        public virtual double EnergyCost { get; } = 0;
 
-        public virtual double EnergyCostPerSecond { get; } = 4;
+        public virtual double EnergyDrainRate { get; } = 0;
 
         public virtual string Spell { get; } = "None";
 

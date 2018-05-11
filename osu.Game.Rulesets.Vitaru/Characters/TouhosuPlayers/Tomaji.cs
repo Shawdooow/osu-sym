@@ -10,7 +10,7 @@
 
         public override double EnergyCost => base.EnergyCost;
 
-        public override double EnergyCostPerSecond => base.EnergyCostPerSecond;
+        public override double EnergyDrainRate => base.EnergyDrainRate;
 
         public override string Background => "Tomaji has always been over shadowed by his older sister Ryukoy who is next in line to be the Hakurei Maiden, though he has never minded. " +
             "He had the option to take of to some exotic place far away if he wanted, but he didn't. " +
