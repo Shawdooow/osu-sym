@@ -18,7 +18,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Fix wedge pattern\n" +
             "-Made circle pattern harder (increased default bullet count from 8 to 16)\n" +
             "-Made wave pattern harder (increased default bullet count from 5 to 7)\n" +
-            "-Nerf Sakuya's energy drain per second (increased from 4 to 6)";
+            "-Nerf Sakuya's energy drain per second (increased from 4 to 6)\n" +
+            "-Show current clock rate for Sakuya";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)

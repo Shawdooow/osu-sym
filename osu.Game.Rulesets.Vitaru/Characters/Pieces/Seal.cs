@@ -10,9 +10,8 @@ using osu.Framework.Platform;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.MathUtils;
 using osu.Framework.Graphics.Effects;
-using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
-using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
+using osu.Game.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
 {
@@ -21,6 +20,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
         public Container Sign { get; private set; }
 
         private CircularContainer characterSigil;
+
+        private OsuSpriteText rightValue;
+        private OsuSpriteText leftValue;
 
         private CircularProgress health;
         private CircularProgress energy;
@@ -115,6 +117,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                         Alpha = 0.2f,
                         Size = new Vector2(1.75f),
                         Padding = new MarginPadding(-Blur.KernelSize(5)),
+
                         Child = (energy = new CircularProgress
                         {
                             RelativeSizeAxes = Axes.Both,
@@ -127,9 +130,49 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                             PadExtent = true
                         }),
                     },
+                    new Container
+                    {
+                        Position = new Vector2(-30, 0),
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.CentreRight,
+
+                        Child = (leftValue = new OsuSpriteText
+                        {
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreRight,
+                            Colour = t.ComplementaryColor,
+                            Font = "Venera",
+                            TextSize = 16,
+                            Alpha = 0.75f,
+                        }).WithEffect(new GlowEffect
+                        {
+                            Colour = Color4.Transparent,
+                            PadExtent = true,
+                        }),
+                    },
+                    new Container
+                    {
+                        Position = new Vector2(30, 0),
+                        Anchor = Anchor.CentreRight,
+                        Origin = Anchor.CentreLeft,
+
+                        Child = (rightValue = new OsuSpriteText
+                        {
+                            Anchor = Anchor.CentreRight,
+                            Origin = Anchor.CentreLeft,
+                            Colour = t.SecondaryColor,
+                            Font = "Venera",
+                            TextSize = 16,
+                            Alpha = 0.75f,
+                        }).WithEffect(new GlowEffect
+                        {
+                            Colour = Color4.Transparent,
+                            PadExtent = true,
+                        }),
+                    },
                 };
 
-                switch (t.TouhosuPlayer.Name)
+                switch (t.TouhosuPlayer.FileName)
                 {
                     default:
                         break;
@@ -225,7 +268,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                 health.Current.Value = t.Health / t.MaxHealth;
                 energy.Current.Value = t.Energy / t.TouhosuPlayer.MaxEnergy;
 
-                switch (t.TouhosuPlayer.Name)
+                switch (t.TouhosuPlayer.FileName)
                 {
                     default:
                         break;
@@ -236,6 +279,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                         gear3.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * speed);
                         gear4.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);
                         gear5.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
+                        DrawableSakuya s = t as DrawableSakuya;
+                        leftValue.Text = s.SetRate.ToString();
                         break;
                 }
             }
