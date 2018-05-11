@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         {
             List<Bullet> bullets = new List<Bullet>();
 
-            int bulletCount = (int)(complexity * 5);
+            int bulletCount = (int)(complexity * 7);
             double directionModifier = ((Math.PI / 2) / (bulletCount - 1));
             double direction = angle - Math.PI / 4;
 

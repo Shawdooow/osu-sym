@@ -16,14 +16,18 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         private const string version_changelog = "-Tweak changelog section code to be a bit easier to use (getting ready to absract it for all rulesets to use)\n" +
             "-Update wiki to be more accurate + hide some sections\n" +
             "-Fix wedge pattern\n" +
-            "-Made circle pattern harder by default (doubled amount of bullets in it)";
+            "-Made circle pattern harder (increased default bullet count from 8 to 16)\n" +
+            "-Made wave pattern harder (increased default bullet count from 5 to 7)\n" +
+            "-Nerf Sakuya's energy drain per second (increased from 4 to 6)";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)
         {
             Storage changelogStorage = storage.GetStorageForDirectory("vitaru");
 
-            Content.Add(new WikiParagraph("This changelog is cumulative, meaning only versions you install and run will be added here. They are saved as text files in your osu! storage"));
+            Content.Add(new WikiParagraph("This changelog is cumulative, meaning only versions you install and run will be added here. " +
+                "They are saved as text files in your osu! storage. " +
+                "Below are all the versions you have saved + this version (" + VitaruRuleset.RulesetVersion + ")."));
 
             try
             {
