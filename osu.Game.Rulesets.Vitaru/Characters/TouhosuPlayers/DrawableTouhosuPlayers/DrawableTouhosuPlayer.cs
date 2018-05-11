@@ -26,7 +26,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         protected override void Update()
         {
             base.Update();
-
             SpellUpdate();
         }
 
@@ -35,11 +34,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         {
             if (Energy >= TouhosuPlayer.EnergyCost && !SpellActive)
             {
-                SpellActive = true;
-
                 if (TouhosuPlayer.EnergyDrainRate == 0)
                     Energy -= TouhosuPlayer.EnergyCost;
 
+                SpellActive = true;
                 Spell?.Invoke(action);
                 return true;
             }
@@ -55,7 +53,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         protected virtual void SpellUpdate()
         {
             if (CanHeal)
-                Energy = Math.Min((float)Clock.ElapsedFrameTime / 500 + Energy, TouhosuPlayer.MaxEnergy);
+                Energy = Math.Min(Clock.ElapsedFrameTime / 500 + Energy, TouhosuPlayer.MaxEnergy);
 
             if (Energy <= 0)
             {
