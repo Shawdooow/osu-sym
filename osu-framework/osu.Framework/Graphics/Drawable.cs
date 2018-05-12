@@ -1282,8 +1282,7 @@ namespace osu.Framework.Graphics
             Drawable search = Parent;
             while (search != null)
             {
-                var test = search as InputManager;
-                if (test != null) return test;
+                if (search is InputManager test) return test;
 
                 search = search.Parent;
             }
@@ -2207,7 +2206,7 @@ namespace osu.Framework.Graphics
         /// </summary>
         MiscGeometry = 1 << 2,
         /// <summary>
-        /// Our colour changed.
+        /// <see cref="Drawable.Colour"/> or <see cref="Drawable.IsPresent"/> has changed.
         /// </summary>
         Colour = 1 << 3,
         /// <summary>

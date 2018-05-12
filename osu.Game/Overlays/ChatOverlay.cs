@@ -198,7 +198,7 @@ namespace osu.Game.Overlays
                 {
                     textbox.HoldFocus = false;
                     if (1f - ChatHeight.Value < channel_selection_min_height)
-                        transformChatHeightTo(1f - channel_selection_min_height, 800, Easing.OutQuint);
+                        this.TransformBindableTo(ChatHeight, 1f - channel_selection_min_height, 800, Easing.OutQuint);
                 }
                 else
                     textbox.HoldFocus = true;
@@ -549,27 +549,6 @@ namespace osu.Game.Overlays
             req.Success += m => target.ReplaceMessage(message, m);
 
             api.Queue(req);
-        }
-
-        private void transformChatHeightTo(double newChatHeight, double duration = 0, Easing easing = Easing.None)
-        {
-            this.TransformTo(this.PopulateTransform(new TransformChatHeight(), newChatHeight, duration, easing));
-        }
-
-        private class TransformChatHeight : Transform<double, ChatOverlay>
-        {
-            private double valueAt(double time)
-            {
-                if (time < StartTime) return StartValue;
-                if (time >= EndTime) return EndValue;
-
-                return Interpolation.ValueAt(time, StartValue, EndValue, StartTime, EndTime, Easing);
-            }
-
-            public override string TargetMember => "ChatHeight.Value";
-
-            protected override void Apply(ChatOverlay d, double time) => d.ChatHeight.Value = valueAt(time);
-            protected override void ReadIntoStartValue(ChatOverlay d) => StartValue = d.ChatHeight.Value;
         }
     }
 }
