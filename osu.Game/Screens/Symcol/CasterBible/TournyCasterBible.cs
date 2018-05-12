@@ -571,7 +571,7 @@ namespace osu.Game.Screens.Symcol.CasterBible
                 name.Text = workingBeatmap.BeatmapSetInfo.Metadata.Title;
                 artist.Text = "By: " + workingBeatmap.BeatmapSetInfo.Metadata.Artist;
                 difficulty.Text = workingBeatmap.BeatmapInfo.Version + " (" + Math.Round(workingBeatmap.BeatmapInfo.StarDifficulty, 2) + " stars) mapped by " + workingBeatmap.BeatmapInfo.Metadata.AuthorString;
-                time.Text = getBPMRange(workingBeatmap.Beatmap) + " bpm for " + TimeSpan.FromMilliseconds(endTime - workingBeatmap.Beatmap.HitObjects.First().StartTime).ToString(@"m\:ss");
+                //time.Text = getBPMRange(workingBeatmap.Beatmap) + " bpm for " + TimeSpan.FromMilliseconds(endTime - workingBeatmap.Beatmap.HitObjects.First().StartTime).ToString(@"m\:ss");
 
                 BorderColour = getColour(workingBeatmap.BeatmapInfo);
                 EdgeEffect = new EdgeEffectParameters

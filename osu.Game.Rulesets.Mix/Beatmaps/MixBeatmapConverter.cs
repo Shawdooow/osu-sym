@@ -1,5 +1,4 @@
-﻿using OpenTK;
-using osu.Game.Beatmaps;
+﻿using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Mix.Objects;
 using System.Collections.Generic;

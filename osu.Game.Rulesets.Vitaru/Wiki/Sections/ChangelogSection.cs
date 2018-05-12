@@ -13,7 +13,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         private const string file_extention = ".vitaru";
 
-        private const string version_changelog = "-Co-op online multiplayer";
+        private const string version_changelog = "-Update to lazer version 2018.511.0\n" +
+            "-Co-op online multiplayer";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)

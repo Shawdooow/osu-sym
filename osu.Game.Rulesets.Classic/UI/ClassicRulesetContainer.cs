@@ -21,18 +21,14 @@ namespace osu.Game.Rulesets.Classic.UI
 {
     public class ClassicRulesetContainer : RulesetContainer<ClassicHitObject>
     {
-        public ClassicRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap, bool isForCurrentRuleset)
-            : base(ruleset, beatmap, isForCurrentRuleset)
+        public ClassicRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap)
+            : base(ruleset, beatmap)
         {
         }
 
         protected override CursorContainer CreateCursor() => new GameplayCursor();
 
         public override ScoreProcessor CreateScoreProcessor() => new ClassicScoreProcessor(this);
-
-        protected override BeatmapConverter<ClassicHitObject> CreateBeatmapConverter() => new ClassicBeatmapConverter();
-
-        protected override BeatmapProcessor<ClassicHitObject> CreateBeatmapProcessor() => new ClassicBeatmapProcessor();
 
         protected override Playfield CreatePlayfield() => new ClassicPlayfield();
 

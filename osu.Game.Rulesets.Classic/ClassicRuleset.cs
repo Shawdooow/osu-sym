@@ -14,19 +14,21 @@ using System.Linq;
 using osu.Framework.Graphics;
 using osu.Game.Overlays.Settings;
 using osu.Framework.Input.Bindings;
-using osu.Framework.Audio;
 using osu.Framework.IO.Stores;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Classic.Settings;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Classic.Edit;
+using osu.Game.Rulesets.Classic.Beatmaps;
 
 namespace osu.Game.Rulesets.Classic
 {
     public class ClassicRuleset : Ruleset
     {
-        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap, bool isForCurrentRuleset) => new ClassicRulesetContainer(this, beatmap, isForCurrentRuleset);
+        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap) => new ClassicRulesetContainer(this, beatmap);
+        public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new ClassicBeatmapConverter(beatmap);
+        public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new ClassicBeatmapProcessor(beatmap);
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
@@ -34,22 +36,6 @@ namespace osu.Game.Rulesets.Classic
             new KeyBinding(InputKey.X, ClassicAction.RightButton),
             new KeyBinding(InputKey.MouseLeft, ClassicAction.LeftButton),
             new KeyBinding(InputKey.MouseRight, ClassicAction.RightButton),
-        };
-
-        public override IEnumerable<BeatmapStatistic> GetBeatmapStatistics(WorkingBeatmap beatmap) => new[]
-            {
-            new BeatmapStatistic
-            {
-                Name = @"Circle count",
-                Content = beatmap.Beatmap.HitObjects.Count(h => h is HitCircle).ToString(),
-                Icon = FontAwesome.fa_dot_circle_o
-            },
-            new BeatmapStatistic
-            {
-                Name = @"Slider count",
-                Content = beatmap.Beatmap.HitObjects.Count(h => h is Slider).ToString(),
-                Icon = FontAwesome.fa_circle_o
-            }
         };
 
         public override IEnumerable<Mod> GetModsFor(ModType type)
@@ -110,7 +96,7 @@ namespace osu.Game.Rulesets.Classic
             }
         }
 
-        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap, Mod[] mods = null) => new ClassicDifficultyCalculator(beatmap, mods);
+        public override DifficultyCalculator CreateDifficultyCalculator(IBeatmap beatmap, Mod[] mods = null) => new ClassicDifficultyCalculator(beatmap, mods);
 
         public override int? LegacyID => 6;
 

@@ -12,14 +12,20 @@ using osu.Game.Rulesets.Circles.OsuDifficulty.Skills;
 
 namespace osu.Game.Rulesets.Classic.ClassicDifficulty
 {
-    public class ClassicDifficultyCalculator : DifficultyCalculator<ClassicHitObject>
+    public class ClassicDifficultyCalculator : DifficultyCalculator
     {
         private const int section_length = 400;
         private const double difficulty_multiplier = 0.0675;
 
-        public ClassicDifficultyCalculator(Beatmap beatmap) : base(beatmap) { }
+        public ClassicDifficultyCalculator(IBeatmap beatmap)
+            : base(beatmap)
+        {
+        }
 
-        public ClassicDifficultyCalculator(Beatmap beatmap, Mod[] mods) : base(beatmap, mods) { }
+        public ClassicDifficultyCalculator(IBeatmap beatmap, Mod[] mods)
+            : base(beatmap, mods)
+        {
+        }
 
         protected override void PreprocessHitObjects()
         {
@@ -29,7 +35,7 @@ namespace osu.Game.Rulesets.Classic.ClassicDifficulty
 
         public override double Calculate(Dictionary<string, double> categoryDifficulty = null)
         {
-            OsuDifficultyBeatmap beatmap = new OsuDifficultyBeatmap(Beatmap.HitObjects, TimeRate);
+            OsuDifficultyBeatmap beatmap = new OsuDifficultyBeatmap((List<ClassicHitObject>)Beatmap.HitObjects, TimeRate);
             Skill[] skills =
             {
                 new Aim(),
@@ -68,6 +74,6 @@ namespace osu.Game.Rulesets.Classic.ClassicDifficulty
             return starRating;
         }
 
-        protected override BeatmapConverter<ClassicHitObject> CreateBeatmapConverter(Beatmap beatmap) => new ClassicBeatmapConverter();
+        //protected override BeatmapConverter<ClassicHitObject> CreateBeatmapConverter(IBeatmap beatmap) => new ClassicBeatmapConverter();
     }
 }

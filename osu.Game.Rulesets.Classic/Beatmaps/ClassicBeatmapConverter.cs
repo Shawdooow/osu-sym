@@ -23,9 +23,14 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
 
         private bool firstObject = true;
 
+        public ClassicBeatmapConverter(IBeatmap beatmap)
+        : base(beatmap)
+        {
+        }
+
         protected override IEnumerable<Type> ValidConversionTypes { get; } = new[] { typeof(IHasPosition) };
 
-        protected override IEnumerable<ClassicHitObject> ConvertHitObject(HitObject original, Beatmap beatmap)
+        protected override IEnumerable<ClassicHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
         {
             var curveData = original as IHasCurve;
             var endTimeData = original as IHasEndTime;
