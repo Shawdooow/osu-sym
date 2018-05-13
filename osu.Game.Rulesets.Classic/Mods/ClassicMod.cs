@@ -107,27 +107,6 @@ namespace osu.Game.Rulesets.Classic.Mods
         }
     }
 
-    public class ClassicModHardRock : ModHardRock, IApplicableToHitObject<ClassicHitObject>
-    {
-        public override double ScoreMultiplier => 1.06;
-        public override bool Ranked => true;
-
-        public void ApplyToHitObject(ClassicHitObject hitObject)
-        {
-            hitObject.Position = new Vector2(hitObject.Position.X, ClassicPlayfield.BASE_SIZE.Y - hitObject.Y);
-
-            var slider = hitObject as Slider;
-            if (slider == null)
-                return;
-
-            var newControlPoints = new List<Vector2>();
-            slider.ControlPoints.ForEach(c => newControlPoints.Add(new Vector2(c.X, ClassicPlayfield.BASE_SIZE.Y - c.Y)));
-
-            slider.ControlPoints = newControlPoints;
-            slider.Curve?.Calculate(); // Recalculate the slider curve
-        }
-    }
-
     public class ClassicModSuddenDeath : ModSuddenDeath
     {
         public override Type[] IncompatibleMods => base.IncompatibleMods.Concat(new[] { typeof(ClassicModAutopilot) }).ToArray();

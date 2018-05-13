@@ -9,21 +9,19 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
     /// <summary>
     /// Most of this is copied from OsuDifficultyCalculator ATM
     /// </summary>
-    public class VitaruDifficultyCalculator : DifficultyCalculator<VitaruHitObject>
+    public class VitaruDifficultyCalculator : DifficultyCalculator
     {
         private const double star_scaling_factor = 0.0675;
 
         internal List<VitaruHitObjectDifficulty> DifficultyHitObjects = new List<VitaruHitObjectDifficulty>();
 
-        public VitaruDifficultyCalculator(Beatmap beatmap, Mod[] mods) : base(beatmap, mods) { }
+        public VitaruDifficultyCalculator(IBeatmap beatmap, Mod[] mods) : base(beatmap, mods) { }
 
         protected override void PreprocessHitObjects()
         {
             //foreach (Pattern h in Beatmap.HitObjects)
                 //h.Curve?.Calculate();
         }
-
-        protected override BeatmapConverter<VitaruHitObject> CreateBeatmapConverter(Beatmap beatmap) => new VitaruBeatmapConverter();
 
         public override double Calculate(Dictionary<string, double> categoryDifficulty = null)
         {

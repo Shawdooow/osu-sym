@@ -15,16 +15,12 @@ namespace osu.Game.Rulesets.Mix
 {
     internal class MixRulesetContainer : RulesetContainer<MixHitObject>
     {
-        public MixRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap, bool isForCurrentRuleset)
-            : base(ruleset, beatmap, isForCurrentRuleset)
+        public MixRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap)
+            : base(ruleset, beatmap)
         {
         }
 
         public override ScoreProcessor CreateScoreProcessor() => new MixScoreProcessor(this);
-
-        protected override BeatmapConverter<MixHitObject> CreateBeatmapConverter() => new MixBeatmapConverter();
-
-        protected override BeatmapProcessor<MixHitObject> CreateBeatmapProcessor() => new MixBeatmapProcessor();
 
         protected override Playfield CreatePlayfield() => new MixPlayfield
         {

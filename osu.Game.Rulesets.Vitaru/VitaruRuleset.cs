@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using osu.Game.Rulesets.UI;
-using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Vitaru.Mods;
 using osu.Framework.Graphics.Textures;
@@ -9,17 +7,15 @@ using osu.Game.Overlays.Settings;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Bindings;
-using osu.Game.Graphics;
 using System.Linq;
-using osu.Game.Rulesets.Scoring;
-using osu.Game.Rulesets.Vitaru.Scoring;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.Edit;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Vitaru.Objects;
-using osu.Game.Rulesets.Vitaru.UI;
 using System;
+using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Beatmaps;
+using osu.Game.Rulesets.UI;
+using osu.Game.Rulesets.Vitaru.UI;
 
 namespace osu.Game.Rulesets.Vitaru
 {
@@ -28,8 +24,6 @@ namespace osu.Game.Rulesets.Vitaru
         public const string RulesetVersion = "0.8.0";
 
         public override int? LegacyID => 4; 
-
-        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap, bool isForCurrentRuleset) => new VitaruRulesetContainer(this, beatmap, isForCurrentRuleset);
 
         public override string Description => "vitaru!";
 
@@ -118,20 +112,6 @@ namespace osu.Game.Rulesets.Vitaru
             return (ControlScheme)Enum.GetValues(typeof(ControlScheme)).Cast<int>().OrderByDescending(i => i).First(v => variant >= v);
         }
 
-        public override IEnumerable<BeatmapStatistic> GetBeatmapStatistics(WorkingBeatmap beatmap) => new[]
-        {
-            new BeatmapStatistic
-            {
-                Name = @"Pattern count",
-                Content = beatmap.Beatmap.HitObjects.Count(h => h is Pattern).ToString(),
-                Icon = FontAwesome.fa_dot_circle_o
-            }
-        };
-
-        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap, Mod[] mods = null) => new VitaruDifficultyCalculator(beatmap, mods);
-
-        public override PerformanceCalculator CreatePerformanceCalculator(Beatmap beatmap, Score score) => new VitaruPerformanceCalculator(this, beatmap, score);
-
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {
             switch (type)
@@ -197,6 +177,14 @@ namespace osu.Game.Rulesets.Vitaru
                 default: return new Mod[] { };
             }
         }
+
+        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap) => new VitaruRulesetContainer(this, beatmap);
+
+        public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new VitaruBeatmapConverter(beatmap);
+
+        public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new VitaruBeatmapProcessor(beatmap);
+
+        public override DifficultyCalculator CreateDifficultyCalculator(IBeatmap beatmap, Mod[] mods = null) => new VitaruDifficultyCalculator(beatmap, mods);
 
         public override SettingsSubsection CreateSettings() => new VitaruSettings();
 

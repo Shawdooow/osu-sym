@@ -22,7 +22,12 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 
         protected override IEnumerable<Type> ValidConversionTypes { get; } = new[] { typeof(IHasPosition) };
 
-        protected override IEnumerable<VitaruHitObject> ConvertHitObject(HitObject original, Beatmap beatmap)
+        public VitaruBeatmapConverter(IBeatmap beatmap)
+        : base(beatmap)
+        {
+        }
+
+        protected override IEnumerable<VitaruHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
         {
             var endTimeData = original as IHasEndTime;
             var positionData = original as IHasPosition;

@@ -9,23 +9,21 @@ using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Shape
 {
-    public class ShapeDifficultyCalculator : DifficultyCalculator<ShapeHitObject>
+    public class ShapeDifficultyCalculator : DifficultyCalculator
     {
         private const double star_scaling_factor = 0.0675;
         private const double extreme_scaling_factor = 0.5;
 
         internal List<ShapeHitObjectDifficulty> DifficultyHitObjects = new List<ShapeHitObjectDifficulty>();
 
-        public ShapeDifficultyCalculator(Beatmap beatmap, Mod[] mods) : base(beatmap, mods) { }
+        public ShapeDifficultyCalculator(IBeatmap beatmap, Mod[] mods) : base(beatmap, mods) { }
 
-        public ShapeDifficultyCalculator(Beatmap beatmap) : base(beatmap) { }
+        public ShapeDifficultyCalculator(IBeatmap beatmap) : base(beatmap) { }
 
         protected override void PreprocessHitObjects()
         {
             foreach (var h in Beatmap.HitObjects) { }
         }
-
-        protected override BeatmapConverter<ShapeHitObject> CreateBeatmapConverter(Beatmap beatmap) => new ShapeBeatmapConverter();
 
         public override double Calculate(Dictionary<string, double> categoryDifficulty = null)
         {
@@ -33,7 +31,7 @@ namespace osu.Game.Rulesets.Shape
             DifficultyHitObjects.Clear();
 
             foreach (var hitObject in Beatmap.HitObjects)
-                DifficultyHitObjects.Add(new ShapeHitObjectDifficulty(hitObject));
+                DifficultyHitObjects.Add(new ShapeHitObjectDifficulty((ShapeHitObject)hitObject));
 
             // Sort DifficultyHitObjects by StartTime of the HitObjects - just to make sure.
             DifficultyHitObjects.Sort((a, b) => a.BaseHitObject.StartTime.CompareTo(b.BaseHitObject.StartTime));

@@ -1,8 +1,6 @@
 ﻿using osu.Game.Rulesets.UI;
-using osu.Game.Rulesets.Shape.Judgements;
 using osu.Game.Rulesets.Shape.Objects;
 using osu.Game.Rulesets.Shape.Objects.Drawables;
-using osu.Game.Rulesets.Shape.Beatmaps;
 using osu.Game.Rulesets.Shape.UI;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Drawables;
@@ -10,22 +8,17 @@ using osu.Game.Rulesets.Scoring;
 using OpenTK;
 using osu.Game.Rulesets.Shape.Scoring;
 using osu.Framework.Input;
-using System;
 
 namespace osu.Game.Rulesets.Shape
 {
     internal class ShapeRulesetContainer : RulesetContainer<ShapeHitObject>
     {
-        public ShapeRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap, bool isForCurrentRuleset)
-            : base(ruleset, beatmap, isForCurrentRuleset)
+        public ShapeRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap)
+            : base(ruleset, beatmap)
         {
         }
 
         public override ScoreProcessor CreateScoreProcessor() => new ShapeScoreProcessor(this);
-
-        protected override BeatmapConverter<ShapeHitObject> CreateBeatmapConverter() => new ShapeBeatmapConverter();
-
-        protected override BeatmapProcessor<ShapeHitObject> CreateBeatmapProcessor() => new ShapeBeatmapProcessor();
 
         protected override Playfield CreatePlayfield() => new ShapePlayfield();
 

@@ -10,8 +10,8 @@ namespace osu.Game.Rulesets.Vitaru.Edit
 {
     public class VitaruEditRulesetContainer : VitaruRulesetContainer
     {
-        public VitaruEditRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap, bool isForCurrentRuleset)
-            : base(ruleset, beatmap, isForCurrentRuleset)
+        public VitaruEditRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap)
+            : base(ruleset, beatmap)
         {
             VitaruEditPlayfield = new VitaruEditPlayfield((VitaruInputManager)KeyBindingInputManager);
         }

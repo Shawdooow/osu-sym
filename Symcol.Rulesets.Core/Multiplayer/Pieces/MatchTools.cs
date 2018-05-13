@@ -295,7 +295,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Pieces
         }
 
         //"Borrowed" stuff
-        private string getBPMRange(Beatmap beatmap)
+        private string getBPMRange(IBeatmap beatmap)
         {
             double bpmMax = beatmap.ControlPointInfo.BPMMaximum;
             double bpmMin = beatmap.ControlPointInfo.BPMMinimum;

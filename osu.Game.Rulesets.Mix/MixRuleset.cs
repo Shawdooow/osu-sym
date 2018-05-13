@@ -10,11 +10,16 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Mix.Settings;
+using osu.Game.Rulesets.Mix.Beatmaps;
 
 namespace osu.Game.Rulesets.Mix
 {
     public class MixRuleset : Ruleset
     {
+        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap) => new MixRulesetContainer(this, beatmap);
+        public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new MixBeatmapConverter(beatmap);
+        public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new MixBeatmapProcessor(beatmap);
+
         public override Drawable CreateIcon() => new Sprite { Texture = MixTextures.Get("icon") };
 
         public static ResourceStore<byte[]> MixResources;
@@ -30,15 +35,11 @@ namespace osu.Game.Rulesets.Mix
             MixTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
         }
 
-        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap, bool isForCurrentRuleset) => new MixRulesetContainer(this, beatmap, isForCurrentRuleset);
-
         public override int? LegacyID => 7;
 
         public override string Description => "mix!";
 
         public override string ShortName => "mix";
-
-        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap, Mod[] mods = null) => new MixDifficultyCalculator(beatmap, mods);
 
         public override SettingsSubsection CreateSettings() => new MixSettings();
 
@@ -74,6 +75,8 @@ namespace osu.Game.Rulesets.Mix
             new KeyBinding(InputKey.L, MixAction.SoftFinishRight),
             new KeyBinding(InputKey.Semicolon, MixAction.SoftClapRight),
         };
+
+        public override DifficultyCalculator CreateDifficultyCalculator(IBeatmap beatmap, Mod[] mods = null) => new MixDifficultyCalculator(beatmap, mods);
 
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {

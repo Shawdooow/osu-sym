@@ -9,23 +9,27 @@ using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Mix
 {
-    public class MixDifficultyCalculator : DifficultyCalculator<MixHitObject>
+    public class MixDifficultyCalculator : DifficultyCalculator
     {
         private const double star_scaling_factor = 0.0675;
         private const double extreme_scaling_factor = 0.5;
 
         internal List<MixHitObjectDifficulty> DifficultyHitObjects = new List<MixHitObjectDifficulty>();
 
-        public MixDifficultyCalculator(Beatmap beatmap, Mod[] mods) : base(beatmap, mods) { }
+        public MixDifficultyCalculator(IBeatmap beatmap)
+            : base(beatmap)
+        {
+        }
 
-        public MixDifficultyCalculator(Beatmap beatmap) : base(beatmap) { }
+        public MixDifficultyCalculator(IBeatmap beatmap, Mod[] mods)
+            : base(beatmap, mods)
+        {
+        }
 
         protected override void PreprocessHitObjects()
         {
             foreach (var h in Beatmap.HitObjects) { }
         }
-
-        protected override BeatmapConverter<MixHitObject> CreateBeatmapConverter(Beatmap beatmap) => new MixBeatmapConverter();
 
         public override double Calculate(Dictionary<string, double> categoryDifficulty = null)
         {
@@ -33,7 +37,7 @@ namespace osu.Game.Rulesets.Mix
             DifficultyHitObjects.Clear();
 
             foreach (var hitObject in Beatmap.HitObjects)
-                DifficultyHitObjects.Add(new MixHitObjectDifficulty(hitObject));
+                DifficultyHitObjects.Add(new MixHitObjectDifficulty((MixHitObject)hitObject));
 
             // Sort DifficultyHitObjects by StartTime of the HitObjects - just to make sure.
             DifficultyHitObjects.Sort((a, b) => a.BaseHitObject.StartTime.CompareTo(b.BaseHitObject.StartTime));

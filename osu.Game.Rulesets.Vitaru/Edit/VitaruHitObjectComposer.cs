@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Vitaru.Edit
     {
         public VitaruHitObjectComposer(Ruleset ruleset) : base(ruleset) { }
 
-        protected override RulesetContainer CreateRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap) => new VitaruEditRulesetContainer(ruleset, beatmap, true);
+        protected override RulesetContainer CreateRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap) => new VitaruEditRulesetContainer(ruleset, beatmap);
 
         protected override IReadOnlyList<ICompositionTool> CompositionTools => new ICompositionTool[]
         {

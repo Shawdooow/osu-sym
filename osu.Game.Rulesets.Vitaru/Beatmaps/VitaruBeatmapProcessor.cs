@@ -3,11 +3,16 @@ using osu.Game.Rulesets.Vitaru.Objects;
 
 namespace osu.Game.Rulesets.Vitaru.Beatmaps
 {
-    internal class VitaruBeatmapProcessor : BeatmapProcessor<VitaruHitObject>
+    internal class VitaruBeatmapProcessor : BeatmapProcessor
     {
-        public override void PostProcess(Beatmap<VitaruHitObject> beatmap)
+        public VitaruBeatmapProcessor(IBeatmap beatmap)
+        : base(beatmap)
         {
-            base.PostProcess(beatmap);
+        }
+
+        public override void PostProcess()
+        {
+            base.PostProcess();
         }
     }
 }

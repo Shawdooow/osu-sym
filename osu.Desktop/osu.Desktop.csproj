@@ -21,9 +21,13 @@
   </PropertyGroup>
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\osu-framework\osu.Framework\osu.Framework.csproj" />
+    <ProjectReference Include="..\osu.Game.Rulesets.Catch\osu.Game.Rulesets.Catch.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Classic\osu.Game.Rulesets.Classic.csproj" />
+    <ProjectReference Include="..\osu.Game.Rulesets.Mania\osu.Game.Rulesets.Mania.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Mix\osu.Game.Rulesets.Mix.csproj" />
+    <ProjectReference Include="..\osu.Game.Rulesets.Osu\osu.Game.Rulesets.Osu.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Shape\osu.Game.Rulesets.Shape.csproj" />
+    <ProjectReference Include="..\osu.Game.Rulesets.Taiko\osu.Game.Rulesets.Taiko.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj" />
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
     <ProjectReference Include="..\osu-resources\osu.Game.Resources\osu.Game.Resources.csproj" />

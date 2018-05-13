@@ -3,7 +3,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
-using osu.Game.Rulesets.Vitaru.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Scoring;
@@ -11,14 +10,13 @@ using OpenTK;
 using osu.Game.Rulesets.Vitaru.UI.Cursor;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Rulesets.Vitaru.Settings;
-using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruRulesetContainer : RulesetContainer<VitaruHitObject>
     {
-        public VitaruRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap, bool isForCurrentRuleset)
-            : base(ruleset, beatmap, isForCurrentRuleset)
+        public VitaruRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap)
+            : base(ruleset, beatmap)
         {
             VitaruPlayfield = new VitaruPlayfield((VitaruInputManager)KeyBindingInputManager);
         }
@@ -26,10 +24,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
         protected override CursorContainer CreateCursor() => new GameplayCursor();
 
         public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor(this);
-
-        protected override BeatmapConverter<VitaruHitObject> CreateBeatmapConverter() => new VitaruBeatmapConverter();
-
-        protected override BeatmapProcessor<VitaruHitObject> CreateBeatmapProcessor() => new VitaruBeatmapProcessor();
 
         protected override Playfield CreatePlayfield() => VitaruPlayfield;
 

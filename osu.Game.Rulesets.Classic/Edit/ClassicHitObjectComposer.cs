@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Classic.Edit
         {
         }
 
-        protected override RulesetContainer CreateRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap) => new ClassicEditRulesetContainer(ruleset, beatmap, true);
+        protected override RulesetContainer CreateRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap) => new ClassicEditRulesetContainer(ruleset, beatmap);
 
         protected override IReadOnlyList<ICompositionTool> CompositionTools => new ICompositionTool[]
         {

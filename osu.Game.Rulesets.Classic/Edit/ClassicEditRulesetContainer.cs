@@ -9,8 +9,8 @@ namespace osu.Game.Rulesets.Classic.Edit
 {
     public class ClassicEditRulesetContainer : ClassicRulesetContainer
     {
-        public ClassicEditRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap, bool isForCurrentRuleset)
-            : base(ruleset, beatmap, isForCurrentRuleset)
+        public ClassicEditRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap)
+            : base(ruleset, beatmap)
         {
         }
 

@@ -3,11 +3,16 @@ using osu.Game.Rulesets.Shape.Objects;
 
 namespace osu.Game.Rulesets.Shape.Beatmaps
 {
-    internal class ShapeBeatmapProcessor : BeatmapProcessor<ShapeHitObject>
+    internal class ShapeBeatmapProcessor : BeatmapProcessor
     {
-        public override void PostProcess(Beatmap<ShapeHitObject> beatmap)
+        public ShapeBeatmapProcessor(IBeatmap beatmap)
+        : base(beatmap)
         {
-            base.PostProcess(beatmap);
+        }
+
+        public override void PostProcess()
+        {
+            base.PostProcess();
         }
     }
 }

@@ -45,7 +45,6 @@ namespace osu.Game.Rulesets.Classic
                 case ModType.DifficultyReduction:
                     return new Mod[]
                     {
-                        new ClassicModEasy(),
                         new ClassicModNoFail(),
                         new ClassicModHalfTime(),
                     };
@@ -53,15 +52,6 @@ namespace osu.Game.Rulesets.Classic
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
-                        new ClassicModHardRock(),
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new ClassicModSuddenDeath(),
-                                new ClassicModPerfect(),
-                            },
-                        },
                         new MultiMod
                         {
                             Mods = new Mod[]
@@ -70,16 +60,12 @@ namespace osu.Game.Rulesets.Classic
                                 new ClassicModNightcore(),
                             },
                         },
-                        new ClassicModHidden(),
-                        new ClassicModFlashlight(),
+                        new ClassicModHidden()
                     };
 
                 case ModType.Special:
                     return new Mod[]
                     {
-                        new ClassicModRelax(),
-                        new ClassicModAutopilot(),
-                        new ClassicModSpunOut(),
                         new MultiMod
                         {
                             Mods = new Mod[]
@@ -88,7 +74,6 @@ namespace osu.Game.Rulesets.Classic
                                 new ModCinema(),
                             },
                         },
-                        new ClassicModTarget(),
                     };
 
                 default:

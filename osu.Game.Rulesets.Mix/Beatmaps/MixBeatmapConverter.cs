@@ -30,7 +30,12 @@ namespace osu.Game.Rulesets.Mix.Beatmaps
         /// </summary>
         private const float shape_base_distance = 100;
 
-        protected override IEnumerable<MixHitObject> ConvertHitObject(HitObject original, Beatmap beatmap)
+        public MixBeatmapConverter(IBeatmap beatmap)
+        : base(beatmap)
+        {
+        }
+
+        protected override IEnumerable<MixHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
         {
             var endTimeData = original as IHasEndTime;
             var positionData = original as IHasPosition;

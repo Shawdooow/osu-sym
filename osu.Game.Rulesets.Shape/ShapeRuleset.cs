@@ -11,6 +11,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Shape.Settings;
+using osu.Game.Rulesets.Shape.Beatmaps;
 
 namespace osu.Game.Rulesets.Shape
 {
@@ -32,15 +33,19 @@ namespace osu.Game.Rulesets.Shape
             ShapeTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
         }
 
-        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap, bool isForCurrentRuleset) => new ShapeRulesetContainer(this, beatmap, isForCurrentRuleset);
+        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap) => new ShapeRulesetContainer(this, beatmap);
+
+        public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new ShapeBeatmapConverter(beatmap);
+
+        public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new ShapeBeatmapProcessor(beatmap);
+
+        public override DifficultyCalculator CreateDifficultyCalculator(IBeatmap beatmap, Mod[] mods = null) => new ShapeDifficultyCalculator(beatmap, mods);
 
         public override int? LegacyID => 5;
 
         public override string Description => "shape!";
 
         public override string ShortName => "shape";
-
-        public override DifficultyCalculator CreateDifficultyCalculator(Beatmap beatmap, Mod[] mods = null) => new ShapeDifficultyCalculator(beatmap, mods);
 
         public override SettingsSubsection CreateSettings() => new ShapeSettings();
 

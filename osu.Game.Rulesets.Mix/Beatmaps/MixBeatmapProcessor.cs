@@ -3,11 +3,16 @@ using osu.Game.Rulesets.Mix.Objects;
 
 namespace osu.Game.Rulesets.Mix.Beatmaps
 {
-    internal class MixBeatmapProcessor : BeatmapProcessor<MixHitObject>
+    internal class MixBeatmapProcessor : BeatmapProcessor
     {
-        public override void PostProcess(Beatmap<MixHitObject> beatmap)
+        public MixBeatmapProcessor(IBeatmap beatmap)
+        : base(beatmap)
         {
-            base.PostProcess(beatmap);
+        }
+
+        public override void PostProcess()
+        {
+            base.PostProcess();
         }
     }
 }

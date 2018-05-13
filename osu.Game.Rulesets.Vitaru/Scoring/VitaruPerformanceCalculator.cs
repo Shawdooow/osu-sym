@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Vitaru.Scoring
 {
-    public class VitaruPerformanceCalculator : PerformanceCalculator<VitaruHitObject>
+    public class VitaruPerformanceCalculator : PerformanceCalculator
     {
         private const float pp_multiplier = 1f;
 
@@ -38,7 +38,5 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
 
             return difficulty * Score.TotalScore * pp_multiplier;
         }
-
-        protected override BeatmapConverter<VitaruHitObject> CreateBeatmapConverter() => new VitaruBeatmapConverter();
     }
 }
