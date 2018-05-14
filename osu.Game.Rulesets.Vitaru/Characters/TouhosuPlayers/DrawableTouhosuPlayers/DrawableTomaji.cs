@@ -1,5 +1,6 @@
 ﻿using OpenTK;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 
@@ -16,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         /// </summary>
         private double charge;
 
-        public DrawableTomaji(VitaruPlayfield playfield) : base(playfield, new Tomaji())
+        public DrawableTomaji(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Tomaji(), vitaruNetworkingClientHandler)
         {
         }
 
