@@ -15,6 +15,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         protected bool SpellActive { get; set; }
 
+        protected double SpellStartTime { get; set; } = double.MaxValue;
+
         protected double SpellDeActivateTime { get; set; } = double.MinValue;
 
         protected double SpellEndTime { get; set; } = double.MinValue;
@@ -39,6 +41,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                     Energy -= TouhosuPlayer.EnergyCost;
 
                 SpellActive = true;
+                SpellStartTime = Time.Current;
                 Spell?.Invoke(action);
                 return true;
             }
