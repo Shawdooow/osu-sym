@@ -13,9 +13,12 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         private const string file_extention = ".vitaru";
 
-        private const string version_changelog = "-Update to lazer version 2018.511.0\n" +
+        private const string version_changelog = "-Updated to lazer version 2018.514.0\n" +
+            "-Updated to lazer version 2018.511.0\n" +
             "-Co-op online multiplayer\n" +
-            "-Implement Tomaji's spell";
+            "-Implement Tomaji's spell\n" +
+            "-Adjust Tomaji's stats based on new spell\n" +
+            "-Nerf Sakuya's energy drain rate (6 => 8)";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)

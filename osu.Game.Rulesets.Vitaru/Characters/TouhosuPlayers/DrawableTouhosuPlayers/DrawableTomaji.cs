@@ -8,9 +8,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 {
     public class DrawableTomaji : DrawableTouhosuPlayer
     {
-        private const double charge_time = 1000;
+        private const double charge_time = 2000;
 
-        private const double blink_distance = 200;
+        private const double blink_distance = 400;
 
         /// <summary>
         /// scale from 0 - 1 on how charged our blink is

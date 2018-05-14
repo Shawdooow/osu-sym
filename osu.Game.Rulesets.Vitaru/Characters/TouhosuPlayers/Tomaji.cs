@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override double EnergyCost => 0;
 
-        public override double EnergyDrainRate => 2;
+        public override double EnergyDrainRate => 4;
 
         public override Color4 PrimaryColor => Color4.Orange;
 
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override Role Role => Role.Offense;
 
-        public override Difficulty Difficulty => Difficulty.Insane;
+        public override Difficulty Difficulty => Difficulty.Another;
 
         public override string Background => "Tomaji has always been over shadowed by his older sister Ryukoy who is next in line to be the Hakurei Maiden, though he has never minded. " +
             "He had the option to take of to some exotic place far away if he wanted, but he didn't. " +
