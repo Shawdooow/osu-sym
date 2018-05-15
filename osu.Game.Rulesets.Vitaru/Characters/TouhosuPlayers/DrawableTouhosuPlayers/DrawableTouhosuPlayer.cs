@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         {
             if (HealingBullets.Count > 0)
                 foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
-                    Energy = Math.Min((Clock.ElapsedFrameTime / 500) * GetBulletHealingMultiplier(HealingBullet.Value), TouhosuPlayer.MaxEnergy);
+                    Energy = Math.Min(((Clock.ElapsedFrameTime / 500) * GetBulletHealingMultiplier(HealingBullet.Value)) + Energy, TouhosuPlayer.MaxEnergy);
 
             if (Energy <= 0)
             {

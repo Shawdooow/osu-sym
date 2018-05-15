@@ -234,7 +234,15 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             float edgeDistance = distance - (bullet.Width / 2 + Hitbox.Width / 2);
 
             if (edgeDistance < 64 && bullet.Bullet.Team != Team)
-                HealingBullets.Add(new KeyValuePair<DrawableBullet, double>(bullet, edgeDistance));
+            {
+                bool add = true;
+                foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
+                    if (HealingBullet.Key == bullet)
+                        add = false;
+
+                if (add)
+                    HealingBullets.Add(new KeyValuePair<DrawableBullet, double>(bullet, edgeDistance));
+            }
 
             if (CurrentGameMode == Gamemodes.Dodge)
                 edgeDistance *= 1.5f;
