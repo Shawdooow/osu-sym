@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         protected readonly List<HealingBullet> HealingBullets = new List<HealingBullet>();
 
-        protected const double Healing_FallOff = 0.8d;
+        protected const double Healing_FallOff = 0.85d;
 
         private const double healing_range = 64;
         private const double healing_min = 0.5d;
