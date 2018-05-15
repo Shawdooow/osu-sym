@@ -1,7 +1,9 @@
 ﻿using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Multi;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
+using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
 {
@@ -56,8 +58,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         protected virtual void SpellUpdate()
         {
-            if (CanHeal)
-                Energy = Math.Min(Clock.ElapsedFrameTime / 500 + Energy, TouhosuPlayer.MaxEnergy);
+            if (HealingBullets.Count > 0)
+                foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
+                    Energy = Math.Min((Clock.ElapsedFrameTime / 500) * GetBulletHealingMultiplier(HealingBullet.Value), TouhosuPlayer.MaxEnergy);
 
             if (Energy <= 0)
             {

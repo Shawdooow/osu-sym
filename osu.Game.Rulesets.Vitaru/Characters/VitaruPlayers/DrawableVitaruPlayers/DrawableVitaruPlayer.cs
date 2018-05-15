@@ -70,6 +70,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         private double nextHalfBeat = -1;
         private double nextQuarterBeat = -1;
         private double beatLength = 1000;
+
+        protected List<KeyValuePair<DrawableBullet, double>> HealingBullets = new List<KeyValuePair<DrawableBullet, double>>();
+
+        private const double healing_range = 64;
+        private const double healing_min = 0.5d;
+        private const double healing_max = 2d;
         #endregion
 
         public DrawableVitaruPlayer(VitaruPlayfield playfield, VitaruPlayer player, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield)
@@ -171,16 +177,21 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             lastQuarterBeat = nextQuarterBeat;
             nextQuarterBeat += beatLength / 4;
 
-            if (CanHeal)
+            if (HealingBullets.Count > 0)
             {
-                CanHeal = false;
-
-                Heal(1d);
-
-                if (CurrentGameMode != Gamemodes.Touhosu)
+                restart:
+                foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
                 {
-                    Seal.Sign.Alpha = 0.2f;
-                    Seal.Sign.FadeOut(beatLength / 4);
+                    Heal(GetBulletHealingMultiplier(HealingBullet.Value));
+
+                    if (CurrentGameMode != Gamemodes.Touhosu)
+                    {
+                        Seal.Sign.Alpha = 0.2f;
+                        Seal.Sign.FadeOut(beatLength / 4);
+                    }
+
+                    HealingBullets.Remove(HealingBullet);
+                    goto restart;
                 }
             }
         }
@@ -223,7 +234,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             float edgeDistance = distance - (bullet.Width / 2 + Hitbox.Width / 2);
 
             if (edgeDistance < 64 && bullet.Bullet.Team != Team)
-                CanHeal = true;
+                HealingBullets.Add(new KeyValuePair<DrawableBullet, double>(bullet, edgeDistance));
 
             if (CurrentGameMode == Gamemodes.Dodge)
                 edgeDistance *= 1.5f;
@@ -260,6 +271,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
 
             return playerPosition;
+        }
+
+        protected double GetBulletHealingMultiplier(double value)
+        {
+            double scale = (healing_max - healing_min) / (0 - healing_range);
+            return healing_min + ((value - healing_range) * scale);
         }
 
         protected override void Death()

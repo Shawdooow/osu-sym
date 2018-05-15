@@ -12,6 +12,7 @@ using osu.Framework.MathUtils;
 using osu.Framework.Graphics.Effects;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
 {
@@ -43,10 +44,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
         [BackgroundDependencyLoader]
         private void load(Storage storage)
         {
-            if (character is DrawableTouhosuPlayer t)
+            if (character is DrawableVitaruPlayer v)
             {
-                Color4 lightColor = t.PrimaryColor.Lighten(0.5f);
-                Color4 darkColor = t.PrimaryColor.Darken(0.5f);
+                Color4 lightColor = v.PrimaryColor.Lighten(0.5f);
+                Color4 darkColor = v.PrimaryColor.Darken(0.5f);
 
                 Size = new Vector2(90);
 
@@ -82,7 +83,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                                 RelativeSizeAxes = Axes.Both,
                                 Size = new Vector2(2f),
 
-                                Colour = t.PrimaryColor,
+                                Colour = v.PrimaryColor,
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Texture = VitaruSkinElement.LoadSkinElement("seal", storage),
@@ -101,10 +102,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                         {
                             RelativeSizeAxes = Axes.Both,
                             InnerRadius = 0.05f,
-                            Colour = t.ComplementaryColor
+                            Colour = v.ComplementaryColor
                         }).WithEffect(new GlowEffect
                         {
-                            Colour = t.ComplementaryColor,
+                            Colour = v.ComplementaryColor,
                             Strength = 2,
                             PadExtent = true
                         }),
@@ -122,10 +123,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                         {
                             RelativeSizeAxes = Axes.Both,
                             InnerRadius = 0.05f,
-                            Colour = t.SecondaryColor
+                            Colour = v.SecondaryColor
                         }).WithEffect(new GlowEffect
                         {
-                            Colour = t.SecondaryColor,
+                            Colour = v.SecondaryColor,
                             Strength = 2,
                             PadExtent = true
                         }),
@@ -140,7 +141,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                         {
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreRight,
-                            Colour = t.ComplementaryColor,
+                            Colour = v.ComplementaryColor,
                             Font = "Venera",
                             TextSize = 16,
                             Alpha = 0.75f,
@@ -160,7 +161,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                         {
                             Anchor = Anchor.CentreRight,
                             Origin = Anchor.CentreLeft,
-                            Colour = t.SecondaryColor,
+                            Colour = v.SecondaryColor,
                             Font = "Venera",
                             TextSize = 16,
                             Alpha = 0.75f,
@@ -172,7 +173,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                     },
                 };
 
-                switch (t.TouhosuPlayer.FileName)
+                switch (v.Player.FileName)
                 {
                     default:
                         break;
@@ -189,7 +190,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                             },
                             gear2 = new Sprite
                             {
-                                Colour = t.PrimaryColor,
+                                Colour = v.PrimaryColor,
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Texture = VitaruSkinElement.LoadSkinElement("gearMedium", storage),
@@ -205,7 +206,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                             },
                             gear4 = new Sprite
                             {
-                                Colour = t.PrimaryColor,
+                                Colour = v.PrimaryColor,
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Texture = VitaruSkinElement.LoadSkinElement("gearMedium", storage),
@@ -261,14 +262,18 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
 
             Sign.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 0.1f);
 
-            if (character is DrawableTouhosuPlayer t)
+            if (character is DrawableVitaruPlayer v)
             {
-                Sign.Alpha = (float)t.Energy / (float)(t.TouhosuPlayer.MaxEnergy * 2);
+                if (v is DrawableTouhosuPlayer t)
+                {
+                    Sign.Alpha = (float)t.Energy / (float)(t.TouhosuPlayer.MaxEnergy * 2);
+                    energy.Current.Value = t.Energy / t.TouhosuPlayer.MaxEnergy;
+                }
 
-                health.Current.Value = t.Health / t.MaxHealth;
-                energy.Current.Value = t.Energy / t.TouhosuPlayer.MaxEnergy;
+                health.Current.Value = v.Health / v.MaxHealth;
+                
 
-                switch (t.TouhosuPlayer.FileName)
+                switch (v.Player.FileName)
                 {
                     default:
                         break;
@@ -279,7 +284,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                         gear3.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * speed);
                         gear4.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);
                         gear5.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
-                        DrawableSakuya s = t as DrawableSakuya;
+                        DrawableSakuya s = v as DrawableSakuya;
                         leftValue.Text = s.SetRate.ToString();
                         break;
                 }

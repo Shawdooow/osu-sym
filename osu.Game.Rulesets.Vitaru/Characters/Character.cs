@@ -54,7 +54,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         public int Team { get; set; }
         protected CircularContainer VisibleHitbox;
         public SymcolHitbox Hitbox;
-        public bool CanHeal = false;
         protected float LastX;
         #endregion
 

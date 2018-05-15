@@ -19,7 +19,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Implement Tomaji's spell\n" +
             "-Adjust Tomaji's stats based on his now implemented spell\n" +
             "-Nerf Sakuya's energy drain rate (6 => 8)\n" +
-            "-Split old \"Gameplay\" wiki section into three new sections: General, Gamemodes and Characters";
+            "-Split old \"Gameplay\" wiki section into three new sections: General, Gamemodes and Characters\n" +
+            "-Fix Seal not loading properly for non touhosu characters\n" +
+            "-Make Healing and energy gain per bullet and the amount distance based";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)
