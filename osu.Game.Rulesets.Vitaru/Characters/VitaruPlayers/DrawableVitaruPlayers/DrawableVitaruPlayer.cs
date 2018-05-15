@@ -73,6 +73,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         protected readonly List<KeyValuePair<DrawableBullet, double>> HealingBullets = new List<KeyValuePair<DrawableBullet, double>>();
 
+        protected const double Healing_FallOff = 0.8d;
+
         private const double healing_range = 64;
         private const double healing_min = 0.5d;
         private const double healing_max = 2d;
@@ -182,12 +184,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 double fallOff = 1;
 
                 for (int i = 0; i < HealingBullets.Count - 1; i++)
-                    fallOff *= 0.75d;
+                    fallOff *= Healing_FallOff;
 
                 restart:
                 foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
                 {
-                    Heal((GetBulletHealingMultiplier(HealingBullet.Value) / 2) * fallOff);
+                    Heal(GetBulletHealingMultiplier(HealingBullet.Value) * fallOff);
                     HealingBullets.Remove(HealingBullet);
                     goto restart;
                 }
