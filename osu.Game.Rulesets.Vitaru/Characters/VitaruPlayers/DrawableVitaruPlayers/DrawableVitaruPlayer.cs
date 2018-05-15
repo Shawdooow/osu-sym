@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         private double nextQuarterBeat = -1;
         private double beatLength = 1000;
 
-        protected readonly List<KeyValuePair<DrawableBullet, double>> HealingBullets = new List<KeyValuePair<DrawableBullet, double>>();
+        protected readonly List<HealingBullet> HealingBullets = new List<HealingBullet>();
 
         protected const double Healing_FallOff = 0.8d;
 
@@ -187,9 +187,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                     fallOff *= Healing_FallOff;
 
                 restart:
-                foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
+                foreach (HealingBullet HealingBullet in HealingBullets)
                 {
-                    Heal(GetBulletHealingMultiplier(HealingBullet.Value) * fallOff);
+                    Heal(GetBulletHealingMultiplier(HealingBullet.EdgeDistance) * fallOff);
                     HealingBullets.Remove(HealingBullet);
                     goto restart;
                 }
@@ -242,12 +242,15 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             if (edgeDistance < 64 && bullet.Bullet.Team != Team)
             {
                 bool add = true;
-                foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
-                    if (HealingBullet.Key == bullet)
+                foreach (HealingBullet HealingBullet in HealingBullets)
+                    if (HealingBullet.DrawableBullet == bullet)
+                    {
+                        HealingBullet.EdgeDistance = edgeDistance;
                         add = false;
+                    }
 
                 if (add)
-                    HealingBullets.Add(new KeyValuePair<DrawableBullet, double>(bullet, edgeDistance));
+                    HealingBullets.Add(new HealingBullet(bullet, edgeDistance));
             }
 
             if (CurrentGameMode == Gamemodes.Dodge)
@@ -257,6 +260,19 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 bullet.ScoreZone = 300;
             else if (edgeDistance <= 128 && bullet.ScoreZone < 100)
                 bullet.ScoreZone = 100;
+        }
+
+        protected class HealingBullet
+        {
+            public readonly DrawableBullet DrawableBullet;
+
+            public double EdgeDistance { get; set; }
+
+            public HealingBullet(DrawableBullet bullet, double distance)
+            {
+                DrawableBullet = bullet;
+                EdgeDistance = distance;
+            }
         }
 
         protected virtual Vector2 GetNewPlayerPosition(double playerSpeed)

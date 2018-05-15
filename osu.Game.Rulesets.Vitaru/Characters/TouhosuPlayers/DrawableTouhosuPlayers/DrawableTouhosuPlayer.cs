@@ -1,9 +1,7 @@
 ﻿using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Multi;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
-using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
 {
@@ -65,8 +63,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                 for (int i = 0; i < HealingBullets.Count - 1; i++)
                     fallOff *= Healing_FallOff;
 
-                foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
-                    Energy = Math.Min(((Clock.ElapsedFrameTime / 500) * (GetBulletHealingMultiplier(HealingBullet.Value) * fallOff)) + Energy, TouhosuPlayer.MaxEnergy);
+                foreach (HealingBullet HealingBullet in HealingBullets)
+                    Energy = Math.Min(((Clock.ElapsedFrameTime / 500) * (GetBulletHealingMultiplier(HealingBullet.EdgeDistance) * fallOff)) + Energy, TouhosuPlayer.MaxEnergy);
             }
 
             if (Energy <= 0)
