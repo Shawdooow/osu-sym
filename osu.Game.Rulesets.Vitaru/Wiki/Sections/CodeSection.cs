@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         [System.ComponentModel.Description("PP Calulation")]
         PP,
         Player,
-        Ryokoy,
+        Ryukoy,
         Sakuya,
     }
 }

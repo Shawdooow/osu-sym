@@ -17,8 +17,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Updated to lazer version 2018.511.0\n" +
             "-Co-op online multiplayer\n" +
             "-Implement Tomaji's spell\n" +
-            "-Adjust Tomaji's stats based on new spell\n" +
-            "-Nerf Sakuya's energy drain rate (6 => 8)";
+            "-Adjust Tomaji's stats based on his now implemented spell\n" +
+            "-Nerf Sakuya's energy drain rate (6 => 8)\n" +
+            "-Split old \"Gameplay\" wiki section into three new sections: General, Gamemodes and Characters";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)
