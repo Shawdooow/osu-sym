@@ -1,10 +1,11 @@
 ﻿using osu.Framework.Input;
 using OpenTK;
 using OpenTK.Input;
+using osu.Framework.Graphics.Containers;
 
 namespace Symcol.Core.Graphics.Containers
 {
-    public class SymcolDragContainer : SymcolContainer
+    public class SymcolDragContainer : Container
     {
         protected override bool OnDragStart(InputState state) => true;
 

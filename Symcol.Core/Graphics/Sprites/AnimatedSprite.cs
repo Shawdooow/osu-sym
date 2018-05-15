@@ -4,14 +4,20 @@ using System.Linq;
 
 namespace Symcol.Core.Graphics.Sprites
 {
+    /// <summary>
+    /// A Sprite that will cycle through multiple Textures after a fixed time (Speed)
+    /// </summary>
     public class AnimatedSprite : Sprite
     {
+        /// <summary>
+        /// The list of Textures we will cycle through
+        /// </summary>
         public Texture[] Textures { get; set; }
 
         /// <summary>
         /// Length of time each sprite is shown for
         /// </summary>
-        public double Speed { get; set; } = 250;
+        public double UpdateRate { get; set; } = 250;
 
         private double lastUpdate = double.MaxValue;
 
@@ -27,7 +33,7 @@ namespace Symcol.Core.Graphics.Sprites
         {
             base.Update();
 
-            if (lastUpdate + Speed <= Time.Current)
+            if (lastUpdate + UpdateRate <= Time.Current)
             {
                 bool next = false;
                 foreach (Texture texture in Textures)
@@ -40,6 +46,7 @@ namespace Symcol.Core.Graphics.Sprites
                         lastUpdate = Time.Current;
                     }
 
+                    //If this texture is last better cycle back to the first!
                     if (Texture == texture && texture == Textures.Last())
                     {
                         Texture = Textures.First();

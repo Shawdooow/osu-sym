@@ -6,18 +6,19 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using Symcol.Core.Graphics.Containers;
+using osu.Framework.Graphics.Containers;
 
 namespace Symcol.Core.Graphics.UserInterface
 {
-    public class SymcolWindow : SymcolContainer
+    public class SymcolWindow : Container
     {
         /// <summary>
         /// Put all your stuff in this
         /// </summary>
-        public SymcolContainer WindowContent { get; set; }
+        public Container WindowContent { get; set; }
         public SpriteText WindowTitle;
 
-        private readonly SymcolContainer topBar;
+        private readonly Container topBar;
         private readonly SymcolClickableContainer minimize;
 
         public SymcolWindow(Vector2 size)
@@ -30,7 +31,7 @@ namespace Symcol.Core.Graphics.UserInterface
 
             Children = new Drawable[]
             {
-                topBar = new SymcolContainer
+                topBar = new Container
                 {
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.TopCentre,
@@ -84,7 +85,7 @@ namespace Symcol.Core.Graphics.UserInterface
                         }
                     }
                 },
-                WindowContent = new SymcolContainer
+                WindowContent = new Container
                 {
                     Size = size,
                     Anchor = Anchor.TopCentre,
