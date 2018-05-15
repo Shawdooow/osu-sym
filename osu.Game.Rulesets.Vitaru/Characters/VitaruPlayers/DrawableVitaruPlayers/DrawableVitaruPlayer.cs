@@ -182,7 +182,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 double fallOff = 1;
 
                 foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
-                    fallOff /= 0.75d;
+                    fallOff *= 0.75d;
 
                 restart:
                 foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
