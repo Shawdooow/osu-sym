@@ -59,8 +59,15 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         protected virtual void SpellUpdate()
         {
             if (HealingBullets.Count > 0)
+            {
+                double fallOff = 1;
+
                 foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
-                    Energy = Math.Min(((Clock.ElapsedFrameTime / 500) * GetBulletHealingMultiplier(HealingBullet.Value)) + Energy, TouhosuPlayer.MaxEnergy);
+                    fallOff /= 0.75d;
+
+                foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
+                    Energy = Math.Min(((Clock.ElapsedFrameTime / 1000) * (GetBulletHealingMultiplier(HealingBullet.Value) * fallOff)) + Energy, TouhosuPlayer.MaxEnergy);
+            }
 
             if (Energy <= 0)
             {

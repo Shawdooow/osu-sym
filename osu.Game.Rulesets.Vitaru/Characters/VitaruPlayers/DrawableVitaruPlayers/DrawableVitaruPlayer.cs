@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         private double nextQuarterBeat = -1;
         private double beatLength = 1000;
 
-        protected List<KeyValuePair<DrawableBullet, double>> HealingBullets = new List<KeyValuePair<DrawableBullet, double>>();
+        protected readonly List<KeyValuePair<DrawableBullet, double>> HealingBullets = new List<KeyValuePair<DrawableBullet, double>>();
 
         private const double healing_range = 64;
         private const double healing_min = 0.5d;
@@ -179,19 +179,23 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
             if (HealingBullets.Count > 0)
             {
+                double fallOff = 1;
+
+                foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
+                    fallOff /= 0.75d;
+
                 restart:
                 foreach (KeyValuePair<DrawableBullet, double> HealingBullet in HealingBullets)
                 {
-                    Heal(GetBulletHealingMultiplier(HealingBullet.Value));
-
-                    if (CurrentGameMode != Gamemodes.Touhosu)
-                    {
-                        Seal.Sign.Alpha = 0.2f;
-                        Seal.Sign.FadeOut(beatLength / 4);
-                    }
-
+                    Heal((GetBulletHealingMultiplier(HealingBullet.Value) / 2) * fallOff);
                     HealingBullets.Remove(HealingBullet);
                     goto restart;
+                }
+
+                if (CurrentGameMode != Gamemodes.Touhosu)
+                {
+                    Seal.Sign.Alpha = 0.2f;
+                    Seal.Sign.FadeOut(beatLength / 4);
                 }
             }
         }
