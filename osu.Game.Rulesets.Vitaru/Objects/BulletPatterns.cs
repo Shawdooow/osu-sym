@@ -16,14 +16,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
             for (int i = 1; i <= bulletCount; i++)
             {
+
                 bullets.Add(new Bullet
                 {
                     StartTime = startTime,
                     Position = position,
                     BulletSpeed = (float)speed,
                     BulletAngle = direction,
-                    BulletDiameter = (float)diameter,
-                    BulletDamage = (float)damage,
+                    BulletDiameter = i % 2 == 1 ? (float)diameter : (float)diameter * 1.5f,
+                    BulletDamage = i % 2 == 1 ? (float)damage : (float)damage * 0.8f,
                     Team = team,
                 });
                 direction += directionModifier;
@@ -160,8 +161,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                     Position = position,
                     BulletSpeed = (float)speed,
                     BulletAngle = direction,
-                    BulletDiameter = (float)diameter,
-                    BulletDamage = (float)damage,
+                    BulletDiameter = i % 2 == 1 ? (float)diameter : (float)diameter * 1.5f,
+                    BulletDamage = i % 2 == 1 ? (float)damage : (float)damage * 0.8f,
                     Team = team,
                 });
                 direction += directionModifier;

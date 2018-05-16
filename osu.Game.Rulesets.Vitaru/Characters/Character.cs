@@ -21,15 +21,15 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         #region Fields
         protected Seal Seal { get; private set; }
 
-        protected Container KiaiContainer { get; private set; }
-        protected Sprite KiaiStillSprite { get; private set; }
-        protected Sprite KiaiRightSprite { get; private set; }
-        protected Sprite KiaiLeftSprite { get; private set; }
+        protected Container KiaiContainer { get; set; }
+        protected Sprite KiaiStillSprite { get; set; }
+        protected Sprite KiaiRightSprite { get; set; }
+        protected Sprite KiaiLeftSprite { get; set; }
 
-        protected Container SoulContainer { get; private set; }
-        protected Sprite StillSprite { get; private set; }
-        protected Sprite RightSprite { get; private set; }
-        protected Sprite LeftSprite { get; private set; }
+        protected Container SoulContainer { get; set; }
+        protected Sprite StillSprite { get; set; }
+        protected Sprite RightSprite { get; set; }
+        protected Sprite LeftSprite { get; set; }
 
         public abstract double MaxHealth { get; }
 
@@ -176,7 +176,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         /// </summary>
         protected virtual void ParseBullet(DrawableBullet bullet) { }
 
-        protected virtual void LoadAnimationSprites(TextureStore textures, Storage storage) { }
+        protected virtual void LoadAnimationSprites(TextureStore textures, Storage storage)
+        {
+            StillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName, storage);
+            KiaiStillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Kiai", storage);
+        }
 
         /// <summary>
         /// Child loading for all Characters (Enemies, Player, Bosses)
@@ -189,31 +193,38 @@ namespace osu.Game.Rulesets.Vitaru.Characters
             Anchor = Anchor.TopLeft;
             Origin = Anchor.Centre;
 
+            //TODO: Temp?
+            Size = new Vector2(64);
+
             Children = new Drawable[]
             {
                 Seal = new Seal(this),
                 SoulContainer = new Container
                 {
-                    Colour = PrimaryColor,
+                    RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
+                    Colour = PrimaryColor,
                     Alpha = 1,
                     Children = new Drawable[]
                     {
                         StillSprite = new Sprite
                         {
+                            RelativeSizeAxes = Axes.Both,
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Alpha = 1,
                         },
                         RightSprite = new Sprite
                         {
+                            RelativeSizeAxes = Axes.Both,
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Alpha = 0,
                         },
                         LeftSprite = new Sprite
                         {
+                            RelativeSizeAxes = Axes.Both,
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Alpha = 0,
@@ -222,6 +233,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
                 },
                 KiaiContainer = new Container
                 {
+                    RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Alpha = 0,
@@ -229,18 +241,21 @@ namespace osu.Game.Rulesets.Vitaru.Characters
                     {
                         KiaiStillSprite = new Sprite
                         {
+                            RelativeSizeAxes = Axes.Both,
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Alpha = 1,
                         },
                         KiaiRightSprite = new Sprite
                         {
+                            RelativeSizeAxes = Axes.Both,
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Alpha = 0,
                         },
                         KiaiLeftSprite = new Sprite
                         {
+                            RelativeSizeAxes = Axes.Both,
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Alpha = 0,
@@ -276,8 +291,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters
             if (CharacterName == "player" || CharacterName == "enemy")
                 KiaiContainer.Colour = PrimaryColor;
 
-            StillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName, storage);
-            KiaiStillSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Kiai", storage);
             LoadAnimationSprites(textures, storage);
         }
 

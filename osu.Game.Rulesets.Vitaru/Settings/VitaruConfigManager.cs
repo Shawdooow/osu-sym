@@ -3,6 +3,7 @@ using osu.Framework.Configuration;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
+using System.ComponentModel;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
@@ -98,7 +99,8 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
     public enum GraphicsPresets
     {
-        HighPerformance,
         Standard,
+        HighPerformance,
+        StandardV2
     }
 }

@@ -2,10 +2,15 @@
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Configuration;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Textures;
+using osu.Framework.Platform;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Multi;
+using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
+using Symcol.Core.Graphics.Sprites;
 using System;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
@@ -13,6 +18,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
     public class DrawableSakuya : DrawableTouhosuPlayer
     {
         #region Fields
+        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
+
+        //protected override string CharacterName => graphics == GraphicsPresets.StandardV2 ? Player.Name : Player.FileName;
+
         public double SetRate { get; private set; } = 0.75d;
 
         private double originalRate;
@@ -34,6 +43,40 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
                 SpellEndTime = Time.Current + 1000;
             };
+        }
+
+        protected override void LoadAnimationSprites(TextureStore textures, Storage storage)
+        {
+            if (graphics == GraphicsPresets.StandardV2)
+            {
+
+                SoulContainer.Alpha = 0;
+                KiaiContainer.Alpha = 1;
+
+                KiaiLeftSprite.Alpha = 0;
+                KiaiRightSprite.Alpha = 0;
+                KiaiStillSprite.Alpha = 0;
+
+                KiaiContainer.Add(new AnimatedSprite()
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    UpdateRate = 100,
+                    Textures = new Texture[]
+                    {
+                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 0", storage),
+                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 1", storage),
+                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 2", storage),
+                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 3", storage),
+                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 4", storage),
+                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 5", storage),
+                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 6", storage),
+                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 7", storage),
+                    }
+                });
+            }
+            else
+                base.LoadAnimationSprites(textures, storage);
+
         }
 
         [BackgroundDependencyLoader]

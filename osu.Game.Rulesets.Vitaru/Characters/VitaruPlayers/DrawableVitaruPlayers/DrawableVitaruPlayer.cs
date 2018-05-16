@@ -25,6 +25,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         #region Fields
         protected readonly Gamemodes CurrentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
+        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
+
         public readonly VitaruPlayer Player;
 
         protected override string CharacterName => Player.FileName;
@@ -116,6 +118,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             KiaiRightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "KiaiRight", storage);
         }
 
+        #region Beat Handling
         protected override void OnNewBeat(int beatIndex, TimingControlPoint timingPoint, EffectControlPoint effectPoint, TrackAmplitudes amplitudes)
         {
             base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
@@ -142,7 +145,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                     Seal.Sign.FadeOut(beatLength);
             }
 
-            if (effectPoint.KiaiMode && SoulContainer.Alpha == 1)
+            if (effectPoint.KiaiMode && SoulContainer.Alpha == 1 && graphics != GraphicsPresets.StandardV2)
             {
                 if (!Dead && CurrentGameMode != Gamemodes.Gravaru)
                 {
@@ -153,7 +156,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 if (CurrentGameMode != Gamemodes.Touhosu)
                     Seal.Sign.FadeTo(0.15f, timingPoint.BeatLength / 4);
             }
-            if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1)
+            if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1 && graphics != GraphicsPresets.StandardV2)
             {
                 if (!Dead && CurrentGameMode != Gamemodes.Gravaru)
                 {
@@ -201,6 +204,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 }
             }
         }
+        #endregion
 
         protected override void Update()
         {
@@ -315,7 +319,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         }
 
         #region Shooting Handling
-        private void bulletAddRad(double speed, double angle, Color4 color, SliderType type = SliderType.Straight)
+        private void bulletAddRad(double speed, double angle, Color4 color, double size, double damage)
         {
             DrawableBullet drawableBullet;
 
@@ -325,13 +329,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Position = Position,
                 BulletAngle = angle,
                 BulletSpeed = speed,
-                BulletDiameter = 16,
-                BulletDamage = 20,
+                BulletDiameter = size,
+                BulletDamage = damage,
                 ColorOverride = color,
                 Team = Team,
-                SliderType = type,
-                Curviness = 0.25d,
                 DummyMode = true,
+                SliderType = SliderType.Straight,
                 Abstraction = 3,
             }, VitaruPlayfield));
 
@@ -345,7 +348,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             const int numberbullets = 3;
             double directionModifier = -0.2d;
             Color4 color = PrimaryColor;
-            SliderType type;
+            double size = 16;
+            double damage = 18;
 
             double cursorAngle = 0;
 
@@ -357,15 +361,21 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
             for (int i = 1; i <= numberbullets; i++)
             {
-                if (i == 1)
-                    type = SliderType.CurveRight;
-                else if (i == 2)
-                    type = SliderType.Straight;
+                if (i % 2 == 0)
+                {
+                    size = 20;
+                    damage = 24;
+                    color = PrimaryColor;
+                }
                 else
-                    type = SliderType.CurveLeft;
+                {
+                    size = 12;
+                    damage = 18;
+                    color = SecondaryColor;
+                }
 
                 //-90 = up
-                bulletAddRad(1, MathHelper.DegreesToRadians(-90 + cursorAngle) + directionModifier, color, type);
+                bulletAddRad(1, MathHelper.DegreesToRadians(-90 + cursorAngle) + directionModifier, color, size, damage);
 
                 if (Actions[VitaruAction.Slow])
                     directionModifier += 0.1d;

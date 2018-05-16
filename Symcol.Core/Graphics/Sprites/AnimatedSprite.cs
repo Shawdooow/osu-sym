@@ -1,5 +1,6 @@
 ﻿using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
+using System;
 using System.Linq;
 
 namespace Symcol.Core.Graphics.Sprites
@@ -18,6 +19,8 @@ namespace Symcol.Core.Graphics.Sprites
         /// Length of time each sprite is shown for
         /// </summary>
         public double UpdateRate { get; set; } = 250;
+
+        public Action OnAnimationRestart;
 
         private double lastUpdate = double.MaxValue;
 
@@ -44,13 +47,16 @@ namespace Symcol.Core.Graphics.Sprites
                     {
                         Texture = texture;
                         lastUpdate = Time.Current;
+                        break;
                     }
 
                     //If this texture is last better cycle back to the first!
                     if (Texture == texture && texture == Textures.Last())
                     {
+                        OnAnimationRestart?.Invoke();
                         Texture = Textures.First();
                         lastUpdate = Time.Current;
+                        break;
                     }
                 }
             }
