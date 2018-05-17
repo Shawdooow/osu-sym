@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Co-op online multiplayer\n" +
             "-Tomaji's spell (also adjusted Tomaji's stats based on his now implemented spell)\n" +
             "-Rezzurect boss\n" +
-            "-StandardV2 graphics option(give it a try, we have AnimatedSprites now!)\n\n" +
+            "-StandardV2 graphics option (give it a try, we have AnimatedSprites now!)\n\n" +
             "Tweaks / Changes:\n\n" +
             "-Split old \"Gameplay\" wiki section into three new sections: General, Gamemodes and Characters\n" +
             "-Make Healing and energy gain per bullet and the amount distance based\n" +
