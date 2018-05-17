@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Fix Seal not loading properly for non touhosu characters\n" +
             "-Make Healing and energy gain per bullet and the amount distance based\n" +
             "-Change most of the patterns to have variable bullet size and damage\n" +
-            "-SkinV2 graphics option (give it a try, we have AnimatedSprites now!)";
+            "-StandardV2 graphics option (give it a try, we have AnimatedSprites now!)";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)

@@ -27,6 +27,15 @@ namespace Symcol.Core.Graphics.Sprites
 
         private double lastUpdate = double.MaxValue;
 
+        /// <summary>
+        /// Reset to first Texture
+        /// </summary>
+        public void Reset()
+        {
+            Texture = Textures.First();
+            lastUpdate = Time.Current;
+        }
+
         protected override void LoadComplete()
         {
             base.LoadComplete();

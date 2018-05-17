@@ -22,6 +22,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         //protected override string CharacterName => graphics == GraphicsPresets.StandardV2 ? Player.Name : Player.FileName;
 
+        protected AnimatedSprite Idle;
+        protected AnimatedSprite Left;
+        protected AnimatedSprite Right;
+
         public double SetRate { get; private set; } = 0.75d;
 
         private double originalRate;
@@ -57,26 +61,95 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                 KiaiRightSprite.Alpha = 0;
                 KiaiStillSprite.Alpha = 0;
 
-                KiaiContainer.Add(new AnimatedSprite()
+                KiaiContainer.AddRange(new Drawable[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    UpdateRate = 100,
-                    Textures = new Texture[]
+                    Idle = new AnimatedSprite()
                     {
-                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 0", storage),
-                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 1", storage),
-                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 2", storage),
-                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 3", storage),
-                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 4", storage),
-                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 5", storage),
-                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 6", storage),
-                        VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 7", storage),
+                        RelativeSizeAxes = Axes.Both,
+                        UpdateRate = 100,
+                        Textures = new Texture[]
+                        {
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 0", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 1", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 2", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 3", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 4", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 5", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 6", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 7", storage),
+                        }
+                    },
+                    Left = new AnimatedSprite()
+                    {
+                        Alpha = 0,
+                        RelativeSizeAxes = Axes.Both,
+                        UpdateRate = 100,
+                        Textures = new Texture[]
+                        {
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 0", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 1", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 2", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 3", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 4", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 5", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 6", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 7", storage),
+                        }
+                    },
+                    Right = new AnimatedSprite()
+                    {
+                        Alpha = 0,
+                        RelativeSizeAxes = Axes.Both,
+                        UpdateRate = 100,
+                        Textures = new Texture[]
+                        {
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Right 0", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Right 1", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Right 2", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Right 3", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Right 4", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Right 5", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Right 6", storage),
+                            VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Right 7", storage),
+                        }
                     }
                 });
             }
             else
                 base.LoadAnimationSprites(textures, storage);
 
+        }
+
+        protected override void MovementAnimations()
+        {
+            if (graphics == GraphicsPresets.StandardV2)
+            {
+                if (Position.X > LastX && Right.Alpha < 1)
+                {
+                    Idle.Alpha = 0;
+                    Left.Alpha = 0;
+                    Right.Alpha = 1;
+                    Right.Reset();
+                }
+                else if (Position.X < LastX && Left.Alpha < 1)
+                {
+                    Idle.Alpha = 0;
+                    Left.Alpha = 1;
+                    Right.Alpha = 0;
+                    Left.Reset();
+                }
+                else if (Position.X == LastX && Idle.Alpha < 1)
+                {
+                    Idle.Alpha = 1;
+                    Left.Alpha = 0;
+                    Right.Alpha = 0;
+                    Idle.Reset();
+                }
+
+                LastX = Position.X;
+            }
+            else
+                base.MovementAnimations();
         }
 
         [BackgroundDependencyLoader]
