@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         protected override void InitialiseDefaults()
         {
-            Set(VitaruSetting.DebugOverlay, false);
+            Set(VitaruSetting.DebugMode, false);
             Set(VitaruSetting.DebugConfiguration, DebugConfiguration.PerformanceMetrics);
             Set(VitaruSetting.GraphicsPresets, GraphicsPresets.Standard);
             Set(VitaruSetting.GameMode, Gamemodes.Vitaru);
@@ -23,8 +23,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.VitaruCharacter, "Alex");
             Set(VitaruSetting.TouhosuCharacter, "SakuyaIzayoi");
 
-            //Leaks like crazy atm
-            Set(VitaruSetting.ComboFire, false);
+            Set(VitaruSetting.ComboFire, true);
             Set(VitaruSetting.ShittyMultiplayer, false);
             Set(VitaruSetting.FriendlyPlayerCount, 0, 0, 7);
             Set(VitaruSetting.FriendlyPlayerOverride, false);
@@ -64,7 +63,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         Character,
         VitaruCharacter,
         TouhosuCharacter,
-        DebugOverlay,
+        DebugMode,
         DebugConfiguration,
         GraphicsPresets,
         ComboFire,

@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             VitaruConfigManager = new VitaruConfigManager(host.Storage);
 
-            showDebugUi = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugOverlay);
+            showDebugUi = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
 
             selectedGamemode = VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
@@ -118,6 +118,11 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     LabelText = "Graphics Presets",
                     Bindable = VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets)
                 },
+                new SettingsCheckbox
+                {
+                    LabelText = "Enable Combo Fire",
+                    Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire)
+                },
                 new SettingsButton
                 {
                     Text = "Open In-game Wiki",
@@ -125,8 +130,8 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                 },
                 new SettingsCheckbox
                 {
-                    LabelText = "Show Debug UI In-Game",
-                    Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugOverlay)
+                    LabelText = "Enable Debug Mode",
+                    Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode)
                 },
                 debugUiSettings = new FillFlowContainer
                 {

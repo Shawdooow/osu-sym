@@ -25,7 +25,10 @@ namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruPlayfield : SymcolPlayfield
     {
-        private static readonly Bindable<Gamemodes> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private static readonly Gamemodes gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+
+        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
+
         private readonly string selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
         public readonly VitaruInputManager VitaruInputManager;
@@ -37,9 +40,13 @@ namespace osu.Game.Rulesets.Vitaru.UI
         private readonly Container judgementLayer;
         private readonly List<DrawableVitaruPlayer> playerList = new List<DrawableVitaruPlayer>();
 
+        //TODO: Make this not need to be static?
         public static List<VitaruClientInfo> LoadPlayerList = new List<VitaruClientInfo>();
 
+        //TODO: Make this not need to be static
         public static DrawableVitaruPlayer Player;
+
+        public Boss Boss;
 
         public virtual bool LoadPlayer => true;
 
@@ -47,9 +54,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             get
             {
-                if (currentGameMode == Gamemodes.Dodge)
+                if (gamemode == Gamemodes.Dodge)
                     return new Vector2(512, 384);
-                else if (currentGameMode == Gamemodes.Gravaru)
+                else if (gamemode == Gamemodes.Gravaru)
                     return new Vector2(384 * 2, 384);
                 else
                     return new Vector2(512, 820);
@@ -125,8 +132,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 foreach (DrawableVitaruPlayer player in playerList)
                     GameField.Add(player);
 
+                if (gamemode == Gamemodes.Touhosu && graphics == GraphicsPresets.StandardV2 && VitaruAPIContainer.Shawdooow)
+                    GameField.Add(Boss = new Boss(this));
+
                 Player.Position = new Vector2(256, 700);
-                if (currentGameMode == Gamemodes.Dodge || currentGameMode == Gamemodes.Gravaru)
+                if (gamemode == Gamemodes.Dodge || gamemode == Gamemodes.Gravaru)
                     Player.Position = BaseSize / 2;
             }
             else

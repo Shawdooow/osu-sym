@@ -17,9 +17,9 @@ namespace osu.Game.Rulesets.Vitaru
 {
     public class VitaruInputManager : SymcolInputManager<VitaruAction>
     {
-        private Bindable<bool> debugUI = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugOverlay);
+        private Bindable<bool> debugUI = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
         private Bindable<bool> comboFire = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire);
-        private Bindable<GraphicsPresets> graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
+        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
 
         protected override bool VectorVideo => VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.VectorVideos);
 
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Vitaru
 
         public VitaruInputManager(RulesetInfo ruleset, int variant) : base(ruleset, variant, SimultaneousBindingMode.Unique)
         {
-            if (graphics.Value == GraphicsPresets.Standard)
+            if (graphics != GraphicsPresets.HighPerformance)
                 Add(Shade = new Box { RelativeSizeAxes = Axes.Both, Alpha = 0, Colour = Color4.Orange });
 
             if (debugUI)

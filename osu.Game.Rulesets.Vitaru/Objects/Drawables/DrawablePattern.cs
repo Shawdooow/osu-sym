@@ -17,6 +17,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
     {
         private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
+        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
+
         public static int PatternCount;
         private readonly Pattern pattern;
         private StarPiece starPiece;
@@ -62,6 +64,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void Update()
         {
             base.Update();
+
+            if (graphics == GraphicsPresets.StandardV2 && currentGameMode == Gamemodes.Touhosu && VitaruPlayfield.Boss != null && VitaruPlayfield.Boss.Free && Time.Current >= HitObject.StartTime - pattern.TimePreempt)
+            {
+                double moveTime = HitObject.StartTime - Time.Current;
+                VitaruPlayfield.Boss.MoveTo(Position, moveTime < 100 ? 100 : moveTime);
+                VitaruPlayfield.Boss.Free = false;
+            }
 
             if (pattern.IsSlider)
             {
@@ -157,6 +166,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void End()
         {
             base.End();
+
+            if (VitaruPlayfield.Boss != null)
+                VitaruPlayfield.Boss.Free = true;
 
             if (currentGameMode != Gamemodes.Dodge)
                 enemy.MoveTo(getPatternStartPosition(), HitObject.TimePreempt * 2, Easing.InQuint)

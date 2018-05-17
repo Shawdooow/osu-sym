@@ -25,6 +25,7 @@
     <None Remove="Assets\Textures\kaguyaKiai.png" />
     <None Remove="Assets\Textures\kaguyaKiaiRight.png" />
     <None Remove="Assets\Textures\kaguyaRight.png" />
+    <None Remove="Assets\Textures\Kokoro Hatano Kiai.png" />
     <None Remove="Assets\Textures\marisa.png" />
     <None Remove="Assets\Textures\marisaKiai.png" />
     <None Remove="Assets\Textures\marisaKiaiRight.png" />
@@ -87,6 +88,7 @@
     <EmbeddedResource Include="Assets\Textures\gearMedium.png" />
     <EmbeddedResource Include="Assets\Textures\gearSmall.png" />
     <EmbeddedResource Include="Assets\Textures\icon.png" />
+    <EmbeddedResource Include="Assets\Textures\Kokoro Hatano Kiai.png" />
     <EmbeddedResource Include="Assets\Textures\ring.png" />
     <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai 0.png" />
     <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai 1.png" />
