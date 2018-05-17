@@ -17,6 +17,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
         protected override string CharacterName => "Kokoro Hatano";
 
+        protected override float HitboxWidth => 64;
+
         public Boss(VitaruPlayfield playfield) : base(playfield)
         {
             Position = new Vector2(256 , 384 / 2);
