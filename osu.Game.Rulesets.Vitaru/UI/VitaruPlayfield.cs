@@ -20,6 +20,9 @@ using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using osu.Framework.Logging;
+using osu.Framework.Graphics.Shapes;
+using osu.Game.Screens.Edit.Screens.Compose.Layers;
+using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -71,6 +74,22 @@ namespace osu.Game.Rulesets.Vitaru.UI
             Origin = Anchor.Centre;
 
             Bindable<int> abstraction = new Bindable<int>() { Value = 0 };
+
+            if (graphics == GraphicsPresets.StandardV2)
+                Add(new Container
+                {
+                    Name = "Border",
+                    RelativeSizeAxes = Axes.Both,
+                    Masking = true,
+                    BorderColour = Color4.White,
+                    BorderThickness = 3,
+                    Child = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Alpha = 0,
+                        AlwaysPresent = true
+                    }
+                });
 
             AddRange(new Drawable[]
             {
@@ -184,16 +203,18 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             public readonly Bindable<int> AbstractionLevel;
 
-            public Container Current = new Container { RelativeSizeAxes = Axes.Both };
-            public Container QuarterAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.5f, Colour = OsuColour.FromHex("#ffe6d1") };
-            public Container HalfAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.25f, Colour = OsuColour.FromHex("#bff5ff") };
-            public Container FullAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.125f, Colour = OsuColour.FromHex("#d191ff") };
+            public Container Current = new Container { RelativeSizeAxes = Axes.Both, Name = "Current" };
+            public Container QuarterAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.5f, Colour = OsuColour.FromHex("#ffe6d1"), Name = "QuarterAbstraction" };
+            public Container HalfAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.25f, Colour = OsuColour.FromHex("#bff5ff"), Name = "HalfAbstraction" };
+            public Container FullAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.125f, Colour = OsuColour.FromHex("#d191ff"), Name = "FullAbstraction" };
 
             public AbstractionField(Bindable<int> abstraction)
             {
                 AbstractionLevel = abstraction;
 
                 RelativeSizeAxes = Axes.Both;
+
+                Name = "AbstractionField";
 
                 Children = new Drawable[]
                 {

@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 {
     public class Enemy : Character
     {
-        private readonly GraphicsPresets currentSkin = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
+        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
 
         public static int EnemyCount;
         private readonly DrawablePattern drawablePattern;
@@ -109,12 +109,20 @@ namespace osu.Game.Rulesets.Vitaru.Characters
             if (effectPoint.KiaiMode && SoulContainer.Alpha == 1)
             {
                 SoulContainer.FadeOutFromOne(timingPoint.BeatLength / 4);
-                KiaiContainer.FadeInFromZero(timingPoint.BeatLength / 4);
+
+                if (VitaruPlayfield.Boss == null)
+                    KiaiContainer.FadeInFromZero(timingPoint.BeatLength / 4);
+                else
+                    Hitbox.HitDetection = false;
             }
             if (!effectPoint.KiaiMode && SoulContainer.Alpha == 0)
             {
                 SoulContainer.FadeInFromZero(timingPoint.BeatLength);
-                KiaiContainer.FadeOutFromOne(timingPoint.BeatLength);
+
+                if (VitaruPlayfield.Boss == null)
+                    KiaiContainer.FadeOutFromOne(timingPoint.BeatLength);
+                else
+                    Hitbox.HitDetection = true;
             }
         }
 

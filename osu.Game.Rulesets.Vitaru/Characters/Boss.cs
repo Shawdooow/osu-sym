@@ -22,8 +22,15 @@ namespace osu.Game.Rulesets.Vitaru.Characters
             Position = new Vector2(256 , 384 / 2);
             AlwaysPresent = true;
             Abstraction = 3;
-            //Alpha = 0;
+            Alpha = 0;
             Team = 1;
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            Hitbox.HitDetection = false;
         }
 
         protected override void OnNewBeat(int beatIndex, TimingControlPoint timingPoint, EffectControlPoint effectPoint, TrackAmplitudes amplitudes)
@@ -45,14 +52,16 @@ namespace osu.Game.Rulesets.Vitaru.Characters
                     Seal.FadeOut(timingPoint.BeatLength);
             }
 
-            if (effectPoint.KiaiMode && Alpha == 1)
+            if (effectPoint.KiaiMode && Alpha == 0)
             {
+                Hitbox.HitDetection = true;
                 this.FadeInFromZero(timingPoint.BeatLength / 4);
                 Seal.FadeTo(0.15f, timingPoint.BeatLength / 4);
             }
             if (!effectPoint.KiaiMode && Alpha == 1)
             {
-                //this.FadeOutFromOne(timingPoint.BeatLength);
+                Hitbox.HitDetection = false;
+                this.FadeOutFromOne(timingPoint.BeatLength);
                 Seal.FadeTo(0f, timingPoint.BeatLength);
             }
         }

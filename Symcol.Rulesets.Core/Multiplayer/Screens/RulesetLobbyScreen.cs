@@ -24,7 +24,6 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
         public RulesetNetworkingClientHandler RulesetNetworkingClientHandler;
 
         public readonly SettingsButton HostGameButton;
-        public readonly SettingsButton DirectConnectButton;
         public readonly SettingsButton JoinGameButton;
 
         public readonly Container NewGame;
