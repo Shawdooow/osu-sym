@@ -20,6 +20,9 @@ namespace Symcol.Core.Graphics.Sprites
         /// </summary>
         public double UpdateRate { get; set; } = 250;
 
+        /// <summary>
+        /// Called when we cycle back to the first texture (technically just before it by one line)
+        /// </summary>
         public Action OnAnimationRestart;
 
         private double lastUpdate = double.MaxValue;

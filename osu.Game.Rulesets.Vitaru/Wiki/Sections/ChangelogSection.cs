@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Split old \"Gameplay\" wiki section into three new sections: General, Gamemodes and Characters\n" +
             "-Fix Seal not loading properly for non touhosu characters\n" +
             "-Make Healing and energy gain per bullet and the amount distance based\n" +
-            "-Change most of the patterns to have variable bullet size and damage\n\n" +
+            "-Change most of the patterns to have variable bullet size and damage\n" +
             "-SkinV2 graphics option (give it a try, we have AnimatedSprites now!)";
 
         [BackgroundDependencyLoader]
