@@ -13,21 +13,13 @@ namespace osu.Game.Screens.Evast
 {
     public class BeatmapScreen : OsuScreen
     {
-        protected override BackgroundScreen CreateBackground() => new BackgroundScreenBeatmap();
-        private readonly Bindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
+        protected override BackgroundScreen CreateBackground() => new BackgroundScreenBeatmap(Beatmap);
         private readonly Vector2 backgroundBlur = new Vector2(20);
 
         [BackgroundDependencyLoader]
         private void load(OsuGameBase game)
         {
-            beatmap.BindTo(game.Beatmap);
-            beatmap.ValueChanged += OnBeatmapChange;
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            beatmap.TriggerChange();
+            Beatmap.ValueChanged += OnBeatmapChange;
         }
 
         protected virtual void OnBeatmapChange(WorkingBeatmap beatmap)
@@ -43,8 +35,7 @@ namespace osu.Game.Screens.Evast
 
         protected override bool OnExiting(Screen next)
         {
-            beatmap.ValueChanged -= OnBeatmapChange;
-            beatmap.UnbindAll();
+            Beatmap.ValueChanged -= OnBeatmapChange;
             return base.OnExiting(next);
         }
     }

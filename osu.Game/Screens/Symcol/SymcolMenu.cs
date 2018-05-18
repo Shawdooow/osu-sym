@@ -31,8 +31,6 @@ namespace osu.Game.Screens.Symcol
 
         public static Bindable<bool> AllowConverts = new Bindable<bool> { Value = true };
 
-        private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
-
         protected override BackgroundScreen CreateBackground() => new BackgroundScreenBeatmap(Beatmap);
 
         private readonly OsuLogo logo;
@@ -74,7 +72,7 @@ namespace osu.Game.Screens.Symcol
                         */
                         new SymcolButton
                         {
-                            ButtonName = "Lazer",
+                            ButtonName = "Thumbnail",
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
                             ButtonColorTop = Color4.Black,
@@ -215,14 +213,13 @@ namespace osu.Game.Screens.Symcol
         [BackgroundDependencyLoader]
         private void load(OsuGameBase game)
         {
-            workingBeatmap.BindTo(game.Beatmap);
-            workingBeatmap.ValueChanged += changeBackground;
+            Beatmap.ValueChanged += changeBackground;
         }
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            workingBeatmap.TriggerChange();
+            Beatmap.TriggerChange();
         }
 
         private bool open(Container container)
