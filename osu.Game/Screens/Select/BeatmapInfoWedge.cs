@@ -88,17 +88,27 @@ namespace osu.Game.Screens.Select
 
         private void loadBeatmap()
         {
+            void updateState()
+            {
+                State = beatmap == null ? Visibility.Hidden : Visibility.Visible;
+
+                Info?.FadeOut(250);
+                Info?.Expire();
+            }
+
+            if (beatmap == null)
+            {
+                updateState();
+                return;
+            }
+
             LoadComponentAsync(new BufferedWedgeInfo(beatmap, ruleset.Value)
             {
                 Shear = -Shear,
                 Depth = Info?.Depth + 1 ?? 0,
             }, newInfo =>
             {
-                State = beatmap == null ? Visibility.Hidden : Visibility.Visible;
-
-                Info?.FadeOut(250);
-                Info?.Expire();
-
+                updateState();
                 Add(Info = newInfo);
             });
         }
@@ -126,110 +136,107 @@ namespace osu.Game.Screens.Select
             [BackgroundDependencyLoader]
             private void load(LocalisationEngine localisation)
             {
-                if (working != null)
+                var beatmapInfo = working.BeatmapInfo;
+                var metadata = beatmapInfo.Metadata ?? working.BeatmapSetInfo?.Metadata ?? new BeatmapMetadata();
+
+                PixelSnapping = true;
+                CacheDrawnFrameBuffer = true;
+                RelativeSizeAxes = Axes.Both;
+
+                titleBinding = localisation.GetUnicodePreference(metadata.TitleUnicode, metadata.Title);
+                artistBinding = localisation.GetUnicodePreference(metadata.ArtistUnicode, metadata.Artist);
+
+                Children = new Drawable[]
                 {
-                    var beatmapInfo = working.BeatmapInfo;
-                    var metadata = beatmapInfo.Metadata ?? working.BeatmapSetInfo?.Metadata ?? new BeatmapMetadata();
-
-                    PixelSnapping = true;
-                    CacheDrawnFrameBuffer = true;
-                    RelativeSizeAxes = Axes.Both;
-
-                    titleBinding = localisation.GetUnicodePreference(metadata.TitleUnicode, metadata.Title);
-                    artistBinding = localisation.GetUnicodePreference(metadata.ArtistUnicode, metadata.Artist);
-
-                    Children = new Drawable[]
+                    // We will create the white-to-black gradient by modulating transparency and having
+                    // a black backdrop. This results in an sRGB-space gradient and not linear space,
+                    // transitioning from white to black more perceptually uniformly.
+                    new Box
                     {
-                        // We will create the white-to-black gradient by modulating transparency and having
-                        // a black backdrop. This results in an sRGB-space gradient and not linear space,
-                        // transitioning from white to black more perceptually uniformly.
-                        new Box
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Color4.Black,
+                    },
+                    // We use a container, such that we can set the colour gradient to go across the
+                    // vertices of the masked container instead of the vertices of the (larger) sprite.
+                    new Container
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = ColourInfo.GradientVertical(Color4.White, Color4.White.Opacity(0.3f)),
+                        Children = new[]
                         {
-                            RelativeSizeAxes = Axes.Both,
-                            Colour = Color4.Black,
-                        },
-                        // We use a container, such that we can set the colour gradient to go across the
-                        // vertices of the masked container instead of the vertices of the (larger) sprite.
-                        new Container
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Colour = ColourInfo.GradientVertical(Color4.White, Color4.White.Opacity(0.3f)),
-                            Children = new[]
+                            // Zoomed-in and cropped beatmap background
+                            new BeatmapBackgroundSprite(working)
                             {
-                                // Zoomed-in and cropped beatmap background
-                                new BeatmapBackgroundSprite(working)
-                                {
-                                    RelativeSizeAxes = Axes.Both,
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                    FillMode = FillMode.Fill,
-                                },
+                                RelativeSizeAxes = Axes.Both,
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                FillMode = FillMode.Fill,
                             },
                         },
-                        new DifficultyColourBar(beatmapInfo)
+                    },
+                    new DifficultyColourBar(beatmapInfo)
+                    {
+                        RelativeSizeAxes = Axes.Y,
+                        Width = 20,
+                    },
+                    new FillFlowContainer
+                    {
+                        Name = "Top-aligned metadata",
+                        Anchor = Anchor.TopLeft,
+                        Origin = Anchor.TopLeft,
+                        Direction = FillDirection.Vertical,
+                        Margin = new MarginPadding { Top = 10, Left = 25, Right = 10, Bottom = 20 },
+                        AutoSizeAxes = Axes.Both,
+                        Children = new Drawable[]
                         {
-                            RelativeSizeAxes = Axes.Y,
-                            Width = 20,
-                        },
-                        new FillFlowContainer
-                        {
-                            Name = "Top-aligned metadata",
-                            Anchor = Anchor.TopLeft,
-                            Origin = Anchor.TopLeft,
-                            Direction = FillDirection.Vertical,
-                            Margin = new MarginPadding { Top = 10, Left = 25, Right = 10, Bottom = 20 },
-                            AutoSizeAxes = Axes.Both,
-                            Children = new Drawable[]
+                            VersionLabel = new OsuSpriteText
                             {
-                                VersionLabel = new OsuSpriteText
-                                {
-                                    Font = @"Exo2.0-MediumItalic",
-                                    Text = beatmapInfo.Version,
-                                    TextSize = 24,
-                                },
-                            }
-                        },
-                        new FillFlowContainer
+                                Font = @"Exo2.0-MediumItalic",
+                                Text = beatmapInfo.Version,
+                                TextSize = 24,
+                            },
+                        }
+                    },
+                    new FillFlowContainer
+                    {
+                        Name = "Centre-aligned metadata",
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.TopLeft,
+                        Y = -22,
+                        Direction = FillDirection.Vertical,
+                        Margin = new MarginPadding { Top = 15, Left = 25, Right = 10, Bottom = 20 },
+                        AutoSizeAxes = Axes.Both,
+                        Children = new Drawable[]
                         {
-                            Name = "Centre-aligned metadata",
-                            Anchor = Anchor.CentreLeft,
-                            Origin = Anchor.TopLeft,
-                            Y = -22,
-                            Direction = FillDirection.Vertical,
-                            Margin = new MarginPadding { Top = 15, Left = 25, Right = 10, Bottom = 20 },
-                            AutoSizeAxes = Axes.Both,
-                            Children = new Drawable[]
+                            TitleLabel = new OsuSpriteText
                             {
-                                TitleLabel = new OsuSpriteText
-                                {
-                                    Font = @"Exo2.0-MediumItalic",
-                                    TextSize = 28,
-                                },
-                                ArtistLabel = new OsuSpriteText
-                                {
-                                    Font = @"Exo2.0-MediumItalic",
-                                    TextSize = 17,
-                                },
-                                MapperContainer = new FillFlowContainer
-                                {
-                                    Margin = new MarginPadding { Top = 10 },
-                                    Direction = FillDirection.Horizontal,
-                                    AutoSizeAxes = Axes.Both,
-                                    Children = getMapper(metadata)
-                                },
-                                InfoLabelContainer = new FillFlowContainer
-                                {
-                                    Margin = new MarginPadding { Top = 20 },
-                                    Spacing = new Vector2(20, 0),
-                                    AutoSizeAxes = Axes.Both,
-                                    Children = getInfoLabels()
-                                }
+                                Font = @"Exo2.0-MediumItalic",
+                                TextSize = 28,
+                            },
+                            ArtistLabel = new OsuSpriteText
+                            {
+                                Font = @"Exo2.0-MediumItalic",
+                                TextSize = 17,
+                            },
+                            MapperContainer = new FillFlowContainer
+                            {
+                                Margin = new MarginPadding { Top = 10 },
+                                Direction = FillDirection.Horizontal,
+                                AutoSizeAxes = Axes.Both,
+                                Children = getMapper(metadata)
+                            },
+                            InfoLabelContainer = new FillFlowContainer
+                            {
+                                Margin = new MarginPadding { Top = 20 },
+                                Spacing = new Vector2(20, 0),
+                                AutoSizeAxes = Axes.Both,
+                                Children = getInfoLabels()
                             }
                         }
-                    };
-                    artistBinding.ValueChanged += value => setMetadata(metadata.Source);
-                    artistBinding.TriggerChange();
-                }
+                    }
+                };
+                artistBinding.ValueChanged += value => setMetadata(metadata.Source);
+                artistBinding.TriggerChange();
             }
 
             private void setMetadata(string source)
