@@ -19,10 +19,11 @@ using osu.Game.Screens.Evast;
 
 namespace osu.Game.Screens.Symcol
 {
-    public class SymcolMenu : OsuScreen
+    public class SymcolMenu : BeatmapScreen
     {
         private const int animation_duration = 600;
-        private readonly Vector2 background_blur = new Vector2(10);
+
+        protected override float BackgroundBlur => 10;
 
         public static OsuScreen RulesetMultiplayerScreen;
 
@@ -30,8 +31,6 @@ namespace osu.Game.Screens.Symcol
         public static TextureStore SymcolTextures;
 
         public static Bindable<bool> AllowConverts = new Bindable<bool> { Value = true };
-
-        protected override BackgroundScreen CreateBackground() => new BackgroundScreenBeatmap(Beatmap);
 
         private readonly OsuLogo logo;
         private readonly Container<SymcolButton> buttonsContainer;
@@ -210,18 +209,6 @@ namespace osu.Game.Screens.Symcol
             };
         }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuGameBase game)
-        {
-            Beatmap.ValueChanged += changeBackground;
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            Beatmap.TriggerChange();
-        }
-
         private bool open(Container container)
         {
             logo.Action = () => close(container);
@@ -240,17 +227,6 @@ namespace osu.Game.Screens.Symcol
             foreach (var button in buttonsContainer)
                 button.MoveTo(Vector2.Zero, animation_duration, Easing.InOutBack);
             return true;
-        }
-
-        private void changeBackground(WorkingBeatmap beatmap)
-        {
-            var backgroundModeBeatmap = Background as BackgroundScreenBeatmap;
-            if (backgroundModeBeatmap != null)
-            {
-                backgroundModeBeatmap.Beatmap = beatmap;
-                backgroundModeBeatmap.BlurTo(background_blur, 1500);
-                backgroundModeBeatmap.FadeTo(1, 250);
-            }
         }
 
         protected override void OnEntering(Screen last)

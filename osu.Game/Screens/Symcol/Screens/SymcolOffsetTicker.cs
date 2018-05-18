@@ -20,10 +20,11 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Beatmaps.ControlPoints;
 using System;
 using osu.Game.Configuration;
+using osu.Game.Screens.Evast;
 
 namespace osu.Game.Screens.Symcol.Screens
 {
-    public class SymcolOffsetTicker : OsuScreen
+    public class SymcolOffsetTicker : BeatmapScreen
     {
         private SampleChannel tick;
         private double savedTime = 0;

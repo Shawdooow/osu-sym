@@ -24,10 +24,11 @@ using osu.Game.Screens.Backgrounds;
 using osu.Game.Configuration;
 using OpenTK.Input;
 using osu.Game.Screens.Evast.Visualizers;
+using osu.Game.Screens.Evast;
 
 namespace osu.Game.Screens.Symcol.Screens
 {
-    public class SymcolMapMixer : OsuScreen
+    public class SymcolMapMixer : BeatmapScreen
     {
         private SettingsSlider<double> clockPitch;
         private SettingsSlider<double> clockSpeed;
@@ -37,15 +38,12 @@ namespace osu.Game.Screens.Symcol.Screens
         public static BindableDouble ClockSpeed;
         private Bindable<double> dimLevel;
         private static Bindable<bool> syncPitch = new Bindable<bool> { Default = true, Value = true };
-        protected override BackgroundScreen CreateBackground() => new BackgroundScreenBeatmap(Beatmap);
+        protected override float BackgroundBlur => 10;
         private bool suspended = false;
-        private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
 
         [BackgroundDependencyLoader]
-        private void load(AudioManager audio, OsuConfigManager config, OsuGameBase game)
+        private void load(AudioManager audio, OsuConfigManager config)
         {
-            workingBeatmap.BindTo(game.Beatmap);
-
             dimLevel = config.GetBindable<double>(OsuSetting.DimLevel);
 
             ClockPitch = new BindableDouble() { MinValue = 0f, Default = 1, Value = pitch, MaxValue = 2 };
@@ -184,41 +182,24 @@ namespace osu.Game.Screens.Symcol.Screens
             }
 
             applyRateAdjustments();
-
-            if(!suspended)
-                changeBackground(Beatmap, 1, 0);
-        }
-
-        private void changeBackground(WorkingBeatmap beatmap, float alpha, double duration)
-        {
-            var backgroundModeBeatmap = Background as BackgroundScreenBeatmap;
-            if (backgroundModeBeatmap != null)
-            {
-                backgroundModeBeatmap.Beatmap = beatmap;
-                backgroundModeBeatmap.BlurTo(new Vector2(10), duration);
-                backgroundModeBeatmap.FadeTo(alpha, duration);
-            }
         }
 
         protected override void OnEntering(Screen last)
         {
             base.OnEntering(last);
-            changeBackground(Beatmap, 1 , 0);
-            setClockSpeed(workingBeatmap.Value.Track);
+            setClockSpeed(Beatmap.Value.Track);
         }
 
         protected override void OnResuming(Screen last)
         {
             base.OnResuming(last);
             suspended = false;
-            changeBackground(Beatmap, 1, 1500);
         }
 
         protected override void OnSuspending(Screen next)
         {
             base.OnSuspending(next);
             suspended = true;
-            changeBackground(Beatmap, 0, 1500);
         }
 
         private void changeClockSpeeds(float value)
@@ -236,9 +217,9 @@ namespace osu.Game.Screens.Symcol.Screens
 
         private void applyRateAdjustments()
         {
-            if (workingBeatmap.Value.Track == null) return;
+            if (Beatmap.Value.Track == null) return;
             else
-                ApplyToClock(workingBeatmap.Value.Track);
+                ApplyToClock(Beatmap.Value.Track);
         }
 
         private void ApplyToClock(IAdjustableClock clock)
