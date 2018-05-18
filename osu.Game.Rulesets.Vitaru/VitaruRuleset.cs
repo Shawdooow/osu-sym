@@ -16,6 +16,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Beatmaps;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Vitaru.UI;
+using osu.Game.Rulesets.Difficulty;
 
 namespace osu.Game.Rulesets.Vitaru
 {

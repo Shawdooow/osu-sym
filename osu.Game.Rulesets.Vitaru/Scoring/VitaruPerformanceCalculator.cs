@@ -5,6 +5,7 @@ using osu.Game.Rulesets.Vitaru.Objects;
 using System;
 using osu.Game.Rulesets.Vitaru.Beatmaps;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Difficulty;
 
 namespace osu.Game.Rulesets.Vitaru.Scoring
 {

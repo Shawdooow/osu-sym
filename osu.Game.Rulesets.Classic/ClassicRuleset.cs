@@ -5,8 +5,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Classic.Mods;
-using osu.Game.Rulesets.Classic.Objects;
-using osu.Game.Rulesets.Classic.ClassicDifficulty;
 using osu.Game.Rulesets.Classic.UI;
 using osu.Game.Rulesets.UI;
 using System.Collections.Generic;
@@ -21,6 +19,8 @@ using osu.Game.Rulesets.Classic.Settings;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Classic.Edit;
 using osu.Game.Rulesets.Classic.Beatmaps;
+using osu.Game.Rulesets.Difficulty;
+using osu.Game.Rulesets.Classic.ClassicDifficulty;
 
 namespace osu.Game.Rulesets.Classic
 {

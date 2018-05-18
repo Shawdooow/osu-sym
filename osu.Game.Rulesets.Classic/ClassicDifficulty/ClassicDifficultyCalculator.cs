@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Generic;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Classic.Beatmaps;
 using osu.Game.Rulesets.Classic.Objects;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Circles.OsuDifficulty.Preprocessing;
 using osu.Game.Rulesets.Circles.OsuDifficulty.Skills;
+using osu.Game.Rulesets.Difficulty;
 
 namespace osu.Game.Rulesets.Classic.ClassicDifficulty
 {

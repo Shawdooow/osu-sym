@@ -1,11 +1,9 @@
 ﻿using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Mix.Objects;
-using osu.Game.Rulesets.Mix.Beatmaps;
-using osu.Game.Rulesets.Objects;
 using System;
 using System.Collections.Generic;
-using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Difficulty;
 
 namespace osu.Game.Rulesets.Mix
 {
