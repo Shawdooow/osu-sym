@@ -17,7 +17,15 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Bug player to checkout settings once\n\n" +
             "Tweaks / Changes:\n\n" +
             "-Use standard Get functions for characters (community made characters soon!)\n" +
-            "-Added Sakuya's Background";//\n\n" +
+            "-Added Sakuya's Background\n" +
+            "-Nerf Ryukoy's Health (80 => 60)\n" +
+            "-Nerf Ryukoy's Max Energy (24 => 20)\n" +
+            "-Nerf Tomaji's Max Energy (16 => 12)\n" +
+            "-Tweak Tomaji's spell values:\n" +
+            "   Time to charge a full blink reduced (2000ms => 600ms)\n" +
+            "   Distance covered at full charge reduced (400 => 200)\n" +
+            "-Nerf Sakuya's Health (100 => 80)\n" +
+            "-Nerf Sakuya's Max Energy (36 => 32)";//\n\n" +
             //"Fixes:\n\n" +
             //"";
 

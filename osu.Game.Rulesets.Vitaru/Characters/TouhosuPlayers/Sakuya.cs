@@ -9,9 +9,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override string FileName => "SakuyaIzayoi";
 
-        public override double MaxHealth => 100;
+        public override double MaxHealth => 80;
 
-        public override double MaxEnergy => 36;
+        public override double MaxEnergy => 32;
 
         public override double EnergyCost => 2;
 

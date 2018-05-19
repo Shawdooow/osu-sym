@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override double MaxHealth => 40;
 
-        public override double MaxEnergy => 16;
+        public override double MaxEnergy => 12;
 
         public override double EnergyCost => 0;
 
