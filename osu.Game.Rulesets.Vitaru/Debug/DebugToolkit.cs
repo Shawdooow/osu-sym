@@ -26,35 +26,27 @@ namespace osu.Game.Rulesets.Vitaru.Debug
 
             Position = new Vector2(20, 0);
 
-            Width = 180;
+            RelativeSizeAxes = Axes.X;
+            Width = 0.18f;
             AutoSizeAxes = Axes.Y;
+
+            Masking = true;
+            CornerRadius = 4;
+            BorderColour = Color4.White;
+            BorderThickness = 4;
 
             Children = new Drawable[]
             {
-                new Container
+                new Box
                 {
-                    Masking = true,
-                    CornerRadius = 4,
-                    BorderColour = Color4.White,
-                    BorderThickness = 4,
-
                     Colour = ColourInfo.GradientVertical(osu.Green.Darken(0.4f), osu.Green.Lighten(0.4f)),
-
+                    RelativeSizeAxes = Axes.Both
+                },
+                new Triangles
+                {
                     RelativeSizeAxes = Axes.Both,
-
-                    Children = new Drawable[]
-                    {
-                        new Box
-                        {
-                            RelativeSizeAxes = Axes.Both
-                        },
-                        new Triangles
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            ColourDark = osu.Green.Darken(0.4f),
-                            ColourLight = osu.Green.Lighten(0.4f)
-                        }
-                    }
+                    ColourDark = osu.Green.Darken(0.4f),
+                    ColourLight = osu.Green.Lighten(0.4f)
                 },
                 debugItems = new FillFlowContainer<Container>
                 {
@@ -65,6 +57,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                     AutoSizeAxes = Axes.Y
                 }
             };
+
         }
 
         public void UpdateItems()
