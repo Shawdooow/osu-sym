@@ -4,7 +4,7 @@ using osu.Framework.Logging;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Overlays.Settings;
-using osu.Game.Screens;
+using osu.Game.Screens.Evast;
 using Symcol.Core.Networking;
 using Symcol.Rulesets.Core.Multiplayer.Networking;
 using Symcol.Rulesets.Core.Multiplayer.Pieces;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Symcol.Rulesets.Core.Multiplayer.Screens
 {
-    public abstract class RulesetMatchScreen : OsuScreen
+    public abstract class RulesetMatchScreen : BeatmapScreen
     {
         public readonly RulesetNetworkingClientHandler RulesetNetworkingClientHandler;
 

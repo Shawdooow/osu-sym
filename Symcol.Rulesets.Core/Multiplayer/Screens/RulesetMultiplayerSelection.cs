@@ -11,15 +11,15 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Screens;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Screens;
 #if SymcolMods
 using osu.Game.Screens.Symcol;
+using osu.Game.Screens.Evast;
 #endif
 using Symcol.Rulesets.Core.Rulesets;
 
 namespace Symcol.Rulesets.Core.Multiplayer.Screens
 {
-    public class RulesetMultiplayerSelection : OsuScreen
+    public class RulesetMultiplayerSelection : BeatmapScreen
     {
         public static readonly FillFlowContainer<RulesetLobbyItem> LobbyItems = new FillFlowContainer<RulesetLobbyItem>
         {

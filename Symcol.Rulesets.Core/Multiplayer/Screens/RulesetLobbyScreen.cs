@@ -5,7 +5,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
-using osu.Game.Screens;
 using System;
 using osu.Framework.Screens;
 using System.Collections.Generic;
@@ -14,10 +13,11 @@ using Symcol.Rulesets.Core.Multiplayer.Networking;
 using osu.Framework.Configuration;
 using Symcol.Rulesets.Core.Rulesets;
 using osu.Framework.Graphics.Colour;
+using osu.Game.Screens.Evast;
 
 namespace Symcol.Rulesets.Core.Multiplayer.Screens
 {
-    public abstract class RulesetLobbyScreen : OsuScreen
+    public abstract class RulesetLobbyScreen : BeatmapScreen
     {
         public abstract RulesetMatchScreen MatchScreen { get; }
 
