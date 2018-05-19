@@ -1,4 +1,5 @@
-﻿using osu.Framework.Configuration;
+﻿using osu.Framework.Allocation;
+using osu.Framework.Configuration;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Multi;
@@ -30,10 +31,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
             TouhosuPlayer = player;
         }
 
-        protected override void LoadComplete()
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            base.LoadComplete();
-
             if (!Puppet)
                 DebugToolkit.DebugItems.Add(new DebugAction(() => { EnergyHacks = !EnergyHacks; }) { Text = "Energy Hacks" });
         }
