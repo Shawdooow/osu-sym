@@ -80,7 +80,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                 touhosuItems.Add(new KeyValuePair<string, string>(character.GetDescription(), character.ToString()));
             selectedTouhosuCharacter.ValueChanged += character => { VitaruConfigManager.Set(VitaruSetting.TouhosuCharacter, character); VitaruConfigManager.Set(VitaruSetting.Character, character); };
 
-
             Children = new Drawable[]
             {
                 new SettingsEnumDropdown<Gamemodes>

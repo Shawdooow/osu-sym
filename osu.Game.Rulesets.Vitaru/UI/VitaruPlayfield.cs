@@ -22,6 +22,9 @@ using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using osu.Framework.Logging;
 using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
+using osu.Game.Overlays.Notifications;
+using osu.Framework.Allocation;
+using osu.Game.Overlays;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -161,6 +164,21 @@ namespace osu.Game.Rulesets.Vitaru.UI
             }
             else
                 Player = null;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(NotificationOverlay notificationOverlay)
+        {
+            if (VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.AnnoyPlayer))
+                notificationOverlay.Post(new SimpleNotification
+                {
+                    Text = "Be sure to check out vitaru settings for the ingame wiki for wiki things! (click me to never see me again)",
+                    Activated = () =>
+                    {
+                        VitaruSettings.VitaruConfigManager.Set<bool>(VitaruSetting.AnnoyPlayer, false);
+                        return true;
+                    }
+                });
         }
 
         protected override void LoadComplete()

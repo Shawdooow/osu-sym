@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Vitaru
 {
     public class VitaruRuleset : Ruleset
     {
-        public const string RulesetVersion = "0.8.0";
+        public const string RulesetVersion = "0.8.1";
 
         public override int? LegacyID => 4; 
 
