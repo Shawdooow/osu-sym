@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                     return new DrawableRyukoy(playfield, vitaruNetworkingClientHandler, bindableInt);
                 case "TomajiHakurei":
                     return new DrawableTomaji(playfield, vitaruNetworkingClientHandler);
-                case "SakuyaHakurei":
+                case "SakuyaIzayoi":
                     return new DrawableSakuya(playfield, vitaruNetworkingClientHandler);
             }
         }

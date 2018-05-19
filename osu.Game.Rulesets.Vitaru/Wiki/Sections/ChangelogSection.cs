@@ -16,6 +16,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         private const string version_changelog = "Features:\n\n" +
             "-Bug player to checkout settings once\n\n" +
             "Tweaks / Changes:\n\n" +
+            "-Use standard Get functions for characters (community made characters soon!)\n" +
             "-Added Sakuya's Background";//\n\n" +
             //"Fixes:\n\n" +
             //"";
