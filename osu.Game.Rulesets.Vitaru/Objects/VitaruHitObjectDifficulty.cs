@@ -1,7 +1,6 @@
 ﻿using OpenTK;
 using osu.Game.Rulesets.Vitaru.Beatmaps;
 using System;
-using System.Diagnostics;
 
 namespace osu.Game.Rulesets.Vitaru.Objects
 {
@@ -94,7 +93,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                     return Math.Pow(distance, 0.99);
             }
 
-            Debug.Assert(false, "Invalid vitaru difficulty hit object type.");
             return 0;
         }
 

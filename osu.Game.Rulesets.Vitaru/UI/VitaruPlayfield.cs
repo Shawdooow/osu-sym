@@ -17,14 +17,13 @@ using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
-using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
-using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using osu.Framework.Logging;
 using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
 using osu.Game.Overlays.Notifications;
 using osu.Framework.Allocation;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Vitaru.Debug;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -70,6 +69,10 @@ namespace osu.Game.Rulesets.Vitaru.UI
             }
         }
 
+        private readonly DebugStat<int> drawableHitobjectCount;
+        private readonly DebugStat<int> drawablePatternCount;
+        private readonly DebugStat<int> drawableBulletCount;
+
         public VitaruPlayfield(VitaruInputManager vitaruInput) : base(BaseSize)
         {
             VitaruInputManager = vitaruInput;
@@ -78,6 +81,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
             Origin = Anchor.Centre;
 
             Bindable<int> abstraction = new Bindable<int>() { Value = 0 };
+
+            DebugToolkit.DebugItems.Add(drawableHitobjectCount = new DebugStat<int>(new Bindable<int>()) { Text = "drawableHitobjectCount" });
 
             if (playfieldBorder)
                 Add(new Container
@@ -165,6 +170,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public override void Add(DrawableHitObject h)
         {
             h.Depth = (float)h.HitObject.StartTime;
+
+            DrawableVitaruHitObject v = h as DrawableVitaruHitObject;
+
+            drawableHitobjectCount.Bindable.Value++;
+            v.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
 
             h.OnJudgement += onJudgement;
 

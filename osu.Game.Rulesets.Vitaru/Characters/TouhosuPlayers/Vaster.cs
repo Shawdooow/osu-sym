@@ -2,6 +2,6 @@
 {
     public class Vaster : TouhosuPlayer
     {
-
+        public override string Background => "";
     }
 }

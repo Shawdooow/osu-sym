@@ -18,7 +18,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public VitaruRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap)
             : base(ruleset, beatmap)
         {
-            VitaruPlayfield = new VitaruPlayfield((VitaruInputManager)KeyBindingInputManager);
+            VitaruInputManager vitaruInputManager = (VitaruInputManager)KeyBindingInputManager;
+            VitaruPlayfield = new VitaruPlayfield(vitaruInputManager);
+            vitaruInputManager.DebugToolkit.UpdateItems();
         }
 
         protected override CursorContainer CreateCursor() => new GameplayCursor();

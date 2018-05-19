@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
-using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
+using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
@@ -67,6 +67,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         /// </summary>
         public bool Puppet;
 
+        protected bool HealthHacks { get; private set; }
+
         public string PlayerID;
 
         private double lastQuarterBeat = -1;
@@ -109,6 +111,14 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                     RelativeSizeAxes = Axes.Both
                 }
             });
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            if (!Puppet)
+                DebugToolkit.DebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
         }
 
         protected override void LoadAnimationSprites(TextureStore textures, Storage storage)
@@ -210,6 +220,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         protected override void Update()
         {
             base.Update();
+
+            if (HealthHacks)
+                Heal(999999);
 
             foreach (Drawable draw in VitaruPlayfield.GameField.QuarterAbstraction)
                 if (draw is DrawableBullet bullet && bullet.Hitbox != null)

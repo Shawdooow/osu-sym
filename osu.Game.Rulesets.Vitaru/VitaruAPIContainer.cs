@@ -24,7 +24,6 @@ namespace osu.Game.Rulesets.Vitaru
             {
                 default:
                     PlayerID = -1;
-                    Shawdooow = false;
                     break;
                 case APIState.Online:
                     PlayerID = (int)api.LocalUser.Value.Id;

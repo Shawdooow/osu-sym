@@ -14,6 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         private const string file_extention = ".vitaru";
 
         private const string version_changelog = "Features:\n\n" +
+            "-Debug mode (Must be a verified developer to use, contains cheats and whatnot to help debug stuff)\n" +
             "-Bug player to checkout settings once\n\n" +
             "Tweaks / Changes:\n\n" +
             "-Use standard Get functions for characters (community made characters soon!)\n" +

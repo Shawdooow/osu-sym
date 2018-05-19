@@ -95,8 +95,6 @@ namespace osu.Game.Screens.Play
 
             IBeatmap beatmap;
 
-            try
-            {
                 beatmap = working.Beatmap;
 
                 if (beatmap == null)
@@ -105,31 +103,13 @@ namespace osu.Game.Screens.Play
                 ruleset = Ruleset.Value ?? beatmap.BeatmapInfo.Ruleset;
                 var rulesetInstance = ruleset.CreateInstance();
 
-                try
-                {
                     RulesetContainer = rulesetInstance.CreateRulesetContainerWith(working);
-                }
-                catch (BeatmapInvalidForRulesetException)
-                {
-                    // we may fail to create a RulesetContainer if the beatmap cannot be loaded with the user's preferred ruleset
-                    // let's try again forcing the beatmap's ruleset.
-                    ruleset = beatmap.BeatmapInfo.Ruleset;
-                    rulesetInstance = ruleset.CreateInstance();
-                    RulesetContainer = rulesetInstance.CreateRulesetContainerWith(Beatmap);
-                }
 
                 if (!RulesetContainer.Objects.Any())
                 {
                     Logger.Error(new InvalidOperationException("Beatmap contains no hit objects!"), "Beatmap contains no hit objects!");
                     return;
                 }
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e, "Could not load beatmap sucessfully!");
-                //couldn't load, hard abort!
-                return;
-            }
 
             sourceClock = (IAdjustableClock)working.Track ?? new StopwatchClock();
             adjustableClock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };

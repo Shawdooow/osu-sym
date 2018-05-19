@@ -5,6 +5,7 @@ using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Skinning;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.UI;
+using System;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -15,6 +16,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected bool Loaded { get; private set; }
 
         protected bool Started { get; private set; }
+
+        public Action<bool> OnDispose;
 
         public DrawableVitaruHitObject(VitaruHitObject hitObject, VitaruPlayfield playfield) : base(hitObject)
         {
@@ -63,6 +66,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected virtual void End() { Started = false; }
 
         protected virtual void Unload() { Loaded = false; }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            OnDispose?.Invoke(isDisposing);
+            base.Dispose(isDisposing);
+        }
     }
 
     public enum ComboResult

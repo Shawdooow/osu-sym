@@ -1,5 +1,6 @@
 ﻿using osu.Framework.Configuration;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
@@ -22,14 +23,28 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         protected double SpellEndTime { get; set; } = double.MinValue;
 
+        protected bool EnergyHacks { get; private set; }
+
         public DrawableTouhosuPlayer(VitaruPlayfield playfield, TouhosuPlayer player, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, player, vitaruNetworkingClientHandler)
         {
             TouhosuPlayer = player;
         }
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            if (!Puppet)
+                DebugToolkit.DebugItems.Add(new DebugAction(() => { EnergyHacks = !EnergyHacks; }) { Text = "Energy Hacks" });
+        }
+
         protected override void Update()
         {
             base.Update();
+
+            if (EnergyHacks)
+                Energy = TouhosuPlayer.MaxEnergy;
+
             SpellUpdate();
         }
 

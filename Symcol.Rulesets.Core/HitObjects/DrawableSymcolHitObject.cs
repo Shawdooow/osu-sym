@@ -85,6 +85,8 @@ namespace Symcol.Rulesets.Core.HitObjects
     : base(hitObject)
         { }
 
+        // Not a todo for symcol rulesets!
+
         // Todo: At some point we need to move these to DrawableHitObject after ensuring that all other Rulesets apply
         // transforms in the same way and don't rely on them not being cleared
         public override void ClearTransformsAfter(double time, bool propagateChildren = false, string targetMember = null) { }

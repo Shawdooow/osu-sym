@@ -2,6 +2,6 @@
 {
     public class Alice : TouhosuPlayer
     {
-
+        public override string Background => "";
     }
 }

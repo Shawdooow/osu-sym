@@ -1,13 +1,12 @@
-﻿using eden.Game.GamePieces;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics;
-using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
+using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Rulesets.Core.Rulesets;
@@ -27,13 +26,15 @@ namespace osu.Game.Rulesets.Vitaru
 
         public readonly Box Shade;
 
+        public readonly DebugToolkit DebugToolkit;
+
         public VitaruInputManager(RulesetInfo ruleset, int variant) : base(ruleset, variant, SimultaneousBindingMode.Unique)
         {
             if (shade)
                 Add(Shade = new Box { RelativeSizeAxes = Axes.Both, Alpha = 0, Colour = Color4.Orange });
 
-            if (debugUI)
-                Add(new DebugValueUI { Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, Position = new Vector2(10, 0) });
+            if (debugUI && VitaruAPIContainer.Shawdooow)
+                Add(DebugToolkit = new DebugToolkit());
 
             if (comboFire)
                 Add(new ComboFire());

@@ -17,7 +17,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
     {
         private readonly Gamemodes gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
-        public static int PatternCount;
         private readonly Pattern pattern;
         private StarPiece starPiece;
 
@@ -49,8 +48,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             }
             else if (pattern.IsSlider)
                 endTime = this.pattern.EndTime + HitObject.TimePreempt * 2 - HitObject.TimeFadein;
-
-            PatternCount++;
         }
 
         [BackgroundDependencyLoader]
@@ -223,12 +220,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 patternStartPosition = new Vector2(pattern.Position.X - 384f / 2, pattern.Position.Y + 512f / 2);
 
             return patternStartPosition;
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            PatternCount--;
-            base.Dispose(isDisposing);
         }
     }
 }

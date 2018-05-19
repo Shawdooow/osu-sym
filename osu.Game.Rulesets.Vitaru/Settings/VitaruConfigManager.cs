@@ -1,6 +1,6 @@
-﻿using eden.Game.GamePieces;
-using osu.Framework.Configuration;
+﻿using osu.Framework.Configuration;
 using osu.Framework.Platform;
+using osu.Game.Rulesets.Vitaru.Debug;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.TouhosuCharacter, "SakuyaIzayoi");
 
             Set(VitaruSetting.DebugMode, false);
-            Set(VitaruSetting.DebugConfiguration, DebugConfiguration.PerformanceMetrics);
+            Set(VitaruSetting.DebugConfiguration, DebugConfiguration.Gameplay);
 
             Set(VitaruSetting.GraphicsPreset, GraphicsPresets.Standard);
             Set(VitaruSetting.BulletVisuals, GraphicsOptions.Standard);

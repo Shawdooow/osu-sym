@@ -1,5 +1,4 @@
 ﻿using OpenTK.Graphics;
-using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers
 {
