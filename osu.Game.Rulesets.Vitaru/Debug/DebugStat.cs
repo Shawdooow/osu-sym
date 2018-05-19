@@ -47,6 +47,8 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                 },
                 text = new SpriteText
                 {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
                     TextSize = 20
                 }
             };

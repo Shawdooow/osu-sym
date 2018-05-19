@@ -46,14 +46,14 @@ namespace osu.Game.Rulesets.Vitaru.Debug
             {
                 new Box
                 {
+                    RelativeSizeAxes = Axes.Both,
                     Colour = osu.Red
                 },
                 text = new SpriteText
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-
-                    TextSize = 10
+                    TextSize = 20
                 }
             };
         }

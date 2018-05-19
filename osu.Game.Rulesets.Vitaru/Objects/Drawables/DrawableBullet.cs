@@ -166,7 +166,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void End()
         {
             base.End();
-            bulletPiece.FadeOut(100);
+            bulletPiece.FadeOut(200, Easing.OutQuad)
+                .ScaleTo(Scale * 1.5f, 200, Easing.OutQuart);
             returnJudgement = true;
         }
 

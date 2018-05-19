@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 judgementLayer = new Container
                 {
                     RelativeSizeAxes = Axes.Both
-                },
+                }
             });
 
             if (LoadPlayer)
