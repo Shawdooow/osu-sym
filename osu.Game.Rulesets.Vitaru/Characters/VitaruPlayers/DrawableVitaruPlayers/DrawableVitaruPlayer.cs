@@ -23,9 +23,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
     public class DrawableVitaruPlayer : Character, IKeyBindingHandler<VitaruAction>
     {
         #region Fields
-        protected readonly Gamemodes CurrentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        protected readonly Gamemodes Gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
-        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
+        protected readonly GraphicsOptions PlayerVisuals = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.PlayerVisuals);
 
         public readonly VitaruPlayer Player;
 
@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         {
             get
             {
-                if (CurrentGameMode == Gamemodes.Touhosu)
+                if (Gamemode == Gamemodes.Touhosu)
                     return new Vector4(0, 512, 0, 820);
                 else
                     return new Vector4(0, 512, 0, 820);
@@ -138,33 +138,33 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             using (Seal.Sign.BeginDelayedSequence(beat_in_time))
                 Seal.Sign.ScaleTo(1, beatLength * 2, Easing.OutQuint);
 
-            if (effectPoint.KiaiMode && CurrentGameMode != Gamemodes.Touhosu)
+            if (effectPoint.KiaiMode && Gamemode != Gamemodes.Touhosu)
             {
                 Seal.Sign.FadeTo(0.25f * amplitudeAdjust, beat_in_time, Easing.Out);
                 using (Seal.Sign.BeginDelayedSequence(beat_in_time))
                     Seal.Sign.FadeOut(beatLength);
             }
 
-            if (effectPoint.KiaiMode && SoulContainer.Alpha == 1 && graphics != GraphicsPresets.StandardV2)
+            if (effectPoint.KiaiMode && SoulContainer.Alpha == 1 && PlayerVisuals != GraphicsOptions.StandardV2)
             {
-                if (!Dead && CurrentGameMode != Gamemodes.Gravaru)
+                if (!Dead && Gamemode != Gamemodes.Gravaru)
                 {
                     KiaiContainer.FadeInFromZero(timingPoint.BeatLength / 4);
                     SoulContainer.FadeOutFromOne(timingPoint.BeatLength / 4);
                 }
 
-                if (CurrentGameMode != Gamemodes.Touhosu)
+                if (Gamemode != Gamemodes.Touhosu)
                     Seal.Sign.FadeTo(0.15f, timingPoint.BeatLength / 4);
             }
-            if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1 && graphics != GraphicsPresets.StandardV2)
+            if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1 && PlayerVisuals != GraphicsOptions.StandardV2)
             {
-                if (!Dead && CurrentGameMode != Gamemodes.Gravaru)
+                if (!Dead && Gamemode != Gamemodes.Gravaru)
                 {
                     SoulContainer.FadeInFromZero(timingPoint.BeatLength);
                     KiaiContainer.FadeOutFromOne(timingPoint.BeatLength);
                 }
 
-                if (CurrentGameMode != Gamemodes.Touhosu)
+                if (Gamemode != Gamemodes.Touhosu)
                     Seal.Sign.FadeTo(0f, timingPoint.BeatLength);
             }
         }
@@ -197,7 +197,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                     goto restart;
                 }
 
-                if (CurrentGameMode != Gamemodes.Touhosu)
+                if (Gamemode != Gamemodes.Touhosu)
                 {
                     Seal.Sign.Alpha = 0.2f;
                     Seal.Sign.FadeOut(beatLength / 4);
@@ -257,7 +257,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                     HealingBullets.Add(new HealingBullet(bullet, edgeDistance));
             }
 
-            if (CurrentGameMode == Gamemodes.Dodge)
+            if (Gamemode == Gamemodes.Dodge)
                 edgeDistance *= 1.5f;
 
             if (edgeDistance <= 64 && bullet.ScoreZone < 300)

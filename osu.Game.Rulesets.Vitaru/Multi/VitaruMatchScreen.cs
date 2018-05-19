@@ -16,9 +16,8 @@ namespace osu.Game.Rulesets.Vitaru.Multi
     public class VitaruMatchScreen : RulesetMatchScreen
     {
         private Bindable<string> selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
-        private readonly Bindable<GraphicsPresets> currentGraphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
-        private readonly Bindable<Gamemodes> currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
-        private readonly Bindable<bool> comboFire = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire);
+        private readonly Bindable<GraphicsPresets> graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPreset);
+        private readonly Bindable<Gamemodes> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         public readonly VitaruNetworkingClientHandler VitaruNetworkingClientHandler;
 
@@ -39,9 +38,8 @@ namespace osu.Game.Rulesets.Vitaru.Multi
                         RelativeSizeAxes = Axes.Both,
                         Children = new Drawable[]
                         {
-                            new MultiplayerToggleOption(comboFire, "Enable Combo Fire", 4, false),
-                            new MultiplayerDropdownEnumOption<GraphicsPresets>(currentGraphics, "Graphics", 3, false),
-                            new MultiplayerDropdownEnumOption<Gamemodes>(currentGameMode, "Vitaru Gamemode", 1),
+                            new MultiplayerDropdownEnumOption<GraphicsPresets>(graphics, "Graphics", 3, false),
+                            new MultiplayerDropdownEnumOption<Gamemodes>(gamemode, "Vitaru Gamemode", 1),
                             //new MultiplayerDropdownOption<string>(selectedCharacter, "Character", 2, false),
                         }
                     };

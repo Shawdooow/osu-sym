@@ -17,9 +17,9 @@ namespace osu.Game.Rulesets.Vitaru
 {
     public class VitaruInputManager : SymcolInputManager<VitaruAction>
     {
-        private Bindable<bool> debugUI = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
-        private Bindable<bool> comboFire = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire);
-        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
+        private bool debugUI = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
+        private bool comboFire = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire);
+        private readonly bool shade = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.PitchShade);
 
         protected override bool VectorVideo => VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.VectorVideos);
 
@@ -29,13 +29,13 @@ namespace osu.Game.Rulesets.Vitaru
 
         public VitaruInputManager(RulesetInfo ruleset, int variant) : base(ruleset, variant, SimultaneousBindingMode.Unique)
         {
-            if (graphics != GraphicsPresets.HighPerformance)
+            if (shade)
                 Add(Shade = new Box { RelativeSizeAxes = Axes.Both, Alpha = 0, Colour = Color4.Orange });
 
             if (debugUI)
                 Add(new DebugValueUI { Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, Position = new Vector2(10, 0) });
 
-            if (false)//comboFire)
+            if (comboFire)
                 Add(new ComboFire());
 
             Add(BlurContainer.WithEffect(new GlowEffect

@@ -1,9 +1,6 @@
 ﻿using eden.Game.GamePieces;
 using osu.Framework.Configuration;
 using osu.Framework.Platform;
-using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
-using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
-using System.ComponentModel;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
@@ -15,15 +12,23 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         protected override void InitialiseDefaults()
         {
-            Set(VitaruSetting.DebugMode, false);
-            Set(VitaruSetting.DebugConfiguration, DebugConfiguration.PerformanceMetrics);
-            Set(VitaruSetting.GraphicsPresets, GraphicsPresets.Standard);
             Set(VitaruSetting.GameMode, Gamemodes.Vitaru);
+
             Set(VitaruSetting.Character, "Alex");
             Set(VitaruSetting.VitaruCharacter, "Alex");
             Set(VitaruSetting.TouhosuCharacter, "SakuyaIzayoi");
 
+            Set(VitaruSetting.DebugMode, false);
+            Set(VitaruSetting.DebugConfiguration, DebugConfiguration.PerformanceMetrics);
+
+            Set(VitaruSetting.GraphicsPreset, GraphicsPresets.Standard);
+            Set(VitaruSetting.BulletVisuals, GraphicsOptions.Standard);
+            Set(VitaruSetting.PlayerVisuals, GraphicsOptions.Standard);
+            Set(VitaruSetting.PitchShade, true);
+            Set(VitaruSetting.KiaiBoss, false);
+            Set(VitaruSetting.PlayfieldBorder, false);
             Set(VitaruSetting.ComboFire, true);
+
             Set(VitaruSetting.ShittyMultiplayer, false);
             Set(VitaruSetting.FriendlyPlayerCount, 0, 0, 7);
             Set(VitaruSetting.FriendlyPlayerOverride, false);
@@ -60,13 +65,22 @@ namespace osu.Game.Rulesets.Vitaru.Settings
     public enum VitaruSetting
     {
         GameMode,
+
         Character,
         VitaruCharacter,
         TouhosuCharacter,
+
         DebugMode,
         DebugConfiguration,
-        GraphicsPresets,
+
+        GraphicsPreset,
+        BulletVisuals,
+        PlayerVisuals,
+        PitchShade,
+        KiaiBoss,
+        PlayfieldBorder,
         ComboFire,
+
         ShittyMultiplayer,
         FriendlyPlayerCount,
         FriendlyPlayerOverride,
@@ -99,7 +113,15 @@ namespace osu.Game.Rulesets.Vitaru.Settings
     public enum GraphicsPresets
     {
         Standard,
+        StandardV2,
         HighPerformance,
-        StandardV2
+        Custom
+    }
+
+    public enum GraphicsOptions
+    {
+        Standard,
+        StandardV2,
+        HighPerformance
     }
 }

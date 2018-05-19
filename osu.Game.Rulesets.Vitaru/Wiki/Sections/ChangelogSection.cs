@@ -25,9 +25,12 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Split old \"Gameplay\" wiki section into three new sections: General, Gamemodes and Characters\n" +
             "-Make Healing and energy gain per bullet and the amount distance based\n" +
             "-Nerf Sakuya's energy drain rate (6 => 8)\n" +
-            "-Change most of the patterns to have variable bullet size and damage\n\n" +
+            "-Change most of the patterns to have variable bullet size and damage\n" +
+            "-Rework how graphics options are done to be more like most games (presets + \"custom\" for fine tunning to what you like)\n" +
+            "-Re-enable ComboFire\n\n" +
             "Fixes:\n\n" +
-            "-Fix Seal not loading properly for non touhosu characters";
+            "-Fix Seal not loading properly for non touhosu characters\n" +
+            "-Fix ComboFire memory leakage";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)

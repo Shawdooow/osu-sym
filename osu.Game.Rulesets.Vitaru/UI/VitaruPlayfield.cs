@@ -21,7 +21,6 @@ using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using osu.Framework.Logging;
 using osu.Framework.Graphics.Shapes;
-using osu.Game.Screens.Edit.Screens.Compose.Layers;
 using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.UI
@@ -30,9 +29,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
     {
         private static readonly Gamemodes gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
-        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
+        private readonly bool playfieldBorder = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.PlayfieldBorder);
 
-        private readonly string selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+        private readonly bool kiaiBoss = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.KiaiBoss);
+
+        private readonly string character = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
         public readonly VitaruInputManager VitaruInputManager;
 
@@ -75,7 +76,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             Bindable<int> abstraction = new Bindable<int>() { Value = 0 };
 
-            if (graphics == GraphicsPresets.StandardV2)
+            if (playfieldBorder)
                 Add(new Container
                 {
                     Name = "Border",
@@ -104,7 +105,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             {
                 VitaruNetworkingClientHandler vitaruNetworkingClientHandler = RulesetNetworkingClientHandler as VitaruNetworkingClientHandler;
 
-                switch (selectedCharacter)
+                switch (character)
                 {
                     case "Alex":
                         playerList.Add(Player = new DrawableVitaruPlayer(this, new Alex(), vitaruNetworkingClientHandler));
@@ -151,7 +152,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 foreach (DrawableVitaruPlayer player in playerList)
                     GameField.Add(player);
 
-                if (gamemode == Gamemodes.Touhosu && graphics == GraphicsPresets.StandardV2 && VitaruAPIContainer.Shawdooow)
+                if (gamemode == Gamemodes.Touhosu && kiaiBoss && VitaruAPIContainer.Shawdooow)
                     GameField.Add(Boss = new Boss(this));
 
                 Player.Position = new Vector2(256, 700);

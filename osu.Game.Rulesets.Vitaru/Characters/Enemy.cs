@@ -14,8 +14,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 {
     public class Enemy : Character
     {
-        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
-
         public static int EnemyCount;
         private readonly DrawablePattern drawablePattern;
 

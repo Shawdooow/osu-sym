@@ -33,9 +33,12 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         private static VitaruAPIContainer api;
 
-        private Bindable<Gamemodes> selectedGamemode;
+        private Bindable<Gamemodes> gamemode;
 
-        private Bindable<string> selectedCharacter;
+        private Bindable<GraphicsPresets> graphics;
+        private FillFlowContainer graphicsOptions;
+
+        private Bindable<string> character;
 
         private FillFlowContainer vitaruCharacter;
         private SettingsDropdown<string> vitaruCharacterDropdown;
@@ -59,9 +62,11 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             showDebugUi = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
 
-            selectedGamemode = VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+            gamemode = VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
-            selectedCharacter = VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+            graphics = VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPreset);
+
+            character = VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
             selectedVitaruCharacter = VitaruConfigManager.GetBindable<string>(VitaruSetting.VitaruCharacter);
             selectedTouhosuCharacter = VitaruConfigManager.GetBindable<string>(VitaruSetting.TouhosuCharacter);
 
@@ -81,7 +86,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                 new SettingsEnumDropdown<Gamemodes>
                 {
                     LabelText = "Vitaru's current gamemode",
-                    Bindable = selectedGamemode
+                    Bindable = gamemode
                 },
                 vitaruCharacter = new FillFlowContainer
                 {
@@ -116,12 +121,50 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                 new SettingsEnumDropdown<GraphicsPresets>
                 {
                     LabelText = "Graphics Presets",
-                    Bindable = VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets)
+                    Bindable = graphics
                 },
-                new SettingsCheckbox
+                graphicsOptions = new FillFlowContainer
                 {
-                    LabelText = "Enable Combo Fire",
-                    Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire)
+                    Direction = FillDirection.Vertical,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    AutoSizeDuration = transition_duration,
+                    AutoSizeEasing = Easing.OutQuint,
+                    Masking = true,
+
+                    Children = new Drawable[]
+                    {
+                        new SettingsEnumDropdown<GraphicsOptions>
+                        {
+                            LabelText = "Bullet Visuals",
+                            Bindable = VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals)
+                        },
+                        new SettingsEnumDropdown<GraphicsOptions>
+                        {
+                            LabelText = "Player Visuals",
+                            Bindable = VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.PlayerVisuals)
+                        },
+                        new SettingsCheckbox
+                        {
+                            LabelText = "Enable Pitch Shade",
+                            Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.PitchShade)
+                        },
+                        new SettingsCheckbox
+                        {
+                            LabelText = "Enable Kiai Boss",
+                            Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.KiaiBoss)
+                        },
+                        new SettingsCheckbox
+                        {
+                            LabelText = "Enable Playfield Border",
+                            Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.PlayfieldBorder)
+                        },
+                        new SettingsCheckbox
+                        {
+                            LabelText = "Enable Combo Fire",
+                            Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire)
+                        }
+                    } 
                 },
                 new SettingsButton
                 {
@@ -153,7 +196,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             vitaruCharacterDropdown.Bindable = selectedVitaruCharacter;
             touhosuCharacterDropdown.Bindable = selectedTouhosuCharacter;
 
-            selectedGamemode.ValueChanged += value =>
+            gamemode.ValueChanged += value =>
             {
                 if (value == Gamemodes.Touhosu)
                 {
@@ -164,7 +207,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     vitaruCharacter.AutoSizeAxes = Axes.None;
                     vitaruCharacter.ResizeHeightTo(0, 0, Easing.OutQuint);
 
-                    selectedCharacter.Value = selectedTouhosuCharacter.Value;
+                    character.Value = selectedTouhosuCharacter.Value;
                 }
                 else
                 {
@@ -175,19 +218,54 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     touhosuCharacter.AutoSizeAxes = Axes.None;
                     touhosuCharacter.ResizeHeightTo(0, 0, Easing.OutQuint);
 
-                    selectedCharacter.Value = selectedVitaruCharacter.Value;
+                    character.Value = selectedVitaruCharacter.Value;
                 }
             };
-            selectedGamemode.TriggerChange();
+            gamemode.TriggerChange();
 
-            selectedTouhosuCharacter.ValueChanged += character =>
+            graphics.ValueChanged += value =>
             {
-                switch (character)
-                {
+                graphicsOptions.ClearTransforms();
+                
 
+                if (value == GraphicsPresets.Custom)
+                    graphicsOptions.AutoSizeAxes = Axes.Y;
+                else
+                {
+                    graphicsOptions.AutoSizeAxes = Axes.None;
+                    graphicsOptions.ResizeHeightTo(0, transition_duration, Easing.OutQuint);
+                }
+
+                switch (value)
+                {
+                    
+                    case GraphicsPresets.Standard:
+                        VitaruConfigManager.Set(VitaruSetting.BulletVisuals, GraphicsOptions.Standard);
+                        VitaruConfigManager.Set(VitaruSetting.PlayerVisuals, GraphicsOptions.Standard);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.PitchShade, true);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, false);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, false);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, true);
+                        break;
+                    case GraphicsPresets.StandardV2:
+                        VitaruConfigManager.Set(VitaruSetting.BulletVisuals, GraphicsOptions.StandardV2);
+                        VitaruConfigManager.Set(VitaruSetting.PlayerVisuals, GraphicsOptions.StandardV2);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.PitchShade, true);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, true);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, true);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, true);
+                        break;
+                    case GraphicsPresets.HighPerformance:
+                        VitaruConfigManager.Set(VitaruSetting.BulletVisuals, GraphicsOptions.HighPerformance);
+                        VitaruConfigManager.Set(VitaruSetting.PlayerVisuals, GraphicsOptions.HighPerformance);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.PitchShade, false);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, false);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, false);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, false);
+                        break;
                 }
             };
-            selectedTouhosuCharacter.TriggerChange();
+            graphics.TriggerChange();
 
             showDebugUi.ValueChanged += isVisible =>
             {

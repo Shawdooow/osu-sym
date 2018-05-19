@@ -18,10 +18,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
     public class DrawableSakuya : DrawableTouhosuPlayer
     {
         #region Fields
-        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
-
-        //protected override string CharacterName => graphics == GraphicsPresets.StandardV2 ? Player.Name : Player.FileName;
-
         protected AnimatedSprite Idle;
         protected AnimatedSprite Left;
         protected AnimatedSprite Right;
@@ -51,7 +47,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         protected override void LoadAnimationSprites(TextureStore textures, Storage storage)
         {
-            if (graphics == GraphicsPresets.StandardV2)
+            if (PlayerVisuals == GraphicsOptions.StandardV2)
             {
 
                 SoulContainer.Alpha = 0;
@@ -122,7 +118,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         protected override void MovementAnimations()
         {
-            if (graphics == GraphicsPresets.StandardV2)
+            if (PlayerVisuals == GraphicsOptions.StandardV2)
             {
                 if (Position.X > LastX && Right.Alpha < 1)
                 {

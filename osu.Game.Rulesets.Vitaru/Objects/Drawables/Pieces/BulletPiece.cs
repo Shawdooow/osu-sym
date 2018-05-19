@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 {
     public class BulletPiece : BeatSyncedContainer
     {
-        private readonly GraphicsPresets graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPresets);
+        private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
 
         private Sprite bulletKiai;
         private CircularContainer circle;
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
         {
             base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
 
-            if (graphics != GraphicsPresets.HighPerformance && graphics != GraphicsPresets.StandardV2)
+            if (graphics != GraphicsOptions.HighPerformance && graphics != GraphicsOptions.StandardV2)
             {
                 if (effectPoint.KiaiMode && bulletKiai.Alpha == 0)
                     bulletKiai.FadeInFromZero(timingPoint.BeatLength / 4);
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
         {
             base.Update();
 
-            if (graphics != GraphicsPresets.HighPerformance && graphics != GraphicsPresets.StandardV2 && bulletKiai.Alpha > 0)
+            if (graphics != GraphicsOptions.HighPerformance && graphics != GraphicsOptions.StandardV2 && bulletKiai.Alpha > 0)
                 {
                     if (randomRotateDirection)
                         bulletKiai.Rotation += (float)(Clock.ElapsedFrameTime / 1000 * 90) * randomRotationValue;
@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 
             Size = new Vector2((float)drawableBullet.Bullet.BulletDiameter + 12);
 
-            if (graphics != GraphicsPresets.HighPerformance && graphics != GraphicsPresets.StandardV2)
+            if (graphics != GraphicsOptions.HighPerformance && graphics != GraphicsOptions.StandardV2)
                 Child = bulletKiai = new Sprite
                 {
                     //Just to look nice for the time being, will fix the sprite later
@@ -86,9 +86,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                 Origin = Anchor.Centre,
                 Alpha = 1,
                 RelativeSizeAxes = Axes.Both,
-                Size = new Vector2(graphics == GraphicsPresets.StandardV2 ? 1 : 1.05f),
+                Size = new Vector2(graphics == GraphicsOptions.StandardV2 ? 1 : 1.05f),
                 BorderColour = drawableBullet.AccentColour,
-                BorderThickness = graphics == GraphicsPresets.StandardV2 ? 0 : 6,
+                BorderThickness = graphics == GraphicsOptions.StandardV2 ? 0 : 6,
                 Masking = true,
 
                 Child = box = new Box
@@ -97,12 +97,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                 }
             });
 
-            if (graphics != GraphicsPresets.HighPerformance)
+            if (graphics != GraphicsOptions.HighPerformance)
                 circle.EdgeEffect = new EdgeEffectParameters
                 {
                     Radius = (float)drawableBullet.Bullet.BulletDiameter,
                     Type = EdgeEffectType.Shadow,
-                    Colour = drawableBullet.AccentColour.Opacity(graphics == GraphicsPresets.StandardV2 ? 0.5f : 0.2f)
+                    Colour = drawableBullet.AccentColour.Opacity(graphics == GraphicsOptions.StandardV2 ? 0.5f : 0.2f)
                 };
         }
     }

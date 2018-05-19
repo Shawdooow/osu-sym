@@ -54,6 +54,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             this.width = width;
 
+            AlwaysPresent = true;
+
             Position = new Vector2((float)RNG.NextDouble(0, width), 60);
             Colour = Interpolation.ValueAt(RNG.NextSingle(), Color4.Red, Color4.Yellow, 0, 1);
 
@@ -74,13 +76,13 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             base.Update();
 
-            this.MoveToOffset(new Vector2(randomMovementXValue * ((float)Clock.ElapsedFrameTime / 1000), randomMovementYValue * ((float)Clock.ElapsedFrameTime / 1000)));
+            Position = Position + new Vector2(randomMovementXValue * ((float)Clock.ElapsedFrameTime / 1000), randomMovementYValue * ((float)Clock.ElapsedFrameTime / 1000));
 
             if (Position.X > width + 60 || Scale.X <= 0.01f || Position.X < -60)
             {
-                AlwaysPresent = true;
-                this.FadeOut(200)
-                    .Expire();
+                Container parent = (Container)Parent;
+                parent.Remove(this);
+                Dispose();
             }
         }
     }

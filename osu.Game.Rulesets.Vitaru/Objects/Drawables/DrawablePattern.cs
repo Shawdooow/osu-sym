@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawablePattern : DrawableVitaruHitObject
     {
-        private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private readonly Gamemodes gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         public static int PatternCount;
         private readonly Pattern pattern;
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 if (Started && !done)
                 {
                     starPiece.Position = pattern.PositionAt(completionProgress);
-                    if (currentGameMode != Gamemodes.Dodge)
+                    if (gamemode != Gamemodes.Dodge)
                         enemy.Position = pattern.PositionAt(completionProgress);
                 }
 
@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 Colour = AccentColour
             });
 
-            if (currentGameMode != Gamemodes.Dodge)
+            if (gamemode != Gamemodes.Dodge)
             {
                 //load the enemy
                 VitaruPlayfield.GameField.Add(enemy = new Enemy(VitaruPlayfield, pattern, this)
@@ -168,7 +168,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.End();
 
-            if (currentGameMode != Gamemodes.Dodge)
+            if (gamemode != Gamemodes.Dodge)
                 enemy.MoveTo(getPatternStartPosition(), HitObject.TimePreempt * 2, Easing.InQuint)
                     .Delay(HitObject.TimePreempt * 2 - HitObject.TimeFadein)
                     .ScaleTo(new Vector2(0.5f), HitObject.TimeFadein, Easing.InQuint)
@@ -188,7 +188,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Unload();
 
-            if (currentGameMode != Gamemodes.Dodge)
+            if (gamemode != Gamemodes.Dodge)
             {
                 VitaruPlayfield.GameField.Remove(enemy);
                 enemy.Dispose();
