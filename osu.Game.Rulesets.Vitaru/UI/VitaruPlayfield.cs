@@ -108,48 +108,20 @@ namespace osu.Game.Rulesets.Vitaru.UI
             {
                 VitaruNetworkingClientHandler vitaruNetworkingClientHandler = RulesetNetworkingClientHandler as VitaruNetworkingClientHandler;
 
-                switch (character)
-                {
-                    case "Alex":
-                        playerList.Add(Player = new DrawableVitaruPlayer(this, new Alex(), vitaruNetworkingClientHandler));
-                        break;
-                    case "ReimuHakurei":
-                        playerList.Add(Player = new DrawableTouhosuPlayer(this, new Reimu(), vitaruNetworkingClientHandler));
-                        break;
-                    case "RyukoyHakurei":
-                        playerList.Add(Player = new DrawableRyukoy(this, vitaruNetworkingClientHandler, abstraction));
-                        break;
-                    case "TomajiHakurei":
-                        playerList.Add(Player = new DrawableTomaji(this, vitaruNetworkingClientHandler));
-                        break;
-                    case "SakuyaIzayoi":
-                        playerList.Add(Player = new DrawableSakuya(this, vitaruNetworkingClientHandler));
-                        break;
-                }
+                if (gamemode == Gamemodes.Touhosu)
+                    playerList.Add(Player = DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler, abstraction));
+                else
+                    playerList.Add(Player = DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
 
                 foreach (VitaruClientInfo client in LoadPlayerList)
                     if (client.PlayerInformation.PlayerID != Player.PlayerID)
                     {
                         Logger.Log("Loading a player recieved from internet!", LoggingTarget.Network, LogLevel.Verbose);
 
-                        switch (client.PlayerInformation.Character)
-                        {
-                            case "Alex":
-                                playerList.Add(Player = new DrawableVitaruPlayer(this, new Alex(), vitaruNetworkingClientHandler) { Puppet = true, PlayerID = client.PlayerInformation.PlayerID });
-                                break;
-                            case "ReimuHakurei":
-                                playerList.Add(Player = new DrawableTouhosuPlayer(this, new Reimu(), vitaruNetworkingClientHandler) { Puppet = true, PlayerID = client.PlayerInformation.PlayerID });
-                                break;
-                            case "RyukoyHakurei":
-                                playerList.Add(Player = new DrawableRyukoy(this, vitaruNetworkingClientHandler, abstraction) { Puppet = true, PlayerID = client.PlayerInformation.PlayerID });
-                                break;
-                            case "TomajiHakurei":
-                                playerList.Add(Player = new DrawableTomaji(this, vitaruNetworkingClientHandler) { Puppet = true, PlayerID = client.PlayerInformation.PlayerID });
-                                break;
-                            case "SakuyaIzayoi":
-                                playerList.Add(Player = new DrawableSakuya(this, vitaruNetworkingClientHandler) { Puppet = true, PlayerID = client.PlayerInformation.PlayerID });
-                                break;
-                        }
+                        if (gamemode == Gamemodes.Touhosu)
+                            playerList.Add(Player = DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler, abstraction));
+                        else
+                            playerList.Add(Player = DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
                     }
 
                 foreach (DrawableVitaruPlayer player in playerList)

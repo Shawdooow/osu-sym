@@ -18,9 +18,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
     {
         public override string Title => "Characters";
 
-        private Bindable<Gamemodes> selectedGamemode;
+        private Bindable<Gamemodes> gamemode;
 
-        private Bindable<string> selectedCharacter;
+        private Bindable<string> character;
 
         private FillFlowContainer vitaruCharacter;
         private SettingsDropdown<string> vitaruCharacterDropdown;
@@ -34,8 +34,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         [BackgroundDependencyLoader]
         private void load()
         {
-            selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
-            selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+            gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+            character = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
             selectedVitaruCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.VitaruCharacter);
             selectedTouhosuCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.TouhosuCharacter);
@@ -102,33 +102,19 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             touhosuCharacterDropdown.Bindable = selectedTouhosuCharacter;
 
             //basically just an ingame wiki for the characters
-            selectedCharacter.ValueChanged += character =>
+            character.ValueChanged += character =>
             {
                 VitaruPlayer vitaruPlayer = new VitaruPlayer();
                 TouhosuPlayer touhosuPlayer = new TouhosuPlayer();
 
-                switch (character)
-                {
-                    case "Alex":
-                        vitaruPlayer = new Alex();
-                        break;
-                    case "ReimuHakurei":
-                        touhosuPlayer = new Reimu();
-                        break;
-                    case "RyukoyHakurei":
-                        touhosuPlayer = new Ryukoy();
-                        break;
-                    case "TomajiHakurei":
-                        touhosuPlayer = new Tomaji();
-                        break;
-                    case "SakuyaIzayoi":
-                        touhosuPlayer = new Sakuya();
-                        break;
-                }
+                if (gamemode == Gamemodes.Touhosu)
+                    touhosuPlayer = TouhosuPlayer.GetTouhosuPlayer(character);
+                else
+                    vitaruPlayer = VitaruPlayer.GetVitaruPlayer(character);
 
                 string stats = vitaruPlayer.Background;
 
-                if (selectedGamemode.Value == Gamemodes.Touhosu)
+                if (gamemode.Value == Gamemodes.Touhosu)
                 {
                     stats = "";
 
@@ -149,9 +135,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
                 characterDescription.Text = stats;
             };
-            selectedCharacter.TriggerChange();
+            character.TriggerChange();
 
-            selectedGamemode.ValueChanged += gamemode =>
+            gamemode.ValueChanged += gamemode =>
             {
                 if (gamemode == Gamemodes.Touhosu)
                 {
@@ -162,7 +148,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                     vitaruCharacter.AutoSizeAxes = Axes.None;
                     vitaruCharacter.ResizeHeightTo(0, 0, Easing.OutQuint);
 
-                    selectedCharacter.Value = selectedTouhosuCharacter.Value;
+                    character.Value = selectedTouhosuCharacter.Value;
                 }
                 else
                 {
@@ -173,10 +159,10 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                     touhosuCharacter.AutoSizeAxes = Axes.None;
                     touhosuCharacter.ResizeHeightTo(0, 0, Easing.OutQuint);
 
-                    selectedCharacter.Value = selectedVitaruCharacter.Value;
+                    character.Value = selectedVitaruCharacter.Value;
                 }
             };
-            selectedGamemode.TriggerChange();
+            gamemode.TriggerChange();
         }
     }
 }

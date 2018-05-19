@@ -1,5 +1,4 @@
-﻿using OpenTK.Graphics;
-using osu.Framework.Allocation;
+﻿using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Configuration;
 using osu.Framework.Timing;

@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
@@ -507,6 +508,17 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             }
         }
         #endregion
+
+        public static DrawableVitaruPlayer GetDrawableVitaruPlayer(VitaruPlayfield playfield, string name, VitaruNetworkingClientHandler vitaruNetworkingClientHandler)
+        {
+            switch (name)
+            {
+                default:
+                    return new DrawableVitaruPlayer(playfield, VitaruPlayer.GetVitaruPlayer(name), vitaruNetworkingClientHandler);
+                case "Alex":
+                    return new DrawableVitaruPlayer(playfield, VitaruPlayer.GetVitaruPlayer(name), vitaruNetworkingClientHandler);
+            }
+        }
     }
 }
 

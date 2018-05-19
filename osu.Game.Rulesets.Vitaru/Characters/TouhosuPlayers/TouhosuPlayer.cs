@@ -17,6 +17,23 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
         public virtual Difficulty Difficulty { get; } = Difficulty.Easy;
 
         public virtual bool Implemented { get; }
+
+        public static TouhosuPlayer GetTouhosuPlayer(string name)
+        {
+            switch (name)
+            {
+                default:
+                    return new TouhosuPlayer();
+                case "ReimuHakurei":
+                    return new Reimu();
+                case "RyukoyHakurei":
+                    return new Ryukoy();
+                case "TomajiHakurei":
+                    return new Tomaji();
+                case "SakuyaIzayoi":
+                    return new Sakuya();
+            }
+        }
     }
 
     public enum Role

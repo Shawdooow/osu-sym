@@ -6,6 +6,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
     {
         public override string Name => "Ryukoy Hakurei";
 
+        public override string FileName => "Ryukoy Hakurei";
+
         public override double MaxHealth => 80;
 
         public override double MaxEnergy => 24;

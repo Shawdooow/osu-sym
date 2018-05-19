@@ -1,4 +1,5 @@
-﻿using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
+﻿using osu.Framework.Configuration;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
@@ -89,6 +90,24 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                 SpellDeactivate(action);
 
             return base.Released(action);
+        }
+
+        //TODO: I feel like this TODO should be obvious (figure out this bindable thing)
+        public static DrawableTouhosuPlayer GetDrawableTouhosuPlayer(VitaruPlayfield playfield, string name, VitaruNetworkingClientHandler vitaruNetworkingClientHandler, Bindable<int> bindableInt = null)
+        {
+            switch (name)
+            {
+                default:
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+                case "ReimuHakurei":
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+                case "RyukoyHakurei":
+                    return new DrawableRyukoy(playfield, vitaruNetworkingClientHandler, bindableInt);
+                case "TomajiHakurei":
+                    return new DrawableTomaji(playfield, vitaruNetworkingClientHandler);
+                case "SakuyaHakurei":
+                    return new DrawableSakuya(playfield, vitaruNetworkingClientHandler);
+            }
         }
     }
 }

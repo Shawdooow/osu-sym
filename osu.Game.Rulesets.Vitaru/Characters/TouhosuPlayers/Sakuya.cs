@@ -29,7 +29,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override Difficulty Difficulty => Difficulty.Normal;
 
-        public override string Background => "";
+        public override string Background => "Sakuya is no stranger to the oddities in the world, but never could they stop her from besting her enemies. " +
+            "Her perfect record has only been tainted by one person, but The Hakureis are close friends of hers now. " +
+            "They have put there differences aside once to fight off something bigger then all of them combined, but as the phrase goes: \"Greater than the sum of its parts\" they were able to hold the fort long enough to succeed.";
 
         public override bool Implemented => true;
     }
