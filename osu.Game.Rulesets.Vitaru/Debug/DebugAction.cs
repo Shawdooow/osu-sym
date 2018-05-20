@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
             BorderThickness = 4;
 
             RelativeSizeAxes = Axes.X;
-            Height = 20;
+            Height = 24;
 
             Children = new Drawable[]
             {
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    TextSize = 20
+                    TextSize = 18
                 }
             };
         }

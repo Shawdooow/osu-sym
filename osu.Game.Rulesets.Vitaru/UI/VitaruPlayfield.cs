@@ -71,7 +71,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         private readonly DebugStat<int> drawableHitobjectCount;
         private readonly DebugStat<int> drawablePatternCount;
-        private readonly DebugStat<int> drawableBulletCount;
 
         public VitaruPlayfield(VitaruInputManager vitaruInput) : base(BaseSize)
         {
@@ -82,8 +81,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             Bindable<int> abstraction = new Bindable<int>() { Value = 0 };
 
-            DebugToolkit.DebugItems.Add(drawableHitobjectCount = new DebugStat<int>(new Bindable<int>()) { Text = "drawableHitobjectCount" });
-
+            DebugToolkit.DebugItems.Add(drawableHitobjectCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Hitobject Count" });
+            DebugToolkit.DebugItems.Add(drawablePatternCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Pattern Count" });
+            
             if (playfieldBorder)
                 Add(new Container
                 {
@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             AddRange(new Drawable[]
             {
-                GameField = new AbstractionField(abstraction),
+                GameField = new AbstractionField(abstraction, drawableHitobjectCount),
                 judgementLayer = new Container
                 {
                     RelativeSizeAxes = Axes.Both
@@ -176,6 +176,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
             drawableHitobjectCount.Bindable.Value++;
             v.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
 
+            if (v is DrawablePattern p)
+            {
+                drawablePatternCount.Bindable.Value++;
+                p.OnDispose += (isDisposing) => { drawablePatternCount.Bindable.Value--; };
+            }
+
             h.OnJudgement += onJudgement;
 
             base.Add(h);
@@ -204,14 +210,29 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             public readonly Bindable<int> AbstractionLevel;
 
+            private readonly DebugStat<int> drawableHitobjectCount;
+            private readonly DebugStat<int> drawableBulletCount;
+            private readonly DebugStat<int> drawableLaserCount;
+            private readonly DebugStat<int> enemyCount;
+            private readonly DebugStat<int> bossCount;
+            private readonly DebugStat<int> playerCount;
+
             public Container Current = new Container { RelativeSizeAxes = Axes.Both, Name = "Current" };
             public Container QuarterAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.5f, Colour = OsuColour.FromHex("#ffe6d1"), Name = "QuarterAbstraction" };
             public Container HalfAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.25f, Colour = OsuColour.FromHex("#bff5ff"), Name = "HalfAbstraction" };
             public Container FullAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.125f, Colour = OsuColour.FromHex("#d191ff"), Name = "FullAbstraction" };
 
-            public AbstractionField(Bindable<int> abstraction)
+            public AbstractionField(Bindable<int> abstraction, DebugStat<int> drawableHitobjectCount)
             {
                 AbstractionLevel = abstraction;
+
+                this.drawableHitobjectCount = drawableHitobjectCount;
+
+                DebugToolkit.DebugItems.Add(drawableBulletCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Bullet Count" });
+                DebugToolkit.DebugItems.Add(drawableLaserCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Laser Count" });
+                DebugToolkit.DebugItems.Add(enemyCount = new DebugStat<int>(new Bindable<int>()) { Text = "Enemy Count" });
+                DebugToolkit.DebugItems.Add(bossCount = new DebugStat<int>(new Bindable<int>()) { Text = "Boss Count" });
+                DebugToolkit.DebugItems.Add(playerCount = new DebugStat<int>(new Bindable<int>()) { Text = "Player Count" });
 
                 RelativeSizeAxes = Axes.Both;
 
@@ -338,6 +359,38 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             public new void Add (Drawable drawable)
             {
+                if (drawable is DrawableBullet bt)
+                {
+                    drawableHitobjectCount.Bindable.Value++;
+                    bt.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
+
+                    drawableBulletCount.Bindable.Value++;
+                    bt.OnDispose += (isDisposing) => { drawableBulletCount.Bindable.Value--; };
+                }
+                if (drawable is DrawableLaser l)
+                {
+                    drawableHitobjectCount.Bindable.Value++;
+                    l.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
+
+                    drawableLaserCount.Bindable.Value++;
+                    l.OnDispose += (isDisposing) => { drawableLaserCount.Bindable.Value--; };
+                }
+                else if (drawable is Enemy e)
+                {
+                    enemyCount.Bindable.Value++;
+                    e.OnDispose += (isDisposing) => { enemyCount.Bindable.Value--; };
+                }
+                else if (drawable is Boss bs)
+                {
+                    bossCount.Bindable.Value++;
+                    bs.OnDispose += (isDisposing) => { bossCount.Bindable.Value--; };
+                }
+                else if (drawable is DrawableVitaruPlayer p)
+                {
+                    playerCount.Bindable.Value++;
+                    p.OnDispose += (isDisposing) => { playerCount.Bindable.Value--; };
+                }
+
                 Current.Add(drawable);
                 AbstractionLevel.TriggerChange();
             }

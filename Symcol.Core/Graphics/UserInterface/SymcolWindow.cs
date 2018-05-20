@@ -5,7 +5,6 @@ using osu.Framework.Input;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
-using Symcol.Core.Graphics.Containers;
 using osu.Framework.Graphics.Containers;
 
 namespace Symcol.Core.Graphics.UserInterface
@@ -19,7 +18,7 @@ namespace Symcol.Core.Graphics.UserInterface
         public SpriteText WindowTitle;
 
         private readonly Container topBar;
-        private readonly SymcolClickableContainer minimize;
+        private readonly ClickableContainer minimize;
 
         public SymcolWindow(Vector2 size)
         {
@@ -52,7 +51,7 @@ namespace Symcol.Core.Graphics.UserInterface
                             Origin = Anchor.Centre,
                             TextSize = 18
                         },
-                        new SymcolClickableContainer
+                        new ClickableContainer
                         {
                             Anchor = Anchor.CentreRight,
                             Origin = Anchor.CentreRight,
@@ -67,7 +66,7 @@ namespace Symcol.Core.Graphics.UserInterface
                                 Alpha = 0.5f
                             }
                         },
-                        minimize = new SymcolClickableContainer
+                        minimize = new ClickableContainer
                         {
                             Anchor = Anchor.CentreRight,
                             Origin = Anchor.CentreRight,

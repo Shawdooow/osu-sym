@@ -35,7 +35,11 @@ namespace osu.Game.Rulesets.Vitaru.Debug
         {
             Bindable = bindable;
 
-            AutoSizeAxes = Axes.Both;
+            Masking = true;
+            CornerRadius = 4;
+
+            RelativeSizeAxes = Axes.X;
+            Height = 24;
 
             Children = new Drawable[]
             {
@@ -47,9 +51,9 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                 },
                 text = new SpriteText
                 {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    TextSize = 20
+                    Anchor = Anchor.CentreLeft,
+                    Origin = Anchor.CentreLeft,
+                    TextSize = 18
                 }
             };
 

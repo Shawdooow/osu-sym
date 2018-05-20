@@ -13,6 +13,7 @@ using Symcol.Core.GameObjects;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Characters.Pieces;
+using System;
 
 namespace osu.Game.Rulesets.Vitaru.Characters
 {
@@ -50,6 +51,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         protected readonly VitaruPlayfield VitaruPlayfield;
 
         public int Abstraction { get; set; }
+
+        public Action<bool> OnDispose;
 
         public int Team { get; set; }
         protected CircularContainer VisibleHitbox;
@@ -337,6 +340,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         protected virtual void Revive()
         {
             Dead = false;
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            OnDispose?.Invoke(isDisposing);
+            base.Dispose(isDisposing);
         }
     }
 }

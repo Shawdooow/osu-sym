@@ -25,8 +25,8 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
 
         public readonly OsuTabControl<BibleScreen> TabControl;
 
-        private SymcolClickableContainer open;
-        private SymcolClickableContainer edit;
+        private ClickableContainer open;
+        private ClickableContainer edit;
 
         public Header()
         {
@@ -62,7 +62,7 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
                     Width = 0.4f,
                     
                 },
-                open = new SymcolClickableContainer
+                open = new ClickableContainer
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
@@ -77,7 +77,7 @@ namespace osu.Game.Screens.Symcol.CasterBible.Pieces
                         Alpha = 0.8f
                     }
                 },
-                edit = new SymcolClickableContainer
+                edit = new ClickableContainer
                 {
                     Anchor = Anchor.CentreRight,
                     Origin = Anchor.CentreRight,

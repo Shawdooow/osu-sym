@@ -54,6 +54,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                     Origin = Anchor.TopCentre,
 
                     RelativeSizeAxes = Axes.X,
+                    Width = 0.98f,
                     AutoSizeAxes = Axes.Y
                 }
             };

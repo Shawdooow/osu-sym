@@ -4,7 +4,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.Vitaru.UI;
 using osu.Game.Beatmaps.ControlPoints;
-using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Framework.Platform;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
