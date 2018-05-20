@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             base.LoadComplete();
 
             VitaruInputManager vitaruInputManager = (VitaruInputManager)KeyBindingInputManager;
-            vitaruInputManager.DebugToolkit.UpdateItems();
+            vitaruInputManager.DebugToolkit?.UpdateItems();
         }
 
         protected override CursorContainer CreateCursor() => new GameplayCursor();
