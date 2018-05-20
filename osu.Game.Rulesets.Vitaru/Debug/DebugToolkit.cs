@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Backgrounds;
+using osu.Game.Rulesets.Vitaru.Settings;
 using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Vitaru.Debug
@@ -17,14 +18,16 @@ namespace osu.Game.Rulesets.Vitaru.Debug
 
         private readonly FillFlowContainer<Container> debugItems;
 
+        private readonly DebugConfiguration configuration = VitaruSettings.VitaruConfigManager.GetBindable<DebugConfiguration>(VitaruSetting.DebugConfiguration);
+
         public DebugToolkit()
         {
             OsuColour osu = new OsuColour();
 
-            Anchor = Anchor.CentreLeft;
-            Origin = Anchor.CentreLeft;
+            Anchor = Anchor.CentreRight;
+            Origin = Anchor.CentreRight;
 
-            Position = new Vector2(20, 0);
+            Position = new Vector2(-20, 0);
 
             RelativeSizeAxes = Axes.X;
             Width = 0.18f;

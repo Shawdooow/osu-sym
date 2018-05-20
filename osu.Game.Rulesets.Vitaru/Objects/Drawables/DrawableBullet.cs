@@ -16,6 +16,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private readonly Gamemodes gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
+        private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
+
         //Used like a multiple (useful for spells in multiplayer)
         public static float BulletSpeedModifier = 1;
 
@@ -166,8 +168,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         protected override void End()
         {
             base.End();
-            bulletPiece.FadeOut(200, Easing.OutQuad)
-                .ScaleTo(Scale * 1.5f, 200, Easing.OutQuart);
+
+            if (graphics == GraphicsOptions.StandardV2)
+                bulletPiece.FadeOut(100, Easing.OutQuad)
+                    .ScaleTo(Scale * 0.5f, 100, Easing.OutQuart);
+            else
+                bulletPiece.FadeOut(100);
+
             returnJudgement = true;
         }
 

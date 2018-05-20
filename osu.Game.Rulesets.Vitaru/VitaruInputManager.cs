@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Vitaru
 {
     public class VitaruInputManager : SymcolInputManager<VitaruAction>
     {
-        private bool debugUI = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
+        private bool debug = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
         private bool comboFire = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire);
         private readonly bool shade = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.PitchShade);
 
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Vitaru
             if (shade)
                 Add(Shade = new Box { RelativeSizeAxes = Axes.Both, Alpha = 0, Colour = Color4.Orange });
 
-            if (debugUI && VitaruAPIContainer.Shawdooow)
+            if (debug && VitaruAPIContainer.Shawdooow)
                 Add(DebugToolkit = new DebugToolkit());
 
             if (comboFire)
