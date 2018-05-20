@@ -14,6 +14,7 @@
     <None Remove="Assets\Textures\chenKiaiRight.png" />
     <None Remove="Assets\Textures\chenRight.png" />
     <None Remove="Assets\Textures\crystal.png" />
+    <None Remove="Assets\Textures\Dean.png" />
     <None Remove="Assets\Textures\enemy.png" />
     <None Remove="Assets\Textures\enemyKiai.png" />
     <None Remove="Assets\Textures\gearLarge.png" />
@@ -82,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\bulletKiai.png" />
+    <EmbeddedResource Include="Assets\Textures\Dean.png" />
     <EmbeddedResource Include="Assets\Textures\enemy.png" />
     <EmbeddedResource Include="Assets\Textures\enemyKiai.png" />
     <EmbeddedResource Include="Assets\Textures\gearLarge.png" />

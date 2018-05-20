@@ -23,6 +23,9 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                 if (value != valueName)
                 {
                     valueName = value;
+
+                    if (Bindable == null)
+                        text.Text = value;
                 }
             }
         }
@@ -57,10 +60,11 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                 }
             };
 
-            Bindable.ValueChanged += (value) =>
-            {
-                text.Text = valueName + " = " + value.ToString();
-            };
+            if (Bindable != null)
+                Bindable.ValueChanged += (value) =>
+                {
+                    text.Text = valueName + " = " + value.ToString();
+                };
         }
     }
 }

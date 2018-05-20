@@ -24,6 +24,7 @@ using osu.Game.Overlays.Notifications;
 using osu.Framework.Allocation;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Vitaru.Debug;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -71,6 +72,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         private readonly DebugStat<int> drawableHitobjectCount;
         private readonly DebugStat<int> drawablePatternCount;
+        private readonly DebugStat<int> ranked;
 
         public VitaruPlayfield(VitaruInputManager vitaruInput) : base(BaseSize)
         {
@@ -141,6 +143,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
             }
             else
                 Player = null;
+
+            DebugToolkit.DebugItems.Add(new DebugAction() { Text = "Exclusive Testing Hax", Action = () => { BulletPiece.ExclusiveTestingHax = !BulletPiece.ExclusiveTestingHax; } });
         }
 
         [BackgroundDependencyLoader]
@@ -205,6 +209,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
         }
 
         protected virtual CursorContainer CreateCursor() => new GameplayCursor();
+
+        protected override void Dispose(bool isDisposing)
+        {
+            BulletPiece.ExclusiveTestingHax = false;
+            base.Dispose(isDisposing);
+        }
 
         public class AbstractionField : Container
         {
