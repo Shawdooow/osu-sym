@@ -1,4 +1,5 @@
 ﻿using OpenTK;
+using osu.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
@@ -196,6 +197,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         BulletAngle = direction,
                         BulletDiameter = (float)diameter,
                         BulletDamage = (float)damage,
+                        SpeedEasing = Easing.InCubic,
                         SliderType = type,
                         Curviness = 2,
                         Team = team,
