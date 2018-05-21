@@ -150,7 +150,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     .ScaleTo(Scale * 0.5f, 100, Easing.OutQuart)
                     .OnComplete((b) => { Unload(); });
             else
-                bulletPiece.FadeOut(100);
+                bulletPiece.FadeOut(100)
+                    .OnComplete((b) => { Unload(); });
 
             returnJudgement = true;
         }

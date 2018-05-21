@@ -140,6 +140,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             Position = pattern.Position;
             Size = new Vector2(64);
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
+            pattern.CreateBullets();
 
             //Load the bullets
             foreach (var o in pattern.NestedHitObjects)
@@ -149,11 +156,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 VitaruPlayfield.GameField.Add(drawableBullet);
                 AddNested(drawableBullet);
             }
-        }
-
-        protected override void Start()
-        {
-            base.Start();
 
             if (VitaruPlayfield.Boss != null)
                 VitaruPlayfield.Boss.Free = true;

@@ -99,10 +99,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         {
             base.CreateNestedHitObjects();
 
-            createBullets();
+            //createBullets();
         }
 
-        private void createBullets()
+        public void CreateBullets()
         {
             IEnumerable<Bullet> startCircleBullets = createPattern();
 
