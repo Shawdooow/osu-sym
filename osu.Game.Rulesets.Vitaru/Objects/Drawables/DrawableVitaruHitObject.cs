@@ -13,11 +13,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
     {
         protected readonly VitaruPlayfield VitaruPlayfield;
 
+        public bool Editor;
+
         protected bool Loaded { get; private set; }
 
         protected bool Started { get; private set; }
 
-        public Action<bool> OnDispose;
+        public Action OnDispose;
 
         public DrawableVitaruHitObject(VitaruHitObject hitObject, VitaruPlayfield playfield) : base(hitObject)
         {
@@ -67,10 +69,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         protected virtual void Unload() { Loaded = false; }
 
-        protected override void Dispose(bool isDisposing)
+        public override void Delete()
         {
-            OnDispose?.Invoke(isDisposing);
-            base.Dispose(isDisposing);
+            OnDispose?.Invoke();
+            base.Delete();
         }
     }
 

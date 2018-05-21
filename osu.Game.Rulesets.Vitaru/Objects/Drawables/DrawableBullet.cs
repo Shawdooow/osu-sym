@@ -12,8 +12,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableBullet : DrawableVitaruHitObject
     { 
-        public static int BulletCount;
-
         private readonly Gamemodes gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
@@ -38,7 +36,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         //Incase we want to be deleted in the near future
         public double BulletDeleteTime = -1;
 
-        private readonly DrawablePattern drawablePattern;
         public readonly Bullet Bullet;
 
         public Action OnHit;
@@ -47,28 +44,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private BulletPiece bulletPiece;
 
-        public DrawableBullet(Bullet bullet, DrawablePattern drawablePattern, VitaruPlayfield playfield) : base(bullet, playfield)
-        {
-            Anchor = Anchor.TopLeft;
-            Origin = Anchor.Centre;
-
-            BulletCount++;
-
-            Bullet = bullet;
-            this.drawablePattern = drawablePattern;
-
-            if (gamemode == Gamemodes.Dodge)
-                BulletBounds = new Vector4(-10, -10, 522, 394);
-            else if (gamemode == Gamemodes.Gravaru)
-                BulletBounds = new Vector4(-10, -10, 384 * 2 + 10, 394);
-        }
-
         public DrawableBullet(Bullet bullet, VitaruPlayfield playfield) : base(bullet, playfield)
         {
             Anchor = Anchor.TopLeft;
             Origin = Anchor.Centre;
-
-            BulletCount++;
 
             Bullet = bullet;
 
@@ -188,14 +167,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             bulletPiece.Dispose();
             Hitbox.Dispose();
 
-            VitaruPlayfield.GameField.Remove(this);
-            Dispose();
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            BulletCount--;
-            base.Dispose(isDisposing);
+            Delete();
         }
     }
 }

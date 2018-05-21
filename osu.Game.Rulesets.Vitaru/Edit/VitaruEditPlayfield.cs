@@ -5,7 +5,7 @@ namespace osu.Game.Rulesets.Vitaru.Edit
 {
     public class VitaruEditPlayfield : VitaruPlayfield
     {
-        public override bool LoadPlayer => false;
+        public override bool Editor => true;
 
         //public override bool ProvidingUserCursor => false;
 

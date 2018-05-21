@@ -32,26 +32,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public SymcolHitbox Hitbox;
         private LaserPiece laserPiece;
 
-        private readonly DrawablePattern drawablePattern;
         public readonly Laser Laser;
 
         private const float fade_in_time = 200;
         private const float fade_out_time = 200;
-
-        public DrawableLaser(Laser laser, DrawablePattern drawablePattern, VitaruPlayfield playfield) : base(laser, playfield)
-        {
-            AlwaysPresent = true;
-            Alpha = 0;
-
-            Anchor = Anchor.TopLeft;
-            Origin = Anchor.BottomCentre;
-
-            Laser = laser;
-            this.drawablePattern = drawablePattern;
-
-            Size = new Vector2(Laser.LaserSize.X / 2, Laser.LaserSize.Y / 8);
-            Rotation = MathHelper.RadiansToDegrees(Laser.LaserAngleRadian);
-        }
 
         public DrawableLaser(Laser laser, VitaruPlayfield playfield) : base(laser, playfield)
         {

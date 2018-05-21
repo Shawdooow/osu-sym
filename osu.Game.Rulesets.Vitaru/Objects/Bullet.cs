@@ -1,4 +1,6 @@
 ﻿using OpenTK;
+using osu.Framework.Graphics;
+using osu.Framework.MathUtils;
 using osu.Game.Audio;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
@@ -88,10 +90,28 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                             },
                         };
                         break;
+                    case SliderType.Variable:
+                        Curve = new SliderCurve()
+                        {
+                            CurveType = CurveType.Linear,
+                            Distance = 2000,
+                            ControlPoints = new List<Vector2>
+                            {
+                                new Vector2((float)Math.Cos(BulletAngle) * -100 + Position.X, (float)Math.Sin(BulletAngle) * -100 + Position.Y),
+                                new Vector2((float)Math.Cos(BulletAngle) * 1900 + Position.X, (float)Math.Sin(BulletAngle) * 1900 + Position.Y)
+                            },
+                        };
+                        break;
                 }
                 EndTime = StartTime + Curve.Distance / Velocity;
 
             }
+        }
+
+        private double getBulletSpeedMultiplier(double time)
+        {
+            if (time < .5) return time * time * time * 4;
+            return --time * time * time * 4 + 1;
         }
 
         private SliderType sliderType;
@@ -124,7 +144,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         }
 
         public override Vector2 EndPosition => this.CurvePositionAt(1);
-        public Vector2 PositionAt(double t) => this.CurvePositionAt(t);
+        public Vector2 PositionAt(double t) => this.CurvePositionAt(SliderType == SliderType.Variable ? getBulletSpeedMultiplier(t) : t);
 
         protected override void ApplyDefaultsToSelf(ControlPointInfo controlPointInfo, BeatmapDifficulty difficulty)
         {
@@ -137,6 +157,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
     public enum SliderType
     {
         Straight,
+        Variable,
 
         CurveRight,
         CurveLeft

@@ -13,9 +13,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 {
     public class Enemy : Character
     {
-        public static int EnemyCount;
-        private readonly DrawablePattern drawablePattern;
-
         public override double MaxHealth => 60;
 
         protected override string CharacterName => "enemy";
@@ -28,23 +25,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
         public Enemy(VitaruPlayfield playfield, Pattern pattern, DrawablePattern drawablePattern) : base(playfield)
         {
-            this.drawablePattern = drawablePattern;
-
             AlwaysPresent = true;
 
             Team = 1;
             characterColor = drawablePattern.AccentColour;
-        }
-
-        protected override void LoadComplete()
-        {
-            EnemyCount++;
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            EnemyCount--;
-            base.Dispose(isDisposing);
         }
 
         protected override void MovementAnimations()

@@ -145,7 +145,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             foreach (var o in pattern.NestedHitObjects)
             {
                 Bullet b = (Bullet)o;
-                DrawableBullet drawableBullet = new DrawableBullet(b, this, VitaruPlayfield);
+                DrawableBullet drawableBullet = new DrawableBullet(b, VitaruPlayfield);
                 VitaruPlayfield.GameField.Add(drawableBullet);
                 AddNested(drawableBullet);
             }
@@ -169,16 +169,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 enemy.MoveTo(getPatternStartPosition(), HitObject.TimePreempt * 2, Easing.InQuint)
                     .Delay(HitObject.TimePreempt * 2 - HitObject.TimeFadein)
                     .ScaleTo(new Vector2(0.5f), HitObject.TimeFadein, Easing.InQuint)
-                    .FadeOut(HitObject.TimeFadein, Easing.InQuint)
-                    .Expire();
+                    .FadeOut(HitObject.TimeFadein, Easing.InQuint);
 
             this.FadeOut(HitObject.TimePreempt / 2)
-                .MoveTo(getPatternStartPosition(), HitObject.TimePreempt * 2, Easing.InQuint)
-                .Expire();
+                .MoveTo(getPatternStartPosition(), HitObject.TimePreempt * 2, Easing.InQuint);
 
             starPiece.FadeOut(HitObject.TimePreempt / 2)
-                .ScaleTo(new Vector2(0.1f), HitObject.TimePreempt / 2)
-                .Expire();
+                .ScaleTo(new Vector2(0.1f), HitObject.TimePreempt / 2);
         }
 
         protected override void Unload()
@@ -186,15 +183,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             base.Unload();
 
             if (gamemode != Gamemodes.Dodge)
-            {
-                VitaruPlayfield.GameField.Remove(enemy);
-                enemy.Dispose();
-            }
+                enemy.Delete();
 
-            VitaruPlayfield.GameField.Remove(starPiece);
-            starPiece.Dispose();
+            starPiece.Delete();
 
-            Expire();
+            if (Editor)
+                Expire();
+            else
+                Delete();
         }
 
         public void PlaySamples(int repeat)

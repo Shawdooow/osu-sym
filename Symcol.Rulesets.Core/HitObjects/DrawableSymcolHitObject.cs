@@ -1,4 +1,5 @@
-﻿using osu.Framework.Graphics;
+﻿using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
@@ -84,6 +85,31 @@ namespace Symcol.Rulesets.Core.HitObjects
         protected DrawableSymcolHitObject(TObject hitObject)
     : base(hitObject)
         { }
+
+        private bool deleted;
+
+        public virtual void Delete()
+        {
+            if (Parent is Container p)
+                p.Remove(this);
+
+            if (Samples != null)
+            {
+                Remove(Samples);
+                Samples.Dispose();
+            }
+
+            deleted = true;
+
+            Dispose();
+        }
+
+        public override bool UpdateSubTree()
+        {
+            if (!deleted)
+                return base.UpdateSubTree();
+            return false;
+        }
 
         // Not a todo for symcol rulesets!
 

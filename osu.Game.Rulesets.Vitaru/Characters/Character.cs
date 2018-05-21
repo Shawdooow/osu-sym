@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
         public int Abstraction { get; set; }
 
-        public Action<bool> OnDispose;
+        public Action OnDispose;
 
         public int Team { get; set; }
         protected CircularContainer VisibleHitbox;
@@ -334,18 +334,22 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         protected virtual void Death()
         {
             Dead = true;
-            Expire();
+            Delete();
+        }
+
+        public virtual void Delete()
+        {
+            OnDispose?.Invoke();
+
+            if (Parent is Container p)
+                p.Remove(this);
+
+            Dispose();
         }
 
         protected virtual void Revive()
         {
             Dead = false;
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            OnDispose?.Invoke(isDisposing);
-            base.Dispose(isDisposing);
         }
     }
 }

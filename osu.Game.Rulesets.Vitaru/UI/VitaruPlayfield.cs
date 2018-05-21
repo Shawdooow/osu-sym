@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public Boss Boss;
 
-        public virtual bool LoadPlayer => true;
+        public virtual bool Editor => false;
 
         public static Vector2 BaseSize
         {
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 }
             });
 
-            if (LoadPlayer)
+            if (!Editor)
             {
                 VitaruNetworkingClientHandler vitaruNetworkingClientHandler = RulesetNetworkingClientHandler as VitaruNetworkingClientHandler;
 
@@ -119,6 +119,18 @@ namespace osu.Game.Rulesets.Vitaru.UI
                     playerList.Add(Player = DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler, abstraction));
                 else
                     playerList.Add(Player = DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
+
+                DebugToolkit.DebugItems.Add(new DebugAction()
+                {
+                    Text = "Add New Player",
+                    Action = () =>
+                    {
+                        if (gamemode == Gamemodes.Touhosu)
+                            GameField.Add(DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler, abstraction));
+                        else
+                            GameField.Add(DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
+                    }
+                });
 
                 foreach (VitaruClientInfo client in LoadPlayerList)
                     if (client.PlayerInformation.PlayerID != Player.PlayerID)
@@ -177,13 +189,15 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             DrawableVitaruHitObject v = h as DrawableVitaruHitObject;
 
+            v.Editor = Editor;
+
             drawableHitobjectCount.Bindable.Value++;
-            v.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
+            v.OnDispose += () => { drawableHitobjectCount.Bindable.Value--; };
 
             if (v is DrawablePattern p)
             {
                 drawablePatternCount.Bindable.Value++;
-                p.OnDispose += (isDisposing) => { drawablePatternCount.Bindable.Value--; };
+                p.OnDispose += () => { drawablePatternCount.Bindable.Value--; };
             }
 
             h.OnJudgement += onJudgement;
@@ -372,33 +386,33 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 if (drawable is DrawableBullet bt)
                 {
                     drawableHitobjectCount.Bindable.Value++;
-                    bt.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
+                    bt.OnDispose += () => { drawableHitobjectCount.Bindable.Value--; };
 
                     drawableBulletCount.Bindable.Value++;
-                    bt.OnDispose += (isDisposing) => { drawableBulletCount.Bindable.Value--; };
+                    bt.OnDispose += () => { drawableBulletCount.Bindable.Value--; };
                 }
                 if (drawable is DrawableLaser l)
                 {
                     drawableHitobjectCount.Bindable.Value++;
-                    l.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
+                    l.OnDispose += () => { drawableHitobjectCount.Bindable.Value--; };
 
                     drawableLaserCount.Bindable.Value++;
-                    l.OnDispose += (isDisposing) => { drawableLaserCount.Bindable.Value--; };
+                    l.OnDispose += () => { drawableLaserCount.Bindable.Value--; };
                 }
                 else if (drawable is Enemy e)
                 {
                     enemyCount.Bindable.Value++;
-                    e.OnDispose += (isDisposing) => { enemyCount.Bindable.Value--; };
+                    e.OnDispose += () => { enemyCount.Bindable.Value--; };
                 }
                 else if (drawable is Boss bs)
                 {
                     bossCount.Bindable.Value++;
-                    bs.OnDispose += (isDisposing) => { bossCount.Bindable.Value--; };
+                    bs.OnDispose += () => { bossCount.Bindable.Value--; };
                 }
                 else if (drawable is DrawableVitaruPlayer p)
                 {
                     playerCount.Bindable.Value++;
-                    p.OnDispose += (isDisposing) => { playerCount.Bindable.Value--; };
+                    p.OnDispose += () => { playerCount.Bindable.Value--; };
                 }
 
                 Current.Add(drawable);

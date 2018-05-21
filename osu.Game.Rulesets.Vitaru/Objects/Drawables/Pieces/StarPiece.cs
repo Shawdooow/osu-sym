@@ -1,11 +1,11 @@
 ﻿using OpenTK;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using Symcol.Core.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 {
-    public class StarPiece : Container
+    public class StarPiece : SymcolContainer
     {
         public StarPiece()
         {
