@@ -98,12 +98,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects
             }
         }
 
-        private double getBulletSpeedMultiplier(double time)
-        {
-            if (time < .5) return time * time * time * 4;
-            return --time * time * time * 4 + 1;
-        }
-
         private SliderType sliderType;
 
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();

@@ -137,7 +137,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             starPiece.Position = getPatternStartPosition();
 
-
             Position = pattern.Position;
             Size = new Vector2(64);
         }

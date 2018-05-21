@@ -6,6 +6,8 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Beatmaps;
 using System;
+using osu.Framework.Graphics;
+using osu.Framework.MathUtils;
 
 namespace osu.Game.Rulesets.Vitaru.Objects
 {
@@ -42,8 +44,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         public double Velocity;
         public double SpanDuration => Duration / this.SpanCount();
 
-        public override Vector2 EndPosition => Position + this.CurvePositionAt(1);
-        public Vector2 PositionAt(double t) => Position + this.CurvePositionAt(t);
+        public Easing SpeedEasing { get; set; } = Easing.None;
+
+        public override Vector2 EndPosition => Position + PositionAt(1);
+        public Vector2 PositionAt(double t) => this.CurvePositionAt(Interpolation.ApplyEasing(SpeedEasing, t));
 
         public int RepeatAt(double progress) => (int)(progress * RepeatCount);
 
@@ -95,16 +99,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         #region Bullet Loading
         public float EnemyHealth { get; set; } = 40;
 
-        protected override void CreateNestedHitObjects()
-        {
-            base.CreateNestedHitObjects();
-
-            //CreateBullets();
-        }
-
         public void CreateBullets()
         {
-            IEnumerable<Bullet> startCircleBullets = createPattern(Position);
+            List<Bullet> startCircleBullets = createPattern(Position);
 
             foreach (Bullet b in startCircleBullets)
             {
@@ -127,7 +124,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
             {
                 for (int repeatIndex = 0, repeat = 1; repeatIndex < RepeatCount + 1; repeatIndex++, repeat++)
                 {
-                    IEnumerable<Bullet> sliderBullets = createPattern(Position + Curve.PositionAt(repeat % 2));
+                    List<Bullet> sliderBullets = createPattern(Position + Curve.PositionAt(repeat % 2));
 
                     foreach (Bullet s in sliderBullets)
                     {
@@ -146,7 +143,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
             }
         }
 
-        private IEnumerable<Bullet> createPattern(Vector2 pos)
+        private List<Bullet> createPattern(Vector2 pos)
         {
             switch (PatternID)
             {
