@@ -6,6 +6,8 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Vitaru.UI;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
+using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru.Characters
 {
@@ -18,6 +20,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         protected override string CharacterName => "Kokoro Hatano";
 
         protected override float HitboxWidth => 64;
+
+        private Sprite dean;
 
         public Boss(VitaruPlayfield playfield) : base(playfield)
         {
@@ -74,6 +78,32 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
             if (Seal.Alpha > 0)
                 Seal.RotateTo((float)((Clock.CurrentTime / 1000) * 90));
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (BulletPiece.ExclusiveTestingHax && KiaiStillSprite.Alpha == 1)
+            {
+                KiaiStillSprite.Alpha = 0;
+                Add(dean = new Sprite
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Origin = Anchor.Centre,
+                    Anchor = Anchor.Centre,
+                    Texture = VitaruRuleset.VitaruTextures.Get("Dean"),
+                });
+            }
+            else if (!BulletPiece.ExclusiveTestingHax && KiaiStillSprite.Alpha == 0)
+            {
+                KiaiStillSprite.Alpha = 1;
+                Remove(dean);
+                dean.Dispose();
+            }
+
+            if (BulletPiece.ExclusiveTestingHax)
+                dean.Rotation += (float)Clock.ElapsedFrameTime / 10;
         }
 
         protected override void LoadAnimationSprites(TextureStore textures, Storage storage)

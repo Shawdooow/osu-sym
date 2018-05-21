@@ -117,7 +117,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                     Origin = Anchor.Centre,
                     Anchor = Anchor.Centre,
                     Colour = drawableBullet.AccentColour.Lighten(0.4f),
-                    Rotation = RNG.Next(0, 1000),
                     Texture = VitaruRuleset.VitaruTextures.Get("Dean"),
                 });
             }
@@ -127,6 +126,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                 Remove(dean);
                 dean.Dispose();
             }
+
+            if (ExclusiveTestingHax)
+                dean.Rotation += (float)Clock.ElapsedFrameTime / 5;
         }
     }
 }

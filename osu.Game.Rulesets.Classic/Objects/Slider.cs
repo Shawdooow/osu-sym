@@ -13,6 +13,7 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
 using osu.Game.Rulesets.Classic.Settings;
+using osu.Framework.Configuration;
 
 namespace osu.Game.Rulesets.Classic.Objects
 {
@@ -31,7 +32,7 @@ namespace osu.Game.Rulesets.Classic.Objects
 
         public SliderCurve Curve { get; } = new SliderCurve();
 
-        public Easing SpeedEasing { get; set; } = ClassicSettings.ClassicConfigManager.GetBindable<Easing>(ClassicSetting.SliderEasing);
+        public Bindable<Easing> SpeedEasing { get; set; } = ClassicSettings.ClassicConfigManager.GetBindable<Easing>(ClassicSetting.SliderEasing);
 
         public List<Vector2> ControlPoints
         {
@@ -51,7 +52,7 @@ namespace osu.Game.Rulesets.Classic.Objects
             set { Curve.Distance = value; }
         }
 
-        public Vector2 PositionAt(double t) => this.CurvePositionAt(Interpolation.ApplyEasing(SpeedEasing, t));
+        public Vector2 PositionAt(double t) => Curve.PositionAt(Interpolation.ApplyEasing(SpeedEasing.Value, t));
 
         /// <summary>
         /// The position of the cursor at the point of completion of this <see cref="Slider"/> if it was hit
@@ -142,7 +143,7 @@ namespace osu.Game.Rulesets.Classic.Objects
                     {
                         SpanIndex = span,
                         StartTime = spanStartTime + timeProgress * spanDuration,
-                        Position = Curve.PositionAt(distanceProgress),
+                        Position = PositionAt(distanceProgress),
                         StackHeight = StackHeight,
                         Scale = Scale,
                         Samples = sampleList
@@ -163,7 +164,7 @@ namespace osu.Game.Rulesets.Classic.Objects
                 {
                     RepeatIndex = repeatIndex,
                     StartTime = repeatStartTime,
-                    Position = Curve.PositionAt(repeat % 2),
+                    Position = PositionAt(repeat % 2),
                     StackHeight = StackHeight,
                     Scale = Scale,
                     Samples = new List<SampleInfo>(RepeatSamples[repeatIndex])
