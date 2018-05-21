@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                 // We want the container to have the same size as the slider,
                 // and to be positioned such that the slider head is at (0,0).
                 container.Size = path.Size;
-                container.Position = -path.PositionInBoundingBox(slider.Curve.PositionAt(0) - currentCurve[0]);
+                container.Position = -path.PositionInBoundingBox(slider.PositionAt(0) - currentCurve[0]);
 
                 container.ForceRedraw();
             }

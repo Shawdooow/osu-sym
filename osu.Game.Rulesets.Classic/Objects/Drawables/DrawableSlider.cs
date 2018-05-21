@@ -153,10 +153,10 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
             //todo: we probably want to reconsider this before adding scoring, but it looks and feels nice.
             if (!initialCircle.Judgements.Any(j => j.IsHit))
-                initialCircle.Position = slider.Curve.PositionAt(progress);
+                initialCircle.Position = slider.PositionAt(progress);
 
             foreach (var c in components.OfType<ISliderProgress>()) c.UpdateProgress(progress, span);
-            foreach (var c in components.OfType<ITrackSnaking>()) c.UpdateSnakingPosition(slider.Curve.PositionAt(Body.SnakedStart ?? 0), slider.Curve.PositionAt(Body.SnakedEnd ?? 0));
+            foreach (var c in components.OfType<ITrackSnaking>()) c.UpdateSnakingPosition(slider.PositionAt(Body.SnakedStart ?? 0), slider.PositionAt(Body.SnakedEnd ?? 0));
             foreach (var t in ticks.Children) t.Tracking = Tracking;
             foreach (var r in repeatPoints.Children) r.Tracking = Tracking;
         }

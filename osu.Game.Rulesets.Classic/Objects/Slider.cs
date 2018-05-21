@@ -10,6 +10,8 @@ using System.Linq;
 using osu.Game.Audio;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Framework.Graphics;
+using osu.Framework.MathUtils;
 
 namespace osu.Game.Rulesets.Classic.Objects
 {
@@ -23,10 +25,12 @@ namespace osu.Game.Rulesets.Classic.Objects
         public double EndTime => StartTime + this.SpanCount() * Curve.Distance / Velocity;
         public double Duration => EndTime - StartTime;
 
-        public Vector2 StackedPositionAt(double t) => StackedPosition + this.CurvePositionAt(t);
-        public override Vector2 EndPosition => Position + this.CurvePositionAt(1);
+        public Vector2 StackedPositionAt(double t) => StackedPosition + PositionAt(t);
+        public override Vector2 EndPosition => Position + PositionAt(1);
 
         public SliderCurve Curve { get; } = new SliderCurve();
+
+        public Easing SpeedEasing { get; set; } = Easing.None;
 
         public List<Vector2> ControlPoints
         {
@@ -45,6 +49,8 @@ namespace osu.Game.Rulesets.Classic.Objects
             get { return Curve.Distance; }
             set { Curve.Distance = value; }
         }
+
+        public Vector2 PositionAt(double t) => this.CurvePositionAt(Interpolation.ApplyEasing(SpeedEasing, t));
 
         /// <summary>
         /// The position of the cursor at the point of completion of this <see cref="Slider"/> if it was hit

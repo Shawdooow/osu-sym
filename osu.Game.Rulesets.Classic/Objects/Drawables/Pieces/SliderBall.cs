@@ -181,7 +181,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
 
         public void UpdateProgress(double progress, int span)
         {
-            Position = slider.Curve.PositionAt(progress);
+            Position = slider.PositionAt(progress);
         }
     }
 }

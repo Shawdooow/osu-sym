@@ -197,7 +197,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         BulletAngle = direction,
                         BulletDiameter = (float)diameter,
                         BulletDamage = (float)damage,
-                        SpeedEasing = Easing.InCubic,
+                        SpeedEasing = Easing.InBounce,
                         SliderType = type,
                         Curviness = 2,
                         Team = team,
