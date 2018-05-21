@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
             }
 
             if (BulletPiece.ExclusiveTestingHax)
-                dean.Rotation += (float)Clock.ElapsedFrameTime / 10;
+                dean.Rotation += (float)Clock.ElapsedFrameTime / 4;
         }
 
         protected override void LoadAnimationSprites(TextureStore textures, Storage storage)

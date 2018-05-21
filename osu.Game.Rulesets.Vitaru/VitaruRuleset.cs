@@ -17,6 +17,7 @@ using osu.Game.Rulesets.Vitaru.Beatmaps;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Vitaru.UI;
 using osu.Game.Rulesets.Difficulty;
+using osu.Framework.Audio;
 
 namespace osu.Game.Rulesets.Vitaru
 {
@@ -195,6 +196,7 @@ namespace osu.Game.Rulesets.Vitaru
 
         public static ResourceStore<byte[]> VitaruResources;
         public static TextureStore VitaruTextures;
+        public static AudioManager VitaruAudio;
 
         public VitaruRuleset(RulesetInfo rulesetInfo) : base(rulesetInfo)
         {
@@ -205,6 +207,16 @@ namespace osu.Game.Rulesets.Vitaru
                 VitaruResources.AddStore(new DllResourceStore("osu.Game.Rulesets.Vitaru.dll"));
                 VitaruTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(VitaruResources, @"Textures")));
                 VitaruTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
+
+                var tracks = new ResourceStore<byte[]>(VitaruResources);
+                tracks.AddStore(new NamespacedResourceStore<byte[]>(VitaruResources, @"Tracks"));
+                tracks.AddStore(new OnlineStore());
+
+                var samples = new ResourceStore<byte[]>(VitaruResources);
+                samples.AddStore(new NamespacedResourceStore<byte[]>(VitaruResources, @"Samples"));
+                samples.AddStore(new OnlineStore());
+
+                VitaruAudio = new AudioManager(tracks, samples);
             }
         }
     }

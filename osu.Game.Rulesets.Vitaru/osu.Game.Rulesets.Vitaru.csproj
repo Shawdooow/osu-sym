@@ -8,6 +8,7 @@
     <Description>dodge the bullets. to the beat.</Description>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Samples\skeletron.mp3" />
     <None Remove="Assets\Textures\bulletKiai.png" />
     <None Remove="Assets\Textures\chen.png" />
     <None Remove="Assets\Textures\chenKiai.png" />
@@ -82,6 +83,7 @@
     <None Remove="Assets\Textures\vortex.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Assets\Samples\skeletron.mp3" />
     <EmbeddedResource Include="Assets\Textures\bulletKiai.png" />
     <EmbeddedResource Include="Assets\Textures\Dean.png" />
     <EmbeddedResource Include="Assets\Textures\enemy.png" />
@@ -133,5 +135,8 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Tracks\" />
   </ItemGroup>
 </Project>

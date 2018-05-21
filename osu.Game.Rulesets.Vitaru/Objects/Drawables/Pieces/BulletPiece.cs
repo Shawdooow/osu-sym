@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
             }
 
             if (ExclusiveTestingHax)
-                dean.Rotation += (float)Clock.ElapsedFrameTime / 5;
+                dean.Rotation += (float)Clock.ElapsedFrameTime / 2;
         }
     }
 }
