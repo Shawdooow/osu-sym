@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 VitaruPlayfield.Boss.MoveTo(Position, moveTime < 100 ? 100 : moveTime, Easing.OutSine);
                 VitaruPlayfield.Boss.Free = false;
 
-                if (VitaruPlayfield.Boss.Alpha == 1)
+                if (VitaruPlayfield.Boss.Alpha == 1 && BulletPiece.ExclusiveTestingHax)
                     VitaruRuleset.VitaruAudio.Sample.Get($"skeletron").Play();
             }
 
