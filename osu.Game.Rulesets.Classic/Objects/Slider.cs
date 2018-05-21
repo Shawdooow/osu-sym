@@ -12,6 +12,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
+using osu.Game.Rulesets.Classic.Settings;
 
 namespace osu.Game.Rulesets.Classic.Objects
 {
@@ -30,7 +31,7 @@ namespace osu.Game.Rulesets.Classic.Objects
 
         public SliderCurve Curve { get; } = new SliderCurve();
 
-        public Easing SpeedEasing { get; set; } = Easing.None;
+        public Easing SpeedEasing { get; set; } = ClassicSettings.ClassicConfigManager.GetBindable<Easing>(ClassicSetting.SliderEasing);
 
         public List<Vector2> ControlPoints
         {

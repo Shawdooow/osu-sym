@@ -44,6 +44,11 @@ namespace osu.Game.Rulesets.Classic.Settings
                     LabelText = "Enable Hold Note",
                     Bindable = ClassicConfigManager.GetBindable<bool>(ClassicSetting.Hold)
                 },
+                new SettingsEnumDropdown<Easing>
+                {
+                    LabelText = "Current Slider Easing",
+                    Bindable = ClassicConfigManager.GetBindable<Easing>(ClassicSetting.SliderEasing)
+                },
                 new SettingsButton
                 {
                     Text = "Open In-game Wiki",

@@ -1,4 +1,5 @@
 ﻿using osu.Framework.Configuration;
+using osu.Framework.Graphics;
 using osu.Framework.Platform;
 
 namespace osu.Game.Rulesets.Classic.Settings
@@ -12,6 +13,7 @@ namespace osu.Game.Rulesets.Classic.Settings
         protected override void InitialiseDefaults()
         {
             Set(ClassicSetting.Hold, false);
+            Set(ClassicSetting.SliderEasing, Easing.None);
             Set(ClassicSetting.Skin, "default");
         }
 
@@ -20,6 +22,7 @@ namespace osu.Game.Rulesets.Classic.Settings
     public enum ClassicSetting
     {
         Hold,
+        SliderEasing,
         Skin
     }
 }
