@@ -348,7 +348,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 ColorOverride = color,
                 Team = Team,
                 DummyMode = true,
-                SliderType = SliderType.Variable,
+                SliderType = SliderType.Straight,
                 Abstraction = 3,
             }, VitaruPlayfield));
 
