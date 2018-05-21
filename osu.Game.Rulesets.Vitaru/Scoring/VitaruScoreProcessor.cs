@@ -46,19 +46,12 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
             {
                 if (obj is Pattern pattern)
                 {
-                    pattern.CreateBullets();
-
-                    foreach (var unused in pattern.NestedHitObjects.OfType<Bullet>())
+                    foreach (var unused in pattern.GetBullets().OfType<Bullet>())
                     {
                         AddJudgement(new VitaruJudgement { Result = HitResult.Great });
-
-                        //TODO: Why is this neccesary!?
-                        if (pattern.IsSlider)
-                            AddJudgement(new VitaruJudgement { Result = HitResult.Great });
-
                         expectedJudgementCount.Bindable.Value++;
                     }
-                    foreach (var unused in pattern.NestedHitObjects.OfType<Laser>())
+                    foreach (var unused in pattern.GetBullets().OfType<Laser>())
                     {
                         AddJudgement(new VitaruJudgement { Result = HitResult.Great });
                         expectedJudgementCount.Bindable.Value++;

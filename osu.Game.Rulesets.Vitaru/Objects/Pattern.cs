@@ -46,8 +46,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
         public Easing SpeedEasing { get; set; } = Easing.None;
 
-        public override Vector2 EndPosition => Position + PositionAt(1);
-        public Vector2 PositionAt(double t) => this.CurvePositionAt(Interpolation.ApplyEasing(SpeedEasing, t));
+        public override Vector2 EndPosition => PositionAt(1);
+        public Vector2 PositionAt(double t) => Position + this.CurvePositionAt(Interpolation.ApplyEasing(SpeedEasing, t));
 
         public int RepeatAt(double progress) => (int)(progress * RepeatCount);
 
@@ -99,11 +99,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         #region Bullet Loading
         public float EnemyHealth { get; set; } = 40;
 
-        public void CreateBullets()
+        public void AddNested(VitaruHitObject hitObject)
         {
-            List<Bullet> startCircleBullets = createPattern(Position);
+            base.AddNested(hitObject);
+        }
 
-            foreach (Bullet b in startCircleBullets)
+        public List<Bullet> GetBullets()
+        {
+            List<Bullet> bullets = new List<Bullet>();
+
+            foreach (Bullet b in createPattern(Position))
             {
                 b.Ar = Ar;
 
@@ -117,16 +122,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                 b.ComboIndex = ComboIndex;
                 b.LastInCombo = LastInCombo;
 
-                AddNested(b);
+                bullets.Add(b);
             }
 
             if (IsSlider)
             {
                 for (int repeatIndex = 0, repeat = 1; repeatIndex < RepeatCount + 1; repeatIndex++, repeat++)
                 {
-                    List<Bullet> sliderBullets = createPattern(Position + Curve.PositionAt(repeat % 2));
-
-                    foreach (Bullet s in sliderBullets)
+                    foreach (Bullet s in createPattern(Position + Curve.PositionAt(repeat % 2)))
                     {
                         s.Ar = Ar;
 
@@ -137,10 +140,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
                         s.StartTime = StartTime + repeat * SpanDuration;
                         s.Position = Position + Curve.PositionAt(repeat % 2);
-                        AddNested(s);
+                        bullets.Add(s);
                     }
                 }
             }
+
+            return bullets;
         }
 
         private List<Bullet> createPattern(Vector2 pos)

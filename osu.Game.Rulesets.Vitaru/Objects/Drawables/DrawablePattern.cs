@@ -145,7 +145,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Start();
 
-            pattern.CreateBullets();
+            foreach (Bullet bullet in pattern.GetBullets())
+                pattern.AddNested(bullet);
 
             //Load the bullets
             foreach (var o in pattern.NestedHitObjects)
