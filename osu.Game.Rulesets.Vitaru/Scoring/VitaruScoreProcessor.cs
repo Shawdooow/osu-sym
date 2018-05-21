@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
             {
                 if (obj is Pattern pattern)
                 {
-                    pattern.CreateBullets();
+                    //pattern.CreateBullets();
 
                     foreach (var unused in pattern.NestedHitObjects.OfType<Bullet>())
                     {
