@@ -13,6 +13,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 {
     public class Bullet : VitaruHitObject, IHasCurve
     {
+        public override double TimePreempt => 100;
+
         public override HitObjectType Type => HitObjectType.Bullet;
 
         public bool DummyMode { get; set; }

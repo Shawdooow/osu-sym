@@ -33,9 +33,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         //Should be set to true when a character is hit
         public bool Hit;
 
-        //Incase we want to be deleted in the near future
-        public double BulletDeleteTime = -1;
-
         public readonly Bullet Bullet;
 
         public Action OnHit;
@@ -150,7 +147,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (graphics == GraphicsOptions.StandardV2)
                 bulletPiece.FadeOut(100, Easing.OutQuad)
-                    .ScaleTo(Scale * 0.5f, 100, Easing.OutQuart);
+                    .ScaleTo(Scale * 0.5f, 100, Easing.OutQuart)
+                    .OnComplete((b) => { Unload(); });
             else
                 bulletPiece.FadeOut(100);
 

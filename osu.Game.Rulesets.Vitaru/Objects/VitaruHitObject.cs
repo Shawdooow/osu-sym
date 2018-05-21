@@ -11,8 +11,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 {
     public abstract class VitaruHitObject : HitObject, IHasComboInformation, IHasEditablePosition
     {
-        public double TimePreempt = 600;
-        public double TimeFadein = 400;
+        public virtual double TimePreempt => 600;
+        public virtual double TimeFadein => 400;
 
         public float Ar { get; set; } = -1;
 
