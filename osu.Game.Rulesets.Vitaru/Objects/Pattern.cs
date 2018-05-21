@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         {
             base.CreateNestedHitObjects();
 
-            //createBullets();
+            //CreateBullets();
         }
 
         public void CreateBullets()

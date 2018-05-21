@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Debug mode (Must be a verified developer to use, contains cheats and whatnot to help debug stuff)\n" +
             "-Bug player to checkout settings once\n\n" +
             "Tweaks / Changes:\n\n" +
-            "-Some serious optimizations\n" +
+            "-Some serious optimizations (doubled my fps sooo. . .)\n" +
             "-Use standard Get functions for characters (community made characters soon!)\n" +
             "-Added Sakuya's Background\n" +
             "-Nerf Ryukoy's Health (80 => 60)\n" +

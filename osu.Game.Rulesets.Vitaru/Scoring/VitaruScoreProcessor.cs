@@ -9,12 +9,16 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.UI;
 using System.Linq;
+using osu.Framework.Configuration;
+using osu.Game.Rulesets.Vitaru.Debug;
 
 namespace osu.Game.Rulesets.Vitaru.Scoring
 {
     internal class VitaruScoreProcessor : ScoreProcessor<VitaruHitObject>
     {
         public new static int Combo;
+
+        private DebugStat<int> expectedJudgementCount;
 
         public VitaruScoreProcessor(RulesetContainer<VitaruHitObject> rulesetContainer)
             : base(rulesetContainer)
@@ -36,13 +40,25 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
 
         protected override void SimulateAutoplay(Beatmap<VitaruHitObject> beatmap)
         {
+            DebugToolkit.DebugItems.Add(expectedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Expected Judgement Count" });
+
             foreach (var obj in beatmap.HitObjects)
             {
-                var pattern = obj as Pattern;
-                foreach (var unused in pattern.NestedHitObjects.OfType<Bullet>())
-                    AddJudgement(new VitaruJudgement { Result = HitResult.Great });
-                foreach (var unused in pattern.NestedHitObjects.OfType<Laser>())
-                    AddJudgement(new VitaruJudgement { Result = HitResult.Great });
+                if (obj is Pattern pattern)
+                {
+                    pattern.CreateBullets();
+
+                    foreach (var unused in pattern.NestedHitObjects.OfType<Bullet>())
+                    {
+                        AddJudgement(new VitaruJudgement { Result = HitResult.Great });
+                        expectedJudgementCount.Bindable.Value++;
+                    }
+                    foreach (var unused in pattern.NestedHitObjects.OfType<Laser>())
+                    {
+                        AddJudgement(new VitaruJudgement { Result = HitResult.Great });
+                        expectedJudgementCount.Bindable.Value++;
+                    }
+                }
             }
         }
 
@@ -65,8 +81,10 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
             if (judgement.Result != HitResult.None)
             {
                 scoreResultCounts[judgement.Result] = scoreResultCounts.GetOrDefault(judgement.Result) + 1;
-                comboResultCounts[vitaruJudgement.Combo] = comboResultCounts.GetOrDefault(vitaruJudgement.Combo) + 1;
-                Combo = comboResultCounts[vitaruJudgement.Combo];
+                comboResultCounts[vitaruJudgement.Combo] = comboResultCounts.GetOrDefault(vitaruJudgement.Combo) + 1;                    
+
+                if (judgement.Result != HitResult.Miss)
+                    Combo++;
             }
 
             if (VitaruPlayfield.Player != null)

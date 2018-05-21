@@ -10,6 +10,10 @@ using OpenTK;
 using osu.Game.Rulesets.Vitaru.UI.Cursor;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Rulesets.Vitaru.Settings;
+using osu.Framework.Configuration;
+using osu.Game.Rulesets.Vitaru.Debug;
+using System.Collections.Generic;
+using osu.Framework.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -39,18 +43,18 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public override int Variant => (int)variant();
 
-        private string selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
-        private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private string character = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+        private readonly Gamemodes gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         private ControlScheme variant()
         {
-            if (currentGameMode == Gamemodes.Vitaru)
+            if (gamemode == Gamemodes.Vitaru)
                 return ControlScheme.Vitaru;
-            else if (currentGameMode == Gamemodes.Dodge)
+            else if (gamemode == Gamemodes.Dodge)
                 return ControlScheme.Dodge;
             else
             {
-                if (selectedCharacter == "SakuyaIzayoi" || selectedCharacter == "RyukoyHakurei" || selectedCharacter == "TomajiHakurei")
+                if (character == "SakuyaIzayoi" || character == "RyukoyHakurei" || character == "TomajiHakurei")
                     return ControlScheme.Sakuya;
                 //else if (currentCharacter == Player.KokoroHatano)
                     //return ControlScheme.Kokoro;
@@ -82,9 +86,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             var aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 10f / 16f, DrawSize.Y);
 
-            if (currentGameMode == Gamemodes.Dodge)
+            if (gamemode == Gamemodes.Dodge)
                 aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 4f / 3f, DrawSize.Y);
-            else if (currentGameMode == Gamemodes.Gravaru)
+            else if (gamemode == Gamemodes.Gravaru)
                 aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 2f / 1f, DrawSize.Y);
 
             return new Vector2(aspectSize.X / DrawSize.X, aspectSize.Y / DrawSize.Y);

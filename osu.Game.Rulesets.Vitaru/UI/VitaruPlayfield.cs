@@ -70,6 +70,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             }
         }
 
+        private readonly DebugStat<int> returnedJudgementCount;
         private readonly DebugStat<int> drawableHitobjectCount;
         private readonly DebugStat<int> drawablePatternCount;
         private readonly DebugStat<int> ranked;
@@ -83,6 +84,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             Bindable<int> abstraction = new Bindable<int>() { Value = 0 };
 
+            DebugToolkit.DebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judgement Count" });
             DebugToolkit.DebugItems.Add(drawableHitobjectCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Hitobject Count" });
             DebugToolkit.DebugItems.Add(drawablePatternCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Pattern Count" });
             
@@ -211,6 +213,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             if (Player != null)
             {
+                returnedJudgementCount.Bindable.Value++;
+
                 DrawableVitaruJudgement explosion = new DrawableVitaruJudgement(judgement, judgedObject)
                 {
                     Alpha = 0.5f,
