@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         private const string file_extention = ".vitaru";
 
-        private const string version_changelog = "";
+        private const string version_changelog = "-Tweak debug ui";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)
