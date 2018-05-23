@@ -13,7 +13,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         private const string file_extention = ".vitaru";
 
-        private const string version_changelog = "-Tweak debug ui";
+        private const string version_changelog = "-Tweak debug ui\n" +
+            "-Fix Combo fire never reseting back to 0 on miss";
 
         [BackgroundDependencyLoader]
         private void load(Storage storage)

@@ -79,10 +79,12 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
             if (judgement.Result != HitResult.None)
             {
                 scoreResultCounts[judgement.Result] = scoreResultCounts.GetOrDefault(judgement.Result) + 1;
-                comboResultCounts[vitaruJudgement.Combo] = comboResultCounts.GetOrDefault(vitaruJudgement.Combo) + 1;                    
+                comboResultCounts[vitaruJudgement.Combo] = comboResultCounts.GetOrDefault(vitaruJudgement.Combo) + 1;
 
-                if (judgement.Result != HitResult.Miss)
-                    Combo++;
+                Combo++;
+
+                if (judgement.Result == HitResult.Miss)
+                    Combo = 0;
             }
 
             if (VitaruPlayfield.Player != null)
