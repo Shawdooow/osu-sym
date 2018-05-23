@@ -144,15 +144,15 @@ namespace osu.Game.Rulesets.Mix.Beatmaps
                 {
                     if (original.Samples.Any(s => s.Name == "normal"))
                         bank = "normal";
-                    else if (original.Samples.Any(s => s.Name == "drums"))
-                        bank = "drums";
+                    else if (original.Samples.Any(s => s.Name == "drum"))
+                        bank = "drum";
                     else if (original.Samples.Any(s => s.Name == "soft"))
                         bank = "soft";
                 }
 
                 if (bank == "normal")
                     color = Color4.Red;
-                else if (bank == "drums")
+                else if (bank == "drum")
                     color = Color4.Green;
                 else if (bank == "soft")
                     color = Color4.Blue;
