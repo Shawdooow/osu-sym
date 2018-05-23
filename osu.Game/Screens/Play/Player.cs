@@ -35,7 +35,7 @@ namespace osu.Game.Screens.Play
     {
         protected override float BackgroundParallaxAmount => 0.1f;
 
-        public override bool ShowOverlaysOnEnter => false;
+        protected override bool HideOverlaysOnEnter => true;
 
         public Action RestartRequested;
 
@@ -44,6 +44,8 @@ namespace osu.Game.Screens.Play
         public bool AllowPause { get; set; } = true;
         public bool AllowLeadIn { get; set; } = true;
         public bool AllowResults { get; set; } = true;
+
+        protected override bool AllowBackButton => false;
 
         private Bindable<bool> mouseWheelDisabled;
         private Bindable<double> userAudioOffset;
@@ -95,6 +97,8 @@ namespace osu.Game.Screens.Play
 
             IBeatmap beatmap;
 
+            try
+            {
                 beatmap = working.Beatmap;
 
                 if (beatmap == null)
@@ -103,13 +107,31 @@ namespace osu.Game.Screens.Play
                 ruleset = Ruleset.Value ?? beatmap.BeatmapInfo.Ruleset;
                 var rulesetInstance = ruleset.CreateInstance();
 
+                try
+                {
                     RulesetContainer = rulesetInstance.CreateRulesetContainerWith(working);
+                }
+                catch (BeatmapInvalidForRulesetException)
+                {
+                    // we may fail to create a RulesetContainer if the beatmap cannot be loaded with the user's preferred ruleset
+                    // let's try again forcing the beatmap's ruleset.
+                    ruleset = beatmap.BeatmapInfo.Ruleset;
+                    rulesetInstance = ruleset.CreateInstance();
+                    RulesetContainer = rulesetInstance.CreateRulesetContainerWith(Beatmap);
+                }
 
                 if (!RulesetContainer.Objects.Any())
                 {
                     Logger.Error(new InvalidOperationException("Beatmap contains no hit objects!"), "Beatmap contains no hit objects!");
                     return;
                 }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Could not load beatmap sucessfully!");
+                //couldn't load, hard abort!
+                return;
+            }
 
             sourceClock = (IAdjustableClock)working.Track ?? new StopwatchClock();
             adjustableClock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
@@ -161,6 +183,7 @@ namespace osu.Game.Screens.Play
                             ProcessCustomClock = false,
                             Breaks = beatmap.Breaks
                         },
+                        RulesetContainer.Cursor?.CreateProxy() ?? new Container(),
                         hudOverlay = new HUDOverlay(scoreProcessor, RulesetContainer, working, offsetClock, adjustableClock)
                         {
                             Clock = Clock, // hud overlay doesn't want to use the audio clock directly
@@ -168,7 +191,6 @@ namespace osu.Game.Screens.Play
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre
                         },
-                        RulesetContainer.Cursor?.CreateProxy() ?? new Container(),
                         new SkipOverlay(firstObjectTime)
                         {
                             Clock = Clock, // skip button doesn't want to use the audio clock directly
@@ -196,6 +218,8 @@ namespace osu.Game.Screens.Play
                     },
                 }
             };
+
+            hudOverlay.HoldToQuit.Action = Exit;
 
             if (ShowStoryboard)
                 initializeStoryboard(false);

@@ -24,6 +24,9 @@ namespace osu.Game.Screens.Evast.Visualizers
     public class Visualizer : BeatmapScreen
 
     {
+
+        protected override bool HideOverlaysOnEnter => true;
+
         private LocalisationEngine localisation;
 
         private BeatmapSprite beatmapSprite;

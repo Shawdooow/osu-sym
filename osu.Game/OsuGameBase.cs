@@ -81,7 +81,7 @@ namespace osu.Game
                     //return @"local " + (DebugUtils.IsDebug ? @"debug" : @"release");
 
                 var assembly = AssemblyName;
-                return $@"2018.517.0";
+                return $@"2018.522.0";
             }
         }
 

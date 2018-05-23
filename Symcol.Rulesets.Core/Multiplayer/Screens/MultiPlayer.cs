@@ -23,7 +23,6 @@ using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 using osu.Game.Screens.Backgrounds;
-using osu.Game.Screens.Ranking;
 using osu.Game.Storyboards.Drawables;
 using OpenTK;
 using osu.Game.Screens;
@@ -44,7 +43,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
 
         protected override float BackgroundParallaxAmount => 0.1f;
 
-        public override bool ShowOverlaysOnEnter => false;
+        protected override bool HideOverlaysOnEnter => true;
 
         public Action RestartRequested;
 
