@@ -24,6 +24,9 @@ namespace osu.Game.Screens.Evast.Visualizers
     public class Visualizer : BeatmapScreen
 
     {
+
+        protected override bool HideOverlaysOnEnter => true;
+
         private LocalisationEngine localisation;
 
         private BeatmapSprite beatmapSprite;
@@ -191,12 +194,12 @@ namespace osu.Game.Screens.Evast.Visualizers
                 artist.Current = null;
                 artist.Text = @"Nothing is playing";
             }
-           /* else
+            else
             {
                 BeatmapMetadata metadata = beatmap.Metadata;
                 title.Current = localisation.GetUnicodePreference(metadata.TitleUnicode, metadata.Title);
                 artist.Current = localisation.GetUnicodePreference(metadata.TitleUnicode, metadata.Artist);
-            }*/
+            }
 
         }
 
