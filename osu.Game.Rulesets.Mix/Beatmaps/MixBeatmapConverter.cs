@@ -82,17 +82,24 @@ namespace osu.Game.Rulesets.Mix.Beatmaps
 
                     Color4 color = Color4.Red;
 
+                    string bank = original.SampleControlPoint.SampleBank;
+
                     if (currentSamples.Any(s => s.Bank != null))
                     {
-                        if (currentSamples.Any(s => s.Name == "drums"))
-                        {
-                            color = Color4.Green;
-                        }
+                        if (currentSamples.Any(s => s.Name == "normal"))
+                            bank = "normal";
+                        else if (currentSamples.Any(s => s.Name == "drums"))
+                            bank = "drums";
                         else if (currentSamples.Any(s => s.Name == "soft"))
-                        {
-                            color = Color4.Blue;
-                        }
+                            bank = "soft";
                     }
+
+                    if (bank == "normal")
+                        color = Color4.Red;
+                    else if (bank == "drums")
+                        color = Color4.Green;
+                    else if (bank == "soft")
+                        color = Color4.Blue;
 
                     yield return new MixNote
                     {
@@ -131,17 +138,24 @@ namespace osu.Game.Rulesets.Mix.Beatmaps
             {
                 Color4 color = Color4.Red;
 
+                string bank = original.SampleControlPoint.SampleBank;
+
                 if (original.Samples.Any(s => s.Bank != null))
                 {
-                    if (original.Samples.Any(s => s.Name == "drums"))
-                    {
-                        color = Color4.Green;
-                    }
+                    if (original.Samples.Any(s => s.Name == "normal"))
+                        bank = "normal";
+                    else if (original.Samples.Any(s => s.Name == "drums"))
+                        bank = "drums";
                     else if (original.Samples.Any(s => s.Name == "soft"))
-                    {
-                        color = Color4.Blue;
-                    }
+                        bank = "soft";
                 }
+
+                if (bank == "normal")
+                    color = Color4.Red;
+                else if (bank == "drums")
+                    color = Color4.Green;
+                else if (bank == "soft")
+                    color = Color4.Blue;
 
                 yield return new MixNote
                 {

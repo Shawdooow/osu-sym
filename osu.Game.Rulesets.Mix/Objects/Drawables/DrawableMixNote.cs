@@ -2,17 +2,18 @@
 using osu.Framework.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
-using osu.Framework.Audio.Sample;
 using OpenTK;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Mix.Judgements;
 using osu.Game.Rulesets.Scoring;
+using osu.Game.Skinning;
+using osu.Game.Audio;
 
 namespace osu.Game.Rulesets.Mix.Objects.Drawables
 {
     public class DrawableMixNote : DrawableMixHitObject
     {
-        private SampleChannel sample;
+        private SkinnableSound sample;
 
         private readonly MixNote note;
 
@@ -40,11 +41,7 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables
             Origin = Anchor.Centre;
 
             Child = new Note(note.Color);
-        }
 
-        [BackgroundDependencyLoader]
-        private void load(AudioManager audio)
-        {
             string bank = "normal";
             string name = "hitnormal";
 
@@ -60,7 +57,14 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables
             else if (note.Clap)
                 name = "hitclap";
 
-            sample = audio.Sample.Get($"Gameplay/{bank}-{name}");
+            sample = new SkinnableSound(new SampleInfo
+            {
+                Bank = bank,
+                Name = name,
+                Volume = note.Volume > 0 ? note.Volume : HitObject.SampleControlPoint.SampleVolume,
+                Namespace = SampleNamespace
+            });
+            Add(sample);
         }
 
         public override bool OnPressed(MixAction action)
