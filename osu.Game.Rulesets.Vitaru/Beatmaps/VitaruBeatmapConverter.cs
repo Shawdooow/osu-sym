@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 
             float ar = calculateAr(beatmap.BeatmapInfo.BaseDifficulty.ApproachRate);
             float cs = 20 + (beatmap.BeatmapInfo.BaseDifficulty.CircleSize - 4);
-            double speed = 0.25d;
+            double speed = 0.2d;
 
             SampleControlPoint controlPoint = beatmap.ControlPointInfo.SamplePointAt(original.StartTime);
 
@@ -69,9 +69,9 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             if (isDrum)
             {
                 if (isWhistle)
-                    patternID = 3;
-                else if (isFinish)
                     patternID = 4;
+                else if (isFinish)
+                    patternID = 3;
                 else if (isClap)
                     patternID = 5;
                 else
@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 if (isWhistle)
                     patternID = 2;
                 else if (isFinish)
-                    patternID = 4;
+                    patternID = 3;
                 else if (isClap)
                     patternID = 5;
                 else
@@ -91,9 +91,9 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             else
             {
                 if (isWhistle)
-                    patternID = 3;
-                else if (isFinish)
                     patternID = 4;
+                else if (isFinish)
+                    patternID = 3;
                 else if (isClap)
                     patternID = 5;
                 else
@@ -124,8 +124,8 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 p.RepeatCount = curveData.RepeatCount;
                 p.EnemyHealth = 60;
 
-                if (isWhistle)
-                    p.PatternSpeed = 0.3f;
+                if (isFinish)
+                    p.PatternSpeed = 0.25f;
             }
             else if (endTimeData != null)
             {
@@ -137,8 +137,8 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 p.EndTime = endTimeData.EndTime;
             }
             else
-                if (isWhistle)
-                    p.PatternSpeed = 0.4f;
+                if (isFinish)
+                    p.PatternSpeed = 0.3f;
 
             if (multiplayer && enemyPlayerCount > 0)
                 HitObjectList.Add(p);
