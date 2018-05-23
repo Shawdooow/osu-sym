@@ -7,6 +7,7 @@ using System;
 using osu.Game.Audio;
 using System.Linq;
 using osu.Game.Beatmaps.ControlPoints;
+using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Mix.Beatmaps
 {
@@ -79,70 +80,98 @@ namespace osu.Game.Rulesets.Mix.Beatmaps
                 {
                     List<SampleInfo> currentSamples = allSamples[i];
 
-                    bool isDrum = controlPoint.SampleBank == "drum";
-                    bool isSoft = controlPoint.SampleBank == "soft";
+                    Color4 color = Color4.Red;
 
                     if (currentSamples.Any(s => s.Bank != null))
                     {
                         if (currentSamples.Any(s => s.Name == "drums"))
-                            isDrum = true;
-                        if (currentSamples.Any(s => s.Name == "soft"))
-                            isSoft = true;
+                        {
+                            color = Color4.Green;
+                        }
+                        else if (currentSamples.Any(s => s.Name == "soft"))
+                        {
+                            color = Color4.Blue;
+                        }
                     }
 
-                    bool isSquare = currentSamples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
-                    bool isTriangle = currentSamples.Any(s => s.Name == SampleInfo.HIT_FINISH);
-                    bool isX = currentSamples.Any(s => s.Name == SampleInfo.HIT_CLAP);
-
                     yield return new MixNote
                     {
                         StartTime = j,
-                        Samples = currentSamples,
+                        Color = color
                     };
 
-                    yield return new MixNote
-                    {
-                        StartTime = j,
-                        Samples = currentSamples,
-                    };
+                    if (currentSamples.Any(s => s.Name == SampleInfo.HIT_WHISTLE))
+                        yield return new MixNote
+                        {
+                            StartTime = j,
+                            Color = color,
+                            Whistle = true
+                        };
 
-                    yield return new MixNote
-                    {
-                        StartTime = j,
-                        Samples = currentSamples,
-                    };
+                    if (currentSamples.Any(s => s.Name == SampleInfo.HIT_FINISH))
+                        yield return new MixNote
+                        {
+                            StartTime = j,
+                            Color = color,
+                            Finish = true
+                        };
+
+                    if (currentSamples.Any(s => s.Name == SampleInfo.HIT_CLAP))
+                        yield return new MixNote
+                        {
+                            StartTime = j,
+                            Color = color,
+                            Clap = true
+                        };
 
                     i = (i + 1) % allSamples.Count;
                 }
             }
             else
             {
-                bool isDrum = controlPoint.SampleBank == "drum";
-                bool isSoft = controlPoint.SampleBank == "soft";
+                Color4 color = Color4.Red;
 
                 if (original.Samples.Any(s => s.Bank != null))
                 {
                     if (original.Samples.Any(s => s.Name == "drums"))
-                        isDrum = true;
-                    if (original.Samples.Any(s => s.Name == "soft"))
-                        isSoft = true;
+                    {
+                        color = Color4.Green;
+                    }
+                    else if (original.Samples.Any(s => s.Name == "soft"))
+                    {
+                        color = Color4.Blue;
+                    }
                 }
 
-                bool isSquare = original.Samples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
-                bool isTriangle = original.Samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
-                bool isX = original.Samples.Any(s => s.Name == SampleInfo.HIT_CLAP);
-
                 yield return new MixNote
                 {
                     StartTime = original.StartTime,
-                    Samples = original.Samples,
+                    Color = color
                 };
 
-                yield return new MixNote
-                {
-                    StartTime = original.StartTime,
-                    Samples = original.Samples,
-                };
+                if (original.Samples.Any(s => s.Name == SampleInfo.HIT_WHISTLE))
+                    yield return new MixNote
+                    {
+                        StartTime = original.StartTime,
+                        Color = color,
+                        Whistle = true
+                    };
+
+                if (original.Samples.Any(s => s.Name == SampleInfo.HIT_FINISH))
+                    yield return new MixNote
+                    {
+                        StartTime = original.StartTime,
+                        Color = color,
+                        Finish = true
+                    };
+
+                if (original.Samples.Any(s => s.Name == SampleInfo.HIT_CLAP))
+                    yield return new MixNote
+                    {
+                        StartTime = original.StartTime,
+                        Color = color,
+                        Clap = true
+                    };
             }
         }
     }
