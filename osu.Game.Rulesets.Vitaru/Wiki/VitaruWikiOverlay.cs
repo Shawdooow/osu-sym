@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
                 new CharactersSection(),
                 //new EditorSection(),
                 //new RankingSection(),
-                new MultiplayerSection(),
+                //new MultiplayerSection(),
                 //new CodeSection(),
                 new CreditsSection(),
                 new ChangelogSection()
