@@ -22,8 +22,6 @@ namespace osu.Game.Screens.Pokeosu
 {
     public class PokeosuMenu : OsuScreen, IOnlineComponent
     {
-        public override bool ShowOverlaysOnEnter => false;
-
         public static bool AssetsLoaded = false;
 
         protected override BackgroundScreen CreateBackground() => new BackgroundScreenDefault();

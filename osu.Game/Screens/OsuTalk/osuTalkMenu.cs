@@ -22,7 +22,7 @@ namespace osu.Game.Screens.OsuTalk
 {
     public class OsuTalkMenu : OsuScreen
     {
-        public override bool ShowOverlaysOnEnter => false;
+        protected override bool HideOverlaysOnEnter => true;
 
         public static bool AssetsLoaded = false;
 
