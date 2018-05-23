@@ -9,7 +9,8 @@ namespace osu.Game.Rulesets.Mix.Wiki
 
         protected override WikiSection[] Sections => new WikiSection[]
             {
-                new Gameplay()
+                new Gameplay(),
+                new ChangelogSection()
             };
     }
 }
