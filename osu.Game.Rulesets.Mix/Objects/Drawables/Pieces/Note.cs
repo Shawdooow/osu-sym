@@ -30,8 +30,8 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables.Pieces
 
                     EdgeEffect = new EdgeEffectParameters
                     {
-                        Colour = color,
-                        Radius = 4,
+                        Colour = color.Opacity(0.5f),
+                        Radius = 8,
                         Type = EdgeEffectType.Shadow
                     },
 
@@ -40,15 +40,15 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables.Pieces
                         new Box
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Colour = ColourInfo.GradientVertical(color.Darken(0.2f), color.Lighten(0.2f))
+                            Colour = ColourInfo.GradientVertical(color.Darken(0.4f), color.Lighten(0.4f))
                         },
                         new Triangles
                         {
                             RelativeSizeAxes = Axes.Both,
 
                             TriangleScale = 1,
-                            ColourLight = color.Lighten(0.3f),
-                            ColourDark = color.Darken(0.3f)
+                            ColourLight = color.Lighten(0.4f),
+                            ColourDark = color.Darken(0.4f)
                         }
                     }
                 }

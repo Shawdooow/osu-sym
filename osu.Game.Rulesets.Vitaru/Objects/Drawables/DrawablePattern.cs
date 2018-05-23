@@ -198,15 +198,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 Delete();
         }
 
-        public void PlaySamples(int repeat)
-        {
-            foreach(SampleInfo info in pattern.RepeatSamples[repeat])
-            {
-                SampleChannel sample = audio.Sample.Get($"Gameplay\\{info.Bank}-{info.Name}");
-                sample?.Play();
-            }
-        }
-
         private Vector2 getPatternStartPosition()
         {
             Vector2 patternStartPosition;

@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Mix.UI
 {
     public class MixPlayfield : ScrollingPlayfield
     {
-        public const float DEFAULT_HEIGHT = 120;
+        public const float DEFAULT_HEIGHT = 100;
 
         private List<Row> rows = new List<Row>();
 
