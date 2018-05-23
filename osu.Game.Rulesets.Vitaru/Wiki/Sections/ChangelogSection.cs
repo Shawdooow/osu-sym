@@ -37,17 +37,21 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             }
             catch { Logger.Log("Could not create / update current version file in changelogStorage!", LoggingTarget.Database, LogLevel.Error); }
 
-            for (int i = 10; i >= 0; i--)
-                for (int j = 20; j >= 0; j--)
-                    for (int k = 20; k >= 0; k--)
-                        if (changelogStorage.Exists(i + "." + j + "." + k + file_extention))
-                        {
-                            Content.Add(new WikiSubSectionHeader(i + "." + j + "." + k));
+            try
+            {
+                for (int i = 10; i >= 0; i--)
+                    for (int j = 20; j >= 0; j--)
+                        for (int k = 20; k >= 0; k--)
+                            if (changelogStorage.Exists(i + "." + j + "." + k + file_extention))
+                            {
+                                Content.Add(new WikiSubSectionHeader(i + "." + j + "." + k));
 
-                            using (Stream stream = changelogStorage.GetStream(i + "." + j + "." + k + file_extention, FileAccess.Read, FileMode.Open))
-                            using (StreamReader r = new StreamReader(stream))
-                                Content.Add(new WikiParagraph(r.ReadToEnd()));
-                        }
+                                using (Stream stream = changelogStorage.GetStream(i + "." + j + "." + k + file_extention, FileAccess.Read, FileMode.Open))
+                                using (StreamReader r = new StreamReader(stream))
+                                    Content.Add(new WikiParagraph(r.ReadToEnd()));
+                            }
+            }
+            catch { Logger.Log("Error reading saved versions (if you have any, if not thats the problem likely)", LoggingTarget.Database, LogLevel.Error); }
         }
     }
 }
