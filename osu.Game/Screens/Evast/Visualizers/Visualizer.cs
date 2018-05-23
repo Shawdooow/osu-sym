@@ -130,7 +130,7 @@ namespace osu.Game.Screens.Evast.Visualizers
                                     TextSize = 60,
                                     Shadow = true,
                                     Colour = Color4.White,
-                                    Text = @"Song Name",
+                                    Text = @"IMAGE -MATERIAL-",
                                     Font = @"Exo2.0-Light"
                                 },
                         artist = new SpriteText
@@ -142,7 +142,7 @@ namespace osu.Game.Screens.Evast.Visualizers
                                     TextSize = 36,
                                     Shadow = true,
                                     Colour = Color4.White,
-                                    Text = @"Artist Name",
+                                    Text = @"Tatsh",
                                     Font = @"Exo2.0-LightItalic"
                                 },
 
