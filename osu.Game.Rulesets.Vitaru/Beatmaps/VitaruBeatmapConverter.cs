@@ -125,12 +125,12 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 p.EnemyHealth = 60;
 
                 if (isWhistle)
-                    p.PatternSpeed = 0.4f;
+                    p.PatternSpeed = 0.3f;
             }
             else if (endTimeData != null)
             {
                 p.IsSpinner = true;
-                p.PatternSpeed = 0.3f;
+                p.PatternSpeed = 0.25f;
                 p.EnemyHealth = 180;
                 p.PatternDamage = 10;
                 p.PatternID = 6;
@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             }
             else
                 if (isWhistle)
-                    p.PatternSpeed = 0.5f;
+                    p.PatternSpeed = 0.4f;
 
             if (multiplayer && enemyPlayerCount > 0)
                 HitObjectList.Add(p);

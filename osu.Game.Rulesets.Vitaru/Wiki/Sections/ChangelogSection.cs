@@ -13,6 +13,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         protected override string FileExtention => ".vitaru";
 
         protected override string VersionChangelog => "-Tweak debug ui\n" +
-            "-Fix Combo fire never reseting back to 0 on miss";
+            "-Fix Combo fire never reseting back to 0 on miss\n" +
+            "-Give all patterns Non-Linear SpeedEasings (nerf spinners by making everything else hard)";
     }
 }

@@ -58,11 +58,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         Curve = new SliderCurve()
                         {
                             CurveType = CurveType.Linear,
-                            Distance = 2000,
+                            Distance = 1000,
                             ControlPoints = new List<Vector2>
                             {
                                 Position,
-                                new Vector2((float)Math.Cos(BulletAngle) * 2000 + Position.X, (float)Math.Sin(BulletAngle) * 2000 + Position.Y)
+                                new Vector2((float)Math.Cos(BulletAngle) * 1000 + Position.X, (float)Math.Sin(BulletAngle) * 1000 + Position.Y)
                             },
                         };
                         break;
@@ -70,12 +70,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         Curve = new SliderCurve()
                         {
                             CurveType = CurveType.PerfectCurve,
-                            Distance = 2000,
+                            Distance = 1200,
                             ControlPoints = new List<Vector2>
                             {
                                 Position,
-                                new Vector2((float)Math.Cos((BulletAngle + offset) - 0.4f) * 1000 + Position.X, (float)Math.Sin((BulletAngle + offset) - 0.4f) * 1000 + Position.Y),
-                                new Vector2((float)Math.Cos(BulletAngle + offset) * (float)(2000 / Curviness) + Position.X, (float)Math.Sin(BulletAngle + offset) * (float)(2000 / Curviness) + Position.Y),
+                                new Vector2((float)Math.Cos((BulletAngle + offset) - 0.4f) * 600 + Position.X, (float)Math.Sin((BulletAngle + offset) - 0.4f) * 600 + Position.Y),
+                                new Vector2((float)Math.Cos(BulletAngle + offset) * (float)(1200 / Curviness) + Position.X, (float)Math.Sin(BulletAngle + offset) * (float)(1200 / Curviness) + Position.Y),
                             },
                         };
                         break;
@@ -83,12 +83,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         Curve = new SliderCurve()
                         {
                             CurveType = CurveType.PerfectCurve,
-                            Distance = 2000,
+                            Distance = 1200,
                             ControlPoints = new List<Vector2>
                             {
                                 Position,
-                                new Vector2((float)Math.Cos((BulletAngle - offset) + 0.4f) * 1000 + Position.X, (float)Math.Sin((BulletAngle - offset) + 0.4f) * 1000 + Position.Y),
-                                new Vector2((float)Math.Cos(BulletAngle - offset) * (float)(2000 / Curviness) + Position.X, (float)Math.Sin(BulletAngle - offset) * (float)(2000 / Curviness) + Position.Y),
+                                new Vector2((float)Math.Cos((BulletAngle - offset) + 0.4f) * 600 + Position.X, (float)Math.Sin((BulletAngle - offset) + 0.4f) * 600 + Position.Y),
+                                new Vector2((float)Math.Cos(BulletAngle - offset) * (float)(1200 / Curviness) + Position.X, (float)Math.Sin(BulletAngle - offset) * (float)(1200 / Curviness) + Position.Y),
                             },
                         };
                         break;
