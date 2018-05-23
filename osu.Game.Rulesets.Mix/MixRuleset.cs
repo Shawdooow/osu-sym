@@ -17,6 +17,8 @@ namespace osu.Game.Rulesets.Mix
 {
     public class MixRuleset : Ruleset
     {
+        public const string RulesetVersion = "0.1.0";
+
         public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap) => new MixRulesetContainer(this, beatmap);
         public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new MixBeatmapConverter(beatmap);
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new MixBeatmapProcessor(beatmap);

@@ -6,8 +6,7 @@ using Symcol.Rulesets.Core.HitObjects;
 
 namespace osu.Game.Rulesets.Mix.Objects.Drawables
 {
-    public abstract class DrawableMixHitObject<MixObject> : DrawableSymcolHitObject<MixHitObject>, IKeyBindingHandler<MixAction>
-        where MixObject : MixHitObject
+    public abstract class DrawableMixHitObject : DrawableSymcolHitObject<MixHitObject>, IKeyBindingHandler<MixAction>
     {
         public float TIME_PREEMPT = 800;
         public float TIME_FADEIN = 400;

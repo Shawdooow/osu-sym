@@ -1,7 +1,6 @@
 ﻿using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Mix.Objects;
 using osu.Game.Rulesets.Mix.Objects.Drawables;
-using osu.Game.Rulesets.Mix.Beatmaps;
 using osu.Game.Rulesets.Mix.UI;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Drawables;

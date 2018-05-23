@@ -100,6 +100,18 @@ namespace osu.Game.Rulesets.Mix.Beatmaps
                         Samples = currentSamples,
                     };
 
+                    yield return new MixNote
+                    {
+                        StartTime = j,
+                        Samples = currentSamples,
+                    };
+
+                    yield return new MixNote
+                    {
+                        StartTime = j,
+                        Samples = currentSamples,
+                    };
+
                     i = (i + 1) % allSamples.Count;
                 }
             }
@@ -119,6 +131,12 @@ namespace osu.Game.Rulesets.Mix.Beatmaps
                 bool isSquare = original.Samples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
                 bool isTriangle = original.Samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
                 bool isX = original.Samples.Any(s => s.Name == SampleInfo.HIT_CLAP);
+
+                yield return new MixNote
+                {
+                    StartTime = original.StartTime,
+                    Samples = original.Samples,
+                };
 
                 yield return new MixNote
                 {
