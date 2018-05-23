@@ -21,11 +21,7 @@ namespace osu.Game.Rulesets.Mix
 
         public override ScoreProcessor CreateScoreProcessor() => new MixScoreProcessor(this);
 
-        protected override Playfield CreatePlayfield() => new MixPlayfield
-        {
-            Anchor = Anchor.CentreLeft,
-            Origin = Anchor.CentreLeft
-        };
+        protected override Playfield CreatePlayfield() => new MixPlayfield();
 
         public override PassThroughInputManager CreateInputManager() => new MixInputManager(Ruleset.RulesetInfo);
 

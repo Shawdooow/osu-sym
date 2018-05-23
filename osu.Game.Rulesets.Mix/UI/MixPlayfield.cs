@@ -22,11 +22,12 @@ namespace osu.Game.Rulesets.Mix.UI
             Anchor = Anchor.TopCentre;
             Origin = Anchor.TopCentre;
 
-            RelativeSizeAxes = Axes.X;
+            RelativeSizeAxes = Axes.Both;
 
             Row row;
             rows.Add(row = new Row(rows.Count + 1));
             AddNested(row);
+            Add(row);
         }
 
         private double currentRow;
@@ -40,6 +41,7 @@ namespace osu.Game.Rulesets.Mix.UI
             {
                 Row row;
                 AddNested(row = new Row(rows.Count + 1));
+                Add(row);
                 rows.Add(row);
                 row.Add(h);
                 currentRow++;
@@ -58,7 +60,6 @@ namespace osu.Game.Rulesets.Mix.UI
             }
 
             lastObjectStartTime = h.HitObject.StartTime;
-            base.Add(h);
         }
 
         private void onJudgement(DrawableHitObject judgedObject, Judgement judgement)
