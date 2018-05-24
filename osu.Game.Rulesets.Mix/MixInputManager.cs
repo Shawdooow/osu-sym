@@ -1,13 +1,14 @@
 ﻿using osu.Framework.Input.Bindings;
+using osu.Game.Rulesets.Mix.UI;
 using osu.Game.Rulesets.UI;
-using System.ComponentModel;
 
 namespace osu.Game.Rulesets.Mix
 {
-    class MixInputManager : RulesetInputManager<MixAction>
+    public class MixInputManager : RulesetInputManager<MixAction>
     {
         public MixInputManager(RulesetInfo ruleset) : base(ruleset, 0, SimultaneousBindingMode.Unique)
         {
+            Child = new SoundButtonArray(KeyBindingContainer);
         }
     }
 

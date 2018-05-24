@@ -3,10 +3,8 @@ using OpenTK.Graphics;
 using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
 using osu.Game.Rulesets.Shape.Objects.Drawables.Pieces;
-using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Shape.Judgements;
 using System.Linq;
-using System;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Graphics;
 
@@ -60,9 +58,10 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
             AddJudgement(new ShapeJudgement
             {
                 Result = result,
-                PositionOffset = Vector2.Zero //todo: set to correct value
+                PositionOffset = Vector2.Zero
             });
-            Delete();
+            this.FadeOutFromOne(100)
+                .OnComplete((s) => Delete());
         }
 
         public override bool OnPressed(ShapeAction action)
@@ -189,15 +188,6 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
                     x.MoveTo(baseDial.Position, TIME_PREEMPT);
                     break;
             }
-        }
-
-        //Marks this for death
-        internal void Delete()
-        {
-            AlwaysPresent = true;
-            Alpha = 0;
-            LifetimeEnd = Time.Current;
-            Expire();
         }
     }
 }
