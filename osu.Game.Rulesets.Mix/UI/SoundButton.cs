@@ -1,5 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Input;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -176,6 +177,22 @@ namespace osu.Game.Rulesets.Mix.UI
         {
             bindingContainer.TriggerReleased(bind);
             return base.OnMouseUp(state, args);
+        }
+
+        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
+        {
+            if (recieveInput && (args.Key == Key.X || args.Key == Key.Z))
+                bindingContainer.TriggerPressed(bind);
+
+            return base.OnKeyDown(state, args);
+        }
+
+        protected override bool OnKeyUp(InputState state, KeyUpEventArgs args)
+        {
+            if (recieveInput && (args.Key == Key.X || args.Key == Key.Z))
+                bindingContainer.TriggerReleased(bind);
+
+            return base.OnKeyUp(state, args);
         }
 
         private string getBank(MixAction bind)
