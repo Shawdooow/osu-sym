@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables.Pieces
                     RelativeSizeAxes = Axes.Both,
                     Colour = Color4.White,
                     Size = new Vector2(0.4f),
-
+                    Masking = true,
                     Child = new Box { RelativeSizeAxes = Axes.Both }
                 });
             }
