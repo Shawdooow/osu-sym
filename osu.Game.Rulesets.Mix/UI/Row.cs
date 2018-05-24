@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Mix.UI
         {
             RowNumber = row;
 
-            Position = new Vector2(0, (MixPlayfield.DEFAULT_HEIGHT * (row - 1)) + 8);
+            Position = new Vector2(0, (MixPlayfield.DEFAULT_HEIGHT + 4) * (row - 1) + 80);
 
             RelativeSizeAxes = Axes.X;
             Height = MixPlayfield.DEFAULT_HEIGHT;
@@ -32,8 +32,18 @@ namespace osu.Game.Rulesets.Mix.UI
                 },
                 new Box
                 {
+                    Anchor = Anchor.TopCentre,
+                    Origin = Anchor.BottomCentre,
                     RelativeSizeAxes = Axes.X,
-                    Height = 4,
+                    Height = 2,
+                    Colour = Color4.White
+                },
+                new Box
+                {
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.TopCentre,
+                    RelativeSizeAxes = Axes.X,
+                    Height = 2,
                     Colour = Color4.White
                 }
             };

@@ -35,12 +35,12 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables
         {
             this.note = note;
 
-            Size = new Vector2(64);
+            Size = new Vector2(56);
 
             Anchor = Anchor.CentreLeft;
             Origin = Anchor.Centre;
 
-            Child = new Note(note.Color);
+            Child = new Note(note);
 
             string bank = "normal";
             string name = "hitnormal";

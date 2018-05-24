@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics;
+﻿using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -6,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Backgrounds;
 using osu.Game.Graphics.Containers;
+using System;
 
 namespace osu.Game.Rulesets.Mix.Objects.Drawables.Pieces
 {
@@ -13,7 +15,7 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables.Pieces
     {
         private readonly CircularContainer circle;
 
-        public Note(Color4 color)
+        public Note(MixNote note)
         {
             RelativeSizeAxes = Axes.Both;
 
@@ -30,7 +32,7 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables.Pieces
 
                     EdgeEffect = new EdgeEffectParameters
                     {
-                        Colour = color.Opacity(0.5f),
+                        Colour = note.Color.Opacity(0.5f),
                         Radius = 8,
                         Type = EdgeEffectType.Shadow
                     },
@@ -40,19 +42,62 @@ namespace osu.Game.Rulesets.Mix.Objects.Drawables.Pieces
                         new Box
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Colour = ColourInfo.GradientVertical(color.Darken(0.4f), color.Lighten(0.4f))
+                            Colour = ColourInfo.GradientVertical(note.Color.Darken(0.4f), note.Color.Lighten(0.4f))
                         },
                         new Triangles
                         {
                             RelativeSizeAxes = Axes.Both,
 
                             TriangleScale = 1,
-                            ColourLight = color.Lighten(0.4f),
-                            ColourDark = color.Darken(0.4f)
+                            ColourLight = note.Color.Lighten(0.4f),
+                            ColourDark = note.Color.Darken(0.4f)
                         }
                     }
                 }
             };
+
+            if (note.Whistle)
+            {
+                Add(new Triangle
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = Color4.White,
+                    Rotation = 180,
+                    Size = new Vector2(0.4f)
+                });
+            }
+            else if (note.Finish)
+            {
+                Add(new Container
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = Color4.White,
+                    Size = new Vector2(0.4f),
+                    CornerRadius = 2,
+                    Child = new Box { RelativeSizeAxes = Axes.Both }
+                });
+            }
+            else if (note.Clap)
+            {
+                Add(new CircularContainer
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = Color4.White,
+                    Size = new Vector2(0.4f),
+
+                    Child = new Box { RelativeSizeAxes = Axes.Both }
+                });
+            }
+            else
+            {
+
+            }
         }
     }
 }

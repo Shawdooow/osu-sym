@@ -70,13 +70,10 @@ namespace osu.Game.Rulesets.Mix.Beatmaps
                 if (beatmap.BeatmapInfo.BeatmapVersion >= 8)
                     speedAdjustedBeatLength *= speedAdjustment;
 
-                // If the drum roll is to be split into hit circles, assume the ticks are 1/8 spaced within the duration of one beat
-                double tickSpacing = Math.Min(speedAdjustedBeatLength / beatmap.BeatmapInfo.BaseDifficulty.SliderTickRate, shapeDuration / spans);
-
                 List<List<SampleInfo>> allSamples = curveData != null ? curveData.RepeatSamples : new List<List<SampleInfo>>(new[] { original.Samples });
 
                 int i = 0;
-                for (double j = original.StartTime; j <= original.StartTime + shapeDuration + tickSpacing / 8; j += tickSpacing)
+                for (double j = original.StartTime; j <= original.StartTime + shapeDuration; j += shapeDuration / spans)
                 {
                     List<SampleInfo> currentSamples = allSamples[i];
 
