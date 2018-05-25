@@ -1,18 +1,20 @@
 ﻿using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input;
+using Symcol.Core.Graphics.Containers;
 
 namespace Symcol.Core.Graphics.UserInterface
 {
     /// <summary>
     /// just a Button with a sprite
     /// </summary>
-    public class SpriteButton : ClickableContainer
+    public class SpriteButton : SymcolClickableContainer
     {
+        public override bool HandleMouseInput => false;
+
         private readonly string textureName;
 
         public string Text

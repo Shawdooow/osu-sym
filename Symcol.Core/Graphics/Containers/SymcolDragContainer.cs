@@ -7,6 +7,8 @@ namespace Symcol.Core.Graphics.Containers
 {
     public class SymcolDragContainer : Container
     {
+        public override bool HandleMouseInput => true;
+
         protected override bool OnDragStart(InputState state) => true;
 
         public bool AllowLeftClickDrag { get; set; } = true;

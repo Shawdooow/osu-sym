@@ -591,7 +591,7 @@ namespace osu.Framework.Input
 
         private bool handleMouseMove(InputState state)
         {
-            return positionalInputQueue.Any(target => target.HandleMouseInput ? target.TriggerOnMouseMove(state) : false);
+            return positionalInputQueue.Any(target => target.TriggerOnMouseMove(state));
         }
 
         private Drawable clickedDrawable;

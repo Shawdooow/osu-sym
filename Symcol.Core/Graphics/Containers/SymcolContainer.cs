@@ -4,6 +4,8 @@ namespace Symcol.Core.Graphics.Containers
 {
     public class SymcolContainer : Container
     {
+        public override bool HandleMouseInput => false;
+
         /// <summary>
         /// Delete this fucking object!
         /// </summary>

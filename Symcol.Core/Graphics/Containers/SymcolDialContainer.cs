@@ -8,6 +8,8 @@ namespace Symcol.Core.Graphics.Containers
 {
     public class SymcolDialContainer : CircularContainer
     {
+        public override bool HandleMouseInput => true;
+
         public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => true;
 
         private Vector2 mousePosition;

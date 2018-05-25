@@ -6,11 +6,14 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using osu.Framework.Graphics.Containers;
+using Symcol.Core.Graphics.Containers;
 
 namespace Symcol.Core.Graphics.UserInterface
 {
-    public class SymcolWindow : Container
+    public class SymcolWindow : SymcolContainer
     {
+        public override bool HandleMouseInput => true;
+
         /// <summary>
         /// Put all your stuff in this
         /// </summary>
