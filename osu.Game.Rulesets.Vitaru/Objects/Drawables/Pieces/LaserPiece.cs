@@ -6,6 +6,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 {
     public class LaserPiece : BeatSyncedContainer
     {
+        public override bool HandleMouseInput => false;
+
         public LaserPiece(DrawableLaser drawableLaser)
         {
             Anchor = Anchor.Centre;

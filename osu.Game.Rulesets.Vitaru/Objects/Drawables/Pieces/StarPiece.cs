@@ -7,6 +7,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 {
     public class StarPiece : SymcolContainer
     {
+        public override bool HandleMouseInput => false;
+
         public StarPiece()
         {
             Size = new Vector2(30);

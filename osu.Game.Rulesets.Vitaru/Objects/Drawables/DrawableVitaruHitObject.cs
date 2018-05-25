@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableVitaruHitObject : DrawableSymcolHitObject<VitaruHitObject>
     {
+        public override bool HandleMouseInput => false;
+
         protected readonly VitaruPlayfield VitaruPlayfield;
 
         public bool Editor;

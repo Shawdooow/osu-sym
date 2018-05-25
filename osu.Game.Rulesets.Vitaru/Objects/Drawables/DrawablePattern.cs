@@ -5,10 +5,8 @@ using System;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Objects.Types;
-using osu.Game.Audio;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
-using osu.Framework.Audio.Sample;
 using osu.Game.Rulesets.Vitaru.Characters;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables

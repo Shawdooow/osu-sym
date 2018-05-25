@@ -20,6 +20,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters
     public abstract class Character : BeatSyncedContainer
     {
         #region Fields
+        public override bool HandleMouseInput => false;
+
         protected Seal Seal { get; private set; }
 
         protected Container KiaiContainer { get; set; }
