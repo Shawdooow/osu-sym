@@ -50,114 +50,10 @@ namespace osu.Game.Screens.Evast.Visualizers
                     Masking = true,
                     EdgeEffect = new EdgeEffectParameters
                     {
-
-                        new Container
-                        {
-                            Margin = new MarginPadding {Top = 20},
-                            AutoSizeAxes = Axes.Both,
-                            Anchor = Anchor.TopCentre,
-                            Origin = Anchor.TopCentre,
-                            Children = new Drawable[]
-                            {
-                                new CircularVisualizer
-                                {
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                    DegreeValue = 180,
-                                    BarsAmount = 100,
-                                    CircleSize = 348,
-                                    BarWidth = 2,
-                                }
-                                ,
-                                new CircularVisualizer
-                                {
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                    DegreeValue = 180,
-                                    BarsAmount = 100,
-                                    CircleSize = 348,
-                                    BarWidth = 2,
-                                    Rotation = 180,
-                                },
-                                new CircularContainer
-                                {
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                    Size = new Vector2(350),
-                                    Masking = true,
-                                    EdgeEffect = new EdgeEffectParameters
-                                    {
-                                        Type = EdgeEffectType.Shadow,
-                                        Colour = Color4.Black.Opacity(0.2f),
-                                        Offset = new Vector2(0, 4),
-                                        Radius = 16
-                                    },
-                                    Child = beatmapSprite = new BeatmapSprite
-                                    {
-                                        RelativeSizeAxes = Axes.Both,
-                                        Anchor = Anchor.Centre,
-                                        Origin = Anchor.Centre,
-                                        FillMode = FillMode.Fill,
-                                    }
-                                }
-                            }
-                        },
-
-                        title = new SpriteText
-                                {
-                                    Margin = new MarginPadding {Top = 10},
-                                    Origin = Anchor.TopCentre,
-                                    Anchor = Anchor.TopCentre,
-                                    Position = new Vector2(0, 0),
-                                    TextSize = 60,
-                                    Shadow = true,
-                                    Colour = Color4.White,
-                                    Text = @"IMAGE -MATERIAL-",
-                                    Font = @"Exo2.0-Light"
-                                },
-                        artist = new SpriteText
-                                {
-                                    Margin = new MarginPadding {Top = 5},
-                                    Origin = Anchor.TopCentre,
-                                    Anchor = Anchor.TopCentre,
-                                    Position = new Vector2(0, 0),
-                                    TextSize = 36,
-                                    Shadow = true,
-                                    Colour = Color4.White,
-                                    Text = @"Tatsh",
-                                    Font = @"Exo2.0-LightItalic"
-                                },
-
-                        musicControls = new FillFlowContainer
-                        {
-                            Margin = new MarginPadding {Top = 30},
-                            Anchor = Anchor.TopCentre,
-                            Origin = Anchor.TopCentre,
-                            AutoSizeAxes = Axes.Both,
-                            Masking = false,
-                            CornerRadius = 16,
-                            Children = new Drawable[]
-                            {
-                                playButton = new IconButton
-                                {
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                    Scale = new Vector2(2.4f),
-                                    IconScale = new Vector2(1.6f),
-                                    CornerRadius = 15,
-                                    
-                                    HoverColour = Color4.Transparent,
-                                    FlashColour = Color4.White.Opacity(0f),
-                                    
-                                    // Action = play,
-                                    Icon = FontAwesome.fa_play_circle_o,
-                                    
-                                }
-                             
-                            }
-
-                        }
-
+                        Type = EdgeEffectType.Shadow,
+                        Colour = Color4.Black.Opacity(0.18f),
+                        Offset = new Vector2(0, 2),
+                        Radius = 6,
                     },
                     Child = beatmapSprite = new BeatmapSprite
                     {
@@ -174,22 +70,6 @@ namespace osu.Game.Screens.Evast.Visualizers
         {
             base.OnBeatmapChange(beatmap);
             beatmapSprite.UpdateTexture(beatmap);
-
-            if (beatmap?.Beatmap == null)
-            {
-                title.Current = null;
-                title.Text = @"Nothing is playing";
-
-                artist.Current = null;
-                artist.Text = @"Nothing is playing";
-            }
-            /*else
-            {
-                BeatmapMetadata metadata = beatmap.Metadata;
-                title.Current = localisation.GetUnicodePreference(metadata.TitleUnicode, metadata.Title);
-                artist.Current = localisation.GetUnicodePreference(metadata.TitleUnicode, metadata.Artist);
-            }*/
-
         }
 
         private class BeatmapSprite : Sprite
