@@ -1,5 +1,4 @@
-﻿using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Textures;
+﻿using osu.Framework.Graphics.Textures;
 using System;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace Symcol.Core.Graphics.Sprites
     /// <summary>
     /// A Sprite that will cycle through multiple Textures after a fixed time (Speed)
     /// </summary>
-    public class AnimatedSprite : Sprite
+    public class AnimatedSprite : SymcolSprite
     {
         /// <summary>
         /// The list of Textures we will cycle through

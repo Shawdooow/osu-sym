@@ -32,6 +32,17 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
                     return new Tomaji();
                 case "SakuyaIzayoi":
                     return new Sakuya();
+                case "RemiliaScarlet":
+                    return new Remilia();
+                case "FlandreScarlet":
+                    return new Flandre();
+                case "AliceLetrunce":
+                    return new Alice();
+                case "VasterLetrunce":
+                    return new Vaster();
+
+                case "MarisaKirisame":
+                    return new Marisa();
             }
         }
     }
