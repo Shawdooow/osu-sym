@@ -26,6 +26,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         protected bool EnergyHacks { get; private set; }
 
+        //reset after healing is done
+        public double EnergyGainMultiplier = 1;
+
         public DrawableTouhosuPlayer(VitaruPlayfield playfield, TouhosuPlayer player, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, player, vitaruNetworkingClientHandler)
         {
             TouhosuPlayer = player;
@@ -36,6 +39,13 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         {
             if (!Puppet)
                 DebugToolkit.DebugItems.Add(new DebugAction(() => { EnergyHacks = !EnergyHacks; }) { Text = "Energy Hacks" });
+        }
+
+        protected override void OnQuarterBeat()
+        {
+            base.OnQuarterBeat();
+
+            EnergyGainMultiplier = 1;
         }
 
         protected override void Update()
@@ -129,6 +139,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                 case "AliceLetrunce":
                     return new DrawableAlice(playfield, vitaruNetworkingClientHandler);
                 case "VasterLetrunce":
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+
+                case "MarisaKirisame":
                     return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
             }
         }

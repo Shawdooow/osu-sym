@@ -70,6 +70,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         protected bool HealthHacks { get; private set; }
 
+        //Is reset after healing applied
+        public double HealingMultiplier = 1;
+
         public string PlayerID;
 
         private double lastQuarterBeat = -1;
@@ -77,7 +80,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         private double nextQuarterBeat = -1;
         private double beatLength = 1000;
 
-        protected readonly List<HealingBullet> HealingBullets = new List<HealingBullet>();
+        protected List<HealingBullet> HealingBullets { get; private set; } = new List<HealingBullet>();
 
         protected const double Healing_FallOff = 0.85d;
 
@@ -138,7 +141,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
             beatLength = timingPoint.BeatLength;
 
-            onHalfBeat();
+            OnHalfBeat();
             lastQuarterBeat = Time.Current;
             nextHalfBeat = Time.Current + timingPoint.BeatLength / 2;
             nextQuarterBeat = Time.Current + timingPoint.BeatLength / 4;
@@ -180,7 +183,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             }
         }
 
-        private void onHalfBeat()
+        protected virtual void OnHalfBeat()
         {
             nextHalfBeat = -1;
 
@@ -188,7 +191,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 PatternWave();
         }
 
-        private void onQuarterBeat()
+        protected virtual void OnQuarterBeat()
         {
             lastQuarterBeat = nextQuarterBeat;
             nextQuarterBeat += beatLength / 4;
@@ -200,13 +203,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 for (int i = 0; i < HealingBullets.Count - 1; i++)
                     fallOff *= Healing_FallOff;
 
-                restart:
                 foreach (HealingBullet HealingBullet in HealingBullets)
                 {
-                    Heal(GetBulletHealingMultiplier(HealingBullet.EdgeDistance) * fallOff);
-                    HealingBullets.Remove(HealingBullet);
-                    goto restart;
+                    Heal((GetBulletHealingMultiplier(HealingBullet.EdgeDistance) * fallOff) * HealingMultiplier);
                 }
+                HealingBullets = new List<HealingBullet>();
+                HealingMultiplier = 1;
 
                 if (Gamemode != Gamemodes.Touhosu)
                 {
@@ -242,10 +244,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Cursor.Position = VitaruCursor.CenterCircle.ToSpaceOfOtherDrawable(Vector2.Zero, Parent) + new Vector2(6);
 
             if (nextHalfBeat <= Time.Current && nextHalfBeat != -1)
-                onHalfBeat();
+                OnHalfBeat();
 
             if (nextQuarterBeat <= Time.Current && nextQuarterBeat != -1)
-                onQuarterBeat();
+                OnQuarterBeat();
         }
 
         protected override void ParseBullet(DrawableBullet bullet)
