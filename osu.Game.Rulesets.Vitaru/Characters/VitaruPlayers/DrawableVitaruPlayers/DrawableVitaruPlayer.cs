@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         protected const double Healing_FallOff = 0.85d;
 
-        private const double field_of_view = 60;
+        private const double field_of_view = 120;
 
         private const double healing_range = 64;
         private const double healing_min = 0.5d;
@@ -348,10 +348,13 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Actions[VitaruAction.Shoot] = false;
                 VisibleHitbox.Alpha = 0;
 
-                bool bulletClose = false;
                 DrawableBullet closestBullet = null;
                 float closestBulletEdgeDitance = float.MaxValue;
                 float closestBulletAngle = 0;
+
+                DrawableBullet secondClosestBullet = null;
+                float secondClosestBulletEdgeDitance = float.MaxValue;
+                float secondClosestBulletAngle = 0;
 
                 //bool bulletBehind = false;
                 float behindBulletEdgeDitance = float.MaxValue;
@@ -363,7 +366,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                         DrawableBullet bullet = draw as DrawableBullet;
                         if (bullet.Bullet.Team != Team)
                         {
-                            Vector2 pos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this) + new Vector2(bullet.Width / 2 + Hitbox.Width / 2);
+                            Vector2 pos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
                             float distance = (float)Math.Sqrt(Math.Pow(pos.X, 2) + Math.Pow(pos.Y, 2));
                             float edgeDistance = distance - (bullet.Width / 2 + Hitbox.Width / 2);
                             float angleToBullet = MathHelper.RadiansToDegrees((float)Math.Atan2((bullet.Position.Y - Position.Y), (bullet.Position.X - Position.X))) + 90 + Rotation;
@@ -378,25 +381,26 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
                             if (edgeDistance < closestBulletEdgeDitance)
                             {
-                                closestBulletEdgeDitance = edgeDistance;
+                                secondClosestBullet = closestBullet;
+                                secondClosestBulletEdgeDitance = closestBulletEdgeDitance;
+                                secondClosestBulletAngle = closestBulletAngle;
+
                                 closestBullet = bullet;
+                                closestBulletEdgeDitance = edgeDistance;
                                 closestBulletAngle = angleToBullet;
                             }
                         }
                     }
 
-                if (closestBulletEdgeDitance <= 50)
+                if (closestBulletEdgeDitance <= 20)
                 {
-                    bulletClose = true;
-                    if (closestBulletEdgeDitance <= 30)
+                    if (closestBulletEdgeDitance <= 16 && closestBulletEdgeDitance >= 8)
                     {
-                        if (closestBulletEdgeDitance >= 20)
-                            Actions[VitaruAction.Down] = true;
-
+                        Actions[VitaruAction.Down] = true;
                         Actions[VitaruAction.Slow] = true;
                     }
 
-                    if (closestBulletAngle > 360 - field_of_view | closestBulletAngle > -field_of_view && closestBulletAngle < field_of_view | closestBulletAngle < 360 + field_of_view)
+                    if ((closestBulletAngle > 360 - field_of_view || closestBulletAngle > -field_of_view) && (closestBulletAngle < field_of_view || closestBulletAngle < 360 + field_of_view) && secondClosestBulletEdgeDitance - closestBulletEdgeDitance >= 1)
                     {
                         if (closestBullet.X < Position.X)
                             Actions[VitaruAction.Right] = true;
@@ -404,18 +408,16 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                             Actions[VitaruAction.Left] = true;
                     }
                 }
-                else if (!bulletClose)
+                else
                 {
                     if (Position.X > 512 - 200)
                         Actions[VitaruAction.Left] = true;
                     else if (Position.X < 200)
                         Actions[VitaruAction.Right] = true;
 
-                    Actions[VitaruAction.Slow] = true;
-
-                    if (Position.Y < 400)
+                    if (Position.Y < 600)
                         Actions[VitaruAction.Down] = true;
-                    else if (Position.Y > 500)
+                    else if (Position.Y > 620)
                         Actions[VitaruAction.Up] = true;
                 }
 
@@ -440,24 +442,26 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
                 playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
             }
-
-            if (Actions[VitaruAction.Slow])
+            else
             {
-                xTranslationDistance /= 2;
-                yTranslationDistance /= 2;
+                if (Actions[VitaruAction.Slow])
+                {
+                    xTranslationDistance /= 2;
+                    yTranslationDistance /= 2;
+                }
+
+                if (Actions[VitaruAction.Up])
+                    playerPosition.Y -= (float)yTranslationDistance;
+                if (Actions[VitaruAction.Left])
+                    playerPosition.X -= (float)xTranslationDistance;
+                if (Actions[VitaruAction.Down])
+                    playerPosition.Y += (float)yTranslationDistance;
+                if (Actions[VitaruAction.Right])
+                    playerPosition.X += (float)xTranslationDistance;
+
+                playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
+                playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
             }
-
-            if (Actions[VitaruAction.Up])
-                playerPosition.Y -= (float)yTranslationDistance;
-            if (Actions[VitaruAction.Left])
-                playerPosition.X -= (float)xTranslationDistance;
-            if (Actions[VitaruAction.Down])
-                playerPosition.Y += (float)yTranslationDistance;
-            if (Actions[VitaruAction.Right])
-                playerPosition.X += (float)xTranslationDistance;
-
-            playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
-            playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
 
             return playerPosition;
         }
