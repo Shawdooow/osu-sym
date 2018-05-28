@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         public abstract HitObjectType Type { get; }
 
         //TODO: make null != White
-        public Color4 ColorOverride { get; set; } = Color4.White;
+        public Color4 ColorOverride { get; set; }
 
         public virtual bool NewCombo { get; set; }
 
