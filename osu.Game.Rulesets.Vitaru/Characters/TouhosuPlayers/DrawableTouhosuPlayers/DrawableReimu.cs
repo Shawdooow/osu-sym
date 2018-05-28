@@ -9,8 +9,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 {
     public class DrawableReimu : DrawableTouhosuPlayer
     {
-        private const double leader_max = 1.5d;
-        private const double leader_min = 0.75d;
+        private const double leader_max = 2d;
+        private const double leader_min = 1d;
         private const double leader_max_range = 64;
         private const double leader_min_range = 128;
 
