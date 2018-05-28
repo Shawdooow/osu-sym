@@ -15,10 +15,16 @@
     <ProjectReference Include="..\osu-framework\osu.Framework\osu.Framework.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MachineLearning\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="libtensorflow.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MachineLearning\Dependencies\libtensorflow.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MachineLearning\Dependencies\libtensorflow.dylib">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MachineLearning\Dependencies\libtensorflow.so">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
