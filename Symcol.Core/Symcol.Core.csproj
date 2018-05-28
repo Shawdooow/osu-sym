@@ -18,14 +18,17 @@
     <None Update="libtensorflow.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="MachineLearning\Dependencies\libtensorflow.dll">
+    <None Update="libtensorflow.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="MachineLearning\Dependencies\libtensorflow.dylib">
+    <None Update="libtensorflow.dylib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="MachineLearning\Dependencies\libtensorflow.so">
+    <None Update="libtensorflow.so">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MachineLearning\" />
   </ItemGroup>
 </Project>
