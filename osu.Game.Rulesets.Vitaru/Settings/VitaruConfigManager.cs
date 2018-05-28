@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.TouhosuCharacter, "SakuyaIzayoi");
 
             Set(VitaruSetting.DebugMode, false);
-            Set(VitaruSetting.DebugConfiguration, DebugConfiguration.Gameplay);
+            Set(VitaruSetting.DebugConfiguration, DebugConfiguration.General);
 
             Set(VitaruSetting.GraphicsPreset, GraphicsPresets.Standard);
             Set(VitaruSetting.BulletVisuals, GraphicsOptions.Standard);

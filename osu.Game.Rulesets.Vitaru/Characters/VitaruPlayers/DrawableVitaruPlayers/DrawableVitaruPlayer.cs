@@ -18,6 +18,7 @@ using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.Networking;
 using System;
 using System.Collections.Generic;
+using TensorFlow;
 using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers
@@ -73,6 +74,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         /// </summary>
         public bool Auto { get; set; }
 
+        protected TFGraph TFGraph { get; private set; }
+
+        protected TFSession TFSession { get; private set; }
+
         protected bool HealthHacks { get; private set; }
 
         //Is reset after healing applied
@@ -100,6 +105,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         {
             Player = player;
             VitaruNetworkingClientHandler = vitaruNetworkingClientHandler;
+
+            TFGraph = new TFGraph();
+            TFSession = new TFSession(TFGraph);
 
             Actions[VitaruAction.Up] = false;
             Actions[VitaruAction.Down] = false;
@@ -129,8 +137,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         {
             if (!Puppet)
             {
-                DebugToolkit.DebugItems.Add(new DebugAction(() => { Auto = !Auto; }) { Text = "Auto Hacks" });
-                DebugToolkit.DebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
+                DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { Auto = !Auto; }) { Text = "Auto Hacks" });
+                DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
             }
         }
 
@@ -338,7 +346,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             double yTranslationDistance = playerSpeed * Clock.ElapsedFrameTime * SpeedMultiplier;
             double xTranslationDistance = playerSpeed * Clock.ElapsedFrameTime * SpeedMultiplier;
 
-            if (Auto)
+            if (false)
             {
                 Actions[VitaruAction.Up] = false;
                 Actions[VitaruAction.Down] = false;
@@ -424,44 +432,31 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Actions[VitaruAction.Shoot] = true;
 
                 if (Actions[VitaruAction.Slow])
-                {
-                    xTranslationDistance /= 2;
-                    yTranslationDistance /= 2;
                     VisibleHitbox.Alpha = 1;
-                }
-
-                if (Actions[VitaruAction.Up])
-                    playerPosition.Y -= (float)yTranslationDistance;
-                if (Actions[VitaruAction.Left])
-                    playerPosition.X -= (float)xTranslationDistance;
-                if (Actions[VitaruAction.Down])
-                    playerPosition.Y += (float)yTranslationDistance;
-                if (Actions[VitaruAction.Right])
-                    playerPosition.X += (float)xTranslationDistance;
-
-                playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
-                playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
             }
-            else
+
+            if (Auto)
             {
-                if (Actions[VitaruAction.Slow])
-                {
-                    xTranslationDistance /= 2;
-                    yTranslationDistance /= 2;
-                }
 
-                if (Actions[VitaruAction.Up])
-                    playerPosition.Y -= (float)yTranslationDistance;
-                if (Actions[VitaruAction.Left])
-                    playerPosition.X -= (float)xTranslationDistance;
-                if (Actions[VitaruAction.Down])
-                    playerPosition.Y += (float)yTranslationDistance;
-                if (Actions[VitaruAction.Right])
-                    playerPosition.X += (float)xTranslationDistance;
-
-                playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
-                playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
             }
+
+            if (Actions[VitaruAction.Slow])
+            {
+                xTranslationDistance /= 2;
+                yTranslationDistance /= 2;
+            }
+
+            if (Actions[VitaruAction.Up])
+                playerPosition.Y -= (float)yTranslationDistance;
+            if (Actions[VitaruAction.Left])
+                playerPosition.X -= (float)xTranslationDistance;
+            if (Actions[VitaruAction.Down])
+                playerPosition.Y += (float)yTranslationDistance;
+            if (Actions[VitaruAction.Right])
+                playerPosition.X += (float)xTranslationDistance;
+
+            playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
+            playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
 
             return playerPosition;
         }
@@ -549,10 +544,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         public bool OnPressed(VitaruAction action)
         {
-            if (true)//!Bot && !Puppet)
+            if (!Auto && !Puppet)
                 return Pressed(action);
-            //else
-            //return false;
+            else
+                return false;
         }
 
         protected virtual bool Pressed(VitaruAction action)
@@ -576,15 +571,14 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = true;
 
-            //if (!Puppet)
-            //sendPacket(action);
+            sendPacket(action);
 
             return true;
         }
 
         public bool OnReleased(VitaruAction action)
         {
-            if (true)//!Bot && !Puppet)
+            if (!Auto && !Puppet)
                 return Released(action);
             else
                 return false;
@@ -610,8 +604,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = false;
 
-            //if (!Puppet)
-            //sendPacket(VitaruAction.None, action);
+            sendPacket(VitaruAction.None, action);
 
             return true;
         }
