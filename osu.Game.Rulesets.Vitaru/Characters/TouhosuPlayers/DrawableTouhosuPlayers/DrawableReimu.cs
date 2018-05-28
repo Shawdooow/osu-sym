@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         private const double leader_max_range = 64;
         private const double leader_min_range = 128;
 
-        private readonly List<DrawableTouhosuPlayer> leaderedPlayers = new List<DrawableTouhosuPlayer>();
+        //private readonly List<DrawableTouhosuPlayer> leaderedPlayers = new List<DrawableTouhosuPlayer>();
 
         public DrawableReimu(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Reimu(), vitaruNetworkingClientHandler)
         {
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
             if (SpellActive)
             {
                 foreach (Drawable drawable in VitaruPlayfield.GameField.Current)
-                    if (drawable is DrawableTouhosuPlayer drawableTouhosuPlayer)
+                    if (drawable is DrawableTouhosuPlayer drawableTouhosuPlayer && drawableTouhosuPlayer.Team == Team)
                     {
                         Vector2 object2Pos = drawableTouhosuPlayer.ToSpaceOfOtherDrawable(Vector2.Zero, this) + new Vector2(6);
                         double distance = Math.Sqrt(Math.Pow(object2Pos.X, 2) + Math.Pow(object2Pos.Y, 2));

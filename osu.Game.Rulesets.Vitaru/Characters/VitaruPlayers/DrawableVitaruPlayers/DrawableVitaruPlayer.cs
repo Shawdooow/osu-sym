@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
+using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Vitaru.Debug;
@@ -18,7 +19,9 @@ using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.Networking;
 using System;
 using System.Collections.Generic;
+using TensorFlow;
 using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
+using static TensorFlow.TFSession;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers
 {
@@ -28,6 +31,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         protected readonly Gamemodes Gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         protected readonly GraphicsOptions PlayerVisuals = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.PlayerVisuals);
+
+        private readonly DebugConfiguration configuration = VitaruSettings.VitaruConfigManager.GetBindable<DebugConfiguration>(VitaruSetting.DebugConfiguration);
 
         public readonly VitaruPlayer Player;
 
@@ -74,6 +79,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         public bool Auto { get; set; }
 
         protected bool HealthHacks { get; private set; }
+
+        protected bool BoundryHacks { get; private set; }
 
         //Is reset after healing applied
         public double HealingMultiplier = 1;
@@ -129,8 +136,17 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         {
             if (!Puppet)
             {
-                DebugToolkit.DebugItems.Add(new DebugAction(() => { Auto = !Auto; }) { Text = "Auto Hacks" });
-                DebugToolkit.DebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
+                switch (configuration)
+                {
+                    case DebugConfiguration.General:
+                        DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { Auto = !Auto; }) { Text = "Auto Hacks" });
+                        DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { BoundryHacks = !BoundryHacks; DrawableBullet.BoundryHacks = !DrawableBullet.BoundryHacks; }) { Text = "Boundry Hacks" });
+                        DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
+                        break;
+                    case DebugConfiguration.MachineLearning:
+                        DebugToolkit.MachineLearningDebugItems.Add(new DebugAction(() => { Auto = !Auto; }) { Text = "Auto Hacks" });
+                        break;
+                }
             }
         }
 
@@ -348,117 +364,121 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Actions[VitaruAction.Shoot] = false;
                 VisibleHitbox.Alpha = 0;
 
-                DrawableBullet closestBullet = null;
-                float closestBulletEdgeDitance = float.MaxValue;
-                float closestBulletAngle = 0;
+                try
+                {
+                    TFSession session = new TFSession();
+                    TFGraph graph = session.Graph;
+                    Runner runner = session.GetRunner();
 
-                DrawableBullet secondClosestBullet = null;
-                float secondClosestBulletEdgeDitance = float.MaxValue;
-                float secondClosestBulletAngle = 0;
+                    TFTensor[] t = new TFTensor[] { new TFTensor((short)3) };
 
-                //bool bulletBehind = false;
-                float behindBulletEdgeDitance = float.MaxValue;
-                float behindBulletAngle = 0;
+                    runner.AddInput(graph ["left"] [0], t);
 
-                foreach (Drawable draw in VitaruPlayfield.GameField.Current)
-                    if (draw is DrawableBullet)
-                    {
-                        DrawableBullet bullet = draw as DrawableBullet;
-                        if (bullet.Bullet.Team != Team)
+                    //Output?
+                    TFTensor[] tensor = runner.Run();
+
+                    if (Actions[VitaruAction.Slow])
+                        VisibleHitbox.Alpha = 1;
+                }
+                catch
+                {
+                    DrawableBullet closestBullet = null;
+                    float closestBulletEdgeDitance = float.MaxValue;
+                    float closestBulletAngle = 0;
+
+                    DrawableBullet secondClosestBullet = null;
+                    float secondClosestBulletEdgeDitance = float.MaxValue;
+                    float secondClosestBulletAngle = 0;
+
+                    //bool bulletBehind = false;
+                    float behindBulletEdgeDitance = float.MaxValue;
+                    float behindBulletAngle = 0;
+
+                    foreach (Drawable draw in VitaruPlayfield.GameField.Current)
+                        if (draw is DrawableBullet)
                         {
-                            Vector2 pos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
-                            float distance = (float)Math.Sqrt(Math.Pow(pos.X, 2) + Math.Pow(pos.Y, 2));
-                            float edgeDistance = distance - (bullet.Width / 2 + Hitbox.Width / 2);
-                            float angleToBullet = MathHelper.RadiansToDegrees((float)Math.Atan2((bullet.Position.Y - Position.Y), (bullet.Position.X - Position.X))) + 90 + Rotation;
-
-                            if (closestBulletAngle < 360 - field_of_view | closestBulletAngle < -field_of_view && closestBulletAngle > field_of_view | closestBulletAngle > 360 + field_of_view)
-                                if (closestBullet.Position.X > Position.X && bullet.Position.X < Position.X || closestBullet.Position.X < Position.X && bullet.Position.X > Position.X)
-                                {
-                                    //bulletBehind = true;
-                                    behindBulletEdgeDitance = edgeDistance;
-                                    behindBulletAngle = angleToBullet;
-                                }
-
-                            if (edgeDistance < closestBulletEdgeDitance)
+                            DrawableBullet bullet = draw as DrawableBullet;
+                            if (bullet.Bullet.Team != Team)
                             {
-                                secondClosestBullet = closestBullet;
-                                secondClosestBulletEdgeDitance = closestBulletEdgeDitance;
-                                secondClosestBulletAngle = closestBulletAngle;
+                                Vector2 pos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this);
+                                float distance = (float)Math.Sqrt(Math.Pow(pos.X, 2) + Math.Pow(pos.Y, 2));
+                                float edgeDistance = distance - (bullet.Width / 2 + Hitbox.Width / 2);
+                                float angleToBullet = MathHelper.RadiansToDegrees((float)Math.Atan2((bullet.Position.Y - Position.Y), (bullet.Position.X - Position.X))) + 90 + Rotation;
 
-                                closestBullet = bullet;
-                                closestBulletEdgeDitance = edgeDistance;
-                                closestBulletAngle = angleToBullet;
+                                if (closestBulletAngle < 360 - field_of_view | closestBulletAngle < -field_of_view && closestBulletAngle > field_of_view | closestBulletAngle > 360 + field_of_view)
+                                    if (closestBullet.Position.X > Position.X && bullet.Position.X < Position.X || closestBullet.Position.X < Position.X && bullet.Position.X > Position.X)
+                                    {
+                                        //bulletBehind = true;
+                                        behindBulletEdgeDitance = edgeDistance;
+                                        behindBulletAngle = angleToBullet;
+                                    }
+
+                                if (edgeDistance < closestBulletEdgeDitance)
+                                {
+                                    secondClosestBullet = closestBullet;
+                                    secondClosestBulletEdgeDitance = closestBulletEdgeDitance;
+                                    secondClosestBulletAngle = closestBulletAngle;
+
+                                    closestBullet = bullet;
+                                    closestBulletEdgeDitance = edgeDistance;
+                                    closestBulletAngle = angleToBullet;
+                                }
                             }
                         }
-                    }
 
-                if (closestBulletEdgeDitance <= 20)
-                {
-                    if (closestBulletEdgeDitance <= 16 && closestBulletEdgeDitance >= 8)
+                    if (closestBulletEdgeDitance <= 20)
                     {
-                        Actions[VitaruAction.Down] = true;
-                        Actions[VitaruAction.Slow] = true;
-                    }
+                        if (closestBulletEdgeDitance <= 16 && closestBulletEdgeDitance >= 8)
+                        {
+                            Actions[VitaruAction.Down] = true;
+                            Actions[VitaruAction.Slow] = true;
+                        }
 
-                    if ((closestBulletAngle > 360 - field_of_view || closestBulletAngle > -field_of_view) && (closestBulletAngle < field_of_view || closestBulletAngle < 360 + field_of_view) && secondClosestBulletEdgeDitance - closestBulletEdgeDitance >= 1)
+                        if ((closestBulletAngle > 360 - field_of_view || closestBulletAngle > -field_of_view) && (closestBulletAngle < field_of_view || closestBulletAngle < 360 + field_of_view) && secondClosestBulletEdgeDitance - closestBulletEdgeDitance >= 1)
+                        {
+                            if (closestBullet.X < Position.X)
+                                Actions[VitaruAction.Right] = true;
+                            else
+                                Actions[VitaruAction.Left] = true;
+                        }
+                    }
+                    else
                     {
-                        if (closestBullet.X < Position.X)
-                            Actions[VitaruAction.Right] = true;
-                        else
+                        if (Position.X > 512 - 250)
                             Actions[VitaruAction.Left] = true;
+                        else if (Position.X < 250)
+                            Actions[VitaruAction.Right] = true;
+
+                        if (Position.Y < 640)
+                            Actions[VitaruAction.Down] = true;
+                        else if (Position.Y > 680)
+                            Actions[VitaruAction.Up] = true;
                     }
+
+                    Actions[VitaruAction.Shoot] = true;
+
+                    if (Actions[VitaruAction.Slow])
+                        VisibleHitbox.Alpha = 1;
                 }
-                else
-                {
-                    if (Position.X > 512 - 200)
-                        Actions[VitaruAction.Left] = true;
-                    else if (Position.X < 200)
-                        Actions[VitaruAction.Right] = true;
-
-                    if (Position.Y < 600)
-                        Actions[VitaruAction.Down] = true;
-                    else if (Position.Y > 620)
-                        Actions[VitaruAction.Up] = true;
-                }
-
-                Actions[VitaruAction.Shoot] = true;
-
-                if (Actions[VitaruAction.Slow])
-                {
-                    xTranslationDistance /= 2;
-                    yTranslationDistance /= 2;
-                    VisibleHitbox.Alpha = 1;
-                }
-
-                if (Actions[VitaruAction.Up])
-                    playerPosition.Y -= (float)yTranslationDistance;
-                if (Actions[VitaruAction.Left])
-                    playerPosition.X -= (float)xTranslationDistance;
-                if (Actions[VitaruAction.Down])
-                    playerPosition.Y += (float)yTranslationDistance;
-                if (Actions[VitaruAction.Right])
-                    playerPosition.X += (float)xTranslationDistance;
-
-                playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
-                playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
             }
-            else
+
+            if (Actions[VitaruAction.Slow])
             {
-                if (Actions[VitaruAction.Slow])
-                {
-                    xTranslationDistance /= 2;
-                    yTranslationDistance /= 2;
-                }
+                xTranslationDistance /= 2;
+                yTranslationDistance /= 2;
+            }
 
-                if (Actions[VitaruAction.Up])
-                    playerPosition.Y -= (float)yTranslationDistance;
-                if (Actions[VitaruAction.Left])
-                    playerPosition.X -= (float)xTranslationDistance;
-                if (Actions[VitaruAction.Down])
-                    playerPosition.Y += (float)yTranslationDistance;
-                if (Actions[VitaruAction.Right])
-                    playerPosition.X += (float)xTranslationDistance;
+            if (Actions[VitaruAction.Up])
+                playerPosition.Y -= (float)yTranslationDistance;
+            if (Actions[VitaruAction.Left])
+                playerPosition.X -= (float)xTranslationDistance;
+            if (Actions[VitaruAction.Down])
+                playerPosition.Y += (float)yTranslationDistance;
+            if (Actions[VitaruAction.Right])
+                playerPosition.X += (float)xTranslationDistance;
 
+            if (!BoundryHacks)
+            {
                 playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
                 playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
             }
@@ -549,10 +569,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         public bool OnPressed(VitaruAction action)
         {
-            if (true)//!Bot && !Puppet)
+            if (!Auto && !Puppet)
                 return Pressed(action);
-            //else
-            //return false;
+            else
+                return false;
         }
 
         protected virtual bool Pressed(VitaruAction action)
@@ -576,15 +596,14 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = true;
 
-            //if (!Puppet)
-            //sendPacket(action);
+            sendPacket(action);
 
             return true;
         }
 
         public bool OnReleased(VitaruAction action)
         {
-            if (true)//!Bot && !Puppet)
+            if (!Auto && !Puppet)
                 return Released(action);
             else
                 return false;
@@ -610,8 +629,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = false;
 
-            //if (!Puppet)
-            //sendPacket(VitaruAction.None, action);
+            sendPacket(VitaruAction.None, action);
 
             return true;
         }

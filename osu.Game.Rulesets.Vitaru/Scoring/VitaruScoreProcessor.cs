@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
 
         protected override void SimulateAutoplay(Beatmap<VitaruHitObject> beatmap)
         {
-            DebugToolkit.DebugItems.Add(expectedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Expected Judgement Count" });
+            DebugToolkit.GeneralDebugItems.Add(expectedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Expected Judgement Count" });
 
             foreach (var obj in beatmap.HitObjects)
             {

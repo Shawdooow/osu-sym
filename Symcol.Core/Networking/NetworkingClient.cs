@@ -144,10 +144,13 @@ namespace Symcol.Core.Networking
                     stream.Position = 0;
 
                     BinaryFormatter formatter = new BinaryFormatter();
-                    Packet packet = (Packet)formatter.Deserialize(stream);
-                    packet.ClientInfo.IP = EndPoint.Address.ToString();
+                    if (formatter.Deserialize(stream) is Packet packet)
+                    {
+                        packet.ClientInfo.IP = EndPoint.Address.ToString();
+                        return packet;
+                    }
 
-                    return packet;
+                    throw new NullReferenceException("Whatever we recieved isnt a packet!");
                 }
             else
                 return null;
