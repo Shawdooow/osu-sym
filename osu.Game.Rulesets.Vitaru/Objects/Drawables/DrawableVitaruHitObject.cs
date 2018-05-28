@@ -34,10 +34,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.SkinChanged(skin, allowFallback);
 
-            if (HitObject is IHasComboInformation combo && HitObject.ColorOverride == Color4.White)
+            if (HitObject is IHasComboInformation combo && HitObject.ColorOverride == null)
                 AccentColour = skin.GetValue<SkinConfiguration, Color4>(s => s.ComboColours.Count > 0 ? s.ComboColours[combo.ComboIndex % s.ComboColours.Count] : (Color4?)null) ?? Color4.White;
             else
-                AccentColour = HitObject.ColorOverride;
+                AccentColour = HitObject.ColorOverride.GetValueOrDefault();
         }
 
         protected sealed override void UpdateState(ArmedState state)

@@ -180,9 +180,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                 {
                     double energyDrainMultiplier = 0;
                     if (currentRate < 1)
-                        energyDrainMultiplier = 1 - currentRate;
+                        energyDrainMultiplier = originalRate - currentRate;
                     else if (currentRate >= 1)
-                        energyDrainMultiplier = currentRate - 1;
+                        energyDrainMultiplier = currentRate - originalRate;
 
                     Energy -= (Clock.ElapsedFrameTime / 1000) * (1 / currentRate) * energyDrainMultiplier * TouhosuPlayer.EnergyDrainRate;
 

@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Vitaru
         Up,
         Down,
 
-        //Self-explaitory
+        //Self-explanitory
         Shoot,
         Spell,
 
@@ -99,15 +99,6 @@ namespace osu.Game.Rulesets.Vitaru
 
         //Sakuya
         Increase,
-        Decrease,
-
-        //Kokoro
-        RightShoot,
-        LeftShoot,
-
-        //Nue
-        Spell2,
-        Spell3,
-        Spell4
+        Decrease
     }
 }

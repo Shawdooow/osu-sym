@@ -26,6 +26,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         protected bool EnergyHacks { get; private set; }
 
+        //reset after healing is done
+        public double EnergyGainMultiplier = 1;
+
         public DrawableTouhosuPlayer(VitaruPlayfield playfield, TouhosuPlayer player, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, player, vitaruNetworkingClientHandler)
         {
             TouhosuPlayer = player;
@@ -36,6 +39,13 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         {
             if (!Puppet)
                 DebugToolkit.DebugItems.Add(new DebugAction(() => { EnergyHacks = !EnergyHacks; }) { Text = "Energy Hacks" });
+        }
+
+        protected override void OnQuarterBeat()
+        {
+            base.OnQuarterBeat();
+
+            EnergyGainMultiplier = 1;
         }
 
         protected override void Update()
@@ -114,14 +124,28 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
             {
                 default:
                     return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+
                 case "ReimuHakurei":
-                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+                    return new DrawableReimu(playfield, vitaruNetworkingClientHandler);
                 case "RyukoyHakurei":
                     return new DrawableRyukoy(playfield, vitaruNetworkingClientHandler, bindableInt);
                 case "TomajiHakurei":
                     return new DrawableTomaji(playfield, vitaruNetworkingClientHandler);
+
                 case "SakuyaIzayoi":
                     return new DrawableSakuya(playfield, vitaruNetworkingClientHandler);
+                case "RemiliaScarlet":
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+                case "FlandreScarlet":
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+
+                case "AliceLetrunce":
+                    return new DrawableAlice(playfield, vitaruNetworkingClientHandler);
+                case "VasterLetrunce":
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+
+                case "MarisaKirisame":
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
             }
         }
     }
