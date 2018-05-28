@@ -124,18 +124,21 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
             {
                 default:
                     return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+
                 case "ReimuHakurei":
                     return new DrawableReimu(playfield, vitaruNetworkingClientHandler);
                 case "RyukoyHakurei":
                     return new DrawableRyukoy(playfield, vitaruNetworkingClientHandler, bindableInt);
                 case "TomajiHakurei":
                     return new DrawableTomaji(playfield, vitaruNetworkingClientHandler);
+
                 case "SakuyaIzayoi":
                     return new DrawableSakuya(playfield, vitaruNetworkingClientHandler);
                 case "RemiliaScarlet":
                     return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
                 case "FlandreScarlet":
                     return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+
                 case "AliceLetrunce":
                     return new DrawableAlice(playfield, vitaruNetworkingClientHandler);
                 case "VasterLetrunce":

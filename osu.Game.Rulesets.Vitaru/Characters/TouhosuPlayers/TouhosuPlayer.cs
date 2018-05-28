@@ -24,18 +24,21 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
             {
                 default:
                     return new TouhosuPlayer();
+
                 case "ReimuHakurei":
                     return new Reimu();
                 case "RyukoyHakurei":
                     return new Ryukoy();
                 case "TomajiHakurei":
                     return new Tomaji();
+
                 case "SakuyaIzayoi":
                     return new Sakuya();
                 case "RemiliaScarlet":
                     return new Remilia();
                 case "FlandreScarlet":
                     return new Flandre();
+
                 case "AliceLetrunce":
                     return new Alice();
                 case "VasterLetrunce":
