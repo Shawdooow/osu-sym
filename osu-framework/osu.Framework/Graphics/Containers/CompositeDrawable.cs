@@ -914,7 +914,7 @@ namespace osu.Framework.Graphics.Containers
         #region Interaction / Input
 
         // Required to pass through input to children by default.
-        // TODO: Evaluate effects of this on performance and address.
+        // TODO: MAKE THESE FALSE BY DEFAULT!
         public override bool HandleKeyboardInput => true;
         public override bool HandleMouseInput => true;
 
