@@ -36,6 +36,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                         {
                             drawableTouhosuPlayer.HealingMultiplier = getLeaderDistanceMultiplier(distance);
                             drawableTouhosuPlayer.EnergyGainMultiplier = getLeaderDistanceMultiplier(distance);
+                            Energy -= (Clock.ElapsedFrameTime / 1000) * TouhosuPlayer.EnergyDrainRate;
                         }
                         else
                         {

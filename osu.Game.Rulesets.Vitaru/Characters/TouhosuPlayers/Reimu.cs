@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override double EnergyCost => 2;
 
-        public override double EnergyDrainRate => 3;
+        public override double EnergyDrainRate => 2;
 
         public override Color4 PrimaryColor => Color4.Red;
 
