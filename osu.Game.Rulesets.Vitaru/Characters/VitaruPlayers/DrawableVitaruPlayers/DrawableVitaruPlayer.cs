@@ -441,14 +441,14 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                     }
                     else
                     {
-                        if (Position.X > 512 - 200)
+                        if (Position.X > 512 - 250)
                             Actions[VitaruAction.Left] = true;
-                        else if (Position.X < 200)
+                        else if (Position.X < 250)
                             Actions[VitaruAction.Right] = true;
 
-                        if (Position.Y < 600)
+                        if (Position.Y < 640)
                             Actions[VitaruAction.Down] = true;
-                        else if (Position.Y > 620)
+                        else if (Position.Y > 680)
                             Actions[VitaruAction.Up] = true;
                     }
 
