@@ -16,9 +16,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
 
-        //Used like a multiple (useful for spells in multiplayer)
-        public static float BulletSpeedModifier = 1;
-
         //Playfield size + Margin of 10 on each side
         public Vector4 BulletBounds = new Vector4(-10, -10, 520, 830);
 
@@ -26,6 +23,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         private bool returnJudgement;
 
         public bool ReturnGreat = false;
+
+        public static bool BoundryHacks;
 
         //Can be set for the Graze ScoringMetric
         public int ScoreZone = 50;
@@ -107,7 +106,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
                 Position = Bullet.PositionAt(completionProgress);
 
-                if (Bullet.ObeyBoundries && Position.Y < BulletBounds.Y | Position.X < BulletBounds.X | Position.Y > BulletBounds.W | Position.X > BulletBounds.Z && !returnJudgement)
+                if (Bullet.ObeyBoundries && (Position.Y < BulletBounds.Y || Position.X < BulletBounds.X || Position.Y > BulletBounds.W || Position.X > BulletBounds.Z) && !returnJudgement && !BoundryHacks)
                     End();
             }
         }

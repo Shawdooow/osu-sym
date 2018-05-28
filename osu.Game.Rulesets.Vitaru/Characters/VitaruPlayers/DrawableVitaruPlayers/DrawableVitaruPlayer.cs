@@ -80,6 +80,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         protected bool HealthHacks { get; private set; }
 
+        protected bool BoundryHacks { get; private set; }
+
         //Is reset after healing applied
         public double HealingMultiplier = 1;
 
@@ -138,6 +140,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 {
                     case DebugConfiguration.General:
                         DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { Auto = !Auto; }) { Text = "Auto Hacks" });
+                        DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { BoundryHacks = !BoundryHacks; DrawableBullet.BoundryHacks = !DrawableBullet.BoundryHacks; }) { Text = "Boundry Hacks" });
                         DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
                         break;
                     case DebugConfiguration.MachineLearning:
@@ -474,8 +477,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             if (Actions[VitaruAction.Right])
                 playerPosition.X += (float)xTranslationDistance;
 
-            playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
-            playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
+            if (!BoundryHacks)
+            {
+                playerPosition = Vector2.ComponentMin(playerPosition, PlayerBounds.Yw);
+                playerPosition = Vector2.ComponentMax(playerPosition, PlayerBounds.Xz);
+            }
 
             return playerPosition;
         }

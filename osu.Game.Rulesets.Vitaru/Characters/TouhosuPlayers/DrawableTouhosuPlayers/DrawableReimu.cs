@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         private const double leader_max_range = 64;
         private const double leader_min_range = 128;
 
-        private readonly List<DrawableTouhosuPlayer> leaderedPlayers = new List<DrawableTouhosuPlayer>();
+        //private readonly List<DrawableTouhosuPlayer> leaderedPlayers = new List<DrawableTouhosuPlayer>();
 
         public DrawableReimu(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Reimu(), vitaruNetworkingClientHandler)
         {

@@ -79,6 +79,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             VitaruInputManager = vitaruInput;
 
+            DrawableBullet.BoundryHacks = false;
+
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 
