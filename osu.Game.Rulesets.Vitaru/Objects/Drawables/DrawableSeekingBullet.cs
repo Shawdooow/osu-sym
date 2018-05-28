@@ -132,14 +132,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 if (NearestEnemy != null && !NearestEnemy.Dead)
                 {
                     bulletVelocity = getBulletVelocity(enemyRelativePositionAngle());
-                    this.MoveToOffset(new Vector2(bulletVelocity.X * DrawableBullet.BulletSpeedModifier * frameTime, bulletVelocity.Y * DrawableBullet.BulletSpeedModifier * frameTime));
+                    this.MoveToOffset(new Vector2(bulletVelocity.X * frameTime, bulletVelocity.Y * frameTime));
 
                 }
                 else
-                    this.MoveToOffset(new Vector2(bulletVelocity.X * DrawableBullet.BulletSpeedModifier * frameTime, bulletVelocity.Y * DrawableBullet.BulletSpeedModifier * frameTime));
+                    this.MoveToOffset(new Vector2(bulletVelocity.X * frameTime, bulletVelocity.Y * frameTime));
             }
             else
-                this.MoveToOffset(new Vector2(bulletVelocity.X * DrawableBullet.BulletSpeedModifier * frameTime, bulletVelocity.Y * DrawableBullet.BulletSpeedModifier * frameTime));
+                this.MoveToOffset(new Vector2(bulletVelocity.X * frameTime, bulletVelocity.Y * frameTime));
 
         }
     }

@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         private void load()
         {
             if (!Puppet)
-                DebugToolkit.DebugItems.Add(new DebugAction(() => { EnergyHacks = !EnergyHacks; }) { Text = "Energy Hacks" });
+                DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { EnergyHacks = !EnergyHacks; }) { Text = "Energy Hacks" });
         }
 
         protected override void OnQuarterBeat()

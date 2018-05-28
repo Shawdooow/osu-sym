@@ -14,7 +14,8 @@ namespace osu.Game.Rulesets.Vitaru.Debug
 {
     public class DebugToolkit : Container
     {
-        public static List<Container> DebugItems = new List<Container>();
+        public static List<Container> GeneralDebugItems = new List<Container>();
+        public static List<Container> MachineLearningDebugItems = new List<Container>();
 
         private readonly FillFlowContainer<Container> debugItems;
 
@@ -70,16 +71,28 @@ namespace osu.Game.Rulesets.Vitaru.Debug
 
         public void UpdateItems()
         {
-            foreach (Container container in DebugItems)
-                debugItems.Add(container);
+            switch (configuration)
+            {
+                case DebugConfiguration.General:
+                    foreach (Container container in GeneralDebugItems)
+                        debugItems.Add(container);
+                    break;
+                case DebugConfiguration.MachineLearning:
+                    foreach (Container container in MachineLearningDebugItems)
+                        debugItems.Add(container);
+                    break;
+            }
 
-            DebugItems = new List<Container>();
+
+            GeneralDebugItems = new List<Container>();
+            MachineLearningDebugItems = new List<Container>();
         }
     }
 
     public enum DebugConfiguration
     {
-        Gameplay,
+        General,
+        MachineLearning,
         Networking,
     }
 }

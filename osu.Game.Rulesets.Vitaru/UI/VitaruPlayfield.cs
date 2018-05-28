@@ -79,14 +79,16 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             VitaruInputManager = vitaruInput;
 
+            DrawableBullet.BoundryHacks = false;
+
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 
             Bindable<int> abstraction = new Bindable<int>() { Value = 0 };
 
-            DebugToolkit.DebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judgement Count" });
-            DebugToolkit.DebugItems.Add(drawableHitobjectCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Hitobject Count" });
-            DebugToolkit.DebugItems.Add(drawablePatternCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Pattern Count" });
+            DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judgement Count" });
+            DebugToolkit.GeneralDebugItems.Add(drawableHitobjectCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Hitobject Count" });
+            DebugToolkit.GeneralDebugItems.Add(drawablePatternCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Pattern Count" });
             
             if (playfieldBorder)
                 Add(new Container
@@ -122,7 +124,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 else
                     playerList.Add(Player = DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
 
-                DebugToolkit.DebugItems.Add(new DebugAction()
+                DebugToolkit.GeneralDebugItems.Add(new DebugAction()
                 {
                     Text = "Add New Player",
                     Action = () =>
@@ -158,7 +160,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             else
                 Player = null;
 
-            DebugToolkit.DebugItems.Add(new DebugAction() { Text = "Exclusive Testing Hax", Action = () => { BulletPiece.ExclusiveTestingHax = !BulletPiece.ExclusiveTestingHax; } });
+            DebugToolkit.GeneralDebugItems.Add(new DebugAction() { Text = "Exclusive Testing Hax", Action = () => { BulletPiece.ExclusiveTestingHax = !BulletPiece.ExclusiveTestingHax; } });
         }
 
         [BackgroundDependencyLoader]
@@ -256,11 +258,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
                 this.drawableHitobjectCount = drawableHitobjectCount;
 
-                DebugToolkit.DebugItems.Add(drawableBulletCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Bullet Count" });
-                DebugToolkit.DebugItems.Add(drawableLaserCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Laser Count" });
-                DebugToolkit.DebugItems.Add(enemyCount = new DebugStat<int>(new Bindable<int>()) { Text = "Enemy Count" });
-                DebugToolkit.DebugItems.Add(bossCount = new DebugStat<int>(new Bindable<int>()) { Text = "Boss Count" });
-                DebugToolkit.DebugItems.Add(playerCount = new DebugStat<int>(new Bindable<int>()) { Text = "Player Count" });
+                DebugToolkit.GeneralDebugItems.Add(drawableBulletCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Bullet Count" });
+                DebugToolkit.GeneralDebugItems.Add(drawableLaserCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Laser Count" });
+                DebugToolkit.GeneralDebugItems.Add(enemyCount = new DebugStat<int>(new Bindable<int>()) { Text = "Enemy Count" });
+                DebugToolkit.GeneralDebugItems.Add(bossCount = new DebugStat<int>(new Bindable<int>()) { Text = "Boss Count" });
+                DebugToolkit.GeneralDebugItems.Add(playerCount = new DebugStat<int>(new Bindable<int>()) { Text = "Player Count" });
 
                 RelativeSizeAxes = Axes.Both;
 
