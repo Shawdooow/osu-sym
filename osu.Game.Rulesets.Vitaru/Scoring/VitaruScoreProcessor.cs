@@ -4,7 +4,6 @@ using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
-using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.UI;
@@ -16,13 +15,16 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
 {
     internal class VitaruScoreProcessor : ScoreProcessor<VitaruHitObject>
     {
+        private readonly VitaruRulesetContainer vitaruRulesetContainer;
+
         public new static int Combo;
 
         private DebugStat<int> expectedJudgementCount;
 
-        public VitaruScoreProcessor(RulesetContainer<VitaruHitObject> rulesetContainer)
-            : base(rulesetContainer)
+        public VitaruScoreProcessor(VitaruRulesetContainer vitaruRulesetContainer)
+            : base(vitaruRulesetContainer)
         {
+            this.vitaruRulesetContainer = vitaruRulesetContainer;
         }
 
         protected override void Reset(bool storeResults)
@@ -87,8 +89,8 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
                     Combo = 0;
             }
 
-            if (VitaruPlayfield.Player != null)
-                Health.Value = VitaruPlayfield.Player.Health / VitaruPlayfield.Player.MaxHealth;
+            if (vitaruRulesetContainer.VitaruPlayfield.Player != null)
+                Health.Value = vitaruRulesetContainer.VitaruPlayfield.Player.Health / vitaruRulesetContainer.VitaruPlayfield.Player.MaxHealth;
 
         }
     }

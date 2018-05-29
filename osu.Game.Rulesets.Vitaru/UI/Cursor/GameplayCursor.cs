@@ -16,10 +16,13 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 {
     public class GameplayCursor : CursorContainer
     {
-        protected override Drawable CreateCursor() => new VitaruCursor();
+        protected override Drawable CreateCursor() => cursor;
 
-        public GameplayCursor()
+        private readonly VitaruCursor cursor;
+
+        public GameplayCursor(VitaruPlayfield vitaruPlayfield)
         {
+            cursor = new VitaruCursor(vitaruPlayfield);
             Masking = false;
         }
 
@@ -27,6 +30,8 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
         {
             private string selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
             private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+
+            private readonly VitaruPlayfield vitaruPlayfield;
 
             private Container lineContainer;
             private Container circleContainer;
@@ -36,8 +41,10 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
             private Bindable<bool> autoCursorScale;
             private Bindable<WorkingBeatmap> beatmap;
 
-            public VitaruCursor()
+            public VitaruCursor(VitaruPlayfield vitaruPlayfield)
             {
+                this.vitaruPlayfield = vitaruPlayfield;
+
                 Origin = Anchor.Centre;
                 Size = new Vector2(32);
                 Masking = false;
@@ -232,7 +239,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
             {
                 base.Update();
 
-                if (VitaruPlayfield.Player != null )
+                if (vitaruPlayfield.Player != null )
                 {
                     switch (selectedCharacter)
                     {

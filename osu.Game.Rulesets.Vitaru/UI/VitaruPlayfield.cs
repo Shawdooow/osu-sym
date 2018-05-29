@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public static List<VitaruClientInfo> LoadPlayerList = new List<VitaruClientInfo>();
 
         //TODO: Make this not need to be static
-        public static DrawableVitaruPlayer Player;
+        public DrawableVitaruPlayer Player;
 
         public Boss Boss;
 
@@ -228,7 +228,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             }
         }
 
-        protected virtual CursorContainer CreateCursor() => new GameplayCursor();
+        protected virtual CursorContainer CreateCursor() => new GameplayCursor(this);
 
         protected override void Dispose(bool isDisposing)
         {
