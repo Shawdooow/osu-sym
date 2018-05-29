@@ -11,9 +11,6 @@ using osu.Game.Rulesets.Vitaru.UI.Cursor;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Framework.Configuration;
-using osu.Game.Rulesets.Vitaru.Debug;
-using System.Collections.Generic;
-using osu.Framework.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -39,12 +36,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         protected override Playfield CreatePlayfield() => VitaruPlayfield;
 
-        protected VitaruPlayfield VitaruPlayfield;
+        public VitaruPlayfield VitaruPlayfield { get; protected set; }
 
         public override int Variant => (int)variant();
 
-        private string character = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
-        private readonly Gamemodes gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private Bindable<string> character = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+        private readonly Bindable<Gamemodes> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         private ControlScheme variant()
         {

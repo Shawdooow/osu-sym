@@ -198,7 +198,7 @@ namespace osu.Game.Rulesets.Vitaru
         public static TextureStore VitaruTextures;
         public static AudioManager VitaruAudio;
 
-        public VitaruRuleset(RulesetInfo rulesetInfo) : base(rulesetInfo)
+        public VitaruRuleset(RulesetInfo rulesetInfo = null) : base(rulesetInfo)
         {
             if (VitaruResources == null)
             {

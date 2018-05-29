@@ -152,10 +152,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             //Load the bullets
             foreach (var o in pattern.NestedHitObjects)
             {
-                Bullet b = (Bullet)o;
-                DrawableBullet drawableBullet = new DrawableBullet(b, VitaruPlayfield);
-                VitaruPlayfield.GameField.Add(drawableBullet);
-                AddNested(drawableBullet);
+                if (o is Bullet b)
+                {
+                    if (DrawableBullet.BoundryHacks && pattern.PatternID == 2)
+                    {
+                        b.BulletAngle = getPlayerAngle();
+                        b.SliderType = b.SliderType;
+                    }
+
+                    DrawableBullet drawableBullet = new DrawableBullet(b, VitaruPlayfield);
+                    VitaruPlayfield.GameField.Add(drawableBullet);
+                    AddNested(drawableBullet);
+                }
             }
 
             if (VitaruPlayfield.Boss != null)
@@ -198,18 +206,19 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private Vector2 getPatternStartPosition()
         {
-            Vector2 patternStartPosition;
-
             if (pattern.Position.X <= 384f / 2 && pattern.Position.Y <= 512f / 2)
-                patternStartPosition = pattern.Position - new Vector2(384f / 2, 512f / 2);
+                return pattern.Position - new Vector2(384f / 2, 512f / 2);
             else if (pattern.Position.X > 384f / 2 && pattern.Position.Y <= 512f / 2)
-                patternStartPosition = new Vector2(pattern.Position.X + 384f / 2, pattern.Position.Y - 512f / 2);
+                return new Vector2(pattern.Position.X + 384f / 2, pattern.Position.Y - 512f / 2);
             else if (pattern.Position.X > 384f / 2 && pattern.Position.Y > 512f / 2)
-                patternStartPosition = pattern.Position + new Vector2(384f / 2, 512f / 2);
+                return pattern.Position + new Vector2(384f / 2, 512f / 2);
             else
-                patternStartPosition = new Vector2(pattern.Position.X - 384f / 2, pattern.Position.Y + 512f / 2);
+                return new Vector2(pattern.Position.X - 384f / 2, pattern.Position.Y + 512f / 2);
+        }
 
-            return patternStartPosition;
+        private double getPlayerAngle()
+        {
+            return (MathHelper.RadiansToDegrees(Math.Atan2((VitaruPlayfield.Player.Position.Y - Position.Y), (VitaruPlayfield.Player.Position.X - Position.X))) + 90 + Rotation) - 12;
         }
     }
 }

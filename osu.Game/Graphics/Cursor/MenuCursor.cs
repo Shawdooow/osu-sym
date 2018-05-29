@@ -14,6 +14,7 @@ using System;
 using System.Diagnostics;
 using JetBrains.Annotations;
 using osu.Framework.Graphics.Textures;
+using osu.Framework.Logging;
 
 namespace osu.Game.Graphics.Cursor
 {
@@ -47,21 +48,26 @@ namespace osu.Game.Graphics.Cursor
                 // don't start rotating until we're moved a minimum distance away from the mouse down location,
                 // else it can have an annoying effect.
                 // ReSharper disable once PossibleInvalidOperationException
-                startRotation |= Vector2Extensions.Distance(state.Mouse.Position, state.Mouse.PositionMouseDown.Value) > 30;
-
-                if (startRotation)
+                try
                 {
-                    Vector2 offset = state.Mouse.Position - state.Mouse.PositionMouseDown.Value;
-                    float degrees = (float)MathHelper.RadiansToDegrees(Math.Atan2(-offset.X, offset.Y)) + 24.3f;
+                    startRotation |= Vector2Extensions.Distance(state.Mouse.Position, state.Mouse.PositionMouseDown.Value) > 30;
 
-                    // Always rotate in the direction of least distance
-                    float diff = (degrees - ActiveCursor.Rotation) % 360;
-                    if (diff < -180) diff += 360;
-                    if (diff > 180) diff -= 360;
-                    degrees = ActiveCursor.Rotation + diff;
 
-                    ActiveCursor.RotateTo(degrees, 600, Easing.OutQuint);
+                    if (startRotation)
+                    {
+                        Vector2 offset = state.Mouse.Position - state.Mouse.PositionMouseDown.Value;
+                        float degrees = (float)MathHelper.RadiansToDegrees(Math.Atan2(-offset.X, offset.Y)) + 24.3f;
+
+                        // Always rotate in the direction of least distance
+                        float diff = (degrees - ActiveCursor.Rotation) % 360;
+                        if (diff < -180) diff += 360;
+                        if (diff > 180) diff -= 360;
+                        degrees = ActiveCursor.Rotation + diff;
+
+                        ActiveCursor.RotateTo(degrees, 600, Easing.OutQuint);
+                    }
                 }
+                catch { Logger.Log("MenuCursor wanted to crash us (null exception on rotation)!", LoggingTarget.Runtime, LogLevel.Error); }
             }
 
             return base.OnMouseMove(state);

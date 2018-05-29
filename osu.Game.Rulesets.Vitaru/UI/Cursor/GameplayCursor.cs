@@ -28,6 +28,8 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
             private string selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
             private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
+            private readonly VitaruPlayfield vitaruPlayfield;
+
             private Container lineContainer;
             private Container circleContainer;
             public static CircularContainer CenterCircle;
@@ -226,25 +228,6 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
                 }
 
                 Scale = new Vector2(scale);
-            }
-
-            protected override void Update()
-            {
-                base.Update();
-
-                if (VitaruPlayfield.Player != null )
-                {
-                    switch (selectedCharacter)
-                    {
-                        case "SakuyaIzayoi":
-                            //speed.Text = ((Sakuya)VitaruPlayfield.Player).SetRate.ToString();
-                            break;
-                        case "TomajiHakurei":
-                            //speed.Text = ((Tomaji)VitaruPlayfield.Player).SetRate.ToString();
-                            break;
-                    }
-                    //combo.Text = VitaruPlayfield.Player.Combo.ToString();
-                }
             }
         }
     }
