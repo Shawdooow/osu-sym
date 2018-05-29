@@ -1,12 +1,11 @@
 ﻿using OpenTK;
-using OpenTK.Graphics;
 using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
-using osu.Game.Rulesets.Shape.Objects.Drawables.Pieces;
-using osu.Game.Rulesets.Shape.Judgements;
-using System.Linq;
-using osu.Game.Rulesets.Scoring;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Scoring;
+using osu.Game.Rulesets.Shape.Judgements;
+using osu.Game.Rulesets.Shape.Objects.Drawables.Pieces;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Shape.Objects.Drawables
 {
@@ -46,7 +45,7 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
                 if (!HitObject.HitWindows.CanBeHit(timeOffset))
                 {
                     AddJudgement(new ShapeJudgement { Result = HitResult.Miss });
-                    Delete();
+                    Expire();
                 }
                 return;
             }
@@ -61,7 +60,7 @@ namespace osu.Game.Rulesets.Shape.Objects.Drawables
                 PositionOffset = Vector2.Zero
             });
             this.FadeOutFromOne(100)
-                .OnComplete((s) => Delete());
+                .OnComplete((s) => Expire());
         }
 
         public override bool OnPressed(ShapeAction action)
