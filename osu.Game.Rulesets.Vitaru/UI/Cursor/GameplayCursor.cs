@@ -239,7 +239,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
             {
                 base.Update();
 
-                if (vitaruPlayfield.Player != null )
+                if (vitaruPlayfield?.Player != null )
                 {
                     switch (selectedCharacter)
                     {
