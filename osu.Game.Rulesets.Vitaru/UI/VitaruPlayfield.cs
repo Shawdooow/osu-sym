@@ -228,7 +228,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             }
         }
 
-        protected virtual CursorContainer CreateCursor() => new GameplayCursor(this);
+        protected virtual CursorContainer CreateCursor() => new GameplayCursor();
 
         protected override void Dispose(bool isDisposing)
         {

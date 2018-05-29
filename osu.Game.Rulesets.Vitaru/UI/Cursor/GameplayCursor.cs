@@ -16,13 +16,10 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 {
     public class GameplayCursor : CursorContainer
     {
-        protected override Drawable CreateCursor() => cursor;
+        protected override Drawable CreateCursor() => new VitaruCursor();
 
-        private readonly VitaruCursor cursor;
-
-        public GameplayCursor(VitaruPlayfield vitaruPlayfield)
+        public GameplayCursor()
         {
-            cursor = new VitaruCursor(vitaruPlayfield);
             Masking = false;
         }
 
@@ -41,10 +38,8 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
             private Bindable<bool> autoCursorScale;
             private Bindable<WorkingBeatmap> beatmap;
 
-            public VitaruCursor(VitaruPlayfield vitaruPlayfield)
+            public VitaruCursor()
             {
-                this.vitaruPlayfield = vitaruPlayfield;
-
                 Origin = Anchor.Centre;
                 Size = new Vector2(32);
                 Masking = false;
@@ -233,25 +228,6 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
                 }
 
                 Scale = new Vector2(scale);
-            }
-
-            protected override void Update()
-            {
-                base.Update();
-
-                if (vitaruPlayfield?.Player != null )
-                {
-                    switch (selectedCharacter)
-                    {
-                        case "SakuyaIzayoi":
-                            //speed.Text = ((Sakuya)VitaruPlayfield.Player).SetRate.ToString();
-                            break;
-                        case "TomajiHakurei":
-                            //speed.Text = ((Tomaji)VitaruPlayfield.Player).SetRate.ToString();
-                            break;
-                    }
-                    //combo.Text = VitaruPlayfield.Player.Combo.ToString();
-                }
             }
         }
     }

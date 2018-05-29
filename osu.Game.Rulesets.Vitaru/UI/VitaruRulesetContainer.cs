@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             vitaruInputManager.DebugToolkit?.UpdateItems();
         }
 
-        protected override CursorContainer CreateCursor() => new GameplayCursor(VitaruPlayfield);
+        protected override CursorContainer CreateCursor() => new GameplayCursor();
 
         public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor(this);
 
