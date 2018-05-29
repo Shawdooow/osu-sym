@@ -15,6 +15,21 @@
         }
 
         private NeuralNetworkState neuralNetworkState;
+
+        public TensorFlowBrain()
+        {
+
+        }
+
+        public void Input(int input)
+        {
+
+        }
+
+        public int Output()
+        {
+            return 0;
+        }
     }
 
     public enum NeuralNetworkState

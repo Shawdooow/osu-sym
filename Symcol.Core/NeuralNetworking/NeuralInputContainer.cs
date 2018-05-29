@@ -1,9 +1,10 @@
 ﻿using OpenTK;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 
 namespace Symcol.Core.NeuralNetworking
 {
-    public abstract class NeuralInputContainer<T> : KeyBindingContainer<T>, IKeyBindingHandler<T>
+    public abstract class NeuralInputContainer<T> : Container, IKeyBindingHandler<T>
         where T : struct
     {
         public TensorFlowBrain TensorFlowBrain { get; private set; }
