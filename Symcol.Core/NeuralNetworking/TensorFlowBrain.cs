@@ -31,7 +31,7 @@ namespace Symcol.Core.NeuralNetworking
         /// <summary>
         /// Get information to react to
         /// </summary>
-        public abstract TFTensor[] GetTensors(TFSession session, T t);
+        public abstract TFTensor GetTensor(TFSession session, T t);
 
         public void LearnInput(int action)
         {
@@ -46,25 +46,22 @@ namespace Symcol.Core.NeuralNetworking
             TFSession session = new TFSession();
             Runner runner = session.GetRunner();
 
-            TFTensor[] result = GetTensors(session, t);
+            TFTensor result = GetTensor(session, t);
             
             int bestIdx = 0;
             float best = 0;
 
-            for (int r = 0; r < result.Count(); r++)
+            object output = result.GetValue(jagged: false);
+
+            float[,] val = (float[,])output;
+
+            // Result is [1,N], flatten array
+            for (int i = 0; i < val.GetLength(1); i++)
             {
-                object output = result[r].GetValue(jagged: false);
-
-                float[,] val = (float[,])output;
-
-                // Result is [1,N], flatten array
-                for (int i = 0; i < val.GetLength(1); i++)
+                if (val[0, i] > best)
                 {
-                    if (val[0, i] > best)
-                    {
-                        bestIdx = i;
-                        best = val[0, i];
-                    }
+                    bestIdx = i;
+                    best = val[0, i];
                 }
             }
 

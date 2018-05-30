@@ -19,12 +19,13 @@ namespace osu.Game.Rulesets.Vitaru.Neural
             this.player = player;
         }
 
-        public override TFTensor[] GetTensors(TFSession session, VitaruAction action)
+        public override TFTensor GetTensor(TFSession session, VitaruAction action)
         {
-            TFTensor[] output = new TFTensor[]
-            {
-                session.GetRunner().Run(session.Graph.Constant((float)action, new TFShape(4, 4), TFDataType.Float))
-            };
+            int s = 0;
+            TFShape shape = new TFShape(s, s);
+            TFTensor tensor = new TFTensor(s);
+
+            TFTensor output;
 
             for (int i = 0; i < vitaruPlayfield.GameField.Current.Count; i++)
                 if (vitaruPlayfield.GameField.Current[i] is DrawableBullet drawableBullet && drawableBullet.Bullet.Team != player.Team)
@@ -34,25 +35,12 @@ namespace osu.Game.Rulesets.Vitaru.Neural
 
                     float sqrt = (float)Math.Sqrt(xPow + yPow);
 
-                    TFOutput position = session.Graph.Constant(sqrt, new TFShape(2, 2), TFDataType.Float);
-                    TFOutput angle = session.Graph.Constant((float)Math.Atan2(drawableBullet.Position.Y - player.Position.Y, drawableBullet.Position.X - player.Position.X), new TFShape(2, 2), TFDataType.Float);
-
-                    TFTensor p = session.GetRunner().Run(position);
-                    TFTensor a = session.GetRunner().Run(angle);
-
-                    output = addTensorToArray(output, p);
-                    output = addTensorToArray(output, a);
+                    session.GetRunner().AddInput(session.Graph.Constant(sqrt, shape, TFDataType.Float), tensor);
                 }
 
-            return output;
-        }
+            output = session.GetRunner().Run(session.Graph.Constant((float)action, shape, TFDataType.Float));
 
-        private TFTensor[] addTensorToArray(TFTensor[] tensorArray, TFTensor newTensor)
-        {
-            TFTensor[] newArray = new TFTensor[tensorArray.Length + 1];
-            tensorArray.CopyTo(newArray, 1);
-            newArray[0] = newTensor;
-            return newArray;
+            return output;
         }
     }
 }
