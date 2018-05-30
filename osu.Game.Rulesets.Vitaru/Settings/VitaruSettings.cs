@@ -277,9 +277,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             showDebugUi.ValueChanged += isVisible =>
             {
-                if (!VitaruAPIContainer.Shawdooow)
-                    isVisible = false;
-
                 debugUiSettings.ClearTransforms();
                 debugUiSettings.AutoSizeAxes = isVisible ? Axes.Y : Axes.None;
 
