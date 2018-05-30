@@ -8,7 +8,7 @@ namespace Symcol.Core.NeuralNetworking
     public abstract class NeuralInputContainer<T> : Container, IKeyBindingHandler<T>
         where T : struct, IConvertible
     {
-        public abstract TensorFlowBrain TensorFlowBrain { get; }
+        public abstract TensorFlowBrain<T> TensorFlowBrain { get; }
 
         /// <summary>
         /// All currently usable actions in T
@@ -22,7 +22,7 @@ namespace Symcol.Core.NeuralNetworking
             if (TensorFlowBrain.NeuralNetworkState == NeuralNetworkState.Active)
                 foreach (T t in GetActiveActions)
                 {
-                    int i = TensorFlowBrain.GetOutput();
+                    int i = TensorFlowBrain.GetOutput(t);
 
                     if (i == 1)
                         Pressed(t);
@@ -38,28 +38,28 @@ namespace Symcol.Core.NeuralNetworking
         public bool OnPressed(T action)
         {
             if (TensorFlowBrain.NeuralNetworkState < NeuralNetworkState.Active)
-                return Pressed(action);
+            {
+                Pressed(action);
+                return true;
+            }
             else
                 return false;
         }
 
-        protected virtual bool Pressed(T action)
-        {
-            return true;
-        }
+        public Action<T> Pressed;
 
         public bool OnReleased(T action)
         {
             if (TensorFlowBrain.NeuralNetworkState < NeuralNetworkState.Active)
-                return Released(action);
+            {
+                Released(action);
+                return true;
+            }
             else
                 return false;
         }
 
-        protected virtual bool Released(T action)
-        {
-            return true;
-        }
+        public Action<T> Released;
         #endregion
     }
 }

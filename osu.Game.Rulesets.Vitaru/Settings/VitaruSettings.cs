@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using Symcol.Core.Extentions;
 using System.Linq;
 using osu.Game.Rulesets.Vitaru.Debug;
+using Symcol.Core.NeuralNetworking;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
@@ -184,10 +185,18 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     AutoSizeEasing = Easing.OutQuint,
                     Masking = true,
 
-                    Child = new SettingsEnumDropdown<DebugConfiguration>
+                    Children = new Drawable[]
                     {
-                        LabelText = "In-Game Debug UI Configuration",
-                        Bindable = VitaruConfigManager.GetBindable<DebugConfiguration>(VitaruSetting.DebugConfiguration)
+                        new SettingsEnumDropdown<DebugConfiguration>
+                        {
+                            LabelText = "In-Game Debug UI Configuration",
+                            Bindable = VitaruConfigManager.GetBindable<DebugConfiguration>(VitaruSetting.DebugConfiguration)
+                        },
+                        new SettingsEnumDropdown<NeuralNetworkState>
+                        {
+                            LabelText = "Neural Network State",
+                            Bindable = VitaruConfigManager.GetBindable<NeuralNetworkState>(VitaruSetting.NeuralNetworkState)
+                        },
                     }
                 },
             };
@@ -268,6 +277,9 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             showDebugUi.ValueChanged += isVisible =>
             {
+                if (!VitaruAPIContainer.Shawdooow)
+                    isVisible = false;
+
                 debugUiSettings.ClearTransforms();
                 debugUiSettings.AutoSizeAxes = isVisible ? Axes.Y : Axes.None;
 

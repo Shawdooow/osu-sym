@@ -76,6 +76,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         DebugMode,
         DebugConfiguration,
+        NeuralNetworkState,
 
         GraphicsPreset,
         BulletVisuals,

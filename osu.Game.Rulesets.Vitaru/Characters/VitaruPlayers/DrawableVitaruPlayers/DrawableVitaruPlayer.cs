@@ -11,6 +11,7 @@ using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Multi;
+using osu.Game.Rulesets.Vitaru.Neural;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Settings;
@@ -22,7 +23,7 @@ using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers
 {
-    public class DrawableVitaruPlayer : Character, IKeyBindingHandler<VitaruAction>
+    public class DrawableVitaruPlayer : Character
     {
         #region Fields
         protected readonly Gamemodes Gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
@@ -30,6 +31,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         protected readonly GraphicsOptions PlayerVisuals = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.PlayerVisuals);
 
         private readonly DebugConfiguration configuration = VitaruSettings.VitaruConfigManager.GetBindable<DebugConfiguration>(VitaruSetting.DebugConfiguration);
+
+        protected readonly VitaruNeuralContainer VitaruNeuralContainer;
 
         public readonly VitaruPlayer Player;
 
@@ -104,6 +107,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         {
             Player = player;
             VitaruNetworkingClientHandler = vitaruNetworkingClientHandler;
+
+            Add(VitaruNeuralContainer = new VitaruNeuralContainer(playfield));
+
+            VitaruNeuralContainer.Pressed = Pressed;
+            VitaruNeuralContainer.Released = Released;
 
             Actions[VitaruAction.Up] = false;
             Actions[VitaruAction.Down] = false;
@@ -545,15 +553,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         #region Input Handling
         public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => true;
 
-        public bool OnPressed(VitaruAction action)
-        {
-            if (!Auto && !Puppet)
-                return Pressed(action);
-            else
-                return false;
-        }
-
-        protected virtual bool Pressed(VitaruAction action)
+        protected virtual void Pressed(VitaruAction action)
         {
             //Keyboard Stuff
             if (action == VitaruAction.Up)
@@ -575,19 +575,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Actions[VitaruAction.Shoot] = true;
 
             sendPacket(action);
-
-            return true;
         }
 
-        public bool OnReleased(VitaruAction action)
-        {
-            if (!Auto && !Puppet)
-                return Released(action);
-            else
-                return false;
-        }
-
-        protected virtual bool Released(VitaruAction action)
+        protected virtual void Released(VitaruAction action)
         {
             //Keyboard Stuff
             if (action == VitaruAction.Up)
@@ -608,8 +598,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Actions[VitaruAction.Shoot] = false;
 
             sendPacket(VitaruAction.None, action);
-
-            return true;
         }
         #endregion
 

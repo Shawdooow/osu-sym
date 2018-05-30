@@ -1,13 +1,22 @@
-﻿using osu.Game.Rulesets.Vitaru.UI;
+﻿using osu.Framework.Configuration;
+using osu.Game.Rulesets.Vitaru.Settings;
+using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.NeuralNetworking;
 
 namespace osu.Game.Rulesets.Vitaru.Neural
 {
     public class VitaruNeuralContainer : NeuralInputContainer<VitaruAction>
     {
-        public override TensorFlowBrain TensorFlowBrain => vitaruNeuralBrain;
+        public override TensorFlowBrain<VitaruAction> TensorFlowBrain => vitaruNeuralBrain;
 
-        public override VitaruAction[] GetActiveActions => throw new System.NotImplementedException();
+        public override VitaruAction[] GetActiveActions => new VitaruAction[]
+        {
+            VitaruAction.Up,
+            VitaruAction.Down,
+            VitaruAction.Left,
+            VitaruAction.Right,
+            VitaruAction.Slow
+        };
 
         private readonly VitaruNeuralBrain vitaruNeuralBrain;
 
@@ -17,6 +26,13 @@ namespace osu.Game.Rulesets.Vitaru.Neural
         {
             this.vitaruPlayfield = vitaruPlayfield;
             vitaruNeuralBrain = new VitaruNeuralBrain(vitaruPlayfield);
+
+            Bindable<NeuralNetworkState> bindable = VitaruSettings.VitaruConfigManager.GetBindable<NeuralNetworkState>(VitaruSetting.NeuralNetworkState);
+            bindable.ValueChanged += state =>
+            {
+                TensorFlowBrain.NeuralNetworkState = state;
+            };
+            bindable.TriggerChange();
         }
     }
 }

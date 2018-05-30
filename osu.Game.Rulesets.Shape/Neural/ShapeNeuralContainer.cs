@@ -2,8 +2,9 @@
 
 namespace osu.Game.Rulesets.Shape.Neural
 {
-    public class ShapeNeuralContainer : NeuralInputContainer<ShapeAction>
+    public class ShapeNeuralContainer// : NeuralInputContainer<ShapeAction>
     {
+        /*
         public override ShapeAction[] GetActiveActions => throw new System.NotImplementedException();
 
         public override TensorFlowBrain TensorFlowBrain => new ShapeNeuralBrain();
@@ -11,6 +12,6 @@ namespace osu.Game.Rulesets.Shape.Neural
         public ShapeNeuralContainer()
         {
 
-        }
+        */
     }
 }

@@ -7,7 +7,8 @@ namespace Symcol.Core.NeuralNetworking
     /// Will act like high-level input / output for TensorFlow
     /// Can be set to different NeuralNetworkStates
     /// </summary>
-    public abstract class TensorFlowBrain
+    public abstract class TensorFlowBrain<T>
+        where T : struct
     {
         /// <summary>
         /// Current state that this Neural Network is set to
@@ -29,7 +30,7 @@ namespace Symcol.Core.NeuralNetworking
         /// <summary>
         /// Get information to react to
         /// </summary>
-        public abstract TFOutput GetTFOutput(TFSession session);
+        public abstract TFOutput GetTFOutput(TFSession session, T t);
 
         public void LearnInput(int action)
         {
@@ -39,14 +40,29 @@ namespace Symcol.Core.NeuralNetworking
             }
         }
 
-        public int GetOutput()
+        public int GetOutput(T t)
         {
             TFSession session = new TFSession();
             Runner runner = session.GetRunner();
 
-            TFTensor tensor = runner.Run(GetTFOutput(session));
+            TFTensor result = runner.Run(GetTFOutput(session, t));
 
-            return (int)tensor.GetValue();
+            int bestIdx = 0;
+            float best = 0;
+
+            float[,] val = (float[,])result.GetValue(jagged: false);
+
+            // Result is [1,N], flatten array
+            for (int i = 0; i < val.GetLength(1); i++)
+            {
+                if (val[0, i] > best)
+                {
+                    bestIdx = i;
+                    best = val[0, i];
+                }
+            }
+
+            return bestIdx;
         }
     }
 
