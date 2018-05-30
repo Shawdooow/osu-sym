@@ -28,11 +28,15 @@ namespace osu.Game.Screens.KoziLord
 
         public Box ColumnBackground;
 
+        public ColumnButton ColumnElement;
+
+        public Container MainContainer;
+
         public KoziScreen()
         {
             Children = new Drawable[]
             {
-                new Container
+                MainContainer = new Container
                 {
                     RelativeSizeAxes = Axes.Y,
                     Width = 600,
@@ -62,15 +66,15 @@ namespace osu.Game.Screens.KoziLord
                                     Direction = FillDirection.Vertical,
                                     Children = new Drawable[]
                                     {
-                                        new ColumnButton(@"Testing Text"),
-                                        new ColumnButton(@"Button no.2"),
-                                        new ColumnButton(@"'Nother one"),
-                                        new ColumnButton(@"'Nother one"),
-                                        new ColumnButton(@"'Nother one"),
-                                        new ColumnButton(@"'Nother one"),
-                                        new ColumnButton(@"'Nother one"),
-                                        new ColumnButton(@"'Nother one"),
-                                        new ColumnButton(@"'Nother one"),
+                                        ColumnElement = new ColumnButton(@"Testing Text"),
+                                        ColumnElement = new ColumnButton(@"Button no.2"),
+                                        ColumnElement = new ColumnButton(@"'Nother one"),
+                                        ColumnElement = new ColumnButton(@"'Nother one"),
+                                        ColumnElement = new ColumnButton(@"'Nother one"),
+                                        ColumnElement = new ColumnButton(@"'Nother one"),
+                                        ColumnElement = new ColumnButton(@"'Nother one"),
+                                        ColumnElement = new ColumnButton(@"'Nother one"),
+                                        ColumnElement = new ColumnButton(@"'Nother one"),
 
                                     }
                                 }
@@ -81,13 +85,14 @@ namespace osu.Game.Screens.KoziLord
             };
     
         }
-        private class ColumnButton : OsuClickableContainer
+        public class ColumnButton : OsuClickableContainer
         {
             public ColumnButton(string title)
             {
                 Anchor = Anchor.TopCentre;
                 Origin = Anchor.TopCentre;
                 Height = 100;
+                Position = new Vector2(0, -60);
                 Width = 500;
                 CornerRadius = 16;
                 Masking = true;
@@ -109,9 +114,10 @@ namespace osu.Game.Screens.KoziLord
 
             }
         }
-
         protected override void OnEntering(Screen last)
         {
+            MainContainer.FadeInFromZero(400, Easing.Out);
+            //ColumnButton.FadeInFromZero(900, Easing.Out);
             ColumnBackground.ScaleTo(new Vector2(1, 1), 600, Easing.OutQuart);
         }
     }

@@ -77,7 +77,7 @@ namespace osu.Game.Screens.Symcol
                             Anchor = Anchor.Centre,
                             ButtonColorTop = Color4.Black,
                             ButtonColorBottom = Color4.Yellow,
-                            ButtonSize = 90,
+                            ButtonSize = 100,
                             Action = delegate { Push(new ShawdooowLazerLiveWallpaper()); },
                             ButtonPosition = new Vector2(170 , 190),
                         },
@@ -189,12 +189,12 @@ namespace osu.Game.Screens.Symcol
                         },
                         new SymcolButton
                         {
-                            ButtonName = "KoziLord",
+                            ButtonName = "KoziLord's",
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
                             ButtonColorTop = Color4.Purple,
                             ButtonColorBottom = Color4.Magenta,
-                            ButtonSize = 100,
+                            ButtonSize = 115,
                             Action = delegate { Push(new KoziScreen()); },
                             ButtonPosition = new Vector2(-250, -20),
                         },
