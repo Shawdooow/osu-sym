@@ -154,7 +154,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 if (o is Bullet b)
                 {
-                    if (DrawableBullet.BoundryHacks && (pattern.PatternID == 2 || pattern.PatternID == 3))
+                    if (DrawableBullet.BoundryHacks)// && (pattern.PatternID == 2 || pattern.PatternID == 3))
                     {
                         b.BulletAngle += getPlayerAngle() - Math.PI / 2;
                         b.SliderType = b.SliderType;
