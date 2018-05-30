@@ -6,7 +6,7 @@ namespace osu.Game.Rulesets.Shape.Neural
     {
         public override ShapeAction[] GetActiveActions => throw new System.NotImplementedException();
 
-        public override TensorFlowBrain TensorFlowBrain => new ShapeNeuralBrain();;
+        public override TensorFlowBrain TensorFlowBrain => new ShapeNeuralBrain();
 
         public ShapeNeuralContainer()
         {
