@@ -8,6 +8,9 @@ namespace osu.Game.Screens.Evast.LifeGame
 {
     public class LifeGamePlayfield : PixelField
     {
+        public override bool HandleMouseInput => false;
+        public override bool HandleKeyboardInput => false;
+
         private readonly bool[,] previousIterationMap;
 
         protected override Pixel CreateNewPixel(int size) => new Cell(size);
