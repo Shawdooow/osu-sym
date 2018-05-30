@@ -201,7 +201,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
             //TODO: Temp?
             Size = new Vector2(64);
 
-            Children = new Drawable[]
+            AddRange(new Drawable[]
             {
                 Seal = new Seal(this),
                 SoulContainer = new Container
@@ -289,7 +289,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
                         Colour = PrimaryColor.Opacity(0.5f)
                     }
                 }
-            };
+            });
 
             Add(Hitbox = new SymcolHitbox(new Vector2(HitboxWidth)) { Team = Team });
 

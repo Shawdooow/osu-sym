@@ -1,16 +1,35 @@
 ﻿using OpenTK;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
+using System;
 
 namespace Symcol.Core.NeuralNetworking
 {
-    public abstract class NeuralInputContainer<T> : KeyBindingContainer<T>, IKeyBindingHandler<T>
-        where T : struct
+    public abstract class NeuralInputContainer<T> : Container, IKeyBindingHandler<T>
+        where T : struct, IConvertible
     {
-        public TensorFlowBrain TensorFlowBrain { get; private set; }
+        public abstract TensorFlowBrain<T> TensorFlowBrain { get; }
 
-        public NeuralInputContainer()
+        /// <summary>
+        /// All currently usable actions in T
+        /// </summary>
+        public abstract T[] GetActiveActions { get; }
+
+        protected override void Update()
         {
-            TensorFlowBrain = new TensorFlowBrain();
+            base.Update();
+
+            if (TensorFlowBrain.NeuralNetworkState == NeuralNetworkState.Active)
+                foreach (T t in GetActiveActions)
+                {
+                    int i = TensorFlowBrain.GetOutput(t);
+
+                    if (i == 1)
+                        Pressed(t);
+                    else if (i == 2)
+                        Released(t);
+                }
+            
         }
 
         #region Input Handling
@@ -19,28 +38,28 @@ namespace Symcol.Core.NeuralNetworking
         public bool OnPressed(T action)
         {
             if (TensorFlowBrain.NeuralNetworkState < NeuralNetworkState.Active)
-                return Pressed(action);
+            {
+                Pressed(action);
+                return true;
+            }
             else
                 return false;
         }
 
-        protected virtual bool Pressed(T action)
-        {
-            return true;
-        }
+        public Action<T> Pressed;
 
         public bool OnReleased(T action)
         {
             if (TensorFlowBrain.NeuralNetworkState < NeuralNetworkState.Active)
-                return Released(action);
+            {
+                Released(action);
+                return true;
+            }
             else
                 return false;
         }
 
-        protected virtual bool Released(T action)
-        {
-            return true;
-        }
+        public Action<T> Released;
         #endregion
     }
 }

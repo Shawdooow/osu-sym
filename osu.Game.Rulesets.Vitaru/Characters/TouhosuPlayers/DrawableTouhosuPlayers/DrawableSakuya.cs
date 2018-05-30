@@ -225,8 +225,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
             SpeedMultiplier = 1 / speed;
         }
 
-        protected override bool Pressed(VitaruAction action)
+        protected override void Pressed(VitaruAction action)
         {
+            base.Pressed(action);
+
             if (action == VitaruAction.Increase)
             {
                 if (Actions[VitaruAction.Slow])
@@ -241,8 +243,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                 else
                     SetRate = Math.Max(Math.Round(SetRate - 0.25d, 2), 0.25d);
             }
-
-            return base.Pressed(action);
         }
     }
 }

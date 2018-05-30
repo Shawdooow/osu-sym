@@ -1,6 +1,7 @@
 ﻿using osu.Framework.Configuration;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Vitaru.Debug;
+using Symcol.Core.NeuralNetworking;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
@@ -22,6 +23,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             Set(VitaruSetting.DebugMode, false);
             Set(VitaruSetting.DebugConfiguration, DebugConfiguration.General);
+            Set(VitaruSetting.NeuralNetworkState, NeuralNetworkState.Idle);
 
             Set(VitaruSetting.GraphicsPreset, GraphicsPresets.Standard);
             Set(VitaruSetting.BulletVisuals, GraphicsOptions.Standard);
@@ -76,6 +78,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         DebugMode,
         DebugConfiguration,
+        NeuralNetworkState,
 
         GraphicsPreset,
         BulletVisuals,

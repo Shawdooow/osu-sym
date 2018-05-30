@@ -71,8 +71,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
             }
         }
 
-        protected override bool Pressed(VitaruAction action)
+        protected override void Pressed(VitaruAction action)
         {
+            base.Pressed(action);
+
             if (action == VitaruAction.Increase)
                 level = Math.Min(level + 1, 3);
             if (action == VitaruAction.Decrease)
@@ -93,8 +95,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                     setPitch = 0.8d;
                     break;
             }
-
-            return base.Pressed(action);
         }
 
         #region Touhosu Story Content

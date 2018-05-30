@@ -101,20 +101,20 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         }
         #endregion
 
-        protected override bool Pressed(VitaruAction action)
+        protected override void Pressed(VitaruAction action)
         {
+            base.Pressed(action);
+
             if (action == VitaruAction.Spell)
                 SpellActivate(action);
-
-            return base.Pressed(action);
         }
 
-        protected override bool Released(VitaruAction action)
+        protected override void Released(VitaruAction action)
         {
+            base.Released(action);
+
             if (action == VitaruAction.Spell)
                 SpellDeactivate(action);
-
-            return base.Released(action);
         }
 
         //TODO: I feel like this TODO should be obvious (figure out this bindable thing)
