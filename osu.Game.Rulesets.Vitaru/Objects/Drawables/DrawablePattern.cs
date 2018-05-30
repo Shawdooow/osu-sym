@@ -154,7 +154,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 if (o is Bullet b)
                 {
-                    if (DrawableBullet.BoundryHacks && pattern.PatternID == 2)
+                    if (DrawableBullet.BoundryHacks && (pattern.PatternID == 2 || pattern.PatternID == 3))
                     {
                         b.BulletAngle = getPlayerAngle();
                         b.SliderType = b.SliderType;
@@ -218,7 +218,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private double getPlayerAngle()
         {
-            return (MathHelper.RadiansToDegrees(Math.Atan2((VitaruPlayfield.Player.Position.Y - Position.Y), (VitaruPlayfield.Player.Position.X - Position.X))) + 90 + Rotation) - 12;
+            return Math.Atan2((VitaruPlayfield.Player.Position.Y - Position.Y), (VitaruPlayfield.Player.Position.X - Position.X));
         }
     }
 }
