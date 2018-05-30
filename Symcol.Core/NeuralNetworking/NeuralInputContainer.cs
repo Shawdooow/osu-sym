@@ -1,17 +1,35 @@
 ﻿using OpenTK;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
+using System;
 
 namespace Symcol.Core.NeuralNetworking
 {
     public abstract class NeuralInputContainer<T> : Container, IKeyBindingHandler<T>
-        where T : struct
+        where T : struct, IConvertible
     {
-        public TensorFlowBrain TensorFlowBrain { get; private set; }
+        public abstract TensorFlowBrain TensorFlowBrain { get; }
 
-        public NeuralInputContainer()
+        /// <summary>
+        /// All currently usable actions in T
+        /// </summary>
+        public abstract T[] GetActiveActions { get; }
+
+        protected override void Update()
         {
-            TensorFlowBrain = new TensorFlowBrain();
+            base.Update();
+
+            if (TensorFlowBrain.NeuralNetworkState == NeuralNetworkState.Active)
+                foreach (T t in GetActiveActions)
+                {
+                    int i = TensorFlowBrain.GetOutput();
+
+                    if (i == 1)
+                        Pressed(t);
+                    else if (i == 2)
+                        Released(t);
+                }
+            
         }
 
         #region Input Handling

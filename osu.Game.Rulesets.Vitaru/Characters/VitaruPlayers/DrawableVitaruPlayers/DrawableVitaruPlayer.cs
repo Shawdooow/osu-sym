@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
-using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Vitaru.Debug;
@@ -19,9 +18,7 @@ using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.Networking;
 using System;
 using System.Collections.Generic;
-using TensorFlow;
 using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
-using static TensorFlow.TFSession;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers
 {

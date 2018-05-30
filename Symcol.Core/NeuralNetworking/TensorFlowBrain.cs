@@ -1,7 +1,17 @@
-﻿namespace Symcol.Core.NeuralNetworking
+﻿using TensorFlow;
+using static TensorFlow.TFSession;
+
+namespace Symcol.Core.NeuralNetworking
 {
-    public class TensorFlowBrain
+    /// <summary>
+    /// Will act like high-level input / output for TensorFlow
+    /// Can be set to different NeuralNetworkStates
+    /// </summary>
+    public abstract class TensorFlowBrain
     {
+        /// <summary>
+        /// Current state that this Neural Network is set to
+        /// </summary>
         public NeuralNetworkState NeuralNetworkState
         {
             get { return neuralNetworkState; }
@@ -16,19 +26,27 @@
 
         private NeuralNetworkState neuralNetworkState;
 
-        public TensorFlowBrain()
-        {
+        /// <summary>
+        /// Get information to react to
+        /// </summary>
+        public abstract TFOutput GetTFOutput(TFSession session);
 
+        public void LearnInput(int action)
+        {
+            if (NeuralNetworkState == NeuralNetworkState.Learning)
+            {
+
+            }
         }
 
-        public void Input(int input)
+        public int GetOutput()
         {
+            TFSession session = new TFSession();
+            Runner runner = session.GetRunner();
 
-        }
+            TFTensor tensor = runner.Run(GetTFOutput(session));
 
-        public int Output()
-        {
-            return 0;
+            return (int)tensor.GetValue();
         }
     }
 
