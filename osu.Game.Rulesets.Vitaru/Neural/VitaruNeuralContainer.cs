@@ -1,4 +1,5 @@
 ﻿using osu.Framework.Configuration;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.NeuralNetworking;
@@ -22,10 +23,10 @@ namespace osu.Game.Rulesets.Vitaru.Neural
 
         private readonly VitaruPlayfield vitaruPlayfield;
 
-        public VitaruNeuralContainer(VitaruPlayfield vitaruPlayfield)
+        public VitaruNeuralContainer(VitaruPlayfield vitaruPlayfield, DrawableVitaruPlayer player)
         {
             this.vitaruPlayfield = vitaruPlayfield;
-            vitaruNeuralBrain = new VitaruNeuralBrain(vitaruPlayfield);
+            vitaruNeuralBrain = new VitaruNeuralBrain(vitaruPlayfield, player);
 
             Bindable<NeuralNetworkState> bindable = VitaruSettings.VitaruConfigManager.GetBindable<NeuralNetworkState>(VitaruSetting.NeuralNetworkState);
             bindable.ValueChanged += state =>
