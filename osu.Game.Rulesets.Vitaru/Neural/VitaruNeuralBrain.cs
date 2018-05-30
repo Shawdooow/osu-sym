@@ -21,13 +21,9 @@ namespace osu.Game.Rulesets.Vitaru.Neural
 
         public override TFTensor[] GetTensors(TFSession session, VitaruAction action)
         {
-            TFOutput input = session.Graph.Constant((float)action, new TFShape(4, 4), TFDataType.Float);
-
-            TFOutput two = session.Graph.Constant(2f, new TFShape(4, 4), TFDataType.Float);
-
             TFTensor[] output = new TFTensor[]
             {
-                session.GetRunner().Run(input)
+                session.GetRunner().Run(session.Graph.Constant((float)action, new TFShape(4, 4), TFDataType.Float))
             };
 
             for (int i = 0; i < vitaruPlayfield.GameField.Current.Count; i++)
@@ -36,11 +32,9 @@ namespace osu.Game.Rulesets.Vitaru.Neural
                     float xPow = (float)Math.Pow(drawableBullet.Position.X, 2);
                     float yPow = (float)Math.Pow(drawableBullet.Position.Y, 2);
 
-                    TFOutput xPowConst = session.Graph.Constant(xPow, new TFShape(2, 2), TFDataType.Float);
-                    TFOutput yPowConst = session.Graph.Constant(yPow, new TFShape(2, 2), TFDataType.Float);
+                    float sqrt = (float)Math.Sqrt(xPow + yPow);
 
-                    TFOutput position = session.Graph.Sqrt(session.Graph.Add(xPowConst, yPowConst));
-
+                    TFOutput position = session.Graph.Constant(sqrt, new TFShape(2, 2), TFDataType.Float);
                     TFOutput angle = session.Graph.Constant((float)Math.Atan2(drawableBullet.Position.Y - player.Position.Y, drawableBullet.Position.X - player.Position.X), new TFShape(2, 2), TFDataType.Float);
 
                     TFTensor p = session.GetRunner().Run(position);
