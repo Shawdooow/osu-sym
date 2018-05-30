@@ -19,14 +19,11 @@ namespace osu.Game.Rulesets.Vitaru.Neural
             this.player = player;
         }
 
-        public override TFTensor[] GetTFTensors(TFSession session, VitaruAction action)
+        public override TFTensor[] GetTensors(TFSession session, VitaruAction action)
         {
-            TFOutput input = session.Graph.Constant((int)action, new TFShape(4, 4), TFDataType.Int32);
+            TFOutput input = session.Graph.Constant((float)action, new TFShape(4, 4), TFDataType.Float);
 
-            TFOutput xPlayer = session.Graph.Constant(player.Position.X, new TFShape(4, 4), TFDataType.Float);
-            TFOutput yPlayer = session.Graph.Constant(player.Position.Y, new TFShape(4, 4), TFDataType.Float);
-
-            TFOutput two = session.Graph.Constant(2, new TFShape(4, 4), TFDataType.Int32);
+            TFOutput two = session.Graph.Constant(2f, new TFShape(4, 4), TFDataType.Float);
 
             TFTensor[] output = new TFTensor[]
             {
@@ -34,29 +31,24 @@ namespace osu.Game.Rulesets.Vitaru.Neural
             };
 
             for (int i = 0; i < vitaruPlayfield.GameField.Current.Count; i++)
-                if (vitaruPlayfield.GameField.Current[i] is DrawableBullet drawableBullet)
+                if (vitaruPlayfield.GameField.Current[i] is DrawableBullet drawableBullet && drawableBullet.Bullet.Team != player.Team)
                 {
-                    TFOutput xBullet = session.Graph.Constant(drawableBullet.Position.X, new TFShape(4, 4), TFDataType.Float);
-                    TFOutput yBullet = session.Graph.Constant(drawableBullet.Position.Y, new TFShape(4, 4), TFDataType.Float);
+                    float xPow = (float)Math.Pow(drawableBullet.Position.X, 2);
+                    float yPow = (float)Math.Pow(drawableBullet.Position.Y, 2);
 
-                    TFOutput xPow = session.Graph.Pow(xBullet, two);
-                    TFOutput yPow = session.Graph.Pow(yBullet, two);
+                    TFOutput xPowConst = session.Graph.Constant(xPow, new TFShape(2, 2), TFDataType.Float);
+                    TFOutput yPowConst = session.Graph.Constant(yPow, new TFShape(2, 2), TFDataType.Float);
 
-                    TFOutput position = session.Graph.Sqrt(session.Graph.Add(xPow, yPow));
+                    TFOutput position = session.Graph.Sqrt(session.Graph.Add(xPowConst, yPowConst));
 
-                    TFOutput xRelative = session.Graph.Sub(xBullet, xPlayer);
-                    TFOutput yRelative = session.Graph.Sub(yBullet, yPlayer);
-
-                    TFOutput angle = session.Graph.Atan2(yRelative, xRelative);
+                    TFOutput angle = session.Graph.Constant((float)Math.Atan2(drawableBullet.Position.Y - player.Position.Y, drawableBullet.Position.X - player.Position.X), new TFShape(2, 2), TFDataType.Float);
 
                     TFTensor p = session.GetRunner().Run(position);
-                    TFTensor a = session.GetRunner().Run(position);
+                    TFTensor a = session.GetRunner().Run(angle);
 
                     output = addTensorToArray(output, p);
                     output = addTensorToArray(output, a);
                 }
-
-            
 
             return output;
         }
