@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         public CreditsSection()
         {
-            Content.Add(new WikiParagraph("A place of thanks, because these people helped make vitaru in one way or another."));
+            Content.Add(new WikiParagraph("A place of thanks, because these people helped get vitaru where it is today one way or another!"));
             Content.Add(new WikiSubSectionLinkHeader("Jorolf", "https://osu.ppy.sh/users/7004641", "View profile in browser"));
             Content.Add(new WikiParagraph("Started the code base, without Jorolf vitaru would not exist today."));
             Content.Add(new WikiSubSectionLinkHeader("Arrcival", "https://osu.ppy.sh/users/3782165", "View profile in browser"));
