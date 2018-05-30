@@ -1,8 +1,7 @@
-﻿using osu.Framework.Graphics;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables;
+﻿using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.NeuralNetworking;
-using System.Collections.Generic;
+using System;
 using TensorFlow;
 
 namespace osu.Game.Rulesets.Vitaru.Neural
@@ -18,26 +17,16 @@ namespace osu.Game.Rulesets.Vitaru.Neural
 
         public override TFOutput GetTFOutput(TFSession session, VitaruAction action)
         {
-            List<DrawableBullet> bullets = new List<DrawableBullet>();
+            for (int i = 0; i < vitaruPlayfield.GameField.Current.Count; i++)
+                if (vitaruPlayfield.GameField.Current[i] is DrawableBullet drawableBullet)
+                {
+                    //TFOutput x = session.Graph.Constant(1, new TFShape(), TFDataType.Double)
+                }
 
-            foreach (Drawable draw in vitaruPlayfield.GameField.Current)
-                if (draw is DrawableBullet drawableBullet)
-                    bullets.Add(drawableBullet);
+            TFOutput bulletstuff = session.Graph.Constant(2, new TFShape(), TFDataType.Int32);
+            TFOutput input = session.Graph.Constant((int)action, new TFShape(), TFDataType.Int32);
 
-            return session.Graph.Constant(new Info(bullets, action), new TFShape(), TFDataType.Double);
-        }
-
-        private class Info
-        {
-            public readonly List<DrawableBullet> DrawableBullets;
-
-            public readonly VitaruAction VitaruAction;
-
-            public Info(List<DrawableBullet> bullets, VitaruAction action)
-            {
-                DrawableBullets = bullets;
-                VitaruAction = action;
-            }
+            return session.Graph.Mul(bulletstuff, input);
         }
     }
 }
