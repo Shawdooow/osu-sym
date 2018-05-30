@@ -23,8 +23,8 @@ namespace osu.Game.Rulesets.Vitaru.Neural
                     //TFOutput x = session.Graph.Constant(1, new TFShape(), TFDataType.Double)
                 }
 
-            TFOutput bulletstuff = session.Graph.Constant(2, new TFShape(), TFDataType.Int32);
-            TFOutput input = session.Graph.Constant((int)action, new TFShape(), TFDataType.Int32);
+            TFOutput bulletstuff = session.Graph.Constant(2, new TFShape(4, 4), TFDataType.Int32);
+            TFOutput input = session.Graph.Constant((int)action, new TFShape(4, 4), TFDataType.Int32);
 
             return session.Graph.Mul(bulletstuff, input);
         }

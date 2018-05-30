@@ -47,10 +47,12 @@ namespace Symcol.Core.NeuralNetworking
 
             TFTensor result = runner.Run(GetTFOutput(session, t));
 
+            object output = result.GetValue(jagged: false);
+
             int bestIdx = 0;
             float best = 0;
 
-            float[,] val = (float[,])result.GetValue(jagged: false);
+            int[,] val = (int[,])output;
 
             // Result is [1,N], flatten array
             for (int i = 0; i < val.GetLength(1); i++)
