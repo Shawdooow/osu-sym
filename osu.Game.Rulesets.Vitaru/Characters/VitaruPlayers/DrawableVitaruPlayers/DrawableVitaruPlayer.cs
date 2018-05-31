@@ -2,6 +2,7 @@
 using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Audio.Track;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -17,6 +18,7 @@ using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.Networking;
+using Symcol.Core.NeuralNetworking;
 using System;
 using System.Collections.Generic;
 using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
@@ -148,8 +150,16 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                         DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { BoundryHacks = !BoundryHacks; DrawableBullet.BoundryHacks = !DrawableBullet.BoundryHacks; }) { Text = "Boundry Hacks" });
                         DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
                         break;
-                    case DebugConfiguration.MachineLearning:
-                        DebugToolkit.MachineLearningDebugItems.Add(new DebugAction(() => { Auto = !Auto; }) { Text = "Auto Hacks" });
+                    case DebugConfiguration.NeuralNetworking:
+                        Bindable<NeuralNetworkState> bindable = VitaruSettings.VitaruConfigManager.GetBindable<NeuralNetworkState>(VitaruSetting.NeuralNetworkState);
+                        bindable.ValueChanged += value => { VitaruNeuralContainer.TensorFlowBrain.NeuralNetworkState = value; };
+                        bindable.TriggerChange();
+
+                        DebugToolkit.MachineLearningDebugItems.Add(new DebugStat<NeuralNetworkState>(bindable) { Text = "Neural Network State" });
+                        DebugToolkit.MachineLearningDebugItems.Add(new DebugAction(() => { bindable.Value = NeuralNetworkState.Idle; }) { Text = "Set Idle State" });
+                        DebugToolkit.MachineLearningDebugItems.Add(new DebugAction(() => { bindable.Value = NeuralNetworkState.Learning; }) { Text = "Set Learning State" });
+                        DebugToolkit.MachineLearningDebugItems.Add(new DebugAction(() => { bindable.Value = NeuralNetworkState.Active; }) { Text = "Set Active State" });
+                        DebugToolkit.MachineLearningDebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
                         break;
                 }
             }

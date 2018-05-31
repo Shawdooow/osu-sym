@@ -61,10 +61,13 @@ namespace osu.Game.Rulesets.Vitaru.Debug
             };
 
             if (Bindable != null)
+            {
                 Bindable.ValueChanged += (value) =>
                 {
                     text.Text = valueName + " = " + value.ToString();
                 };
+                Bindable.TriggerChange();
+            }
         }
     }
 }
