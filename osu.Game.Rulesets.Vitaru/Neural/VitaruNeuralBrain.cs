@@ -38,6 +38,7 @@ namespace osu.Game.Rulesets.Vitaru.Neural
                     session.GetRunner().AddInput(session.Graph.Constant(sqrt, shape, TFDataType.Float), tensor);
                 }
 
+            //TODO: see if this leaks
             output = session.GetRunner().Run(session.Graph.Constant((float)action, shape, TFDataType.Float));
 
             return output;

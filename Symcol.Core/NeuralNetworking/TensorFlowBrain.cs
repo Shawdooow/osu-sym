@@ -41,6 +41,7 @@ namespace Symcol.Core.NeuralNetworking
             }
         }
 
+        //TODO: fix serious memory leak issues
         public int GetOutput(T t)
         {
             TFSession session = new TFSession();
@@ -65,6 +66,8 @@ namespace Symcol.Core.NeuralNetworking
                 }
             }
 
+            session.Graph.Dispose();
+            session.Dispose();
             return bestIdx;
         }
     }
