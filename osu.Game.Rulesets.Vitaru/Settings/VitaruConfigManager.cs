@@ -2,6 +2,7 @@
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Vitaru.Debug;
 using Symcol.Core.NeuralNetworking;
+using osu.Game.Rulesets.Vitaru.Edit;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
@@ -32,6 +33,8 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.KiaiBoss, false);
             Set(VitaruSetting.PlayfieldBorder, false);
             Set(VitaruSetting.ComboFire, true);
+
+            Set(VitaruSetting.EditorConfiguration, EditorConfiguration.Simple);
 
             Set(VitaruSetting.ShittyMultiplayer, false);
             Set(VitaruSetting.FriendlyPlayerCount, 0, 0, 7);
@@ -87,6 +90,8 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         KiaiBoss,
         PlayfieldBorder,
         ComboFire,
+
+        EditorConfiguration,
 
         ShittyMultiplayer,
         FriendlyPlayerCount,

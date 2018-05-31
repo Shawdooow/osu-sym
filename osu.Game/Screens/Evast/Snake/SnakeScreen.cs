@@ -4,6 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays.Settings;
 using osu.Game.Screens.Evast.LifeGame;
 using osu.Game.Screens.Play.PlayerSettings;
 
@@ -47,34 +48,34 @@ namespace osu.Game.Screens.Evast.Snake
         {
             protected override string Title => @"general";
 
-            public readonly OsuButton StopButton;
-            public readonly OsuButton RestartButton;
-            public readonly OsuButton PauseButton;
-            public readonly OsuButton ContinueButton;
+            public readonly SettingsButton StopButton;
+            public readonly SettingsButton RestartButton;
+            public readonly SettingsButton PauseButton;
+            public readonly SettingsButton ContinueButton;
 
             public GeneralSettings()
             {
                 Children = new Drawable[]
                 {
-                    StopButton = new OsuButton
+                    StopButton = new SettingsButton
                     {
                         RelativeSizeAxes = Axes.X,
                         Height = 40,
                         Text = "Stop",
                     },
-                    RestartButton = new OsuButton
+                    RestartButton = new SettingsButton
                     {
                         RelativeSizeAxes = Axes.X,
                         Height = 40,
                         Text = "Restart",
                     },
-                    PauseButton = new OsuButton
+                    PauseButton = new SettingsButton
                     {
                         RelativeSizeAxes = Axes.X,
                         Height = 40,
                         Text = "Pause",
                     },
-                    ContinueButton = new OsuButton
+                    ContinueButton = new SettingsButton
                     {
                         RelativeSizeAxes = Axes.X,
                         Height = 40,

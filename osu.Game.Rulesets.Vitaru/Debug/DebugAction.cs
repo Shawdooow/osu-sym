@@ -3,6 +3,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input;
 using osu.Game.Graphics;
 using System;
 
@@ -56,6 +57,14 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                     TextSize = 18
                 }
             };
+        }
+
+        protected override bool OnClick(InputState state)
+        {
+            if (!VitaruAPIContainer.Shawdooow)
+                return false;
+
+            return base.OnClick(state);
         }
     }
 }

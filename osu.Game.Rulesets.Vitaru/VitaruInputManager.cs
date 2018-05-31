@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Vitaru
             if (shade)
                 Add(Shade = new Box { RelativeSizeAxes = Axes.Both, Alpha = 0, Colour = Color4.Orange });
 
-            if (debug && VitaruAPIContainer.Shawdooow)
+            if (debug)
                 Add(DebugToolkit = new DebugToolkit());
 
             if (comboFire)

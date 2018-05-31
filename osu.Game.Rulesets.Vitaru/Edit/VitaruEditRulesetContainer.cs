@@ -33,4 +33,11 @@ namespace osu.Game.Rulesets.Vitaru.Edit
             return null;
         }
     }
+
+    public enum EditorConfiguration
+    {
+        Simple,
+        Complex,
+        Custom
+    }
 }

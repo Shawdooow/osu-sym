@@ -47,12 +47,12 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                         "Left Mouse = Shoot (while in vitaru or touhosu mode)"));
 
             Content.Add(new WikiSubSectionHeader("Anatomy"));
-            Content.Add(new WikiParagraph("Lets get you familiar with the anatomy of the Player first. " +
-                        "Unfortunetly I have not had time to implement squishy insides so for now we are just going to go over the basics.\n"));
+            Content.Add(new WikiParagraph("Lets get you familiar with the anatomy of different game objects.\n"));
             Content.Add(new WikiSplitColum(
-                new WikiParagraph("On the right we have the Player, I also have revealed the hitbox so I can explain why thats the only part that actually matters. " +
+                new WikiParagraph("On the right we have the Player, unfortunetly I have not had time to implement squishy insides so for now we are just going to go over the basics." +
+                        "I have also revealed the hitbox so I can explain why thats the only part that actually matters. " +
                         "First, see that little white dot with the colored ring in the middle of the player? Thats the hitbox. " +
-                        "You only take damage if that white part gets hit, bullets will pass right over the rest of the player without actually harming you in any way, infact that heals you!"),
+                        "You only take damage if that white part gets hit, bullets will pass right over the rest of the player without actually harming you in any way, infact that will heal you!"),
                 new Container
                 {
                     RelativeSizeAxes = Axes.X,

@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             Player = player;
             VitaruNetworkingClientHandler = vitaruNetworkingClientHandler;
 
-            Add(VitaruNeuralContainer = new VitaruNeuralContainer(playfield));
+            Add(VitaruNeuralContainer = new VitaruNeuralContainer(playfield, this));
 
             VitaruNeuralContainer.Pressed = Pressed;
             VitaruNeuralContainer.Released = Released;

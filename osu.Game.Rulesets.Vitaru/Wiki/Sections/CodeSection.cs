@@ -30,9 +30,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
                 switch (equations)
                 {
-                    case Code.Difficulty:
-                        leftParagraph.Text = "I honestly have no idea how it works or if it actually does. It appears to work so I ain't gonna go back in there till people complain.";
-                        break;
                     case Code.PP:
                         leftParagraph.Text = "Where:\n" +
                         "difficulty = map star rating\n" +
@@ -41,17 +38,29 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
                         rightParagraph.Text = "pp = difficulty * Score.TotalScore * pp_multiplier;";
                         break;
-                    case Code.Player:
+                    case Code.Healing:
                         leftParagraph.Text = "Basically we are checking where the bullet is relative to the player's hitbox (which would be (0, 0)) and seeing how far away the edge of the bullet is to the edge of the hitbox. " +
                         "If its less than 64 you can heal this beat (which approximates to just within the health ring). " +
                         "This is also how we check if you can gain energy, but instead of it being beat based it is a per frame thing " +
                         "(however the amount is framerate independent, it is based on real time passed. This makes it map independent).";
 
                         rightParagraph.Text = "Vector2 object2Pos = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, this) + new Vector2(6);\n" +
-                        "float distance = (float)Math.Sqrt(Math.Pow(object2Pos.X, 2) + Math.Pow(object2Pos.Y, 2));\n" +
-                        "float edgeDistance = distance - (bullet.Width / 2 + Hitbox.Width / 2);\n\n" +
+                        "double distance = Math.Sqrt(Math.Pow(object2Pos.X, 2) + Math.Pow(object2Pos.Y, 2));\n" +
+                        "double edgeDistance = distance - (bullet.Width / 2 + Hitbox.Width / 2);\n\n" +
+
                         "if (edgeDistance < 64 && bullet.Bullet.Team != Team)\n" +
-                        "   CanHeal = true;";
+                        "{\n" +
+                        "    bool add = true;" +
+                        "    foreach (HealingBullet HealingBullet in HealingBullets)\n" +
+                        "        if (HealingBullet.DrawableBullet == bullet)\n" +
+                        "        {\n" +
+                        "            HealingBullet.EdgeDistance = edgeDistance;\n" +
+                        "            add = false;\n" +
+                        "        }\n\n" +
+
+                        "    if (add)\n" +
+                        "        HealingBullets.Add(new HealingBullet(bullet, edgeDistance));\n" +
+                        "}";
                         break;
                 }
             };
@@ -67,8 +76,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         Difficulty,
         [System.ComponentModel.Description("PP Calulation")]
         PP,
-        Player,
-        Ryukoy,
-        Sakuya,
+        Healing
     }
 }

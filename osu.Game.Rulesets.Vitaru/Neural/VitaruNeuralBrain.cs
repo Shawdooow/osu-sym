@@ -1,4 +1,5 @@
-﻿using osu.Game.Rulesets.Vitaru.Objects.Drawables;
+﻿using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.NeuralNetworking;
 using System;
@@ -10,23 +11,36 @@ namespace osu.Game.Rulesets.Vitaru.Neural
     {
         private readonly VitaruPlayfield vitaruPlayfield;
 
-        public VitaruNeuralBrain(VitaruPlayfield vitaruPlayfield)
+        private readonly DrawableVitaruPlayer player;
+
+        public VitaruNeuralBrain(VitaruPlayfield vitaruPlayfield, DrawableVitaruPlayer player)
         {
             this.vitaruPlayfield = vitaruPlayfield;
+            this.player = player;
         }
 
-        public override TFOutput GetTFOutput(TFSession session, VitaruAction action)
+        public override TFTensor GetTensor(TFSession session, VitaruAction action)
         {
+            int s = 0;
+            TFShape shape = new TFShape(s, s);
+            TFTensor tensor = new TFTensor(s);
+
+            TFTensor output;
+
             for (int i = 0; i < vitaruPlayfield.GameField.Current.Count; i++)
-                if (vitaruPlayfield.GameField.Current[i] is DrawableBullet drawableBullet)
+                if (vitaruPlayfield.GameField.Current[i] is DrawableBullet drawableBullet && drawableBullet.Bullet.Team != player.Team)
                 {
-                    //TFOutput x = session.Graph.Constant(1, new TFShape(), TFDataType.Double)
+                    float xPow = (float)Math.Pow(drawableBullet.Position.X, 2);
+                    float yPow = (float)Math.Pow(drawableBullet.Position.Y, 2);
+
+                    float sqrt = (float)Math.Sqrt(xPow + yPow);
+
+                    session.GetRunner().AddInput(session.Graph.Constant(sqrt, shape, TFDataType.Float), tensor);
                 }
 
-            TFOutput bulletstuff = session.Graph.Constant(2, new TFShape(4, 4), TFDataType.Int32);
-            TFOutput input = session.Graph.Constant((int)action, new TFShape(4, 4), TFDataType.Int32);
+            output = session.GetRunner().Run(session.Graph.Constant((float)action, shape, TFDataType.Float));
 
-            return session.Graph.Mul(bulletstuff, input);
+            return output;
         }
     }
 }

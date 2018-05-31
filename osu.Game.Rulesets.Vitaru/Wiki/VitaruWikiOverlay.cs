@@ -8,16 +8,16 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
         protected override WikiHeader Header => new VitaruWikiHeader();
 
         protected override WikiSection[] Sections => new WikiSection[]
-            {
-                new GeneralSection(),
-                new GamemodeSection(),
-                new CharactersSection(),
-                //new EditorSection(),
-                //new RankingSection(),
-                //new MultiplayerSection(),
-                //new CodeSection(),
-                new CreditsSection(),
-                new ChangelogSection()
-            };
+        {
+            new GeneralSection(),
+            new GamemodeSection(),
+            new CharactersSection(),
+            new EditorSection(),
+            new MappingSection(),
+            new MultiplayerSection(),
+            new CodeSection(),
+            new CreditsSection(),
+            new ChangelogSection()
+        };
     }
 }

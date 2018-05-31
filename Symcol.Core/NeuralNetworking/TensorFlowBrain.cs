@@ -1,4 +1,5 @@
-﻿using TensorFlow;
+﻿using System.Linq;
+using TensorFlow;
 using static TensorFlow.TFSession;
 
 namespace Symcol.Core.NeuralNetworking
@@ -30,7 +31,7 @@ namespace Symcol.Core.NeuralNetworking
         /// <summary>
         /// Get information to react to
         /// </summary>
-        public abstract TFOutput GetTFOutput(TFSession session, T t);
+        public abstract TFTensor GetTensor(TFSession session, T t);
 
         public void LearnInput(int action)
         {
@@ -45,14 +46,14 @@ namespace Symcol.Core.NeuralNetworking
             TFSession session = new TFSession();
             Runner runner = session.GetRunner();
 
-            TFTensor result = runner.Run(GetTFOutput(session, t));
-
-            object output = result.GetValue(jagged: false);
-
+            TFTensor result = GetTensor(session, t);
+            
             int bestIdx = 0;
             float best = 0;
 
-            int[,] val = (int[,])output;
+            object output = result.GetValue(jagged: false);
+
+            float[,] val = (float[,])output;
 
             // Result is [1,N], flatten array
             for (int i = 0; i < val.GetLength(1); i++)

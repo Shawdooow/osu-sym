@@ -5,6 +5,7 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays.Settings;
 using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Screens.Evast.LifeGame
@@ -47,34 +48,34 @@ namespace osu.Game.Screens.Evast.LifeGame
         {
             protected override string Title => @"general";
 
-            public readonly OsuButton ResetButton;
-            public readonly OsuButton StartButton;
-            public readonly OsuButton PauseButton;
-            public readonly OsuButton RandomButton;
+            public readonly SettingsButton ResetButton;
+            public readonly SettingsButton StartButton;
+            public readonly SettingsButton PauseButton;
+            public readonly SettingsButton RandomButton;
 
             public GeneralSettings()
             {
                 Children = new Drawable[]
                 {
-                    ResetButton = new OsuButton
+                    ResetButton = new SettingsButton
                     {
                         RelativeSizeAxes = Axes.X,
                         Height = 40,
                         Text = "Reset simulation",
                     },
-                    StartButton = new OsuButton
+                    StartButton = new SettingsButton
                     {
                         RelativeSizeAxes = Axes.X,
                         Height = 40,
                         Text = "Start simulation",
                     },
-                    PauseButton = new OsuButton
+                    PauseButton = new SettingsButton
                     {
                         RelativeSizeAxes = Axes.X,
                         Height = 40,
                         Text = "Pause simulation",
                     },
-                    RandomButton = new OsuButton
+                    RandomButton = new SettingsButton
                     {
                         RelativeSizeAxes = Axes.X,
                         Height = 40,
