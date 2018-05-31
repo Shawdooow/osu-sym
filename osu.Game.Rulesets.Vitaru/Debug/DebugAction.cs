@@ -37,9 +37,6 @@ namespace osu.Game.Rulesets.Vitaru.Debug
             Masking = true;
             CornerRadius = 4;
 
-            BorderColour = Color4.White;
-            BorderThickness = 4;
-
             RelativeSizeAxes = Axes.X;
             Height = 24;
 
@@ -48,7 +45,8 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                 new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Colour = osu.Red
+                    Colour = osu.Red,
+                    Alpha = 0.8f
                 },
                 text = new SpriteText
                 {

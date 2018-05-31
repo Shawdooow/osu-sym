@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
             Masking = true;
             CornerRadius = 4;
             BorderColour = Color4.White;
-            BorderThickness = 4;
+            BorderThickness = 3;
 
             Children = new Drawable[]
             {
