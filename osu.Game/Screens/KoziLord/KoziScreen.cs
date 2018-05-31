@@ -14,12 +14,14 @@ using osu.Game.Screens.Symcol.Screens;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Screens.KoziLord;
+using osu.Game.Screens.KoziLord.MusicPlayer;
 using osu.Game.Screens.Evast;
 using osu.Game.Graphics.Containers;
 using osu.Framework.Allocation;
 using osu.Framework.IO.Stores;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Graphics;
+using System;
 
 namespace osu.Game.Screens.KoziLord
 {
@@ -67,8 +69,8 @@ namespace osu.Game.Screens.KoziLord
                                     Direction = FillDirection.Vertical,
                                     Children = new Drawable[]
                                     {
-                                       ColumnElement = new ColumnButton(@"Testing Text"),
-                                       ColumnElement = new ColumnButton(@"Button no.2"),
+                                       ColumnElement = new ColumnButton(@"FullScreen Player", () => Push(new FullscreenPlayer())),//Action crashes right now for some reason ¯\_(ツ)_/¯ 
+                                       ColumnElement = new ColumnButton(@"Dummy button"),
                                        ColumnElement = new ColumnButton(@"'Nother one"),
                                        ColumnElement = new ColumnButton(@"'Nother one"),
                                        ColumnElement = new ColumnButton(@"'Nother one"),
@@ -89,8 +91,10 @@ namespace osu.Game.Screens.KoziLord
         public class ColumnButton : OsuClickableContainer
         {
             public Box ItemBackground;
-            public ColumnButton(string title)
+            public ColumnButton(string title, Action onPressed = null)
             {
+                Action = onPressed;
+
                 Alpha = 0;
                 Scale = new Vector2(0.8f);
                 Anchor = Anchor.TopCentre;

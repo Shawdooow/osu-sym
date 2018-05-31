@@ -1,8 +1,6 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-//Base taken from Evast's.
-
 using OpenTK;
 using OpenTK.Graphics;
 using osu.Framework.Allocation;
@@ -12,10 +10,11 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Screens.Evast.MusicVisualizers;
+using osu.Game.Screens.Evast.Visualizers;
 
-namespace osu.Game.Screens.Evast.Visualizers
+    namespace osu.Game.Screens.KoziLord.MusicPlayer
 {
-    public class FullscreenPlayer : BeatmapScreen
+    public class FullscreenPlayer : Evast.BeatmapScreen
     {
         private BeatmapSprite beatmapSprite;
 
