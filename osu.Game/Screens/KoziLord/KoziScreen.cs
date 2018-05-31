@@ -2,6 +2,7 @@
 using OpenTK.Graphics;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
@@ -66,15 +67,15 @@ namespace osu.Game.Screens.KoziLord
                                     Direction = FillDirection.Vertical,
                                     Children = new Drawable[]
                                     {
-                                        ColumnElement = new ColumnButton(@"Testing Text"),
-                                        ColumnElement = new ColumnButton(@"Button no.2"),
-                                        ColumnElement = new ColumnButton(@"'Nother one"),
-                                        ColumnElement = new ColumnButton(@"'Nother one"),
-                                        ColumnElement = new ColumnButton(@"'Nother one"),
-                                        ColumnElement = new ColumnButton(@"'Nother one"),
-                                        ColumnElement = new ColumnButton(@"'Nother one"),
-                                        ColumnElement = new ColumnButton(@"'Nother one"),
-                                        ColumnElement = new ColumnButton(@"'Nother one"),
+                                       ColumnElement = new ColumnButton(@"Testing Text"),
+                                       ColumnElement = new ColumnButton(@"Button no.2"),
+                                       ColumnElement = new ColumnButton(@"'Nother one"),
+                                       ColumnElement = new ColumnButton(@"'Nother one"),
+                                       ColumnElement = new ColumnButton(@"'Nother one"),
+                                       ColumnElement = new ColumnButton(@"'Nother one"),
+                                       ColumnElement = new ColumnButton(@"'Nother one"),
+                                       ColumnElement = new ColumnButton(@"'Nother one"),
+                                       ColumnElement = new ColumnButton(@"'Nother one"),
 
                                     }
                                 }
@@ -87,21 +88,24 @@ namespace osu.Game.Screens.KoziLord
         }
         public class ColumnButton : OsuClickableContainer
         {
+            public Box ItemBackground;
             public ColumnButton(string title)
             {
+                Alpha = 0;
+                Scale = new Vector2(0.8f);
                 Anchor = Anchor.TopCentre;
                 Origin = Anchor.TopCentre;
                 Height = 100;
-                Position = new Vector2(0, -60);
                 Width = 500;
                 CornerRadius = 16;
                 Masking = true;
                 Children = new Drawable[]
                 {
-                    new Box
+                   ItemBackground  = new Box
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Colour = Color4.White.Opacity(0.1f),
+                        Colour = Color4.White.Opacity(0.2f),
+                        Alpha = 0.5f
                     },
                     new OsuSpriteText
                     {
@@ -111,14 +115,42 @@ namespace osu.Game.Screens.KoziLord
                         Text = title
                     }
                 };
+             
+            }
+            //[BackgroundDependencyLoader]
+            protected override bool OnHover(InputState state)
+            {
+                ItemBackground.FadeIn(50, Easing.Out);
+                return base.OnHover(state);
+            }
 
+            protected override void OnHoverLost(InputState state)
+            {
+                ItemBackground.FadeTo(0.5f, 150, Easing.Out);
+                base.OnHoverLost(state);
             }
         }
         protected override void OnEntering(Screen last)
         {
-            MainContainer.FadeInFromZero(400, Easing.Out);
-            //ColumnButton.FadeInFromZero(900, Easing.Out);
+
+            int delaySequence = 0;
+            foreach (ColumnButton button in ColumnContainer)
+            {
+                button.Delay(50 * delaySequence)
+                    .FadeInFromZero(600, Easing.Out)
+                    .ScaleTo(1, 400, Easing.OutCubic);
+                delaySequence++;
+            }
+            
             ColumnBackground.ScaleTo(new Vector2(1, 1), 600, Easing.OutQuart);
         }
+        protected override bool OnExiting(Screen next)
+        {
+            MainContainer.FadeOut(200, Easing.In);
+            ColumnBackground.ScaleTo(new Vector2(0, 1), 200, Easing.InCubic);
+
+            return base.OnExiting(next);
+        }
+
     }
 }
