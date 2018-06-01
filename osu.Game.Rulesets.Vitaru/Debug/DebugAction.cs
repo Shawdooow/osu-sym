@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
 
         protected override bool OnClick(InputState state)
         {
-            if (adminRequired || !VitaruAPIContainer.Admin)
+            if (adminRequired && !VitaruAPIContainer.Admin)
                 return false;
 
             return base.OnClick(state);
