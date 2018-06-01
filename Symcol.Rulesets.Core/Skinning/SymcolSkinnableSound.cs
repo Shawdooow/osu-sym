@@ -23,6 +23,12 @@ namespace Symcol.Rulesets.Core.Skinning
             Dispose();
         }
 
+        protected override void Dispose(bool isDisposing)
+        {
+            deleted = true;
+            base.Dispose(isDisposing);
+        }
+
         public override bool UpdateSubTree()
         {
             if (!deleted)
