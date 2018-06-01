@@ -201,7 +201,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 if (slider.SampleControlPoints.Count > 0)
                     slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
                 else
-                    Logger.Log("SampleControlPoint missing from slider!", LoggingTarget.Runtime, LogLevel.Error);
+                    Logger.Log("Expected a SampleControlPoint in DrawableSlider!", LoggingTarget.Runtime, LogLevel.Debug);
             }
         }
 
