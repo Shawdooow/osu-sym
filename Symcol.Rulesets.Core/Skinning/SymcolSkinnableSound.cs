@@ -8,6 +8,7 @@ namespace Symcol.Rulesets.Core.Skinning
     {
         public SymcolSkinnableSound(params SampleInfo[] samples) : base(samples)
         {
+            Name = "SymcolSkinnableSound";
         }
 
         private bool deleted;

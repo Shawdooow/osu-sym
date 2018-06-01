@@ -130,7 +130,6 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 Ar = ar,
                 StartTime = original.StartTime,
                 Position = positionData?.Position ?? Vector2.Zero,
-                Samples = original.Samples,
                 PatternComplexity = complexity,
                 PatternTeam = 1,
                 PatternDiameter = cs,
@@ -230,7 +229,6 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 p.ControlPoints = curveData.ControlPoints;
                 p.CurveType = curveData.CurveType;
                 p.Distance = curveData.Distance;
-                p.RepeatSamples = curveData != null ? curveData.RepeatSamples : new List<List<SampleInfo>>(new[] { original.Samples });
                 p.RepeatCount = curveData.RepeatCount;
                 p.EnemyHealth = 60;
 
