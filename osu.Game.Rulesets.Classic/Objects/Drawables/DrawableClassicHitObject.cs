@@ -18,12 +18,22 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
     {
         public const float TIME_FADEOUT = 500;
 
-        protected List<SymcolSkinnableSound> BetterSamples = new List<SymcolSkinnableSound>();
-
         protected DrawableClassicHitObject(ClassicHitObject hitObject)
             : base(hitObject)
         {
             Alpha = 0;
+        }
+
+        public List<SymcolSkinnableSound> SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
+
+        protected void PlayBetterSamples()
+        {
+            foreach (SymcolSkinnableSound sound in SymcolSkinnableSounds)
+            {
+                sound.Play();
+                Remove(sound);
+                sound.Delete();
+            }
         }
 
         protected sealed override void UpdateState(ArmedState state)

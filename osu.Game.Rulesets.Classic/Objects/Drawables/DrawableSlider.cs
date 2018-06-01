@@ -38,33 +38,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
             Position = s.StackedPosition;
 
-            bool isDrum = false;
-            bool isSoft = false;
-
-            bool isWhistle = false;
-            bool isFinish = false;
-            bool isClap = false;
-
-            restart:
-            foreach (SampleInfo info in slider.BetterRepeatSamples.First())
-            {
-                if (!isDrum)
-                    isDrum = info.Bank == "drum";
-                if (!isSoft)
-                    isSoft = info.Bank == "soft";
-
-                if (!isWhistle)
-                    isWhistle = info.Name == SampleInfo.HIT_WHISTLE;
-                if (!isFinish)
-                    isFinish = info.Name == SampleInfo.HIT_FINISH;
-                if (!isClap)
-                    isClap = info.Name == SampleInfo.HIT_CLAP;
-
-                slider.BetterRepeatSamples.First().Remove(info);
-                goto restart;
-            }
-            slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
-
             Children = new Drawable[]
             {
                 Body = new SliderBody(s)
@@ -79,13 +52,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 },
                 initialCircle = new DrawableHitCircle(new HitCircle
                 {
-                    Drum = isDrum,
-                    Soft = isSoft,
-
-                    Whistle = isWhistle,
-                    Finish = isFinish,
-                    Clap = isClap,
-
                     StartTime = s.StartTime,
                     ComboIndex = s.ComboIndex,
                     IndexInCurrentCombo = s.IndexInCurrentCombo,
@@ -102,6 +68,22 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     HitWindow50 = s.HitWindow50
                 })
             };
+
+            foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+            {
+                SymcolSkinnableSound sound;
+                initialCircle.SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
+                initialCircle.Add(sound);
+            }
+            slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
+
+            foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+            {
+                SymcolSkinnableSound sound;
+                SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
+                Add(sound);
+            }
+            slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
 
             components.Add(Body);
             components.Add(Ball);
@@ -144,24 +126,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 components.Add(drawableRepeatPoint);
                 AddNested(drawableRepeatPoint);
             }
-
-            restart2:
-            foreach (SampleInfo info in slider.BetterRepeatSamples.First())
-            {
-                BetterSamples = new List<SymcolSkinnableSound>();
-                SymcolSkinnableSound newSound;
-                BetterSamples.Add(newSound = new SymcolSkinnableSound(new SampleInfo
-                {
-                    Bank = info.Bank,
-                    Name = info.Name,
-                    Volume = info.Volume,
-                    Namespace = SampleNamespace
-                }));
-                Add(newSound);
-                slider.BetterRepeatSamples.First().Remove(info);
-                goto restart2;
-            }
-            slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
         }
 
         public override Color4 AccentColour
@@ -204,34 +168,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             if (span > currentSpan)
             {
                 currentSpan = span;
-
-                foreach (SymcolSkinnableSound sound in BetterSamples)
-                {
-                    sound.Play();
-                    Remove(sound);
-                    sound.Delete();
-                }
-
-                restart:
-                if (slider.BetterRepeatSamples.Count > 0)
-                {
-                    foreach (SampleInfo info in slider.BetterRepeatSamples.First())
-                    {
-                        BetterSamples = new List<SymcolSkinnableSound>();
-                        SymcolSkinnableSound newSound;
-                        BetterSamples.Add(newSound = new SymcolSkinnableSound(new SampleInfo
-                        {
-                            Bank = info.Bank,
-                            Name = info.Name,
-                            Volume = info.Volume,
-                            Namespace = SampleNamespace
-                        }));
-                        Add(newSound);
-                        slider.BetterRepeatSamples.First().Remove(info);
-                        goto restart;
-                    }
-                    slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
-                }
+                PlayBetterRepeatSamples();
             }
 
             //todo: we probably want to reconsider this before adding scoring, but it looks and feels nice.
@@ -242,6 +179,22 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             foreach (var c in components.OfType<ITrackSnaking>()) c.UpdateSnakingPosition(slider.PositionAt(Body.SnakedStart ?? 0), slider.PositionAt(Body.SnakedEnd ?? 0));
             foreach (var t in ticks.Children) t.Tracking = Tracking;
             foreach (var r in repeatPoints.Children) r.Tracking = Tracking;
+        }
+
+        protected void PlayBetterRepeatSamples()
+        {
+            PlayBetterSamples();
+
+            if (slider.BetterRepeatSamples.Count > 0)
+            {
+                foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+                {
+                    SymcolSkinnableSound sound;
+                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
+                    Add(sound);
+                }
+                slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
+            }
         }
 
         protected override void CheckForJudgements(bool userTriggered, double timeOffset)

@@ -1,8 +1,10 @@
 ﻿using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Audio;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
+using Symcol.Rulesets.Core.Skinning;
 using System;
 using System.Collections.Generic;
 
@@ -102,6 +104,17 @@ namespace Symcol.Rulesets.Core.HitObjects
             deleted = true;
 
             Dispose();
+        }
+
+        protected SymcolSkinnableSound GetSkinnableSound(SampleInfo info)
+        {
+            return new SymcolSkinnableSound(new SampleInfo
+            {
+                Bank = info.Bank ?? HitObject.SampleControlPoint.SampleBank,
+                Name = info.Name,
+                Volume = info.Volume > 0 ? info.Volume : HitObject.SampleControlPoint.SampleVolume,
+                Namespace = SampleNamespace
+            });
         }
 
         public override bool UpdateSubTree()

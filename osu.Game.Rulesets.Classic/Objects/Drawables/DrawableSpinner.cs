@@ -114,49 +114,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     Alpha = 0
                 }
             };
-
-            string bank = "normal";
-
-            if (s.Drum)
-                bank = "drum";
-            else if (s.Soft)
-                bank = "soft";
-
-            BetterSamples.Add(new SymcolSkinnableSound(new SampleInfo
-            {
-                Bank = bank,
-                Name = "hitnormal",
-                Volume = s.Volume > 0 ? s.Volume : HitObject.SampleControlPoint.SampleVolume,
-                Namespace = SampleNamespace
-            }));
-
-            if (s.Whistle)
-                BetterSamples.Add(new SymcolSkinnableSound(new SampleInfo
-                {
-                    Bank = bank,
-                    Name = "hitwhistle",
-                    Volume = s.Volume > 0 ? s.Volume : HitObject.SampleControlPoint.SampleVolume,
-                    Namespace = SampleNamespace
-                }));
-            if (s.Finish)
-                BetterSamples.Add(new SymcolSkinnableSound(new SampleInfo
-                {
-                    Bank = bank,
-                    Name = "hitfinish",
-                    Volume = s.Volume > 0 ? s.Volume : HitObject.SampleControlPoint.SampleVolume,
-                    Namespace = SampleNamespace
-                }));
-            if (s.Clap)
-                BetterSamples.Add(new SymcolSkinnableSound(new SampleInfo
-                {
-                    Bank = bank,
-                    Name = "hitclap",
-                    Volume = s.Volume > 0 ? s.Volume : HitObject.SampleControlPoint.SampleVolume,
-                    Namespace = SampleNamespace
-                }));
-
-            foreach (SymcolSkinnableSound sound in BetterSamples)
-                Add(sound);
         }
 
         public float Progress => MathHelper.Clamp(Disc.RotationAbsolute / 360 / spinner.SpinsRequired, 0, 1);
@@ -184,32 +141,14 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 if (Progress >= 1)
                 {
                     AddJudgement(new ClassicJudgement { Result = HitResult.Great });
-                    foreach (SymcolSkinnableSound sound in BetterSamples)
-                    {
-                        sound.Play();
-                        Remove(sound);
-                        sound.Delete();
-                    }
                 }
                 else if (Progress > .9)
                 {
                     AddJudgement(new ClassicJudgement { Result = HitResult.Good });
-                    foreach (SymcolSkinnableSound sound in BetterSamples)
-                    {
-                        sound.Play();
-                        Remove(sound);
-                        sound.Delete();
-                    }
                 }
                 else if (Progress > .75)
                 {
                     AddJudgement(new ClassicJudgement { Result = HitResult.Meh });
-                    foreach (SymcolSkinnableSound sound in BetterSamples)
-                    {
-                        sound.Play();
-                        Remove(sound);
-                        sound.Delete();
-                    }
                 }
                 else if (Time.Current >= spinner.EndTime)
                     AddJudgement(new ClassicJudgement { Result = HitResult.Miss });

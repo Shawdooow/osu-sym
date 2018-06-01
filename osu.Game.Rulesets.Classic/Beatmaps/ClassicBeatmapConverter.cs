@@ -61,21 +61,6 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
 
             SampleControlPoint controlPoint = beatmap.ControlPointInfo.SamplePointAt(original.StartTime);
 
-            bool isDrum = controlPoint.SampleBank == "drum";
-            bool isSoft = controlPoint.SampleBank == "soft";
-
-            if (original.Samples.Any(s => s.Bank != null))
-            {
-                if (original.Samples.Any(s => s.Name == "drum"))
-                    isDrum = true;
-                if (original.Samples.Any(s => s.Name == "soft"))
-                    isSoft = true;
-            }
-
-            bool isWhistle = original.Samples.Any(s => s.Name == SampleInfo.HIT_WHISTLE);
-            bool isFinish = original.Samples.Any(s => s.Name == SampleInfo.HIT_FINISH);
-            bool isClap = original.Samples.Any(s => s.Name == SampleInfo.HIT_CLAP);
-
             List<List<SampleInfo>> betterRepeatSamples = new List<List<SampleInfo>>();
 
             if (curveData != null)
@@ -114,53 +99,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                 {
                     List<SampleInfo> currentSamples = allSamples[i];
 
-                    string bank = original.SampleControlPoint.SampleBank;
-
-                    if (currentSamples.Any(s => s.Bank != null))
-                    {
-                        if (currentSamples.Any(s => s.Name == "normal"))
-                            bank = "normal";
-                        else if (currentSamples.Any(s => s.Name == "drum"))
-                            bank = "drum";
-                        else if (currentSamples.Any(s => s.Name == "soft"))
-                            bank = "soft";
-                    }
-
-                    List<SampleInfo> samplesList = new List<SampleInfo>()
-                    {
-                        new SampleInfo()
-                        {
-                            Bank = bank,
-                            Name = "hitnormal",
-                            Volume = original.SampleControlPoint.SampleVolume,
-                        }
-                    };
-
-                    if (currentSamples.Any(s => s.Name == SampleInfo.HIT_WHISTLE))
-                        samplesList.Add(new SampleInfo()
-                        {
-                            Bank = bank,
-                            Name = "hitwhistle",
-                            Volume = original.SampleControlPoint.SampleVolume,
-                        });
-
-                    if (currentSamples.Any(s => s.Name == SampleInfo.HIT_FINISH))
-                        samplesList.Add(new SampleInfo()
-                        {
-                            Bank = bank,
-                            Name = "hitfinish",
-                            Volume = original.SampleControlPoint.SampleVolume,
-                        });
-
-                    if (currentSamples.Any(s => s.Name == SampleInfo.HIT_CLAP))
-                        samplesList.Add(new SampleInfo()
-                        {
-                            Bank = bank,
-                            Name = "hitclap",
-                            Volume = original.SampleControlPoint.SampleVolume,
-                        });
-
-                    betterRepeatSamples.Add(samplesList);
+                    betterRepeatSamples.Add(getBetterSampleInfoList(currentSamples, original));
 
                     i = (i + 1) % allSamples.Count;
                 }
@@ -239,12 +178,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
             {
                 yield return new Spinner
                 {
-                    Drum = isDrum,
-                    Soft = isSoft,
-
-                    Whistle = isWhistle,
-                    Finish = isFinish,
-                    Clap = isClap,
+                    BetterSamples = getBetterSampleInfoList(original.Samples, original),
 
                     StartTime = original.StartTime,
                     EndTime = endTimeData.EndTime,
@@ -258,13 +192,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                 if (!firstObject)
                     yield return new HitCircle
                     {
-                        Drum = isDrum,
-                        Soft = isSoft,
-
-                        Whistle = isWhistle,
-                        Finish = isFinish,
-                        Clap = isClap,
-
+                        BetterSamples = getBetterSampleInfoList(original.Samples, original),
                         StartTime = original.StartTime,
                         Position = positionData?.Position ?? Vector2.Zero,
                         NewCombo = comboData?.NewCombo ?? false,
@@ -275,13 +203,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                     firstObject = false;
                     yield return new HitCircle
                     {
-                        Drum = isDrum,
-                        Soft = isSoft,
-
-                        Whistle = isWhistle,
-                        Finish = isFinish,
-                        Clap = isClap,
-
+                        BetterSamples = getBetterSampleInfoList(original.Samples, original),
                         StartTime = original.StartTime,
                         Position = positionData?.Position ?? Vector2.Zero,
                         NewCombo = comboData?.NewCombo ?? false,
@@ -290,6 +212,11 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                     };
                 }
             }
+        }
+
+        private List<SampleInfo> getBetterSampleInfoList(List<SampleInfo> list, HitObject original)
+        {
+            return list;
         }
     }
 }
