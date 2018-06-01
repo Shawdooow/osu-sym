@@ -45,21 +45,22 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                 new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Colour = osu.Red,
+                    Colour = Color4.Black,
                     Alpha = 0.8f
                 },
                 text = new SpriteText
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    TextSize = 18
+                    TextSize = 18,
+                    Colour = osu.Red
                 }
             };
         }
 
         protected override bool OnClick(InputState state)
         {
-            if (!VitaruAPIContainer.Shawdooow)
+            if (!VitaruAPIContainer.Admin)
                 return false;
 
             return base.OnClick(state);
