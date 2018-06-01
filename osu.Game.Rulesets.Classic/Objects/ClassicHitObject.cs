@@ -7,6 +7,8 @@ using OpenTK;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Scoring;
+using System.Collections.Generic;
+using osu.Game.Audio;
 
 namespace osu.Game.Rulesets.Classic.Objects
 {
@@ -25,6 +27,8 @@ namespace osu.Game.Rulesets.Classic.Objects
         public bool First { get; set; }
 
         public bool SliderStartCircle { get; set; }
+
+        public List<SampleInfo> BetterSamples { get; set; } = new List<SampleInfo>();
 
         public bool Hidden { get; set; }
 
@@ -96,6 +100,8 @@ namespace osu.Game.Rulesets.Classic.Objects
             HitWindow50 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 200, 150, 100);
             HitWindow100 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 140, 100, 60);
             HitWindow300 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 80, 50, 20);
+
+            SampleControlPoint = controlPointInfo.SamplePointAt(StartTime);
 
             Scale = (1.0f - 0.7f * (difficulty.CircleSize - 5) / 5) / 2;
         }

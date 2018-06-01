@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
             Masking = true;
             CornerRadius = 4;
             BorderColour = Color4.White;
-            BorderThickness = 4;
+            BorderThickness = 3;
 
             Children = new Drawable[]
             {
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                     foreach (Container container in GeneralDebugItems)
                         debugItems.Add(container);
                     break;
-                case DebugConfiguration.MachineLearning:
+                case DebugConfiguration.NeuralNetworking:
                     foreach (Container container in MachineLearningDebugItems)
                         debugItems.Add(container);
                     break;
@@ -92,7 +92,8 @@ namespace osu.Game.Rulesets.Vitaru.Debug
     public enum DebugConfiguration
     {
         General,
-        MachineLearning,
+        [System.ComponentModel.Description("Neural Networking")]
+        NeuralNetworking,
         Networking,
     }
 }

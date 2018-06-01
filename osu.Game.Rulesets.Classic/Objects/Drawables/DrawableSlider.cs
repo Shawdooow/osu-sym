@@ -13,6 +13,10 @@ using osu.Game.Rulesets.Classic.UI;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Objects.Types;
 using OpenTK.Graphics;
+using osu.Game.Audio;
+using Symcol.Rulesets.Core.Skinning;
+using osu.Game.Beatmaps.ControlPoints;
+using osu.Framework.Logging;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -58,7 +62,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     SliderStartCircle = true,
                     Hidden = s.Hidden,
                     First = s.First,
-                    Samples = s.Samples,
                     SampleControlPoint = s.SampleControlPoint,
                     TimePreempt = s.TimePreempt,
                     TimeFadein = s.TimeFadein,
@@ -67,6 +70,23 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     HitWindow50 = s.HitWindow50
                 })
             };
+
+            foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+            {
+                SymcolSkinnableSound sound;
+                initialCircle.SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
+                initialCircle.Add(sound);
+            }
+            slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
+
+            foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+            {
+                SymcolSkinnableSound sound;
+                SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, slider.SampleControlPoints.First()));
+                Add(sound);
+            }
+            slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
+            slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
 
             components.Add(Body);
             components.Add(Ball);
@@ -149,7 +169,10 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             progress = slider.ProgressAt(progress);
 
             if (span > currentSpan)
+            {
                 currentSpan = span;
+                PlayBetterRepeatSamples();
+            }
 
             //todo: we probably want to reconsider this before adding scoring, but it looks and feels nice.
             if (!initialCircle.Judgements.Any(j => j.IsHit))
@@ -159,6 +182,27 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             foreach (var c in components.OfType<ITrackSnaking>()) c.UpdateSnakingPosition(slider.PositionAt(Body.SnakedStart ?? 0), slider.PositionAt(Body.SnakedEnd ?? 0));
             foreach (var t in ticks.Children) t.Tracking = Tracking;
             foreach (var r in repeatPoints.Children) r.Tracking = Tracking;
+        }
+
+        protected void PlayBetterRepeatSamples()
+        {
+            PlayBetterSamples();
+
+            if (slider.BetterRepeatSamples.Count > 0)
+            {
+                foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+                {
+                    SymcolSkinnableSound sound;
+                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, slider.SampleControlPoints.Count > 0 ? slider.SampleControlPoints.First() : null));
+                    Add(sound);
+                }
+                slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
+
+                if (slider.SampleControlPoints.Count > 0)
+                    slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
+                else
+                    Logger.Log("SampleControlPoint missing from slider!", LoggingTarget.Runtime, LogLevel.Error);
+            }
         }
 
         protected override void CheckForJudgements(bool userTriggered, double timeOffset)

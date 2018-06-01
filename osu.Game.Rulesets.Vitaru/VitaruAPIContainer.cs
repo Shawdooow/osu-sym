@@ -8,6 +8,8 @@ namespace osu.Game.Rulesets.Vitaru
     {
         public static int PlayerID;
 
+        public static bool Admin => Shawdooow;
+
         public static bool Shawdooow;
         public static bool Arrcival;
         public static bool Jorolf;

@@ -106,7 +106,7 @@ namespace osu.Game.Screens.Symcol.Pieces
             };
         }
 
-        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => content.ReceiveMouseInputAt(screenSpacePos);
+        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => content != null ? content.ReceiveMouseInputAt(screenSpacePos) : false;
 
         private const double early_activation = 60;
 
