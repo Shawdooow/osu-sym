@@ -15,6 +15,8 @@ using osu.Game.Rulesets.Classic.Judgements;
 using osu.Game.Screens.Ranking;
 using osu.Game.Rulesets.Circles.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Scoring;
+using Symcol.Rulesets.Core.Skinning;
+using osu.Game.Audio;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -137,11 +139,17 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             if (!userTriggered && Time.Current >= spinner.EndTime)
             {
                 if (Progress >= 1)
+                {
                     AddJudgement(new ClassicJudgement { Result = HitResult.Great });
+                }
                 else if (Progress > .9)
+                {
                     AddJudgement(new ClassicJudgement { Result = HitResult.Good });
+                }
                 else if (Progress > .75)
+                {
                     AddJudgement(new ClassicJudgement { Result = HitResult.Meh });
+                }
                 else if (Time.Current >= spinner.EndTime)
                     AddJudgement(new ClassicJudgement { Result = HitResult.Miss });
             }

@@ -4,6 +4,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.Debug
 {
@@ -38,6 +39,8 @@ namespace osu.Game.Rulesets.Vitaru.Debug
         {
             Bindable = bindable;
 
+            OsuColour osu = new OsuColour();
+
             Masking = true;
             CornerRadius = 4;
 
@@ -56,7 +59,8 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
-                    TextSize = 18
+                    TextSize = 18,
+                    Colour = osu.Blue
                 }
             };
 
@@ -65,6 +69,12 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                 {
                     text.Text = valueName + " = " + value.ToString();
                 };
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+            Bindable.TriggerChange();
         }
     }
 }

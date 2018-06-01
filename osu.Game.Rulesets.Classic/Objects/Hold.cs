@@ -45,6 +45,8 @@ namespace osu.Game.Rulesets.Classic.Objects
             set { Curve.Distance = value; }
         }
 
+        public List<List<SampleInfo>> BetterRepeatSamples { get; set; } = new List<List<SampleInfo>>();
+
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
         public int RepeatCount { get; set; } = 1;
 

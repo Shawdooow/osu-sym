@@ -150,7 +150,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 foreach (DrawableVitaruPlayer player in playerList)
                     GameField.Add(player);
 
-                if (gamemode == Gamemodes.Touhosu && kiaiBoss && VitaruAPIContainer.Shawdooow)
+                if (gamemode == Gamemodes.Touhosu && kiaiBoss)
                     GameField.Add(Boss = new Boss(this));
 
                 Player.Position = new Vector2(256, 700);

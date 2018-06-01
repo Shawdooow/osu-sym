@@ -189,7 +189,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                     {
                         new SettingsEnumDropdown<DebugConfiguration>
                         {
-                            LabelText = "In-Game Debug UI Configuration",
+                            LabelText = "Debug Tools Configuration",
                             Bindable = VitaruConfigManager.GetBindable<DebugConfiguration>(VitaruSetting.DebugConfiguration)
                         },
                         new SettingsEnumDropdown<NeuralNetworkState>

@@ -119,5 +119,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
             Size = new Vector2(128);
         }
+
+        protected override void Death()
+        {
+            //base.Death();
+            Hitbox.HitDetection = false;
+        }
     }
 }

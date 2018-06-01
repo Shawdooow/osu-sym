@@ -27,6 +27,8 @@ namespace osu.Game.Rulesets.Classic.Objects
         public double EndTime => StartTime + this.SpanCount() * Curve.Distance / Velocity;
         public double Duration => EndTime - StartTime;
 
+        public double SpanDuration => (Distance / Velocity) / this.SpanCount();
+
         public Vector2 StackedPositionAt(double t) => StackedPosition + PositionAt(t);
         public override Vector2 EndPosition => Position + PositionAt(1);
 
@@ -66,6 +68,10 @@ namespace osu.Game.Rulesets.Classic.Objects
         /// </summary>
         internal float LazyTravelDistance;
 
+        public List<List<SampleInfo>> BetterRepeatSamples { get; set; } = new List<List<SampleInfo>>();
+
+        public List<SampleControlPoint> SampleControlPoints = new List<SampleControlPoint>();
+
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
         public int RepeatCount { get; set; }
 
@@ -95,6 +101,17 @@ namespace osu.Game.Rulesets.Classic.Objects
 
             Velocity = scoringDistance / timingPoint.BeatLength;
             TickDistance = scoringDistance / difficulty.SliderTickRate;
+
+            for (double i = StartTime + SpanDuration; i <= EndTime; i += SpanDuration)
+            {
+                SampleControlPoint point = controlPointInfo.SamplePointAt(i);
+                SampleControlPoints.Add(new SampleControlPoint()
+                {
+                    SampleBank = point.SampleBank,
+                    SampleBankCount = point.SampleBankCount,
+                    SampleVolume = point.SampleVolume,
+                });
+            }
         }
 
         protected override void CreateNestedHitObjects()
@@ -167,7 +184,6 @@ namespace osu.Game.Rulesets.Classic.Objects
                     Position = PositionAt(repeat % 2),
                     StackHeight = StackHeight,
                     Scale = Scale,
-                    Samples = new List<SampleInfo>(RepeatSamples[repeatIndex])
                 });
             }
         }

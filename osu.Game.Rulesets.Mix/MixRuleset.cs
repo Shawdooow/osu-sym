@@ -48,20 +48,20 @@ namespace osu.Game.Rulesets.Mix
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
-            new KeyBinding(InputKey.Number1, MixAction.NormalNormalLeft),
-            new KeyBinding(InputKey.Number2, MixAction.NormalWhistleLeft),
-            new KeyBinding(InputKey.Number3, MixAction.NormalFinishLeft),
-            new KeyBinding(InputKey.Number4, MixAction.NormalClapLeft),
+            new KeyBinding(InputKey.Number4, MixAction.NormalNormalLeft),
+            new KeyBinding(InputKey.Number3, MixAction.NormalWhistleLeft),
+            new KeyBinding(InputKey.Number2, MixAction.NormalFinishLeft),
+            new KeyBinding(InputKey.Number1, MixAction.NormalClapLeft),
 
-            new KeyBinding(InputKey.Q, MixAction.DrumNormalLeft),
-            new KeyBinding(InputKey.W, MixAction.DrumWhistleLeft),
-            new KeyBinding(InputKey.E, MixAction.DrumFinishLeft),
-            new KeyBinding(InputKey.R, MixAction.DrumClapLeft),
+            new KeyBinding(InputKey.R, MixAction.DrumNormalLeft),
+            new KeyBinding(InputKey.E, MixAction.DrumWhistleLeft),
+            new KeyBinding(InputKey.W, MixAction.DrumFinishLeft),
+            new KeyBinding(InputKey.Q, MixAction.DrumClapLeft),
 
-            new KeyBinding(InputKey.A, MixAction.SoftNormalLeft),
-            new KeyBinding(InputKey.S, MixAction.SoftWhistleLeft),
-            new KeyBinding(InputKey.D, MixAction.SoftFinishLeft),
-            new KeyBinding(InputKey.F, MixAction.SoftClapLeft),
+            new KeyBinding(InputKey.F, MixAction.SoftNormalLeft),
+            new KeyBinding(InputKey.D, MixAction.SoftWhistleLeft),
+            new KeyBinding(InputKey.S, MixAction.SoftFinishLeft),
+            new KeyBinding(InputKey.A, MixAction.SoftClapLeft),
 
             new KeyBinding(InputKey.Number7, MixAction.NormalNormalRight),
             new KeyBinding(InputKey.Number8, MixAction.NormalWhistleRight),

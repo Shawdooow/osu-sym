@@ -28,7 +28,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
             base.OnEntering(last);
         }
 
-        protected override bool OnSelectionFinalised()
+        protected override bool OnStart()
         {
             if (!exiting)
             {

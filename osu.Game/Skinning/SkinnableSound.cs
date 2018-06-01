@@ -47,9 +47,17 @@ namespace osu.Game.Skinning
             SampleChannel ch = null;
 
             if (info.Namespace != null)
+                ch = getSampleFunction($"Gameplay/{info.Namespace}/{info.Bank}-{info.Name + info.BankNumber}");
+
+            // try without number as a fallback.
+            if (info.Namespace != null && ch == null)
                 ch = getSampleFunction($"Gameplay/{info.Namespace}/{info.Bank}-{info.Name}");
 
             // try without namespace as a fallback.
+            if (ch == null)
+                ch = getSampleFunction($"Gameplay/{info.Bank}-{info.Name + info.BankNumber}");
+
+            // try without number as a fallback.
             if (ch == null)
                 ch = getSampleFunction($"Gameplay/{info.Bank}-{info.Name}");
 

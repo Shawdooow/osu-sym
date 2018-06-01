@@ -12,6 +12,8 @@ using osu.Game.Rulesets.Classic.Beatmaps;
 using osu.Game.Rulesets.Classic.UI;
 using osu.Game.Rulesets.Scoring;
 using OpenTK.Graphics;
+using Symcol.Rulesets.Core.Skinning;
+using osu.Game.Audio;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -61,6 +63,13 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 }
             };
 
+            foreach (SampleInfo info in h.BetterSamples)
+            {
+                SymcolSkinnableSound sound;
+                SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
+                Add(sound);
+            }
+
             //may not be so correct
             Size = circle.DrawSize;
         }
@@ -109,6 +118,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                         PositionOffset = Vector2.Zero //todo: set to correct value
                     });
                 }
+                PlayBetterSamples();
+
                 if (ClassicBeatmapConverter.CurrentHitCircle <= hitObject.ID)
                 {
                     ClassicBeatmapConverter.CurrentHitCircle = hitObject.ID + 1;

@@ -8,6 +8,10 @@ using osu.Game.Rulesets.Objects.Types;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Game.Rulesets.Vitaru.Characters;
+using osu.Game.Audio;
+using System.Collections.Generic;
+using System.Linq;
+using Symcol.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
@@ -28,6 +32,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private AudioManager audio;
 
+        private List<SymcolSkinnableSound> samples = new List<SymcolSkinnableSound>();
+        private List<SymcolSkinnableSound> repeatSamples = new List<SymcolSkinnableSound>();
+
         public DrawablePattern(Pattern pattern, VitaruPlayfield playfield) : base(pattern, playfield)
         {
             AlwaysPresent = true;
@@ -44,8 +51,73 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 endTime = this.pattern.StartTime + HitObject.TimePreempt * 2 - HitObject.TimeFadein;
                 this.pattern.EndTime = endTime;
             }
-            else if (pattern.IsSlider)
+
+            if (!pattern.IsSlider)
+            {
+                string bank = "normal";
+
+                if (pattern.Drum)
+                    bank = "drum";
+                else if (pattern.Soft)
+                    bank = "soft";
+
+                samples.Add(new SymcolSkinnableSound(new SampleInfo
+                {
+                    Bank = bank,
+                    Name = "hitnormal",
+                    Volume = pattern.Volume > 0 ? pattern.Volume : HitObject.SampleControlPoint.SampleVolume,
+                    Namespace = SampleNamespace
+                }));
+
+                if (pattern.Whistle)
+                    samples.Add(new SymcolSkinnableSound(new SampleInfo
+                    {
+                        Bank = bank,
+                        Name = "hitwhistle",
+                        Volume = pattern.Volume > 0 ? pattern.Volume : HitObject.SampleControlPoint.SampleVolume,
+                        Namespace = SampleNamespace
+                    }));
+                if (pattern.Finish)
+                    samples.Add(new SymcolSkinnableSound(new SampleInfo
+                    {
+                        Bank = bank,
+                        Name = "hitfinish",
+                        Volume = pattern.Volume > 0 ? pattern.Volume : HitObject.SampleControlPoint.SampleVolume,
+                        Namespace = SampleNamespace
+                    }));
+                if (pattern.Clap)
+                    samples.Add(new SymcolSkinnableSound(new SampleInfo
+                    {
+                        Bank = bank,
+                        Name = "hitclap",
+                        Volume = pattern.Volume > 0 ? pattern.Volume : HitObject.SampleControlPoint.SampleVolume,
+                        Namespace = SampleNamespace
+                    }));
+
+                foreach (SymcolSkinnableSound sound in samples)
+                    Add(sound);
+            }
+            else
+            {
                 endTime = this.pattern.EndTime + HitObject.TimePreempt * 2 - HitObject.TimeFadein;
+
+                restart:
+                foreach (SampleInfo info in pattern.BetterRepeatSamples.First())
+                {
+                    SymcolSkinnableSound sound;
+                    repeatSamples.Add(sound = new SymcolSkinnableSound(new SampleInfo
+                    {
+                        Bank = info.Bank,
+                        Name = info.Name,
+                        Volume = info.Volume,
+                        Namespace = SampleNamespace
+                    }));
+                    Add(sound);
+                    pattern.BetterRepeatSamples.First().Remove(info);
+                    goto restart;
+                }
+                pattern.BetterRepeatSamples.Remove(pattern.BetterRepeatSamples.First());
+            }
         }
 
         [BackgroundDependencyLoader]
@@ -64,6 +136,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 VitaruPlayfield.Boss.MoveTo(Position, moveTime < 100 ? 100 : moveTime, Easing.OutSine);
                 VitaruPlayfield.Boss.Free = false;
 
+                //TODO: make Dean not so loud
                 if (VitaruPlayfield.Boss.Alpha == 1 && BulletPiece.ExclusiveTestingHax)
                     VitaruRuleset.VitaruAudio.Sample.Get($"skeletron").Play();
             }
@@ -83,7 +156,35 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 if (repeat > currentRepeat)
                 {
                     if (repeat < pattern.RepeatCount + 2)
-                        PlaySamples();
+                    {
+                        foreach (SymcolSkinnableSound sound in repeatSamples)
+                        {
+                            sound.Play();
+                            Remove(sound);
+                            sound.Delete();
+                        }
+
+                        restart:
+                        if (pattern.BetterRepeatSamples.Count > 0)
+                        {
+                            foreach (SampleInfo info in pattern.BetterRepeatSamples.First())
+                            {
+                                repeatSamples = new List<SymcolSkinnableSound>();
+                                SymcolSkinnableSound newSound;
+                                repeatSamples.Add(newSound = new SymcolSkinnableSound(new SampleInfo
+                                {
+                                    Bank = info.Bank,
+                                    Name = info.Name,
+                                    Volume = info.Volume,
+                                    Namespace = SampleNamespace
+                                }));
+                                Add(newSound);
+                                pattern.BetterRepeatSamples.First().Remove(info);
+                                goto restart;
+                            }
+                            pattern.BetterRepeatSamples.Remove(pattern.BetterRepeatSamples.First());
+                        }
+                    }
                     currentRepeat = repeat;
                 }
 
@@ -169,7 +270,43 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             if (VitaruPlayfield.Boss != null)
                 VitaruPlayfield.Boss.Free = true;
 
-            PlaySamples();
+            if (!pattern.IsSlider)
+                foreach (SymcolSkinnableSound sound in samples)
+                {
+                    sound.Play();
+                    Remove(sound);
+                    sound.Delete();
+                }
+            else
+            {
+                foreach (SymcolSkinnableSound sound in repeatSamples)
+                {
+                    sound.Play();
+                    Remove(sound);
+                    sound.Delete();
+                }
+
+                restart:
+                if (pattern.BetterRepeatSamples.Count > 0)
+                {
+                    foreach (SampleInfo info in pattern.BetterRepeatSamples.First())
+                    {
+                        repeatSamples = new List<SymcolSkinnableSound>();
+                        SymcolSkinnableSound newSound;
+                        repeatSamples.Add(newSound = new SymcolSkinnableSound(new SampleInfo
+                        {
+                            Bank = info.Bank,
+                            Name = info.Name,
+                            Volume = info.Volume,
+                            Namespace = SampleNamespace
+                        }));
+                        Add(newSound);
+                        pattern.BetterRepeatSamples.First().Remove(info);
+                        goto restart;
+                    }
+                    pattern.BetterRepeatSamples.Remove(pattern.BetterRepeatSamples.First());
+                }
+            }
         }
 
         protected override void End()
@@ -202,6 +339,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 Expire();
             else
                 Delete();
+        }
+
+        public override void Delete()
+        {
+            foreach (SymcolSkinnableSound sound in samples)
+                sound.Delete();
+            foreach (SymcolSkinnableSound sound in repeatSamples)
+                sound.Delete();
+
+            base.Delete();
         }
 
         private Vector2 getPatternStartPosition()

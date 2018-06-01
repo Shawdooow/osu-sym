@@ -19,6 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         /// All Pattern specific stuff
         /// </summary>
         #region Pattern
+        public bool Convert { get; set; }
         public int PatternID { get; set; }
         public double PatternSpeed { get; set; } = 0.25d;
         public double PatternComplexity { get; set; } = 1;
@@ -29,6 +30,17 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         public double PatternDamage { get; set; } = 20;
         public int PatternTeam { get; set; } = 1;
         private double beatLength;
+
+        public bool Drum { get; set; }
+        public bool Soft { get; set; }
+
+        public int Volume { get; set; }
+
+        public bool Whistle { get; set; }
+        public bool Finish { get; set; }
+        public bool Clap { get; set; }
+
+        public List<List<SampleInfo>> BetterRepeatSamples { get; set; } = new List<List<SampleInfo>>();
         #endregion
 
         /// <summary>
