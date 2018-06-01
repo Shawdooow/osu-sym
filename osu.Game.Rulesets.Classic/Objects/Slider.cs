@@ -66,6 +66,8 @@ namespace osu.Game.Rulesets.Classic.Objects
         /// </summary>
         internal float LazyTravelDistance;
 
+        public List<List<SampleInfo>> BetterRepeatSamples { get; set; } = new List<List<SampleInfo>>();
+
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
         public int RepeatCount { get; set; }
 
@@ -167,7 +169,6 @@ namespace osu.Game.Rulesets.Classic.Objects
                     Position = PositionAt(repeat % 2),
                     StackHeight = StackHeight,
                     Scale = Scale,
-                    Samples = new List<SampleInfo>(RepeatSamples[repeatIndex])
                 });
             }
         }

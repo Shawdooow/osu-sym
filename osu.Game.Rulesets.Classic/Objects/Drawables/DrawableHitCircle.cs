@@ -12,6 +12,8 @@ using osu.Game.Rulesets.Classic.Beatmaps;
 using osu.Game.Rulesets.Classic.UI;
 using osu.Game.Rulesets.Scoring;
 using OpenTK.Graphics;
+using Symcol.Rulesets.Core.Skinning;
+using osu.Game.Audio;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -63,6 +65,49 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
             //may not be so correct
             Size = circle.DrawSize;
+
+            string bank = "normal";
+
+            if (h.Drum)
+                bank = "drum";
+            else if (h.Soft)
+                bank = "soft";
+
+            BetterSamples.Add(new SymcolSkinnableSound(new SampleInfo
+            {
+                Bank = bank,
+                Name = "hitnormal",
+                Volume = h.Volume > 0 ? h.Volume : HitObject.SampleControlPoint.SampleVolume,
+                Namespace = SampleNamespace
+            }));
+
+            if (h.Whistle)
+                BetterSamples.Add(new SymcolSkinnableSound(new SampleInfo
+                {
+                    Bank = bank,
+                    Name = "hitwhistle",
+                    Volume = h.Volume > 0 ? h.Volume : HitObject.SampleControlPoint.SampleVolume,
+                    Namespace = SampleNamespace
+                }));
+            if (h.Finish)
+                BetterSamples.Add(new SymcolSkinnableSound(new SampleInfo
+                {
+                    Bank = bank,
+                    Name = "hitfinish",
+                    Volume = h.Volume > 0 ? h.Volume : HitObject.SampleControlPoint.SampleVolume,
+                    Namespace = SampleNamespace
+                }));
+            if (h.Clap)
+                BetterSamples.Add(new SymcolSkinnableSound(new SampleInfo
+                {
+                    Bank = bank,
+                    Name = "hitclap",
+                    Volume = h.Volume > 0 ? h.Volume : HitObject.SampleControlPoint.SampleVolume,
+                    Namespace = SampleNamespace
+                }));
+
+            foreach (SymcolSkinnableSound sound in BetterSamples)
+                Add(sound);
         }
 
         public override Color4 AccentColour
@@ -109,6 +154,14 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                         PositionOffset = Vector2.Zero //todo: set to correct value
                     });
                 }
+
+                foreach (SymcolSkinnableSound sound in BetterSamples)
+                {
+                    sound.Play();
+                    Remove(sound);
+                    sound.Delete();
+                }
+
                 if (ClassicBeatmapConverter.CurrentHitCircle <= hitObject.ID)
                 {
                     ClassicBeatmapConverter.CurrentHitCircle = hitObject.ID + 1;

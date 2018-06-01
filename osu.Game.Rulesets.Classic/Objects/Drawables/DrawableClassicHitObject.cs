@@ -9,12 +9,16 @@ using Symcol.Rulesets.Core.HitObjects;
 using osu.Game.Skinning;
 using osu.Game.Rulesets.Objects.Types;
 using OpenTK.Graphics;
+using System.Collections.Generic;
+using Symcol.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
     public class DrawableClassicHitObject : DrawableSymcolHitObject<ClassicHitObject>
     {
         public const float TIME_FADEOUT = 500;
+
+        protected List<SymcolSkinnableSound> BetterSamples = new List<SymcolSkinnableSound>();
 
         protected DrawableClassicHitObject(ClassicHitObject hitObject)
             : base(hitObject)

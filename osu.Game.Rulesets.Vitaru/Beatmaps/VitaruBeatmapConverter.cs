@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 
             if (original.Samples.Any(s => s.Bank != null))
             {
-                if (original.Samples.Any(s => s.Name == "drums"))
+                if (original.Samples.Any(s => s.Name == "drum"))
                     isDrum = true;
                 if (original.Samples.Any(s => s.Name == "soft"))
                     isSoft = true;

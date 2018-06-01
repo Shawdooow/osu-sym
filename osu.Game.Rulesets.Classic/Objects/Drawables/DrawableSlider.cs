@@ -13,6 +13,8 @@ using osu.Game.Rulesets.Classic.UI;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Objects.Types;
 using OpenTK.Graphics;
+using osu.Game.Audio;
+using Symcol.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -36,6 +38,33 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
             Position = s.StackedPosition;
 
+            bool isDrum = false;
+            bool isSoft = false;
+
+            bool isWhistle = false;
+            bool isFinish = false;
+            bool isClap = false;
+
+            restart:
+            foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+            {
+                if (!isDrum)
+                    isDrum = info.Bank == "drum";
+                if (!isSoft)
+                    isSoft = info.Bank == "soft";
+
+                if (!isWhistle)
+                    isWhistle = info.Name == SampleInfo.HIT_WHISTLE;
+                if (!isFinish)
+                    isFinish = info.Name == SampleInfo.HIT_FINISH;
+                if (!isClap)
+                    isClap = info.Name == SampleInfo.HIT_CLAP;
+
+                slider.BetterRepeatSamples.First().Remove(info);
+                goto restart;
+            }
+            slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
+
             Children = new Drawable[]
             {
                 Body = new SliderBody(s)
@@ -50,6 +79,13 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 },
                 initialCircle = new DrawableHitCircle(new HitCircle
                 {
+                    Drum = isDrum,
+                    Soft = isSoft,
+
+                    Whistle = isWhistle,
+                    Finish = isFinish,
+                    Clap = isClap,
+
                     StartTime = s.StartTime,
                     ComboIndex = s.ComboIndex,
                     IndexInCurrentCombo = s.IndexInCurrentCombo,
@@ -58,7 +94,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     SliderStartCircle = true,
                     Hidden = s.Hidden,
                     First = s.First,
-                    Samples = s.Samples,
                     SampleControlPoint = s.SampleControlPoint,
                     TimePreempt = s.TimePreempt,
                     TimeFadein = s.TimeFadein,
@@ -109,6 +144,24 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 components.Add(drawableRepeatPoint);
                 AddNested(drawableRepeatPoint);
             }
+
+            restart2:
+            foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+            {
+                BetterSamples = new List<SymcolSkinnableSound>();
+                SymcolSkinnableSound newSound;
+                BetterSamples.Add(newSound = new SymcolSkinnableSound(new SampleInfo
+                {
+                    Bank = info.Bank,
+                    Name = info.Name,
+                    Volume = info.Volume,
+                    Namespace = SampleNamespace
+                }));
+                Add(newSound);
+                slider.BetterRepeatSamples.First().Remove(info);
+                goto restart2;
+            }
+            slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
         }
 
         public override Color4 AccentColour
@@ -149,7 +202,37 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             progress = slider.ProgressAt(progress);
 
             if (span > currentSpan)
+            {
                 currentSpan = span;
+
+                foreach (SymcolSkinnableSound sound in BetterSamples)
+                {
+                    sound.Play();
+                    Remove(sound);
+                    sound.Delete();
+                }
+
+                restart:
+                if (slider.BetterRepeatSamples.Count > 0)
+                {
+                    foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+                    {
+                        BetterSamples = new List<SymcolSkinnableSound>();
+                        SymcolSkinnableSound newSound;
+                        BetterSamples.Add(newSound = new SymcolSkinnableSound(new SampleInfo
+                        {
+                            Bank = info.Bank,
+                            Name = info.Name,
+                            Volume = info.Volume,
+                            Namespace = SampleNamespace
+                        }));
+                        Add(newSound);
+                        slider.BetterRepeatSamples.First().Remove(info);
+                        goto restart;
+                    }
+                    slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
+                }
+            }
 
             //todo: we probably want to reconsider this before adding scoring, but it looks and feels nice.
             if (!initialCircle.Judgements.Any(j => j.IsHit))

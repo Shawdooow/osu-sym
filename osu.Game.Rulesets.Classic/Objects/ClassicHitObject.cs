@@ -26,6 +26,15 @@ namespace osu.Game.Rulesets.Classic.Objects
 
         public bool SliderStartCircle { get; set; }
 
+        public bool Drum { get; set; }
+        public bool Soft { get; set; }
+
+        public int Volume { get; set; }
+
+        public bool Whistle { get; set; }
+        public bool Finish { get; set; }
+        public bool Clap { get; set; }
+
         public bool Hidden { get; set; }
 
         public Vector2 Position { get; set; }
