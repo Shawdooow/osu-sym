@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "Tweaks / Changes:\n\n" +
             "\n\n" +
             "Fixes:\n\n" +
-            "\n\n" + 
+            "-Fix boss death crashing game\n\n" + 
             "Additional Patch-Notes:\n\n" +
             "";
     }
