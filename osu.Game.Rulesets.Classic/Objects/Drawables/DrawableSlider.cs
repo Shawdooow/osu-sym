@@ -16,6 +16,7 @@ using OpenTK.Graphics;
 using osu.Game.Audio;
 using Symcol.Rulesets.Core.Skinning;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Framework.Logging;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -192,11 +193,15 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 foreach (SampleInfo info in slider.BetterRepeatSamples.First())
                 {
                     SymcolSkinnableSound sound;
-                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, slider.SampleControlPoints.First()));
+                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, slider.SampleControlPoints.Count > 0 ? slider.SampleControlPoints.First() : null));
                     Add(sound);
                 }
                 slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
-                slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
+
+                if (slider.SampleControlPoints.Count > 0)
+                    slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
+                else
+                    Logger.Log("SampleControlPoint missing from slider!", LoggingTarget.Runtime, LogLevel.Error);
             }
         }
 

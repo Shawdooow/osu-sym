@@ -101,6 +101,8 @@ namespace osu.Game.Rulesets.Classic.Objects
             HitWindow100 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 140, 100, 60);
             HitWindow300 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 80, 50, 20);
 
+            SampleControlPoint = controlPointInfo.SamplePointAt(StartTime);
+
             Scale = (1.0f - 0.7f * (difficulty.CircleSize - 5) / 5) / 2;
         }
     }

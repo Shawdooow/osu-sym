@@ -103,7 +103,15 @@ namespace osu.Game.Rulesets.Classic.Objects
             TickDistance = scoringDistance / difficulty.SliderTickRate;
 
             for (double i = StartTime + SpanDuration; i <= EndTime; i += SpanDuration)
-                SampleControlPoints.Add(controlPointInfo.SamplePointAt(i));
+            {
+                SampleControlPoint point = controlPointInfo.SamplePointAt(i);
+                SampleControlPoints.Add(new SampleControlPoint()
+                {
+                    SampleBank = point.SampleBank,
+                    SampleBankCount = point.SampleBankCount,
+                    SampleVolume = point.SampleVolume,
+                });
+            }
         }
 
         protected override void CreateNestedHitObjects()
