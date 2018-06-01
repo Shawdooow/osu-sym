@@ -21,5 +21,12 @@ namespace Symcol.Rulesets.Core.Skinning
 
             Dispose();
         }
+
+        public override bool UpdateSubTree()
+        {
+            if (!deleted)
+                return base.UpdateSubTree();
+            return false;
+        }
     }
 }
