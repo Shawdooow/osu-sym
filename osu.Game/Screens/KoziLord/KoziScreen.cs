@@ -121,7 +121,7 @@ namespace osu.Game.Screens.KoziLord
                 };
              
             }
-            //[BackgroundDependencyLoader]
+            
             protected override bool OnHover(InputState state)
             {
                 ItemBackground.FadeIn(50, Easing.Out);
@@ -148,13 +148,13 @@ namespace osu.Game.Screens.KoziLord
             
             ColumnBackground.ScaleTo(new Vector2(1, 1), 600, Easing.OutQuart);
         }
-        protected override bool OnExiting(Screen next)
+       /* protected override bool OnExiting(Screen next)
         {
             MainContainer.FadeOut(200, Easing.In);
             ColumnBackground.ScaleTo(new Vector2(0, 1), 200, Easing.InCubic);
 
             return base.OnExiting(next);
-        }
+        }*/
 
     }
 }
