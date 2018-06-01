@@ -217,6 +217,13 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
         private List<SampleInfo> getBetterSampleInfoList(List<SampleInfo> list, HitObject original)
         {
             return list;
+
+            List<SampleInfo> betterList = new List<SampleInfo>();
+
+            foreach (SampleInfo info in list)
+            {
+                //if ()
+            }
         }
     }
 }

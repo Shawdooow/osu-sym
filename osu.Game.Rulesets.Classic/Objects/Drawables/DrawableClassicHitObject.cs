@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
         public List<SymcolSkinnableSound> SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
 
-        protected void PlayBetterSamples()
+        protected virtual void PlayBetterSamples()
         {
             foreach (SymcolSkinnableSound sound in SymcolSkinnableSounds)
             {

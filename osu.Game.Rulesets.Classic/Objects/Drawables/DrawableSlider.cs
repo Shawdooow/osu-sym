@@ -15,6 +15,7 @@ using osu.Game.Rulesets.Objects.Types;
 using OpenTK.Graphics;
 using osu.Game.Audio;
 using Symcol.Rulesets.Core.Skinning;
+using osu.Game.Beatmaps.ControlPoints;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -80,10 +81,11 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             foreach (SampleInfo info in slider.BetterRepeatSamples.First())
             {
                 SymcolSkinnableSound sound;
-                SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
+                SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, slider.SampleControlPoints.First()));
                 Add(sound);
             }
             slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
+            slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
 
             components.Add(Body);
             components.Add(Ball);
@@ -190,10 +192,11 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 foreach (SampleInfo info in slider.BetterRepeatSamples.First())
                 {
                     SymcolSkinnableSound sound;
-                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
+                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, slider.SampleControlPoints.First()));
                     Add(sound);
                 }
                 slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
+                slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
             }
         }
 

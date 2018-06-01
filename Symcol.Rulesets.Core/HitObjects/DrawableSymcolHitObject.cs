@@ -2,6 +2,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Audio;
+using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using Symcol.Rulesets.Core.Skinning;
@@ -106,11 +107,17 @@ namespace Symcol.Rulesets.Core.HitObjects
             Dispose();
         }
 
-        protected SymcolSkinnableSound GetSkinnableSound(SampleInfo info)
+        protected SymcolSkinnableSound GetSkinnableSound(SampleInfo info, SampleControlPoint point = null)
         {
+            SampleControlPoint control = HitObject.SampleControlPoint;
+
+            if (point != null)
+                control = point;
+
             return new SymcolSkinnableSound(new SampleInfo
             {
                 Bank = info.Bank ?? HitObject.SampleControlPoint.SampleBank,
+                BankNumber = control.SampleBankCount > 1 ? control.SampleBankCount : 1,
                 Name = info.Name,
                 Volume = info.Volume > 0 ? info.Volume : HitObject.SampleControlPoint.SampleVolume,
                 Namespace = SampleNamespace
