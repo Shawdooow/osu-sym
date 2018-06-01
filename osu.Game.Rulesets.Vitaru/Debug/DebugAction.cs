@@ -26,9 +26,23 @@ namespace osu.Game.Rulesets.Vitaru.Debug
             }
         }
 
+        private readonly bool adminRequired;
+
         private SpriteText text;
 
-        public DebugAction(Action action = null)
+        public DebugAction(bool adminRequired = true)
+        {
+            this.adminRequired = adminRequired;
+            load();
+        }
+
+        public DebugAction(Action action, bool adminRequired = true)
+        {
+            this.adminRequired = adminRequired;
+            load(action);
+        }
+
+        private void load(Action action = null)
         {
             Action = action;
 
@@ -60,7 +74,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
 
         protected override bool OnClick(InputState state)
         {
-            if (!VitaruAPIContainer.Admin)
+            if (adminRequired || !VitaruAPIContainer.Admin)
                 return false;
 
             return base.OnClick(state);
