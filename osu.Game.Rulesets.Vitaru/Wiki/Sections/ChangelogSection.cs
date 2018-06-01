@@ -21,6 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Tweak debug ui\n" +
             "-Give all patterns Non-Linear SpeedEasings (nerf spinners by making everything else harder)\n\n" +
             "Fixes:\n\n" +
+            "-Fix sliders not playing proper hitsounds (sliders not throwing proper patterns for hitsounds will get fixed in next release)" +
             "-Fix Combo fire never reseting back to 0 on miss\n\n" + 
             "Additional Patch-Notes:\n\n" +
             "-Started work on Auto under the hood (both hardcoded ai and neural networking)";
