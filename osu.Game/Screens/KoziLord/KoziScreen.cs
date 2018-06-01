@@ -78,6 +78,8 @@ namespace osu.Game.Screens.KoziLord
                                        ColumnElement = new ColumnButton(@"'Nother one"),
                                        ColumnElement = new ColumnButton(@"'Nother one"),
                                        ColumnElement = new ColumnButton(@"'Nother one"),
+                                       ColumnElement = new ColumnButton(@"'Nother one"),
+
 
                                     }
                                 }
