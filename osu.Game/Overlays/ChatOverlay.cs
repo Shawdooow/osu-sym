@@ -14,6 +14,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Transforms;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Input;
 using osu.Framework.MathUtils;
 using osu.Framework.Threading;
@@ -112,8 +113,10 @@ namespace osu.Game.Overlays
                                 {
                                     RelativeSizeAxes = Axes.Both,
                                 },
-                                new Container
+                                new BufferedContainer
                                 {
+                                    Alpha = 0.1f,
+                                    BlurSigma = new Vector2(12),
                                     RelativeSizeAxes = Axes.Both,
                                     Masking = true,
                                     Children = new Drawable[]
@@ -121,9 +124,9 @@ namespace osu.Game.Overlays
                                         chatBackgroundTriangles = new Triangles
                                         {
                                             RelativeSizeAxes = Axes.Both,
-                                            ColourDark = OsuColour.FromHex(@"132226"),
-                                            ColourLight = OsuColour.FromHex(@"1f3b42"),
-                                            TriangleScale = 3,
+                                            ColourDark = Color4.Black,
+                                            ColourLight = Color4.White,
+                                            TriangleScale = 2,
                                         }
                                     }
                                 },
@@ -301,7 +304,7 @@ namespace osu.Game.Overlays
             };
             ChatHeight.TriggerChange();
 
-            chatBackground.Colour = colours.ChatBlue;
+            chatBackground.Colour = colours.ChatBlue.Opacity(0.9f);
         }
 
         private long? lastMessageId;
