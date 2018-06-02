@@ -14,7 +14,7 @@ using osu.Game.Screens.Symcol.Screens;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Screens.KoziLord;
-using osu.Game.Screens.KoziLord.MusicPlayer;
+using osu.Game.Screens.KoziLord.EvastModded.MusicPlayer;
 using osu.Game.Screens.Evast;
 using osu.Game.Graphics.Containers;
 using osu.Framework.Allocation;
@@ -62,14 +62,14 @@ namespace osu.Game.Screens.KoziLord
                             {
                                 ColumnContainer = new FillFlowContainer
                                 {
-                                    Padding = new MarginPadding{Top = 20},
+                                    Padding = new MarginPadding{Top = 20, Bottom = 20},
                                     RelativeSizeAxes = Axes.X,
                                     AutoSizeAxes = Axes.Y,
                                     Spacing = new Vector2(0,20),
                                     Direction = FillDirection.Vertical,
                                     Children = new Drawable[]
                                     {
-                                       ColumnElement = new ColumnButton(@"FullScreen Player", () => Push(new FullscreenPlayer())),//Action crashes right now for some reason ¯\_(ツ)_/¯ 
+                                       ColumnElement = new ColumnButton(@"FullScreen Player", () => Push(new FullscreenPlayer())),
                                        ColumnElement = new ColumnButton(@"Dummy button"),
                                        ColumnElement = new ColumnButton(@"'Nother one"),
                                        ColumnElement = new ColumnButton(@"'Nother one"),
@@ -92,13 +92,15 @@ namespace osu.Game.Screens.KoziLord
         }
         public class ColumnButton : OsuClickableContainer
         {
-            public Box ItemBackground;
+            private readonly Box ItemBackground;
+            private readonly OsuSpriteText ButtonTitle;
+
             public ColumnButton(string title, Action onPressed = null)
             {
                 Action = onPressed;
 
                 Alpha = 0;
-                Scale = new Vector2(0.8f);
+                Scale = new Vector2(0.75f);
                 Anchor = Anchor.TopCentre;
                 Origin = Anchor.TopCentre;
                 Height = 100;
@@ -113,7 +115,7 @@ namespace osu.Game.Screens.KoziLord
                         Colour = Color4.White.Opacity(0.2f),
                         Alpha = 0.5f
                     },
-                    new OsuSpriteText
+                    ButtonTitle = new OsuSpriteText
                     {
                         TextSize = 26,
                         Anchor = Anchor.Centre,
@@ -138,6 +140,7 @@ namespace osu.Game.Screens.KoziLord
         }
         protected override void OnEntering(Screen last)
         {
+            base.OnEntering(last);
 
             int delaySequence = 0;
             foreach (ColumnButton button in ColumnContainer)
@@ -150,13 +153,14 @@ namespace osu.Game.Screens.KoziLord
             
             ColumnBackground.ScaleTo(new Vector2(1, 1), 600, Easing.OutQuart);
         }
-       /* protected override bool OnExiting(Screen next)
-        {
-            MainContainer.FadeOut(200, Easing.In);
-            ColumnBackground.ScaleTo(new Vector2(0, 1), 200, Easing.InCubic);
 
-            return base.OnExiting(next);
-        }*/
+        protected override bool OnExiting(Screen next)
+         {
+             MainContainer.FadeOut(200, Easing.In);
+             ColumnBackground.ScaleTo(new Vector2(0, 1), 200, Easing.InCubic);
 
+             return base.OnExiting(next);
+         }
+        //TODO: OnSuspending and OnResuming animations.
     }
 }
