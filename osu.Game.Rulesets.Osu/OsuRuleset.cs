@@ -142,6 +142,7 @@ namespace osu.Game.Rulesets.Osu
                             },
                         },
                         new OsuModTarget(),
+                        new OsuModFluidDifficulty(),
                     };
 
                 default:
