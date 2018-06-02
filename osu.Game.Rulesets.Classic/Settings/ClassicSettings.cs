@@ -44,6 +44,11 @@ namespace osu.Game.Rulesets.Classic.Settings
                     LabelText = "Enable Hold Note",
                     Bindable = ClassicConfigManager.GetBindable<bool>(ClassicSetting.Hold)
                 },
+                new SettingsCheckbox
+                {
+                    LabelText = "Enable Accelerando Mod",
+                    Bindable = ClassicConfigManager.GetBindable<bool>(ClassicSetting.Accelerando)
+                },
                 new SettingsEnumDropdown<Easing>
                 {
                     LabelText = "Current Slider Easing",

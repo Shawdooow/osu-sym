@@ -10,8 +10,14 @@ using osu.Game.Rulesets.Classic.Objects.Drawables;
 using osu.Game.Rulesets.Classic.Objects.Drawables.Connections;
 using osu.Game.Rulesets.UI;
 using System.Linq;
+using osu.Framework.Allocation;
+using osu.Framework.Audio;
+using osu.Framework.Configuration;
+using osu.Framework.Timing;
+using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Classic.Judgements;
+using osu.Game.Rulesets.Classic.Settings;
 using osu.Game.Rulesets.Classic.UI.Cursor;
 
 namespace osu.Game.Rulesets.Classic.UI
@@ -21,6 +27,13 @@ namespace osu.Game.Rulesets.Classic.UI
         private readonly Container approachCircles;
         private readonly Container judgementLayer;
         private readonly ConnectionRenderer<ClassicHitObject> connectionLayer;
+
+        private readonly Bindable<bool> fast = ClassicSettings.ClassicConfigManager.GetBindable<bool>(ClassicSetting.Accelerando);
+
+        private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
+
+        private double startTime = double.MinValue;
+        private double endTime = double.MaxValue;
 
         //public override bool ProvidingUserCursor => true;
 
@@ -51,8 +64,12 @@ namespace osu.Game.Rulesets.Classic.UI
                     Depth = -1,
                 }
             });
+        }
 
-            
+        [BackgroundDependencyLoader]
+        private void load(OsuGameBase game)
+        {
+            workingBeatmap.BindTo(game.Beatmap);
         }
 
         protected override void LoadComplete()
@@ -61,9 +78,39 @@ namespace osu.Game.Rulesets.Classic.UI
             AddInternal(new GameplayCursor());
         }
 
+        protected override void Update()
+        {
+            base.Update();
+
+            if (fast)
+                applyToClock(workingBeatmap.Value.Track, getSpeed(Time.Current) < 0.75f ? 0.75f : getSpeed(Time.Current));
+        }
+
+        private double getSpeed(double value)
+        {
+            double scale = (1.5 - 0.75) / (endTime - startTime);
+            return 0.75 + ((value - startTime) * scale);
+        }
+
+        private void applyToClock(IAdjustableClock clock, double speed)
+        {
+            if (clock is IHasPitchAdjust pitchAdjust)
+                pitchAdjust.PitchAdjust = speed;
+        }
+
         public override void Add(DrawableHitObject h)
         {
             h.Depth = (float)h.HitObject.StartTime;
+
+            if (startTime == double.MinValue)
+                startTime = h.HitObject.StartTime;
+
+            if (h is DrawableSlider s && s.HitObject is Slider slider)
+                endTime = slider.EndTime;
+            else if (h is DrawableSpinner p && p.HitObject is Spinner spinner)
+                endTime = spinner.EndTime;
+            else
+                endTime = h.HitObject.StartTime;
 
             h.OnJudgement += onJudgement;
 
