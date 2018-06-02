@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         protected List<HealingBullet> HealingBullets { get; private set; } = new List<HealingBullet>();
 
-        protected const double Healing_FallOff = 0.85d;
+        protected const double HEALING_FALL_OFF = 0.85d;
 
         private const double field_of_view = 120;
 
@@ -242,7 +242,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 double fallOff = 1;
 
                 for (int i = 0; i < HealingBullets.Count - 1; i++)
-                    fallOff *= Healing_FallOff;
+                    fallOff *= HEALING_FALL_OFF;
 
                 foreach (HealingBullet HealingBullet in HealingBullets)
                 {

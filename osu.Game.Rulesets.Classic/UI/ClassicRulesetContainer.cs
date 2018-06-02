@@ -5,7 +5,6 @@ using osu.Framework.Input;
 using OpenTK;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Classic.Beatmaps;
 using osu.Game.Rulesets.Classic.Objects;
 using osu.Game.Rulesets.Classic.Objects.Drawables;
 using osu.Game.Rulesets.Classic.Replays;

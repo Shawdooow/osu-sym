@@ -168,10 +168,11 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             int span = slider.SpanAt(progress);
             progress = slider.ProgressAt(progress);
 
-            if (span > currentSpan)
+            if (span > currentSpan && span < slider.SpanCount())
             {
                 currentSpan = span;
-                PlayBetterRepeatSamples();
+                if (Ball.Tracking)
+                    PlayBetterRepeatSamples();
             }
 
             //todo: we probably want to reconsider this before adding scoring, but it looks and feels nice.
@@ -201,7 +202,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 if (slider.SampleControlPoints.Count > 0)
                     slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
                 else
-                    Logger.Log("SampleControlPoint missing from slider!", LoggingTarget.Runtime, LogLevel.Error);
+                    Logger.Log("Expected a SampleControlPoint in DrawableSlider!", LoggingTarget.Runtime, LogLevel.Debug);
             }
         }
 
@@ -228,11 +229,20 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     hitFraction = (double)ticksHit / ticksCount;
 
                 if (hitFraction >= 1)
+                {
+                    PlayBetterRepeatSamples();
                     AddJudgement(new ClassicJudgement { Result = HitResult.Great });
+                }
                 else if (hitFraction >= 0.5)
+                {
+                    PlayBetterRepeatSamples();
                     AddJudgement(new ClassicJudgement { Result = HitResult.Good });
+                }
                 else if (hitFraction > 0 || initialCircle.Judgements.Any(j => j.IsHit) || Ball.Tracking)
+                {
+                    PlayBetterRepeatSamples();
                     AddJudgement(new ClassicJudgement { Result = HitResult.Meh });
+                }
                 else
                     AddJudgement(new ClassicJudgement { Result = HitResult.Miss });
             }
@@ -269,6 +279,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                         .Expire();
                 }
             }
+
         }
 
         public Drawable ProxiedLayer => initialCircle.ApproachCircle;

@@ -344,7 +344,7 @@ namespace osu.Game.Beatmaps.Formats
                     });
                 }
 
-                if (stringSampleSet != samplePoint.SampleBank || sampleVolume != samplePoint.SampleVolume)
+                if (stringSampleSet != samplePoint.SampleBank || sampleVolume != samplePoint.SampleVolume || sampleBank != samplePoint.SampleBankCount)
                 {
                     beatmap.ControlPointInfo.SamplePoints.Add(new SampleControlPoint
                     {
