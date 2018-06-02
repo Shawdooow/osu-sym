@@ -34,6 +34,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 Remove(sound);
                 sound.Delete();
             }
+            SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
         }
 
         protected sealed override void UpdateState(ArmedState state)
