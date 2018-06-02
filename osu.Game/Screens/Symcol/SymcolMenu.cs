@@ -16,6 +16,7 @@ using osu.Framework.Graphics.Textures;
 using osu.Game.Screens.Symcol.CasterBible;
 using osu.Game.Graphics;
 using osu.Game.Screens.Evast;
+using osu.Game.Screens.KoziLord;
 
 namespace osu.Game.Screens.Symcol
 {
@@ -163,6 +164,18 @@ namespace osu.Game.Screens.Symcol
                             Action = delegate { Push(new MoreScreen()); },
                             ButtonPosition = new Vector2(20 , 200),
                         },
+                        new SymcolButton
+                        {
+                            ButtonName = "Jacob's",
+                            Origin = Anchor.Centre,
+                            Anchor = Anchor.Centre,
+                            ButtonColorTop = Color4.Purple,
+                            ButtonColorBottom = Color4.Magenta,
+                            ButtonSize = 100,
+                            Action = delegate { Push(new KoziScreen()); },
+                            ButtonPosition = new Vector2(-250, -20),
+
+                        },
                         /*
                         new SymcolButton
                         {
@@ -186,6 +199,7 @@ namespace osu.Game.Screens.Symcol
                             Action = delegate { Push(new SymcolTestScreen()); },
                             ButtonPosition = new Vector2(-150 , 200),
                         },
+
                         new SymcolButton
                         {
                             ButtonName = "Back",
