@@ -125,6 +125,7 @@ namespace osu.Game.Rulesets.Osu
                         },
                         new OsuModHidden(),
                         new OsuModFlashlight(),
+                        new OsuModWobble(), 
                     };
 
                 case ModType.Special:
