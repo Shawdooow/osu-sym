@@ -5,6 +5,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -13,14 +14,19 @@ using osu.Game.Screens.Evast;
 using osu.Game.Screens.Evast.Visualizers;
 using osu.Game.Screens.Evast.MusicVisualizers;
 using osu.Game.Screens.KoziLord.EvastModded.Visualizers;
+using osu.Framework.Screens;
 
 namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
 {
 
-    //TODO: Everything, adding media buttons and showing the names, and of course entry animation.
+    //TODO: Adding media controls and the entry animation entry animation.
     public class FullscreenPlayer : BeatmapScreen
     {
         private BeatmapSprite beatmapSprite;
+
+        public Container Visualizer;
+
+        public Container MediaControls;
 
         public SpriteText Title;
         public SpriteText Artist;
@@ -41,8 +47,9 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
 
                     Children = new Drawable[]
                     {
-                        new Container
+                        Visualizer = new Container
                         {
+                            Scale = new Vector2(0.4f),
                             Anchor = Anchor.TopCentre,
                             Origin = Anchor.TopCentre,
                             Size = new Vector2(350),
@@ -94,6 +101,9 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
                         },
                         Title = new SpriteText
                         {
+                            AlwaysPresent = true,
+                            Alpha = 0,
+                            Scale = new Vector2(0.6f),
                             Margin = new MarginPadding{Top = 20},
                             Anchor = Anchor.TopCentre,
                             Origin = Anchor.TopCentre,
@@ -101,10 +111,13 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
                             Font = @"Exo2.0-Medium",
                             TextSize = 56,
                             Shadow = true
-                            
+
                         },
                         Artist = new SpriteText
                         {
+                            AlwaysPresent = true,
+                            Alpha = 0,
+                            Scale = new Vector2(0.6f),
                             Margin = new MarginPadding{Top = 10},
                             Anchor = Anchor.TopCentre,
                             Origin = Anchor.TopCentre,
@@ -112,6 +125,27 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
                             Font = @"Exo2.0-MediumItalic",
                             TextSize = 36,
                             Shadow = true
+                        },
+                        MediaControls = new Container
+                        {
+                            Scale = new Vector2(0.6f),
+                            Alpha = 0,
+                            AlwaysPresent = true,
+                            Height = 100,
+                            Width = 400,
+                            CornerRadius = 16,
+                            Margin = new MarginPadding{Top = 20},
+                            Masking = true,
+                            Origin = Anchor.TopCentre,
+                            Anchor = Anchor.TopCentre,
+                            Children = new Drawable[]
+                            {
+                                new Box
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Colour = Color4.White.Opacity(0.1f),
+                                }
+                            }
                         }
                     }
                 },
@@ -119,10 +153,23 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
             };
         }
 
+        protected override void OnEntering(Screen last)
+        {
+            base.OnEntering(last);
+
+            Visualizer.ScaleTo(1f, 500, Easing.OutQuad);
+            Title.Delay(150).ScaleTo(1f, 500, Easing.OutQuad).FadeIn(500,Easing.Out);
+            Artist.Delay(300).ScaleTo(1f, 500, Easing.OutQuad).FadeIn(500,Easing.Out);
+            MediaControls.Delay(400).ScaleTo(1f, 500, Easing.OutQuad).FadeIn(500, Easing.Out);
+        }
+
         protected override void OnBeatmapChange(WorkingBeatmap beatmap)
         {
             base.OnBeatmapChange(beatmap);
             beatmapSprite.UpdateTexture(beatmap);
+
+            Title.Text = beatmap.Beatmap.Metadata.Title;
+            Artist.Text = beatmap.Beatmap.Metadata.Artist;
         }
 
         private class BeatmapSprite : Sprite
