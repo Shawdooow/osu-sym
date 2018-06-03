@@ -13,6 +13,7 @@ using osu.Game.Screens.Evast;
 using osu.Game.Screens.Evast.Visualizers;
 using osu.Game.Screens.Evast.MusicVisualizers;
 using osu.Game.Screens.KoziLord.EvastModded.Visualizers;
+using osu.Framework.Screens;
 
 namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
 {
@@ -21,6 +22,8 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
     public class FullscreenPlayer : BeatmapScreen
     {
         private BeatmapSprite beatmapSprite;
+
+        public Container Visualizer;
 
         public SpriteText Title;
         public SpriteText Artist;
@@ -41,8 +44,9 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
 
                     Children = new Drawable[]
                     {
-                        new Container
+                        Visualizer = new Container
                         {
+                            Scale = new Vector2(0.4f),
                             Anchor = Anchor.TopCentre,
                             Origin = Anchor.TopCentre,
                             Size = new Vector2(350),
@@ -94,6 +98,9 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
                         },
                         Title = new SpriteText
                         {
+                            AlwaysPresent = true,
+                            Alpha = 0,
+                            Scale = new Vector2(0.6f),
                             Margin = new MarginPadding{Top = 20},
                             Anchor = Anchor.TopCentre,
                             Origin = Anchor.TopCentre,
@@ -105,6 +112,9 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
                         },
                         Artist = new SpriteText
                         {
+                            AlwaysPresent = true,
+                            Alpha = 0,
+                            Scale = new Vector2(0.6f),
                             Margin = new MarginPadding{Top = 10},
                             Anchor = Anchor.TopCentre,
                             Origin = Anchor.TopCentre,
@@ -117,6 +127,15 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
                 },
               
             };
+        }
+
+        protected override void OnEntering(Screen last)
+        {
+            base.OnEntering(last);
+
+            Visualizer.ScaleTo(1f, 500, Easing.OutQuad);
+            Title.Delay(150).ScaleTo(1f, 500, Easing.OutQuad).FadeIn(500,Easing.Out);
+            Artist.Delay(300).ScaleTo(1f, 500, Easing.OutQuad).FadeIn(500,Easing.Out);
         }
 
         protected override void OnBeatmapChange(WorkingBeatmap beatmap)
