@@ -5,6 +5,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -24,6 +25,8 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
         private BeatmapSprite beatmapSprite;
 
         public Container Visualizer;
+
+        public Container MediaControls;
 
         public SpriteText Title;
         public SpriteText Artist;
@@ -108,7 +111,7 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
                             Font = @"Exo2.0-Medium",
                             TextSize = 56,
                             Shadow = true
-                            
+
                         },
                         Artist = new SpriteText
                         {
@@ -122,6 +125,27 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
                             Font = @"Exo2.0-MediumItalic",
                             TextSize = 36,
                             Shadow = true
+                        },
+                        MediaControls = new Container
+                        {
+                            Scale = new Vector2(0.6f),
+                            Alpha = 0,
+                            AlwaysPresent = true,
+                            Height = 100,
+                            Width = 400,
+                            CornerRadius = 16,
+                            Margin = new MarginPadding{Top = 20},
+                            Masking = true,
+                            Origin = Anchor.TopCentre,
+                            Anchor = Anchor.TopCentre,
+                            Children = new Drawable[]
+                            {
+                                new Box
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Colour = Color4.White.Opacity(0.1f),
+                                }
+                            }
                         }
                     }
                 },
@@ -136,6 +160,7 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
             Visualizer.ScaleTo(1f, 500, Easing.OutQuad);
             Title.Delay(150).ScaleTo(1f, 500, Easing.OutQuad).FadeIn(500,Easing.Out);
             Artist.Delay(300).ScaleTo(1f, 500, Easing.OutQuad).FadeIn(500,Easing.Out);
+            MediaControls.Delay(400).ScaleTo(1f, 500, Easing.OutQuad).FadeIn(500, Easing.Out);
         }
 
         protected override void OnBeatmapChange(WorkingBeatmap beatmap)

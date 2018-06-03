@@ -62,6 +62,8 @@ namespace osu.Game.Screens.KoziLord
                             {
                                 ColumnContainer = new FillFlowContainer
                                 {
+                                    Origin = Anchor.Centre,
+                                    Anchor = Anchor.Centre,
                                     Padding = new MarginPadding{Top = 20, Bottom = 20},
                                     RelativeSizeAxes = Axes.X,
                                     AutoSizeAxes = Axes.Y,
@@ -162,5 +164,26 @@ namespace osu.Game.Screens.KoziLord
              return base.OnExiting(next);
          }
         //TODO: OnSuspending and OnResuming animations.
+        protected override void OnSuspending(Screen next)
+        {
+            base.OnSuspending(next);
+
+            ColumnContainer.ScaleTo(1.2f, 200, Easing.InCubic);
+            ColumnBackground.Delay(100).ScaleTo(new Vector2(1.1f, 1), 200, Easing.InCubic);
+
+            ColumnContainer.FadeOut(200, Easing.In);
+            ColumnBackground.Delay(100).FadeOut(200, Easing.In);
+
+        }
+        protected override void OnResuming(Screen last)
+        {
+            base.OnResuming(last);
+
+            ColumnContainer.ScaleTo(1, 300, Easing.OutCubic);
+            ColumnBackground.Delay(100).ScaleTo(1, 300, Easing.OutCubic);
+
+            ColumnContainer.FadeIn(300, Easing.Out);
+            ColumnBackground.Delay(100).FadeIn(300, Easing.Out);
+        }
     }
 }
