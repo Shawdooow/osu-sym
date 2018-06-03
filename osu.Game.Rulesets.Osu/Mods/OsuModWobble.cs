@@ -33,9 +33,9 @@ namespace osu.Game.Rulesets.Osu.Mods
 
             var h = d.HitObject;
 
-            if (!(drawable is DrawableHitCircle || drawable is DrawableSlider))
+            if (!(drawable is DrawableHitCircle || drawable is DrawableSlider || drawable is DrawableSpinner))
                 return;
-            if (drawable is DrawableSliderHead || drawable is DrawableSliderTail)
+            if (drawable is DrawableSliderHead)
                 return;
 
             // fade out immediately after fade in.
