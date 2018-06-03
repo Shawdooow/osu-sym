@@ -17,7 +17,7 @@ using osu.Game.Screens.KoziLord.EvastModded.Visualizers;
 namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
 {
 
-    //TODO: Everything, adding media buttons and showing the names, and of course entry animation.
+    //TODO: Adding media controls and the entry animation entry animation.
     public class FullscreenPlayer : BeatmapScreen
     {
         private BeatmapSprite beatmapSprite;
@@ -123,6 +123,9 @@ namespace osu.Game.Screens.KoziLord.EvastModded.MusicPlayer
         {
             base.OnBeatmapChange(beatmap);
             beatmapSprite.UpdateTexture(beatmap);
+
+            Title.Text = beatmap.Beatmap.Metadata.Title;
+            Artist.Text = beatmap.Beatmap.Metadata.Artist;
         }
 
         private class BeatmapSprite : Sprite
