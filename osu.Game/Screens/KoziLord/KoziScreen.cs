@@ -168,8 +168,8 @@ namespace osu.Game.Screens.KoziLord
         {
             base.OnSuspending(next);
 
-            ColumnContainer.ScaleTo(1.2f, 200, Easing.InCubic);
-            ColumnBackground.Delay(100).ScaleTo(new Vector2(1.1f, 1), 200, Easing.InCubic);
+            ColumnContainer.ScaleTo(1.4f, 200, Easing.InCubic);
+            ColumnBackground.Delay(100).ScaleTo(new Vector2(1.2f, 1), 200, Easing.InCubic);
 
             ColumnContainer.FadeOut(200, Easing.In);
             ColumnBackground.Delay(100).FadeOut(200, Easing.In);
