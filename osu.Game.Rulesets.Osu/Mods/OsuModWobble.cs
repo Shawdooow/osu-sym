@@ -38,7 +38,6 @@ namespace osu.Game.Rulesets.Osu.Mods
             if (drawable is DrawableSliderHead)
                 return;
 
-            // fade out immediately after fade in.
             using (drawable.BeginAbsoluteSequence(h.TimeFadein, true))
             {
                 Vector2 pos = h.Position;
