@@ -1,12 +1,11 @@
 ﻿using osu.Framework.Configuration;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 
 namespace Symcol.Rulesets.Core.Skinning
 {
-    public abstract class SkinElement : Container
+    public abstract class SkinElement
     {
         private static string loadedSkin;
 

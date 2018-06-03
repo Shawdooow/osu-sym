@@ -6,7 +6,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
     {
         public override string Title => "Changelog";
 
-        protected override string RulesetVersion => VitaruRuleset.RulesetVersion;
+        protected override string RulesetVersion => VitaruRuleset.RULESET_VERSION;
 
         protected override string RulesetStorage => "vitaru\\changelogs";
 
