@@ -10,7 +10,6 @@ using osu.Game.Configuration;
 using OpenTK;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 {
@@ -25,13 +24,8 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
 
         public class VitaruCursor : Container
         {
-            private string selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
             private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
-            private readonly VitaruPlayfield vitaruPlayfield;
-
-            private Container lineContainer;
-            private Container circleContainer;
             public static CircularContainer CenterCircle;
 
             private Bindable<double> cursorScale;
@@ -68,7 +62,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
                             RelativeSizeAxes = Axes.Both
                         }
                     },
-                    lineContainer = new Container
+                    new Container
                     {
                         Masking = false,
                         Anchor = Anchor.Centre,
@@ -135,7 +129,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
                             }
                         }
                     },
-                    circleContainer = new Container
+                    new Container
                     {
                         Masking = false,
                         Anchor = Anchor.Centre,

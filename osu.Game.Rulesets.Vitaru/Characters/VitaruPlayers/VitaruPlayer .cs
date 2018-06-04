@@ -6,6 +6,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers
     {
         public virtual string Name { get; } = "Alex";
 
+        //TODO: this field is redundant
         public virtual string FileName { get; } = "Alex";
 
         public virtual double MaxHealth => 80;

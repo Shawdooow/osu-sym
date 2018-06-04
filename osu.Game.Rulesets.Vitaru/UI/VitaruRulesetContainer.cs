@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         protected override Vector2 GetAspectAdjustedSize()
         {
-            var aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 10f / 16f, DrawSize.Y);
+            var aspectSize = new Vector2(DrawSize.Y * 10f / 16f, DrawSize.Y);
 
             if (gamemode == Gamemodes.Dodge)
                 aspectSize = DrawSize.X * 0.75f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.75f) : new Vector2(DrawSize.Y * 4f / 3f, DrawSize.Y);
