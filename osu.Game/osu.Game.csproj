@@ -11,7 +11,9 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   <ItemGroup Label="Project References">
+    <ProjectReference Include="..\osu-framework\osu.Framework\osu.Framework.csproj" />
     <ProjectReference Include="..\osu-resources\osu.Game.Resources\osu.Game.Resources.csproj" />
+    <ProjectReference Include="..\Symcol.Core\Symcol.Core.csproj" />
   </ItemGroup>
   <ItemGroup Label="Package References">
     <PackageReference Include="Humanizer" Version="2.2.0" />

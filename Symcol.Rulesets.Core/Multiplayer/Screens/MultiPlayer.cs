@@ -381,6 +381,6 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
             RulesetNetworkingClientHandler.AbortGame();
         }
 
-        protected override bool OnWheel(InputState state) => mouseWheelDisabled.Value;
+        protected override bool OnScroll(InputState state) => mouseWheelDisabled.Value;
     }
 }
