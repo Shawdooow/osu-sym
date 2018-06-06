@@ -49,7 +49,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         {
             if (PlayerVisuals == GraphicsOptions.StandardV2)
             {
-
                 SoulContainer.Alpha = 0;
                 KiaiContainer.Alpha = 1;
 
