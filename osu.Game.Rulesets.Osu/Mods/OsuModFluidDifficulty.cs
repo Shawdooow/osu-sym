@@ -1,4 +1,5 @@
-﻿using osu.Framework.Timing;
+﻿using System;
+using osu.Framework.Timing;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
@@ -9,11 +10,10 @@ namespace osu.Game.Rulesets.Osu.Mods
     {
         public override string Name => "Fluid Difficutly";
         public override string ShortenedName => "FluidDiff";
-        public override double ScoreMultiplier => 0;
+        public override double ScoreMultiplier => 1.2;
         public override ModType Type => ModType.Special;
         public override FontAwesome Icon => FontAwesome.fa_upload;
 
-        private double speedMulitplier = 1;
         private IAdjustableClock clock;
 
         public void ApplyToClock(IAdjustableClock clock)
@@ -26,11 +26,15 @@ namespace osu.Game.Rulesets.Osu.Mods
             scoreProcessor.Health.ValueChanged += v => updateClock(scoreProcessor);
             scoreProcessor.Combo.ValueChanged += v => updateClock(scoreProcessor);
         }
-   
+
         private void updateClock(ScoreProcessor scoreProcessor)
         {
-            speedMulitplier = 0.7 + scoreProcessor.Combo.Value * 0.007;
-            clock.Rate = speedMulitplier;
+            double scoreMultplier = Math.Min(scoreProcessor.Combo.Value, 100) / 100d;
+            double accuracyMultiplier = Math.Min(scoreProcessor.Accuracy.Value, 0.95d) / 0.95d;
+
+            double difficultyMultiplier = (scoreMultplier + accuracyMultiplier) / 2;
+
+            clock.Rate = 0.5 + difficultyMultiplier * 1.5;
         }
 
         public bool AllowFail => false;
