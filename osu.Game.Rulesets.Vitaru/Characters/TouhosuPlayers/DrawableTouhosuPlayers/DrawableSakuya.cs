@@ -33,13 +33,15 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         public DrawableSakuya(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Sakuya(), vitaruNetworkingClientHandler)
         {
-            Spell += (action) =>
+            Spell += action =>
             {
                 if (originalRate == 0)
                     originalRate = (float)workingBeatmap.Value.Track.Rate;
 
                 currentRate = originalRate * SetRate;
                 applyToClock(workingBeatmap.Value.Track, currentRate);
+
+                Seal.SignSprite.Colour = Color4.DarkRed;
 
                 SpellEndTime = Time.Current + 1000;
             };
@@ -58,11 +60,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
                 KiaiContainer.AddRange(new Drawable[]
                 {
-                    Idle = new AnimatedSprite()
+                    Idle = new AnimatedSprite
                     {
                         RelativeSizeAxes = Axes.Both,
                         UpdateRate = 100,
-                        Textures = new Texture[]
+                        Textures = new[]
                         {
                             VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 0", storage),
                             VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 1", storage),
@@ -74,12 +76,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                             VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai 7", storage),
                         }
                     },
-                    Left = new AnimatedSprite()
+                    Left = new AnimatedSprite
                     {
                         Alpha = 0,
                         RelativeSizeAxes = Axes.Both,
                         UpdateRate = 100,
-                        Textures = new Texture[]
+                        Textures = new[]
                         {
                             VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 0", storage),
                             VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 1", storage),
@@ -91,12 +93,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                             VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Left 7", storage),
                         }
                     },
-                    Right = new AnimatedSprite()
+                    Right = new AnimatedSprite
                     {
                         Alpha = 0,
                         RelativeSizeAxes = Axes.Both,
                         UpdateRate = 100,
-                        Textures = new Texture[]
+                        Textures = new[]
                         {
                             VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Right 0", storage),
                             VitaruSkinElement.LoadSkinElement(Player.Name + " Kiai Right 1", storage),
@@ -183,7 +185,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                     else if (currentRate >= 1)
                         energyDrainMultiplier = currentRate - originalRate;
 
-                    Energy -= (Clock.ElapsedFrameTime / 1000) * (1 / currentRate) * energyDrainMultiplier * TouhosuPlayer.EnergyDrainRate;
+                    Energy -= Clock.ElapsedFrameTime / 1000 * (1 / currentRate) * energyDrainMultiplier * TouhosuPlayer.EnergyDrainRate;
 
                     if (currentRate > 0)
                         SpellEndTime = Time.Current + 2000;
@@ -193,6 +195,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                     currentRate = originalRate * SetRate;
                     applyToClock(workingBeatmap.Value.Track, currentRate);
                 }
+        }
+
+        protected override void SpellDeactivate(VitaruAction action)
+        {
+            base.SpellDeactivate(action);
+            Seal.SignSprite.FadeColour(Player.PrimaryColor, 100);
         }
 
         private void applyToClock(IAdjustableClock clock, double speed)
@@ -230,17 +238,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
             if (action == VitaruAction.Increase)
             {
-                if (Actions[VitaruAction.Slow])
-                    SetRate = Math.Min(Math.Round(SetRate + 0.05d, 2), 2d);
-                else
-                    SetRate = Math.Min(Math.Round(SetRate + 0.25d, 2), 2d);
+                SetRate = Math.Min(Actions[VitaruAction.Slow] ? Math.Round(SetRate + 0.05d, 2) : Math.Round(SetRate + 0.25d, 2), 2d);
             }
             if (action == VitaruAction.Decrease)
             {
-                if (Actions[VitaruAction.Slow])
-                    SetRate = Math.Max(Math.Round(SetRate - 0.05d, 2), 0.25d);
-                else
-                    SetRate = Math.Max(Math.Round(SetRate - 0.25d, 2), 0.25d);
+                SetRate = Math.Max(Actions[VitaruAction.Slow] ? Math.Round(SetRate - 0.05d, 2) : Math.Round(SetRate - 0.25d, 2), 0.25d);
             }
         }
     }

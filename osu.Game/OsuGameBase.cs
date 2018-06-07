@@ -10,7 +10,6 @@ using System.Reflection;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Configuration;
-using osu.Framework.Development;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.IO.Stores;
@@ -31,6 +30,7 @@ using osu.Game.IO;
 using osu.Game.Rulesets;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
+using DebugUtils = osu.Game.Utils.DebugUtils;
 
 namespace osu.Game
 {
@@ -59,8 +59,6 @@ namespace osu.Game
 
         protected MenuCursorContainer MenuCursorContainer;
 
-        protected override string MainResourceFile => @"osu.Game.Resources.dll";
-
         private Container content;
 
         protected override Container<Drawable> Content => content;
@@ -81,7 +79,7 @@ namespace osu.Game
                     //return @"local " + (DebugUtils.IsDebug ? @"debug" : @"release");
 
                 var assembly = AssemblyName;
-                return $@"2018.531.0";
+                return $@"2018.606.0";
             }
         }
 
@@ -100,6 +98,8 @@ namespace osu.Game
         [BackgroundDependencyLoader]
         private void load()
         {
+            Resources.AddStore(new DllResourceStore(@"osu.Game.Resources.dll"));
+
             dependencies.Cache(contextFactory = new DatabaseContextFactory(Host));
 
             dependencies.Cache(new LargeTextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(Resources, @"Textures"))));
@@ -211,15 +211,17 @@ namespace osu.Game
                 using (var db = contextFactory.GetForWrite(false))
                     db.Context.Migrate();
             }
-            catch (MigrationFailedException e)
+            catch (Exception e)
             {
                 Logger.Error(e.InnerException ?? e, "Migration failed! We'll be starting with a fresh database.", LoggingTarget.Database);
 
                 // if we failed, let's delete the database and start fresh.
                 // todo: we probably want a better (non-destructive) migrations/recovery process at a later point than this.
                 contextFactory.ResetDatabase();
+
                 Logger.Log("Database purged successfully.", LoggingTarget.Database, LogLevel.Important);
 
+                // only run once more, then hard bail.
                 using (var db = contextFactory.GetForWrite(false))
                     db.Context.Migrate();
             }
