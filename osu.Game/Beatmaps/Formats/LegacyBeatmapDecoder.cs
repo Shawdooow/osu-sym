@@ -270,6 +270,22 @@ namespace osu.Game.Beatmaps.Formats
             }
         }
 
+        private void handleEventSamplePoint(string line)
+        {
+            try
+            {
+                string[] split = line.Split(',');
+
+                double time = getOffsetTime(double.Parse(split[0].Trim(), NumberFormatInfo.InvariantInfo));
+                double beatLength = double.Parse(split[1].Trim(), NumberFormatInfo.InvariantInfo);
+
+
+            }
+            catch (FormatException e)
+            {
+            }
+        }
+
         private void handleTimingPoint(string line)
         {
             try

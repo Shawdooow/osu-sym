@@ -16,6 +16,8 @@ namespace osu.Game.Beatmaps.ControlPoints
 
         public int SampleBankCount = 1;
 
+        public string SampleExtension = ".mp3";
+
         /// <summary>
         /// The default sample volume at this control point.
         /// </summary>

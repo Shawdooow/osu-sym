@@ -12,7 +12,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 
         protected override string FileExtention => ".vitaru";
 
-        protected override string VersionChangelog => "" +
+        protected override string VersionChangelog => "-Updated to lazer version 2018.607.0\n" +
+            "-Updated to lazer version 2018.606.0\n\n" +
             "Features:\n\n" +
             "\n\n" +
             "Tweaks / Changes:\n\n" +
