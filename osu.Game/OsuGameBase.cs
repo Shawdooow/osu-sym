@@ -63,7 +63,7 @@ namespace osu.Game
         protected override Container<Drawable> Content => content;
 
         private OsuBindableBeatmap beatmap;
-        protected BindableBeatmap Beatmap => beatmap;
+        public BindableBeatmap Beatmap => beatmap;
 
         private Bindable<bool> fpsDisplayVisible;
 
