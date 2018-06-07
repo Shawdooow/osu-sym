@@ -19,6 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
     public class Seal : Container
     {
         public Container Sign { get; private set; }
+        public Sprite SignSprite { get; private set; }
 
         private CircularContainer characterSigil;
 
@@ -78,7 +79,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
                                 Origin = Anchor.Centre,
                                 Masking = true,
                             },
-                            new Sprite
+                            SignSprite = new Sprite
                             {
                                 RelativeSizeAxes = Axes.Both,
                                 Size = new Vector2(2f),
