@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Vitaru
             switch (getControlType(variant))
             {
                 case ControlScheme.Vitaru:
-                    return new KeyBinding[]
+                    return new[]
                     {
                         new KeyBinding(InputKey.W, VitaruAction.Up),
                         new KeyBinding(InputKey.S, VitaruAction.Down),
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Vitaru
                         new KeyBinding(InputKey.Shift, VitaruAction.Slow),
                     };
                 case ControlScheme.Dodge:
-                    return new KeyBinding[]
+                    return new[]
                     {
                         new KeyBinding(InputKey.W, VitaruAction.Up),
                         new KeyBinding(InputKey.S, VitaruAction.Down),
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Vitaru
                         new KeyBinding(InputKey.Shift, VitaruAction.Slow),
                     };
                 case ControlScheme.Touhosu:
-                    return new KeyBinding[]
+                    return new[]
                     {
                         new KeyBinding(InputKey.W, VitaruAction.Up),
                         new KeyBinding(InputKey.S, VitaruAction.Down),
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Vitaru
                         new KeyBinding(InputKey.Shift, VitaruAction.Slow),
                     };
                 case ControlScheme.Sakuya:
-                    return new KeyBinding[]
+                    return new[]
                     {
                         new KeyBinding(InputKey.W, VitaruAction.Up),
                         new KeyBinding(InputKey.S, VitaruAction.Down),
@@ -203,7 +203,7 @@ namespace osu.Game.Rulesets.Vitaru
             if (VitaruResources == null)
             {
                 VitaruResources = new ResourceStore<byte[]>();
-                VitaruResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Game.Rulesets.Vitaru.dll"), ("Assets")));
+                VitaruResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Game.Rulesets.Vitaru.dll"), "Assets"));
                 VitaruResources.AddStore(new DllResourceStore("osu.Game.Rulesets.Vitaru.dll"));
                 VitaruTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(VitaruResources, @"Textures")));
                 VitaruTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
