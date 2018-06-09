@@ -88,6 +88,14 @@ namespace Symcol.Rulesets.Core.HitObjects
     : base(hitObject)
         { }
 
+        public List<SymcolSkinnableSound> SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
+
+        protected virtual void PlayBetterSamples()
+        {
+            foreach (SymcolSkinnableSound sound in SymcolSkinnableSounds)
+                sound.Play();            
+        }
+
         private bool deleted;
 
         public virtual void Delete()

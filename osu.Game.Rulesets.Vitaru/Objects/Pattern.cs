@@ -31,16 +31,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         public int PatternTeam { get; set; } = 1;
         private double beatLength;
 
-        public bool Drum { get; set; }
-        public bool Soft { get; set; }
-
-        public int Volume { get; set; }
-
-        public bool Whistle { get; set; }
-        public bool Finish { get; set; }
-        public bool Clap { get; set; }
-
-        public List<List<SampleInfo>> BetterRepeatSamples { get; set; } = new List<List<SampleInfo>>();
+        public List<SampleControlPoint> SampleControlPoints = new List<SampleControlPoint>();
         #endregion
 
         /// <summary>
@@ -95,7 +86,20 @@ namespace osu.Game.Rulesets.Vitaru.Objects
             beatLength = timingPoint.BeatLength;
 
             if (IsSlider)
+            {
                 EndTime = StartTime + this.SpanCount() * Curve.Distance / Velocity;
+
+                for (double i = StartTime + SpanDuration; i <= EndTime; i += SpanDuration)
+                {
+                    SampleControlPoint point = controlPointInfo.SamplePointAt(i);
+                    SampleControlPoints.Add(new SampleControlPoint
+                    {
+                        SampleBank = point.SampleBank,
+                        SampleBankCount = point.SampleBankCount,
+                        SampleVolume = point.SampleVolume,
+                    });
+                }
+            }
             else if (!IsSpinner)
                 EndTime = StartTime;
         }

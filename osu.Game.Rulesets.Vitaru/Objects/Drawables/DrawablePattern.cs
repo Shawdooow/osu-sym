@@ -2,6 +2,7 @@
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
+using System.Collections.Generic;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Objects.Types;
@@ -9,8 +10,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Audio;
-using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Logging;
+using osu.Game.Beatmaps.ControlPoints;
 using Symcol.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
@@ -32,9 +34,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private AudioManager audio;
 
-        private List<SymcolSkinnableSound> samples = new List<SymcolSkinnableSound>();
-        private List<SymcolSkinnableSound> repeatSamples = new List<SymcolSkinnableSound>();
-
         public DrawablePattern(Pattern pattern, VitaruPlayfield playfield) : base(pattern, playfield)
         {
             AlwaysPresent = true;
@@ -52,71 +51,23 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 this.pattern.EndTime = endTime;
             }
 
-            if (!pattern.IsSlider)
+            if (pattern.IsSlider)
             {
-                string bank = "normal";
-
-                if (pattern.Drum)
-                    bank = "drum";
-                else if (pattern.Soft)
-                    bank = "soft";
-
-                samples.Add(new SymcolSkinnableSound(new SampleInfo
+                foreach (SampleInfo info in pattern.RepeatSamples.First())
                 {
-                    Bank = bank,
-                    Name = "hitnormal",
-                    Volume = pattern.Volume > 0 ? pattern.Volume : HitObject.SampleControlPoint.SampleVolume,
-                    Namespace = SampleNamespace
-                }));
-
-                if (pattern.Whistle)
-                    samples.Add(new SymcolSkinnableSound(new SampleInfo
-                    {
-                        Bank = bank,
-                        Name = "hitwhistle",
-                        Volume = pattern.Volume > 0 ? pattern.Volume : HitObject.SampleControlPoint.SampleVolume,
-                        Namespace = SampleNamespace
-                    }));
-                if (pattern.Finish)
-                    samples.Add(new SymcolSkinnableSound(new SampleInfo
-                    {
-                        Bank = bank,
-                        Name = "hitfinish",
-                        Volume = pattern.Volume > 0 ? pattern.Volume : HitObject.SampleControlPoint.SampleVolume,
-                        Namespace = SampleNamespace
-                    }));
-                if (pattern.Clap)
-                    samples.Add(new SymcolSkinnableSound(new SampleInfo
-                    {
-                        Bank = bank,
-                        Name = "hitclap",
-                        Volume = pattern.Volume > 0 ? pattern.Volume : HitObject.SampleControlPoint.SampleVolume,
-                        Namespace = SampleNamespace
-                    }));
-
-                foreach (SymcolSkinnableSound sound in samples)
+                    SymcolSkinnableSound sound;
+                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, pattern.SampleControlPoints.First()));
                     Add(sound);
+                }
             }
             else
             {
-                endTime = this.pattern.EndTime + HitObject.TimePreempt * 2 - HitObject.TimeFadein;
-
-                restart:
-                foreach (SampleInfo info in pattern.BetterRepeatSamples.First())
+                foreach (SampleInfo info in pattern.Samples)
                 {
                     SymcolSkinnableSound sound;
-                    repeatSamples.Add(sound = new SymcolSkinnableSound(new SampleInfo
-                    {
-                        Bank = info.Bank,
-                        Name = info.Name,
-                        Volume = info.Volume,
-                        Namespace = SampleNamespace
-                    }));
+                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
                     Add(sound);
-                    pattern.BetterRepeatSamples.First().Remove(info);
-                    goto restart;
                 }
-                pattern.BetterRepeatSamples.Remove(pattern.BetterRepeatSamples.First());
             }
         }
 
@@ -155,42 +106,35 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
                 if (repeat > currentRepeat)
                 {
-                    if (repeat < pattern.RepeatCount + 2)
-                    {
-                        foreach (SymcolSkinnableSound sound in repeatSamples)
-                        {
-                            sound.Play();
-                            Remove(sound);
-                            sound.Delete();
-                        }
-
-                        restart:
-                        if (pattern.BetterRepeatSamples.Count > 0)
-                        {
-                            foreach (SampleInfo info in pattern.BetterRepeatSamples.First())
-                            {
-                                repeatSamples = new List<SymcolSkinnableSound>();
-                                SymcolSkinnableSound newSound;
-                                repeatSamples.Add(newSound = new SymcolSkinnableSound(new SampleInfo
-                                {
-                                    Bank = info.Bank,
-                                    Name = info.Name,
-                                    Volume = info.Volume,
-                                    Namespace = SampleNamespace
-                                }));
-                                Add(newSound);
-                                pattern.BetterRepeatSamples.First().Remove(info);
-                                goto restart;
-                            }
-                            pattern.BetterRepeatSamples.Remove(pattern.BetterRepeatSamples.First());
-                        }
-                    }
+                    PlayBetterRepeatSamples(repeat + 1);
                     currentRepeat = repeat;
                 }
 
                 if (pattern.EndTime <= Time.Current && Started && !done)
                     done = true;
             }
+        }
+
+        protected void PlayBetterRepeatSamples(int repeat)
+        {
+            PlayBetterSamples();
+
+            foreach (SymcolSkinnableSound sound in SymcolSkinnableSounds)
+                sound.Delete();
+
+            SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
+
+            if (pattern.RepeatSamples.Count > repeat)
+                foreach (SampleInfo info in pattern.RepeatSamples[repeat])
+                {
+                    SymcolSkinnableSound sound;
+
+                    if (pattern.SampleControlPoints.Count > repeat)
+                        pattern.SampleControlPoint = pattern.SampleControlPoints[repeat];
+
+                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
+                    Add(sound);
+                }
         }
 
         protected override void Load()
@@ -250,6 +194,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             foreach (Bullet bullet in pattern.GetBullets())
                 pattern.AddNested(bullet);
 
+            if (!pattern.IsSlider && !pattern.IsSpinner)
+                PlayBetterSamples();
+            else
+                PlayBetterRepeatSamples(1);
+
             //Load the bullets
             foreach (var o in pattern.NestedHitObjects)
             {
@@ -269,49 +218,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (VitaruPlayfield.Boss != null)
                 VitaruPlayfield.Boss.Free = true;
-
-            if (!pattern.IsSlider)
-                foreach (SymcolSkinnableSound sound in samples)
-                {
-                    sound.Play();
-                    Remove(sound);
-                    sound.Delete();
-                }
-            else
-            {
-                foreach (SymcolSkinnableSound sound in repeatSamples)
-                {
-                    sound.Play();
-                    Remove(sound);
-                    sound.Delete();
-                }
-
-                restart:
-                if (pattern.BetterRepeatSamples.Count > 0)
-                {
-                    foreach (SampleInfo info in pattern.BetterRepeatSamples.First())
-                    {
-                        repeatSamples = new List<SymcolSkinnableSound>();
-                        SymcolSkinnableSound newSound;
-                        repeatSamples.Add(newSound = new SymcolSkinnableSound(new SampleInfo
-                        {
-                            Bank = info.Bank,
-                            Name = info.Name,
-                            Volume = info.Volume,
-                            Namespace = SampleNamespace
-                        }));
-                        Add(newSound);
-                        pattern.BetterRepeatSamples.First().Remove(info);
-                        goto restart;
-                    }
-                    pattern.BetterRepeatSamples.Remove(pattern.BetterRepeatSamples.First());
-                }
-            }
         }
 
         protected override void End()
         {
             base.End();
+
+            if (pattern.IsSpinner)
+                PlayBetterSamples();
 
             if (gamemode != Gamemodes.Dodge)
                 enemy.MoveTo(getPatternStartPosition(), HitObject.TimePreempt * 2, Easing.InQuint)
@@ -339,16 +253,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 Expire();
             else
                 Delete();
-        }
-
-        public override void Delete()
-        {
-            foreach (SymcolSkinnableSound sound in samples)
-                sound.Delete();
-            foreach (SymcolSkinnableSound sound in repeatSamples)
-                sound.Delete();
-
-            base.Delete();
         }
 
         private Vector2 getPatternStartPosition()

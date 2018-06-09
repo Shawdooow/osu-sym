@@ -120,12 +120,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             {
                 Convert = true,
 
-                Drum = isDrum,
-                Soft = isSoft,
-
-                Whistle = isWhistle,
-                Finish = isFinish,
-                Clap = isClap,
+                Samples = original.Samples,
 
                 Ar = ar,
                 StartTime = original.StartTime,
@@ -140,97 +135,13 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 
             if (original is IHasCurve curveData)
             {
-                // Number of spans of the object - one for the initial length and for each repeat
-                int spans = curveData?.SpanCount() ?? 1;
-
-                TimingControlPoint timingPoint = beatmap.ControlPointInfo.TimingPointAt(original.StartTime);
-                DifficultyControlPoint difficultyPoint = beatmap.ControlPointInfo.DifficultyPointAt(original.StartTime);
-
-                double speedAdjustment = difficultyPoint.SpeedMultiplier;
-                double speedAdjustedBeatLength = timingPoint.BeatLength / speedAdjustment;
-
-                double distance = curveData.Distance * spans * legacy_velocity_multiplier;
-
-                double shapeVelocity = shape_base_distance * beatmap.BeatmapInfo.BaseDifficulty.SliderMultiplier * legacy_velocity_multiplier / speedAdjustedBeatLength;
-                double shapeDuration = distance / shapeVelocity;
-
-                // The velocity of the osu! hit object - calculated as the velocity of a slider
-                double osuVelocity = osu_base_scoring_distance * beatmap.BeatmapInfo.BaseDifficulty.SliderMultiplier * legacy_velocity_multiplier / speedAdjustedBeatLength;
-                // The duration of the osu! hit object
-                double osuDuration = distance / osuVelocity;
-
-                // osu-stable always uses the speed-adjusted beatlength to determine the velocities, but
-                // only uses it for tick rate if beatmap version < 8
-                if (beatmap.BeatmapInfo.BeatmapVersion >= 8)
-                    speedAdjustedBeatLength *= speedAdjustment;
-
-                // If the drum roll is to be split into hit circles, assume the ticks are 1/8 spaced within the duration of one beat
-                double tickSpacing = Math.Min(speedAdjustedBeatLength / beatmap.BeatmapInfo.BaseDifficulty.SliderTickRate, shapeDuration / spans);
-
-                List<List<SampleInfo>> allSamples = curveData != null ? curveData.RepeatSamples : new List<List<SampleInfo>>(new[] { original.Samples });
-
-                int i = 0;
-                for (double j = original.StartTime; j <= original.StartTime + shapeDuration + tickSpacing / 8; j += tickSpacing)
-                {
-                    List<SampleInfo> currentSamples = allSamples[i];
-
-                    string bank = original.SampleControlPoint.SampleBank;
-
-                    if (currentSamples.Any(s => s.Bank != null))
-                    {
-                        if (currentSamples.Any(s => s.Name == "normal"))
-                            bank = "normal";
-                        else if (currentSamples.Any(s => s.Name == "drum"))
-                            bank = "drum";
-                        else if (currentSamples.Any(s => s.Name == "soft"))
-                            bank = "soft";
-                    }
-
-                    List<SampleInfo> samplesList = new List<SampleInfo>()
-                    {
-                        new SampleInfo()
-                        {
-                            Bank = bank,
-                            Name = "hitnormal",
-                            Volume = original.SampleControlPoint.SampleVolume,
-                        }
-                    };
-
-                    if (currentSamples.Any(s => s.Name == SampleInfo.HIT_WHISTLE))
-                        samplesList.Add(new SampleInfo()
-                        {
-                            Bank = bank,
-                            Name = "hitwhistle",
-                            Volume = original.SampleControlPoint.SampleVolume,
-                        });
-
-                    if (currentSamples.Any(s => s.Name == SampleInfo.HIT_FINISH))
-                        samplesList.Add(new SampleInfo()
-                        {
-                            Bank = bank,
-                            Name = "hitfinish",
-                            Volume = original.SampleControlPoint.SampleVolume,
-                        });
-
-                    if (currentSamples.Any(s => s.Name == SampleInfo.HIT_CLAP))
-                        samplesList.Add(new SampleInfo()
-                        {
-                            Bank = bank,
-                            Name = "hitclap",
-                            Volume = original.SampleControlPoint.SampleVolume,
-                        });
-
-                    p.BetterRepeatSamples.Add(samplesList);
-
-                    i = (i + 1) % allSamples.Count;
-                }
-
                 p.IsSlider = true;
                 p.ControlPoints = curveData.ControlPoints;
                 p.CurveType = curveData.CurveType;
                 p.Distance = curveData.Distance;
                 p.RepeatCount = curveData.RepeatCount;
                 p.EnemyHealth = 60;
+                p.RepeatSamples = curveData.RepeatSamples;
 
                 if (isFinish)
                     p.PatternSpeed = 0.25f;

@@ -19,6 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "Tweaks / Changes:\n\n" +
             "\n\n" +
             "Fixes:\n\n" +
+            "-Fix hitsounding not being 1:1 with stable" +
             "-Fix boss death crashing game\n\n" + 
             "Additional Patch-Notes:\n\n" +
             "";

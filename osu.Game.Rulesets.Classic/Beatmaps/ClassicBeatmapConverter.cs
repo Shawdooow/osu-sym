@@ -12,7 +12,6 @@ using osu.Game.Rulesets.Classic.UI;
 using osu.Framework.Configuration;
 using osu.Game.Rulesets.Classic.Settings;
 using osu.Game.Beatmaps.ControlPoints;
-using System.Linq;
 using osu.Game.Audio;
 
 namespace osu.Game.Rulesets.Classic.Beatmaps

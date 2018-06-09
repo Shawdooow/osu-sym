@@ -15,7 +15,6 @@ using osu.Game.Rulesets.Objects.Types;
 using OpenTK.Graphics;
 using osu.Game.Audio;
 using Symcol.Rulesets.Core.Skinning;
-using osu.Game.Beatmaps.ControlPoints;
 using osu.Framework.Logging;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables

@@ -9,8 +9,6 @@ using Symcol.Rulesets.Core.HitObjects;
 using osu.Game.Skinning;
 using osu.Game.Rulesets.Objects.Types;
 using OpenTK.Graphics;
-using System.Collections.Generic;
-using Symcol.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -22,19 +20,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             : base(hitObject)
         {
             Alpha = 0;
-        }
-
-        public List<SymcolSkinnableSound> SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
-
-        protected virtual void PlayBetterSamples()
-        {
-            foreach (SymcolSkinnableSound sound in SymcolSkinnableSounds)
-            {
-                sound.Play();
-                Remove(sound);
-                sound.Delete();
-            }
-            SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
         }
 
         protected sealed override void UpdateState(ArmedState state)
