@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public Boss Boss;
 
-        public virtual bool Editor => goodFps;
+        public virtual bool Editor => false;
 
         public static Vector2 BaseSize
         {
@@ -202,7 +202,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             drawable.Depth = (float)drawable.HitObject.StartTime;
 
-            drawable.Editor = Editor;
+            drawable.Editor = Editor || !goodFps;
 
             drawableHitobjectCount.Bindable.Value++;
             drawable.OnDispose += isDisposing => { drawableHitobjectCount.Bindable.Value--; };
@@ -219,7 +219,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             DrawablePattern drawable = h as DrawablePattern;
 
-            if (Editor)
+            if (Editor || !goodFps)
                 base.Add(h);
             else
                 patterns.Add((Pattern)drawable.HitObject);
