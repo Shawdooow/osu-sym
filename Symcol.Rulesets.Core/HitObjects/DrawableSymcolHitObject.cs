@@ -2,7 +2,6 @@
 using osu.Framework.Graphics.Containers;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using Symcol.Rulesets.Core.Skinning;
 using System;
@@ -15,7 +14,7 @@ namespace Symcol.Rulesets.Core.HitObjects
     /// </summary>
     /// <typeparam name="TObject"></typeparam>
     public abstract class DrawableSymcolHitObject<TObject> : DrawableHitObject<TObject>
-        where TObject : HitObject
+        where TObject : SymcolHitObject
     {
         #region Container
         protected virtual Container<Drawable> Content => new Container();
@@ -114,6 +113,7 @@ namespace Symcol.Rulesets.Core.HitObjects
             Dispose();
         }
 
+        //TODO: share logic with GetAdjustedSample
         protected SymcolSkinnableSound GetSkinnableSound(SampleInfo info, SampleControlPoint point = null)
         {
             SampleControlPoint control = HitObject.SampleControlPoint;

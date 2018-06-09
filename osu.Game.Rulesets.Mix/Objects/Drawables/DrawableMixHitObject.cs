@@ -1,5 +1,4 @@
 ﻿using osu.Game.Rulesets.Objects.Drawables;
-using System;
 using System.ComponentModel;
 using osu.Framework.Input.Bindings;
 using Symcol.Rulesets.Core.HitObjects;

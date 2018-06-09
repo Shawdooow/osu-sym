@@ -1,15 +1,15 @@
-﻿using osu.Game.Rulesets.Objects;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Types;
 using System;
 using osu.Game.Rulesets.Edit.Types;
+using Symcol.Rulesets.Core.HitObjects;
 
 namespace osu.Game.Rulesets.Vitaru.Objects
 {
-    public abstract class VitaruHitObject : HitObject, IHasComboInformation, IHasEditablePosition
+    public abstract class VitaruHitObject : SymcolHitObject, IHasComboInformation, IHasEditablePosition
     {
         public virtual double TimePreempt => 600;
         public virtual double TimeFadein => 400;

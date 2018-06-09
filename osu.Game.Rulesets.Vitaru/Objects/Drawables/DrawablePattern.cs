@@ -11,8 +11,6 @@ using osu.Framework.Audio;
 using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Audio;
 using System.Linq;
-using osu.Framework.Logging;
-using osu.Game.Beatmaps.ControlPoints;
 using Symcol.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
@@ -53,7 +51,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (pattern.IsSlider)
             {
-                foreach (SampleInfo info in pattern.RepeatSamples.First())
+                foreach (SampleInfo info in pattern.GetRepeatSamples(0))
                 {
                     SymcolSkinnableSound sound;
                     SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
@@ -124,17 +122,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
 
-            if (pattern.RepeatSamples.Count > repeat)
-                foreach (SampleInfo info in pattern.RepeatSamples[repeat])
-                {
-                    SymcolSkinnableSound sound;
+            foreach (SampleInfo info in pattern.GetRepeatSamples(repeat))
+            {
+                SymcolSkinnableSound sound;
 
-                    if (pattern.SampleControlPoints.Count > repeat)
-                        pattern.SampleControlPoint = pattern.SampleControlPoints[repeat];
+                pattern.SampleControlPoint = pattern.GetSampleControlPoint(repeat);
 
-                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
-                    Add(sound);
-                }
+                SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
+                Add(sound);
+            }
         }
 
         protected override void Load()

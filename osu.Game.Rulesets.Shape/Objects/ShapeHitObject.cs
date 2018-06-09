@@ -1,14 +1,12 @@
-﻿using osu.Game.Rulesets.Objects;
-using OpenTK;
-using osu.Game.Rulesets.Shape.Objects.Drawables;
+﻿using OpenTK;
 using OpenTK.Graphics;
-using osu.Game.Database;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Beatmaps;
+using Symcol.Rulesets.Core.HitObjects;
 
 namespace osu.Game.Rulesets.Shape.Objects
 {
-    public abstract class ShapeHitObject : HitObject
+    public abstract class ShapeHitObject : SymcolHitObject
     {
         public const double HitboxSize = 8;
 

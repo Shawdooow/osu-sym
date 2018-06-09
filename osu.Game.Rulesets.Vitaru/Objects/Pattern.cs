@@ -6,7 +6,7 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Beatmaps;
 using System;
-using System.Linq;
+using osu.Framework.Audio.Sample;
 using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
 
@@ -21,7 +21,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         /// </summary>
         #region Pattern
         public bool Convert { get; set; }
-        public int PatternID { get; set; }
         public double PatternSpeed { get; set; } = 0.25d;
         public double PatternComplexity { get; set; } = 1;
 
@@ -49,6 +48,35 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         public int RepeatCount { get; set; }
         public double Velocity;
         public double SpanDuration => Duration / this.SpanCount();
+
+        private List<SampleInfo> ree;
+        public List<SampleInfo> GetRepeatSamples(int repeat)
+        {
+            if (RepeatSamples.Count > repeat)
+                ree = RepeatSamples[repeat];
+            return ree;
+        }
+
+        private SampleControlPoint reee;
+        public SampleControlPoint GetSampleControlPoint(int repeat)
+        {
+            if (SampleControlPoints.Count > repeat)
+                reee = SampleControlPoints[repeat];
+            return reee;
+        }
+
+        public List<SampleInfo> GetAdjustedSamples(int repeat = -1)
+        {
+            List<SampleInfo> list = new List<SampleInfo>();
+            if (repeat >= 0)
+                foreach (SampleInfo info in GetRepeatSamples(repeat))
+                    list.Add(GetAdjustedSample(info, GetSampleControlPoint(repeat)));
+            else
+                foreach (SampleInfo info in BetterSamples)
+                    list.Add(GetAdjustedSample(info));
+
+            return list;
+        }
 
         public Easing SpeedEasing { get; set; } = Easing.None;
 
@@ -88,6 +116,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
             beatLength = timingPoint.BeatLength;
 
+            reee = SampleControlPoint;
+            ree = Samples;
+
             if (IsSlider)
             {
                 EndTime = StartTime + this.SpanCount() * Curve.Distance / Velocity;
@@ -115,6 +146,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         public bool IsSpinner { get; set; }
         #endregion
 
+        /// <summary>
+        /// All Bullet loading stuff
+        /// </summary>
         #region Bullet Loading
         public float EnemyHealth { get; set; } = 40;
 
@@ -125,51 +159,75 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
         public List<Bullet> GetBullets()
         {
-            List<Bullet> bullets = new List<Bullet>();
-
-            foreach (Bullet b in createPattern(Position))
+            if (Convert)
             {
-                b.Ar = Ar;
+                List<Bullet> bullets = new List<Bullet>();
 
-                if (IsSpinner)
-                    b.Abstraction = 2;
-                else if (!IsSlider)
-                    b.Abstraction = 1;
+                if (!IsSlider)
+                    foreach (SampleInfo info in GetAdjustedSamples())
+                        foreach (Bullet b in getPattern(Position, getPatternID(info)))
+                        {
+                            b.Ar = Ar;
 
-                b.NewCombo = NewCombo;
-                b.IndexInCurrentCombo = IndexInCurrentCombo;
-                b.ComboIndex = ComboIndex;
-                b.LastInCombo = LastInCombo;
+                            if (IsSpinner)
+                                b.Abstraction = 2;
+                            else if (!IsSlider)
+                                b.Abstraction = 1;
 
-                bullets.Add(b);
-            }
+                            b.NewCombo = NewCombo;
+                            b.IndexInCurrentCombo = IndexInCurrentCombo;
+                            b.ComboIndex = ComboIndex;
+                            b.LastInCombo = LastInCombo;
 
-            if (IsSlider)
-            {
-                for (int repeatIndex = 0, repeat = 1; repeatIndex < RepeatCount + 1; repeatIndex++, repeat++)
+                            bullets.Add(b);
+                        }
+
+                if (IsSlider)
                 {
-                    foreach (Bullet s in createPattern(Position + Curve.PositionAt(repeat % 2)))
-                    {
-                        s.Ar = Ar;
+                    foreach (SampleInfo info in GetAdjustedSamples(0))
+                        foreach (Bullet b in getPattern(Position, getPatternID(info)))
+                        {
+                            b.Ar = Ar;
 
-                        s.NewCombo = NewCombo;
-                        s.IndexInCurrentCombo = IndexInCurrentCombo;
-                        s.ComboIndex = ComboIndex;
-                        s.LastInCombo = LastInCombo;
+                            if (IsSpinner)
+                                b.Abstraction = 2;
+                            else if (!IsSlider)
+                                b.Abstraction = 1;
 
-                        s.StartTime = StartTime + repeat * SpanDuration;
-                        s.Position = Position + Curve.PositionAt(repeat % 2);
-                        bullets.Add(s);
-                    }
+                            b.NewCombo = NewCombo;
+                            b.IndexInCurrentCombo = IndexInCurrentCombo;
+                            b.ComboIndex = ComboIndex;
+                            b.LastInCombo = LastInCombo;
+
+                            bullets.Add(b);
+                        }
+
+                    for (int repeatIndex = 0, repeat = 1; repeatIndex < RepeatCount + 1; repeatIndex++, repeat++)
+                        foreach (SampleInfo info in GetAdjustedSamples(repeat))
+                            foreach (Bullet s in getPattern(Position + Curve.PositionAt(repeat % 2), getPatternID(info)))
+                            {
+                                s.Ar = Ar;
+
+                                s.NewCombo = NewCombo;
+                                s.IndexInCurrentCombo = IndexInCurrentCombo;
+                                s.ComboIndex = ComboIndex;
+                                s.LastInCombo = LastInCombo;
+
+                                s.StartTime = StartTime + repeat * SpanDuration;
+                                s.Position = Position + Curve.PositionAt(repeat % 2);
+                                bullets.Add(s);
+                            }
                 }
+
+                return bullets;
             }
 
-            return bullets;
+            throw new NotImplementedException("Native vitaru! mapping doesn't exist yet!");
         }
 
-        private List<Bullet> createPattern(Vector2 pos)
+        private List<Bullet> getPattern(Vector2 pos, int id)
         {
-            switch (PatternID)
+            switch (id)
             {
                 default:
                     return BulletPatterns.Wave(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, pos, StartTime, PatternComplexity, PatternAngle);
@@ -185,6 +243,41 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                     return BulletPatterns.Circle(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, pos, StartTime, PatternComplexity);
                 case 6:
                     return BulletPatterns.Flower(PatternSpeed * (float)Velocity * 2, PatternDiameter, PatternDamage, pos, StartTime, Duration, beatLength, PatternComplexity);
+            }
+        }
+
+        private int getPatternID(SampleInfo info)
+        {
+            if (IsSpinner) return 6;
+
+            switch (info.Bank)
+            {
+                default:
+                    throw new NotImplementedException("getPatternID(); => bad SampleInfo: " + info.Bank + " - " + info.Name);
+                case "normal" when info.Name == "hitnormal":
+                    return 1;
+                case "normal" when info.Name == "hitwhistle":
+                    return 2;
+                case "normal" when info.Name == "hitfinish":
+                    return 3;
+                case "normal" when info.Name == "hitclap":
+                    return 5;
+                case "drum" when info.Name == "hitnormal":
+                    return 1;
+                case "drum" when info.Name == "hitwhistle":
+                    return 2;
+                case "drum" when info.Name == "hitfinish":
+                    return 3;
+                case "drum" when info.Name == "hitclap":
+                    return 4;
+                case "soft" when info.Name == "hitnormal":
+                    return 1;
+                case "soft" when info.Name == "hitwhistle":
+                    return 2;
+                case "soft" when info.Name == "hitfinish":
+                    return 3;
+                case "soft" when info.Name == "hitclap":
+                    return 5;
             }
         }
 
