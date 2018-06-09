@@ -32,6 +32,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         public int PatternTeam { get; set; } = 1;
         private double beatLength;
 
+        public List<SampleInfo> BetterSamples = new List<SampleInfo>();
+
         public List<SampleControlPoint> SampleControlPoints = new List<SampleControlPoint>();
         #endregion
 

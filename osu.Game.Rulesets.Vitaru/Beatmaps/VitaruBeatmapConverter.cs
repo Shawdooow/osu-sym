@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             {
                 Convert = true,
 
-                Samples = original.Samples,
+                BetterSamples = original.Samples,
 
                 Ar = ar,
                 StartTime = original.StartTime,
