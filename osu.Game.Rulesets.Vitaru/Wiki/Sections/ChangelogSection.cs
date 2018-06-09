@@ -19,11 +19,13 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "\n\n" +
             "Tweaks / Changes:\n\n" +
             "-Adjust Touhosu playfield size + aspect ratio (make it bigger inline with TouhouSharp's playfield [doubled width])\n" +
-            "-Patterns are per individual hitsound rather than one pattern each time hitsounds are played\n\n" +
+            "-Patterns are per individual hitsound rather than one pattern each time hitsounds are played (basically there are gonna be way more bullets now)\n\n" +
             "Fixes:\n\n" +
-            "-Fix hitsounding not being 1:1 with stable" +
+            "-Fix hitsounding not being 1:1 with stable\n" +
             "-Fix boss death crashing game\n\n" + 
-            "Additional Patch-Notes:\n\n" +
+            "Dev Notes:\n\n" +
+            "Generally speaking now the more beautiful a map's hitsounds the more likely it is to kill you. " +
+            "I also was tinkering with a wider playfield and thought it would be a welcome change in Touhosu with the new patterns that are planned." +
             "";
     }
 }
