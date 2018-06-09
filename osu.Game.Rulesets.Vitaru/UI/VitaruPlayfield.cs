@@ -229,7 +229,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             foreach (Pattern p in patterns)
             {
-                if (Time.Current <= p.StartTime - p.TimePreempt * 2)
+                if (Time.Current >= p.StartTime - p.TimePreempt * 2)
                 {
                     add(p);
                     patterns.Remove(p);
