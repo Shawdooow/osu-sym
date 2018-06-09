@@ -338,7 +338,7 @@ namespace osu.Framework.Graphics
         public virtual bool UpdateSubTree()
         {
             if (isDisposed)
-                return false;
+                throw new ObjectDisposedException(ToString(), "Disposed Drawables may never be in the scene graph.");
 
             if (ProcessCustomClock)
                 customClock?.ProcessFrame();
