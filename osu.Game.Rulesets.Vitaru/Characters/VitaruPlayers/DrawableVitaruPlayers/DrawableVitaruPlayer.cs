@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             get
             {
                 if (Gamemode == Gamemodes.Touhosu)
-                    return new Vector4(0, 512, 0, 820);
+                    return new Vector4(0, 512 * 2, 0, 820);
                 else
                     return new Vector4(0, 512, 0, 820);
             }

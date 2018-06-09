@@ -83,7 +83,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             var aspectSize = new Vector2(DrawSize.Y * 10f / 16f, DrawSize.Y);
 
-            if (gamemode == Gamemodes.Dodge)
+            if (gamemode == Gamemodes.Touhosu)
+                aspectSize = new Vector2(DrawSize.Y * 20f / 16f, DrawSize.Y);
+            else if (gamemode == Gamemodes.Dodge)
                 aspectSize = new Vector2(DrawSize.Y * 4f / 3f, DrawSize.Y);
             else if (gamemode == Gamemodes.Gravaru)
                 aspectSize = new Vector2(DrawSize.Y * 2f / 1f, DrawSize.Y);

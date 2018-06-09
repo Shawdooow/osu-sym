@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
 
         //Playfield size + Margin of 10 on each side
-        public Vector4 BulletBounds = new Vector4(-10, -10, 520, 830);
+        public Vector4 BulletBounds = new Vector4(-10, -10, 522, 830);
 
         //Set to "true" when a judgement should be returned
         private bool returnJudgement;
@@ -51,6 +51,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 BulletBounds = new Vector4(-10, -10, 522, 394);
             else if (gamemode == Gamemodes.Gravaru)
                 BulletBounds = new Vector4(-10, -10, 384 * 2 + 10, 394);
+            else if (gamemode == Gamemodes.Touhosu)
+                BulletBounds = new Vector4(-10, -10, 512 * 2 + 10, 820);
         }
 
         protected override void CheckForJudgements(bool userTriggered, double timeOffset)

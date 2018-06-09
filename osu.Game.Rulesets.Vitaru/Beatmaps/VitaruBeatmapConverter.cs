@@ -5,13 +5,14 @@ using osu.Game.Rulesets.Vitaru.Objects;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Objects.Types;
 using System;
+using osu.Framework.Configuration;
 using osu.Game.Rulesets.Vitaru.Settings;
 
 namespace osu.Game.Rulesets.Vitaru.Beatmaps
 {
     internal class VitaruBeatmapConverter : BeatmapConverter<VitaruHitObject>
     {
-        private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private readonly Bindable<Gamemodes> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
         private readonly bool multiplayer = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.ShittyMultiplayer);
         private readonly int enemyPlayerCount = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.EnemyPlayerCount);
 
@@ -36,7 +37,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
             float cs = 20 + (beatmap.BeatmapInfo.BaseDifficulty.CircleSize - 4);
             double speed = 0.2d;
 
-            if (currentGameMode == Gamemodes.Dodge || currentGameMode == Gamemodes.Gravaru)
+            if (gamemode == Gamemodes.Dodge || gamemode == Gamemodes.Gravaru)
             {
                 complexity *= 0.66f;
                 cs *= 0.5f;
@@ -59,6 +60,9 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
                 PatternSpeed = speed,
                 NewCombo = comboData?.NewCombo ?? false,
             };
+
+            if (gamemode == Gamemodes.Touhosu)
+                p.Position = new Vector2(p.Position.X + 256, p.Position.Y);
 
             if (original is IHasCurve curveData)
             {
