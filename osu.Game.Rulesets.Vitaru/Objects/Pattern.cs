@@ -6,6 +6,7 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Beatmaps;
 using System;
+using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
 

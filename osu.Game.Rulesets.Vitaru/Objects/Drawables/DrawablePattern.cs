@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 foreach (SampleInfo info in pattern.RepeatSamples.First())
                 {
                     SymcolSkinnableSound sound;
-                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, pattern.SampleControlPoints.First()));
+                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
                     Add(sound);
                 }
             }
