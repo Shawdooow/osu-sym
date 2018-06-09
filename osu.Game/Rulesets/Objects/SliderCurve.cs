@@ -193,7 +193,7 @@ namespace osu.Game.Rulesets.Objects
         /// <returns></returns>
         public Vector2 PositionAt(double progress)
         {
-            if (calculatedPath.Count == 0 && ControlPoints.Count > 0)
+            if (calculatedPath.Count == 0 && ControlPoints?.Count > 0)
                 Calculate();
 
             double d = progressToDistance(progress);

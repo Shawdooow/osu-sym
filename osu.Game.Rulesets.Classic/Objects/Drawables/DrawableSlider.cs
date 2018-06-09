@@ -15,7 +15,6 @@ using osu.Game.Rulesets.Objects.Types;
 using OpenTK.Graphics;
 using osu.Game.Audio;
 using Symcol.Rulesets.Core.Skinning;
-using osu.Game.Beatmaps.ControlPoints;
 using osu.Framework.Logging;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
@@ -183,27 +182,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             foreach (var c in components.OfType<ITrackSnaking>()) c.UpdateSnakingPosition(slider.PositionAt(Body.SnakedStart ?? 0), slider.PositionAt(Body.SnakedEnd ?? 0));
             foreach (var t in ticks.Children) t.Tracking = Tracking;
             foreach (var r in repeatPoints.Children) r.Tracking = Tracking;
-        }
-
-        protected void PlayBetterRepeatSamples()
-        {
-            PlayBetterSamples();
-
-            if (slider.BetterRepeatSamples.Count > 0)
-            {
-                foreach (SampleInfo info in slider.BetterRepeatSamples.First())
-                {
-                    SymcolSkinnableSound sound;
-                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, slider.SampleControlPoints.Count > 0 ? slider.SampleControlPoints.First() : null));
-                    Add(sound);
-                }
-                slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
-
-                if (slider.SampleControlPoints.Count > 0)
-                    slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
-                else
-                    Logger.Log("Expected a SampleControlPoint in DrawableSlider!", LoggingTarget.Runtime, LogLevel.Debug);
-            }
         }
 
         protected override void CheckForJudgements(bool userTriggered, double timeOffset)

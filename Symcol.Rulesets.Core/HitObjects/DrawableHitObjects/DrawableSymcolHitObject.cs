@@ -106,6 +106,19 @@ namespace Symcol.Rulesets.Core.HitObjects
             Dispose();
         }
 
+        public List<SymcolSkinnableSound> SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
+
+        protected virtual void PlayBetterSamples()
+        {
+            foreach (SymcolSkinnableSound sound in SymcolSkinnableSounds)
+            {
+                sound.Play();
+                Remove(sound);
+                sound.Delete();
+            }
+            SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
+        }
+
         protected SymcolSkinnableSound GetSkinnableSound(SampleInfo info, SampleControlPoint point = null)
         {
             SampleControlPoint control = HitObject.SampleControlPoint;
