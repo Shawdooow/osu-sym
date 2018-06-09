@@ -203,10 +203,10 @@ namespace osu.Game.Rulesets.Vitaru.UI
             drawable.Editor = Editor;
 
             drawableHitobjectCount.Bindable.Value++;
-            drawable.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
+            drawable.OnDispose += isDisposing => { drawableHitobjectCount.Bindable.Value--; };
 
              drawablePatternCount.Bindable.Value++;
-            drawable.OnDispose += (isDisposing) => { drawablePatternCount.Bindable.Value--; };
+            drawable.OnDispose += isDisposing => { drawablePatternCount.Bindable.Value--; };
 
             drawable.OnJudgement += onJudgement;
 

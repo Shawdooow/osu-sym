@@ -250,6 +250,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 Delete();
         }
 
+        public override void Delete()
+        {
+            VitaruPlayfield.HitObjects.Remove(this);
+            base.Delete();
+        }
+
         private Vector2 getPatternStartPosition()
         {
             if (pattern.Position.X <= 384f / 2 && pattern.Position.Y <= 512f / 2)
