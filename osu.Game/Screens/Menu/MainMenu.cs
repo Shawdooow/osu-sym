@@ -5,6 +5,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using osu.Framework.Allocation;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Input;
 using osu.Framework.Screens;
@@ -155,6 +156,8 @@ namespace osu.Game.Screens.Menu
         {
             base.OnSuspending(next);
 
+            OsuGameBase.VersionOverlay.Value = false;
+
             const float length = 400;
 
             buttons.State = MenuState.EnteringMode;
@@ -168,6 +171,8 @@ namespace osu.Game.Screens.Menu
         protected override void OnResuming(Screen last)
         {
             base.OnResuming(last);
+
+            OsuGameBase.VersionOverlay.Value = true;
 
             background.Next();
 
