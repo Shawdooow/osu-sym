@@ -40,6 +40,8 @@ namespace osu.Game
     /// </summary>
     public class OsuGameBase : Framework.Game, ICanAcceptFiles
     {
+        public static Bindable<bool> VersionOverlay = new Bindable<bool>() { Value = true };
+
         protected OsuConfigManager LocalConfig;
 
         protected BeatmapManager BeatmapManager;

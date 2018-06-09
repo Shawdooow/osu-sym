@@ -12,6 +12,7 @@ using osu.Framework.Platform;
 using osu.Game;
 using OpenTK.Input;
 using Microsoft.Win32;
+using osu.Framework.Graphics;
 using osu.Framework.Platform.Windows;
 
 namespace osu.Desktop
@@ -84,11 +85,20 @@ namespace osu.Desktop
 
             if (!noVersionOverlay)
             {
-                LoadComponentAsync(new VersionManager { Depth = int.MinValue }, v =>
+                VersionManager m;
+                LoadComponentAsync(m = new VersionManager { Depth = int.MinValue }, v =>
                 {
                     Add(v);
                     v.State = Visibility.Visible;
                 });
+
+                VersionOverlay.ValueChanged += value =>
+                {
+                    if (!value)
+                        m.FadeOut(200);
+                    else
+                        m.FadeIn(200);
+                };
             }
         }
 
