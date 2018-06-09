@@ -33,6 +33,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.KiaiBoss, false);
             Set(VitaruSetting.PlayfieldBorder, false);
             Set(VitaruSetting.ComboFire, true);
+            Set(VitaruSetting.GoodFPS, false);
 
             Set(VitaruSetting.EditorConfiguration, EditorConfiguration.Simple);
 
@@ -90,6 +91,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         KiaiBoss,
         PlayfieldBorder,
         ComboFire,
+        GoodFPS,
 
         EditorConfiguration,
 
