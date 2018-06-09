@@ -24,6 +24,7 @@ using osu.Game.Overlays.Notifications;
 using osu.Framework.Allocation;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Vitaru.Debug;
+using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
 
 namespace osu.Game.Rulesets.Vitaru.UI
@@ -191,26 +192,50 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 AddInternal(cursor);
         }
 
-        public override void Add(DrawableHitObject h)
+        private List<Pattern> patterns = new List<Pattern>();
+
+        private void add(Pattern p)
         {
-            h.Depth = (float)h.HitObject.StartTime;
+            DrawablePattern drawable = new DrawablePattern(p, this);
 
-            DrawableVitaruHitObject v = h as DrawableVitaruHitObject;
+            drawable.Depth = (float)drawable.HitObject.StartTime;
 
-            v.Editor = Editor;
+            drawable.Editor = Editor;
 
             drawableHitobjectCount.Bindable.Value++;
-            v.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
+            drawable.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
 
-            if (v is DrawablePattern p)
+             drawablePatternCount.Bindable.Value++;
+            drawable.OnDispose += (isDisposing) => { drawablePatternCount.Bindable.Value--; };
+
+            drawable.OnJudgement += onJudgement;
+
+            base.Add(drawable);
+        }
+
+        public override void Add(DrawableHitObject h)
+        {
+            DrawablePattern p = h as DrawablePattern;
+
+            if (Editor)
+                base.Add(h);
+            else
+                patterns.Add((Pattern)p.HitObject);
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            foreach (Pattern p in patterns)
             {
-                drawablePatternCount.Bindable.Value++;
-                p.OnDispose += (isDisposing) => { drawablePatternCount.Bindable.Value--; };
+                if (Time.Current <= p.StartTime - p.TimePreempt * 2)
+                {
+                    add(p);
+                    patterns.Remove(p);
+                    break;
+                }
             }
-
-            h.OnJudgement += onJudgement;
-
-            base.Add(h);
         }
 
         private void onJudgement(DrawableHitObject judgedObject, Judgement judgement)
