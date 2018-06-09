@@ -163,6 +163,11 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                         {
                             LabelText = "Enable Combo Fire",
                             Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.ComboFire)
+                        },
+                        new SettingsCheckbox
+                        {
+                            LabelText = "3x - 5x Fps (Unranked)",
+                            Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.GoodFPS)
                         }
                     } 
                 },
@@ -234,7 +239,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             graphics.ValueChanged += value =>
             {
                 graphicsOptions.ClearTransforms();
-                
+
 
                 if (value == GraphicsPresets.Custom)
                     graphicsOptions.AutoSizeAxes = Axes.Y;
@@ -254,6 +259,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                         VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, false);
                         VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, false);
                         VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, true);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.GoodFPS, false);
                         break;
                     case GraphicsPresets.StandardV2:
                         VitaruConfigManager.Set(VitaruSetting.BulletVisuals, GraphicsOptions.StandardV2);
@@ -262,6 +268,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                         VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, true);
                         VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, true);
                         VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, true);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.GoodFPS, false);
                         break;
                     case GraphicsPresets.HighPerformance:
                         VitaruConfigManager.Set(VitaruSetting.BulletVisuals, GraphicsOptions.HighPerformance);
@@ -270,6 +277,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                         VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, false);
                         VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, false);
                         VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, false);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.GoodFPS, false);
                         break;
                 }
             };

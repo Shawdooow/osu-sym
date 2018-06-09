@@ -33,6 +33,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
     {
         private static readonly Bindable<Gamemodes> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
+        private readonly Bindable<bool> goodFps = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.GoodFPS);
+
         private readonly bool playfieldBorder = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.PlayfieldBorder);
 
         private readonly bool kiaiBoss = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.KiaiBoss);
@@ -56,7 +58,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public Boss Boss;
 
-        public virtual bool Editor => false;
+        public virtual bool Editor => goodFps;
 
         public static Vector2 BaseSize
         {
@@ -192,7 +194,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 AddInternal(cursor);
         }
 
-        private List<Pattern> patterns = new List<Pattern>();
+        private readonly List<Pattern> patterns = new List<Pattern>();
 
         private void add(Pattern p)
         {
@@ -205,7 +207,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             drawableHitobjectCount.Bindable.Value++;
             drawable.OnDispose += isDisposing => { drawableHitobjectCount.Bindable.Value--; };
 
-             drawablePatternCount.Bindable.Value++;
+            drawablePatternCount.Bindable.Value++;
             drawable.OnDispose += isDisposing => { drawablePatternCount.Bindable.Value--; };
 
             drawable.OnJudgement += onJudgement;
@@ -215,12 +217,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public override void Add(DrawableHitObject h)
         {
-            DrawablePattern p = h as DrawablePattern;
+            DrawablePattern drawable = h as DrawablePattern;
 
             if (Editor)
                 base.Add(h);
             else
-                patterns.Add((Pattern)p.HitObject);
+                patterns.Add((Pattern)drawable.HitObject);
         }
 
         protected override void Update()
