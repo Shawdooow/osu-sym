@@ -10,7 +10,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Audio;
-using System.Linq;
 using Symcol.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables

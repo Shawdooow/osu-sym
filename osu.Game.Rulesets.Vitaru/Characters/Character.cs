@@ -22,6 +22,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         #region Fields
         public override bool HandleMouseInput => false;
 
+        protected static bool HitDetection;
+
         protected Seal Seal { get; private set; }
 
         protected Container KiaiContainer { get; set; }
@@ -137,38 +139,41 @@ namespace osu.Game.Rulesets.Vitaru.Characters
             if (Health <= 0 && !Dead)
                 Death();
 
-            foreach (Drawable draw in VitaruPlayfield.GameField.Current)
+            if (HitDetection)
             {
-                DrawableBullet bullet = draw as DrawableBullet;
-                if (bullet?.Hitbox != null)
+                foreach (Drawable draw in VitaruPlayfield.GameField.Current)
                 {
-                    ParseBullet(bullet);
-                    if (Hitbox.HitDetect(Hitbox, bullet.Hitbox))
+                    DrawableBullet bullet = draw as DrawableBullet;
+                    if (bullet?.Hitbox != null)
                     {
-                        Hurt(bullet.Bullet.BulletDamage);
-                        bullet.Bullet.BulletDamage = 0;
-                        bullet.Hit = true;
+                        ParseBullet(bullet);
+                        if (Hitbox.HitDetect(Hitbox, bullet.Hitbox))
+                        {
+                            Hurt(bullet.Bullet.BulletDamage);
+                            bullet.Bullet.BulletDamage = 0;
+                            bullet.Hit = true;
+                        }
                     }
-                }
 
-                DrawableSeekingBullet seekingBullet = draw as DrawableSeekingBullet;
-                if (seekingBullet?.Hitbox != null)
-                {
-                    if (Hitbox.HitDetect(Hitbox, seekingBullet.Hitbox))
+                    DrawableSeekingBullet seekingBullet = draw as DrawableSeekingBullet;
+                    if (seekingBullet?.Hitbox != null)
                     {
-                        Hurt(seekingBullet.SeekingBullet.BulletDamage);
-                        seekingBullet.SeekingBullet.BulletDamage = 0;
-                        seekingBullet.Hit = true;
+                        if (Hitbox.HitDetect(Hitbox, seekingBullet.Hitbox))
+                        {
+                            Hurt(seekingBullet.SeekingBullet.BulletDamage);
+                            seekingBullet.SeekingBullet.BulletDamage = 0;
+                            seekingBullet.Hit = true;
+                        }
                     }
-                }
 
-                DrawableLaser laser = draw as DrawableLaser;
-                if (laser?.Hitbox != null)
-                {
-                    if (Hitbox.HitDetect(Hitbox, laser.Hitbox))
+                    DrawableLaser laser = draw as DrawableLaser;
+                    if (laser?.Hitbox != null)
                     {
-                    Hurt(laser.Laser.LaserDamage * (1000 / (float)Clock.ElapsedFrameTime));
-                        laser.Hit = true;
+                        if (Hitbox.HitDetect(Hitbox, laser.Hitbox))
+                        {
+                            Hurt(laser.Laser.LaserDamage * (1000 / (float)Clock.ElapsedFrameTime));
+                            laser.Hit = true;
+                        }
                     }
                 }
             }

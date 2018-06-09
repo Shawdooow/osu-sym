@@ -5,14 +5,13 @@ using Symcol.Rulesets.Core.HitObjects;
 
 namespace osu.Game.Rulesets.Shape.Objects.Drawables
 {
-    public abstract class DrawableShapeHitObject<ShapeObject> : DrawableSymcolHitObject<ShapeHitObject>, IKeyBindingHandler<ShapeAction>
-        where ShapeObject : ShapeHitObject
+    public abstract class DrawableShapeHitObject : DrawableSymcolHitObject<ShapeHitObject>, IKeyBindingHandler<ShapeAction>
     {
         public float TIME_PREEMPT = 800;
         public float TIME_FADEIN = 400;
-        public float TIME_FADEOUT = 400;
+        //public float TIME_FADEOUT = 400;
 
-        public DrawableShapeHitObject(ShapeHitObject hitObject)
+        protected DrawableShapeHitObject(ShapeHitObject hitObject)
             : base(hitObject)
         {
         }

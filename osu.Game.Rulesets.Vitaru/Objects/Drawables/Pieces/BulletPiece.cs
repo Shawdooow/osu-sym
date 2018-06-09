@@ -15,6 +15,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
     public class BulletPiece : BeatSyncedContainer
     {
         public override bool HandleMouseInput => false;
+        public override bool HandleKeyboardInput => false;
 
         private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
 

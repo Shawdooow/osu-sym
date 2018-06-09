@@ -145,7 +145,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 switch (configuration)
                 {
                     case DebugConfiguration.General:
+                        HitDetection = true;
                         DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { Auto = !Auto; }) { Text = "Auto Hacks" });
+                        DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { HitDetection = !HitDetection; }) { Text = "Toggle BulletParsing" });
                         DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { BoundryHacks = !BoundryHacks; DrawableBullet.BoundryHacks = !DrawableBullet.BoundryHacks; }) { Text = "Boundry Hacks" });
                         DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
                         break;

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace osu.Game.Rulesets.Shape.Objects.Drawables
 {
-    public class DrawableBaseShape : DrawableShapeHitObject<ShapeHitObject>
+    public class DrawableBaseShape : DrawableShapeHitObject
     {
         private BaseDial baseDial;
         private ShapeCircle circle;

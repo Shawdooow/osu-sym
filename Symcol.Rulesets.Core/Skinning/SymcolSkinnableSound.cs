@@ -6,6 +6,9 @@ namespace Symcol.Rulesets.Core.Skinning
 {
     public class SymcolSkinnableSound : SkinnableSound
     {
+        public override bool HandleMouseInput => false;
+        public override bool HandleKeyboardInput => false;
+
         public SymcolSkinnableSound(params SampleInfo[] samples) : base(samples)
         {
             Name = "SymcolSkinnableSound";

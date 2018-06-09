@@ -8,9 +8,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 {
     public class DrawableTomaji : DrawableTouhosuPlayer
     {
-        private const double charge_time = 600;
+        private const double charge_time = 1000;
 
-        private const double blink_distance = 200;
+        private const double blink_distance = 320;
 
         /// <summary>
         /// scale from 0 - 1 on how charged our blink is
@@ -45,7 +45,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
                 this.MoveTo(new Vector2((float)x, (float)y), 200 * charge, Easing.OutSine)
                     .FadeIn(200 * charge, Easing.InCubic);
-
 
                 charge = 0;
             }
