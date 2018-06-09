@@ -21,6 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-Adjust Touhosu playfield size + aspect ratio (make it bigger inline with TouhouSharp's playfield [doubled width])\n" +
             "-Patterns are per individual hitsound rather than one pattern each time hitsounds are played (basically there are gonna be way more bullets now)\n\n" +
             "Fixes:\n\n" +
+            "-Fix that 3x to 5x performance depending on map (when not in editor)\n" +
             "-Fix hitsounding not being 1:1 with stable\n" +
             "-Fix boss death crashing game\n\n" + 
             "Dev Notes:\n\n" +
