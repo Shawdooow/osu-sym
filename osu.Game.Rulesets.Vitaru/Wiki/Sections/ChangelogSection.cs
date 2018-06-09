@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         protected override string VersionChangelog => "-Updated to lazer version 2018.607.0\n" +
             "-Updated to lazer version 2018.606.0\n\n" +
             "Features:\n\n" +
-            "-Added an option that 2x to 10x performance depending on map (when not in editor + its unranked)\n" +
+            "-Added an option that will 2x to 10x performance depending on map (when not in editor + its unranked)\n" +
             //"-New Patterns\n\n" +
             "\n\n" +
             "Tweaks / Changes:\n\n" +
