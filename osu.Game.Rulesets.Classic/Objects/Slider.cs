@@ -5,14 +5,56 @@ using OpenTK;
 using osu.Game.Rulesets.Objects.Types;
 using System;
 using System.Collections.Generic;
+using osu.Game.Rulesets.Objects;
 using System.Linq;
 using osu.Game.Audio;
+using osu.Game.Beatmaps;
+using osu.Game.Beatmaps.ControlPoints;
+using osu.Framework.Graphics;
+using osu.Framework.MathUtils;
+using osu.Game.Rulesets.Classic.Settings;
+using osu.Framework.Configuration;
 
 namespace osu.Game.Rulesets.Classic.Objects
 {
-    public class Slider : ClassicHitObject
+    public class Slider : ClassicHitObject, IHasCurve
     {
+        /// <summary>
+        /// Scoring distance with a speed-adjusted beat length of 1 second.
+        /// </summary>
+        private const float base_scoring_distance = 100;
+
+        public double EndTime => StartTime + this.SpanCount() * Curve.Distance / Velocity;
+        public double Duration => EndTime - StartTime;
+
+        public double SpanDuration => (Distance / Velocity) / this.SpanCount();
+
         public Vector2 StackedPositionAt(double t) => StackedPosition + PositionAt(t);
+        public override Vector2 EndPosition => Position + PositionAt(1);
+
+        public SliderCurve Curve { get; } = new SliderCurve();
+
+        public Bindable<Easing> SpeedEasing { get; set; } = ClassicSettings.ClassicConfigManager.GetBindable<Easing>(ClassicSetting.SliderEasing);
+
+        public List<Vector2> ControlPoints
+        {
+            get { return Curve.ControlPoints; }
+            set { Curve.ControlPoints = value; }
+        }
+
+        public CurveType CurveType
+        {
+            get { return Curve.CurveType; }
+            set { Curve.CurveType = value; }
+        }
+
+        public double Distance
+        {
+            get { return Curve.Distance; }
+            set { Curve.Distance = value; }
+        }
+
+        public Vector2 PositionAt(double t) => Curve.PositionAt(Interpolation.ApplyEasing(SpeedEasing.Value, t));
 
         /// <summary>
         /// The position of the cursor at the point of completion of this <see cref="Slider"/> if it was hit
@@ -26,6 +68,13 @@ namespace osu.Game.Rulesets.Classic.Objects
         /// </summary>
         internal float LazyTravelDistance;
 
+        public List<List<SampleInfo>> BetterRepeatSamples { get; set; } = new List<List<SampleInfo>>();
+
+        public List<SampleControlPoint> SampleControlPoints = new List<SampleControlPoint>();
+
+        public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
+        public int RepeatCount { get; set; }
+
         private int stackHeight;
 
         public override int StackHeight
@@ -35,6 +84,33 @@ namespace osu.Game.Rulesets.Classic.Objects
             {
                 stackHeight = value;
                 Curve.Offset = StackOffset;
+            }
+        }
+
+        public double Velocity;
+        public double TickDistance;
+
+        protected override void ApplyDefaultsToSelf(ControlPointInfo controlPointInfo, BeatmapDifficulty difficulty)
+        {
+            base.ApplyDefaultsToSelf(controlPointInfo, difficulty);
+
+            TimingControlPoint timingPoint = controlPointInfo.TimingPointAt(StartTime);
+            DifficultyControlPoint difficultyPoint = controlPointInfo.DifficultyPointAt(StartTime);
+
+            double scoringDistance = base_scoring_distance * difficulty.SliderMultiplier * difficultyPoint.SpeedMultiplier;
+
+            Velocity = scoringDistance / timingPoint.BeatLength;
+            TickDistance = scoringDistance / difficulty.SliderTickRate;
+
+            for (double i = StartTime + SpanDuration; i <= EndTime; i += SpanDuration)
+            {
+                SampleControlPoint point = controlPointInfo.SamplePointAt(i);
+                SampleControlPoints.Add(new SampleControlPoint()
+                {
+                    SampleBank = point.SampleBank,
+                    SampleBankCount = point.SampleBankCount,
+                    SampleVolume = point.SampleVolume,
+                });
             }
         }
 

@@ -2,15 +2,17 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Objects;
 using OpenTK;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Scoring;
-using Symcol.Rulesets.Core.HitObjects;
+using System.Collections.Generic;
+using osu.Game.Audio;
 
 namespace osu.Game.Rulesets.Classic.Objects
 {
-    public abstract class ClassicHitObject : SymcolSliderHitObject, IHasComboInformation
+    public abstract class ClassicHitObject : HitObject, IHasComboInformation
     {
         public const double OBJECT_RADIUS = 64;
 
@@ -26,9 +28,17 @@ namespace osu.Game.Rulesets.Classic.Objects
 
         public bool SliderStartCircle { get; set; }
 
+        public List<SampleInfo> BetterSamples { get; set; } = new List<SampleInfo>();
+
         public bool Hidden { get; set; }
 
-        public Vector2 StackedPosition => Position + StackOffset;        
+        public Vector2 Position { get; set; }
+        public float X => Position.X;
+        public float Y => Position.Y;
+
+        public Vector2 StackedPosition => Position + StackOffset;
+
+        public virtual Vector2 EndPosition => Position;
 
         public Vector2 StackedEndPosition => EndPosition + StackOffset;
 
