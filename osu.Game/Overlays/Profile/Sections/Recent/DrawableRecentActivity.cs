@@ -82,7 +82,7 @@ namespace osu.Game.Overlays.Profile.Sections.Recent
             }
         }
 
-        private string toAbsoluteUrl(string url) => $"{api.Endpoint}{url}";
+        private string toAbsoluteUrl(string url) => $"{APIAccess.Endpoint}{url}";
 
         private MessageFormatter.MessageFormatterResult createMessage()
         {

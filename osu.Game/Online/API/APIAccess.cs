@@ -22,7 +22,8 @@ namespace osu.Game.Online.API
         private readonly OsuConfigManager config;
         private readonly OAuth authentication;
 
-        public string Endpoint = @"https://osu.ppy.sh";
+        public static string Endpoint = @"https://osu.ppy.sh";
+
         private const string client_id = @"5";
         private const string client_secret = @"FGc9GAtyHzeQDshWP5Ah7dega8hJACAJpQtw6OXk";
 

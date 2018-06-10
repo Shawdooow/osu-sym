@@ -41,7 +41,7 @@ namespace osu.Game.Online.API
 
         protected virtual WebRequest CreateWebRequest() => new WebRequest(Uri);
 
-        protected virtual string Uri => $@"{API.Endpoint}/api/v2/{Target}";
+        protected virtual string Uri => $@"{APIAccess.Endpoint}/api/v2/{Target}";
 
         private double remainingTime => Math.Max(0, Timeout - (DateTimeOffset.UtcNow - (startTime ?? DateTimeOffset.MinValue)).TotalMilliseconds);
 
