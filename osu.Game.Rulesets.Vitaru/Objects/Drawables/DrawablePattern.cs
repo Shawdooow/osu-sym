@@ -259,7 +259,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 Result = HitResult.Great,
                 BonusScore = true
             });
-            if (!Started)
+            if (Time.Current < HitObject.StartTime && !Started)
             {
                 enemy.FadeOut(pattern.StartTime - Time.Current);
                 starPiece.FadeInFromZero(pattern.StartTime - Time.Current);
