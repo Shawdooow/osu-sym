@@ -26,12 +26,12 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                     valueName = value;
 
                     if (Bindable == null)
-                        text.Text = value;
+                        SpriteText.Text = value;
                 }
             }
         }
 
-        private SpriteText text;
+        public readonly SpriteText SpriteText;
 
         private string valueName;
 
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                   Colour = Color4.Black,
                   Alpha = 0.8f
                 },
-                text = new SpriteText
+                SpriteText = new SpriteText
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
             if (Bindable != null)
                 Bindable.ValueChanged += (value) =>
                 {
-                    text.Text = valueName + " = " + value.ToString();
+                    SpriteText.Text = valueName + " = " + value.ToString();
                 };
         }
 

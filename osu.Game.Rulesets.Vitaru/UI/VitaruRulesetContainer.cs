@@ -13,12 +13,16 @@ using osu.Framework.Graphics.Cursor;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Graphics;
 using osu.Game.Rulesets.Vitaru.Debug;
+// ReSharper disable PossibleLossOfFraction
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruRulesetContainer : RulesetContainer<VitaruHitObject>
     {
+        private readonly DebugStat<int> ranked;
+
         public VitaruRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap)
             : base(ruleset, beatmap)
         {
@@ -28,6 +32,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             if (DebugToolkit.MachineLearningDebugItems.Count > 0)
                 DebugToolkit.MachineLearningDebugItems = new List<Container>();
 
+            DebugToolkit.GeneralDebugItems.Add(ranked = new DebugStat<int>(new Bindable<int>()) { Text = "Ranked" });
             VitaruPlayfield = new VitaruPlayfield((VitaruInputManager)KeyBindingInputManager);
         }
 
@@ -39,17 +44,41 @@ namespace osu.Game.Rulesets.Vitaru.UI
             vitaruInputManager.DebugToolkit?.UpdateItems();
         }
 
+        protected override void Update()
+        {
+            base.Update();
+
+            if (Clock.ElapsedFrameTime > 1000)
+                ranked.Bindable.Value += 1000;
+            else if (Clock.ElapsedFrameTime > 1000 / 10)
+                ranked.Bindable.Value += 100;
+            else if (Clock.ElapsedFrameTime > 1000 / 30)
+                ranked.Bindable.Value += 10;
+            else if (Clock.ElapsedFrameTime > 1000 / 40)
+                ranked.Bindable.Value += 5;
+            else if (Clock.ElapsedFrameTime > 1000 / 60)
+                ranked.Bindable.Value++;
+
+            if (ranked.Bindable.Value >= 1000 && VitaruPlayfield.OnJudgement != null)
+            {
+                OsuColour osu = new OsuColour();
+                VitaruPlayfield.OnJudgement = null;
+                ranked.SpriteText.Colour = osu.Yellow;
+                ranked.Text = "Unranked (Bad PC)";
+            }
+        }
+
         protected override CursorContainer CreateCursor() => new GameplayCursor();
 
         public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor(this);
 
         protected override Playfield CreatePlayfield() => VitaruPlayfield;
 
-        public VitaruPlayfield VitaruPlayfield { get; protected set; }
+        public VitaruPlayfield VitaruPlayfield { get; }
 
         public override int Variant => (int)variant();
 
-        private Bindable<string> character = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+        private readonly Bindable<string> character = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
         private readonly Bindable<Gamemodes> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
 
         private ControlScheme variant()

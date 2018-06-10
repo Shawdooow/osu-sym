@@ -177,8 +177,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
         [BackgroundDependencyLoader(true)]
         private void load(NotificationOverlay notificationOverlay)
         {
-            if (VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.AnnoyPlayer) && notificationOverlay != null)
-                notificationOverlay.Post(new SimpleNotification
+            if (VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.AnnoyPlayer))
+                notificationOverlay?.Post(new SimpleNotification
                 {
                     Text = "Be sure to check out vitaru settings for the ingame wiki for wiki things! (click me to never see me again)",
                     Activated = () =>
