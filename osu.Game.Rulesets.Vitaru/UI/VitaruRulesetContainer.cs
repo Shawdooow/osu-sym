@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             if (DebugToolkit.MachineLearningDebugItems.Count > 0)
                 DebugToolkit.MachineLearningDebugItems = new List<Container>();
 
-            DebugToolkit.GeneralDebugItems.Add(ranked = new DebugStat<int>(new Bindable<int>()));
+            DebugToolkit.GeneralDebugItems.Add(ranked = new DebugStat<int>(new Bindable<int>()) { Text = "Ranked" });
             VitaruPlayfield = new VitaruPlayfield((VitaruInputManager)KeyBindingInputManager);
         }
 
@@ -40,7 +40,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             base.LoadComplete();
 
-            ranked.Text = VitaruPlayfield.OnJudgement != null ? "Ranked" : "Unranked (Bad Code)";
+            if (VitaruPlayfield.OnJudgement == null)
+            {
+                OsuColour osu = new OsuColour();
+                ranked.Text = "Unranked (Bad Code)";
+                ranked.SpriteText.Colour = osu.Yellow;
+            }
             VitaruInputManager vitaruInputManager = (VitaruInputManager)KeyBindingInputManager;
             vitaruInputManager.DebugToolkit?.UpdateItems();
         }
