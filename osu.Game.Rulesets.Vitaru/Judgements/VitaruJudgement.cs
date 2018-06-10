@@ -14,6 +14,10 @@ namespace osu.Game.Rulesets.Vitaru.Judgements
         /// </summary>
         public Vector2 PositionOffset;
 
+        public override bool AffectsCombo => !BonusScore;
+
+        public bool BonusScore = false;
+
         protected override int NumericResultFor(HitResult result)
         {
             switch (result)

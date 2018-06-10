@@ -7,7 +7,6 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Framework.Platform;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
-using osu.Game.Rulesets.Vitaru.Objects;
 
 namespace osu.Game.Rulesets.Vitaru.Characters
 {
@@ -21,10 +20,14 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
         protected override float HitboxWidth => 48;
 
-        private Color4 characterColor;
+        private readonly Color4 characterColor;
 
-        public Enemy(VitaruPlayfield playfield, Pattern pattern, DrawablePattern drawablePattern) : base(playfield)
+        private readonly DrawablePattern drawablePattern;
+
+        public Enemy(VitaruPlayfield playfield, DrawablePattern drawablePattern) : base(playfield)
         {
+            this.drawablePattern = drawablePattern;
+
             AlwaysPresent = true;
 
             Team = 1;
@@ -111,6 +114,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         {
             Dead = true;
             Hitbox.HitDetection = false;
+            drawablePattern.Death(this);
         }
     }
 }

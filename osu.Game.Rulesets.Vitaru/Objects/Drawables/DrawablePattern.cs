@@ -10,6 +10,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Audio;
+using osu.Game.Rulesets.Scoring;
+using osu.Game.Rulesets.Vitaru.Judgements;
 using Symcol.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
@@ -149,7 +151,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             if (gamemode != Gamemodes.Dodge)
             {
                 //load the enemy
-                VitaruPlayfield.GameField.Add(enemy = new Enemy(VitaruPlayfield, pattern, this)
+                VitaruPlayfield.GameField.Add(enemy = new Enemy(VitaruPlayfield, this)
                 {
                     Alpha = 0,
                     Anchor = Anchor.TopLeft,
@@ -248,6 +250,31 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 Expire();
             else
                 Delete();
+        }
+
+        public void Death(Enemy enemy)
+        {
+            AddJudgement(new VitaruJudgement
+            {
+                Result = HitResult.Great,
+                BonusScore = true
+            });
+            if (!Started)
+            {
+                enemy.FadeOut(pattern.StartTime - Time.Current);
+                starPiece.FadeInFromZero(pattern.StartTime - Time.Current);
+            }
+            else if (Time.Current < HitObject.EndTime && Started)
+            {
+                enemy.FadeOutFromOne(200)
+                     .ScaleTo(new Vector2(1.5f), 200);
+                starPiece.FadeInFromZero(200);
+            }
+            else if (Time.Current >= HitObject.EndTime)
+            {
+                enemy.ClearTransforms();
+                enemy.FadeOutFromOne(200);
+            }
         }
 
         public override void Delete()
