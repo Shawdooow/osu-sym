@@ -196,9 +196,10 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         private readonly List<Pattern> patterns = new List<Pattern>();
 
-        private void add(Pattern p)
+        private void add(Pattern p, DrawablePattern drawable = null)
         {
-            DrawablePattern drawable = new DrawablePattern(p, this);
+            if (drawable == null)
+                drawable = new DrawablePattern(p, this);
 
             drawable.Depth = (float)drawable.HitObject.StartTime;
 
@@ -220,7 +221,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             DrawablePattern drawable = h as DrawablePattern;
 
             if (Editor || !goodFps)
-                base.Add(h);
+                add(null, drawable);
             else
                 patterns.Add((Pattern)drawable.HitObject);
         }
