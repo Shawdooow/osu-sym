@@ -1,4 +1,5 @@
-﻿using osu.Framework.Graphics;
+﻿using System;
+using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using OpenTK;
 using osu.Game.Rulesets.Vitaru.Judgements;
@@ -46,6 +47,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public readonly AbstractionField GameField;
 
         public readonly MirrorField Mirrorfield;
+
+        public static Action<Judgement> OnJudgement;
+        //public Action<Judgement> RemoveJudgement;
 
         private readonly Container judgementLayer;
         private readonly List<DrawableVitaruPlayer> playerList = new List<DrawableVitaruPlayer>();
@@ -245,6 +249,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             var vitaruJudgement = (VitaruJudgement)judgement;
 
+            OnJudgement?.Invoke(vitaruJudgement);
+
             if (Player != null)
             {
                 returnedJudgementCount.Bindable.Value++;
@@ -265,6 +271,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
         protected override void Dispose(bool isDisposing)
         {
             BulletPiece.ExclusiveTestingHax = false;
+            OnJudgement = null;
+            //RemoveJudgement = null;
             base.Dispose(isDisposing);
         }
 

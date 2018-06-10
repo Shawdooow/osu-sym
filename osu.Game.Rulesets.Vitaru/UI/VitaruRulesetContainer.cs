@@ -1,4 +1,5 @@
-﻿using osu.Framework.Input;
+﻿using System.Collections.Generic;
+using osu.Framework.Input;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
@@ -11,6 +12,8 @@ using osu.Game.Rulesets.Vitaru.UI.Cursor;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Framework.Configuration;
+using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Vitaru.Debug;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -19,6 +22,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public VitaruRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap)
             : base(ruleset, beatmap)
         {
+            //TODO: make this a function if it works
+            if (DebugToolkit.GeneralDebugItems.Count > 0)
+                DebugToolkit.GeneralDebugItems = new List<Container>();
+            if (DebugToolkit.MachineLearningDebugItems.Count > 0)
+                DebugToolkit.MachineLearningDebugItems = new List<Container>();
+
             VitaruPlayfield = new VitaruPlayfield((VitaruInputManager)KeyBindingInputManager);
         }
 

@@ -166,7 +166,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                         },
                         new SettingsCheckbox
                         {
-                            LabelText = "2x - 10x Fps (Unranked)",
+                            LabelText = "2x - 10x Ruleset Performance",
                             Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.GoodFPS)
                         }
                     } 
