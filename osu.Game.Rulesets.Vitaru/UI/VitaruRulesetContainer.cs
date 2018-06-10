@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             if (DebugToolkit.MachineLearningDebugItems.Count > 0)
                 DebugToolkit.MachineLearningDebugItems = new List<Container>();
 
-            DebugToolkit.GeneralDebugItems.Add(ranked = new DebugStat<int>(new Bindable<int>()) { Text = "Ranked" });
+            DebugToolkit.GeneralDebugItems.Add(ranked = new DebugStat<int>(new Bindable<int>()) { Text = VitaruPlayfield.OnJudgement != null ? "Ranked" : "Unranked (Bad Code)" });
             VitaruPlayfield = new VitaruPlayfield((VitaruInputManager)KeyBindingInputManager);
         }
 
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 ranked.Bindable.Value += 100;
             else if (Clock.ElapsedFrameTime > 1000 / 30)
                 ranked.Bindable.Value += 10;
-            else if (Clock.ElapsedFrameTime > 1000 / 40)
+            else if (Clock.ElapsedFrameTime > 1000 / 45)
                 ranked.Bindable.Value += 5;
             else if (Clock.ElapsedFrameTime > 1000 / 60)
                 ranked.Bindable.Value++;
