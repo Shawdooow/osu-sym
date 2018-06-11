@@ -153,9 +153,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 Alpha = 1;
                 bulletPiece.Scale = new Vector2(1.5f);
-                bulletPiece.FadeInFromZero(150, Easing.OutSine)
-                           .ScaleTo(Vector2.One, 150, Easing.InSine);
-                bulletPiece.Box.FadeInFromZero(200, Easing.InSine);
+                bulletPiece.FadeInFromZero(100, Easing.OutSine)
+                           .ScaleTo(Vector2.One, 100, Easing.InSine);
+                bulletPiece.Box.FadeInFromZero(150, Easing.InSine);
             }
             else
                 this.FadeInFromZero(100)
