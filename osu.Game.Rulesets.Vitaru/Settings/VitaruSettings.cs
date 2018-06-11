@@ -202,6 +202,11 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                             LabelText = "Neural Network State",
                             Bindable = VitaruConfigManager.GetBindable<NeuralNetworkState>(VitaruSetting.NeuralNetworkState)
                         },
+                        new SettingsCheckbox
+                        {
+                            LabelText = "Enable Ranked Play Filter",
+                            Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.RankedFilter)
+                        }
                     }
                 },
             };

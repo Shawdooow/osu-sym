@@ -23,6 +23,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
     {
         private readonly DebugStat<int> ranked;
 
+        private readonly Bindable<bool> rankedFilter = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.RankedFilter);
+
         public VitaruRulesetContainer(Ruleset ruleset, WorkingBeatmap beatmap)
             : base(ruleset, beatmap)
         {
@@ -40,12 +42,15 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             base.LoadComplete();
 
-            if (VitaruPlayfield.OnJudgement == null)
+            if (VitaruPlayfield.OnJudgement == null && !rankedFilter)
             {
                 OsuColour osu = new OsuColour();
                 ranked.Text = "Unranked (Bad Code)";
                 ranked.SpriteText.Colour = osu.Yellow;
             }
+            else if (rankedFilter)
+                ranked.Text = "Ranked (Ranked Filter Disabled)";
+
             VitaruInputManager vitaruInputManager = (VitaruInputManager)KeyBindingInputManager;
             vitaruInputManager.DebugToolkit?.UpdateItems();
         }
@@ -65,7 +70,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             else if (Clock.ElapsedFrameTime > 1000 / 60)
                 ranked.Bindable.Value++;
 
-            if (ranked.Bindable.Value >= 1000 && VitaruPlayfield.OnJudgement != null)
+            if (ranked.Bindable.Value >= 1000 && VitaruPlayfield.OnJudgement != null && rankedFilter)
             {
                 OsuColour osu = new OsuColour();
                 VitaruPlayfield.OnJudgement = null;

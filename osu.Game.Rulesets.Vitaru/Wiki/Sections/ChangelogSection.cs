@@ -15,13 +15,14 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         protected override string VersionChangelog => "-Updated to lazer version 2018.607.0\n" +
             "-Updated to lazer version 2018.606.0\n\n" +
             "Features:\n\n" +
-            "-Added an option that will 2x to 10x ruleset performance depending on map (when not in editor)\n" +
+            "-Added an option that will 2x to 10x ruleset performance depending on map (when not in editor) under the \"Custom\" graphics settings\n" +
             //"-New Patterns\n\n" +
             "\n\n" +
             "Tweaks / Changes:\n\n" +
             "-Adjust Touhosu playfield size + aspect ratio (make it bigger inline with TouhouSharp's playfield [doubled width])\n" +
+            "-Adjust StandardV2 bullet animations\n" +
             "-Patterns are per individual hitsound rather than one pattern each time hitsounds are played (basically there are gonna be way more bullets now)\n" +
-            "-Bring back the ranked play detector\n" +
+            "-Bring back the ranked play detector as a debug option (too buggy to go live yet)\n" +
             "-Killing enemies now will grant 300 extra score\n\n" +
             "Fixes:\n\n" +
             "-Fix hitsounding not being 1:1 with stable\n" +
