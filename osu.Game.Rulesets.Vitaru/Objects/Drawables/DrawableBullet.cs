@@ -153,11 +153,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 Alpha = 1;
                 bulletPiece.Scale = new Vector2(1.5f);
-                bulletPiece.Scale = new Vector2(0.75f);
-                bulletPiece.FadeInFromZero(200, Easing.InCubic)
-                           .ScaleTo(Vector2.One, 200, Easing.OutQuint);
-                bulletPiece.Box.FadeInFromZero(100, Easing.OutQuint)
-                           .ScaleTo(Vector2.One, 200, Easing.OutQuint);
+                bulletPiece.FadeInFromZero(150, Easing.OutSine)
+                           .ScaleTo(Vector2.One, 150, Easing.InSine);
+                bulletPiece.Box.FadeInFromZero(200, Easing.InSine);
             }
             else
                 this.FadeInFromZero(100)
@@ -171,11 +169,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (graphics == GraphicsOptions.StandardV2)
             {
-                bulletPiece.FadeOut(200, Easing.InCubic)
-                           .ScaleTo(new Vector2(1.5f), 200, Easing.OutQuint)
+                bulletPiece.FadeOut(300, Easing.OutCubic)
+                           .ScaleTo(new Vector2(1.5f), 300, Easing.OutSine)
                            .OnComplete((b) => { Unload(); });
-                bulletPiece.Box.FadeOut(100, Easing.OutQuint)
-                           .ScaleTo(new Vector2(0.75f), 200, Easing.OutQuint);
+                bulletPiece.Box.FadeOut(150, Easing.InSine);
             }
             else
                 bulletPiece.FadeOut(100)
