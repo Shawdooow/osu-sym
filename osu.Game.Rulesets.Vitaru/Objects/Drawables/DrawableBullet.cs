@@ -6,6 +6,7 @@ using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using osu.Game.Rulesets.Scoring;
+using OpenTK.Graphics;
 using Symcol.Core.GameObjects;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
@@ -80,8 +81,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             else if (Hit)
             {
+                if (graphics == GraphicsOptions.StandardV2)
+                    bulletPiece.ScaleTo(new Vector2(0.75f))
+                               .FadeColour(Color4.Red, 500, Easing.OutCubic)
+                               .FadeOut(500, Easing.InCubic);
+                else
+                    bulletPiece.Alpha = 0;
+
                 AddJudgement(new VitaruJudgement { Result = HitResult.Miss });
-                bulletPiece.Alpha = 0;
                 End();
             }
 
@@ -119,7 +126,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             Alpha = 0;
             Size = new Vector2((float)Bullet.BulletDiameter);
-            Scale = new Vector2(0.1f);
+
+            if (graphics != GraphicsOptions.StandardV2)
+                Scale = new Vector2(0.1f);
 
             Children = new Drawable[]
             {
@@ -134,12 +143,26 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         protected override void Start()
         {
+            if (returnJudgement) return;
             base.Start();
 
             Position = Bullet.PositionAt(0);
             Hitbox.HitDetection = true;
-            this.FadeInFromZero(100)
-                .ScaleTo(Vector2.One, 100);
+
+            if (graphics == GraphicsOptions.StandardV2)
+            {
+                Alpha = 1;
+                bulletPiece.Scale = new Vector2(1.5f);
+                bulletPiece.Scale = new Vector2(0.75f);
+                bulletPiece.FadeInFromZero(200, Easing.InCubic)
+                           .ScaleTo(Vector2.One, 200, Easing.OutQuint);
+                bulletPiece.Box.FadeInFromZero(100, Easing.OutQuint)
+                           .ScaleTo(Vector2.One, 200, Easing.OutQuint);
+            }
+            else
+                this.FadeInFromZero(100)
+                    .ScaleTo(Vector2.One, 100);
+
         }
 
         protected override void End()
@@ -147,9 +170,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             base.End();
 
             if (graphics == GraphicsOptions.StandardV2)
-                bulletPiece.FadeOut(100, Easing.OutQuad)
-                    .ScaleTo(Scale * 0.5f, 100, Easing.OutQuart)
-                    .OnComplete((b) => { Unload(); });
+            {
+                bulletPiece.FadeOut(200, Easing.InCubic)
+                           .ScaleTo(new Vector2(1.5f), 200, Easing.OutQuint)
+                           .OnComplete((b) => { Unload(); });
+                bulletPiece.Box.FadeOut(100, Easing.OutQuint)
+                           .ScaleTo(new Vector2(0.75f), 200, Easing.OutQuint);
+            }
             else
                 bulletPiece.FadeOut(100)
                     .OnComplete((b) => { Unload(); });

@@ -19,10 +19,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 
         private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
 
-        private Sprite bulletKiai;
+        private readonly Sprite bulletKiai;
         private Sprite dean;
-        private CircularContainer circle;
-        private Box box;
+        private readonly CircularContainer circle;
+        public readonly Box Box;
 
         public static bool ExclusiveTestingHax;
 
@@ -40,11 +40,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 
             randomRotationValue = (float)RNG.Next(10, 15) / 10;
             randomRotateDirection = RNG.NextBool();
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
 
             Size = new Vector2((float)drawableBullet.Bullet.BulletDiameter + 12);
 
@@ -71,7 +66,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                 BorderThickness = graphics == GraphicsOptions.StandardV2 ? 0 : 6,
                 Masking = true,
 
-                Child = box = new Box
+                Child = Box = new Box
                 {
                     RelativeSizeAxes = Axes.Both
                 }
@@ -80,6 +75,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
             if (graphics != GraphicsOptions.HighPerformance)
                 circle.EdgeEffect = new EdgeEffectParameters
                 {
+                    Hollow = true,
                     Radius = (float)drawableBullet.Bullet.BulletDiameter,
                     Type = EdgeEffectType.Shadow,
                     Colour = drawableBullet.AccentColour.Opacity(graphics == GraphicsOptions.StandardV2 ? 0.5f : 0.2f)

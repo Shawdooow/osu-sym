@@ -44,8 +44,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             double transformTime = HitObject.StartTime - HitObject.TimePreempt;
 
-            base.ApplyTransformsAt(transformTime, true);
-            base.ClearTransformsAfter(transformTime, true);
+            ApplyTransformsAt(transformTime, true);
+            ClearTransformsAfter(transformTime, true);
         }
 
         protected override void Update()
