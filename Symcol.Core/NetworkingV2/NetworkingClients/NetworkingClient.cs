@@ -4,6 +4,7 @@ using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using Mono.Nat;
 using Symcol.Core.NetworkingV2.Packets;
+// ReSharper disable InconsistentNaming
 
 namespace Symcol.Core.NetworkingV2.NetworkingClients
 {

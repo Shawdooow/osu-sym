@@ -22,7 +22,7 @@ namespace Symcol.Core.NetworkingV2
         public ClientInfo ClientInfo;
 
         /// <summary>
-        /// All Connecting clients
+        /// All Connecting clients / clients losing connection
         /// </summary>
         public readonly List<ClientInfo> ConnectingClients = new List<ClientInfo>();
 
@@ -32,7 +32,7 @@ namespace Symcol.Core.NetworkingV2
         public readonly List<ClientInfo> ConncetedClients = new List<ClientInfo>();
 
         /// <summary>
-        /// Clients waiting in our match
+        /// Clients waiting in our lobby
         /// </summary>
         public readonly List<ClientInfo> InMatchClients = new List<ClientInfo>();
 
