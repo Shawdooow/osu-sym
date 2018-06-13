@@ -1,25 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using osu.Framework.Logging;
+using osu.Framework.Timing;
 using Symcol.Core.Graphics.Containers;
 using Symcol.Core.NetworkingV2.NetworkingClients;
 using Symcol.Core.NetworkingV2.Packets;
 
 namespace Symcol.Core.NetworkingV2
 {
-    //TODO: This NEEDS its own clock to avoid fuckery later on with modified clock speeds
     public class NetworkingClientHandler : SymcolContainer
     {
+        #region Fields
+
         //30 Seconds by default
         protected virtual double TimeOutTime => 30000;
 
-        protected readonly NetworkingClient ReceiveClient;
-
-        protected readonly NetworkingClient SendClient;
+        protected NetworkingClient ReceiveClient;
 
         /// <summary>
         /// Just a client signature basically
         /// </summary>
         public ClientInfo ClientInfo;
+
+        /// <summary>
+        /// If we are connected to a host / server this will be it
+        /// </summary>
+        public ClientInfo ServerInfo;
 
         /// <summary>
         /// All Connecting clients / clients losing connection
@@ -47,208 +53,313 @@ namespace Symcol.Core.NetworkingV2
         public readonly List<ClientInfo> InGameClients = new List<ClientInfo>();
 
         /// <summary>
-        /// Gets hit when we get a Packet
+        /// Gets hit when we get + send a Packet
         /// </summary>
         public Action<Packet> OnPacketReceive;
 
         /// <summary>
-        /// (Peer) Call this when we connect to a Host (Includes list of connected peers + Host)
+        /// Call this when we connect to a Host (Includes list of connected peers + Host)
         /// </summary>
         public Action<List<ClientInfo>> OnConnectedToHost;
 
         /// <summary>
-        /// (Host) Whenever a new client Connects
+        /// TODO: Implement TCP connections
         /// </summary>
-        public Action<ClientInfo> OnClientConnect;
+        public bool TCP
+        {
+            get => tcp;
+            set
+            {
+                if (value != tcp)
+                {
+                    tcp = value;
+                }
+            }
+        }
+
+        private bool tcp;
 
         /// <summary>
-        /// (Host) Whenever a new client Disconnects
+        /// Called when the address is changed
         /// </summary>
-        public Action<ClientInfo> OnClientDisconnect;
+        public event Action<string, int> OnAddressChange;
 
         /// <summary>
-        /// (Host/Peer) When a new Client joins the game
+        /// Our IP:Port
         /// </summary>
-        public Action<ClientInfo> OnClientJoin;
+        public string Address
+        {
+            get => IP + ":" + Port;
+            set
+            {
+                string[] split = value.Split(':');
+
+                string i = split[0];
+                int p = int.Parse(split[1]);
+
+                if (IP + Port != value)
+                {
+                    IP = i;
+                    Port = p;
+                    OnAddressChange?.Invoke(i, p);
+                }
+            }
+        }
 
         /// <summary>
-        /// Receive a full player list
+        /// Called when the ip is changed
         /// </summary>
-        public Action<List<ClientInfo>> OnReceivePlayerList;
+        public event Action<string> OnIPChange;
 
         /// <summary>
-        /// if we are connected and in a match
+        /// Our IP
         /// </summary>
-        public bool InMatch;
+        public string IP
+        {
+            get => ip;
+            private set
+            {
+                if (ip != value)
+                {
+                    ip = value;
+                    OnIPChange?.Invoke(ip);
+                }
+            }
+        }
+
+        private string ip;
 
         /// <summary>
-        /// Are we in a game
+        /// Called when the port is changed
         /// </summary>
-        public bool InGame;
+        public event Action<int> OnPortChange;
 
         /// <summary>
-        /// Are we loaded and ready to start?
+        /// Our Port
         /// </summary>
-        public bool Loaded;
+        public int Port
+        {
+            get => port;
+            private set
+            {
+                if (port != value)
+                {
+                    port = value;
+                    OnPortChange?.Invoke(port);
+                }
+            }
+        }
 
-        /// <summary>
-        /// Called to leave an in-progress game
-        /// </summary>
-        public Action OnAbort;
+        private int port;
 
-        /// <summary>
-        /// Called to load the game (Includes Host)
-        /// </summary>
-        public Action<List<ClientInfo>> OnLoadGame;
+        public event Action<ClientType> OnClientTypeChange;
 
-        /// <summary>
-        /// Called to start the game once loaded
-        /// </summary>
-        public Action StartGame;
+        public ClientType ClientType
+        {
+            get => clientType;
+            set
+            {
+                if (value != clientType)
+                {
+                    clientType = value;
 
-        public readonly ClientType ClientType;
+                    switch (value)
+                    {
+                        case ClientType.Peer:
+                            break;
+                        case ClientType.Host:
+                        case ClientType.Server:
+                            break;
+                    }
+
+                    OnClientTypeChange?.Invoke(value);
+                }
+            }
+        }
+
+        private ClientType clientType;
 
         public ConnectionStatues ConnectionStatues { get; protected set; }
+
+        #endregion
 
         public NetworkingClientHandler()
         {
             AlwaysPresent = true;
+
+            //TODO: make sure this works as intended
+            Clock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
+
+            OnAddressChange += (ip, port) =>
+            {
+                string address = ip + ":" + port;
+                ClientInfo = new ClientInfo
+                {
+                    Address = address,
+                    IP = ip,
+                    Port = port
+                };
+
+                if (ReceiveClient != null)
+                    ReceiveClient.Address = address;
+            };
+
+            OnClientTypeChange += (type) =>
+            {
+                switch (type)
+                {
+                    case ClientType.Peer:
+                        ReceiveClient = new UDPNetworkingClient(false)
+                        {
+                            Address = Address
+                        };
+                        break;
+                    case ClientType.Host:
+                    case ClientType.Server:
+                        ReceiveClient = new UDPNetworkingClient(false)
+                        {
+                            Address = Address
+                        };
+                        break;
+                }
+            };
         }
+
+        #region Update Loop
 
         protected override void Update()
         {
             base.Update();
 
-            Packet p = ReceiveClient.GetPacket();
+            foreach (Packet p in ReceivePackets())
+                HandlePackets(p);
         }
 
         /// <summary>
-        /// Poke!
-        /// </summary>
-        /// <param name="clientInfo"></param>
-        protected void TestConnection(ClientInfo clientInfo)
-        {
-
-        }
-
-        public void RequestPlayerList()
-        {
-
-        }
-
-        /// <summary>
-        /// Tell peers to start loading game
-        /// </summary>
-        public virtual void StartLoadingGame()
-        {
-
-        }
-
-        /// <summary>
-        /// Call this when the game is Loaded and ready to be started
-        /// </summary>
-        public virtual void GameLoaded()
-        {
-
-        }
-
-        /// <summary>
-        /// Connects to the Host
-        /// </summary>
-        public virtual void ConnectToHost()
-        {
-
-        }
-
-        /// <summary>
-        /// Tell peers to start and starts ours
-        /// </summary>
-        public virtual void SendStartGame()
-        {
-
-        }
-
-        /// <summary>
-        /// Send a Packet to the Host
+        /// Handle any packets we got before sending them to OnPackerReceive
         /// </summary>
         /// <param name="packet"></param>
-        public void SendToHost(Packet packet)
+        protected virtual void HandlePackets(Packet packet)
         {
-            SendClient?.SendPacket(packet);
+            if (ClientType != ClientType.Server)
+            {
+                switch (packet)
+                {
+                    case ConnectPacket connectPacket:
+                        break;
+                    case DisconnectPacket disconnectPacket:
+                        break;
+                }
+            }
+            else
+            {
+
+            }
+
+            OnPacketReceive?.Invoke(packet);
+        }
+
+        #endregion
+
+        #region Packet and Client Helper Functions
+
+        /// <summary>
+        /// Trys to send packets wherever they must go.
+        /// Also calls OnPacketReceive with it
+        /// </summary>
+        /// <param name="packet"></param>
+        public void SendPacket(Packet packet)
+        {
+            switch (ClientType)
+            {
+                case ClientType.Peer:
+                    SendToServer(packet);
+                    break;
+                case ClientType.Host:
+                case ClientType.Server:
+                    SendToAllConnectedClients(packet);
+                    break;
+
+            }
+            OnPacketReceive?.Invoke(packet);
         }
 
         /// <summary>
-        /// Send a Packet to all Connecting clients
+        /// returns a list of all avalable packets
         /// </summary>
-        /// <param name="packet"></param>
-        public void SendToConnectingClients(Packet packet)
+        /// <returns></returns>
+        protected List<Packet> ReceivePackets()
         {
-
+            List<Packet> packets = new List<Packet>();
+            for (int i = 0; i < ReceiveClient.Avalable; i++)
+                packets.Add(ReceiveClient.GetPacket());
+            return packets;
         }
 
         /// <summary>
-        /// Send a Packet to all clients Connected and waiting
+        /// Returns a send only networking client for the inputed ClientInfo
         /// </summary>
-        /// <param name="packet"></param>
-        public void SendToConnectedClients(Packet packet)
+        /// <param name="info"></param>
+        /// <returns></returns>
+        protected virtual NetworkingClient GetNetworkingClient(ClientInfo info)
         {
-
+            if (TCP)
+                throw new NotImplementedException("TCP client is not implemented!");
+            return new UDPNetworkingClient(true)
+            {
+                Address = info.IP + ":" + info.Port
+            };
         }
 
         /// <summary>
-        /// Send a Packet to all clients In this Match
+        /// Signs this packet so everyone knows where it came from
         /// </summary>
         /// <param name="packet"></param>
-        public void SendToInMatchClients(Packet packet)
+        /// <returns></returns>
+        protected virtual Packet SignPacket(Packet packet)
         {
-
+            packet.Address = ReceiveClient.Address;
+            return packet;
         }
+
+        #endregion
+
+        #region Send Functions
+
+        protected void SendToServer(Packet packet)
+        {
+            packet = SignPacket(packet);
+            GetNetworkingClient(ServerInfo).SendPacket(packet);
+        }
+
+        protected void SendToAllConnectedClients(Packet packet)
+        {
+            packet = SignPacket(packet);
+            foreach (ClientInfo info in ConnectingClients)
+                GetNetworkingClient(info).SendPacket(packet);
+        }
+
+        #endregion
+
+        #region Network Actions
 
         /// <summary>
-        /// Send a Packet to all clients Loaded
+        /// Starts the connection proccess to Host / Server
         /// </summary>
-        /// <param name="packet"></param>
-        public void SendToLoadedClients(Packet packet)
+        public virtual void Connect()
         {
+            if (ConnectionStatues <= ConnectionStatues.Disconnected)
+            {
 
+            }
+            else
+            {
+                Logger.Log("We are already connecting, please wait for us to fail before retrying!", LoggingTarget.Network);
+            }
         }
 
-        /// <summary>
-        /// Send a Packet to all clients InGame
-        /// </summary>
-        /// <param name="packet"></param>
-        public void SendToInGameClients(Packet packet)
-        {
+        #endregion
 
-        }
-
-        /// <summary>
-        /// Send a Packet to ALL clients we know
-        /// </summary>
-        /// <param name="packet"></param>
-        public void SendToAllClients(Packet packet)
-        {
-
-        }
-
-        /// <summary>
-        /// Send to all but the one that sent it
-        /// </summary>
-        /// <param name="packet"></param>
-        public void ShareWithOtherPeers(Packet packet)
-        {
-
-        }
-
-        public virtual void AbortGame()
-        {
-
-        }
-
-        public virtual void Disconnect()
-        {
-
-        }
     }
 
     public enum ClientType

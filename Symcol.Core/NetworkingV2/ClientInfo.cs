@@ -5,8 +5,6 @@
     /// </summary>
     public class ClientInfo
     {
-        public string ClientID;
-
         public string Address;
 
         public string IP;
