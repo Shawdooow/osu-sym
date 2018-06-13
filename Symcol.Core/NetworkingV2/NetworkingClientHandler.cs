@@ -35,7 +35,7 @@ namespace Symcol.Core.NetworkingV2
         /// <summary>
         /// All Connected clients
         /// </summary>
-        public readonly List<ClientInfo> ConncetedClients = new List<ClientInfo>();
+        public readonly List<ClientInfo> ConnectedClients = new List<ClientInfo>();
 
         /// <summary>
         /// Clients waiting in our lobby
@@ -233,6 +233,8 @@ namespace Symcol.Core.NetworkingV2
 
             foreach (Packet p in ReceivePackets())
                 HandlePackets(p);
+
+            CheckClients();
         }
 
         /// <summary>
@@ -241,22 +243,75 @@ namespace Symcol.Core.NetworkingV2
         /// <param name="packet"></param>
         protected virtual void HandlePackets(Packet packet)
         {
-            if (ClientType != ClientType.Server)
+            switch (packet)
             {
-                switch (packet)
-                {
-                    case ConnectPacket connectPacket:
-                        break;
-                    case DisconnectPacket disconnectPacket:
-                        break;
-                }
-            }
-            else
-            {
-
+                case ConnectPacket connectPacket:
+                    ConnectingClients.Add(GetConnectingClientInfo(connectPacket));
+                    break;
+                case DisconnectPacket disconnectPacket:
+                    ClientDisconnecting(disconnectPacket);
+                    break;
+                case TestPacket testPacket:
+                    if (clientType == ClientType.Peer)
+                        SendPacket(new TestPacket());
+                    else
+                    {
+                        foreach (ClientInfo info in ConnectingClients)
+                            if (info.Address == testPacket.Address)
+                            {
+                                ConnectingClients.Remove(info);
+                                ConnectedClients.Add(info);
+                                break;
+                            }
+                    }
+                    break;
             }
 
             OnPacketReceive?.Invoke(packet);
+        }
+
+        protected virtual void CheckClients()
+        {
+            foreach (ClientInfo client in ConnectingClients)
+            {
+                if (client.LastConnectionTime + TimeOutTime / 10 <= Time.Current && client.ConncetionTryCount == 0)
+                    TestConnection(client);
+
+                if (client.LastConnectionTime + TimeOutTime / 6 <= Time.Current && client.ConncetionTryCount == 1)
+                    TestConnection(client);
+
+                if (client.LastConnectionTime + TimeOutTime / 3 <= Time.Current && client.ConncetionTryCount == 2)
+                    TestConnection(client);
+
+                if (client.LastConnectionTime + TimeOutTime <= Time.Current)
+                {
+                    ConnectingClients.Remove(client);
+                    Logger.Log("Connection to a connecting client lost! - " + client.Address, LoggingTarget.Network, LogLevel.Error);
+                    break;
+                }
+            }
+
+            foreach (ClientInfo client in ConnectedClients)
+            {
+                if (client.LastConnectionTime + TimeOutTime / 6 <= Time.Current && client.ConncetionTryCount == 0)
+                    TestConnection(client);
+
+                if (client.LastConnectionTime + TimeOutTime / 3 <= Time.Current && client.ConncetionTryCount == 1)
+                    TestConnection(client);
+
+                if (client.LastConnectionTime + TimeOutTime / 2 <= Time.Current && client.ConncetionTryCount == 2)
+                    TestConnection(client);
+
+                if (client.LastConnectionTime + TimeOutTime <= Time.Current)
+                {
+                    ConnectedClients.Remove(client);
+                    InGameClients.Remove(client);
+                    LoadedClients.Remove(client);
+                    InGameClients.Remove(client);
+                    Logger.Log("Connection to a connected client lost! - " + client.Address, LoggingTarget.Network, LogLevel.Error);
+                    break;
+                }
+            }
         }
 
         #endregion
@@ -264,12 +319,13 @@ namespace Symcol.Core.NetworkingV2
         #region Packet and Client Helper Functions
 
         /// <summary>
-        /// Trys to send packets wherever they must go.
+        /// Signs a packet then trys to send it wherever it must go.
         /// Also calls OnPacketReceive with it
         /// </summary>
         /// <param name="packet"></param>
         public void SendPacket(Packet packet)
         {
+            packet = SignPacket(packet);
             switch (ClientType)
             {
                 case ClientType.Peer:
@@ -322,19 +378,58 @@ namespace Symcol.Core.NetworkingV2
             return packet;
         }
 
+        protected ClientInfo GetConnectingClientInfo(ConnectPacket packet)
+        {
+            string[] split = packet.Address.Split(':');
+
+            string i = split[0];
+            int p = int.Parse(split[1]);
+
+            return new ClientInfo
+            {
+                Address = packet.Address,
+                IP = i,
+                Port = p,
+                LastConnectionTime = Time.Current
+            };
+        }
+
+        protected void ClientDisconnecting(DisconnectPacket packet)
+        {
+            foreach (ClientInfo client in ConnectedClients)
+                if (client.Address == packet.Address)
+                {
+                    ConnectedClients.Remove(client);
+                    InMatchClients.Remove(client);
+                    LoadedClients.Remove(client);
+                    InGameClients.Remove(client);
+                    return;
+                }
+            foreach (ClientInfo client in ConnectingClients)
+                if (client.Address == packet.Address)
+                {
+                    ConnectingClients.Remove(client);
+                    return;
+                }
+        }
+
+        protected virtual void TestConnection(ClientInfo info)
+        {
+            NetworkingClient client = GetNetworkingClient(info);
+            client.SendPacket(new TestPacket());
+        }
+
         #endregion
 
         #region Send Functions
 
         protected void SendToServer(Packet packet)
         {
-            packet = SignPacket(packet);
             GetNetworkingClient(ServerInfo).SendPacket(packet);
         }
 
         protected void SendToAllConnectedClients(Packet packet)
         {
-            packet = SignPacket(packet);
             foreach (ClientInfo info in ConnectingClients)
                 GetNetworkingClient(info).SendPacket(packet);
         }
@@ -348,14 +443,30 @@ namespace Symcol.Core.NetworkingV2
         /// </summary>
         public virtual void Connect()
         {
-            if (ConnectionStatues <= ConnectionStatues.Disconnected)
+            if (ClientType != ClientType.Peer)
             {
+                Logger.Log("We are not a peer!", LoggingTarget.Network);
+                return;
+            }
 
-            }
+            if (ConnectionStatues <= ConnectionStatues.Disconnected)
+                SendPacket(new ConnectPacket());
             else
-            {
                 Logger.Log("We are already connecting, please wait for us to fail before retrying!", LoggingTarget.Network);
+        }
+
+        public virtual void Disconnect()
+        {
+            if (ClientType != ClientType.Peer)
+            {
+                Logger.Log("We are not a peer!", LoggingTarget.Network);
+                return;
             }
+
+            if (ConnectionStatues >= ConnectionStatues.Connecting)
+                SendPacket(new DisconnectPacket());
+            else
+                Logger.Log("We are not connected!", LoggingTarget.Network);
         }
 
         #endregion
@@ -364,8 +475,8 @@ namespace Symcol.Core.NetworkingV2
 
     public enum ClientType
     {
-        Host,
         Peer,
+        Host,
         Server
     }
 

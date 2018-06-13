@@ -1,10 +1,10 @@
-﻿namespace Symcol.Core.NetworkingV2.Packets
+﻿using System;
+
+namespace Symcol.Core.NetworkingV2.Packets
 {
+    [Serializable]
     public class DisconnectPacket : Packet
     {
-        public DisconnectPacket(string address)
-            : base(address)
-        {
-        }
+        public override int PacketSize => 128;
     }
 }
