@@ -8,16 +8,16 @@ namespace Symcol.Core.NetworkingV2
         /// <summary>
         /// Just a Signature
         /// </summary>
-        public readonly ClientInfo ClientInfo;
+        public string Address;
 
         /// <summary>
-        /// Specify starting size of packet (bytes) for efficiency
+        /// Specify starting size of a packet (bytes) for efficiency
         /// </summary>
         public virtual int PacketSize => 1024;
 
-        public Packet(ClientInfo clientInfo)
+        public Packet(string address)
         {
-            ClientInfo = clientInfo;
+            Address = address;
         }
     }
 }

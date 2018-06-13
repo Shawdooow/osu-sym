@@ -129,7 +129,8 @@ namespace Symcol.Core.NetworkingV2
                 BinaryFormatter formatter = new BinaryFormatter();
                 if (formatter.Deserialize(stream) is Packet packet)
                 {
-                    packet.ClientInfo.IP = EndPoint.Address.ToString();
+                    //TODO: not this, each client should send the packet with this information somehow
+                    packet.Address = EndPoint.Address.ToString() + EndPoint.Port.ToString();
                     return packet;
                 }
 

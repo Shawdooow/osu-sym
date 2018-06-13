@@ -8,11 +8,7 @@ namespace Symcol.Core.NetworkingV2
     [Serializable]
     public class ClientInfo
     {
-        public string IP;
-
-        public int Port;
-
-        public int Ping;
+        public string ClientID;
 
         public int ConncetionTryCount;
 
