@@ -1,16 +1,39 @@
-﻿using Mono.Nat;
+﻿using System.Collections.Generic;
+using Mono.Nat;
 
 namespace Symcol.Core.NetworkingV2
 {
-    public class NatMapping
+    public static class NatMapping
     {
-        public readonly Mapping UdpMapping;
+        public static List<Mapping> Mappings = new List<Mapping>();
 
-        public static INatDevice NatDevice;
-
-        public NatMapping(Mapping mapping)
+        public static INatDevice NatDevice
         {
-            UdpMapping = mapping;
+            get => device;
+            set
+            {
+                if (!Equals(value, device) && device == null)
+                {
+                    device = value;
+
+                    foreach (Mapping m in Mappings)
+                        device.CreatePortMap(m);
+                }
+            }
+        }
+
+        private static INatDevice device;
+
+        public static void Add(Mapping mapping)
+        {
+            Mappings.Add(mapping);
+            NatDevice?.CreatePortMap(mapping);
+        }
+
+        public static void Remove(Mapping mapping)
+        {
+            NatDevice?.DeletePortMap(mapping);
+            Mappings.Remove(mapping);
         }
     }
 }

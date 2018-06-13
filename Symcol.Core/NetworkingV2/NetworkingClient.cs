@@ -1,109 +1,92 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
 using Mono.Nat;
-using osu.Framework.Logging;
 
 namespace Symcol.Core.NetworkingV2
 {
-    public class NetworkingClient
+    public abstract class NetworkingClient : IDisposable
     {
-        public readonly UdpClient UdpClient;
-
-        public readonly NatMapping NatMapping;
-
         public IPEndPoint EndPoint;
 
-        // ReSharper disable once InconsistentNaming
-        public Action OnStartedUPnPMapping;
-
         /// <summary>
-        /// if false we only receive
+        /// Called when the address is changed
         /// </summary>
-        public readonly bool Send;
+        public event Action<string, int> OnAddressChange;
 
-        public readonly int Port;
-
-        public readonly string IP;
-
-        public NetworkingClient(bool send, string ip, int port = 25570)
+        public string Address
         {
-            Send = send;
-            IP = ip;
-            Port = port;
-
-            NatMapping = new NatMapping(new Mapping(Protocol.Udp, Port, Port));
-
-            if (!send)
+            get => IP + Port;
+            set
             {
-                if (NatMapping.NatDevice != null)
+                string[] split = value.Split(':');
+                
+                string i = split[0];
+                int p = int.Parse(split[1]);
+
+                if (IP + Port != value)
                 {
-                    NatMapping.NatDevice.CreatePortMap(NatMapping.UdpMapping);
-                    IP = NatMapping.NatDevice.LocalAddress.ToString();
-                    OnStartedUPnPMapping?.Invoke();
+                    foreach (Mapping m in NatMapping.Mappings)
+                        if (m.PrivatePort == Port)
+                        {
+                            NatMapping.Remove(m);
+                            break;
+                        }
+
+                    NatMapping.Add(new Mapping(Protocol.Udp, p, p));
+                    IP = i;
+                    Port = p;
+                    OnAddressChange?.Invoke(i, p);
                 }
-
-                if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
-                    Logger.Log("No Network Connection Detected!", LoggingTarget.Network, LogLevel.Error);
-
-                else
-                {
-                    NatUtility.DeviceFound += deviceFound;
-                    NatUtility.DeviceLost += deviceLost;
-                    NatUtility.StartDiscovery();
-                }
-
-                UdpClient = new UdpClient(Port);
-                EndPoint = new IPEndPoint(IPAddress.Any, Port);
             }
-            else
-                UdpClient = new UdpClient(IP, Port);
-        }
-
-        private void deviceFound(object sender, DeviceEventArgs args)
-        {
-            INatDevice device = args.Device;
-
-            if (Equals(NatMapping.NatDevice?.LocalAddress, device.LocalAddress))
-                return;
-
-            device.CreatePortMap(NatMapping.UdpMapping);
-            NatMapping.NatDevice = device;
-
-            if (OnStartedUPnPMapping != null)
-            {
-                OnStartedUPnPMapping();
-                OnStartedUPnPMapping = null;
-            }
-        }
-
-        private void deviceLost(object sender, DeviceEventArgs args)
-        {
-            INatDevice device = args.Device;
-            if (Equals(NatMapping.NatDevice.LocalAddress, device.LocalAddress))
-            {
-                NatMapping.NatDevice.DeletePortMap(NatMapping.UdpMapping);
-                NatMapping.NatDevice = null;
-            }
-        }
-
-        private void sendByte(byte[] data)
-        {
-            UdpClient.Send(data, data.Length);
-        }
-
-        private byte[] receiveByte()
-        {
-            return UdpClient.Receive(ref EndPoint);
         }
 
         /// <summary>
-        /// Send a Packet somewhere
+        /// Called when the ip is changed
+        /// </summary>
+        public event Action<string> OnIPChange;
+
+        public string IP
+        {
+            get => ip;
+            private set
+            {
+                if (ip != value)
+                {
+                    ip = value;
+                    OnIPChange?.Invoke(ip);
+                }
+            }
+        }
+
+        private string ip;
+
+        /// <summary>
+        /// Called when the port is changed
+        /// </summary>
+        public event Action<int> OnPortChange;
+
+        public int Port
+        {
+            get => port;
+            private set
+            {
+                if (port != value)
+                {
+                    port = value;
+                    OnPortChange?.Invoke(port);
+                }
+            }
+        }
+
+        private int port;
+
+        /// <summary>
+        /// Send a packet
         /// </summary>
         /// <param name="packet"></param>
-        public void SendPacket(Packet packet)
+        public virtual void SendPacket(Packet packet)
         {
             using (MemoryStream stream = new MemoryStream())
             {
@@ -126,47 +109,46 @@ namespace Symcol.Core.NetworkingV2
                     goto retry;
                 }
 
-                sendByte(data);
+                SendBytes(data);
             }
         }
 
         /// <summary>
-        /// Receive a Packet from somewhere
+        /// Receive a packet
         /// </summary>
         /// <returns></returns>
-        public Packet ReceivePacket(bool force = false)
+        public virtual Packet GetPacket()
         {
-            if (UdpClient.Available > 0 || force)
-                using (MemoryStream stream = new MemoryStream())
+            using (MemoryStream stream = new MemoryStream())
+            {
+                byte[] data = GetBytes();
+                stream.Write(data, 0, data.Length);
+
+                stream.Position = 0;
+
+                BinaryFormatter formatter = new BinaryFormatter();
+                if (formatter.Deserialize(stream) is Packet packet)
                 {
-                    byte[] data = receiveByte();
-                    stream.Write(data, 0, data.Length);
-
-                    stream.Position = 0;
-
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    if (formatter.Deserialize(stream) is Packet packet)
-                    {
-                        packet.ClientInfo.IP = EndPoint.Address.ToString();
-                        return packet;
-                    }
-
-                    throw new NullReferenceException("Whatever we recieved isnt a packet!");
+                    packet.ClientInfo.IP = EndPoint.Address.ToString();
+                    return packet;
                 }
-            else
-                return null;
+
+                throw new NullReferenceException("Whatever we recieved isnt a packet!");
+            }
         }
 
-        public void Clear()
-        {
-            UdpClient?.Dispose();
+        /// <summary>
+        /// Send some bytes
+        /// </summary>
+        /// <param name="bytes"></param>
+        public abstract void SendBytes(byte[] bytes);
 
-            if (!Send)
-                try
-                {
-                    NatMapping.NatDevice?.DeletePortMap(NatMapping.UdpMapping);
-                }
-                catch { Logger.Log("Error trying to release port mapping!", LoggingTarget.Network, LogLevel.Error); }
-        }
+        /// <summary>
+        /// Receive some bytes
+        /// </summary>
+        /// <returns></returns>
+        public abstract byte[] GetBytes();
+
+        public abstract void Dispose();
     }
 }
