@@ -68,11 +68,39 @@ namespace osu.Game.Rulesets.Classic.Objects
         /// </summary>
         internal float LazyTravelDistance;
 
-        public List<List<SampleInfo>> BetterRepeatSamples { get; set; } = new List<List<SampleInfo>>();
-
         public List<SampleControlPoint> SampleControlPoints = new List<SampleControlPoint>();
 
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
+
+        private List<SampleInfo> ree;
+        public List<SampleInfo> GetRepeatSamples(int repeat)
+        {
+            if (RepeatSamples.Count > repeat)
+                ree = RepeatSamples[repeat];
+            return ree;
+        }
+
+        private SampleControlPoint reee;
+        public SampleControlPoint GetSampleControlPoint(int repeat)
+        {
+            if (SampleControlPoints.Count > repeat)
+                reee = SampleControlPoints[repeat];
+            return reee;
+        }
+
+        public List<SampleInfo> GetAdjustedSamples(int repeat = -1)
+        {
+            List<SampleInfo> list = new List<SampleInfo>();
+            if (repeat >= 0)
+                foreach (SampleInfo info in GetRepeatSamples(repeat))
+                    list.Add(GetAdjustedSample(info, GetSampleControlPoint(repeat)));
+            else
+                foreach (SampleInfo info in BetterSamples)
+                    list.Add(GetAdjustedSample(info));
+
+            return list;
+        }
+
         public int RepeatCount { get; set; }
 
         private int stackHeight;
@@ -101,6 +129,9 @@ namespace osu.Game.Rulesets.Classic.Objects
 
             Velocity = scoringDistance / timingPoint.BeatLength;
             TickDistance = scoringDistance / difficulty.SliderTickRate;
+
+            reee = SampleControlPoint;
+            ree = Samples;
 
             for (double i = StartTime + SpanDuration; i <= EndTime; i += SpanDuration)
             {

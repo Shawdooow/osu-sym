@@ -15,7 +15,6 @@ using osu.Game.Rulesets.Objects.Types;
 using OpenTK.Graphics;
 using osu.Game.Audio;
 using Symcol.Rulesets.Core.Skinning;
-using osu.Framework.Logging;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -70,22 +69,19 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                 })
             };
 
-            foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+            foreach (SampleInfo info in slider.GetRepeatSamples(0))
             {
                 SymcolSkinnableSound sound;
                 initialCircle.SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
                 initialCircle.Add(sound);
             }
-            slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
 
-            foreach (SampleInfo info in slider.BetterRepeatSamples.First())
+            foreach (SampleInfo info in slider.GetRepeatSamples(1))
             {
                 SymcolSkinnableSound sound;
-                SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, slider.SampleControlPoints.First()));
+                SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
                 Add(sound);
             }
-            slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
-            slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
 
             components.Add(Body);
             components.Add(Ball);
@@ -171,7 +167,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             {
                 currentSpan = span;
                 if (Ball.Tracking)
-                    PlayBetterRepeatSamples();
+                    PlayBetterRepeatSamples(span + 1);
             }
 
             //todo: we probably want to reconsider this before adding scoring, but it looks and feels nice.
@@ -184,24 +180,23 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             foreach (var r in repeatPoints.Children) r.Tracking = Tracking;
         }
 
-        protected void PlayBetterRepeatSamples()
+        protected void PlayBetterRepeatSamples(int repeat)
         {
             PlayBetterSamples();
 
-            if (slider.BetterRepeatSamples.Count > 0)
-            {
-                foreach (SampleInfo info in slider.BetterRepeatSamples.First())
-                {
-                    SymcolSkinnableSound sound;
-                    SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info, slider.SampleControlPoints.Count > 0 ? slider.SampleControlPoints.First() : null));
-                    Add(sound);
-                }
-                slider.BetterRepeatSamples.Remove(slider.BetterRepeatSamples.First());
+            foreach (SymcolSkinnableSound sound in SymcolSkinnableSounds)
+                sound.Delete();
 
-                if (slider.SampleControlPoints.Count > 0)
-                    slider.SampleControlPoints.Remove(slider.SampleControlPoints.First());
-                else
-                    Logger.Log("Expected a SampleControlPoint in DrawableSlider!", LoggingTarget.Runtime, LogLevel.Debug);
+            SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
+
+            foreach (SampleInfo info in slider.GetRepeatSamples(repeat))
+            {
+                SymcolSkinnableSound sound;
+
+                slider.SampleControlPoint = slider.GetSampleControlPoint(repeat);
+
+                SymcolSkinnableSounds.Add(sound = GetSkinnableSound(info));
+                Add(sound);
             }
         }
 
@@ -229,17 +224,17 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
                 if (hitFraction >= 1)
                 {
-                    PlayBetterRepeatSamples();
+                    PlayBetterRepeatSamples(0);
                     AddJudgement(new ClassicJudgement { Result = HitResult.Great });
                 }
                 else if (hitFraction >= 0.5)
                 {
-                    PlayBetterRepeatSamples();
+                    PlayBetterRepeatSamples(0);
                     AddJudgement(new ClassicJudgement { Result = HitResult.Good });
                 }
                 else if (hitFraction > 0 || initialCircle.Judgements.Any(j => j.IsHit) || Ball.Tracking)
                 {
-                    PlayBetterRepeatSamples();
+                    PlayBetterRepeatSamples(0);
                     AddJudgement(new ClassicJudgement { Result = HitResult.Meh });
                 }
                 else

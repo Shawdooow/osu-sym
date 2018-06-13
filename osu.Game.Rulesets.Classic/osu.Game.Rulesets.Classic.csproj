@@ -8,6 +8,7 @@
     <Description>click the classic circles. to the beat.</Description>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\Samples\combobreak.mp3" />
     <None Remove="Assets\Textures\approachcircle%402x.png" />
     <None Remove="Assets\Textures\comboburst%402x.png" />
     <None Remove="Assets\Textures\cursor%402x.png" />
@@ -112,6 +113,7 @@
     <None Remove="Assets\Textures\star2%402x.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Assets\Samples\combobreak.mp3" />
     <EmbeddedResource Include="Assets\Textures\approachcircle@2x.png" />
     <EmbeddedResource Include="Assets\Textures\comboburst@2x.png" />
     <EmbeddedResource Include="Assets\Textures\cursor-smoke@2x.png" />
@@ -219,5 +221,8 @@
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
     <ProjectReference Include="..\Symcol.Core\Symcol.Core.csproj" />
     <ProjectReference Include="..\Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Tracks\" />
   </ItemGroup>
 </Project>

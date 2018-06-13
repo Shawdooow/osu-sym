@@ -9,6 +9,7 @@ using osu.Game.Rulesets.Classic.UI;
 using osu.Game.Rulesets.UI;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Audio;
 using osu.Framework.Graphics;
 using osu.Game.Overlays.Settings;
 using osu.Framework.Input.Bindings;
@@ -97,6 +98,7 @@ namespace osu.Game.Rulesets.Classic
 
         public static ResourceStore<byte[]> ClassicResources;
         public static TextureStore ClassicTextures;
+        public static AudioManager ClassicAudio;
 
         public ClassicRuleset(RulesetInfo rulesetInfo)
             : base(rulesetInfo)
@@ -108,6 +110,16 @@ namespace osu.Game.Rulesets.Classic
                 ClassicResources.AddStore(new DllResourceStore("osu.Game.Rulesets.Classic.dll"));
                 ClassicTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(ClassicResources, @"Textures")));
                 ClassicTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
+
+                var tracks = new ResourceStore<byte[]>(ClassicResources);
+                tracks.AddStore(new NamespacedResourceStore<byte[]>(ClassicResources, @"Tracks"));
+                tracks.AddStore(new OnlineStore());
+
+                var samples = new ResourceStore<byte[]>(ClassicResources);
+                samples.AddStore(new NamespacedResourceStore<byte[]>(ClassicResources, @"Samples"));
+                samples.AddStore(new OnlineStore());
+
+                ClassicAudio = new AudioManager(tracks, samples);
             }
         }
     }

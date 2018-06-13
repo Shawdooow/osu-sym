@@ -104,12 +104,16 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
             else if (ClassicBeatmapConverter.CurrentHitCircle >= hitObject.ID)
             {
-                if(!hitObject.SliderStartCircle)
-                AddJudgement(new ClassicJudgement
+                if (!hitObject.SliderStartCircle)
                 {
-                    Result = HitObject.ScoreResultForOffset(Math.Abs(timeOffset)),
-                    PositionOffset = Vector2.Zero //todo: set to correct value
-                });
+                    AddJudgement(new ClassicJudgement
+                    {
+                        Result = HitObject.ScoreResultForOffset(Math.Abs(timeOffset)),
+                        PositionOffset = Vector2.Zero //todo: set to correct value
+                    });
+                    if (HitObject.ScoreResultForOffset(Math.Abs(timeOffset)) != HitResult.Miss)
+                        PlayBetterSamples();
+                }
                 else if (hitObject.SliderStartCircle)
                 {
                     AddJudgement(new ClassicJudgement
@@ -117,13 +121,11 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                         Result = HitResult.Great,
                         PositionOffset = Vector2.Zero //todo: set to correct value
                     });
+                    PlayBetterSamples();
                 }
-                PlayBetterSamples();
 
                 if (ClassicBeatmapConverter.CurrentHitCircle <= hitObject.ID)
-                {
                     ClassicBeatmapConverter.CurrentHitCircle = hitObject.ID + 1;
-                }
             }
         }
 
