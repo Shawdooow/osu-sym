@@ -1,8 +1,9 @@
-﻿using osu.Game.Graphics;
-using osu.Game.Online.API;
+﻿//using osu.Game.Graphics;
+//using osu.Game.Online.API;
 
 namespace osu.Game.Overlays.Toolbar
 {
+    /*
     public class ToolbarServerSwitcher : ToolbarButton
     {
         private bool symcol;
@@ -30,4 +31,5 @@ namespace osu.Game.Overlays.Toolbar
             TooltipSub = "Swap between osu! and Symcol servers!";
         }
     }
+    */
 }

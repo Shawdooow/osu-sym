@@ -50,8 +50,7 @@ namespace osu.Game.Overlays.Toolbar
                         {
                             Action = () => OnHome?.Invoke()
                         },
-                        new ToolbarModeSelector(),
-                        new ToolbarServerSwitcher(), 
+                        new ToolbarModeSelector()
                     }
                 },
                 new FillFlowContainer
