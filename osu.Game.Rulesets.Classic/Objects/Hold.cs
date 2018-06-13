@@ -48,7 +48,6 @@ namespace osu.Game.Rulesets.Classic.Objects
         public List<List<SampleInfo>> BetterRepeatSamples { get; set; } = new List<List<SampleInfo>>();
 
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
-        public List<List<SampleInfo>> BodySamples { get; }
         public int RepeatCount { get; set; } = 1;
 
         private int stackHeight;

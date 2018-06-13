@@ -6,6 +6,7 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Beatmaps;
 using System;
+using osu.Framework.Audio.Sample;
 using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
 
@@ -41,7 +42,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         #region Slider
         public bool IsSlider { get; set; } = false;
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
-        public List<List<SampleInfo>> BodySamples { get; }
         private const float base_scoring_distance = 100;
         public double Duration => EndTime - StartTime;
         public SliderCurve Curve { get; } = new SliderCurve();

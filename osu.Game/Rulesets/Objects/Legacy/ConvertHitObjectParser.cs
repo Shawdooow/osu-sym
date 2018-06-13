@@ -103,33 +103,12 @@ namespace osu.Game.Rulesets.Objects.Legacy
                     // One node for each repeat + the start and end nodes
                     int nodes = repeatCount + 2;
 
-                    int bodys = repeatCount + 1;
-
                     // Populate node sample bank infos with the default hit object sample bank
                     var nodeBankInfos = new List<SampleBankInfo>();
                     for (int i = 0; i < nodes; i++)
                         nodeBankInfos.Add(bankInfo.Clone());
 
-                    // Populate body sample bank infos with the default hit object sample bank
-                    var bodyBankInfos = new List<SampleBankInfo>();
-                    for (int i = 0; i < bodys; i++)
-                        bodyBankInfos.Add(bankInfo.Clone());
-
                     // Read any per-node sample banks
-                    if (split.Length > 9 && split[9].Length > 0)
-                    {
-                        string[] sets = split[9].Split('|');
-                        for (int i = 0; i < nodes; i++)
-                        {
-                            if (i >= sets.Length)
-                                break;
-
-                            SampleBankInfo info = nodeBankInfos[i];
-                            readCustomSampleBanks(sets[i], info);
-                        }
-                    }
-
-                    // Read any per-body sample banks
                     if (split.Length > 9 && split[9].Length > 0)
                     {
                         string[] sets = split[9].Split('|');
@@ -148,11 +127,6 @@ namespace osu.Game.Rulesets.Objects.Legacy
                     for (int i = 0; i < nodes; i++)
                         nodeSoundTypes.Add(soundType);
 
-                    // Populate body sound types with the default hit object sound type
-                    var bodySoundTypes = new List<LegacySoundType>();
-                    for (int i = 0; i < bodys; i++)
-                        bodySoundTypes.Add(soundType);
-
                     // Read any per-node sound types
                     if (split.Length > 8 && split[8].Length > 0)
                     {
@@ -168,38 +142,12 @@ namespace osu.Game.Rulesets.Objects.Legacy
                         }
                     }
 
-                    // Read any per-body sound types
-                    if (split.Length > 8 && split[10].Length > 0)
-                    {
-                        string[] adds = split[10].Split('|');
-                        for (int i = 0; i < bodys; i++)
-                        {
-                            if (i >= adds.Length)
-                                break;
-
-                            int sound;
-                            int.TryParse(adds[i], out sound);
-                            bodySoundTypes[i] = (LegacySoundType)sound;
-                        }
-                    }
-                    else
-                    {
-                        int sound;
-                        int.TryParse(split[4], out sound);
-                        bodySoundTypes[4] = (LegacySoundType)sound;
-                    }
-
-                    // Generate the final per-repeat samples
-                    var repeatSamples = new List<List<SampleInfo>>(nodes);
+                    // Generate the final per-node samples
+                    var nodeSamples = new List<List<SampleInfo>>(nodes);
                     for (int i = 0; i < nodes; i++)
-                        repeatSamples.Add(convertSoundType(nodeSoundTypes[i], nodeBankInfos[i]));
+                        nodeSamples.Add(convertSoundType(nodeSoundTypes[i], nodeBankInfos[i]));
 
-                    //Generate body samples
-                    var bodySamples = new List<List<SampleInfo>>(bodys);
-                    for (int i = 0; i < bodys; i++)
-                        bodySamples.Add(convertSoundType(bodySoundTypes[i], bodyBankInfos[i]));
-
-                    result = CreateSlider(pos, combo, points, length, curveType, repeatCount, repeatSamples, bodySamples);
+                    result = CreateSlider(pos, combo, points, length, curveType, repeatCount, nodeSamples);
                 }
                 else if ((type & ConvertHitObjectType.Spinner) > 0)
                 {
@@ -284,7 +232,7 @@ namespace osu.Game.Rulesets.Objects.Legacy
         /// <param name="repeatCount">The slider repeat count.</param>
         /// <param name="repeatSamples">The samples to be played when the repeat nodes are hit. This includes the head and tail of the slider.</param>
         /// <returns>The hit object.</returns>
-        protected abstract HitObject CreateSlider(Vector2 position, bool newCombo, List<Vector2> controlPoints, double length, CurveType curveType, int repeatCount, List<List<SampleInfo>> repeatSamples, List<List<SampleInfo>> bodySamples);
+        protected abstract HitObject CreateSlider(Vector2 position, bool newCombo, List<Vector2> controlPoints, double length, CurveType curveType, int repeatCount, List<List<SampleInfo>> repeatSamples);
 
         /// <summary>
         /// Creates a legacy Spinner-type hit object.
@@ -344,26 +292,6 @@ namespace osu.Game.Rulesets.Objects.Legacy
                 });
             }
 
-            if ((type & LegacySoundType.SliderSlide) > 0)
-            {
-                soundTypes.Add(new SampleInfo
-                {
-                    Bank = bankInfo.Add,
-                    Name = SampleInfo.SLIDER_SLIDE,
-                    Volume = bankInfo.Volume
-                });
-            }
-
-            if ((type & LegacySoundType.SliderWhistle) > 0)
-            {
-                soundTypes.Add(new SampleInfo
-                {
-                    Bank = bankInfo.Add,
-                    Name = SampleInfo.SLIDER_WHISTLE,
-                    Volume = bankInfo.Volume
-                });
-            }
-
             return soundTypes;
         }
 
@@ -386,9 +314,7 @@ namespace osu.Game.Rulesets.Objects.Legacy
             Normal = 1,
             Whistle = 2,
             Finish = 4,
-            Clap = 8,
-            SliderSlide = 16,
-            SliderWhistle = 32
+            Clap = 8
         }
     }
 }

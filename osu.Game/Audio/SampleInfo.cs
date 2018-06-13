@@ -13,9 +13,6 @@ namespace osu.Game.Audio
         public const string HIT_NORMAL = @"hitnormal";
         public const string HIT_CLAP = @"hitclap";
 
-        public const string SLIDER_SLIDE = @"sliderslide";
-        public const string SLIDER_WHISTLE = @"sliderwhistle";
-
         /// <summary>
         /// An optional ruleset namespace.
         /// </summary>

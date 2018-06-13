@@ -73,7 +73,6 @@ namespace osu.Game.Rulesets.Classic.Objects
         public List<SampleControlPoint> SampleControlPoints = new List<SampleControlPoint>();
 
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
-        public List<List<SampleInfo>> BodySamples { get; }
         public int RepeatCount { get; set; }
 
         private int stackHeight;

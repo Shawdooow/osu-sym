@@ -27,7 +27,6 @@ namespace osu.Game.Rulesets.Objects.Legacy
         public double Distance { get; set; }
 
         public List<List<SampleInfo>> RepeatSamples { get; set; }
-        public List<List<SampleInfo>> BodySamples { get; set; }
         public int RepeatCount { get; set; }
 
         public double EndTime => StartTime + this.SpanCount() * Distance / Velocity;

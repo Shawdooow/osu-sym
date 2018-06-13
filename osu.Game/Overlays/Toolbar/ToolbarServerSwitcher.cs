@@ -26,8 +26,6 @@ namespace osu.Game.Overlays.Toolbar
             };
 
             Icon = FontAwesome.fa_chevron_circle_up;
-            TooltipMain = "Server Switcher";
-            TooltipSub = "Swap between osu! and Symcol servers!";
         }
     }
 }

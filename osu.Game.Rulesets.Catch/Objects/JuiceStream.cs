@@ -147,7 +147,6 @@ namespace osu.Game.Rulesets.Catch.Objects
         }
 
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
-        public List<List<SampleInfo>> BodySamples { get; }
 
         public CurveType CurveType
         {
