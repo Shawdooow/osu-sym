@@ -1,14 +1,11 @@
 ﻿using osu.Framework.Input;
 using OpenTK;
 using OpenTK.Input;
-using osu.Framework.Graphics.Containers;
 
 namespace Symcol.Core.Graphics.Containers
 {
-    public class SymcolDragContainer : Container
+    public class SymcolDragContainer : SymcolContainer
     {
-        public override bool HandleMouseInput => true;
-
         protected override bool OnDragStart(InputState state) => true;
 
         public bool AllowLeftClickDrag { get; set; } = true;

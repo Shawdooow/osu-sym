@@ -2,7 +2,7 @@
 
 namespace Symcol.Core.Graphics.Containers
 {
-    public class SymcolClickableContainer : ClickableContainer
+    public class SymcolCircularContainer : CircularContainer
     {
         private bool disposed;
 

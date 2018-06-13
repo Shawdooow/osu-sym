@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Mono.Nat;
 using osu.Framework.Logging;
 
-namespace Symcol.Core.Networking
+namespace Symcol.Core.NetworkingV2
 {
     public class NetworkingClient
     {

@@ -1,9 +1,9 @@
-﻿using osu.Framework.Graphics.Containers;
-using osu.Framework.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Logging;
 
-namespace Symcol.Core.Networking
+namespace Symcol.Core.NetworkingV2
 {
     //TODO: This NEEDS its own clock to avoid fuckery later on with modified clock speeds
     public class NetworkingClientHandler : Container

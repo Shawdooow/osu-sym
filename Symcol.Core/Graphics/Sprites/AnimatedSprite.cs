@@ -20,7 +20,12 @@ namespace Symcol.Core.Graphics.Sprites
         public double UpdateRate { get; set; } = 250;
 
         /// <summary>
-        /// Called when we cycle back to the first texture (technically just before it by one line)
+        /// Play animation in reverse when reaching end rather than cycle back to the first frame
+        /// </summary>
+        public bool ReverseOnComplete { get; set; }
+
+        /// <summary>
+        /// Called when we cycle back to the first texture (technically just before it by one line) if !ReverseOnComplete
         /// </summary>
         public Action OnAnimationRestart;
 
@@ -43,29 +48,42 @@ namespace Symcol.Core.Graphics.Sprites
             lastUpdate = Time.Current;
         }
 
+        private bool reversing;
+
         protected override void Update()
         {
             base.Update();
 
             if (lastUpdate + UpdateRate <= Time.Current)
             {
-                bool next = false;
-                foreach (Texture texture in Textures)
+                for (int i = 0; i < Textures.Length; i++)
                 {
-                    if (Texture == texture)
-                        next = true;
-                    else if (next)
+                    if (Texture == Textures[i] && Textures[i] == Textures.Last())
                     {
-                        Texture = texture;
+                        if (!ReverseOnComplete)
+                        {
+                            Texture = Textures.First();
+                            OnAnimationRestart?.Invoke();
+                        }
+                        else
+                        {
+                            Texture = Textures[i - 1];
+                            reversing = true;
+                        }
                         lastUpdate = Time.Current;
                         break;
                     }
 
-                    //If this texture is last better cycle back to the first!
-                    if (Texture == texture && texture == Textures.Last())
+                    if (Texture == Textures[i])
                     {
-                        OnAnimationRestart?.Invoke();
-                        Texture = Textures.First();
+                        if (ReverseOnComplete && Texture != Textures.First() && reversing)
+                            Texture = Textures[i - 1];
+                        else
+                        {
+                            Texture = Textures[i + 1];
+                            reversing = true;
+                        }
+
                         lastUpdate = Time.Current;
                         break;
                     }

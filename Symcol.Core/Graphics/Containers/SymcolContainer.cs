@@ -4,7 +4,7 @@ namespace Symcol.Core.Graphics.Containers
 {
     public class SymcolContainer : Container
     {
-        public override bool HandleMouseInput => false;
+        private bool disposed;
 
         /// <summary>
         /// Delete this fucking object!
@@ -15,6 +15,19 @@ namespace Symcol.Core.Graphics.Containers
                 p.Remove(this);
 
             Dispose();
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            disposed = true;
+            base.Dispose(isDisposing);
+        }
+
+        public override bool UpdateSubTree()
+        {
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if (disposed) return false;
+            return base.UpdateSubTree();
         }
     }
 }

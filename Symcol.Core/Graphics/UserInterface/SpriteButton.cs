@@ -13,8 +13,6 @@ namespace Symcol.Core.Graphics.UserInterface
     /// </summary>
     public class SpriteButton : SymcolClickableContainer
     {
-        public override bool HandleMouseInput => false;
-
         private readonly string textureName;
 
         public string Text
