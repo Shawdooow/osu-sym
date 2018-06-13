@@ -2,9 +2,9 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using osu.Game.Rulesets.Circles.OsuDifficulty.Preprocessing;
+using osu.Game.Rulesets.Classic.ClassicDifficulty.Preprocessing;
 
-namespace osu.Game.Rulesets.Circles.OsuDifficulty.Skills
+namespace osu.Game.Rulesets.Classic.ClassicDifficulty.Skills
 {
     /// <summary>
     /// Represents the skill required to correctly aim at every object in the map with a uniform CircleSize and normalized distances.

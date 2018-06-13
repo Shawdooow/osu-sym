@@ -1,16 +1,14 @@
-﻿using osu.Game.Rulesets.UI;
+﻿using osu.Framework.Input;
+using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Mix.Objects;
 using osu.Game.Rulesets.Mix.Objects.Drawables;
-using osu.Game.Rulesets.Mix.UI;
-using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Mix.Scoring;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
+using osu.Game.Rulesets.UI;
 using OpenTK;
-using osu.Game.Rulesets.Mix.Scoring;
-using osu.Framework.Input;
-using osu.Framework.Graphics;
 
-namespace osu.Game.Rulesets.Mix
+namespace osu.Game.Rulesets.Mix.UI
 {
     internal class MixRulesetContainer : RulesetContainer<MixHitObject>
     {

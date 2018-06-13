@@ -1,15 +1,14 @@
-﻿using osu.Game.Rulesets.UI;
-using osu.Game.Rulesets.Shape.Objects;
-using osu.Game.Rulesets.Shape.Objects.Drawables;
-using osu.Game.Rulesets.Shape.UI;
+﻿using osu.Framework.Input;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
-using OpenTK;
+using osu.Game.Rulesets.Shape.Objects;
+using osu.Game.Rulesets.Shape.Objects.Drawables;
 using osu.Game.Rulesets.Shape.Scoring;
-using osu.Framework.Input;
+using osu.Game.Rulesets.UI;
+using OpenTK;
 
-namespace osu.Game.Rulesets.Shape
+namespace osu.Game.Rulesets.Shape.UI
 {
     internal class ShapeRulesetContainer : RulesetContainer<ShapeHitObject>
     {

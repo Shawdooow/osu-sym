@@ -1,4 +1,7 @@
-﻿namespace Symcol.Core.NetworkingV2
+﻿using Symcol.Core.NetworkingV2.NetworkingClients;
+using Symcol.Core.NetworkingV2.Packets;
+
+namespace Symcol.Core.NetworkingV2
 {
     public class TCPNetworkingClient : NetworkingClient
     {

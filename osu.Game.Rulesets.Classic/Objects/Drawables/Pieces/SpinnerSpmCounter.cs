@@ -8,7 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 
-namespace osu.Game.Rulesets.Circles.Objects.Drawables.Pieces
+namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
 {
     public class SpinnerSpmCounter : Container
     {

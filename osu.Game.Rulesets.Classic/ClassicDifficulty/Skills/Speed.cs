@@ -1,9 +1,9 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Game.Rulesets.Circles.OsuDifficulty.Preprocessing;
+using osu.Game.Rulesets.Classic.ClassicDifficulty.Preprocessing;
 
-namespace osu.Game.Rulesets.Circles.OsuDifficulty.Skills
+namespace osu.Game.Rulesets.Classic.ClassicDifficulty.Skills
 {
     /// <summary>
     /// Represents the skill required to press keys with regards to keeping up with the speed at which objects need to be hit.

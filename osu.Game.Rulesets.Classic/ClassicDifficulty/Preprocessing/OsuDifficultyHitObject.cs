@@ -3,11 +3,10 @@
 
 using System;
 using System.Linq;
-using OpenTK;
 using osu.Game.Rulesets.Classic.Objects;
-using osu.Game.Rulesets.Objects.Types;
+using OpenTK;
 
-namespace osu.Game.Rulesets.Circles.OsuDifficulty.Preprocessing
+namespace osu.Game.Rulesets.Classic.ClassicDifficulty.Preprocessing
 {
     /// <summary>
     /// A wrapper around <see cref="OsuHitObject"/> extending it with additional data required for difficulty calculation.

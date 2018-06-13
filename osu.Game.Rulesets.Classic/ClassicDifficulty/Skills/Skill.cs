@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using osu.Game.Rulesets.Circles.OsuDifficulty.Preprocessing;
-using osu.Game.Rulesets.Circles.OsuDifficulty.Utils;
+using osu.Game.Rulesets.Classic.ClassicDifficulty.Preprocessing;
+using osu.Game.Rulesets.Classic.ClassicDifficulty.Utils;
 using osu.Game.Rulesets.Classic.Objects;
 
-namespace osu.Game.Rulesets.Circles.OsuDifficulty.Skills
+namespace osu.Game.Rulesets.Classic.ClassicDifficulty.Skills
 {
     /// <summary>
     /// Used to processes strain values of <see cref="OsuDifficultyHitObject"/>s, keep track of strain levels caused by the processed objects

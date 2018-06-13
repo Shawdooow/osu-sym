@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Platform;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
+using osu.Game.Rulesets.Vitaru.Objects;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.Settings;
+using osu.Game.Rulesets.Vitaru.UI;
 using osu.Game.Tests.Beatmaps;
 using osu.Game.Tests.Visual;
 using OpenTK;
-using osu.Game.Rulesets.Vitaru.UI;
-using osu.Game.Rulesets.Vitaru;
-using osu.Game.Rulesets.Vitaru.Objects;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables;
-using osu.Framework.Platform;
-using osu.Game.Rulesets.Vitaru.Settings;
 
-namespace osu.Game.Rulesets.Taiko.Tests
+namespace osu.Game.Rulesets.Vitaru.Tests
 {
     [TestFixture]
     public class TestCaseVitaruPlayfield : OsuTestCase

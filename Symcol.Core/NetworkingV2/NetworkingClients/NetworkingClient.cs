@@ -3,8 +3,9 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using Mono.Nat;
+using Symcol.Core.NetworkingV2.Packets;
 
-namespace Symcol.Core.NetworkingV2
+namespace Symcol.Core.NetworkingV2.NetworkingClients
 {
     public abstract class NetworkingClient : IDisposable
     {

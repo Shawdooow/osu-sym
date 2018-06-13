@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace osu.Game.Rulesets.Circles.OsuDifficulty.Utils
+namespace osu.Game.Rulesets.Classic.ClassicDifficulty.Utils
 {
     /// <summary>
     /// An indexed stack with Push() only, which disposes items at the bottom after the capacity is full.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Symcol.Core.NetworkingV2
+namespace Symcol.Core.NetworkingV2.Packets
 {
     [Serializable]
     public class Packet

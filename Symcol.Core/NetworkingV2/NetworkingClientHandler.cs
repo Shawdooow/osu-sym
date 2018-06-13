@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Symcol.Core.Graphics.Containers;
+using Symcol.Core.NetworkingV2.NetworkingClients;
+using Symcol.Core.NetworkingV2.Packets;
 
 namespace Symcol.Core.NetworkingV2
 {

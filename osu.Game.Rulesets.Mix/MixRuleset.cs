@@ -12,6 +12,7 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Mix.Settings;
 using osu.Game.Rulesets.Mix.Beatmaps;
 using osu.Game.Rulesets.Difficulty;
+using osu.Game.Rulesets.Mix.UI;
 
 namespace osu.Game.Rulesets.Mix
 {

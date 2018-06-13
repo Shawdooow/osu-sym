@@ -1,11 +1,11 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Game.Rulesets.Classic.Objects;
 using System.Collections;
 using System.Collections.Generic;
+using osu.Game.Rulesets.Classic.Objects;
 
-namespace osu.Game.Rulesets.Circles.OsuDifficulty.Preprocessing
+namespace osu.Game.Rulesets.Classic.ClassicDifficulty.Preprocessing
 {
     /// <summary>
     /// An enumerable container wrapping <see cref="OsuHitObject"/> input as <see cref="OsuDifficultyHitObject"/>

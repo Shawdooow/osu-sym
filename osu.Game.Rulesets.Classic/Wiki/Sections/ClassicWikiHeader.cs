@@ -2,7 +2,7 @@
 using osu.Game.Users;
 using Symcol.Rulesets.Core.Wiki;
 
-namespace osu.Game.Rulesets.Classic.Wiki
+namespace osu.Game.Rulesets.Classic.Wiki.Sections
 {
     public class ClassicWikiHeader : WikiHeader
     {

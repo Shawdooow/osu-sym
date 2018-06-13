@@ -13,6 +13,7 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Shape.Settings;
 using osu.Game.Rulesets.Shape.Beatmaps;
 using osu.Game.Rulesets.Difficulty;
+using osu.Game.Rulesets.Shape.UI;
 
 namespace osu.Game.Rulesets.Shape
 {

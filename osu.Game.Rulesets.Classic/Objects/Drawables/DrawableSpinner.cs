@@ -13,7 +13,6 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Classic.Judgements;
 using osu.Game.Screens.Ranking;
-using osu.Game.Rulesets.Circles.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Scoring;
 using Symcol.Rulesets.Core.Skinning;
 using osu.Game.Audio;
