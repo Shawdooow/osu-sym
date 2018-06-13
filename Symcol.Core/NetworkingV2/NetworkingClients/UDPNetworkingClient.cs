@@ -11,6 +11,8 @@ namespace Symcol.Core.NetworkingV2.NetworkingClients
 
         public Mapping CurrentMapping { get; private set; }
 
+        public override int Avalable => UdpClient.Available;
+
         /// <summary>
         /// if false we only receive
         /// </summary>

@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using Mono.Nat;
+using osu.Framework.Logging;
 using Symcol.Core.NetworkingV2.Packets;
 // ReSharper disable InconsistentNaming
 
@@ -12,6 +13,8 @@ namespace Symcol.Core.NetworkingV2.NetworkingClients
     {
         public IPEndPoint EndPoint;
 
+        public abstract int Avalable { get; }
+
         /// <summary>
         /// Called when the address is changed
         /// </summary>
@@ -19,7 +22,7 @@ namespace Symcol.Core.NetworkingV2.NetworkingClients
 
         public string Address
         {
-            get => IP + Port;
+            get => IP + ":" + Port;
             set
             {
                 string[] split = value.Split(':');
@@ -108,6 +111,7 @@ namespace Symcol.Core.NetworkingV2.NetworkingClients
                 catch
                 {
                     i *= 2;
+                    Logger.Log("Warning: Packet being sent is larger than its predefined size of (" + packet.PacketSize + "  bytes) and is being resized to (" + i + " bytes)", LoggingTarget.Network, LogLevel.Error);
                     goto retry;
                 }
 
