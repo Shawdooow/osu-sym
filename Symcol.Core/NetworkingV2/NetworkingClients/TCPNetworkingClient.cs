@@ -5,6 +5,8 @@ namespace Symcol.Core.NetworkingV2
 {
     public class TCPNetworkingClient : NetworkingClient
     {
+        public override int Avalable { get; }
+
         public override void SendPacket(Packet packet)
         {
             throw new System.NotImplementedException();
