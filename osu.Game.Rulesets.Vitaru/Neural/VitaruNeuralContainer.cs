@@ -1,4 +1,6 @@
-﻿using osu.Framework.Configuration;
+﻿using System.Collections.Generic;
+using osu.Framework.Configuration;
+using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
@@ -10,7 +12,7 @@ namespace osu.Game.Rulesets.Vitaru.Neural
     {
         public override TensorFlowBrain<VitaruAction> TensorFlowBrain => vitaruNeuralBrain;
 
-        public override VitaruAction[] GetActiveActions => new VitaruAction[]
+        public override VitaruAction[] GetActiveActions => new[]
         {
             VitaruAction.Up,
             VitaruAction.Down,
@@ -35,5 +37,7 @@ namespace osu.Game.Rulesets.Vitaru.Neural
             };
             bindable.TriggerChange();
         }
+
+        //public override IEnumerable<KeyBinding> DefaultKeyBindings { get; }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using OpenTK;
 using osu.Framework.Input.Bindings;
 using System;
+using osu.Framework.Graphics.Containers;
 
 namespace Symcol.Core.NeuralNetworking
 {
-    public abstract class NeuralInputContainer<T> : KeyBindingContainer<T>, IKeyBindingHandler<T>
+    public abstract class NeuralInputContainer<T> : Container, IKeyBindingHandler<T>
         where T : struct, IConvertible
     {
         public abstract TensorFlowBrain<T> TensorFlowBrain { get; }
@@ -14,7 +15,7 @@ namespace Symcol.Core.NeuralNetworking
         /// </summary>
         public abstract T[] GetActiveActions { get; }
 
-        protected NeuralInputContainer(SimultaneousBindingMode bindingMode = SimultaneousBindingMode.Unique) : base(bindingMode)
+        protected NeuralInputContainer(SimultaneousBindingMode bindingMode = SimultaneousBindingMode.Unique) : base()
         {
         }
 
