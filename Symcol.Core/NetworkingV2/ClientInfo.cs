@@ -16,7 +16,7 @@
         /// </summary>
         public double Ping;
 
-        public int ConncetionTryCount;
+        public int ConnectionTryCount;
 
         public double LastConnectionTime;
     }

@@ -246,7 +246,7 @@ namespace Symcol.Core.NetworkingV2
             switch (packet)
             {
                 case ConnectPacket connectPacket:
-                    ConnectingClients.Add(GetConnectingClientInfo(connectPacket));
+                    ConnectingClients.Add(GenerateConnectingClientInfo(connectPacket));
                     break;
                 case DisconnectPacket disconnectPacket:
                     ClientDisconnecting(disconnectPacket);
@@ -274,13 +274,13 @@ namespace Symcol.Core.NetworkingV2
         {
             foreach (ClientInfo client in ConnectingClients)
             {
-                if (client.LastConnectionTime + TimeOutTime / 10 <= Time.Current && client.ConncetionTryCount == 0)
+                if (client.LastConnectionTime + TimeOutTime / 10 <= Time.Current && client.ConnectionTryCount == 0)
                     TestConnection(client);
 
-                if (client.LastConnectionTime + TimeOutTime / 6 <= Time.Current && client.ConncetionTryCount == 1)
+                if (client.LastConnectionTime + TimeOutTime / 6 <= Time.Current && client.ConnectionTryCount == 1)
                     TestConnection(client);
 
-                if (client.LastConnectionTime + TimeOutTime / 3 <= Time.Current && client.ConncetionTryCount == 2)
+                if (client.LastConnectionTime + TimeOutTime / 3 <= Time.Current && client.ConnectionTryCount == 2)
                     TestConnection(client);
 
                 if (client.LastConnectionTime + TimeOutTime <= Time.Current)
@@ -293,13 +293,13 @@ namespace Symcol.Core.NetworkingV2
 
             foreach (ClientInfo client in ConnectedClients)
             {
-                if (client.LastConnectionTime + TimeOutTime / 6 <= Time.Current && client.ConncetionTryCount == 0)
+                if (client.LastConnectionTime + TimeOutTime / 6 <= Time.Current && client.ConnectionTryCount == 0)
                     TestConnection(client);
 
-                if (client.LastConnectionTime + TimeOutTime / 3 <= Time.Current && client.ConncetionTryCount == 1)
+                if (client.LastConnectionTime + TimeOutTime / 3 <= Time.Current && client.ConnectionTryCount == 1)
                     TestConnection(client);
 
-                if (client.LastConnectionTime + TimeOutTime / 2 <= Time.Current && client.ConncetionTryCount == 2)
+                if (client.LastConnectionTime + TimeOutTime / 2 <= Time.Current && client.ConnectionTryCount == 2)
                     TestConnection(client);
 
                 if (client.LastConnectionTime + TimeOutTime <= Time.Current)
@@ -378,7 +378,23 @@ namespace Symcol.Core.NetworkingV2
             return packet;
         }
 
-        protected ClientInfo GetConnectingClientInfo(ConnectPacket packet)
+        protected ClientInfo GetConnectingClientInfo(Packet packet)
+        {
+            foreach (ClientInfo info in ConnectingClients)
+                if (info.Address == packet.Address)
+                    return info;
+            return null;
+        }
+
+        protected ClientInfo GetConnectedClientInfo(Packet packet)
+        {
+            foreach (ClientInfo info in ConnectedClients)
+                if (info.Address == packet.Address)
+                    return info;
+            return null;
+        }
+
+        protected ClientInfo GenerateConnectingClientInfo(ConnectPacket packet)
         {
             string[] split = packet.Address.Split(':');
 
@@ -415,6 +431,7 @@ namespace Symcol.Core.NetworkingV2
 
         protected virtual void TestConnection(ClientInfo info)
         {
+            info.ConnectionTryCount++;
             NetworkingClient client = GetNetworkingClient(info);
             client.SendPacket(new TestPacket());
         }
