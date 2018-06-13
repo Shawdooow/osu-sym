@@ -58,6 +58,7 @@ namespace osu.Game.Rulesets.Osu.Objects
         internal float LazyTravelDistance;
 
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
+        public List<List<SampleInfo>> BodySamples { get; }
         public int RepeatCount { get; set; }
 
         /// <summary>

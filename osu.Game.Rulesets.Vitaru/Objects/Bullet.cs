@@ -101,6 +101,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         private SliderType sliderType;
 
         public List<List<SampleInfo>> RepeatSamples { get; set; } = new List<List<SampleInfo>>();
+        public List<List<SampleInfo>> BodySamples { get; }
         public bool IsSlider { get; set; } = false;
         private const float base_scoring_distance = 100;
         public double Duration => EndTime - StartTime;
