@@ -13,6 +13,7 @@ using osu.Framework.Logging;
 #endif
 using osu.Framework.Platform;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
+using Symcol.Rulesets.Core.Multiplayer.Screens;
 
 namespace Symcol.Rulesets.Core.Rulesets
 {
@@ -23,7 +24,8 @@ namespace Symcol.Rulesets.Core.Rulesets
         public virtual RulesetLobbyItem RulesetLobbyItem => null;
 
 #if SymcolMods
-        public static RulesetMultiplayerSelection RulesetMultiplayerSelection;
+        public static RulesetMultiplayerSelection LegacyRulesetMultiplayerSelection;
+        public static Lobby Lobby;
 #endif
 
         public static SymcolConfigManager SymcolConfigManager;
@@ -36,10 +38,14 @@ namespace Symcol.Rulesets.Core.Rulesets
                 if (RulesetLobbyItem != null)
                     RulesetMultiplayerSelection.LobbyItems.Add(RulesetLobbyItem);
 
-                if (RulesetMultiplayerSelection == null)
-                    RulesetMultiplayerSelection = new RulesetMultiplayerSelection();
+                if (LegacyRulesetMultiplayerSelection == null)
+                    LegacyRulesetMultiplayerSelection = new RulesetMultiplayerSelection();
 
-                SymcolMenu.RulesetMultiplayerScreen = RulesetMultiplayerSelection;
+            if (Lobby == null)
+                Lobby = new Lobby();
+
+            SymcolMenu.LegacyRulesetMultiplayerScreen = LegacyRulesetMultiplayerSelection;
+            SymcolMenu.Lobby = Lobby;
 #else
             Logger.Log("osu.Game mods not installed! Online Multiplayer will not be avalible without them. . .", LoggingTarget.Information, LogLevel.Important);
 #endif

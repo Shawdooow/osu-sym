@@ -13,6 +13,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Multiplayer\Networking\" />
-    <Folder Include="Multiplayer\Screens\" />
   </ItemGroup>
 </Project>

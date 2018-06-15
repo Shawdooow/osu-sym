@@ -3,16 +3,10 @@ using OpenTK.Graphics;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
-using osu.Game.Beatmaps;
-using osu.Game.Screens.Backgrounds;
 using osu.Game.Screens.Menu;
 using osu.Game.Screens.Symcol.Pieces;
 using osu.Game.Screens.Symcol.Screens;
-using osu.Framework.Configuration;
 using osu.Game.Screens.Symcol.Screens.Shawdooow;
-using osu.Framework.Allocation;
-using osu.Framework.IO.Stores;
-using osu.Framework.Graphics.Textures;
 using osu.Game.Screens.Symcol.CasterBible;
 using osu.Game.Graphics;
 using osu.Game.Screens.Evast;
@@ -26,24 +20,11 @@ namespace osu.Game.Screens.Symcol
 
         protected override float BackgroundBlur => 10;
 
-        public static OsuScreen RulesetMultiplayerScreen;
-
-        public static ResourceStore<byte[]> SymcolResources;
-        public static TextureStore SymcolTextures;
-
-        public static Bindable<bool> AllowConverts = new Bindable<bool> { Value = true };
+        public static OsuScreen LegacyRulesetMultiplayerScreen;
+        public static OsuScreen Lobby;
 
         private readonly OsuLogo logo;
         private readonly Container<SymcolButton> buttonsContainer;
-
-        public static void LoadSymcolAssets()
-        {
-            SymcolResources = new ResourceStore<byte[]>();
-            SymcolResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Game.Symcol.Resources.dll"), ("Assets")));
-            SymcolResources.AddStore(new DllResourceStore("osu.Game.Symcol.Resources.dll"));
-            SymcolTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Textures")));
-            SymcolTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
-        }
 
         public SymcolMenu()
         {
@@ -132,13 +113,24 @@ namespace osu.Game.Screens.Symcol
                         */
                         new SymcolButton
                         {
+                            ButtonName = "Legacy MP",
+                            Origin = Anchor.Centre,
+                            Anchor = Anchor.Centre,
+                            ButtonColorTop = OsuColour.FromHex("#d8d8d8"),
+                            ButtonColorBottom = OsuColour.FromHex("#3a3a3a"),
+                            ButtonSize = 60,
+                            Action = delegate { Push(LegacyRulesetMultiplayerScreen); },
+                            ButtonPosition = new Vector2(280 , -180),
+                        },
+                        new SymcolButton
+                        {
                             ButtonName = "Multi",
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
-                            ButtonColorTop = Color4.Blue,
-                            ButtonColorBottom = Color4.Red,
+                            ButtonColorTop = Color4.LimeGreen,
+                            ButtonColorBottom = Color4.Yellow,
                             ButtonSize = 120,
-                            Action = delegate { Push(RulesetMultiplayerScreen); },
+                            Action = delegate { Push(Lobby); },
                             ButtonPosition = new Vector2(180 , -100),
                         },
                         new SymcolButton

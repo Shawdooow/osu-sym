@@ -13,6 +13,7 @@ using osu.Game.Screens.Evast;
 using osu.Game.Screens.Symcol;
 using OpenTK;
 using OpenTK.Graphics;
+using Symcol.Rulesets.Core.Multiplayer.Screens;
 using Symcol.Rulesets.Core.Rulesets;
 #if SymcolMods
 #endif
@@ -48,9 +49,11 @@ namespace Symcol.Rulesets.Core.LegacyMultiplayer.Screens
             Remove(LobbyItems);
 
 #if SymcolMods
-            SymcolSettingsSubsection.RulesetMultiplayerSelection = new RulesetMultiplayerSelection();
+            SymcolSettingsSubsection.LegacyRulesetMultiplayerSelection = new RulesetMultiplayerSelection();
+            SymcolSettingsSubsection.Lobby = new Lobby();
 
-            SymcolMenu.RulesetMultiplayerScreen = SymcolSettingsSubsection.RulesetMultiplayerSelection;
+            SymcolMenu.LegacyRulesetMultiplayerScreen = SymcolSettingsSubsection.LegacyRulesetMultiplayerSelection;
+            SymcolMenu.Lobby = SymcolSettingsSubsection.Lobby;
 #endif
 
             return base.OnExiting(next);
