@@ -14,7 +14,6 @@ using osu.Game.Screens.Symcol.Screens;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Screens.KoziLord;
-using osu.Game.Screens.KoziLord.EvastModded.MusicPlayer;
 using osu.Game.Screens.Evast;
 using osu.Game.Graphics.Containers;
 using osu.Framework.Allocation;
@@ -22,6 +21,7 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Graphics;
 using System;
+using osu.Game.Screens.KoziLord.EvastModded.MusicPlayers;
 
 namespace osu.Game.Screens.KoziLord
 {

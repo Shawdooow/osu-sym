@@ -8,8 +8,8 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Classic.Wiki;
 using Symcol.Rulesets.Core.Wiki;
 using Symcol.Rulesets.Core.Rulesets;
-using Symcol.Rulesets.Core.Multiplayer.Screens;
 using osu.Game.Rulesets.Classic.Multi;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 
 namespace osu.Game.Rulesets.Classic.Settings
 {

@@ -2,15 +2,15 @@
 using osu.Framework.Configuration;
 using osu.Game.Online.API;
 using osu.Game.Rulesets.Vitaru.Settings;
-using Symcol.Core.Networking;
-using Symcol.Rulesets.Core.Multiplayer.Networking;
+using Symcol.Core.LegacyNetworking;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Networking;
 using Symcol.Rulesets.Core.Rulesets;
 
 namespace osu.Game.Rulesets.Vitaru.Multi
 {
     public class VitaruNetworkingClientHandler : RulesetNetworkingClientHandler, IOnlineComponent
     {
-        private Bindable<string> selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+        private readonly Bindable<string> selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
         public readonly VitaruClientInfo VitaruClientInfo;
 

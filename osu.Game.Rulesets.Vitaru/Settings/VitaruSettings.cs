@@ -7,7 +7,6 @@ using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Overlays.Settings;
 using Symcol.Rulesets.Core.Wiki;
 using osu.Game.Rulesets.Vitaru.Wiki;
-using Symcol.Rulesets.Core.Multiplayer.Screens;
 using Symcol.Rulesets.Core.Rulesets;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ using Symcol.Core.Extentions;
 using System.Linq;
 using osu.Game.Rulesets.Vitaru.Debug;
 using Symcol.Core.NeuralNetworking;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {

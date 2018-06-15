@@ -4,12 +4,12 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
-using Symcol.Core.Networking;
-using Symcol.Rulesets.Core.Multiplayer.Options;
-using Symcol.Rulesets.Core.Multiplayer.Pieces;
-using Symcol.Rulesets.Core.Multiplayer.Screens;
 using Symcol.Rulesets.Core.Rulesets;
 using System.Collections.Generic;
+using Symcol.Core.LegacyNetworking;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Options;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Pieces;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 
 namespace osu.Game.Rulesets.Vitaru.Multi
 {

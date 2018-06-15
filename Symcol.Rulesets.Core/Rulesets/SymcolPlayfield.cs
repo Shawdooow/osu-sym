@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 using osu.Game.Rulesets.UI;
-using Symcol.Rulesets.Core.Multiplayer.Networking;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Networking;
 
 namespace Symcol.Rulesets.Core.Rulesets
 {

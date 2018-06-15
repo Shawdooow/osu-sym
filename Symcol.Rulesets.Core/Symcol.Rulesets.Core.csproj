@@ -11,4 +11,8 @@
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
     <ProjectReference Include="..\Symcol.Core\Symcol.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Multiplayer\Networking\" />
+    <Folder Include="Multiplayer\Screens\" />
+  </ItemGroup>
 </Project>

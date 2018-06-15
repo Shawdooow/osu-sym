@@ -4,8 +4,8 @@ using osu.Framework.Platform;
 using osu.Game.Overlays.Settings;
 using Symcol.Rulesets.Core.Wiki;
 using osu.Game.Rulesets.Mix.Wiki;
-using Symcol.Rulesets.Core.Multiplayer.Screens;
 using osu.Game.Rulesets.Mix.Multi;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 using Symcol.Rulesets.Core.Rulesets;
 
 namespace osu.Game.Rulesets.Mix.Settings

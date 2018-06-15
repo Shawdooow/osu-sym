@@ -16,10 +16,10 @@ using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
-using Symcol.Core.Networking;
 using Symcol.Core.NeuralNetworking;
 using System;
 using System.Collections.Generic;
+using Symcol.Core.LegacyNetworking;
 using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers

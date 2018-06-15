@@ -1,5 +1,5 @@
-﻿using Symcol.Rulesets.Core.Multiplayer.Networking;
-using System;
+﻿using System;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Networking;
 
 namespace osu.Game.Rulesets.Vitaru.Multi
 {

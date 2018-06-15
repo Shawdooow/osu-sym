@@ -1,7 +1,7 @@
-﻿using Symcol.Core.Networking;
-using Symcol.Rulesets.Core.Multiplayer.Screens;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Symcol.Core.LegacyNetworking;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 
 namespace osu.Game.Rulesets.Vitaru.Multi
 {

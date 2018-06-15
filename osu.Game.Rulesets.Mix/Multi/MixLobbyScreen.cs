@@ -1,4 +1,4 @@
-﻿using Symcol.Rulesets.Core.Multiplayer.Screens;
+﻿using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 
 namespace osu.Game.Rulesets.Mix.Multi
 {

@@ -1,5 +1,5 @@
-﻿using Symcol.Core.Networking;
-using System;
+﻿using System;
+using Symcol.Core.LegacyNetworking;
 
 namespace osu.Game.Rulesets.Vitaru.Multi
 {

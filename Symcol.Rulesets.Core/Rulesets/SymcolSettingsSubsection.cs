@@ -11,8 +11,8 @@ using osu.Game.Screens.Symcol;
 #else
 using osu.Framework.Logging;
 #endif
-using Symcol.Rulesets.Core.Multiplayer.Screens;
 using osu.Framework.Platform;
+using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 
 namespace Symcol.Rulesets.Core.Rulesets
 {

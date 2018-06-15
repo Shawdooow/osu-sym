@@ -1,33 +1,7 @@
-﻿using OpenTK;
-using osu.Framework.Graphics;
-using System.Collections.Generic;
-using OpenTK.Graphics;
-using System;
-using osu.Framework.Audio.Track;
-using osu.Framework.Graphics.Textures;
-using osu.Game.Rulesets.Vitaru.Settings;
-using osu.Game.Rulesets.Vitaru.Scoring;
-using osu.Framework.Audio;
-using osu.Game.Rulesets.Vitaru.UI;
-using osu.Framework.Timing;
-using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
-using osu.Framework.Allocation;
-using osu.Framework.Configuration;
-using osu.Framework.MathUtils;
-using osu.Game.Beatmaps;
-using osu.Game.Beatmaps.ControlPoints;
-using osu.Framework.Input.Bindings;
-using osu.Game.Graphics.Containers;
-using osu.Framework.Platform;
-using osu.Game.Rulesets.Vitaru.Multi;
-using Symcol.Core.Networking;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
-//using Vitaru.Plot.Story;
+﻿//using Vitaru.Plot.Story;
 //using Vitaru.Plot.Story.CharacterSpeech;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 
-namespace osu.Game.Rulesets.Vitaru.Old.Shit
+namespace osu.Game.Rulesets.Vitaru.Characters
 {
     /*
     public class OldVitaruPlayerClass : Character, IKeyBindingHandler<VitaruAction>
