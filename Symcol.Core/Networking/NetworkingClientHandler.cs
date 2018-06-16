@@ -15,6 +15,8 @@ namespace Symcol.Core.Networking
         //30 Seconds by default
         protected virtual double TimeOutTime => 30000;
 
+        protected virtual string GameID => "";
+
         protected NetworkingClient ReceiveClient;
 
         /// <summary>
@@ -197,7 +199,8 @@ namespace Symcol.Core.Networking
                 {
                     Address = address,
                     IP = ip,
-                    Port = port
+                    Port = port,
+                    GameID = GameID
                 };
 
                 if (ReceiveClient != null)
@@ -223,6 +226,7 @@ namespace Symcol.Core.Networking
                         break;
                 }
             };
+            OnClientTypeChange?.Invoke(clientType);
         }
 
         #region Update Loop
@@ -347,7 +351,7 @@ namespace Symcol.Core.Networking
         protected List<Packet> ReceivePackets()
         {
             List<Packet> packets = new List<Packet>();
-            for (int i = 0; i < ReceiveClient.Avalable; i++)
+            for (int i = 0; i < ReceiveClient?.Avalable; i++)
                 packets.Add(ReceiveClient.GetPacket());
             return packets;
         }
@@ -374,10 +378,17 @@ namespace Symcol.Core.Networking
         /// <returns></returns>
         protected virtual Packet SignPacket(Packet packet)
         {
+            if (packet is ConnectPacket c)
+                c.GameID = ClientInfo.GameID;
             packet.Address = ReceiveClient.Address;
             return packet;
         }
 
+        /// <summary>
+        /// Get a matching client info from currently connecting clients
+        /// </summary>
+        /// <param name="packet"></param>
+        /// <returns></returns>
         protected ClientInfo GetConnectingClientInfo(Packet packet)
         {
             foreach (ClientInfo info in ConnectingClients)
@@ -386,6 +397,11 @@ namespace Symcol.Core.Networking
             return null;
         }
 
+        /// <summary>
+        /// Get a matching client info from currently connected clients
+        /// </summary>
+        /// <param name="packet"></param>
+        /// <returns></returns>
         protected ClientInfo GetConnectedClientInfo(Packet packet)
         {
             foreach (ClientInfo info in ConnectedClients)
@@ -394,6 +410,11 @@ namespace Symcol.Core.Networking
             return null;
         }
 
+        /// <summary>
+        /// Takes a ConnectPacket and creates a ClientInfo for the connecting client
+        /// </summary>
+        /// <param name="packet"></param>
+        /// <returns></returns>
         protected ClientInfo GenerateConnectingClientInfo(ConnectPacket packet)
         {
             string[] split = packet.Address.Split(':');
@@ -406,10 +427,15 @@ namespace Symcol.Core.Networking
                 Address = packet.Address,
                 IP = i,
                 Port = p,
-                LastConnectionTime = Time.Current
+                LastConnectionTime = Time.Current,
+                GameID = packet.GameID
             };
         }
 
+        /// <summary>
+        /// Called to remove a client that is disconnecting
+        /// </summary>
+        /// <param name="packet"></param>
         protected void ClientDisconnecting(DisconnectPacket packet)
         {
             foreach (ClientInfo client in ConnectedClients)
@@ -429,6 +455,10 @@ namespace Symcol.Core.Networking
                 }
         }
 
+        /// <summary>
+        /// Test a clients connection
+        /// </summary>
+        /// <param name="info"></param>
         protected virtual void TestConnection(ClientInfo info)
         {
             info.ConnectionTryCount++;
@@ -488,6 +518,12 @@ namespace Symcol.Core.Networking
 
         #endregion
 
+        protected override void Dispose(bool isDisposing)
+        {
+            //TODO: is this neccesary?
+            //ReceiveClient?.Dispose();
+            base.Dispose(isDisposing);
+        }
     }
 
     public enum ClientType

@@ -11,6 +11,8 @@
 
         public int Port;
 
+        public string GameID;
+
         /// <summary>
         /// Last successful ping to this client
         /// </summary>
