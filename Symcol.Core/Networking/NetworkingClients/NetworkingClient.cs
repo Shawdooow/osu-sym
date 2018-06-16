@@ -137,7 +137,7 @@ namespace Symcol.Core.Networking.NetworkingClients
                 if (formatter.Deserialize(stream) is Packet packet)
                 {
                     //TODO: not this, each client should send the packet with this information somehow
-                    packet.Address = EndPoint.Address.ToString() + EndPoint.Port.ToString();
+                    packet.Address = EndPoint.Address.ToString() + ":" + EndPoint.Port.ToString();
                     return packet;
                 }
 

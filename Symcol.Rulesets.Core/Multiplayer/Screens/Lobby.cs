@@ -15,7 +15,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
             client.ServerInfo = new ClientInfo
             {
                 IP = "10.0.0.25",
-                Port = 25570
+                Port = 25571
             };
             Child = client;
             client.Connect();
