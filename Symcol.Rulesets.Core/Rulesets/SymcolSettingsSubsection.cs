@@ -12,12 +12,13 @@ using osu.Game.Screens.Symcol;
 using osu.Framework.Logging;
 #endif
 using osu.Framework.Platform;
+using osu.Game.Rulesets;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 using Symcol.Rulesets.Core.Multiplayer.Screens;
 
 namespace Symcol.Rulesets.Core.Rulesets
 {
-    public abstract class SymcolSettingsSubsection : SettingsSubsection
+    public abstract class SymcolSettingsSubsection : RulesetSettingsSubsection
     {
         public virtual WikiOverlay Wiki => null;
 
@@ -32,7 +33,8 @@ namespace Symcol.Rulesets.Core.Rulesets
 
         private OsuGame osu;
 
-        public SymcolSettingsSubsection()
+        protected SymcolSettingsSubsection(Ruleset ruleset)
+            : base(ruleset)
         {
 #if SymcolMods
                 if (RulesetLobbyItem != null)
