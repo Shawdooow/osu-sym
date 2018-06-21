@@ -106,8 +106,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
             var texture = new Texture(textureWidth, 1);
 
             //initialise background
-            var upload = new TextureUpload(textureWidth * 4);
-            var bytes = upload.Data;
+            var raw = new RawTexture(textureWidth, 1);
+            var bytes = raw.Data;
 
             const float aa_portion = 0.02f;
             const float border_portion = 0.128f;
@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                 }
             }
 
-            texture.SetData(upload);
+            texture.SetData(new TextureUpload(raw));
             path.Texture = texture;
         }
 

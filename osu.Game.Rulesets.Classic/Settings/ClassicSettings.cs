@@ -88,5 +88,10 @@ namespace osu.Game.Rulesets.Classic.Settings
             }
             catch { }
         }
+
+        public ClassicSettings(Ruleset ruleset)
+            : base(ruleset)
+        {
+        }
     }
 }

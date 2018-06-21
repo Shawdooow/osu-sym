@@ -135,7 +135,7 @@ namespace osu.Game.Screens.Symcol.Screens
                     ButtonSize = 50,
                     Action = () => changeClockSpeeds(1f),
                     Position = new Vector2(0 , 250),
-                    Bind = Key.V
+                    Bind = Key.N
                 },
                 new SymcolButton
                 {
@@ -148,7 +148,7 @@ namespace osu.Game.Screens.Symcol.Screens
                     ButtonSize = 50,
                     Action = () => changeClockSpeeds(1.5f),
                     Position = new Vector2(200 , 250),
-                    Bind = Key.B
+                    Bind = Key.M
                 },
                 new SymcolButton
                 {
@@ -161,14 +161,9 @@ namespace osu.Game.Screens.Symcol.Screens
                     ButtonSize = 50,
                     Action = () => changeClockSpeeds(0.75f),
                     Position = new Vector2(-200, 250),
-                    Bind = Key.C
+                    Bind = Key.B
                 },
             };
-        }
-
-        private void evastBackground()
-        {
-            
         }
 
         protected override void Update()
@@ -217,12 +212,11 @@ namespace osu.Game.Screens.Symcol.Screens
 
         private void applyRateAdjustments()
         {
-            if (Beatmap.Value.Track == null) return;
-            else
-                ApplyToClock(Beatmap.Value.Track);
+            if (Beatmap.Value.Track != null)
+                applyToClock(Beatmap.Value.Track);
         }
 
-        private void ApplyToClock(IAdjustableClock clock)
+        private void applyToClock(IAdjustableClock clock)
         {
             var pitchAdjust = clock as IHasPitchAdjust;
             if (pitchAdjust != null)
