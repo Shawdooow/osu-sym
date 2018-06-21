@@ -21,6 +21,7 @@
   </PropertyGroup>
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\osu.Game.Rulesets.Classic\osu.Game.Rulesets.Classic.csproj" />
+    <ProjectReference Include="..\osu.Game.Rulesets.Mix\osu.Game.Rulesets.Mix.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Shape\osu.Game.Rulesets.Shape.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj" />
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />

@@ -21,8 +21,12 @@ namespace osu.Game.Rulesets.Mix
         public const string RulesetVersion = "0.1.0";
 
         public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap) => new MixRulesetContainer(this, beatmap);
+
         public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new MixBeatmapConverter(beatmap);
+
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new MixBeatmapProcessor(beatmap);
+
+        public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new MixDifficultyCalculator(this, beatmap);
 
         public override Drawable CreateIcon() => new Sprite { Texture = MixTextures.Get("icon") };
 
@@ -45,7 +49,7 @@ namespace osu.Game.Rulesets.Mix
 
         public override string ShortName => "mix";
 
-        public override SettingsSubsection CreateSettings() => new MixSettings();
+        public override RulesetSettingsSubsection CreateSettings() => new MixSettings(this);
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
@@ -80,8 +84,6 @@ namespace osu.Game.Rulesets.Mix
             new KeyBinding(InputKey.Semicolon, MixAction.SoftClapRight),
         };
 
-        public override DifficultyCalculator CreateDifficultyCalculator(IBeatmap beatmap, Mod[] mods = null) => new MixDifficultyCalculator(beatmap, mods);
-
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {
             switch (type)
@@ -91,39 +93,15 @@ namespace osu.Game.Rulesets.Mix
                     {
                         new MixModEasy(),
                         new MixModNoFail(),
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new MixModHalfTime(),
-                                new MixModDaycore(),
-                            },
-                        },
+                        new MultiMod(new MixModHalfTime(), new MixModDaycore())
                     };
-
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
                         new MixModHardRock(),
                         new MixModSuddenDeath(),
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new MixModDoubleTime(),
-                                new MixModNightcore(),
-                            },
-                        },
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new MixModHidden(),
-                                new MixModFlashlight(),
-                            },
-                        },
+                        new MultiMod(new MixModDoubleTime(), new MixModNightcore())
                     };
-
                 case ModType.Special:
                     return new Mod[]
                     {
