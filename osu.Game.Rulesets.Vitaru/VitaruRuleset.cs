@@ -121,7 +121,15 @@ namespace osu.Game.Rulesets.Vitaru
                 case ModType.DifficultyReduction:
                     return new Mod[]
                     {
+                        new VitaruModEasy(),
                         new VitaruModNoFail(),
+                        new MultiMod(new VitaruModHalfTime(), new VitaruModDaycore())
+                    };
+                case ModType.DifficultyIncrease:
+                    return new Mod[]
+                    {
+                        new VitaruModHardRock(),
+                        new MultiMod(new VitaruModDoubleTime(), new VitaruModNightcore())
                     };
                 default: return new Mod[] { };
             }
