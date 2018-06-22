@@ -103,7 +103,6 @@ namespace osu.Game.Rulesets.Osu
                         new MultiMod(new OsuModDoubleTime(), new OsuModNightcore()),
                         new OsuModHidden(),
                         new OsuModFlashlight(),
-                        new OsuModWobble(), 
                     };
                 case ModType.Special:
                     return new Mod[]
@@ -113,7 +112,6 @@ namespace osu.Game.Rulesets.Osu
                         new OsuModSpunOut(),
                         new MultiMod(new OsuModAutoplay(), new ModCinema()),
                         new OsuModTarget(),
-                        new OsuModFluidDifficulty(),
                     };
                 default:
                     return new Mod[] { };

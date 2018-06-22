@@ -20,10 +20,6 @@
     <StartupObject>osu.Desktop.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\osu.Game.Rulesets.Classic\osu.Game.Rulesets.Classic.csproj" />
-    <ProjectReference Include="..\osu.Game.Rulesets.Mix\osu.Game.Rulesets.Mix.csproj" />
-    <ProjectReference Include="..\osu.Game.Rulesets.Shape\osu.Game.Rulesets.Shape.csproj" />
-    <ProjectReference Include="..\osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj" />
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Osu\osu.Game.Rulesets.Osu.csproj" />
     <ProjectReference Include="..\osu.Game.Rulesets.Catch\osu.Game.Rulesets.Catch.csproj" />

@@ -14,10 +14,6 @@ namespace osu.Game.Beatmaps.ControlPoints
         /// </summary>
         public string SampleBank = DEFAULT_BANK;
 
-        public int SampleBankCount = 1;
-
-        public string SampleExtension = ".mp3";
-
         /// <summary>
         /// The default sample volume at this control point.
         /// </summary>

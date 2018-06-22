@@ -289,9 +289,9 @@ namespace osu.Game.Beatmaps.Formats
                 if (split.Length >= 4)
                     sampleSet = (LegacySampleBank)int.Parse(split[3]);
 
-                int sampleBank = 1;
-                if (split.Length >= 5)
-                    sampleBank = int.Parse(split[4]);
+                //SampleBank sampleBank = SampleBank.Default;
+                //if (split.Length >= 5)
+                //    sampleBank = (SampleBank)int.Parse(split[4]);
 
                 int sampleVolume = defaultSampleVolume;
                 if (split.Length >= 6)
@@ -338,13 +338,12 @@ namespace osu.Game.Beatmaps.Formats
                     });
                 }
 
-                if (stringSampleSet != samplePoint.SampleBank || sampleVolume != samplePoint.SampleVolume || sampleBank != samplePoint.SampleBankCount)
+                if (stringSampleSet != samplePoint.SampleBank || sampleVolume != samplePoint.SampleVolume)
                 {
                     beatmap.ControlPointInfo.SamplePoints.Add(new SampleControlPoint
                     {
                         Time = time,
                         SampleBank = stringSampleSet,
-                        SampleBankCount = sampleBank,
                         SampleVolume = sampleVolume
                     });
                 }

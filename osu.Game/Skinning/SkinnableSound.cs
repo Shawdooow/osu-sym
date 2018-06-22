@@ -46,30 +46,15 @@ namespace osu.Game.Skinning
         {
             SampleChannel ch = null;
 
-            retry:
             if (info.Namespace != null)
-                ch = getSampleFunction($"Gameplay/{info.Namespace}/{info.Bank}-{info.Name + info.BankNumber + info.Extension}");
-
-            // try without number as a fallback.
-            if (info.Namespace != null && ch == null)
-                ch = getSampleFunction($"Gameplay/{info.Namespace}/{info.Bank}-{info.Name + info.Extension}");
+                ch = getSampleFunction($"Gameplay/{info.Namespace}/{info.Bank}-{info.Name}");
 
             // try without namespace as a fallback.
             if (ch == null)
-                ch = getSampleFunction($"Gameplay/{info.Bank}-{info.Name + info.BankNumber + info.Extension}");
-
-            // try without number as a fallback.
-            if (ch == null)
-                ch = getSampleFunction($"Gameplay/{info.Bank}-{info.Name + info.Extension}");
+                ch = getSampleFunction($"Gameplay/{info.Bank}-{info.Name}");
 
             if (ch != null)
                 ch.Volume.Value = info.Volume / 100.0;
-
-            if (ch == null && info.Extension != "")
-            {
-                info.Extension = "";
-                goto retry;
-            }
 
             return ch;
         }
