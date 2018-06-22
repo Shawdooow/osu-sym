@@ -19,7 +19,7 @@ namespace Symcol.Rulesets.Core.HitObjects
             return new SampleInfo
             {
                 Bank = info.Bank ?? SampleControlPoint.SampleBank,
-                BankNumber = control.SampleBankCount,
+                //BankNumber = control.SampleBankCount,
                 Name = info.Name,
                 Volume = info.Volume > 0 ? info.Volume : SampleControlPoint.SampleVolume,
             };

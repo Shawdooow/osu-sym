@@ -124,7 +124,7 @@ namespace Symcol.Rulesets.Core.HitObjects
             return new SymcolSkinnableSound(new SampleInfo
             {
                 Bank = info.Bank ?? HitObject.SampleControlPoint.SampleBank,
-                BankNumber = control.SampleBankCount,
+                //BankNumber = control.SampleBankCount,
                 Name = info.Name,
                 Volume = info.Volume > 0 ? info.Volume : HitObject.SampleControlPoint.SampleVolume,
                 Namespace = SampleNamespace

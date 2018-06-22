@@ -129,7 +129,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                     SampleControlPoints.Add(new SampleControlPoint
                     {
                         SampleBank = point.SampleBank,
-                        SampleBankCount = point.SampleBankCount,
+                        //SampleBankCount = point.SampleBankCount,
                         SampleVolume = point.SampleVolume,
                     });
                 }

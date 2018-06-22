@@ -40,8 +40,10 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuConfigManager config, OsuGameBase game, OsuColour osu)
+            private void load(OsuConfigManager config, BindableBeatmap beatmap, OsuColour osu)
             {
+                this.beatmap = beatmap;
+
                 Children = new Drawable[]
                 {
                     new Sprite
@@ -199,7 +201,7 @@ namespace osu.Game.Rulesets.Vitaru.UI.Cursor
                     //combo.Alpha = 0.5f;
                 }
 
-                beatmap = game.Beatmap.GetBoundCopy();
+                beatmap = beatmap.GetBoundCopy();
                 beatmap.ValueChanged += v => calculateScale();
 
                 cursorScale = config.GetBindable<double>(OsuSetting.GameplayCursorSize);

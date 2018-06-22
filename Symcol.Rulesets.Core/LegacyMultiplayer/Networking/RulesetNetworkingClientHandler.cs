@@ -47,7 +47,7 @@ namespace Symcol.Rulesets.Core.LegacyMultiplayer.Networking
                     OnlineBeatmapID = (int)map.BeatmapInfo.OnlineBeatmapID
                 };
                 SendToInMatchClients(packet);
-                OnMapChange?.Invoke(osu.Beatmap.Value);
+                //OnMapChange?.Invoke(osu.Beatmap.Value);
             }
             catch
             {
@@ -59,7 +59,7 @@ namespace Symcol.Rulesets.Core.LegacyMultiplayer.Networking
                     Mapper = map.Metadata.Author.Username
                 };
                 SendToInMatchClients(packet);
-                OnMapChange?.Invoke(osu.Beatmap.Value);
+                //OnMapChange?.Invoke(osu.Beatmap.Value);
             }
         }
 

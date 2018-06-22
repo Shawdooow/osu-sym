@@ -112,12 +112,12 @@ namespace Symcol.Rulesets.Core.LegacyMultiplayer.Pieces
                         {
                             RelativeSizeAxes = Axes.Both,
 #if SymcolMods
-                            /*Child = new HitSoundBoard
+                            Child = new HitSoundBoard
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 ButtonSize = 80
-                            }*/
+                            }
 #endif
                         };
                         break;
