@@ -1,6 +1,6 @@
 ﻿using osu.Game.Screens;
 
-namespace osu.Game.Symcol
+namespace osu.Game.ModLoader
 {
     public abstract class ModSet
     {

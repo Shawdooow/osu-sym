@@ -1,11 +1,11 @@
 ﻿using System;
-using osu.Framework.Logging;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using osu.Framework.Logging;
 
-namespace osu.Game.Symcol
+namespace osu.Game.ModLoader
 {
     public static class ModStore
     {
