@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\osu.Game.props" />
+  <PropertyGroup Label="Project">
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Description>mix the music. to the beat.</Description>
+    <Copyright>Symcol 2018</Copyright>
+    <Company>Symcol</Company>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\Textures\icon%402x.png" />
+    <None Remove="Assets\Textures\mix BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\icon.png" />
+    <EmbeddedResource Include="Assets\Textures\icon@2x.png" />
+    <EmbeddedResource Include="Assets\Textures\mix BG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symcol\Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj" />
+  </ItemGroup>
+</Project>
