@@ -6,7 +6,7 @@ using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Overlays.Settings;
 using Symcol.Core.LegacyNetworking;
-using Symcol.osu.Core.Evast;
+using Symcol.osu.Core.Screens.Evast;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Networking;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Pieces;
 

@@ -21,6 +21,7 @@ using osu.Game.Rulesets.Objects.Types;
 using OpenTK;
 using OpenTK.Graphics;
 using Symcol.osu.Core.Containers;
+using Symcol.osu.Core.Containers.Shawdooow;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Options;
 #if SymcolMods
 #endif

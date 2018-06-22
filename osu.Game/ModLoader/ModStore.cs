@@ -9,7 +9,7 @@ namespace osu.Game.ModLoader
 {
     public static class ModStore
     {
-        public static List<ModSet> ModSets = new List<ModSet>();
+        //public static List<ModSet> ModSets = new List<ModSet>();
 
         private static Dictionary<Assembly, Type> loadedAssemblies = new Dictionary<Assembly, Type>();
 
@@ -41,10 +41,7 @@ namespace osu.Game.ModLoader
 
             //add any other mods
             foreach (ModSet s in instances)
-            {
-                Logger.Log("Successfully loaded un-official gamemode");
                 set = s;
-            }
 
             return set;
         }

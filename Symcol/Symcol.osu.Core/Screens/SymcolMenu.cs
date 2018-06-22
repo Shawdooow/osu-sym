@@ -6,10 +6,9 @@ using osu.Game.Screens;
 using osu.Game.Screens.Menu;
 using OpenTK;
 using OpenTK.Graphics;
-using Symcol.osu.Core.Containers;
-using Symcol.osu.Core.Evast;
-using Symcol.osu.Core.KoziLord;
-using Symcol.osu.Core.Shawdooow;
+using Symcol.osu.Core.Containers.Shawdooow;
+using Symcol.osu.Core.Screens.Evast;
+using Symcol.osu.Core.SymcolMods;
 
 namespace Symcol.osu.Core.Screens
 {
@@ -37,79 +36,6 @@ namespace Symcol.osu.Core.Screens
                     RelativeSizeAxes = Axes.Both,
                     Children = new[]
                     {
-                        /*
-                        new SymcolButton
-                        {
-                            ButtonName = "osu!Talk",
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = new Color4(33 , 58 , 79 , 255),
-                            ButtonColorBottom = new Color4(17 , 31 , 42 , 255),
-                            ButtonSize = 60,
-                            Action = delegate { Push(new OsuTalkMenu()); },
-                            ButtonPosition = new Vector2(250 , 175),
-                        },
-                        */
-                        new SymcolButton
-                        {
-                            ButtonName = "Thumbnail",
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = Color4.Black,
-                            ButtonColorBottom = Color4.Yellow,
-                            ButtonSize = 90,
-                            //Action = delegate { Push(new ShawdooowLazerLiveWallpaper()); },
-                            ButtonPosition = new Vector2(170 , 190),
-                        },
-                        /*
-                        new SymcolButton
-                        {
-                            ButtonName = "Offset",
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = Color4.Black,
-                            ButtonColorBottom = Color4.White,
-                            ButtonSize = 90,
-                            Action = delegate { Push(new SymcolOffsetTicker()); },
-                            ButtonPosition = new Vector2(-10 , -190),
-                        },
-                        new SymcolButton
-                        {
-                            ButtonName = "Pokeosu",
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = Color4.DarkOrange,
-                            ButtonColorBottom = Color4.Orange,
-                            ButtonSize = 75,
-                            Action = delegate { Push(new PokeosuMenu()); },
-                            ButtonPosition = new Vector2(200 , 100),
-                        },
-                        */
-                        new SymcolButton
-                        {
-                            ButtonName = "Map Mixer",
-                            ButtonFontSizeMultiplier = 0.8f,
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = Color4.Purple,
-                            ButtonColorBottom = Color4.HotPink,
-                            ButtonSize = 120,
-                            Action = delegate { Push(new MapMixer()); },
-                            ButtonPosition = new Vector2(-200 , -150),
-                        },
-                        /*
-                        new SymcolButton
-                        {
-                            ButtonName = "Play",
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = Color4.DarkGreen,
-                            ButtonColorBottom = Color4.Green,
-                            ButtonSize = 130,
-                            Action = delegate { Push(new PlaySongSelect()); },
-                            ButtonPosition = new Vector2(300 , -20),
-                        },
-                        */
                         new SymcolButton
                         {
                             ButtonName = "Legacy MP",
@@ -134,65 +60,6 @@ namespace Symcol.osu.Core.Screens
                         },
                         new SymcolButton
                         {
-                            ButtonName = "Caster Bible",
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = Color4.Yellow,
-                            ButtonColorBottom = Color4.Green,
-                            ButtonSize = 100,
-                            //Action = delegate { Push(new TournyCasterBible()); },
-                            ButtonPosition = new Vector2(40 , -200),
-                        },
-
-                        new SymcolButton
-                        {
-                            ButtonName = "Evast's",
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = OsuColour.FromHex("#7b30ff"),
-                            ButtonColorBottom = OsuColour.FromHex("#d230ff"),
-                            ButtonSize = 90,
-                            Action = delegate { Push(new MoreScreen()); },
-                            ButtonPosition = new Vector2(20 , 200),
-                        },
-                        new SymcolButton
-                        {
-                            ButtonName = "Jacob's",
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = Color4.Purple,
-                            ButtonColorBottom = Color4.Magenta,
-                            ButtonSize = 100,
-                            Action = delegate { Push(new KoziScreen()); },
-                            ButtonPosition = new Vector2(-250, -20),
-
-                        },
-                        /*
-                        new SymcolButton
-                        {
-                            ButtonName = "Edit",
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = Color4.DarkGoldenrod,
-                            ButtonColorBottom = Color4.Gold,
-                            ButtonSize = 90,
-                            Action = delegate { Push(new Editor()); },
-                            ButtonPosition = new Vector2(250 , -150),
-                        },*/
-                        new SymcolButton
-                        {
-                            ButtonName = "Tests",
-                            Origin = Anchor.Centre,
-                            Anchor = Anchor.Centre,
-                            ButtonColorTop = Color4.DarkCyan,
-                            ButtonColorBottom = Color4.Cyan,
-                            ButtonSize = 100,
-                            //Action = delegate { Push(new SymcolTestScreen()); },
-                            ButtonPosition = new Vector2(-150 , 200),
-                        },
-
-                        new SymcolButton
-                        {
                             ButtonName = "Back",
                             Origin = Anchor.Centre,
                             Anchor = Anchor.Centre,
@@ -201,8 +68,8 @@ namespace Symcol.osu.Core.Screens
                             ButtonSize = 80,
                             Action = Exit,
                             ButtonPosition = new Vector2(-350 , 300),
-                        },
-                    },
+                        }
+                    }
                 },
                 logo = new OsuLogo
                 {
@@ -212,6 +79,14 @@ namespace Symcol.osu.Core.Screens
                     Anchor = Anchor.Centre,
                 }
             };
+
+            SymcolModStore.ReloadModSets();
+            foreach (SymcolModSet set in SymcolModStore.LoadedModSets)
+            {
+                SymcolButton s = set.GetMenuButton();
+                buttonsContainer.Add(s);
+                s.Action = () => Push(set.GetMenuScreen());
+            }
         }
 
         private bool open(Container container)

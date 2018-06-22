@@ -11,8 +11,8 @@ using osu.Framework.Screens;
 using osu.Game.Graphics.Sprites;
 using OpenTK;
 using OpenTK.Graphics;
-using Symcol.osu.Core.Evast;
 using Symcol.osu.Core.Screens;
+using Symcol.osu.Core.Screens.Evast;
 using Symcol.Rulesets.Core.Multiplayer.Screens;
 using Symcol.Rulesets.Core.Rulesets;
 #if SymcolMods

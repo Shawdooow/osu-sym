@@ -9,8 +9,8 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using OpenTK;
 using OpenTK.Graphics;
-using Symcol.osu.Core.Evast;
 using Symcol.osu.Core.KoziLord.EvastModded.MusicPlayers;
+using Symcol.osu.Core.Screens.Evast;
 
 namespace Symcol.osu.Core.KoziLord
 {

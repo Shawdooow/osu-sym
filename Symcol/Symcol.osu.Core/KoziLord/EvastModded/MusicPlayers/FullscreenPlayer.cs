@@ -11,9 +11,9 @@ using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using OpenTK;
 using OpenTK.Graphics;
-using Symcol.osu.Core.Evast;
 using Symcol.osu.Core.Evast.MusicVisualizers;
 using Symcol.osu.Core.Evast.Visualizers;
+using Symcol.osu.Core.Screens.Evast;
 
 namespace Symcol.osu.Core.KoziLord.EvastModded.MusicPlayers
 {

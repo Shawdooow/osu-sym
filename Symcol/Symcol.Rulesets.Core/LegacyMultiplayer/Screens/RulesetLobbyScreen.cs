@@ -11,7 +11,7 @@ using osu.Game.Overlays.Settings;
 using OpenTK;
 using OpenTK.Graphics;
 using Symcol.Core.LegacyNetworking;
-using Symcol.osu.Core.Evast;
+using Symcol.osu.Core.Screens.Evast;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Networking;
 using Symcol.Rulesets.Core.Rulesets;
 
