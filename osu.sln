@@ -27,6 +27,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Taiko.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Osu.Tests", "osu.Game.Rulesets.Osu.Tests\osu.Game.Rulesets.Osu.Tests.csproj", "{6A2D5D58-0261-4A75-BE84-2BE8B076B7C2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Vitaru", "osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj", "{9CF24E82-8B5C-46FF-95C6-22A58081AE2B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.Core", "Symcol.Core\Symcol.Core.csproj", "{8A17DECB-FD2E-4C13-8D54-AC47B6A09D3D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "osu-framework", "osu-framework", "{69FC0F0C-8860-4452-82F0-718FF9781EB1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Framework", "osu-framework\osu.Framework\osu.Framework.csproj", "{814BD1FC-B7A3-4707-A4A6-2FC17E05D53E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,9 +89,24 @@ Global
 		{6A2D5D58-0261-4A75-BE84-2BE8B076B7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A2D5D58-0261-4A75-BE84-2BE8B076B7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A2D5D58-0261-4A75-BE84-2BE8B076B7C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF24E82-8B5C-46FF-95C6-22A58081AE2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF24E82-8B5C-46FF-95C6-22A58081AE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF24E82-8B5C-46FF-95C6-22A58081AE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF24E82-8B5C-46FF-95C6-22A58081AE2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A17DECB-FD2E-4C13-8D54-AC47B6A09D3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A17DECB-FD2E-4C13-8D54-AC47B6A09D3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A17DECB-FD2E-4C13-8D54-AC47B6A09D3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A17DECB-FD2E-4C13-8D54-AC47B6A09D3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{814BD1FC-B7A3-4707-A4A6-2FC17E05D53E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{814BD1FC-B7A3-4707-A4A6-2FC17E05D53E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{814BD1FC-B7A3-4707-A4A6-2FC17E05D53E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{814BD1FC-B7A3-4707-A4A6-2FC17E05D53E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{814BD1FC-B7A3-4707-A4A6-2FC17E05D53E} = {69FC0F0C-8860-4452-82F0-718FF9781EB1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {671B0BEC-2403-45B0-9357-2C97CC517668}
