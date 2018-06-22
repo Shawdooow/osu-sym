@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Shape
 
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new ShapeBeatmapProcessor(beatmap);
 
-        public override DifficultyCalculator CreateDifficultyCalculator(IBeatmap beatmap, Mod[] mods = null) => new ShapeDifficultyCalculator(beatmap, mods);
+        public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new ShapeDifficultyCalculator(this, beatmap);
 
         public override int? LegacyID => 5;
 
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Shape
 
         public override string ShortName => "shape";
 
-        public override SettingsSubsection CreateSettings() => new ShapeSettings();
+        public override RulesetSettingsSubsection CreateSettings() => new ShapeSettings(this);
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
@@ -72,43 +72,14 @@ namespace osu.Game.Rulesets.Shape
                     {
                         new ShapeModEasy(),
                         new ShapeModNoFail(),
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new ShapeModHalfTime(),
-                                new ShapeModDaycore(),
-                            },
-                        },
+                        new MultiMod(new ShapeModHalfTime(), new ShapeModDaycore())
                     };
-
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
                         new ShapeModHardRock(),
                         new ShapeModSuddenDeath(),
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new ShapeModDoubleTime(),
-                                new ShapeModNightcore(),
-                            },
-                        },
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new ShapeModHidden(),
-                                new ShapeModFlashlight(),
-                            },
-                        },
-                    };
-
-                case ModType.Special:
-                    return new Mod[]
-                    {
-                        new ShapeRelax()
+                        new MultiMod(new ShapeModDoubleTime(), new ShapeModNightcore())
                     };
                 default : return new Mod[] { };
             }

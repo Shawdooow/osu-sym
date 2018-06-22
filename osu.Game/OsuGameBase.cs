@@ -58,6 +58,8 @@ namespace osu.Game
 
         protected SettingsStore SettingsStore;
 
+        protected RulesetConfigCache RulesetConfigCache;
+
         protected MenuCursorContainer MenuCursorContainer;
 
         private Container content;
@@ -81,7 +83,7 @@ namespace osu.Game
                     //return @"local " + (DebugUtils.IsDebug ? @"debug" : @"release");
 
                 var assembly = AssemblyName;
-                return $@"2018.607.0";
+                return $@"2018.619.0";
             }
         }
 
@@ -125,6 +127,7 @@ namespace osu.Game
             dependencies.Cache(ScoreStore = new ScoreStore(Host.Storage, contextFactory, Host, BeatmapManager, RulesetStore));
             dependencies.Cache(KeyBindingStore = new KeyBindingStore(contextFactory, RulesetStore));
             dependencies.Cache(SettingsStore = new SettingsStore(contextFactory));
+            dependencies.Cache(RulesetConfigCache = new RulesetConfigCache(SettingsStore));
             dependencies.Cache(new OsuColour());
 
             fileImporters.Add(BeatmapManager);

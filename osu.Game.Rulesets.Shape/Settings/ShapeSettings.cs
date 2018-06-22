@@ -40,5 +40,10 @@ namespace osu.Game.Rulesets.Shape.Settings
                 }
             };
         }
+
+        public ShapeSettings(Ruleset ruleset)
+            : base(ruleset)
+        {
+        }
     }
 }

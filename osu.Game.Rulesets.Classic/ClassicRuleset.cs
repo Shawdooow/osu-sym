@@ -53,28 +53,14 @@ namespace osu.Game.Rulesets.Classic
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new ClassicModDoubleTime(),
-                                new ClassicModNightcore(),
-                            },
-                        },
+                        new MultiMod(new ClassicModDoubleTime(), new ClassicModNightcore()),
                         new ClassicModHidden()
                     };
 
                 case ModType.Special:
                     return new Mod[]
                     {
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new ClassicModAutoplay(),
-                                new ModCinema(),
-                            },
-                        },
+                        new ClassicModAutoplay()
                     };
 
                 default:
@@ -82,7 +68,9 @@ namespace osu.Game.Rulesets.Classic
             }
         }
 
-        public override DifficultyCalculator CreateDifficultyCalculator(IBeatmap beatmap, Mod[] mods = null) => new ClassicDifficultyCalculator(beatmap, mods);
+        public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new ClassicDifficultyCalculator(this, beatmap);
+
+        public override RulesetSettingsSubsection CreateSettings() => new ClassicSettings(this);
 
         public override int? LegacyID => 6;
 
@@ -91,8 +79,6 @@ namespace osu.Game.Rulesets.Classic
         public override string ShortName => "classic";
 
         public override HitObjectComposer CreateHitObjectComposer() => new ClassicHitObjectComposer(this);
-
-        public override SettingsSubsection CreateSettings() => new ClassicSettings();
 
         public override Drawable CreateIcon() => new Sprite { Texture = ClassicTextures.Get("icon") };
 

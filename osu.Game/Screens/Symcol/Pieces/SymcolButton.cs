@@ -103,7 +103,7 @@ namespace osu.Game.Screens.Symcol.Pieces
             };
         }
 
-        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => content != null ? content.ReceiveMouseInputAt(screenSpacePos) : false;
+        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => content?.ReceiveMouseInputAt(screenSpacePos) ?? false;
 
         private const double early_activation = 60;
 
@@ -128,7 +128,7 @@ namespace osu.Game.Screens.Symcol.Pieces
             }
         }
 
-        private bool recieveInput = false;
+        private bool recieveInput;
 
         protected override bool OnHover(InputState state)
         {
@@ -164,7 +164,7 @@ namespace osu.Game.Screens.Symcol.Pieces
 
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (recieveInput && args.Key == Key.X  || args.Key == Key.Z && recieveInput || args.Key == Bind && Bind != Key.Unknown)
+            if (recieveInput && (args.Key == Key.X  || args.Key == Key.Z || args.Key == Key.C || args.Key == Key.V) || args.Key == Bind && Bind != Key.Unknown)
                 Action?.Invoke();
 
             return base.OnKeyDown(state, args);

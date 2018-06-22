@@ -11,6 +11,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Handlers;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
+using osu.Framework.Statistics;
 using OpenTK;
 using OpenTK.Input;
 
@@ -281,12 +282,20 @@ namespace osu.Framework.Input
             positionalInputQueue.Clear();
 
             if (state.Keyboard != null)
+            {
+                if (this is UserInputManager)
+                    FrameStatistics.Increment(StatisticsCounterType.KeyboardQueue);
                 foreach (Drawable d in AliveInternalChildren)
                     d.BuildKeyboardInputQueue(inputQueue);
+            }
 
             if (state.Mouse != null)
+            {
+                if (this is UserInputManager)
+                    FrameStatistics.Increment(StatisticsCounterType.MouseQueue);
                 foreach (Drawable d in AliveInternalChildren)
                     d.BuildMouseInputQueue(state.Mouse.Position, positionalInputQueue);
+            }
 
             // Keyboard and mouse queues were created in back-to-front order.
             // We want input to first reach front-most drawables, so the queues
@@ -860,7 +869,11 @@ namespace osu.Framework.Input
                         createDistinctState(s => s.Mouse.Position = incoming.Mouse.Position);
 
                     if (transient.Mouse.Scroll != incoming.Mouse.Scroll)
-                        createDistinctState(s => s.Mouse.Scroll = incoming.Mouse.Scroll);
+                        createDistinctState(s =>
+                        {
+                            s.Mouse.Scroll = incoming.Mouse.Scroll;
+                            s.Mouse.HasPreciseScroll = incoming.Mouse.HasPreciseScroll;
+                        });
 
                     processForButtons(transient.Mouse.Buttons, incoming.Mouse.Buttons, (s, buttons) => s.Mouse.Buttons = buttons);
                 }

@@ -38,5 +38,10 @@ namespace osu.Game.Rulesets.Mix.Settings
                 }
             };
         }
+
+        public MixSettings(Ruleset ruleset)
+            : base(ruleset)
+        {
+        }
     }
 }

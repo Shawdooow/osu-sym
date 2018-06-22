@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Vitaru
 {
     public class VitaruRuleset : Ruleset
     {
-        public const string RULESET_VERSION = "0.8.3";
+        public const string RULESET_VERSION = "0.8.4";
 
         public override int? LegacyID => 4; 
 
@@ -123,58 +123,13 @@ namespace osu.Game.Rulesets.Vitaru
                     {
                         new VitaruModEasy(),
                         new VitaruModNoFail(),
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new VitaruModHalfTime(),
-                                new VitaruModDaycore(),
-                            },
-                        },
+                        new MultiMod(new VitaruModHalfTime(), new VitaruModDaycore())
                     };
-
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
                         new VitaruModHardRock(),
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new VitaruModSuddenDeath(),
-                                new VitaruModPerfect(),
-                            },
-                        },
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new VitaruModDoubleTime(),
-                                new VitaruModNightcore(),
-                            },
-                        },
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new VitaruModHidden(),
-                                new VitaruModFlashlight(),
-                            },
-                        },
-                    };
-
-                case ModType.Special:
-                    return new Mod[]
-                    {
-                        new VitaruRelax(),
-                        new MultiMod
-                        {
-                            Mods = new Mod[]
-                            {
-                                new VitaruModAutoplay(),
-                                new ModCinema(),
-                            },
-                        },
+                        new MultiMod(new VitaruModDoubleTime(), new VitaruModNightcore())
                     };
                 default: return new Mod[] { };
             }
@@ -186,9 +141,9 @@ namespace osu.Game.Rulesets.Vitaru
 
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new VitaruBeatmapProcessor(beatmap);
 
-        public override DifficultyCalculator CreateDifficultyCalculator(IBeatmap beatmap, Mod[] mods = null) => new VitaruDifficultyCalculator(beatmap, mods);
+        public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new VitaruDifficultyCalculator(this, beatmap);
 
-        public override SettingsSubsection CreateSettings() => new VitaruSettings();
+        public override RulesetSettingsSubsection CreateSettings() => new VitaruSettings(this);
 
         public override Drawable CreateIcon() => new Sprite { Texture = VitaruTextures.Get("icon") };
 

@@ -298,6 +298,11 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             };
             showDebugUi.TriggerChange();
         }
+
+        public VitaruSettings(Ruleset ruleset)
+            : base(ruleset)
+        {
+        }
     }
 
     internal enum VitaruCharacters
