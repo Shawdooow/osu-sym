@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.osu.Mods.Shawdooow",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.osu.Mods.Evast", "Symcol\Symcol.osu.Mods.Evast\Symcol.osu.Mods.Evast.csproj", "{C81B33BF-C9AE-476A-9275-BE3962D55E69}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.osu.Mods.KoziLord", "Symcol\Symcol.osu.Mods.KoziLord\Symcol.osu.Mods.KoziLord.csproj", "{F3500297-9AA7-4DDC-8EDF-EFB5D45F3199}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +147,10 @@ Global
 		{C81B33BF-C9AE-476A-9275-BE3962D55E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C81B33BF-C9AE-476A-9275-BE3962D55E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C81B33BF-C9AE-476A-9275-BE3962D55E69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3500297-9AA7-4DDC-8EDF-EFB5D45F3199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3500297-9AA7-4DDC-8EDF-EFB5D45F3199}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3500297-9AA7-4DDC-8EDF-EFB5D45F3199}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3500297-9AA7-4DDC-8EDF-EFB5D45F3199}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -156,6 +162,7 @@ Global
 		{259965F8-33FC-4C91-8851-546F18602766} = {E507C08A-AA0D-4E33-9332-39685CB8BAA8}
 		{F0A41447-2932-492E-A079-61475EA99A17} = {E507C08A-AA0D-4E33-9332-39685CB8BAA8}
 		{C81B33BF-C9AE-476A-9275-BE3962D55E69} = {E507C08A-AA0D-4E33-9332-39685CB8BAA8}
+		{F3500297-9AA7-4DDC-8EDF-EFB5D45F3199} = {E507C08A-AA0D-4E33-9332-39685CB8BAA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {671B0BEC-2403-45B0-9357-2C97CC517668}
