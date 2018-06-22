@@ -11,17 +11,17 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
         {
             Children = new Drawable[]
             {
-                new LinearVisualizer(Beatmap)
+                new LinearVisualizer
                 {
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,
                 },
-                new LinearVisualizer(Beatmap)
+                new LinearVisualizer
                 {
                     Anchor = Anchor.BottomRight,
                     Origin = Anchor.BottomRight,
                 },
-                new CircularVisualizer(Beatmap)
+                new CircularVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -31,7 +31,7 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
                     CircleSize = 150,
                     X = -400,
                 },
-                new CircularVisualizer(Beatmap)
+                new CircularVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -43,7 +43,7 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
                     Rotation = 180,
                     IsReversed = true,
                 },
-                new CircularVisualizer(Beatmap)
+                new CircularVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -51,7 +51,7 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
                     BarsAmount = 50,
                     BarWidth = 2,
                 },
-                new CircularVisualizer(Beatmap)
+                new CircularVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -60,7 +60,7 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
                     BarWidth = 2,
                     Rotation = 180,
                 },
-                new CircularVisualizer(Beatmap)
+                new CircularVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,

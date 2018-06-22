@@ -50,11 +50,6 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
             get { return degreeValue; }
         }
 
-        public CircularVisualizer(Bindable<WorkingBeatmap> b)
-            : base(b)
-        {
-        }
-
         protected override void AddBars()
         {
             calculateBarProperties();

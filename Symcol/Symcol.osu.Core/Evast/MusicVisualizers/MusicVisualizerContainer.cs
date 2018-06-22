@@ -1,6 +1,7 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
@@ -11,9 +12,10 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
     {
         private readonly Bindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
 
-        protected MusicVisualizerContainer(Bindable<WorkingBeatmap> b)
+        [BackgroundDependencyLoader]
+        private void load(BindableBeatmap beatmap)
         {
-            beatmap.BindTo(b);
+            this.beatmap.BindTo(beatmap);
         }
 
         private int updateDelay = 1;

@@ -1,11 +1,9 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Game.Beatmaps;
 using OpenTK;
 using OpenTK.Graphics;
 
@@ -17,7 +15,7 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
         {
             Children = new Drawable[]
             {
-                new FallBarVisualizer(Beatmap)
+                new FallBarVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -26,7 +24,7 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
                     CircleSize = 250,
                     X = -400,
                 },
-                new SplittedBarVisualizer(Beatmap)
+                new SplittedBarVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -34,7 +32,7 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
                     BarWidth = 5,
                     CircleSize = 250,
                 },
-                new CircularBarVisualizer(Beatmap)
+                new CircularBarVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -49,11 +47,6 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
         private class CircularBarVisualizer : CircularVisualizer
         {
             protected override VisualizerBar CreateNewBar() => new CircularBar() { Masking = true };
-
-            public CircularBarVisualizer(Bindable<WorkingBeatmap> b)
-                : base(b)
-            {
-            }
 
             private class CircularBar : DefaultBar
             {
@@ -80,11 +73,6 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
         private class SplittedBarVisualizer : CircularVisualizer
         {
             protected override VisualizerBar CreateNewBar() => new SplittedBar();
-
-            public SplittedBarVisualizer(Bindable<WorkingBeatmap> b)
-                : base(b)
-            {
-            }
 
             private class SplittedBar : VisualizerBar
             {
@@ -157,11 +145,6 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
         private class FallBarVisualizer : CircularVisualizer
         {
             protected override VisualizerBar CreateNewBar() => new FallBar();
-
-            public FallBarVisualizer(Bindable<WorkingBeatmap> b)
-                : base(b)
-            {
-            }
 
             private class FallBar : VisualizerBar
             {

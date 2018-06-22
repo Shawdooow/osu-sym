@@ -23,7 +23,7 @@ namespace Symcol.osu.Core.Evast.Visualizers
             Children = new Drawable[]
             {
                 new SpaceParticlesContainer(),
-                new CircularVisualizer(Beatmap)
+                new CircularVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -32,7 +32,7 @@ namespace Symcol.osu.Core.Evast.Visualizers
                     CircleSize = 348,
                     BarWidth = 2,
                 },
-                new CircularVisualizer(Beatmap)
+                new CircularVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,

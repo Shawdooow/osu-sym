@@ -1,11 +1,9 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Game.Beatmaps;
 using OpenTK;
 using OpenTK.Graphics;
 
@@ -24,8 +22,7 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
             get { return flow.Spacing.X; }
         }
 
-        public LinearVisualizer(Bindable<WorkingBeatmap> b)
-            : base(b)
+        public LinearVisualizer()
         {
             AutoSizeAxes = Axes.Both;
             Child = flow = new FillFlowContainer

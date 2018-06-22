@@ -17,7 +17,7 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
         {
             parent.Children = new Drawable[]
             {
-                visualizer = new CircularVisualizer(Beatmap)
+                visualizer = new CircularVisualizer
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,

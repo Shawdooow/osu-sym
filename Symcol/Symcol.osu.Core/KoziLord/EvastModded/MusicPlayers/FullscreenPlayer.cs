@@ -54,7 +54,7 @@ namespace Symcol.osu.Core.KoziLord.EvastModded.MusicPlayers
                             Size = new Vector2(350),
                             Children = new Drawable[]
                             {
-                                new CircularVisualizer(Beatmap)
+                                new CircularVisualizer
                                 {
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.Centre,
@@ -63,7 +63,7 @@ namespace Symcol.osu.Core.KoziLord.EvastModded.MusicPlayers
                                     CircleSize = 348,
                                     BarWidth = 2,
                                 },
-                                new CircularVisualizer(Beatmap)
+                                new CircularVisualizer
                                 {
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.Centre,

@@ -14,7 +14,6 @@
   <ItemGroup>
     <Folder Include="Containers\" />
     <Folder Include="Evast\" />
-    <Folder Include="Shawdooow\" />
     <Folder Include="Wiki\" />
     <Folder Include="Screens\" />
   </ItemGroup>

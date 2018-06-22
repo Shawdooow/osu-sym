@@ -2,9 +2,7 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
-using osu.Framework.Configuration;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Beatmaps;
 
 namespace Symcol.osu.Core.Evast.MusicVisualizers
 {
@@ -96,11 +94,6 @@ namespace Symcol.osu.Core.Evast.MusicVisualizers
         protected VisualizerBar[] EqualizerBars;
 
         public bool IsReversed { get; set; }
-
-        protected MusicVisualizerBarsContainer(Bindable<WorkingBeatmap> b)
-            : base(b)
-        {
-        }
 
         [BackgroundDependencyLoader]
         private void load()

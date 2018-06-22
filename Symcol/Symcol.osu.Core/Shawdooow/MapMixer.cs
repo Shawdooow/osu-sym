@@ -7,8 +7,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Screens;
 using osu.Framework.Timing;
-using osu.Game;
-using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Configuration;
 using osu.Game.Graphics.Containers;
@@ -23,7 +21,7 @@ using Symcol.osu.Core.Evast.Visualizers;
 
 namespace Symcol.osu.Core.Shawdooow
 {
-    public class SymcolMapMixer : BeatmapScreen
+    public class MapMixer : BeatmapScreen
     {
         private SettingsSlider<double> clockPitch;
         private SettingsSlider<double> clockSpeed;
@@ -335,9 +333,9 @@ namespace Symcol.osu.Core.Shawdooow
             if (lastMeasureTime <= (float)(Beatmap.Value.Track.CurrentTime - measureLength * 0.9f) || lastMeasureTime > (float)Beatmap.Value.Track.CurrentTime)
                 lastMeasureTime = (float)Beatmap.Value.Track.CurrentTime;
             lastBeatTime = (float)Beatmap.Value.Track.CurrentTime;
-            if(SymcolMapMixer.ClockPitch.Value > 0)
+            if(MapMixer.ClockPitch.Value > 0)
                 measure++;
-            if (SymcolMapMixer.ClockPitch.Value < 0)
+            if (MapMixer.ClockPitch.Value < 0)
                 measure--;
             if (measure > 4)
                 measure = 1;

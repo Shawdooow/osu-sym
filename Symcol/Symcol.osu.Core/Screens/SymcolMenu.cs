@@ -94,7 +94,7 @@ namespace Symcol.osu.Core.Screens
                             ButtonColorTop = Color4.Purple,
                             ButtonColorBottom = Color4.HotPink,
                             ButtonSize = 120,
-                            Action = delegate { Push(new SymcolMapMixer()); },
+                            Action = delegate { Push(new MapMixer()); },
                             ButtonPosition = new Vector2(-200 , -150),
                         },
                         /*
