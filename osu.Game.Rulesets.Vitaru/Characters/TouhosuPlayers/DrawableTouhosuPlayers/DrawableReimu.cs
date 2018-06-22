@@ -1,9 +1,7 @@
 ﻿using OpenTK;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
-using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
 {
@@ -16,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
         //private readonly List<DrawableTouhosuPlayer> leaderedPlayers = new List<DrawableTouhosuPlayer>();
 
-        public DrawableReimu(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Reimu(), vitaruNetworkingClientHandler)
+        public DrawableReimu(VitaruPlayfield playfield) : base(playfield, new Reimu())
         {
         }
 

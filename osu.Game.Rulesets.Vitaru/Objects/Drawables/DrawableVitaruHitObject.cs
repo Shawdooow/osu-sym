@@ -9,7 +9,7 @@ using System;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
-    public class DrawableVitaruHitObject : DrawableSymcolHitObject<VitaruHitObject>
+    public class DrawableVitaruHitObject : DrawableHitObject<VitaruHitObject>
     {
         public override bool HandleMouseInput => false;
 

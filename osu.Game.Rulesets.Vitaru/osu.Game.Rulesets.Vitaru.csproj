@@ -8,6 +8,17 @@
     <Description>dodge the bullets. to the beat.</Description>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Multi\**" />
+    <Compile Remove="Neural\**" />
+    <Compile Remove="Wiki\**" />
+    <EmbeddedResource Remove="Multi\**" />
+    <EmbeddedResource Remove="Neural\**" />
+    <EmbeddedResource Remove="Wiki\**" />
+    <None Remove="Multi\**" />
+    <None Remove="Neural\**" />
+    <None Remove="Wiki\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Assets\Samples\skeletron.mp3" />
     <None Remove="Assets\Textures\bulletKiai.png" />
     <None Remove="Assets\Textures\chen.png" />
@@ -131,7 +142,6 @@
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
     <ProjectReference Include="..\Symcol.Core\Symcol.Core.csproj" />
-    <ProjectReference Include="..\Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />

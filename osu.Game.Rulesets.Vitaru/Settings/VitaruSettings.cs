@@ -3,32 +3,27 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Platform;
-using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Overlays.Settings;
-using Symcol.Rulesets.Core.Wiki;
-using osu.Game.Rulesets.Vitaru.Wiki;
-using Symcol.Rulesets.Core.Rulesets;
 using System.ComponentModel;
 using System.Collections.Generic;
 using Symcol.Core.Extentions;
 using System.Linq;
 using osu.Game.Rulesets.Vitaru.Debug;
 using Symcol.Core.NeuralNetworking;
-using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
-    public class VitaruSettings : SymcolSettingsSubsection
+    public class VitaruSettings : RulesetSettingsSubsection
     {
         protected override string Header => "vitaru!";
 
-        public override WikiOverlay Wiki => vitaruWiki;
+        //public override WikiOverlay Wiki => vitaruWiki;
 
-        public override RulesetLobbyItem RulesetLobbyItem => vitaruLobby;
+        //public override RulesetLobbyItem RulesetLobbyItem => vitaruLobby;
 
-        private readonly VitaruWikiOverlay vitaruWiki = new VitaruWikiOverlay();
+        //private readonly VitaruWikiOverlay vitaruWiki = new VitaruWikiOverlay();
 
-        private readonly VitaruLobbyItem vitaruLobby = new VitaruLobbyItem();
+        //private readonly VitaruLobbyItem vitaruLobby = new VitaruLobbyItem();
 
         public static VitaruConfigManager VitaruConfigManager;
 

@@ -10,8 +10,6 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Vitaru.Debug;
-using osu.Game.Rulesets.Vitaru.Multi;
-using osu.Game.Rulesets.Vitaru.Neural;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Settings;
@@ -33,7 +31,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         private readonly DebugConfiguration configuration = VitaruSettings.VitaruConfigManager.GetBindable<DebugConfiguration>(VitaruSetting.DebugConfiguration);
 
-        protected readonly VitaruNeuralContainer VitaruNeuralContainer;
+        //protected readonly VitaruNeuralContainer VitaruNeuralContainer;
 
         public readonly VitaruPlayer Player;
 
@@ -67,7 +65,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         protected readonly Container Cursor;
 
-        protected readonly VitaruNetworkingClientHandler VitaruNetworkingClientHandler;
+        //protected readonly VitaruNetworkingClientHandler VitaruNetworkingClientHandler;
 
         /// <summary>
         /// Are we a slave over the net?
@@ -104,15 +102,15 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         private const double healing_max = 2d;
         #endregion
 
-        public DrawableVitaruPlayer(VitaruPlayfield playfield, VitaruPlayer player, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield)
+        public DrawableVitaruPlayer(VitaruPlayfield playfield, VitaruPlayer player) : base(playfield)
         {
             Player = player;
-            VitaruNetworkingClientHandler = vitaruNetworkingClientHandler;
+            //VitaruNetworkingClientHandler = vitaruNetworkingClientHandler;
 
-            Add(VitaruNeuralContainer = new VitaruNeuralContainer(playfield, this));
+            //Add(VitaruNeuralContainer = new VitaruNeuralContainer(playfield, this));
 
-            VitaruNeuralContainer.Pressed = Pressed;
-            VitaruNeuralContainer.Released = Released;
+            //VitaruNeuralContainer.Pressed = Pressed;
+            //VitaruNeuralContainer.Released = Released;
 
             Actions[VitaruAction.Up] = false;
             Actions[VitaruAction.Down] = false;
@@ -153,7 +151,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                         break;
                     case DebugConfiguration.NeuralNetworking:
                         Bindable<NeuralNetworkState> bindable = VitaruSettings.VitaruConfigManager.GetBindable<NeuralNetworkState>(VitaruSetting.NeuralNetworkState);
-                        bindable.ValueChanged += value => { VitaruNeuralContainer.TensorFlowBrain.NeuralNetworkState = value; };
+                        //bindable.ValueChanged += value => { VitaruNeuralContainer.TensorFlowBrain.NeuralNetworkState = value; };
                         bindable.TriggerChange();
 
                         DebugToolkit.MachineLearningDebugItems.Add(new DebugStat<NeuralNetworkState>(bindable) { Text = "Neural Network State" });
