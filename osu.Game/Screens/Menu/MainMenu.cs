@@ -17,6 +17,7 @@ using osu.Game.Screens.Edit;
 using osu.Game.Screens.Multi;
 using osu.Game.Screens.Select;
 using osu.Game.Screens.Tournament;
+using osu.Game.Symcol;
 
 namespace osu.Game.Screens.Menu
 {
@@ -57,6 +58,7 @@ namespace osu.Game.Screens.Menu
                             OnEdit = delegate { Push(new Editor()); },
                             OnSolo = delegate { Push(consumeSongSelect()); },
                             OnMulti = delegate { Push(new Multiplayer()); },
+                            OnMod = delegate { Push(ModStore.GetModSet().GetMenuScreen()); },
                             OnExit = Exit,
                         }
                     }
