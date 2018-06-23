@@ -1,12 +1,12 @@
-﻿using osu.Framework.Graphics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
-using System.Collections.Generic;
-using System.Diagnostics;
 
-namespace Symcol.Rulesets.Core.Containers
+namespace Symcol.osu.Core.Containers
 {
     public class LinkText : OsuSpriteText, IHasTooltip
     {

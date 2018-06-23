@@ -8,5 +8,7 @@ namespace Symcol.osu.Core.SymcolMods
         public abstract SymcolButton GetMenuButton();
 
         public abstract OsuScreen GetMenuScreen();
+
+        //public virtual WikiSet GetWikiSet() => new WikiSet();
     }
 }
