@@ -1,6 +1,6 @@
 ﻿using osu.Game.Users;
 
-namespace Symcol.Rulesets.Core.Containers
+namespace Symcol.osu.Core.Containers
 {
     /// <summary>
     /// TODO: make this more generic

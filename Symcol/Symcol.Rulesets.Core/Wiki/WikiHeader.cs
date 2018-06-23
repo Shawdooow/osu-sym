@@ -7,7 +7,7 @@ using osu.Game.Graphics.Containers;
 using OpenTK;
 using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
-using Symcol.Rulesets.Core.Containers;
+using Symcol.osu.Core.Containers;
 
 namespace Symcol.Rulesets.Core.Wiki
 {

@@ -1,6 +1,6 @@
 ﻿using osu.Framework.Graphics;
 using osu.Game.Graphics;
-using Symcol.Rulesets.Core.Containers;
+using Symcol.osu.Core.Containers;
 
 namespace Symcol.Rulesets.Core.Wiki
 {

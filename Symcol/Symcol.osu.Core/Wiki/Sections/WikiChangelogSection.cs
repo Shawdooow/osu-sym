@@ -1,9 +1,10 @@
-﻿using osu.Framework.Allocation;
+﻿using System.IO;
+using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
-using System.IO;
+using Symcol.osu.Core.Wiki.Sections.SectionPieces;
 
-namespace Symcol.Rulesets.Core.Wiki
+namespace Symcol.osu.Core.Wiki.Sections
 {
     public abstract class WikiChangelogSection : WikiSection
     {

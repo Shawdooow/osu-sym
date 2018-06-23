@@ -1,10 +1,10 @@
-﻿using OpenTK;
-using osu.Framework.Graphics;
+﻿using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
+using OpenTK;
 
-namespace Symcol.Rulesets.Core.Wiki
+namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
 {
     public class WikiSplitColum : Container
     {

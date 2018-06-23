@@ -1,12 +1,12 @@
-﻿using OpenTK;
-using osu.Framework.Configuration;
+﻿using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Overlays.Settings;
+using OpenTK;
 
-namespace Symcol.Rulesets.Core.Wiki
+namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
 {
     public class WikiOptionEnumSplitExplanation<T> : FillFlowContainer
         where T : struct

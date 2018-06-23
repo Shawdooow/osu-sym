@@ -2,7 +2,7 @@
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 
-namespace Symcol.Rulesets.Core.Wiki
+namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
 {
     public class WikiSubSectionHeader : OsuSpriteText
     {

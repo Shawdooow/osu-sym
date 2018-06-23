@@ -2,7 +2,7 @@
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 
-namespace Symcol.Rulesets.Core.Wiki
+namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
 {
     public class WikiParagraph : Container
     {
