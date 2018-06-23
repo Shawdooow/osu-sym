@@ -34,6 +34,7 @@
     <ProjectReference Include="..\Symcol\Symcol.Core\Symcol.Core.csproj" />
     <ProjectReference Include="..\Symcol\Symcol.osu.Core\Symcol.osu.Core.csproj" />
     <ProjectReference Include="..\Symcol\Symcol.osu.Mods.Evast\Symcol.osu.Mods.Evast.csproj" />
+    <ProjectReference Include="..\Symcol\Symcol.osu.Mods.KoziLord\Symcol.osu.Mods.KoziLord.csproj" />
     <ProjectReference Include="..\Symcol\Symcol.osu.Mods.Shawdooow\Symcol.osu.Mods.Shawdooow.csproj" />
     <ProjectReference Include="..\Symcol\Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.5.0" />
