@@ -2,14 +2,12 @@
 using osu.Game.Graphics;
 using Symcol.osu.Core.Containers.Text;
 
-namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
+namespace Symcol.osu.Core.Wiki.Sections.Subsection
 {
-    public class WikiSubSectionLinkHeader : LinkOsuSpriteText
+    public class WikiSubSectionHeader : ClickableOsuSpriteText
     {
-        public WikiSubSectionLinkHeader(string text, string url, string tooltip = "")
+        public WikiSubSectionHeader(string text = "")
         {
-            Tooltip = tooltip;
-            Url = url;
             OsuColour osu = new OsuColour();
             Colour = osu.Pink;
             Text = text;

@@ -5,6 +5,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using OpenTK;
 using Symcol.osu.Core.Wiki.Sections.SectionPieces;
+using Symcol.osu.Core.Wiki.Sections.Subsection;
 
 namespace Symcol.osu.Core.Wiki.Sections
 {

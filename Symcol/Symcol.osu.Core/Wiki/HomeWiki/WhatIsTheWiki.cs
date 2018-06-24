@@ -6,6 +6,7 @@ namespace Symcol.osu.Core.Wiki.HomeWiki
     {
         public override string Title => "What is the wiki?";
 
-        public override string Overview => "This wiki is a culmination of everything mod devs and ruleset want to document for you; the player.";
+        public override string Overview => "This is Symcol ingame wiki, featuring content from mods and rulesets that have wikis added in. "
+                                           + "You can use it to browse information about mods and rulesets to learn how to use them or how to play.";
     }
 }

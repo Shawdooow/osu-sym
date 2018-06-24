@@ -6,7 +6,7 @@ using osu.Game.Graphics;
 using osu.Game.Overlays.Settings;
 using OpenTK;
 
-namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
+namespace Symcol.osu.Core.Wiki.Sections.OptionExplanations
 {
     public class WikiOptionEnumSplitExplanation<T> : FillFlowContainer
         where T : struct

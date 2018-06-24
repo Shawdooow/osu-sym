@@ -1,4 +1,5 @@
-﻿using osu.Framework.Configuration;
+﻿using System.Collections.Generic;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -7,14 +8,13 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using OpenTK;
 
-namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
+namespace Symcol.osu.Core.Wiki.Sections.OptionExplanations
 {
-    public class WikiOptionEnumExplanation<T> : Container
-        where T : struct
+    public class WikiOptionExplanation<T> : Container
     {
         public OsuTextFlowContainer Description;
 
-        public WikiOptionEnumExplanation(Bindable<T> bindable)
+        public WikiOptionExplanation(Bindable<T> bindable, List<KeyValuePair<string, T>> items)
         {
             OsuColour osu = new OsuColour();
             Anchor = Anchor.TopCentre;
@@ -49,9 +49,10 @@ namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
                     RelativeSizeAxes = Axes.X,
                     Width = 0.45f,
 
-                    Child = new SettingsEnumDropdown<T>
+                    Child = new SettingsDropdown<T>
                     {
-                        Bindable = bindable
+                        Bindable = bindable,
+                        Items = items
                     }
                 },
                 new Container

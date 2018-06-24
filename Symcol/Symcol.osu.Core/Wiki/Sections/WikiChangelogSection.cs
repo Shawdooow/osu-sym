@@ -3,6 +3,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
 using Symcol.osu.Core.Wiki.Sections.SectionPieces;
+using Symcol.osu.Core.Wiki.Sections.Subsection;
 
 namespace Symcol.osu.Core.Wiki.Sections
 {

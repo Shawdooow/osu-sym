@@ -1,7 +1,7 @@
-﻿using OpenTK.Graphics;
-using osu.Game.Graphics.Containers;
+﻿using osu.Game.Graphics.Containers;
+using OpenTK.Graphics;
 
-namespace Symcol.osu.Core.Wiki.OverlayPieces
+namespace Symcol.osu.Core.Containers
 {
     public class PaintableHoverContainer : OsuHoverContainer
     {
