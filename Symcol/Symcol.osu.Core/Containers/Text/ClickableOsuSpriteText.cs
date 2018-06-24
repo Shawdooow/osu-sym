@@ -15,7 +15,7 @@ namespace Symcol.osu.Core.Containers.Text
 
         public string Tooltip = "";
 
-        public new Color4 Colour
+        public Color4 IdleColour
         {
             get => HoverContainer.IdleColour;
             set => HoverContainer.IdleColour = value;
@@ -27,7 +27,7 @@ namespace Symcol.osu.Core.Containers.Text
             set { HoverContainer.Action = value; }
         }
 
-        protected readonly PaintableHoverContainer HoverContainer;
+        public readonly PaintableHoverContainer HoverContainer;
 
         public override bool HandleKeyboardInput => HoverContainer.Action != null;
         public override bool HandleMouseInput => HoverContainer.Action != null;

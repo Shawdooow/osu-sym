@@ -8,7 +8,7 @@ namespace Symcol.osu.Core.Wiki.OverlayPieces
         public WikiClickableOsuSpriteText()
         {
             OsuColour osu = new OsuColour();
-            Colour = osu.Pink;
+            IdleColour = osu.Pink;
             HoverContainer.HoverColour = osu.Blue;
         }
     }

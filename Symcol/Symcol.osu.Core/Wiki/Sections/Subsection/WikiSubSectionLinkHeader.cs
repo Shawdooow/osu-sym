@@ -11,7 +11,7 @@ namespace Symcol.osu.Core.Wiki.Sections.Subsection
             Tooltip = tooltip;
             Url = url;
             OsuColour osu = new OsuColour();
-            Colour = osu.Pink;
+            IdleColour = osu.Pink;
             Text = text;
             TextSize = 24;
             Font = @"Exo2.0-BoldItalic";

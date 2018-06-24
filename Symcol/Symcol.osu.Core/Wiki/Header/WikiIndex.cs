@@ -2,6 +2,8 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using OpenTK;
@@ -53,10 +55,18 @@ namespace Symcol.osu.Core.Wiki.Header
                 }
             };
 
+            WikiSetStore.ReloadWikiSets();
+            ReloadOptions();
+
+            OsuColour osu = new OsuColour();
             CurrentWikiSet.ValueChanged += value =>
             {
-                WikiSetStore.ReloadWikiSets();
-                ReloadOptions();
+                if (value.Name == "Home")
+                    foreach (WikiClickableOsuSpriteText b in selectableWikis)
+                    {
+                        b.HoverContainer.IdleColour = osu.Pink;
+                        b.HoverContainer.TriggerOnHoverLost(null);
+                    }
             };
         }
 
@@ -78,6 +88,7 @@ namespace Symcol.osu.Core.Wiki.Header
 
             foreach (WikiSet set in WikiSetStore.LoadedWikiSets)
             {
+                OsuColour osu = new OsuColour();
                 WikiClickableOsuSpriteText button = new WikiClickableOsuSpriteText
                 {
                     Text = set.Name,
@@ -85,7 +96,18 @@ namespace Symcol.osu.Core.Wiki.Header
                     TextSize = 18,
                 };
                 selectableWikis.Add(button);
-                button.Action = () => { CurrentWikiSet.Value = set; };
+                button.Action = () =>
+                {
+                    CurrentWikiSet.Value = set;
+
+                    foreach (WikiClickableOsuSpriteText b in selectableWikis)
+                    {
+                        b.HoverContainer.IdleColour = osu.Pink;
+                        b.HoverContainer.TriggerOnHoverLost(null);
+                    }
+
+                    button.HoverContainer.IdleColour = osu.Yellow;
+                };
             }
         }
     }
