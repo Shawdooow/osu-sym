@@ -8,10 +8,10 @@ namespace Symcol.osu.Core.Containers
     /// </summary>
     public class ProfileLink : LinkOsuSpriteText
     {
-        public override string Tooltip => "View profile in browser";
-
         public ProfileLink(User user, bool maintainer = false)
         {
+            Tooltip = "View profile in browser";
+
             if (!maintainer)
                 Text = "Ruleset Creator: " + user.Username;
             else

@@ -1,5 +1,6 @@
 ﻿using osu.Framework.Configuration;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -15,6 +16,7 @@ namespace Symcol.osu.Core.Wiki.Header
 
         public readonly HomeWikiSet Home = new HomeWikiSet();
 
+        private readonly BufferedContainer backgroundBlurContainer;
         private readonly Sprite background;
         private readonly Sprite icon;
 
@@ -29,12 +31,17 @@ namespace Symcol.osu.Core.Wiki.Header
 
             Children = new Drawable[]
             {
-                background = new Sprite
+                backgroundBlurContainer = new BufferedContainer
                 {
                     RelativeSizeAxes = Axes.Both,
-                    FillMode  = FillMode.Fill,
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
+
+                    Child = background = new Sprite
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        FillMode  = FillMode.Fill,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                    }
                 },
                 new Box
                 {
@@ -75,6 +82,8 @@ namespace Symcol.osu.Core.Wiki.Header
             {
                 if (value.HeaderBackground != null)
                     background.Texture = value.HeaderBackground;
+
+                backgroundBlurContainer.BlurTo(value.HeaderBackgroundBlur, 500);
 
                 if (value.Icon != null)
                     icon.Texture = value.Icon;

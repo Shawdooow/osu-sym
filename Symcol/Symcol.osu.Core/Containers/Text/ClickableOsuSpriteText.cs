@@ -13,7 +13,7 @@ namespace Symcol.osu.Core.Containers.Text
     {
         public string TooltipText => Tooltip;
 
-        public virtual string Tooltip => "";
+        public string Tooltip = "";
 
         public new Color4 Colour
         {

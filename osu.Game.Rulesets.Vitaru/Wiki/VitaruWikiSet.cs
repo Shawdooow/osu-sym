@@ -8,6 +8,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
     {
         public override string Name => "vitaru!";
 
+        public override string IndexTooltip => "official vitaru wiki!";
+
         public override Texture Icon => VitaruRuleset.VitaruTextures.Get("icon@2x");
 
         public override Texture HeaderBackground => VitaruRuleset.VitaruTextures.Get("vitaru spring 2018");

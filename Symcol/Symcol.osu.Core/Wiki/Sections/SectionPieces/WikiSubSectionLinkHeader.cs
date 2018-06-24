@@ -6,13 +6,9 @@ namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
 {
     public class WikiSubSectionLinkHeader : LinkOsuSpriteText
     {
-        public override string Tooltip => tooltip;
-
-        private string tooltip;
-
         public WikiSubSectionLinkHeader(string text, string url, string tooltip = "")
         {
-            this.tooltip = tooltip;
+            Tooltip = tooltip;
             Url = url;
             OsuColour osu = new OsuColour();
             Colour = osu.Pink;

@@ -74,6 +74,7 @@ namespace Symcol.osu.Core.Wiki.Index
                 WikiClickableOsuSpriteText button = new WikiClickableOsuSpriteText
                 {
                     Text = set.Name,
+                    Tooltip = set.IndexTooltip,
                     TextSize = 18,
                 };
                 selectableWikis.Add(button);
