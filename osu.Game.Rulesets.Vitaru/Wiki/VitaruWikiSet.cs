@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
 
         public override WikiSection[] GetSections() => new WikiSection[]
         {
-
+            new General(), 
         };
     }
 }

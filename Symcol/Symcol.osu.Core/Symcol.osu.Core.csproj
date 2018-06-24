@@ -12,11 +12,21 @@
     <EmbeddedResource Remove="KoziLord\**" />
     <None Remove="KoziLord\**" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Assets\Textures\symcol spring 2018 1080.png" />
+    <None Remove="Assets\Textures\Symcol%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\symcol spring 2018 1080.png" />
+    <EmbeddedResource Include="Assets\Textures\Symcol@2x.png" />
+  </ItemGroup>
   <ItemGroup Label="Project References">
     <ProjectReference Include="..\..\osu.Game\osu.Game.csproj" />
     <ProjectReference Include="..\Symcol.Core\Symcol.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\Samples\" />
+    <Folder Include="Assets\Tracks\" />
     <Folder Include="Containers\Evast\" />
     <Folder Include="Wiki\Index\IndexPieces\" />
   </ItemGroup>

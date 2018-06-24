@@ -2,8 +2,8 @@
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using OpenTK;
-using Symcol.osu.Core.Containers.Text;
 using Symcol.osu.Core.Wiki.Sections.SectionPieces;
 
 namespace Symcol.osu.Core.Wiki.Sections
@@ -12,13 +12,15 @@ namespace Symcol.osu.Core.Wiki.Sections
     {
         public abstract string Title { get; }
 
-        public readonly ClickableOsuSpriteText SectionHeaderText;
+        public virtual string Overview { get; }
 
-        public virtual WikiSubSection[] SubSections => null;
+        public virtual WikiSubSection[] GetSubSections() => null;
 
-        private readonly FillFlowContainer content;
+        protected readonly OsuSpriteText SectionHeaderText;
 
         protected override Container<Drawable> Content => content;
+
+        private readonly FillFlowContainer content;
 
         protected WikiSection()
         {
@@ -28,7 +30,7 @@ namespace Symcol.osu.Core.Wiki.Sections
             RelativeSizeAxes = Axes.X;
             InternalChildren = new Drawable[]
             {
-                SectionHeaderText = new ClickableOsuSpriteText
+                SectionHeaderText = new OsuSpriteText
                 {
                     Colour = osu.Yellow,
                     Text = Title,
@@ -59,6 +61,13 @@ namespace Symcol.osu.Core.Wiki.Sections
                     EdgeSmoothness = Vector2.One
                 }
             };
+
+            if (Overview != "")
+                Content.Add(new WikiParagraph(Overview));
+
+            if (GetSubSections() != null)
+                foreach (WikiSubSection subSection in GetSubSections())
+                    Content.Add(subSection);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using osu.Framework.Allocation;
+﻿using osu.Framework.Allocation;
+using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -11,7 +11,6 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using OpenTK.Graphics;
 using Symcol.osu.Core.Wiki.Header;
-using Symcol.osu.Core.Wiki.Index;
 using Symcol.osu.Core.Wiki.Sections;
 using osu.Game.Graphics.UserInterface;
 
@@ -21,6 +20,8 @@ namespace Symcol.osu.Core.Wiki
     public class WikiOverlay : WaveOverlayContainer
     {
         public const float CONTENT_X_MARGIN = 80;
+
+        private readonly Bindable<WikiSet> currentWikiSet = new Bindable<WikiSet>();
 
         private WikiHeader header;
         private WikiSection[] sections;
@@ -78,6 +79,9 @@ namespace Symcol.osu.Core.Wiki
                     }
                 }
             });
+
+            currentWikiSet.BindTo(header.CurrentWikiSet);
+            currentWikiSet.Value = header.Home;
         }
 
         [BackgroundDependencyLoader]

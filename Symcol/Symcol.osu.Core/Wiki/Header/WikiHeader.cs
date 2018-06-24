@@ -1,4 +1,4 @@
-﻿using System;
+﻿using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
@@ -11,7 +11,9 @@ namespace Symcol.osu.Core.Wiki.Header
 {
     public class WikiHeader : Container
     {
-        public event Action<WikiSet> OnWikiSetChange;
+        public readonly Bindable<WikiSet> CurrentWikiSet = new Bindable<WikiSet>();
+
+        public readonly HomeWikiSet Home = new HomeWikiSet();
 
         private readonly Sprite background;
         private readonly Sprite icon;
@@ -54,10 +56,31 @@ namespace Symcol.osu.Core.Wiki.Header
                     RelativeSizeAxes = Axes.X,
                     Width = 0.5f
                 },
-                index = new WikiIndex
-                {
+                index = new WikiIndex()
+            };
 
+            breadcrumbs.Current.ValueChanged += value =>
+            {
+                switch (value)
+                {
+                    case BreadCrumbState.Home:
+                        CurrentWikiSet.Value = Home;
+                        break;
                 }
+            };
+
+            CurrentWikiSet.BindTo(index.CurrentWikiSet);
+
+            CurrentWikiSet.ValueChanged += value =>
+            {
+                if (value.HeaderBackground != null)
+                    background.Texture = value.HeaderBackground;
+
+                if (value.Icon != null)
+                    icon.Texture = value.Icon;
+
+                if (value != Home)
+                    breadcrumbs.Current.Value = BreadCrumbState.Wiki;
             };
         }
     }

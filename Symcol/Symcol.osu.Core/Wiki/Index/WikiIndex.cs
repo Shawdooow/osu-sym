@@ -1,7 +1,6 @@
 ﻿using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using OpenTK;
@@ -25,7 +24,7 @@ namespace Symcol.osu.Core.Wiki.Index
             Origin = Anchor.BottomLeft;
 
             RelativeSizeAxes = Axes.Y;
-            Size = new Vector2(180, 0.88f);
+            Size = new Vector2(80, 0.88f);
 
             Children = new Drawable[]
             {
@@ -52,7 +51,6 @@ namespace Symcol.osu.Core.Wiki.Index
                 WikiSetStore.ReloadWikiSets();
                 ReloadOptions();
             };
-            CurrentWikiSet.TriggerChange();
         }
 
         public void ReloadOptions()

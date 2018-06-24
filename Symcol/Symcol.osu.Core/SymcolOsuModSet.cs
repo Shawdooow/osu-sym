@@ -1,4 +1,7 @@
-﻿using osu.Game;
+﻿using osu.Framework.Audio;
+using osu.Framework.Graphics.Textures;
+using osu.Framework.IO.Stores;
+using osu.Game;
 using osu.Game.ModLoader;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Screens;
@@ -17,9 +20,32 @@ namespace Symcol.osu.Core
 
         public override Toolbar GetToolbar() => new SymcolModdedToolbar();
 
+        public static ResourceStore<byte[]> SymcolResources;
+        public static TextureStore SymcolTextures;
+        public static AudioManager SymcolAudio;
+
         public override void LoadComplete(OsuGame game)
         {
             base.LoadComplete(game);
+
+            if (SymcolResources == null)
+            {
+                SymcolResources = new ResourceStore<byte[]>();
+                SymcolResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("Symcol.osu.Core.dll"), "Assets"));
+                SymcolResources.AddStore(new DllResourceStore("Symcol.osu.Core.dll"));
+                SymcolTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Textures")));
+                SymcolTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
+
+                var tracks = new ResourceStore<byte[]>(SymcolResources);
+                tracks.AddStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Tracks"));
+                tracks.AddStore(new OnlineStore());
+
+                var samples = new ResourceStore<byte[]>(SymcolResources);
+                samples.AddStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Samples"));
+                samples.AddStore(new OnlineStore());
+
+                SymcolAudio = new AudioManager(tracks, samples);
+            }
 
             SymcolModStore.ReloadModSets();
 
