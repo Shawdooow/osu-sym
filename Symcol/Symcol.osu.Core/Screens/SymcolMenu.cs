@@ -36,6 +36,7 @@ namespace Symcol.osu.Core.Screens
                     RelativeSizeAxes = Axes.Both,
                     Children = new[]
                     {
+                        /*
                         new SymcolButton
                         {
                             ButtonName = "Legacy MP",
@@ -58,6 +59,7 @@ namespace Symcol.osu.Core.Screens
                             Action = delegate { Push(Lobby); },
                             ButtonPosition = new Vector2(180 , -100),
                         },
+                        */
                         new SymcolButton
                         {
                             ButtonName = "Back",
