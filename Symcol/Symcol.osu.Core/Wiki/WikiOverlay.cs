@@ -1,4 +1,6 @@
-﻿using osu.Framework.Allocation;
+﻿using System.Collections.Generic;
+using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -13,7 +15,6 @@ using OpenTK.Graphics;
 using Symcol.osu.Core.Wiki.Header;
 using Symcol.osu.Core.Wiki.Sections;
 using osu.Game.Graphics.UserInterface;
-using osu.Framework.Logging;
 
 namespace Symcol.osu.Core.Wiki
 {
@@ -24,12 +25,9 @@ namespace Symcol.osu.Core.Wiki
 
         private readonly Bindable<WikiSet> currentWikiSet = new Bindable<WikiSet>();
 
-        private WikiHeader header;
-        private WikiSection[] sections;
+        private List<WikiSection> sections = new List<WikiSection>();
 
         private WikiSection lastSection;
-        private SectionsContainer<WikiSection> sectionsContainer;
-        private WikiTabControl tabs;
 
         private OsuGame game;
 
@@ -63,45 +61,84 @@ namespace Symcol.osu.Core.Wiki
                 Colour = OsuColour.Gray(0.2f)
             });
 
-            header = new WikiHeader();
-            tabs = new WikiTabControl();
+            WikiHeader header = new WikiHeader();
+            WikiTabControl tabs = new WikiTabControl();
+            SectionsContainer<WikiSection> sectionsContainer;
 
-            AddRange(new Drawable[]
+            Add(sectionsContainer = new SectionsContainer<WikiSection>
             {
-                sectionsContainer = new SectionsContainer<WikiSection>
+                RelativeSizeAxes = Axes.Both,
+                ExpandableHeader = header,
+                FixedHeader = tabs,
+                HeaderBackground = new Box
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    ExpandableHeader = header,
-                    FixedHeader = tabs,
-                    HeaderBackground = new Box
-                    {
-                        Colour = OsuColour.Gray(34),
-                        RelativeSizeAxes = Axes.Both
-                    }
+                    Colour = OsuColour.Gray(34),
+                    RelativeSizeAxes = Axes.Both
                 }
             });
+
+            sectionsContainer.SelectedSection.ValueChanged += s =>
+            {
+                if (lastSection != s)
+                {
+                    lastSection = s;
+                    tabs.Current.Value = lastSection;
+                }
+            };
+
+            tabs.Current.ValueChanged += s =>
+            {
+                if (lastSection == null)
+                {
+                    lastSection = sectionsContainer.Children.FirstOrDefault();
+                    if (lastSection != null)
+                        tabs.Current.Value = lastSection;
+                    return;
+                }
+                if (lastSection != s)
+                {
+                    lastSection = s;
+                    sectionsContainer.ScrollTo(lastSection);
+                }
+            };
 
             currentWikiSet.BindTo(header.CurrentWikiSet);
 
             currentWikiSet.ValueChanged += value =>
             {
-                try
+                foreach (WikiSection s in sections)
                 {
-                    restart:
-                    foreach (WikiSection s in sectionsContainer.Children)
-                    {
-                        sectionsContainer.Remove(s);
-                        tabs.Remove(s);
-                        goto restart;
-                    }
-
-                    foreach (WikiSection sec in value.GetSections())
-                    {
-                        sectionsContainer.Add(sec);
-                        tabs.AddItem(sec);
-                    }
+                    sectionsContainer.Remove(s);
                 }
-                catch { Logger.Log("Failed to refresh Wiki properly", LoggingTarget.Runtime, LogLevel.Error); }
+                sections = new List<WikiSection>();
+
+                lastSection = null;
+                sectionsContainer.FixedHeader = null;
+                tabs = new WikiTabControl();
+                sectionsContainer.FixedHeader = tabs;
+
+                tabs.Current.ValueChanged += s =>
+                {
+                    if (lastSection == null)
+                    {
+                        lastSection = sectionsContainer.Children.FirstOrDefault();
+                        if (lastSection != null)
+                            tabs.Current.Value = lastSection;
+                        return;
+                    }
+                    if (lastSection != s)
+                    {
+                        lastSection = s;
+                        sectionsContainer.ScrollTo(lastSection);
+                    }
+                };
+
+                foreach (WikiSection s in value.GetSections())
+                {
+                    sections.Add(s);
+                    sectionsContainer.Add(s);
+                    tabs.AddItem(s);
+                }
             };
 
             currentWikiSet.Value = header.Home;
