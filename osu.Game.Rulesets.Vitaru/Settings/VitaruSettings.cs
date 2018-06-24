@@ -5,8 +5,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Overlays.Settings;
-using Symcol.Rulesets.Core.Wiki;
-using osu.Game.Rulesets.Vitaru.Wiki;
 using Symcol.Rulesets.Core.Rulesets;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -22,11 +20,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
     {
         protected override string Header => "vitaru!";
 
-        public override WikiOverlay Wiki => vitaruWiki;
-
         public override RulesetLobbyItem RulesetLobbyItem => vitaruLobby;
-
-        private readonly VitaruWikiOverlay vitaruWiki = new VitaruWikiOverlay();
 
         private readonly VitaruLobbyItem vitaruLobby = new VitaruLobbyItem();
 
@@ -170,11 +164,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                             Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.GoodFPS)
                         }
                     } 
-                },
-                new SettingsButton
-                {
-                    Text = "Open In-game Wiki",
-                    Action = vitaruWiki.Show
                 },
                 new SettingsCheckbox
                 {

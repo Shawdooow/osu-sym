@@ -1,4 +1,5 @@
 ﻿using osu.Framework.Graphics.Textures;
+using osu.Game.Rulesets.Vitaru.Wiki.Sections;
 using Symcol.osu.Core.Wiki;
 using Symcol.osu.Core.Wiki.Sections;
 
@@ -8,7 +9,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
     {
         public override string Name => "vitaru!";
 
-        public override string Description => "vitaru! is a 3rd party ruleset for osu!lazer.";
+        public override string Description => "vitaru! is a 3rd party ruleset developed for osu!lazer. It is a \"Dodge the Beat\" style ruleset where projectiles will be flying towards you while you must avoid them.";
 
         public override string IndexTooltip => "official vitaru wiki!";
 
@@ -18,7 +19,15 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
 
         public override WikiSection[] GetSections() => new WikiSection[]
         {
-            new General(), 
+            new GeneralSection(),
+            new GamemodeSection(),
+            new CharactersSection(),
+            new EditorSection(),
+            new MappingSection(),
+            new MultiplayerSection(),
+            new CodeSection(),
+            new CreditsSection(),
+            new ChangelogSection()
         };
     }
 }

@@ -2,7 +2,10 @@
 using osu.Framework.Configuration;
 using osu.Game.Rulesets.Vitaru.Edit;
 using osu.Game.Rulesets.Vitaru.Settings;
-using Symcol.Rulesets.Core.Wiki;
+using Symcol.osu.Core.Wiki.Sections;
+using Symcol.osu.Core.Wiki.Sections.OptionExplanations;
+using Symcol.osu.Core.Wiki.Sections.SectionPieces;
+using Symcol.osu.Core.Wiki.Sections.Subsection;
 
 namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 {

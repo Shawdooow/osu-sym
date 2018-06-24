@@ -1,13 +1,16 @@
 ﻿using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics.Containers;
-using Symcol.Rulesets.Core.Wiki;
 using osu.Framework.Graphics;
 using OpenTK;
 using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Sprites;
+using Symcol.osu.Core.Wiki.Sections;
+using Symcol.osu.Core.Wiki.Sections.OptionExplanations;
+using Symcol.osu.Core.Wiki.Sections.SectionPieces;
+using Symcol.osu.Core.Wiki.Sections.Subsection;
 
 namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 {
