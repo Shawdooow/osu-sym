@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using OpenTK.Graphics;
-using Symcol.osu.Core.Wiki.OverlayPieces;
 
 namespace Symcol.osu.Core.Containers.Text
 {
@@ -38,11 +38,13 @@ namespace Symcol.osu.Core.Containers.Text
 
         public ClickableOsuSpriteText()
         {
+            OsuColour osu = new OsuColour();
             base.Colour = Color4.White;
 
             AddInternal(HoverContainer = new PaintableHoverContainer
             {
                 AutoSizeAxes = Axes.Both,
+                HoverColour = osu.Blue
             });
         }
     }
