@@ -1,4 +1,6 @@
 ﻿using osu.Framework.Graphics;
+using osu.Framework.Graphics.Textures;
+using osu.Framework.IO.Stores;
 using osu.Game.Screens;
 using OpenTK;
 using OpenTK.Graphics;
@@ -25,5 +27,20 @@ namespace Symcol.osu.Mods.CasterBible
         public override OsuScreen GetMenuScreen() => new CasterBibleScreen();
 
         public override WikiSet GetWikiSet() => new CasterWikiSet();
+
+        public static ResourceStore<byte[]> CasterResources;
+        public static TextureStore CasterTextures;
+
+        public CasterBibleModSet()
+        {
+            if (CasterResources == null)
+            {
+                CasterResources = new ResourceStore<byte[]>();
+                CasterResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("Symcol.osu.Mods.CasterBible.dll"), "Assets"));
+                CasterResources.AddStore(new DllResourceStore("Symcol.osu.Mods.CasterBible.dll"));
+                CasterTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(CasterResources, @"Textures")));
+                CasterTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
+            }
+        }
     }
 }
