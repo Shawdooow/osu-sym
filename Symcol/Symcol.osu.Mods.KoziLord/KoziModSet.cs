@@ -21,6 +21,6 @@ namespace Symcol.osu.Mods.KoziLord
             ButtonPosition = new Vector2(-180, -20),
         };
 
-        public override OsuScreen GetMenuScreen() => new Screens.KoziScreen();
+        public override OsuScreen GetMenuScreen() => new KoziScreen();
     }
 }

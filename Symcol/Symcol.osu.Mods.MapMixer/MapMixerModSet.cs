@@ -4,10 +4,11 @@ using OpenTK;
 using OpenTK.Graphics;
 using Symcol.osu.Core.Containers.Shawdooow;
 using Symcol.osu.Core.SymcolMods;
+using Symcol.osu.Core.Wiki;
 
-namespace Symcol.osu.Mods.Shawdooow
+namespace Symcol.osu.Mods.MapMixer
 {
-    public class ShawdoooowModSet : SymcolModSet
+    public class MapMixerModSet : SymcolModSet
     {
         public override SymcolButton GetMenuButton() => new SymcolButton
         {
@@ -22,5 +23,7 @@ namespace Symcol.osu.Mods.Shawdooow
         };
 
         public override OsuScreen GetMenuScreen() => new MapMixer();
+
+        public override WikiSet GetWikiSet() => new MapMixerWikiSet();
     }
 }

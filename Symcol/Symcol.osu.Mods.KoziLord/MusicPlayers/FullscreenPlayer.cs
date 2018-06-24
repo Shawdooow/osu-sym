@@ -11,11 +11,11 @@ using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using OpenTK;
 using OpenTK.Graphics;
+using Symcol.osu.Core.Screens.Evast;
 using Symcol.osu.Mods.Evast.MusicVisualizers;
 using Symcol.osu.Mods.Evast.Visualizers;
-using Symcol.osu.Core.Screens.Evast;
 
-namespace Symcol.osu.Mods.KoziLord.Screens.MusicPlayer
+namespace Symcol.osu.Mods.KoziLord.MusicPlayers
 {
 
     //TODO: Adding media controls and the entry animation entry animation.

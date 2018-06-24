@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Logging;
 using osu.Game;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
@@ -133,12 +134,15 @@ namespace Symcol.osu.Core.Wiki
                     }
                 };
 
-                foreach (WikiSection s in value.GetSections())
-                {
-                    sections.Add(s);
-                    sectionsContainer.Add(s);
-                    tabs.AddItem(s);
-                }
+                if (value.GetSections() != null)
+                    foreach (WikiSection s in value.GetSections())
+                    {
+                        sections.Add(s);
+                        sectionsContainer.Add(s);
+                        tabs.AddItem(s);
+                    }
+                else
+                    Logger.Log("\"" + value.Name + "\"" + " wiki sections are null, please report to the mod/ruleset creator!", LoggingTarget.Runtime, LogLevel.Error);
             };
 
             currentWikiSet.Value = header.Home;

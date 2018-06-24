@@ -9,10 +9,10 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using OpenTK;
 using OpenTK.Graphics;
-using Symcol.osu.Mods.KoziLord.Screens.MusicPlayer;
 using Symcol.osu.Core.Screens.Evast;
+using Symcol.osu.Mods.KoziLord.MusicPlayers;
 
-namespace Symcol.osu.Mods.KoziLord.Screens
+namespace Symcol.osu.Mods.KoziLord
 {
     public class KoziScreen : BeatmapScreen
     {

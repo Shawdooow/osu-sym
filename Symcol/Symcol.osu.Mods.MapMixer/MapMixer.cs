@@ -19,7 +19,7 @@ using Symcol.osu.Core.Containers.Shawdooow;
 using Symcol.osu.Core.Screens.Evast;
 using Symcol.osu.Mods.Evast.Visualizers;
 
-namespace Symcol.osu.Mods.Shawdooow
+namespace Symcol.osu.Mods.MapMixer
 {
     public class MapMixer : BeatmapScreen
     {
