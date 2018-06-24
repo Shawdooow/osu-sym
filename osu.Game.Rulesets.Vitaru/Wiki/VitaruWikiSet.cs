@@ -8,6 +8,8 @@ namespace osu.Game.Rulesets.Vitaru.Wiki
     {
         public override string Name => "vitaru!";
 
+        public override string Description => "vitaru! is a 3rd party ruleset for osu!lazer.";
+
         public override string IndexTooltip => "official vitaru wiki!";
 
         public override Texture Icon => VitaruRuleset.VitaruTextures.Get("icon@2x");

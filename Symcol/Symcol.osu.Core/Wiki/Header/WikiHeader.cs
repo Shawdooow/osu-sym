@@ -3,6 +3,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using OpenTK.Graphics;
 using Symcol.osu.Core.Wiki.Index;
@@ -19,6 +20,7 @@ namespace Symcol.osu.Core.Wiki.Header
         private readonly BufferedContainer backgroundBlurContainer;
         private readonly Sprite background;
         private readonly Sprite icon;
+        private readonly OsuTextFlowContainer description;
 
         private readonly BreadcrumbControl<BreadCrumbState> breadcrumbs;
         private readonly WikiIndex index;
@@ -63,7 +65,15 @@ namespace Symcol.osu.Core.Wiki.Header
                     RelativeSizeAxes = Axes.X,
                     Width = 0.5f
                 },
-                index = new WikiIndex()
+                index = new WikiIndex(),
+                description = new OsuTextFlowContainer(t => { t.TextSize = 32; })
+                {
+                    Anchor = Anchor.CentreRight,
+                    Origin = Anchor.CentreRight,
+
+                    RelativeSizeAxes = Axes.Both,
+                    Width = 0.25f
+                }
             };
 
             breadcrumbs.Current.ValueChanged += value =>
@@ -80,6 +90,8 @@ namespace Symcol.osu.Core.Wiki.Header
 
             CurrentWikiSet.ValueChanged += value =>
             {
+                description.Text = value.Description;
+
                 if (value.HeaderBackground != null)
                     background.Texture = value.HeaderBackground;
 
