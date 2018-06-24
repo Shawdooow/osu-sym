@@ -1,6 +1,7 @@
 // Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using System.Linq;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
@@ -58,7 +59,7 @@ namespace osu.Game.Screens.Menu
                             OnEdit = delegate { Push(new Editor()); },
                             OnSolo = delegate { Push(consumeSongSelect()); },
                             OnMulti = delegate { Push(new Multiplayer()); },
-                            OnMod = delegate { Push(ModStore.GetModSet().GetMenuScreen()); },
+                            OnMod = delegate { Push(ModStore.ModSets.First().GetMenuScreen()); },
                             OnExit = Exit,
                         }
                     }

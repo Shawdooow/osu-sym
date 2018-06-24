@@ -36,6 +36,23 @@ namespace Symcol.osu.Core.SymcolMods
                 }
             }
 
+            foreach (string file in Directory.GetFiles(Environment.CurrentDirectory, $"osu.Game.Rulesets.*.dll"))
+            {
+                var filename = Path.GetFileNameWithoutExtension(file);
+
+                if (loadedAssemblies.Values.Any(t => t.Namespace == filename)) return;
+
+                try
+                {
+                    var assembly = Assembly.LoadFrom(file);
+                    loadedAssemblies[assembly] = assembly.GetTypes().First(t => t.IsPublic && t.IsSubclassOf(typeof(SymcolModSet)));
+                }
+                catch (Exception)
+                {
+                    Logger.Log("Error loading a modset from a ruleset!", LoggingTarget.Runtime, LogLevel.Error);
+                }
+            }
+
             var instances = loadedAssemblies.Values.Select(g => (SymcolModSet)Activator.CreateInstance(g)).ToList();
 
             //add any other mods

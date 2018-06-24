@@ -8,6 +8,7 @@ using OpenTK;
 using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
 using Symcol.osu.Core.Containers;
+using Symcol.osu.Core.Containers.Text;
 
 namespace Symcol.Rulesets.Core.Wiki
 {
@@ -35,12 +36,11 @@ namespace Symcol.Rulesets.Core.Wiki
         private const float header_margin = 50;
         private const float rulesetname_height = 60;
 
-        public WikiHeader()
+        protected WikiHeader()
         {
             Masking = true;
             RelativeSizeAxes = Axes.X;
             Height = header_margin + icon_size + rulesetname_height;
-
 
             var user = Creator;
             bool maintainer = false;
@@ -75,7 +75,7 @@ namespace Symcol.Rulesets.Core.Wiki
                     Origin = Anchor.TopLeft,
                     Texture = RulesetIcon
                 },
-                new LinkText
+                new LinkOsuSpriteText
                 {
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,
@@ -91,7 +91,7 @@ namespace Symcol.Rulesets.Core.Wiki
                     Origin = Anchor.TopLeft,
                     Position = new Vector2(10, icon_size + rulesetname_height),
                 },
-                new LinkText
+                new LinkOsuSpriteText
                 {
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,

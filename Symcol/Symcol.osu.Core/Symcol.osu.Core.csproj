@@ -18,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Containers\Evast\" />
+    <Folder Include="Wiki\Index\IndexPieces\" />
     <Folder Include="Wiki\OverlayPieces\" />
   </ItemGroup>
 </Project>

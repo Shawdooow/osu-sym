@@ -1,10 +1,10 @@
 ﻿using osu.Framework.Graphics;
 using osu.Game.Graphics;
-using osu.Game.Graphics.Sprites;
+using Symcol.osu.Core.Containers.Text;
 
 namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
 {
-    public class WikiSubSectionHeader : OsuSpriteText
+    public class WikiSubSectionHeader : ClickableOsuSpriteText
     {
         public WikiSubSectionHeader(string text)
         {

@@ -1,11 +1,12 @@
 ﻿using osu.Game.Users;
+using Symcol.osu.Core.Containers.Text;
 
 namespace Symcol.osu.Core.Containers
 {
     /// <summary>
     /// TODO: make this more generic
     /// </summary>
-    public class ProfileLink : LinkText
+    public class ProfileLink : LinkOsuSpriteText
     {
         public override string Tooltip => "View profile in browser";
 

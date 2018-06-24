@@ -1,4 +1,5 @@
-﻿using osu.Framework.Allocation;
+﻿using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -7,21 +8,25 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using OpenTK.Graphics;
+using Symcol.osu.Core.Wiki.Header;
+using Symcol.osu.Core.Wiki.Index;
 using Symcol.osu.Core.Wiki.Sections;
+using osu.Game.Graphics.UserInterface;
 
 namespace Symcol.osu.Core.Wiki
 {
     //The wiki is my GREATEST POWER!
     public class WikiOverlay : WaveOverlayContainer
     {
-        public const float CONTENT_X_MARGIN = 100;
+        public const float CONTENT_X_MARGIN = 80;
 
-        //private WikiHeader header;
-        //private WikiSection[] sections;
+        private WikiHeader header;
+        private WikiSection[] sections;
 
+        private WikiSection lastSection;
+        private SectionsContainer<WikiSection> sectionsContainer;
         private WikiTabControl tabs;
 
         private OsuGame game;
@@ -36,6 +41,7 @@ namespace Symcol.osu.Core.Wiki
             RelativeSizeAxes = Axes.Both;
             RelativePositionAxes = Axes.Both;
             Width = 0.85f;
+
             Anchor = Anchor.TopCentre;
             Origin = Anchor.TopCentre;
 
@@ -49,6 +55,17 @@ namespace Symcol.osu.Core.Wiki
                 Radius = 10
             };
 
+            Add(new Box
+            {
+                RelativeSizeAxes = Axes.Both,
+                Colour = OsuColour.Gray(0.2f)
+            });
+
+            header = new WikiHeader
+            {
+
+            };
+
             tabs = new WikiTabControl
             {
                 RelativeSizeAxes = Axes.X,
@@ -57,22 +74,18 @@ namespace Symcol.osu.Core.Wiki
                 Height = 30
             };
 
-            Add(new Box
+            AddRange(new Drawable[]
             {
-                RelativeSizeAxes = Axes.Both,
-                Colour = OsuColour.Gray(0.2f)
-            });
-
-            /*
-            Add(sectionsContainer = new SectionsContainer<WikiSection>
-            {
-                RelativeSizeAxes = Axes.Both,
-                ExpandableHeader = Header,
-                FixedHeader = tabs,
-                HeaderBackground = new Box
+                sectionsContainer = new SectionsContainer<WikiSection>
                 {
-                    Colour = OsuColour.Gray(34),
-                    RelativeSizeAxes = Axes.Both
+                    RelativeSizeAxes = Axes.Both,
+                    ExpandableHeader = header,
+                    FixedHeader = tabs,
+                    HeaderBackground = new Box
+                    {
+                        Colour = OsuColour.Gray(34),
+                        RelativeSizeAxes = Axes.Both
+                    }
                 }
             });
 
@@ -81,17 +94,18 @@ namespace Symcol.osu.Core.Wiki
                 if (lastSection != s)
                 {
                     lastSection = s;
-                    tabs.Current.Value = lastSection;
+                    //index.Current.Value = lastSection;
                 }
             };
 
-            tabs.Current.ValueChanged += s =>
+            /*
+            index.Current.ValueChanged += s =>
             {
                 if (lastSection == null)
                 {
                     lastSection = sectionsContainer.Children.FirstOrDefault();
                     if (lastSection != null)
-                        tabs.Current.Value = lastSection;
+                        index.Current.Value = lastSection;
                     return;
                 }
                 if (lastSection != s)

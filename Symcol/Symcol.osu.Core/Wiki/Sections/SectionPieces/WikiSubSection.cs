@@ -4,23 +4,20 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using OpenTK;
 using Symcol.osu.Core.Containers.Text;
-using Symcol.osu.Core.Wiki.Sections.SectionPieces;
 
-namespace Symcol.osu.Core.Wiki.Sections
+namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
 {
-    public abstract class WikiSection : FillFlowContainer
+    public abstract class WikiSubSection : FillFlowContainer
     {
         public abstract string Title { get; }
 
-        public readonly ClickableOsuSpriteText SectionHeaderText;
-
-        public virtual WikiSubSection[] SubSections => null;
+        public readonly ClickableOsuSpriteText SubSectionHeaderText;
 
         private readonly FillFlowContainer content;
 
         protected override Container<Drawable> Content => content;
 
-        protected WikiSection()
+        protected WikiSubSection()
         {
             OsuColour osu = new OsuColour();
             Direction = FillDirection.Vertical;
@@ -28,7 +25,7 @@ namespace Symcol.osu.Core.Wiki.Sections
             RelativeSizeAxes = Axes.X;
             InternalChildren = new Drawable[]
             {
-                SectionHeaderText = new ClickableOsuSpriteText
+                SubSectionHeaderText = new ClickableOsuSpriteText
                 {
                     Colour = osu.Yellow,
                     Text = Title,

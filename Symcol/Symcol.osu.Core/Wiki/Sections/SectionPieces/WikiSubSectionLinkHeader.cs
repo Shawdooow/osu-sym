@@ -1,10 +1,10 @@
 ﻿using osu.Framework.Graphics;
 using osu.Game.Graphics;
-using Symcol.osu.Core.Containers;
+using Symcol.osu.Core.Containers.Text;
 
 namespace Symcol.osu.Core.Wiki.Sections.SectionPieces
 {
-    public class WikiSubSectionLinkHeader : LinkText
+    public class WikiSubSectionLinkHeader : LinkOsuSpriteText
     {
         public override string Tooltip => tooltip;
 

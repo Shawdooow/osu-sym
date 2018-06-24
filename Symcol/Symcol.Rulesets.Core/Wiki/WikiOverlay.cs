@@ -9,6 +9,8 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using System.Linq;
+using osu.Framework.Allocation;
+using osu.Game;
 
 namespace Symcol.Rulesets.Core.Wiki
 {
@@ -20,6 +22,8 @@ namespace Symcol.Rulesets.Core.Wiki
         private WikiSection lastSection;
         private SectionsContainer<WikiSection> sectionsContainer;
         private WikiTabControl tabs;
+
+        private OsuGame game;
 
         public const float CONTENT_X_MARGIN = 100;
 
@@ -108,6 +112,12 @@ namespace Symcol.Rulesets.Core.Wiki
             sectionsContainer.ScrollToTop();
         }
 
+        [BackgroundDependencyLoader]
+        private void load(OsuGame game)
+        {
+            this.game = game;
+        }
+
         protected override void PopIn()
         {
             base.PopIn();
@@ -118,6 +128,13 @@ namespace Symcol.Rulesets.Core.Wiki
         {
             base.PopOut();
             FadeEdgeEffectTo(0, WaveContainer.DISAPPEAR_DURATION, Easing.Out);
+        }
+
+        protected override void UpdateAfterChildren()
+        {
+            base.UpdateAfterChildren();
+
+            Padding = new MarginPadding { Top = game.ToolbarOffset };
         }
 
         private class WikiTabControl : PageTabControl<WikiSection>
