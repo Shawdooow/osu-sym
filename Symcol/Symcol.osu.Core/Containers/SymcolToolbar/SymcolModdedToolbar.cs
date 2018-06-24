@@ -46,7 +46,8 @@ namespace Symcol.osu.Core.Containers.SymcolToolbar
                     AutoSizeAxes = Axes.X,
                     Children = new Drawable[]
                     {
-                        new ToolbarSystemClock(), 
+                        new ToolbarSystemClock(),
+                        new ToolBarWikiButton(), 
                         new ToolbarDirectButton(),
                         new ToolbarChatButton(),
                         new ToolbarSocialButton(),
