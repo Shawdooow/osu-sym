@@ -8,6 +8,7 @@ using osu.Game.Graphics.UserInterface;
 using OpenTK.Graphics;
 using Symcol.osu.Core.Wiki.Index;
 using Container = osu.Framework.Graphics.Containers.Container;
+using Symcol.osu.Core.Wiki.HomeWiki;
 
 namespace Symcol.osu.Core.Wiki.Header
 {

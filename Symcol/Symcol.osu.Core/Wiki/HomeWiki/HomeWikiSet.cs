@@ -1,7 +1,7 @@
 ﻿using osu.Framework.Graphics.Textures;
 using Symcol.osu.Core.Wiki.Sections;
 
-namespace Symcol.osu.Core.Wiki
+namespace Symcol.osu.Core.Wiki.HomeWiki
 {
     public sealed class HomeWikiSet : WikiSet
     {
@@ -13,9 +13,9 @@ namespace Symcol.osu.Core.Wiki
 
         public override Texture HeaderBackground => SymcolOsuModSet.SymcolTextures.Get("symcol spring 2018 1080");
 
-        public override WikiSection[] GetSections()
+        public override WikiSection[] GetSections() => new WikiSection[]
         {
-            throw new System.NotImplementedException();
-        }
+            new WhatIsTheWiki()
+        };
     }
 }

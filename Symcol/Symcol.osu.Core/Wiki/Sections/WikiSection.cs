@@ -62,7 +62,7 @@ namespace Symcol.osu.Core.Wiki.Sections
                 }
             };
 
-            if (Overview != "")
+            if (Overview != null)
                 Content.Add(new WikiParagraph(Overview));
 
             if (GetSubSections() != null)
