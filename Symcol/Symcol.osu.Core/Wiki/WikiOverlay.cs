@@ -13,6 +13,7 @@ using OpenTK.Graphics;
 using Symcol.osu.Core.Wiki.Header;
 using Symcol.osu.Core.Wiki.Sections;
 using osu.Game.Graphics.UserInterface;
+using osu.Framework.Logging;
 
 namespace Symcol.osu.Core.Wiki
 {
@@ -81,6 +82,28 @@ namespace Symcol.osu.Core.Wiki
             });
 
             currentWikiSet.BindTo(header.CurrentWikiSet);
+
+            currentWikiSet.ValueChanged += value =>
+            {
+                try
+                {
+                    restart:
+                    foreach (WikiSection s in sectionsContainer.Children)
+                    {
+                        sectionsContainer.Remove(s);
+                        tabs.Remove(s);
+                        goto restart;
+                    }
+
+                    foreach (WikiSection sec in value.GetSections())
+                    {
+                        sectionsContainer.Add(sec);
+                        tabs.AddItem(sec);
+                    }
+                }
+                catch { Logger.Log("Failed to refresh Wiki properly", LoggingTarget.Runtime, LogLevel.Error); }
+            };
+
             currentWikiSet.Value = header.Home;
         }
 
