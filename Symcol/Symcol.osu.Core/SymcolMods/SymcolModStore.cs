@@ -32,7 +32,7 @@ namespace Symcol.osu.Core.SymcolMods
                 }
                 catch (Exception)
                 {
-                    Logger.Log("Error loading a modset!", LoggingTarget.Runtime, LogLevel.Error);
+                    Logger.Log("Error loading a modset from a mod file! [filename = " + filename + "]", LoggingTarget.Runtime, LogLevel.Error);
                 }
             }
 
@@ -49,7 +49,7 @@ namespace Symcol.osu.Core.SymcolMods
                 }
                 catch (Exception)
                 {
-                    Logger.Log("Error loading a modset from a ruleset!", LoggingTarget.Runtime, LogLevel.Error);
+                    Logger.Log("Error loading a modset from a ruleset (it probably didn't have one [filename = " + filename + "])");
                 }
             }
 

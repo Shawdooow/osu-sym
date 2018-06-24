@@ -3,14 +3,14 @@ using Symcol.osu.Core.Wiki.Sections;
 
 namespace Symcol.osu.Core.Wiki
 {
-    public class WikiSet
+    public abstract class WikiSet
     {
-        public virtual string Name => "";
+        public abstract string Name { get; }
 
         public virtual Texture Icon => null;
 
         public virtual Texture HeaderBackground => null;
 
-        public virtual WikiSection[] GetSections() => null;
+        public abstract WikiSection[] GetSections();
     }
 }

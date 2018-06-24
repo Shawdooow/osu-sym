@@ -2,9 +2,9 @@
 using osu.Game.ModLoader;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Screens;
-using Symcol.osu.Core.Containers;
 using Symcol.osu.Core.Containers.SymcolToolbar;
 using Symcol.osu.Core.Screens;
+using Symcol.osu.Core.SymcolMods;
 using Symcol.osu.Core.Wiki;
 
 namespace Symcol.osu.Core
@@ -20,6 +20,8 @@ namespace Symcol.osu.Core
         public override void LoadComplete(OsuGame game)
         {
             base.LoadComplete(game);
+
+            SymcolModStore.ReloadModSets();
 
             if (WikiOverlay == null)
                 game.Add(WikiOverlay = new WikiOverlay());

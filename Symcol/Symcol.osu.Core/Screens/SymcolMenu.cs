@@ -80,7 +80,6 @@ namespace Symcol.osu.Core.Screens
                 }
             };
 
-            SymcolModStore.ReloadModSets();
             foreach (SymcolModSet set in SymcolModStore.LoadedModSets)
                 if (set.GetMenuButton() != null && set.GetMenuScreen() != null)
                 {

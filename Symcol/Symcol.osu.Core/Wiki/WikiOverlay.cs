@@ -61,18 +61,8 @@ namespace Symcol.osu.Core.Wiki
                 Colour = OsuColour.Gray(0.2f)
             });
 
-            header = new WikiHeader
-            {
-
-            };
-
-            tabs = new WikiTabControl
-            {
-                RelativeSizeAxes = Axes.X,
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.TopCentre,
-                Height = 30
-            };
+            header = new WikiHeader();
+            tabs = new WikiTabControl();
 
             AddRange(new Drawable[]
             {
@@ -88,33 +78,6 @@ namespace Symcol.osu.Core.Wiki
                     }
                 }
             });
-
-            sectionsContainer.SelectedSection.ValueChanged += s =>
-            {
-                if (lastSection != s)
-                {
-                    lastSection = s;
-                    //index.Current.Value = lastSection;
-                }
-            };
-
-            /*
-            index.Current.ValueChanged += s =>
-            {
-                if (lastSection == null)
-                {
-                    lastSection = sectionsContainer.Children.FirstOrDefault();
-                    if (lastSection != null)
-                        index.Current.Value = lastSection;
-                    return;
-                }
-                if (lastSection != s)
-                {
-                    lastSection = s;
-                    sectionsContainer.ScrollTo(lastSection);
-                }
-            };
-            */
         }
 
         [BackgroundDependencyLoader]
@@ -146,6 +109,11 @@ namespace Symcol.osu.Core.Wiki
         {
             public WikiTabControl()
             {
+                RelativeSizeAxes = Axes.X;
+                Anchor = Anchor.TopCentre;
+                Origin = Anchor.TopCentre;
+                Height = 30;
+
                 TabContainer.RelativeSizeAxes &= ~Axes.X;
                 TabContainer.AutoSizeAxes |= Axes.X;
                 TabContainer.Anchor |= Anchor.x1;

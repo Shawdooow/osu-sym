@@ -9,7 +9,7 @@ namespace Symcol.osu.Core.Containers.SymcolToolbar
         {
             SetIcon(FontAwesome.fa_chevron_circle_up);
             StateContainer = SymcolOsuModSet.WikiOverlay;
-            TooltipMain = "Wiki Overlay";
+            TooltipMain = "Wiki";
             TooltipSub = "documenting the game, ya know?";
         }
     }

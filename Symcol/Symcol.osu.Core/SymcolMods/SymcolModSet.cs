@@ -10,6 +10,6 @@ namespace Symcol.osu.Core.SymcolMods
 
         public virtual OsuScreen GetMenuScreen() => null;
 
-        public virtual WikiSet GetWikiSet() => new WikiSet();
+        public virtual WikiSet GetWikiSet() => null;
     }
 }
