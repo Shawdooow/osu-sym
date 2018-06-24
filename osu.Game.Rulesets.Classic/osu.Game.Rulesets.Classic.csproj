@@ -8,6 +8,11 @@
     <Description>click the classic circles. to the beat.</Description>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Wiki\**" />
+    <EmbeddedResource Remove="Wiki\**" />
+    <None Remove="Wiki\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Assets\Samples\combobreak.mp3" />
     <None Remove="Assets\Textures\approachcircle%402x.png" />
     <None Remove="Assets\Textures\comboburst%402x.png" />

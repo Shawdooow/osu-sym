@@ -10,6 +10,11 @@
     <Company>Symcol</Company>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Wiki\**" />
+    <EmbeddedResource Remove="Wiki\**" />
+    <None Remove="Wiki\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Assets\Textures\icon%402x.png" />
     <None Remove="Assets\Textures\mix BG.png" />
   </ItemGroup>
