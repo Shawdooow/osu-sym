@@ -1,6 +1,7 @@
 ﻿using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using OpenTK;
@@ -8,7 +9,7 @@ using OpenTK.Graphics;
 using Symcol.Core.Graphics.Containers;
 using Symcol.osu.Core.Wiki.OverlayPieces;
 
-namespace Symcol.osu.Core.Wiki.Index
+namespace Symcol.osu.Core.Wiki.Header
 {
     public class WikiIndex : SymcolContainer
     {
@@ -24,10 +25,16 @@ namespace Symcol.osu.Core.Wiki.Index
             Origin = Anchor.BottomLeft;
 
             RelativeSizeAxes = Axes.Y;
-            Size = new Vector2(80, 0.88f);
+            Size = new Vector2(100, 0.72f);
 
             Children = new Drawable[]
             {
+                new Box
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = Color4.Black,
+                    Alpha = 0.5f
+                },
                 new OsuSpriteText
                 {
                     Anchor = Anchor.TopLeft,
@@ -42,7 +49,7 @@ namespace Symcol.osu.Core.Wiki.Index
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
                     RelativeSizeAxes = Axes.Both,
-                    Height = 0.9f
+                    Height = 0.84f
                 }
             };
 

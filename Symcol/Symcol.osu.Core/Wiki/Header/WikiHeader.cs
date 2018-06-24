@@ -4,9 +4,10 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Containers;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using OpenTK;
 using OpenTK.Graphics;
-using Symcol.osu.Core.Wiki.Index;
 using Container = osu.Framework.Graphics.Containers.Container;
 using Symcol.osu.Core.Wiki.HomeWiki;
 
@@ -19,6 +20,8 @@ namespace Symcol.osu.Core.Wiki.Header
         public readonly HomeWikiSet Home = new HomeWikiSet();
 
         private readonly BufferedContainer backgroundBlurContainer;
+
+        private readonly OsuSpriteText name;
         private readonly Sprite background;
         private readonly Sprite icon;
         private readonly OsuTextFlowContainer description;
@@ -59,10 +62,18 @@ namespace Symcol.osu.Core.Wiki.Header
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                 },
+                name = new OsuSpriteText
+                {
+                    Anchor = Anchor.TopLeft,
+                    Origin = Anchor.TopLeft,
+                    TextSize = 48
+                },
                 breadcrumbs = new BreadcrumbControl<BreadCrumbState>
                 {
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,
+
+                    Position = new Vector2(0, 48),
                     RelativeSizeAxes = Axes.X,
                     Width = 0.5f
                 },
@@ -91,6 +102,7 @@ namespace Symcol.osu.Core.Wiki.Header
 
             CurrentWikiSet.ValueChanged += value =>
             {
+                name.Text = value.Name;
                 description.Text = value.Description;
 
                 if (value.HeaderBackground != null)

@@ -28,6 +28,5 @@
     <Folder Include="Assets\Samples\" />
     <Folder Include="Assets\Tracks\" />
     <Folder Include="Containers\Evast\" />
-    <Folder Include="Wiki\Index\IndexPieces\" />
   </ItemGroup>
 </Project>
