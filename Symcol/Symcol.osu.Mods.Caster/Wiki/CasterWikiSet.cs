@@ -6,11 +6,11 @@ namespace Symcol.osu.Mods.Caster.Wiki
 {
     public class CasterWikiSet : WikiSet
     {
-        public override string Name => "Caster Bible";
+        public override string Name => "Caster";
 
-        public override string Description => "The caster bible aims to make the casters' lives easier by making it much easier to archive and share important information about tournements.";
+        public override string Description => "The caster aims to make the casters' lives easier by making it much easier to archive and share important information about tournements.";
 
-        public override string IndexTooltip => "the caster bible wiki!";
+        public override string IndexTooltip => "the caster mod wiki!";
 
         public override Texture Icon => CasterModSet.CasterTextures.Get("Casters icon 1080");
 
