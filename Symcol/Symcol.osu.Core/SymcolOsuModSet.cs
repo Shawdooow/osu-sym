@@ -50,10 +50,8 @@ namespace Symcol.osu.Core
                 SymcolAudio = new AudioManager(tracks, samples);
 
                 LazerResources = new ResourceStore<byte[]>();
-                LazerResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Game.Resources.dll"), ""));
-                LazerResources.AddStore(new DllResourceStore("osu.Game.Resources.dll"));
+                LazerResources.AddStore(new DllResourceStore(@"osu.Game.Resources.dll"));
                 LazerTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(LazerResources, @"Textures")));
-                LazerTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
             }
 
             SymcolModStore.ReloadModSets();

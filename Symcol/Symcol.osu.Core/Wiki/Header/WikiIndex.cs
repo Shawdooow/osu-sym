@@ -91,7 +91,7 @@ namespace Symcol.osu.Core.Wiki.Header
                 OsuColour osu = new OsuColour();
                 WikiClickableOsuSpriteText button = new WikiClickableOsuSpriteText
                 {
-                    Text = set.Name,
+                    Text = set.Name + "                ",
                     Tooltip = set.IndexTooltip,
                     TextSize = 18,
                 };

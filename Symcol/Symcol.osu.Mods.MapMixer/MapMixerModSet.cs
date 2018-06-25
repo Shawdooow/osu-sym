@@ -24,6 +24,6 @@ namespace Symcol.osu.Mods.MapMixer
 
         public override OsuScreen GetMenuScreen() => new MapMixer();
 
-        public override WikiSet GetWikiSet() => new MapMixerWikiSet();
+        //public override WikiSet GetWikiSet() => new MapMixerWikiSet();
     }
 }
