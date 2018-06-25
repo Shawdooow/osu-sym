@@ -1,4 +1,5 @@
 ﻿using osu.Framework.Graphics.Textures;
+using Symcol.osu.Core.IncludedWikis.Lazer.Sections;
 using Symcol.osu.Core.Wiki;
 using Symcol.osu.Core.Wiki.Sections;
 
@@ -18,7 +19,8 @@ namespace Symcol.osu.Core.IncludedWikis.Lazer
 
         public override WikiSection[] GetSections() => new WikiSection[]
         {
-            new WhatIsLazer(), 
+            new WhatsChanged(),
+            new WhatsNew(), 
         };
     }
 }
