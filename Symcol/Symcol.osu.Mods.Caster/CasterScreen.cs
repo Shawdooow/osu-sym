@@ -1,6 +1,7 @@
 ﻿using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Screens;
+using OpenTK;
 using Symcol.Core.Graphics.Containers;
 
 namespace Symcol.osu.Mods.Caster
@@ -16,8 +17,8 @@ namespace Symcol.osu.Mods.Caster
                 new CasterSideBar(),
                 new SymcolContainer
                 {
-                    RelativeSizeAxes = Axes.Both
-
+                    RelativeSizeAxes = Axes.Both,
+                    Size = new Vector2(0.8f, 0.98f)
                 }
             };
         }
