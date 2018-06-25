@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.osu.Mods.Evast", "Sy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.osu.Mods.KoziLord", "Symcol\Symcol.osu.Mods.KoziLord\Symcol.osu.Mods.KoziLord.csproj", "{F3500297-9AA7-4DDC-8EDF-EFB5D45F3199}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.osu.Mods.CasterBible", "Symcol\Symcol.osu.Mods.CasterBible\Symcol.osu.Mods.CasterBible.csproj", "{2DF027A9-1B44-4CA7-BDBB-05021AA44832}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.osu.Mods.Caster", "Symcol\Symcol.osu.Mods.Caster\Symcol.osu.Mods.Caster.csproj", "{2DF027A9-1B44-4CA7-BDBB-05021AA44832}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

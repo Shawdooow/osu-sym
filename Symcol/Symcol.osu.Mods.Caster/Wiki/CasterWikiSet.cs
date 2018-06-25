@@ -2,7 +2,7 @@
 using Symcol.osu.Core.Wiki;
 using Symcol.osu.Core.Wiki.Sections;
 
-namespace Symcol.osu.Mods.CasterBible.Wiki
+namespace Symcol.osu.Mods.Caster.Wiki
 {
     public class CasterWikiSet : WikiSet
     {
@@ -12,9 +12,9 @@ namespace Symcol.osu.Mods.CasterBible.Wiki
 
         public override string IndexTooltip => "the caster bible wiki!";
 
-        public override Texture Icon => CasterBibleModSet.CasterTextures.Get("Casters icon 1080");
+        public override Texture Icon => CasterModSet.CasterTextures.Get("Casters icon 1080");
 
-        public override Texture HeaderBackground => CasterBibleModSet.CasterTextures.Get("Casters");
+        public override Texture HeaderBackground => CasterModSet.CasterTextures.Get("Casters");
 
         public override WikiSection[] GetSections() => new WikiSection[]
         {

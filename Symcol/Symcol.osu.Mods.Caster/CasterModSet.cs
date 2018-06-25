@@ -7,37 +7,37 @@ using OpenTK.Graphics;
 using Symcol.osu.Core.Containers.Shawdooow;
 using Symcol.osu.Core.SymcolMods;
 using Symcol.osu.Core.Wiki;
-using Symcol.osu.Mods.CasterBible.Wiki;
+using Symcol.osu.Mods.Caster.Wiki;
 
-namespace Symcol.osu.Mods.CasterBible
+namespace Symcol.osu.Mods.Caster
 {
-    public class CasterBibleModSet : SymcolModSet
+    public class CasterModSet : SymcolModSet
     {
         public override SymcolButton GetMenuButton() => new SymcolButton
         {
-            ButtonName = "Caster Bible",
+            ButtonName = "Caster",
             Origin = Anchor.Centre,
             Anchor = Anchor.Centre,
-            ButtonColorTop = Color4.Yellow,
-            ButtonColorBottom = Color4.Green,
+            ButtonColorTop = Color4.BlueViolet,
+            ButtonColorBottom = Color4.Cyan,
             ButtonSize = 100,
             ButtonPosition = new Vector2(40, -200),
         };
 
-        public override OsuScreen GetMenuScreen() => new CasterBibleScreen();
+        public override OsuScreen GetMenuScreen() => new CasterScreen();
 
         public override WikiSet GetWikiSet() => new CasterWikiSet();
 
         public static ResourceStore<byte[]> CasterResources;
         public static TextureStore CasterTextures;
 
-        public CasterBibleModSet()
+        public CasterModSet()
         {
             if (CasterResources == null)
             {
                 CasterResources = new ResourceStore<byte[]>();
-                CasterResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("Symcol.osu.Mods.CasterBible.dll"), "Assets"));
-                CasterResources.AddStore(new DllResourceStore("Symcol.osu.Mods.CasterBible.dll"));
+                CasterResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("Symcol.osu.Mods.Caster.dll"), "Assets"));
+                CasterResources.AddStore(new DllResourceStore("Symcol.osu.Mods.Caster.dll"));
                 CasterTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(CasterResources, @"Textures")));
                 CasterTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
             }

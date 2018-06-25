@@ -2,7 +2,7 @@
 using Symcol.osu.Core.Wiki.Sections.SectionPieces;
 using Symcol.osu.Core.Wiki.Sections.Subsection;
 
-namespace Symcol.osu.Mods.CasterBible.Wiki
+namespace Symcol.osu.Mods.Caster.Wiki
 {
     public class Credits : WikiSection
     {

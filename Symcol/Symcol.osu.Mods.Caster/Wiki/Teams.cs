@@ -1,6 +1,6 @@
 ﻿using Symcol.osu.Core.Wiki.Sections;
 
-namespace Symcol.osu.Mods.CasterBible.Wiki
+namespace Symcol.osu.Mods.Caster.Wiki
 {
     public class Teams : WikiSection
     {
