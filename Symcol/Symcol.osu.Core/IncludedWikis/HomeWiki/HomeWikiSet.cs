@@ -10,9 +10,9 @@ namespace Symcol.osu.Core.IncludedWikis.HomeWiki
 
         public override string Description => "Welcome to the new wiki!";
 
-        public override Texture Icon => SymcolOsuModSet.SymcolTextures.Get("Symcol@2x");
+        //public override Texture Icon => SymcolOsuModSet.SymcolTextures.Get("Symcol@2x");
 
-        public override Texture HeaderBackground => SymcolOsuModSet.SymcolTextures.Get("symcol spring 2018 1080");
+        public override Texture HeaderBackground => SymcolOsuModSet.LazerTextures.Get("Backgrounds/bg2");
 
         public override WikiSection[] GetSections() => new WikiSection[]
         {

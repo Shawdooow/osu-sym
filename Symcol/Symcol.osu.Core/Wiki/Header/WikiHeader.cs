@@ -6,8 +6,10 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Screens.Menu;
 using OpenTK;
 using OpenTK.Graphics;
+using Symcol.Core.Graphics.Containers;
 using Symcol.osu.Core.IncludedWikis.HomeWiki;
 using Container = osu.Framework.Graphics.Containers.Container;
 
@@ -24,6 +26,7 @@ namespace Symcol.osu.Core.Wiki.Header
         private readonly OsuSpriteText name;
         private readonly Sprite background;
         private readonly Sprite icon;
+        private readonly DeadContainer logo;
         private readonly OsuTextFlowContainer description;
 
         private readonly BreadcrumbControl<BreadCrumbState> breadcrumbs;
@@ -61,6 +64,20 @@ namespace Symcol.osu.Core.Wiki.Header
                     FillMode  = FillMode.Fit,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
+                },
+                logo = new DeadContainer
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    FillMode  = FillMode.Fit,
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+
+                    Child = new OsuLogo
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.6f)
+                    }
                 },
                 name = new OsuSpriteText
                 {
@@ -114,7 +131,16 @@ namespace Symcol.osu.Core.Wiki.Header
                     icon.Texture = value.Icon;
 
                 if (value != Home)
+                {
                     breadcrumbs.Current.Value = BreadCrumbState.Wiki;
+                    icon.Show();
+                    logo.Hide();
+                }
+                else
+                {
+                    icon.Hide();
+                    logo.Show();
+                }
             };
         }
     }
