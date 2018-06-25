@@ -1,4 +1,4 @@
-﻿using Symcol.Rulesets.Core.Wiki;
+﻿using Symcol.osu.Core.Wiki.Sections;
 
 namespace osu.Game.Rulesets.Mix.Wiki.Sections
 {

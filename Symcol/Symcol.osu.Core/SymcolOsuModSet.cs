@@ -20,6 +20,9 @@ namespace Symcol.osu.Core
 
         public override Toolbar GetToolbar() => new SymcolModdedToolbar();
 
+        public static ResourceStore<byte[]> LazerResources;
+        public static TextureStore LazerTextures;
+
         public static ResourceStore<byte[]> SymcolResources;
         public static TextureStore SymcolTextures;
         public static AudioManager SymcolAudio;
@@ -45,6 +48,12 @@ namespace Symcol.osu.Core
                 samples.AddStore(new OnlineStore());
 
                 SymcolAudio = new AudioManager(tracks, samples);
+
+                LazerResources = new ResourceStore<byte[]>();
+                LazerResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Game.Resources.dll"), ""));
+                LazerResources.AddStore(new DllResourceStore("osu.Game.Resources.dll"));
+                LazerTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(LazerResources, @"Textures")));
+                LazerTextures.AddStore(new RawTextureLoaderStore(new OnlineStore()));
             }
 
             SymcolModStore.ReloadModSets();

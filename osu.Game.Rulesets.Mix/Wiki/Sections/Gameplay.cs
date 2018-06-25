@@ -1,5 +1,7 @@
 ﻿using osu.Framework.Allocation;
-using Symcol.Rulesets.Core.Wiki;
+using Symcol.osu.Core.Wiki.Sections;
+using Symcol.osu.Core.Wiki.Sections.SectionPieces;
+using Symcol.osu.Core.Wiki.Sections.Subsection;
 
 namespace osu.Game.Rulesets.Mix.Wiki.Sections
 {

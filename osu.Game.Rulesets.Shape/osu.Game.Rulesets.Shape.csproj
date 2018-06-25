@@ -8,11 +8,6 @@
     <Description>hit the shapes. to the beat.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Wiki\**" />
-    <EmbeddedResource Remove="Wiki\**" />
-    <None Remove="Wiki\**" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Assets\Textures\circle.png" />
     <None Remove="Assets\Textures\icon.png" />
     <None Remove="Assets\Textures\icon@2x.png" />
