@@ -59,7 +59,11 @@ namespace osu.Game.Screens.Menu
                             OnEdit = delegate { Push(new Editor()); },
                             OnSolo = delegate { Push(consumeSongSelect()); },
                             OnMulti = delegate { Push(new Multiplayer()); },
-                            OnMod = delegate { Push(ModStore.ModSets.First().GetMenuScreen()); },
+                            OnMod = delegate
+                            {
+                                if (ModStore.ModSets.Count > 0)
+                                    Push(ModStore.ModSets.First().GetMenuScreen());
+                            },
                             OnExit = Exit,
                         }
                     }

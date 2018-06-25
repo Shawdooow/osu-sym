@@ -270,7 +270,7 @@ namespace osu.Game
                 },
             };
 
-            if (ModStore.ModSets.First().GetToolbar() != null)
+            if (ModStore.ModSets.Count > 0 && ModStore.ModSets.First().GetToolbar() != null)
             {
                 Toolbar = ModStore.ModSets.First().GetToolbar();
                 Toolbar.Depth = -5;
