@@ -1,8 +1,7 @@
 ﻿using osu.Framework.Graphics.Textures;
-using Symcol.osu.Core.Wiki;
 using Symcol.osu.Core.Wiki.Sections;
 
-namespace Symcol.osu.Core.IncludedWikis.Symcol
+namespace Symcol.osu.Core.Wiki.IncludedWikis.Symcol
 {
     public class SymcolWikiSet : WikiSet
     {
