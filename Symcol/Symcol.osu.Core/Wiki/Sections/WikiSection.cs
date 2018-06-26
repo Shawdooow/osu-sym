@@ -13,7 +13,7 @@ namespace Symcol.osu.Core.Wiki.Sections
     {
         public abstract string Title { get; }
 
-        public virtual string Overview { get; }
+        public virtual string Overview => null;
 
         public virtual WikiSubSection[] GetSubSections() => null;
 
