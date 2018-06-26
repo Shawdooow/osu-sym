@@ -6,7 +6,7 @@ namespace Symcol.osu.Mods.Caster.Wiki
 {
     public class CasterWikiSet : WikiSet
     {
-        public override string Name => "Caster";
+        public override string Name => "caster";
 
         public override string Description => "The caster aims to make the casters' lives easier by making it much easier to archive and share important information about tournements.";
 

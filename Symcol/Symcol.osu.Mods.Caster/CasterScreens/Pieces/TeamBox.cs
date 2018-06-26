@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.Sprites;
+using osu.Framework.Logging;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Backgrounds;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using OpenTK;
 using OpenTK.Graphics;
@@ -93,9 +94,9 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
 
         private class Player : EditableOsuSpriteText
         {
-            public readonly string Username;
+            public string Username;
 
-            public readonly int ID;
+            public int ID;
 
             public Player(string username, int id, Bindable<bool> bindable = null)
             {
@@ -108,17 +109,79 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
                 Username = username;
                 ID = id;
 
-                Text = "  " + username;
+                Text = username;
                 TextSize = 32;
 
-                Add(new SpriteIcon
+                OsuSpriteText.Position = new Vector2(18, 0);
+
+                SpriteIcon icon = new SpriteIcon
                 {
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
                     Icon = FontAwesome.fa_chevron_right,
                     Size = new Vector2(TextSize / 2),
                     Colour = Color4.White
-                });
+                };
+
+                OsuTextBox.Width = 0.48f;
+                OsuTextBox idBox = new OsuTextBox
+                {
+                    Alpha = 0,
+                    Anchor = Anchor.TopRight,
+                    Origin = Anchor.TopRight,
+                    RelativeSizeAxes = Axes.X,
+                    Height = TextSize,
+                    Width = 0.48f,
+                    Text = id.ToString()
+                };
+
+                Add(idBox);
+                Add(icon);
+
+                OsuTextBox.OnCommit += (commit, ree) => { Username = commit.Text; };
+
+                idBox.OnCommit += (commit, ree) =>
+                {
+                    try
+                    {
+                        int i = Int32.Parse(commit.Text);
+                        ID = i;
+
+                        string u = $@"https://osu.ppy.sh/users/{i}";
+
+                        OsuSpriteText.Tooltip = u;
+                        OsuSpriteText.Action = () => { Process.Start(u); };
+                    }
+                    catch { Logger.Log(commit.Text + " is not a valid user id!", LoggingTarget.Runtime, LogLevel.Error);}
+                };
+
+                Editable.ValueChanged += edit =>
+                {
+                    icon.Alpha = edit ? 0 : 1;
+                    idBox.Alpha = edit ? 1 : 0;
+
+                    if (!edit)
+                    {
+                        Username = OsuTextBox.Text;
+
+                        try
+                        {
+                            int i = Int32.Parse(idBox.Text);
+                            ID = i;
+
+                            string u = $@"https://osu.ppy.sh/users/{i}";
+
+                            OsuSpriteText.Tooltip = u;
+                            OsuSpriteText.Action = () => { Process.Start(u); };
+                        }
+                        catch
+                        {
+                            Logger.Log(OsuTextBox.Text + " is not a valid user id!", LoggingTarget.Runtime, LogLevel.Error);
+                            idBox.Text = ID.ToString();
+                        }
+                    }
+                };
+                Editable.TriggerChange();
 
                 string url = $@"https://osu.ppy.sh/users/{id}";
 

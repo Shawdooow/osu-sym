@@ -57,6 +57,9 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
             {
                 OsuSpriteText.Alpha = edit ? 0 : 1;
                 OsuTextBox.Alpha = edit ? 1 : 0;
+
+                if (!edit)
+                    OsuSpriteText.Text = OsuTextBox.Text;
             };
             Editable.TriggerChange();
         }
