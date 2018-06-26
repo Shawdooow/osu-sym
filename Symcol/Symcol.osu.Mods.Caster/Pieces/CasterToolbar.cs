@@ -21,7 +21,7 @@ namespace Symcol.osu.Mods.Caster.Pieces
             Origin = Anchor.TopRight;
 
             RelativeSizeAxes = Axes.Both;
-            Size = new Vector2(1 - 0.18f, 0.06f);
+            Size = new Vector2(1 - 0.18f, 0.04f);
 
             AlwaysPresent = true;
 
