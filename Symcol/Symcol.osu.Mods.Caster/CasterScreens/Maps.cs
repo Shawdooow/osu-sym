@@ -1,8 +1,11 @@
-﻿namespace Symcol.osu.Mods.Caster.CasterScreens
+﻿using Symcol.osu.Mods.Caster.Pieces;
+
+namespace Symcol.osu.Mods.Caster.CasterScreens
 {
     public class Maps : CasterSubScreen
     {
-        public Maps() : base(SelectedScreen.Maps)
+        public Maps(CasterControlPanel controlPanel)
+            : base(controlPanel)
         {
         }
     }

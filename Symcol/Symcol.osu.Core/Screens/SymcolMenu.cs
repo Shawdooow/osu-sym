@@ -1,7 +1,6 @@
 ﻿using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
-using osu.Game.Graphics;
 using osu.Game.Screens;
 using osu.Game.Screens.Menu;
 using OpenTK;

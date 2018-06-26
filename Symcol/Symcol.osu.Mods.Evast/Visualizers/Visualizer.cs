@@ -16,6 +16,8 @@ namespace Symcol.osu.Mods.Evast.Visualizers
 {
     public class Visualizer : BeatmapScreen
     {
+        protected override bool HideOverlaysOnEnter => true;
+
         private BeatmapSprite beatmapSprite;
 
         [BackgroundDependencyLoader]
