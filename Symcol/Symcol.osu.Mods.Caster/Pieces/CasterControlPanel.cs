@@ -26,9 +26,12 @@ namespace Symcol.osu.Mods.Caster.Pieces
         public readonly Bindable<string> Year = new Bindable<string>();
         public readonly Bindable<string> Stage = new Bindable<string>();
 
+        public readonly Bindable<bool> Editable = new Bindable<bool>();
+
         private readonly SettingsDropdown<string> cup;
         private readonly SettingsDropdown<string> year;
         private readonly SettingsDropdown<string> stage;
+
 
         private Storage storage;
 
@@ -62,6 +65,11 @@ namespace Symcol.osu.Mods.Caster.Pieces
 
                         Children = new Drawable[]
                         {
+                            new SettingsCheckbox
+                            {
+                                LabelText = "Enable Edit Mode",
+                                Bindable = Editable
+                            },
                             cup = new SettingsDropdown<string>
                             {
                                 LabelText = "Selected Cup",
@@ -137,7 +145,7 @@ namespace Symcol.osu.Mods.Caster.Pieces
         #region IO
 
         /// <summary>
-        /// Returns a file's contents from the selected Cup + Year + Stage
+        /// Returns a file's contents from the selected Cup + Year + Stage. If it doesn't exist we will create an empty file with that name
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -150,9 +158,35 @@ namespace Symcol.osu.Mods.Caster.Pieces
             }
             catch
             {
-                Logger.Log($"Failed to read {Cup.Value}\\{Year.Value}\\{Stage.Value}\\{name}", LoggingTarget.Database, LogLevel.Error);
-                return null;
+                Logger.Log($"Failed to read {Cup.Value}\\{Year.Value}\\{Stage.Value}\\{name}. Creating our own. . .", LoggingTarget.Database, LogLevel.Error);
+
+                StreamWriter writer = new StreamWriter(storage.GetStream($"caster\\Cups\\{Cup.Value}\\{Year.Value}\\{Stage.Value}\\{name}", FileAccess.Write, FileMode.Create));
+                writer.Write("");
+
+                return "";
             }
+        }
+
+        /// <summary>
+        /// Returns a StreamWriter from the selected Cup + Year + Stage for the filename. If none is selected return null
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public StreamWriter GetStreamWriter(string filename)
+        {
+            if (Stage.Value == "None") return null;
+            return new StreamWriter(storage.GetStream($"caster\\Cups\\{Cup.Value}\\{Year.Value}\\{Stage.Value}\\{filename}", FileAccess.Write, FileMode.OpenOrCreate));
+        }
+
+        /// <summary>
+        /// Returns a StreamReader from the selected Cup + Year + Stage for the filename. If none is selected return null
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public StreamReader GetStreamReader(string filename)
+        {
+            if (Stage.Value == "None") return null;
+            return new StreamReader(storage.GetStream($"caster\\Cups\\{Cup.Value}\\{Year.Value}\\{Stage.Value}\\{filename}", FileAccess.Read, FileMode.Open));
         }
 
         private void createCasterStorage()

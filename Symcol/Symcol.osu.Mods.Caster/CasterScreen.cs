@@ -1,5 +1,7 @@
 ﻿using osu.Framework.Graphics;
+using osu.Framework.Graphics.Shapes;
 using OpenTK;
+using OpenTK.Graphics;
 using Symcol.Core.Graphics.Containers;
 using Symcol.osu.Core.Screens.Evast;
 using Symcol.osu.Mods.Caster.CasterScreens;
@@ -22,15 +24,33 @@ namespace Symcol.osu.Mods.Caster
             {
                 toolbar = new CasterToolbar(),
                 casterPanel = new CasterControlPanel(),
+                new SymcolContainer
+                {
+                    Anchor = Anchor.BottomRight,
+                    Origin = Anchor.BottomRight,
+
+                    RelativeSizeAxes = Axes.Both,
+                    Position = new Vector2(-16),
+                    Size = new Vector2(0.8f, 0.9f),
+
+                    Masking = true,
+                    CornerRadius = 20,
+
+                    Child = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = Color4.Black,
+                        Alpha = 0.4f
+                    }
+                },
                 screenSpace = new SymcolContainer
                 {
                     Anchor = Anchor.BottomRight,
                     Origin = Anchor.BottomRight,
 
-                    RelativePositionAxes = Axes.Both,
                     RelativeSizeAxes = Axes.Both,
-                    Position = new Vector2(-10),
-                    Size = new Vector2(0.8f, 0.8f),
+                    Position = new Vector2(-16),
+                    Size = new Vector2(0.8f, 0.9f),
                 }
             };
 

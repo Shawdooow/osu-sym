@@ -18,6 +18,7 @@ namespace Symcol.osu.Mods.Caster.Wiki
 
         public override WikiSection[] GetSections() => new WikiSection[]
         {
+            new General(),
             new Teams(),
             new Maps(),
             new Results(),

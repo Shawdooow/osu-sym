@@ -1,4 +1,5 @@
-﻿using Symcol.Core.Graphics.Containers;
+﻿using osu.Framework.Graphics;
+using Symcol.Core.Graphics.Containers;
 using Symcol.osu.Mods.Caster.Pieces;
 
 namespace Symcol.osu.Mods.Caster.CasterScreens
@@ -10,6 +11,8 @@ namespace Symcol.osu.Mods.Caster.CasterScreens
         public CasterSubScreen(CasterControlPanel controlPanel)
         {
             CasterControlPanel = controlPanel;
+
+            RelativeSizeAxes = Axes.Both;
         }
     }
 }
