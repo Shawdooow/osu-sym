@@ -35,6 +35,11 @@ namespace osu.Game.Rulesets.Classic.Settings
             {
                 new SettingsCheckbox
                 {
+                    LabelText = "Dark Sliderbodys",
+                    Bindable = ClassicConfigManager.GetBindable<bool>(ClassicSetting.Black)
+                },
+                new SettingsCheckbox
+                {
                     LabelText = "Enable Hold Note",
                     Bindable = ClassicConfigManager.GetBindable<bool>(ClassicSetting.Hold)
                 },

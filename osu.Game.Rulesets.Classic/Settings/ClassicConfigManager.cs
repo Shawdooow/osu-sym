@@ -12,6 +12,7 @@ namespace osu.Game.Rulesets.Classic.Settings
 
         protected override void InitialiseDefaults()
         {
+            Set(ClassicSetting.Black, false);
             Set(ClassicSetting.Hold, false);
             Set(ClassicSetting.Accelerando, false);
             Set(ClassicSetting.SliderEasing, Easing.None);
@@ -22,6 +23,7 @@ namespace osu.Game.Rulesets.Classic.Settings
 
     public enum ClassicSetting
     {
+        Black,
         Hold,
         Accelerando,
         SliderEasing,

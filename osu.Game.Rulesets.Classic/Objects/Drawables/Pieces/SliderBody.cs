@@ -113,8 +113,11 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
             const float border_portion = 0.128f;
             const float gradient_portion = 1 - border_portion;
 
-            const float opacity_at_centre = 0.5f;
-            const float opacity_at_edge = 0.8f;
+            const float opacity_at_centre = 0.75f;
+            const float opacity_at_edge = 0.75f;
+
+            const float brightness_at_centre = 1.5f;
+            const float brightness_at_edge = 1f;
 
             for (int i = 0; i < textureWidth; i++)
             {
@@ -131,9 +134,9 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                 {
                     progress -= border_portion;
 
-                    bytes[i * 4] = (byte)(AccentColour.R * 255);
-                    bytes[i * 4 + 1] = (byte)(AccentColour.G * 255);
-                    bytes[i * 4 + 2] = (byte)(AccentColour.B * 255);
+                    bytes[i * 4] = (byte)Math.Min((brightness_at_edge - (brightness_at_edge - brightness_at_centre) * progress / gradient_portion) * (AccentColour.R * 255), 255);
+                    bytes[i * 4 + 1] = (byte)Math.Min((brightness_at_edge - (brightness_at_edge - brightness_at_centre) * progress / gradient_portion) * (AccentColour.G * 255), 255);
+                    bytes[i * 4 + 2] = (byte)Math.Min((brightness_at_edge - (brightness_at_edge - brightness_at_centre) * progress / gradient_portion) * (AccentColour.B * 255), 255);
                     bytes[i * 4 + 3] = (byte)((opacity_at_edge - (opacity_at_edge - opacity_at_centre) * progress / gradient_portion) * (AccentColour.A * 255));
                 }
             }
