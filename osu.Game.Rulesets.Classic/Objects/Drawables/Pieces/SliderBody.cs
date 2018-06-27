@@ -15,10 +15,11 @@ using osu.Game.Configuration;
 using OpenTK;
 using OpenTK.Graphics.ES30;
 using OpenTK.Graphics;
+using Symcol.Core.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
 {
-    public class SliderBody : Container, ISliderProgress
+    public class SliderBody : SymcolContainer, ISliderProgress
     {
         private readonly Path path;
         private readonly BufferedContainer container;
