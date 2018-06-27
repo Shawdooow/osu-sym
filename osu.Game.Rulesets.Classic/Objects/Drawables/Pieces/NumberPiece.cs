@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Classic.UI;
+using OpenTK;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
 {
@@ -32,7 +33,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Alpha = 1
+                    Alpha = 1,
+                    Scale = new Vector2(0.75f)
                 }
             };
         }
@@ -40,10 +42,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
         [BackgroundDependencyLoader]
         private void load(Storage storage)
         {
-            if (numberValue <= 9)
-                number.Texture = ClassicSkinElement.LoadSkinElement(@"default-" + numberValue, storage);
-            else
-                number.Texture = ClassicSkinElement.LoadSkinElement(@"default-" + 0, storage);
+            number.Texture = numberValue <= 9 ? ClassicSkinElement.LoadSkinElement(@"default-" + numberValue, storage) : ClassicSkinElement.LoadSkinElement(@"default-" + 0, storage);
         }
     }
 }
