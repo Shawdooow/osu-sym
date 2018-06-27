@@ -86,8 +86,9 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                 // Autosizing does not give us the desired behaviour here.
                 // We want the container to have the same size as the slider,
                 // and to be positioned such that the slider head is at (0,0).
-                container.Size = path.Size;
-                container.Position = -path.PositionInBoundingBox(slider.PositionAt(0) - currentCurve[0]);
+                container.Size = new Vector2(100, 100); //new Vector2(path.Size.X > 1920 ? 1920 : path.Size.X, path.Size.Y > 1080 ? 1080 : path.Size.Y);
+                container.Position = -path.PositionInBoundingBox(slider.PositionAt(0) - currentCurve[0] + new Vector2(path.Size.X / 2, path.Size.Y / 2));//new Vector2(path.Size.X > 1920 ? path.Size.X - 1920 : 0, path.Size.Y > 1080 ? path.Size.Y - 1080 : 0 ));
+                path.Position = new Vector2(path.Size.X / 2, path.Size.Y / 2);
 
                 container.ForceRedraw();
             }
