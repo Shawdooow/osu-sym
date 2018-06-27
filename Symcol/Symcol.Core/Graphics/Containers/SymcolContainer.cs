@@ -9,7 +9,7 @@ namespace Symcol.Core.Graphics.Containers
         /// <summary>
         /// Delete this fucking object!
         /// </summary>
-        public void Delete()
+        public virtual void Delete()
         {
             if (Parent is Container p)
                 p.Remove(this);

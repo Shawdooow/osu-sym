@@ -158,7 +158,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             }
 
             if (Time.Current >= slider.EndTime && slider.Hidden)
-                Body.Expire();
+                Body.Delete();
 
             Tracking = Ball.Tracking;
 
@@ -266,7 +266,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
                 if (!HitObject.Hidden)
                 {
-                    Body.FadeOut(160);
+                    Body.FadeOut(160)
+                        .Finally(t => Body.Delete());
 
                     this.FadeOut(800)
                         .Expire();
