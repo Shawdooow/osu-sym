@@ -10,6 +10,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.OpenGL.Textures;
 using osu.Framework.Graphics.Lines;
 using osu.Framework.Graphics.Textures;
+using osu.Framework.MathUtils;
 using osu.Game.Configuration;
 using OpenTK;
 using OpenTK.Graphics.ES30;
@@ -116,9 +117,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
             const float opacity_at_centre = 0.75f;
             const float opacity_at_edge = 0.75f;
 
-            const float brightness_at_centre = 1.5f;
-            const float brightness_at_edge = 1f;
-
             for (int i = 0; i < textureWidth; i++)
             {
                 float progress = (float)i / (textureWidth - 1);
@@ -134,9 +132,13 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                 {
                     progress -= border_portion;
 
-                    bytes[i * 4] = (byte)Math.Min((brightness_at_edge - (brightness_at_edge - brightness_at_centre) * progress / gradient_portion) * (AccentColour.R * 255), 255);
-                    bytes[i * 4 + 1] = (byte)Math.Min((brightness_at_edge - (brightness_at_edge - brightness_at_centre) * progress / gradient_portion) * (AccentColour.G * 255), 255);
-                    bytes[i * 4 + 2] = (byte)Math.Min((brightness_at_edge - (brightness_at_edge - brightness_at_centre) * progress / gradient_portion) * (AccentColour.B * 255), 255);
+                    float r = (float)Interpolation.ApplyEasing(Easing.None, AccentColour.R - (AccentColour.R - Math.Min(AccentColour.R * 2f, 1)) * progress / gradient_portion) * 255;
+                    float g = (float)Interpolation.ApplyEasing(Easing.None, AccentColour.G - (AccentColour.G - Math.Min(AccentColour.G * 2f, 1)) * progress / gradient_portion) * 255;
+                    float b = (float)Interpolation.ApplyEasing(Easing.None, AccentColour.B - (AccentColour.B - Math.Min(AccentColour.B * 2f, 1)) * progress / gradient_portion) * 255;
+
+                    bytes[i * 4] = (byte)r;
+                    bytes[i * 4 + 1] = (byte)g;
+                    bytes[i * 4 + 2] = (byte)b;
                     bytes[i * 4 + 3] = (byte)((opacity_at_edge - (opacity_at_edge - opacity_at_centre) * progress / gradient_portion) * (AccentColour.A * 255));
                 }
             }
