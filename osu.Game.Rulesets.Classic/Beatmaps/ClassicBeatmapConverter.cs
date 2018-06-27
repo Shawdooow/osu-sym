@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Objects.Types;
 using System;
 using osu.Game.Rulesets.Classic.UI;
 using osu.Framework.Configuration;
+using osu.Framework.Logging;
 using osu.Game.Rulesets.Classic.Settings;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Audio;
@@ -58,51 +59,6 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
             if (CurrentHitCircle > 1)
                 CurrentHitCircle = 1;
 
-            SampleControlPoint controlPoint = beatmap.ControlPointInfo.SamplePointAt(original.StartTime);
-
-            List<List<SampleInfo>> betterRepeatSamples = new List<List<SampleInfo>>();
-
-            if (curveData != null)
-            {
-                // Number of spans of the object - one for the initial length and for each repeat
-                int spans = curveData?.SpanCount() ?? 1;
-
-                TimingControlPoint timingPoint = beatmap.ControlPointInfo.TimingPointAt(original.StartTime);
-                DifficultyControlPoint difficultyPoint = beatmap.ControlPointInfo.DifficultyPointAt(original.StartTime);
-
-                double speedAdjustment = difficultyPoint.SpeedMultiplier;
-                double speedAdjustedBeatLength = timingPoint.BeatLength / speedAdjustment;
-
-                double distance = curveData.Distance * spans * legacy_velocity_multiplier;
-
-                double shapeVelocity = shape_base_distance * beatmap.BeatmapInfo.BaseDifficulty.SliderMultiplier * legacy_velocity_multiplier / speedAdjustedBeatLength;
-                double shapeDuration = distance / shapeVelocity;
-
-                // The velocity of the osu! hit object - calculated as the velocity of a slider
-                double osuVelocity = osu_base_scoring_distance * beatmap.BeatmapInfo.BaseDifficulty.SliderMultiplier * legacy_velocity_multiplier / speedAdjustedBeatLength;
-                // The duration of the osu! hit object
-                double osuDuration = distance / osuVelocity;
-
-                // osu-stable always uses the speed-adjusted beatlength to determine the velocities, but
-                // only uses it for tick rate if beatmap version < 8
-                if (beatmap.BeatmapInfo.BeatmapVersion >= 8)
-                    speedAdjustedBeatLength *= speedAdjustment;
-
-                // If the drum roll is to be split into hit circles, assume the ticks are 1/8 spaced within the duration of one beat
-                double tickSpacing = Math.Min(speedAdjustedBeatLength / beatmap.BeatmapInfo.BaseDifficulty.SliderTickRate, shapeDuration / spans);
-
-                List<List<SampleInfo>> allSamples = curveData != null ? curveData.RepeatSamples : new List<List<SampleInfo>>(new[] { original.Samples });
-
-                int i = 0;
-                for (double j = original.StartTime; j <= original.StartTime + shapeDuration + tickSpacing / 8; j += tickSpacing)
-                {
-                    List<SampleInfo> currentSamples = allSamples[i];
-
-                    betterRepeatSamples.Add(getBetterSampleInfoList(currentSamples, original));
-
-                    i = (i + 1) % allSamples.Count;
-                }
-            }
             if (curveData != null)
             {
                 hitCircleCount++;
@@ -115,7 +71,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                             ControlPoints = curveData.ControlPoints,
                             CurveType = curveData.CurveType,
                             Distance = curveData.Distance,
-                            BetterRepeatSamples = betterRepeatSamples,
+                            BetterRepeatSamples = curveData.RepeatSamples,
                             RepeatCount = curveData.RepeatCount,
                             Position = positionData?.Position ?? Vector2.Zero,
                             NewCombo = comboData?.NewCombo ?? false,
@@ -130,7 +86,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                             ControlPoints = curveData.ControlPoints,
                             CurveType = curveData.CurveType,
                             Distance = curveData.Distance,
-                            BetterRepeatSamples = betterRepeatSamples,
+                            BetterRepeatSamples = curveData.RepeatSamples,
                             RepeatCount = curveData.RepeatCount,
                             Position = positionData?.Position ?? Vector2.Zero,
                             NewCombo = comboData?.NewCombo ?? false,
@@ -148,7 +104,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                             ControlPoints = curveData.ControlPoints,
                             CurveType = curveData.CurveType,
                             Distance = curveData.Distance,
-                            RepeatSamples = betterRepeatSamples,
+                            RepeatSamples = curveData.RepeatSamples,
                             RepeatCount = curveData.RepeatCount,
                             Position = positionData?.Position ?? Vector2.Zero,
                             NewCombo = comboData?.NewCombo ?? false,
@@ -163,7 +119,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                             ControlPoints = curveData.ControlPoints,
                             CurveType = curveData.CurveType,
                             Distance = curveData.Distance,
-                            RepeatSamples = betterRepeatSamples,
+                            RepeatSamples = curveData.RepeatSamples,
                             RepeatCount = curveData.RepeatCount,
                             Position = positionData?.Position ?? Vector2.Zero,
                             NewCombo = comboData?.NewCombo ?? false,
@@ -177,7 +133,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
             {
                 yield return new Spinner
                 {
-                    BetterSamples = getBetterSampleInfoList(original.Samples, original),
+                    BetterSamples = original.Samples,
 
                     StartTime = original.StartTime,
                     EndTime = endTimeData.EndTime,
@@ -191,7 +147,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                 if (!firstObject)
                     yield return new HitCircle
                     {
-                        BetterSamples = getBetterSampleInfoList(original.Samples, original),
+                        BetterSamples = original.Samples,
                         StartTime = original.StartTime,
                         Position = positionData?.Position ?? Vector2.Zero,
                         NewCombo = comboData?.NewCombo ?? false,
@@ -202,7 +158,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                     firstObject = false;
                     yield return new HitCircle
                     {
-                        BetterSamples = getBetterSampleInfoList(original.Samples, original),
+                        BetterSamples = original.Samples,
                         StartTime = original.StartTime,
                         Position = positionData?.Position ?? Vector2.Zero,
                         NewCombo = comboData?.NewCombo ?? false,
@@ -211,11 +167,6 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                     };
                 }
             }
-        }
-
-        private List<SampleInfo> getBetterSampleInfoList(List<SampleInfo> list, HitObject original)
-        {
-            return list;
         }
     }
 }

@@ -133,10 +133,15 @@ namespace osu.Game.Rulesets.Classic.Objects
             reee = SampleControlPoint;
             ree = Samples;
 
+            int r = 0;
             for (double i = StartTime + SpanDuration; i <= EndTime; i += SpanDuration)
             {
+                if (r > 10000)
+                    break;
+
                 SampleControlPoint point = controlPointInfo.SamplePointAt(i);
                 SampleControlPoints.Add(point);
+                r++;
             }
         }
 
