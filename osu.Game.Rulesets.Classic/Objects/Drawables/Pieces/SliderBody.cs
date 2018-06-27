@@ -13,8 +13,8 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.MathUtils;
 using osu.Game.Configuration;
 using OpenTK;
-using OpenTK.Graphics.ES30;
 using OpenTK.Graphics;
+using OpenTK.Graphics.ES30;
 using Symcol.Core.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
     public class SliderBody : SymcolContainer, ISliderProgress
     {
         private readonly Path path;
-        private readonly BufferedContainer container;
+        private BufferedContainer container;
 
         public float PathWidth
         {
@@ -58,22 +58,11 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
         {
             slider = s;
 
-            Children = new Drawable[]
+            path = new Path
             {
-                container = new BufferedContainer
-                {
-                    CacheDrawnFrameBuffer = true,
-                    Children = new Drawable[]
-                    {
-                        path = new Path
-                        {
-                            Blending = BlendingMode.None,
-                        },
-                    }
-                },
+                Blending = BlendingMode.None,
+                Scale = new Vector2(1.5f)
             };
-
-            container.Attach(RenderbufferInternalFormat.DepthComponent16);
         }
 
         public void SetRange(double p0, double p1)
@@ -86,11 +75,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                 // Autosizing does not give us the desired behaviour here.
                 // We want the container to have the same size as the slider,
                 // and to be positioned such that the slider head is at (0,0).
-                container.Size = new Vector2(path.Size.X > 2048 ? path.Size.X / 4 : path.Size.X, path.Size.Y > 4096 ? path.Size.Y / 8 : path.Size.Y);
-                container.Position = -path.PositionInBoundingBox(slider.PositionAt(0) - currentCurve[0] - new Vector2(path.Size.X > 2048 ? path.Size.X / 4 : 0, path.Size.Y > 4096 ? path.Size.Y / 8 : 0));
-                path.Position = new Vector2(path.Size.X > 2048 ? path.Size.X / 4 : 0, path.Size.Y > 4096 ? path.Size.Y / 8 : 0);
-
-                container.ForceRedraw();
+                path.Position = ToSpaceOfOtherDrawable(-path.PositionInBoundingBox(slider.PositionAt(0) - currentCurve[0]), ClassicInputManager.SliderBodyContainer);
             }
         }
 
@@ -181,6 +166,30 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
             }
 
             SetRange(start, end);
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            path.Alpha = Alpha;
+
+            if (Time.Current >= slider.StartTime - slider.TimePreempt - 1000 && Time.Current < slider.EndTime && container == null)
+            {
+                ClassicInputManager.SliderBodyContainer.Add(container = new BufferedContainer
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Child = path
+                });
+
+                container.Attach(RenderbufferInternalFormat.DepthComponent16);
+            }
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            ClassicInputManager.SliderBodyContainer?.Remove(container);
+            container?.Dispose();
+            base.Dispose(isDisposing);
         }
     }
 }
