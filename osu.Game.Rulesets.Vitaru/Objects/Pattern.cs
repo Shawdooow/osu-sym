@@ -126,12 +126,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                 for (double i = StartTime + SpanDuration; i <= EndTime; i += SpanDuration)
                 {
                     SampleControlPoint point = controlPointInfo.SamplePointAt(i);
-                    SampleControlPoints.Add(new SampleControlPoint
-                    {
-                        SampleBank = point.SampleBank,
-                        //SampleBankCount = point.SampleBankCount,
-                        SampleVolume = point.SampleVolume,
-                    });
+                    SampleControlPoints.Add(point);
                 }
             }
             else if (!IsSpinner)

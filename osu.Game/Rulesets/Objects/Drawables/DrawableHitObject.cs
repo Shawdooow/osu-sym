@@ -94,6 +94,7 @@ namespace osu.Game.Rulesets.Objects.Drawables
                 {
                     Bank = s.Bank ?? HitObject.SampleControlPoint.SampleBank,
                     Name = s.Name,
+                    BankNumber = s.BankNumber,
                     Volume = s.Volume > 0 ? s.Volume : HitObject.SampleControlPoint.SampleVolume,
                     Namespace = SampleNamespace
                 }).ToArray()));
