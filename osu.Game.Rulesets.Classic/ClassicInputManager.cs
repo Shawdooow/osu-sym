@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Classic
     {
         private ClassicUi classicUi;
 
-        public static Container<BufferedContainer> SliderBodyContainer;
+        public readonly Container<BufferedContainer> SliderBodyContainer;
 
         public IEnumerable<ClassicAction> PressedActions => KeyBindingContainer.PressedActions;
 
@@ -43,18 +43,6 @@ namespace osu.Game.Rulesets.Classic
                     Depth = -2,
                 }
             });
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            Remove(SliderBodyContainer);
-            SliderBodyContainer.Dispose();
-            SliderBodyContainer = null;
-
-            //TODO: evaluate if this is neccesary
-            //GC.Collect();
-
-            base.Dispose(isDisposing);
         }
     }
 

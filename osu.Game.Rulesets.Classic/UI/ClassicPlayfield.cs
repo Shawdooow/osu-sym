@@ -1,6 +1,8 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using System;
+using System.Collections.Generic;
 using OpenTK;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -19,11 +21,14 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Classic.Judgements;
 using osu.Game.Rulesets.Classic.Settings;
 using osu.Game.Rulesets.Classic.UI.Cursor;
+using OpenTK.Graphics.ES30;
 
 namespace osu.Game.Rulesets.Classic.UI
 {
     public class ClassicPlayfield : Playfield
     {
+        public static Action<Judgement> OnJudgement;
+
         private readonly Container approachCircles;
         private readonly Container judgementLayer;
         private readonly ConnectionRenderer<ClassicHitObject> connectionLayer;
@@ -39,8 +44,12 @@ namespace osu.Game.Rulesets.Classic.UI
 
         public static readonly Vector2 BASE_SIZE = new Vector2(512, 384);
 
-        public ClassicPlayfield() : base(BASE_SIZE.X)
+        private readonly ClassicInputManager classicInputManager;
+
+        public ClassicPlayfield(ClassicInputManager classicInputManager) : base(BASE_SIZE.X)
         {
+            this.classicInputManager = classicInputManager;
+
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 
@@ -84,6 +93,16 @@ namespace osu.Game.Rulesets.Classic.UI
 
             if (fast)
                 applyToClock(workingBeatmap.Value.Track, getSpeed(Time.Current) < 0.75f ? 0.75f : getSpeed(Time.Current));
+
+            foreach (ClassicHitObject h in hitobjects)
+            {
+                if (Time.Current >= h.StartTime - h.TimePreempt * 2)
+                {
+                    add(h);
+                    hitobjects.Remove(h);
+                    break;
+                }
+            }
         }
 
         private double getSpeed(double value)
@@ -98,10 +117,48 @@ namespace osu.Game.Rulesets.Classic.UI
                 pitchAdjust.PitchAdjust = speed;
         }
 
+        private readonly List<ClassicHitObject> hitobjects = new List<ClassicHitObject>();
+
+        private void add(ClassicHitObject h, DrawableHitObject drawable = null)
+        {
+            if (drawable == null)
+                switch (h)
+                {
+                    case HitCircle c:
+                        drawable = new DrawableHitCircle(c);
+                        break;
+                    case Slider s:
+                        drawable = new DrawableSlider(s);
+                        break;
+                    case Hold r:
+                        drawable = new DrawableHold(r);
+                        break;
+                    case Spinner s:
+                        drawable = new DrawableSpinner(s);
+                        break;
+                }
+
+            drawable.OnJudgement += onJudgement;
+
+            drawable.Anchor = Anchor.TopLeft;
+            //drawable.Origin = Anchor.Centre;
+
+            if (h is IDrawableHitObjectWithProxiedApproach p)
+                approachCircles.Add(p.ProxiedLayer.CreateProxy());
+
+            BufferedContainer b = new BufferedContainer
+            {
+                Depth = (float)drawable.HitObject.StartTime,
+                RelativeSizeAxes = Axes.Both,
+                Child = new PlayfieldHitobjectContainer(drawable)
+            };
+            b.Attach(RenderbufferInternalFormat.DepthComponent16);
+
+            classicInputManager.SliderBodyContainer.Add(b);
+        }
+
         public override void Add(DrawableHitObject h)
         {
-            h.Depth = (float)h.HitObject.StartTime;
-
             if (startTime == double.MinValue)
                 startTime = h.HitObject.StartTime;
 
@@ -112,13 +169,7 @@ namespace osu.Game.Rulesets.Classic.UI
             else
                 endTime = h.HitObject.StartTime;
 
-            h.OnJudgement += onJudgement;
-
-            var c = h as IDrawableHitObjectWithProxiedApproach;
-            if (c != null)
-                approachCircles.Add(c.ProxiedLayer.CreateProxy());
-
-            base.Add(h);
+            hitobjects.Add((ClassicHitObject)h.HitObject);
         }
 
         public override void PostProcess()
@@ -133,6 +184,8 @@ namespace osu.Game.Rulesets.Classic.UI
             var osuJudgement = (ClassicJudgement)judgement;
             var osuObject = (ClassicHitObject)judgedObject.HitObject;
 
+            OnJudgement?.Invoke(osuJudgement);
+
             DrawableClassicJudgement explosion = new DrawableClassicJudgement(osuJudgement, judgedObject)
             {
                 Origin = Anchor.Centre,
@@ -140,6 +193,39 @@ namespace osu.Game.Rulesets.Classic.UI
             };
 
             judgementLayer.Add(explosion);
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            OnJudgement = null;
+            base.Dispose(isDisposing);
+        }
+
+        private class PlayfieldHitobjectContainer : Container
+        {
+            private readonly DrawableClassicHitObject hitobject;
+            public PlayfieldHitobjectContainer(DrawableHitObject hitobject)
+            {
+                this.hitobject = (DrawableClassicHitObject)hitobject;
+
+                Anchor = Anchor.Centre;
+                Origin = Anchor.Centre;
+
+                Size = BASE_SIZE;
+                Add(hitobject);
+            }
+
+            protected override void Update()
+            {
+                base.Update();
+                Scale = new Vector2(Parent.DrawSize.Y * 4 / 3 / Size.X, Parent.DrawSize.Y / Size.Y) * 0.8f;
+
+                if (Time.Current >= hitobject.LifetimeEnd)
+                {
+                    BufferedContainer parent = (BufferedContainer)Parent;
+                    parent.Expire();
+                }
+            }
         }
     }
 }

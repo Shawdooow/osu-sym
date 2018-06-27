@@ -29,23 +29,41 @@ namespace osu.Game.Rulesets.Classic.UI
 
         public override ScoreProcessor CreateScoreProcessor() => new ClassicScoreProcessor(this);
 
-        protected override Playfield CreatePlayfield() => new ClassicPlayfield();
+        protected override Playfield CreatePlayfield() => new ClassicPlayfield(ClassicInputManager);
 
-        public override PassThroughInputManager CreateInputManager() => new ClassicInputManager(Ruleset.RulesetInfo);
+        public override PassThroughInputManager CreateInputManager() => ClassicInputManager;
+
+        private bool loaded;
+
+        protected ClassicInputManager ClassicInputManager
+        {
+            get
+            {
+                if (!loaded)
+                {
+                    loaded = true;
+                    return classicInputManager = new ClassicInputManager(Ruleset.RulesetInfo);
+                }
+                else
+                    return classicInputManager;
+            }
+        }
+
+        private ClassicInputManager classicInputManager;
 
         protected override DrawableHitObject<ClassicHitObject> GetVisualRepresentation(ClassicHitObject h)
         {
-            if (h is HitCircle circle)
-                return new DrawableHitCircle(circle);
-
-            if (h is Slider slider)
-                return new DrawableSlider(slider);
-
-            if (h is Hold hold)
-                return new DrawableHold(hold);
-
-            if (h is Spinner spinner)
-                return new DrawableSpinner(spinner);
+            switch (h)
+            {
+                case HitCircle circle:
+                    return new DrawableHitCircle(circle);
+                case Slider slider:
+                    return new DrawableSlider(slider);
+                case Hold hold:
+                    return new DrawableHold(hold);
+                case Spinner spinner:
+                    return new DrawableSpinner(spinner);
+            }
 
             return null;
         }

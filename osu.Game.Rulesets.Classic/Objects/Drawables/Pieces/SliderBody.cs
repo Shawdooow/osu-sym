@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.OpenGL.Textures;
 using osu.Framework.Graphics.Lines;
 using osu.Framework.Graphics.Textures;
@@ -14,7 +13,6 @@ using osu.Framework.MathUtils;
 using osu.Game.Configuration;
 using OpenTK;
 using OpenTK.Graphics;
-using OpenTK.Graphics.ES30;
 using Symcol.Core.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
@@ -22,7 +20,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
     public class SliderBody : SymcolContainer, ISliderProgress
     {
         private readonly Path path;
-        private BufferedContainer container;
 
         public float PathWidth
         {
@@ -58,11 +55,10 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
         {
             slider = s;
 
-            path = new Path
+            Add(path = new Path
             {
                 Blending = BlendingMode.None,
-                Scale = new Vector2(1.5f)
-            };
+            });
         }
 
         public void SetRange(double p0, double p1)
@@ -75,7 +71,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                 // Autosizing does not give us the desired behaviour here.
                 // We want the container to have the same size as the slider,
                 // and to be positioned such that the slider head is at (0,0).
-                path.Position = ToSpaceOfOtherDrawable(-path.PositionInBoundingBox(slider.PositionAt(0) - currentCurve[0]), ClassicInputManager.SliderBodyContainer);
+                path.Position = -path.PositionInBoundingBox(slider.PositionAt(0) - currentCurve[0]);
             }
         }
 
@@ -166,30 +162,6 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
             }
 
             SetRange(start, end);
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            path.Alpha = Alpha;
-
-            if (Time.Current >= slider.StartTime - slider.TimePreempt - 1000 && Time.Current < slider.EndTime && container == null)
-            {
-                ClassicInputManager.SliderBodyContainer.Add(container = new BufferedContainer
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Child = path
-                });
-
-                container.Attach(RenderbufferInternalFormat.DepthComponent16);
-            }
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            ClassicInputManager.SliderBodyContainer?.Remove(container);
-            container?.Dispose();
-            base.Dispose(isDisposing);
         }
     }
 }

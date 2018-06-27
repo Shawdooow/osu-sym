@@ -21,6 +21,8 @@ namespace osu.Game.Rulesets.Classic.Scoring
         public ClassicScoreProcessor(RulesetContainer<ClassicHitObject> rulesetContainer)
             : base(rulesetContainer)
         {
+            if (ClassicPlayfield.OnJudgement == null)
+                ClassicPlayfield.OnJudgement += AddJudgement;
         }
 
         //public override bool PassiveHealthDrain => true;
