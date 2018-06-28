@@ -76,11 +76,5 @@ namespace osu.Game.Rulesets.Classic.UI
             var aspectSize = DrawSize.X * 0.9f < DrawSize.Y ? new Vector2(DrawSize.X, DrawSize.X * 0.9f) : new Vector2(DrawSize.Y * 4f / 3f, DrawSize.Y);
             return new Vector2(aspectSize.X / DrawSize.X, aspectSize.Y / DrawSize.Y);
         }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
-            GC.Collect();
-        }
     }
 }

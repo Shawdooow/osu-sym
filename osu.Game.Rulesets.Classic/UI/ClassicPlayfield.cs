@@ -22,6 +22,7 @@ using osu.Game.Rulesets.Classic.Judgements;
 using osu.Game.Rulesets.Classic.Settings;
 using osu.Game.Rulesets.Classic.UI.Cursor;
 using OpenTK.Graphics.ES30;
+using Symcol.Core.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Classic.UI
 {
@@ -39,8 +40,6 @@ namespace osu.Game.Rulesets.Classic.UI
 
         private double startTime = double.MinValue;
         private double endTime = double.MaxValue;
-
-        //public override bool ProvidingUserCursor => true;
 
         public static readonly Vector2 BASE_SIZE = new Vector2(512, 384);
 
@@ -108,7 +107,7 @@ namespace osu.Game.Rulesets.Classic.UI
         private double getSpeed(double value)
         {
             double scale = (1.5 - 0.75) / (endTime - startTime);
-            return 0.75 + ((value - startTime) * scale);
+            return 0.75 + (value - startTime) * scale;
         }
 
         private void applyToClock(IAdjustableClock clock, double speed)
@@ -146,12 +145,21 @@ namespace osu.Game.Rulesets.Classic.UI
             if (h is IDrawableHitObjectWithProxiedApproach p)
                 approachCircles.Add(p.ProxiedLayer.CreateProxy());
 
-            BufferedContainer b = new BufferedContainer
+            double q = 0;
+
+            if (drawable is DrawableSlider d && d.HitObject is Slider slider)
+                q = slider.EndTime;
+            else if (drawable is DrawableSpinner u && u.HitObject is Spinner spinner)
+                q = spinner.EndTime;
+            else
+                q = drawable.HitObject.StartTime;
+
+            SymcolBufferedContainer b = new SymcolBufferedContainer
             {
                 Depth = (float)drawable.HitObject.StartTime,
                 RelativeSizeAxes = Axes.Both,
-                Child = new PlayfieldHitobjectContainer(drawable)
             };
+            b.Child = new PlayfieldHitobjectContainer(drawable, q);
             b.Attach(RenderbufferInternalFormat.DepthComponent16);
 
             classicInputManager.SliderBodyContainer.Add(b);
@@ -204,9 +212,12 @@ namespace osu.Game.Rulesets.Classic.UI
         private class PlayfieldHitobjectContainer : Container
         {
             private readonly DrawableClassicHitObject hitobject;
-            public PlayfieldHitobjectContainer(DrawableHitObject hitobject)
+            private readonly double endTime;
+
+            public PlayfieldHitobjectContainer(DrawableHitObject hitobject, double endTime)
             {
                 this.hitobject = (DrawableClassicHitObject)hitobject;
+                this.endTime = endTime;
 
                 Anchor = Anchor.Centre;
                 Origin = Anchor.Centre;
@@ -220,10 +231,10 @@ namespace osu.Game.Rulesets.Classic.UI
                 base.Update();
                 Scale = new Vector2(Parent.DrawSize.Y * 4 / 3 / Size.X, Parent.DrawSize.Y / Size.Y) * 0.8f;
 
-                if (Time.Current >= hitobject.LifetimeEnd)
+                if (Time.Current >= endTime + 1000)
                 {
-                    BufferedContainer parent = (BufferedContainer)Parent;
-                    parent.Expire();
+                    SymcolBufferedContainer parent = (SymcolBufferedContainer)Parent;
+                    parent.Delete();
                 }
             }
         }
