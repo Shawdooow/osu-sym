@@ -40,8 +40,6 @@ namespace osu.Game
     /// </summary>
     public class OsuGameBase : Framework.Game, ICanAcceptFiles
     {
-        public static Bindable<bool> VersionOverlay = new Bindable<bool>() { Value = true };
-
         protected OsuConfigManager LocalConfig;
 
         protected BeatmapManager BeatmapManager;
@@ -67,7 +65,7 @@ namespace osu.Game
         protected override Container<Drawable> Content => content;
 
         private OsuBindableBeatmap beatmap;
-        public BindableBeatmap Beatmap => beatmap;
+        protected BindableBeatmap Beatmap => beatmap;
 
         private Bindable<bool> fpsDisplayVisible;
 
@@ -79,11 +77,11 @@ namespace osu.Game
         {
             get
             {
-                //if (!IsDeployedBuild)
-                    //return @"local " + (DebugUtils.IsDebug ? @"debug" : @"release");
+                if (!IsDeployedBuild)
+                    return @"local " + (DebugUtils.IsDebug ? @"debug" : @"release");
 
                 var assembly = AssemblyName;
-                return $@"2018.619.0";
+                return $@"{assembly.Version.Major}.{assembly.Version.Minor}.{assembly.Version.Build}";
             }
         }
 

@@ -5,8 +5,6 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Classic.Wiki;
-using Symcol.Rulesets.Core.Wiki;
 using Symcol.Rulesets.Core.Rulesets;
 using osu.Game.Rulesets.Classic.Multi;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
@@ -21,10 +19,6 @@ namespace osu.Game.Rulesets.Classic.Settings
         private SettingsDropdown<string> skin;
         private Bindable<string> currentSkin;
         private Storage storage;
-
-        public override WikiOverlay Wiki => classicWiki;
-
-        private readonly ClassicWikiOverlay classicWiki = new ClassicWikiOverlay();
 
         public override RulesetLobbyItem RulesetLobbyItem => classicLobby;
 
@@ -41,6 +35,11 @@ namespace osu.Game.Rulesets.Classic.Settings
             {
                 new SettingsCheckbox
                 {
+                    LabelText = "Dark Sliderbodys",
+                    Bindable = ClassicConfigManager.GetBindable<bool>(ClassicSetting.Black)
+                },
+                new SettingsCheckbox
+                {
                     LabelText = "Enable Hold Note",
                     Bindable = ClassicConfigManager.GetBindable<bool>(ClassicSetting.Hold)
                 },
@@ -53,11 +52,6 @@ namespace osu.Game.Rulesets.Classic.Settings
                 {
                     LabelText = "Current Slider Easing",
                     Bindable = ClassicConfigManager.GetBindable<Easing>(ClassicSetting.SliderEasing)
-                },
-                new SettingsButton
-                {
-                    Text = "Open In-game Wiki",
-                    Action = classicWiki.Show
                 },
                 skin = new SettingsDropdown<string>
                 {

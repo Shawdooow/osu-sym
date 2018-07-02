@@ -1,9 +1,5 @@
 ﻿using osu.Framework.Allocation;
-using osu.Framework.Graphics;
 using osu.Framework.Platform;
-using osu.Game.Overlays.Settings;
-using Symcol.Rulesets.Core.Wiki;
-using osu.Game.Rulesets.Shape.Wiki;
 using osu.Game.Rulesets.Shape.Multi;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 using Symcol.Rulesets.Core.Rulesets;
@@ -13,10 +9,6 @@ namespace osu.Game.Rulesets.Shape.Settings
     public class ShapeSettings : SymcolSettingsSubsection
     {
         protected override string Header => "shape!";
-
-        public override WikiOverlay Wiki => shapeWiki;
-
-        private readonly ShapeWikiOverlay shapeWiki = new ShapeWikiOverlay();
 
         public override RulesetLobbyItem RulesetLobbyItem => shapeLobby;
 
@@ -30,15 +22,6 @@ namespace osu.Game.Rulesets.Shape.Settings
             ShapeConfigManager = new ShapeConfigManager(host.Storage);
 
             Storage skinsStorage = storage.GetStorageForDirectory("Skins");
-
-            Children = new Drawable[]
-            {
-                new SettingsButton
-                {
-                    Text = "Open In-game Wiki",
-                    Action = shapeWiki.Show
-                }
-            };
         }
 
         public ShapeSettings(Ruleset ruleset)

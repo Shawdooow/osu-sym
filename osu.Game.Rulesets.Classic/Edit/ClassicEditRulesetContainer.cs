@@ -14,6 +14,6 @@ namespace osu.Game.Rulesets.Classic.Edit
         {
         }
 
-        protected override Playfield CreatePlayfield() => new ClassicEditPlayfield();
+        protected override Playfield CreatePlayfield() => new ClassicEditPlayfield(ClassicInputManager);
     }
 }

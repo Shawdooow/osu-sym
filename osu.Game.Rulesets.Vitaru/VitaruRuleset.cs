@@ -21,7 +21,7 @@ using osu.Framework.Audio;
 
 namespace osu.Game.Rulesets.Vitaru
 {
-    public class VitaruRuleset : Ruleset
+    public sealed class VitaruRuleset : Ruleset
     {
         public const string RULESET_VERSION = "0.8.4";
 

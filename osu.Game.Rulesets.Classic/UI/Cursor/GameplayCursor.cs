@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Classic.UI.Cursor
             private Sprite cursorMiddle;
 
             [BackgroundDependencyLoader]
-            private void load(OsuConfigManager config, OsuGameBase game, Storage storage)
+            private void load(OsuConfigManager config, BindableBeatmap beatmap, Storage storage)
             {
                 Children = new Drawable[]
                 {
@@ -118,8 +118,8 @@ namespace osu.Game.Rulesets.Classic.UI.Cursor
                 cursorMiddle.Texture = ClassicSkinElement.LoadSkinElement(@"cursormiddle", storage);
                 cursor.Texture = ClassicSkinElement.LoadSkinElement(@"cursor", storage);
 
-                beatmap = game.Beatmap.GetBoundCopy();
-                beatmap.ValueChanged += v => calculateScale();
+                this.beatmap = beatmap.GetBoundCopy();
+                this.beatmap.ValueChanged += v => calculateScale();
 
                 cursorScale = config.GetBindable<double>(OsuSetting.GameplayCursorSize);
                 cursorScale.ValueChanged += v => calculateScale();

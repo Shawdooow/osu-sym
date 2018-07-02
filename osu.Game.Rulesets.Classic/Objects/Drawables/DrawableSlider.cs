@@ -14,12 +14,16 @@ using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Objects.Types;
 using OpenTK.Graphics;
 using osu.Game.Audio;
+using osu.Game.Graphics;
+using osu.Game.Rulesets.Classic.Settings;
 using Symcol.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
     public class DrawableSlider : DrawableClassicHitObject, IDrawableHitObjectWithProxiedApproach
     {
+        private readonly bool black = ClassicSettings.ClassicConfigManager.Get<bool>(ClassicSetting.Black);
+
         private readonly Slider slider;
 
         private readonly DrawableHitCircle initialCircle;
@@ -132,7 +136,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             set
             {
                 base.AccentColour = value;
-                Body.AccentColour = AccentColour;
+                Body.AccentColour = black ? OsuColour.FromHex("#3d3d3d") : AccentColour;
                 Ball.AccentColour = AccentColour;
             }
         }
@@ -154,7 +158,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             }
 
             if (Time.Current >= slider.EndTime && slider.Hidden)
-                Body.Expire();
+                Body.Delete();
 
             Tracking = Ball.Tracking;
 
@@ -262,7 +266,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
                 if (!HitObject.Hidden)
                 {
-                    Body.FadeOut(160);
+                    Body.FadeOut(160)
+                        .Finally(t => Body.Delete());
 
                     this.FadeOut(800)
                         .Expire();

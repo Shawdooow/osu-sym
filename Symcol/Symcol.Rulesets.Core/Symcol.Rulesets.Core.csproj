@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\osu.Game.props" />
+  <PropertyGroup Label="Project">
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Description>symcol ruleset tools</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Multiplayer\Networking\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symcol.osu.Core\Symcol.osu.Core.csproj" />
+  </ItemGroup>
+</Project>

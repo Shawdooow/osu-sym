@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
             AlwaysPresent = true;
 
-            Position = HitObject.StackedPosition;
+            Position = HitObject.SliderStartCircle ? HitObject.Position : HitObject.StackedPosition;
             Scale = new Vector2(HitObject.Scale);
 
             Children = new Drawable[]

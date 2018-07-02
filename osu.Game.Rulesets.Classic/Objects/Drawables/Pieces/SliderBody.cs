@@ -6,21 +6,20 @@ using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.OpenGL.Textures;
 using osu.Framework.Graphics.Lines;
 using osu.Framework.Graphics.Textures;
+using osu.Framework.MathUtils;
 using osu.Game.Configuration;
 using OpenTK;
-using OpenTK.Graphics.ES30;
 using OpenTK.Graphics;
+using Symcol.Core.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
 {
-    public class SliderBody : Container, ISliderProgress
+    public class SliderBody : SymcolContainer, ISliderProgress
     {
         private readonly Path path;
-        private readonly BufferedContainer container;
 
         public float PathWidth
         {
@@ -56,22 +55,10 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
         {
             slider = s;
 
-            Children = new Drawable[]
+            Add(path = new Path
             {
-                container = new BufferedContainer
-                {
-                    CacheDrawnFrameBuffer = true,
-                    Children = new Drawable[]
-                    {
-                        path = new Path
-                        {
-                            Blending = BlendingMode.None,
-                        },
-                    }
-                },
-            };
-
-            container.Attach(RenderbufferInternalFormat.DepthComponent16);
+                Blending = BlendingMode.None,
+            });
         }
 
         public void SetRange(double p0, double p1)
@@ -84,10 +71,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                 // Autosizing does not give us the desired behaviour here.
                 // We want the container to have the same size as the slider,
                 // and to be positioned such that the slider head is at (0,0).
-                container.Size = path.Size;
-                container.Position = -path.PositionInBoundingBox(slider.PositionAt(0) - currentCurve[0]);
-
-                container.ForceRedraw();
+                path.Position = -path.PositionInBoundingBox(slider.PositionAt(0) - currentCurve[0]);
             }
         }
 
@@ -113,8 +97,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
             const float border_portion = 0.128f;
             const float gradient_portion = 1 - border_portion;
 
-            const float opacity_at_centre = 0.5f;
-            const float opacity_at_edge = 0.8f;
+            const float opacity_at_centre = 0.75f;
+            const float opacity_at_edge = 0.75f;
 
             for (int i = 0; i < textureWidth; i++)
             {
@@ -131,9 +115,13 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
                 {
                     progress -= border_portion;
 
-                    bytes[i * 4] = (byte)(AccentColour.R * 255);
-                    bytes[i * 4 + 1] = (byte)(AccentColour.G * 255);
-                    bytes[i * 4 + 2] = (byte)(AccentColour.B * 255);
+                    float r = (float)Interpolation.ApplyEasing(Easing.None, AccentColour.R - (AccentColour.R - Math.Min(AccentColour.R * 2f, 1)) * progress / gradient_portion) * 255;
+                    float g = (float)Interpolation.ApplyEasing(Easing.None, AccentColour.G - (AccentColour.G - Math.Min(AccentColour.G * 2f, 1)) * progress / gradient_portion) * 255;
+                    float b = (float)Interpolation.ApplyEasing(Easing.None, AccentColour.B - (AccentColour.B - Math.Min(AccentColour.B * 2f, 1)) * progress / gradient_portion) * 255;
+
+                    bytes[i * 4] = (byte)r;
+                    bytes[i * 4 + 1] = (byte)g;
+                    bytes[i * 4 + 2] = (byte)b;
                     bytes[i * 4 + 3] = (byte)((opacity_at_edge - (opacity_at_edge - opacity_at_centre) * progress / gradient_portion) * (AccentColour.A * 255));
                 }
             }

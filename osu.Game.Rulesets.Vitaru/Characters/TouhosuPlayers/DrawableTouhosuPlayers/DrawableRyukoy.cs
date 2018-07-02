@@ -33,9 +33,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuGameBase game)
+        private void load(BindableBeatmap beatmap)
         {
-            workingBeatmap.BindTo(game.Beatmap);
+            workingBeatmap.BindTo(beatmap);
         }
 
         protected override void SpellUpdate()

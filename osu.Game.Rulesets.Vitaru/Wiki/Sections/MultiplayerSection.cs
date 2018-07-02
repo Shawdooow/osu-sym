@@ -1,4 +1,6 @@
-﻿using Symcol.Rulesets.Core.Wiki;
+﻿using Symcol.osu.Core.Wiki.Sections;
+using Symcol.osu.Core.Wiki.Sections.SectionPieces;
+using Symcol.osu.Core.Wiki.Sections.Subsection;
 
 namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 {

@@ -1,6 +1,8 @@
 ﻿using osu.Framework.Allocation;
 using osu.Framework.Configuration;
-using Symcol.Rulesets.Core.Wiki;
+using Symcol.osu.Core.Wiki.Sections;
+using Symcol.osu.Core.Wiki.Sections.OptionExplanations;
+using Symcol.osu.Core.Wiki.Sections.SectionPieces;
 
 namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
 {

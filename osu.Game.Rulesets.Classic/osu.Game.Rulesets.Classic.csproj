@@ -217,12 +217,10 @@
     <EmbeddedResource Include="Assets\Textures\spinner-top@2x.png" />
     <EmbeddedResource Include="Assets\Textures\star2@2x.png" />
   </ItemGroup>
-  <ItemGroup Label="Project References">
-    <ProjectReference Include="..\osu.Game\osu.Game.csproj" />
-    <ProjectReference Include="..\Symcol.Core\Symcol.Core.csproj" />
-    <ProjectReference Include="..\Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Tracks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symcol\Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj" />
   </ItemGroup>
 </Project>

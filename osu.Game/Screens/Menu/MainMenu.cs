@@ -1,23 +1,23 @@
 // Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using System.Linq;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using osu.Framework.Allocation;
-using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Input;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.Containers;
+using osu.Game.ModLoader;
 using osu.Game.Screens.Backgrounds;
 using osu.Game.Screens.Charts;
 using osu.Game.Screens.Direct;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Multi;
 using osu.Game.Screens.Select;
-using osu.Game.Screens.Symcol;
 using osu.Game.Screens.Tournament;
 
 namespace osu.Game.Screens.Menu
@@ -59,8 +59,12 @@ namespace osu.Game.Screens.Menu
                             OnEdit = delegate { Push(new Editor()); },
                             OnSolo = delegate { Push(consumeSongSelect()); },
                             OnMulti = delegate { Push(new Multiplayer()); },
+                            OnMod = delegate
+                            {
+                                if (ModStore.ModSets.Count > 0)
+                                    Push(ModStore.ModSets.First().GetMenuScreen());
+                            },
                             OnExit = Exit,
-                            OnSymcol = delegate { Push(new SymcolMenu()); },
                         }
                     }
                 },
@@ -156,8 +160,6 @@ namespace osu.Game.Screens.Menu
         {
             base.OnSuspending(next);
 
-            OsuGameBase.VersionOverlay.Value = false;
-
             const float length = 400;
 
             buttons.State = MenuState.EnteringMode;
@@ -171,8 +173,6 @@ namespace osu.Game.Screens.Menu
         protected override void OnResuming(Screen last)
         {
             base.OnResuming(last);
-
-            OsuGameBase.VersionOverlay.Value = true;
 
             background.Next();
 

@@ -7,17 +7,27 @@ using osu.Game.Rulesets.UI;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Classic.UI;
 using System.Collections.Generic;
+using osu.Framework.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Classic
 {
     public class ClassicInputManager : RulesetInputManager<ClassicAction>
     {
-        private ClassicUi classicUI;
+        private ClassicUi classicUi;
+
+        public readonly Container<BufferedContainer> SliderBodyContainer;
 
         public IEnumerable<ClassicAction> PressedActions => KeyBindingContainer.PressedActions;
 
         public ClassicInputManager(RulesetInfo ruleset) : base(ruleset, 0, SimultaneousBindingMode.Unique)
         {
+            if (SliderBodyContainer == null)
+            {
+                Add(SliderBodyContainer = new Container<BufferedContainer>
+                {
+                    RelativeSizeAxes = Axes.Both,
+                });
+            }
         }
 
         protected override void LoadComplete()
@@ -25,7 +35,7 @@ namespace osu.Game.Rulesets.Classic
             base.LoadComplete();
             AddRange(new Drawable[] 
             {
-                classicUI = new ClassicUi
+                classicUi = new ClassicUi
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
