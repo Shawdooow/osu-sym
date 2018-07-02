@@ -32,7 +32,6 @@ namespace Symcol.osu.Mods.MapMixer
         private Bindable<double> dimLevel;
         private static Bindable<bool> syncPitch = new Bindable<bool> { Default = true, Value = true };
         protected override float BackgroundBlur => 10;
-        private bool suspended = false;
 
         [BackgroundDependencyLoader]
         private void load(AudioManager audio, OsuConfigManager config)
@@ -176,18 +175,6 @@ namespace Symcol.osu.Mods.MapMixer
         {
             base.OnEntering(last);
             setClockSpeed(Beatmap.Value.Track);
-        }
-
-        protected override void OnResuming(Screen last)
-        {
-            base.OnResuming(last);
-            suspended = false;
-        }
-
-        protected override void OnSuspending(Screen next)
-        {
-            base.OnSuspending(next);
-            suspended = true;
         }
 
         private void changeClockSpeeds(float value)
