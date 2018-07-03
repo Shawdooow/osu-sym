@@ -285,7 +285,7 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
                 using (StreamReader reader = controlPanel.GetStreamReader(stream))
                     teamsRaw = reader.ReadToEnd().Split('\n');
             }
-            catch { Logger.Log("Teams file doesn't exist!", LoggingTarget.Database, LogLevel.Important); }
+            catch { Logger.Log("Teams file doesn't exist!", LoggingTarget.Database, LogLevel.Important); return teamsList; }
 
             foreach (string teamRaw in teamsRaw)
             {
