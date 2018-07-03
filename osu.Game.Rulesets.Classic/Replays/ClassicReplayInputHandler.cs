@@ -29,17 +29,5 @@ namespace osu.Game.Rulesets.Classic.Replays
                 return Interpolation.ValueAt(CurrentTime, CurrentFrame.Position, NextFrame.Position, CurrentFrame.Time, NextFrame.Time);
             }
         }
-
-        public override List<InputState> GetPendingStates()
-        {
-            return new List<InputState>
-            {
-                new ReplayState<ClassicAction>
-                {
-                    Mouse = new ReplayMouseState(GamefieldToScreenSpace(Position ?? Vector2.Zero)),
-                    PressedActions = CurrentFrame.Actions
-                }
-            };
-        }
     }
 }
