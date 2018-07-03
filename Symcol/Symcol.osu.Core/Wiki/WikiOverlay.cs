@@ -151,20 +151,33 @@ namespace Symcol.osu.Core.Wiki
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuGame game, NotificationOverlay notificationOverlay)
+        private void load(OsuGame game)
         {
             this.game = game;
+        }
+
+        private double doit;
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
 
             if (SymcolOsuModSet.SymcolConfigManager.Get<bool>(SymcolSetting.FreshInstall))
-                notificationOverlay?.Post(new SimpleNotification
-                {
-                    Text = "Be sure to check out the toolbar for the ingame wiki for wiki things! (click me to never see me again)",
-                    Activated = () =>
-                    {
-                        SymcolOsuModSet.SymcolConfigManager.Set<bool>(SymcolSetting.FreshInstall, false);
-                        return true;
-                    }
-                });
+            {
+                doit = Time.Current + 8000;
+                SymcolOsuModSet.SymcolConfigManager.Set<bool>(SymcolSetting.FreshInstall, false);
+            }
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (Time.Current >= doit)
+            {
+                doit = double.MaxValue;
+                Show();
+            }
         }
 
         protected override void PopIn()
