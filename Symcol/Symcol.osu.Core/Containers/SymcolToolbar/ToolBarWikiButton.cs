@@ -7,7 +7,7 @@ namespace Symcol.osu.Core.Containers.SymcolToolbar
     {
         public ToolBarWikiButton()
         {
-            SetIcon(FontAwesome.fa_chevron_circle_up);
+            SetIcon(FontAwesome.fa_question_circle);
             StateContainer = SymcolOsuModSet.WikiOverlay;
             TooltipMain = "Wiki";
             TooltipSub = "documenting the game, ya know?";

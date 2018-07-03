@@ -148,7 +148,6 @@ namespace Symcol.osu.Core.Wiki.Header
     public enum BreadCrumbState
     {
         Home,
-        Wiki,
-        Section
+        Wiki
     }
 }
