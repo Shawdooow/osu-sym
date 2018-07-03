@@ -14,10 +14,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\Textures\symcol spring 2018 1080.png" />
+    <None Remove="Assets\Textures\symcol summer 2018 1080.png" />
     <None Remove="Assets\Textures\Symcol%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\symcol spring 2018 1080.png" />
+    <EmbeddedResource Include="Assets\Textures\symcol summer 2018 1080.png" />
     <EmbeddedResource Include="Assets\Textures\Symcol@2x.png" />
   </ItemGroup>
   <ItemGroup Label="Project References">

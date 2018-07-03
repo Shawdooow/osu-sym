@@ -23,6 +23,8 @@ namespace osu.Game.Audio
         /// </summary>
         public string Bank;
 
+        public int BankNumber = 1;
+
         /// <summary>
         /// The name of the sample to load.
         /// </summary>
