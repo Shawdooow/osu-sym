@@ -15,11 +15,14 @@ using Symcol.Core.Graphics.Containers;
 using Symcol.osu.Mods.Caster.Pieces;
 using Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces.Drawables;
 using System.Linq;
+using System;
 
 namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
 {
     public class TeamBox : SymcolContainer
     {
+        private const string file_name = "teams.mango";
+
         private readonly Box box;
         private readonly Triangles triangles;
 
@@ -219,9 +222,12 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
 
             controlPanel.Stage.ValueChanged += stage =>
             {
-                if (controlPanel.Cup == "None") return;
-                if (controlPanel.Year == "None") return;
-                if (stage == "None") return;
+                if (controlPanel.Cup == "None" || controlPanel.Year == "None" || stage == "None")
+                {
+                    return;
+                }
+
+
             };
 
             controlPanel.Editable.ValueChanged += edit =>
@@ -237,6 +243,9 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
                     {
                         new KeyValuePair<string, Team>("None", new Team { Name = "None" })
                     };
+
+                    foreach (Team t in loadTeams(controlPanel))
+                        ts.Add(new KeyValuePair<string, Team>(t.Name, t));
 
                     foreach (DrawableTeam t in teams)
                         if (t.Team.Name != "None")
@@ -254,6 +263,8 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
                     teamsDropdown.Items = ts;
                     if (teamsDropdown.Bindable.Value == null)
                         teamsDropdown.Bindable.Value = ts.First().Value;
+
+                    save(controlPanel);
                 }
                 else
                 {
@@ -263,6 +274,62 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
                 }
             };
             controlPanel.Editable.TriggerChange();
+        }
+
+        private List<Team> loadTeams(CasterControlPanel controlPanel)
+        {
+            List<Team> teamsList = new List<Team>();
+
+            string[] teamsRaw = controlPanel.GetFileContents(file_name).Split('\n');
+
+            foreach (string teamRaw in teamsRaw)
+            {
+                string[] teamArgs = teamRaw.Split('|');
+
+                Team team = new Team();
+
+                foreach (string teamArgRaw in teamArgs)
+                {
+                    string[] teamArgArgsRaw = teamArgRaw.Split(':');
+
+                    for(int i = 0; i < teamArgArgsRaw.Count(); i++)
+                    {
+                        string arg = teamArgArgsRaw[i];
+
+                        if (arg == "Name")
+                            team.Name = teamArgArgsRaw[i + 1];
+
+                        if (arg == "Players")
+                        {
+                            string[] playersRaw = teamArgArgsRaw[i + 1].Split(',');
+
+                            List<Player> playersList = new List<Player>();
+
+                            foreach (string playerRaw in playersRaw)
+                            {
+                                string[] playerArgsRaw = playerRaw.Split('.');
+
+                                playersList.Add(new Player
+                                {
+                                    Name = playerArgsRaw[0],
+                                    PlayerID = Int32.Parse(playerArgsRaw[1])
+                                });
+                            }
+
+                            team.Players = playersList;
+                        }
+                    }
+                }
+
+                teamsList.Add(team);
+            }
+
+            return teamsList;
+        }
+
+        private void save(CasterControlPanel controlPanel)
+        {
+
         }
     }
 }
