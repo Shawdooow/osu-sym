@@ -9,6 +9,8 @@ using OpenTK.Graphics;
 using Symcol.Core.LegacyNetworking;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Networking;
 using Symcol.Rulesets.Core.Rulesets;
+using Symcol.osu.Core;
+using Symcol.osu.Core.Config;
 
 namespace Symcol.Rulesets.Core.LegacyMultiplayer.Pieces
 {
@@ -16,7 +18,7 @@ namespace Symcol.Rulesets.Core.LegacyMultiplayer.Pieces
     {
         private readonly RulesetNetworkingClientHandler rulesetNetworkingClientHandler;
 
-        private string playerColorHex = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<string>(SymcolSetting.PlayerColor);
+        private string playerColorHex = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.PlayerColor);
 
         private readonly FillFlowContainer<ChatMessage> messageContainer;
         private readonly OsuTextBox textBox;
@@ -106,7 +108,7 @@ namespace Symcol.Rulesets.Core.LegacyMultiplayer.Pieces
 
             ChatPacket packet = new ChatPacket(rulesetNetworkingClientHandler.ClientInfo)
             {
-                Author = SymcolSettingsSubsection.SymcolConfigManager.Get<string>(SymcolSetting.SavedName),
+                Author = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.SavedName),
                 AuthorColor = playerColorHex,
                 Message = message,
             };

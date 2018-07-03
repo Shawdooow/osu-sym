@@ -6,6 +6,8 @@ using osu.Game.Rulesets;
 using Symcol.osu.Core.Screens;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 using Symcol.Rulesets.Core.Multiplayer.Screens;
+using Symcol.osu.Core;
+using Symcol.osu.Core.Config;
 
 namespace Symcol.Rulesets.Core.Rulesets
 {
@@ -15,8 +17,6 @@ namespace Symcol.Rulesets.Core.Rulesets
 
         public static RulesetMultiplayerSelection LegacyRulesetMultiplayerSelection;
         public static Lobby Lobby;
-
-        public static SymcolConfigManager SymcolConfigManager;
 
         protected SymcolSettingsSubsection(Ruleset ruleset)
             : base(ruleset)
@@ -37,8 +37,8 @@ namespace Symcol.Rulesets.Core.Rulesets
         [BackgroundDependencyLoader]
         private void load(OsuGame osu, Storage storage)
         {
-            if (SymcolConfigManager == null)
-                SymcolConfigManager = new SymcolConfigManager(storage);
+            if (SymcolOsuModSet.SymcolConfigManager == null)
+                SymcolOsuModSet.SymcolConfigManager = new SymcolConfigManager(storage);
         }
     }
 }

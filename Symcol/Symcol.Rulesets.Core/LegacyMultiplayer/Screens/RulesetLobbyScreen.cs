@@ -14,6 +14,8 @@ using Symcol.Core.LegacyNetworking;
 using Symcol.osu.Core.Screens.Evast;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Networking;
 using Symcol.Rulesets.Core.Rulesets;
+using Symcol.osu.Core;
+using Symcol.osu.Core.Config;
 
 namespace Symcol.Rulesets.Core.LegacyMultiplayer.Screens
 {
@@ -35,10 +37,10 @@ namespace Symcol.Rulesets.Core.LegacyMultiplayer.Screens
 
         public readonly Container JoinIP;
 
-        private readonly Bindable<string> hostip = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<string>(SymcolSetting.HostIP);
-        private readonly Bindable<string> localip = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<string>(SymcolSetting.LocalIP);
-        private readonly Bindable<int> hostport = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<int>(SymcolSetting.HostPort);
-        private readonly Bindable<int> localport = SymcolSettingsSubsection.SymcolConfigManager.GetBindable<int>(SymcolSetting.LocalPort);
+        private readonly Bindable<string> hostip = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.HostIP);
+        private readonly Bindable<string> localip = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.LocalIP);
+        private readonly Bindable<int> hostport = SymcolOsuModSet.SymcolConfigManager.GetBindable<int>(SymcolSetting.HostPort);
+        private readonly Bindable<int> localport = SymcolOsuModSet.SymcolConfigManager.GetBindable<int>(SymcolSetting.LocalPort);
 
         public RulesetLobbyScreen()
         {

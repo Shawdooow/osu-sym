@@ -5,6 +5,7 @@ using osu.Game;
 using osu.Game.ModLoader;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Screens;
+using Symcol.osu.Core.Config;
 using Symcol.osu.Core.Containers.SymcolToolbar;
 using Symcol.osu.Core.Screens;
 using Symcol.osu.Core.SymcolMods;
@@ -26,11 +27,10 @@ namespace Symcol.osu.Core
         public static ResourceStore<byte[]> SymcolResources;
         public static TextureStore SymcolTextures;
         public static AudioManager SymcolAudio;
+        public static SymcolConfigManager SymcolConfigManager;
 
-        public override void LoadComplete(OsuGame game)
+        public SymcolOsuModSet()
         {
-            base.LoadComplete(game);
-
             if (SymcolResources == null)
             {
                 SymcolResources = new ResourceStore<byte[]>();
@@ -53,11 +53,25 @@ namespace Symcol.osu.Core
                 LazerResources.AddStore(new DllResourceStore(@"osu.Game.Resources.dll"));
                 LazerTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(LazerResources, @"Textures")));
             }
+        }
+
+        public override void LoadComplete(OsuGame game)
+        {
+            base.LoadComplete(game);
+
+            if (SymcolConfigManager == null)
+                SymcolConfigManager = new SymcolConfigManager(game.Host.Storage);
 
             SymcolModStore.ReloadModSets();
 
             if (WikiOverlay == null)
                 game.Add(WikiOverlay = new WikiOverlay());
+        }
+
+        public override void Dispose()
+        {
+            SymcolConfigManager.Save();
+            base.Dispose();
         }
     }
 }

@@ -43,6 +43,8 @@ namespace osu.Game
     /// </summary>
     public class OsuGame : OsuGameBase, IKeyBindingHandler<GlobalAction>
     {
+        public GameHost Host => base.Host;
+
         public Toolbar Toolbar;
 
         private ChatOverlay chat;
@@ -594,6 +596,14 @@ namespace osu.Game
 
             if (newScreen == null)
                 Exit();
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            foreach (ModSet s in ModStore.ModSets)
+                s.Dispose();
+
+            base.Dispose(isDisposing);
         }
     }
 }

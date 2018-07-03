@@ -3,6 +3,8 @@ using osu.Framework.Configuration;
 using osu.Game.Online.API;
 using osu.Game.Rulesets.Vitaru.Settings;
 using Symcol.Core.LegacyNetworking;
+using Symcol.osu.Core;
+using Symcol.osu.Core.Config;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Networking;
 using Symcol.Rulesets.Core.Rulesets;
 
@@ -60,12 +62,12 @@ namespace osu.Game.Rulesets.Vitaru.Multi
             switch (state)
             {
                 default:
-                    VitaruClientInfo.Username = SymcolSettingsSubsection.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
-                    VitaruClientInfo.UserID = SymcolSettingsSubsection.SymcolConfigManager.Get<int>(SymcolSetting.SavedUserID);
+                    VitaruClientInfo.Username = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
+                    VitaruClientInfo.UserID = SymcolOsuModSet.SymcolConfigManager.Get<int>(SymcolSetting.SavedUserID);
                     break;
                 case APIState.Online:
-                    SymcolSettingsSubsection.SymcolConfigManager.Set(SymcolSetting.SavedName, api.LocalUser.Value.Username);
-                    SymcolSettingsSubsection.SymcolConfigManager.Set(SymcolSetting.SavedUserID, api.LocalUser.Value.Id);
+                    SymcolOsuModSet.SymcolConfigManager.Set(SymcolSetting.SavedName, api.LocalUser.Value.Username);
+                    SymcolOsuModSet.SymcolConfigManager.Set(SymcolSetting.SavedUserID, api.LocalUser.Value.Id);
 
                     VitaruClientInfo.Username = api.LocalUser.Value.Username;
                     VitaruClientInfo.UserID = api.LocalUser.Value.Id;

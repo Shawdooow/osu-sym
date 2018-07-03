@@ -16,6 +16,8 @@ using OpenTK.Graphics;
 using Symcol.osu.Core.Wiki.Header;
 using Symcol.osu.Core.Wiki.Sections;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays.Notifications;
+using Symcol.osu.Core.Config;
 
 namespace Symcol.osu.Core.Wiki
 {
@@ -149,9 +151,20 @@ namespace Symcol.osu.Core.Wiki
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuGame game)
+        private void load(OsuGame game, NotificationOverlay notificationOverlay)
         {
             this.game = game;
+
+            if (SymcolOsuModSet.SymcolConfigManager.Get<bool>(SymcolSetting.FreshInstall))
+                notificationOverlay?.Post(new SimpleNotification
+                {
+                    Text = "Be sure to check out the toolbar for the ingame wiki for wiki things! (click me to never see me again)",
+                    Activated = () =>
+                    {
+                        SymcolOsuModSet.SymcolConfigManager.Set<bool>(SymcolSetting.FreshInstall, false);
+                        return true;
+                    }
+                });
         }
 
         protected override void PopIn()

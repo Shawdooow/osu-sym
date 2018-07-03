@@ -14,8 +14,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         protected override void InitialiseDefaults()
         {
-            Set(VitaruSetting.AnnoyPlayer, true);
-
             Set(VitaruSetting.GameMode, Gamemodes.Vitaru);
 
             Set(VitaruSetting.Character, "Alex");
@@ -73,8 +71,6 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
     public enum VitaruSetting
     {
-        AnnoyPlayer,
-
         GameMode,
 
         Character,

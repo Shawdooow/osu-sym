@@ -4,6 +4,8 @@ using osu.Game;
 using osu.Game.Beatmaps;
 using osu.Game.Online.API;
 using Symcol.Core.LegacyNetworking;
+using Symcol.osu.Core;
+using Symcol.osu.Core.Config;
 using Symcol.Rulesets.Core.Rulesets;
 
 namespace Symcol.Rulesets.Core.LegacyMultiplayer.Networking
@@ -75,12 +77,12 @@ namespace Symcol.Rulesets.Core.LegacyMultiplayer.Networking
             switch (state)
             {
                 default:
-                    RulesetClientInfo.Username = SymcolSettingsSubsection.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
-                    RulesetClientInfo.UserID = SymcolSettingsSubsection.SymcolConfigManager.Get<int>(SymcolSetting.SavedUserID);
+                    RulesetClientInfo.Username = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
+                    RulesetClientInfo.UserID = SymcolOsuModSet.SymcolConfigManager.Get<int>(SymcolSetting.SavedUserID);
                     break;
                 case APIState.Online:
-                    SymcolSettingsSubsection.SymcolConfigManager.Set(SymcolSetting.SavedName, api.LocalUser.Value.Username);
-                    SymcolSettingsSubsection.SymcolConfigManager.Set(SymcolSetting.SavedUserID, api.LocalUser.Value.Id);
+                    SymcolOsuModSet.SymcolConfigManager.Set(SymcolSetting.SavedName, api.LocalUser.Value.Username);
+                    SymcolOsuModSet.SymcolConfigManager.Set(SymcolSetting.SavedUserID, api.LocalUser.Value.Id);
 
                     RulesetClientInfo.Username = api.LocalUser.Value.Username;
                     RulesetClientInfo.UserID = api.LocalUser.Value.Id;

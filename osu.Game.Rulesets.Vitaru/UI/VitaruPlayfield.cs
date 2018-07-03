@@ -21,9 +21,6 @@ using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Framework.Logging;
 using osu.Framework.Graphics.Shapes;
 using OpenTK.Graphics;
-using osu.Game.Overlays.Notifications;
-using osu.Framework.Allocation;
-using osu.Game.Overlays;
 using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
@@ -172,21 +169,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 Player = null;
 
             DebugToolkit.GeneralDebugItems.Add(new DebugAction() { Text = "Exclusive Testing Hax", Action = () => { BulletPiece.ExclusiveTestingHax = !BulletPiece.ExclusiveTestingHax; } });
-        }
-
-        [BackgroundDependencyLoader(true)]
-        private void load(NotificationOverlay notificationOverlay)
-        {
-            if (VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.AnnoyPlayer))
-                notificationOverlay?.Post(new SimpleNotification
-                {
-                    Text = "Be sure to check out vitaru settings for the ingame wiki for wiki things! (click me to never see me again)",
-                    Activated = () =>
-                    {
-                        VitaruSettings.VitaruConfigManager.Set<bool>(VitaruSetting.AnnoyPlayer, false);
-                        return true;
-                    }
-                });
         }
 
         protected override void LoadComplete()

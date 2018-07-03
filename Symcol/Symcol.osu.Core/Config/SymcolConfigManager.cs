@@ -1,7 +1,7 @@
 ﻿using osu.Framework.Configuration;
 using osu.Framework.Platform;
 
-namespace Symcol.Rulesets.Core.Rulesets
+namespace Symcol.osu.Core.Config
 {
     public class SymcolConfigManager : IniConfigManager<SymcolSetting>
     {
@@ -11,6 +11,9 @@ namespace Symcol.Rulesets.Core.Rulesets
 
         protected override void InitialiseDefaults()
         {
+            Set(SymcolSetting.Version, "");
+            Set(SymcolSetting.FreshInstall, true);
+
             Set(SymcolSetting.PlayerColor, "#ffffff");
             Set(SymcolSetting.HostIP, "Host's IP Address");
             Set(SymcolSetting.LocalIP, "Local IP Address");
@@ -23,6 +26,10 @@ namespace Symcol.Rulesets.Core.Rulesets
 
     public enum SymcolSetting
     {
+        Version,
+        FreshInstall,
+
+        //Old networking stuff
         PlayerColor,
         HostIP,
         LocalIP,
