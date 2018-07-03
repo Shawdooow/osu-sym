@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Symcol.osu.Core.SymcolMods;
-using Symcol.osu.Core.Wiki.IncludedWikis.Lazer;
-using Symcol.osu.Core.Wiki.IncludedWikis.Symcol;
+using Symcol.osu.Core.Wiki.Included.Lazer;
+using Symcol.osu.Core.Wiki.Included.Symcol;
 
 namespace Symcol.osu.Core.Wiki
 {

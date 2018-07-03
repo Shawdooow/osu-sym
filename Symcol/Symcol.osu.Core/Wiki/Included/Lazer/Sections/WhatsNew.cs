@@ -1,6 +1,6 @@
 ﻿using Symcol.osu.Core.Wiki.Sections;
 
-namespace Symcol.osu.Core.Wiki.IncludedWikis.Lazer.Sections
+namespace Symcol.osu.Core.Wiki.Included.Lazer.Sections
 {
     public class WhatsNew : WikiSection
     {

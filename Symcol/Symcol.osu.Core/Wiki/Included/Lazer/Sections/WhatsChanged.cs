@@ -1,8 +1,8 @@
-﻿using Symcol.osu.Core.Wiki.IncludedWikis.Lazer.Sections.SubSections;
+﻿using Symcol.osu.Core.Wiki.Included.Lazer.Sections.SubSections;
 using Symcol.osu.Core.Wiki.Sections;
 using Symcol.osu.Core.Wiki.Sections.Subsection;
 
-namespace Symcol.osu.Core.Wiki.IncludedWikis.Lazer.Sections
+namespace Symcol.osu.Core.Wiki.Included.Lazer.Sections
 {
     public class WhatsChanged : WikiSection
     {

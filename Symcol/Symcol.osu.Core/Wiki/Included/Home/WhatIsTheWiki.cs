@@ -1,6 +1,6 @@
 ﻿using Symcol.osu.Core.Wiki.Sections;
 
-namespace Symcol.osu.Core.Wiki.IncludedWikis.HomeWiki
+namespace Symcol.osu.Core.Wiki.Included.Home
 {
     public class WhatIsTheWiki : WikiSection
     {

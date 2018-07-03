@@ -1,8 +1,8 @@
 ﻿using osu.Framework.Graphics.Textures;
-using Symcol.osu.Core.Wiki.IncludedWikis.Lazer.Sections;
+using Symcol.osu.Core.Wiki.Included.Lazer.Sections;
 using Symcol.osu.Core.Wiki.Sections;
 
-namespace Symcol.osu.Core.Wiki.IncludedWikis.Lazer
+namespace Symcol.osu.Core.Wiki.Included.Lazer
 {
     public sealed class LazerWikiSet : WikiSet
     {
