@@ -13,7 +13,8 @@ namespace Symcol.osu.Core.Wiki.Included.Home
 
         public override WikiSection[] GetSections() => new WikiSection[]
         {
-            new WhatIsTheWiki()
+            new WhatIsTheWiki(),
+            new Access()
         };
     }
 }
