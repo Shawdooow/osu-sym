@@ -7,9 +7,7 @@ namespace Symcol.osu.Core.Wiki.Included.Home
     {
         public override string Name => "Home";
 
-        public override string Description => "Welcome to the new wiki!";
-
-        //public override Texture Icon => SymcolOsuModSet.SymcolTextures.Get("Symcol@2x");
+        public override string Description => "Welcome to osu!lazer! We hope you enjoy all the new features lazer has to offer!";
 
         public override Texture HeaderBackground => SymcolOsuModSet.LazerTextures.Get("Backgrounds/bg2");
 
