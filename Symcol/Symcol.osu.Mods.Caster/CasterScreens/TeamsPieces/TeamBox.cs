@@ -239,7 +239,8 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
                     };
 
                     foreach (DrawableTeam t in teams)
-                        ts.Add(new KeyValuePair<string, Team>(t.Team.Name, t.Team));
+                        if (t.Team.Name != "None")
+                            ts.Add(new KeyValuePair<string, Team>(t.Team.Name, t.Team));
 
                     if (teamsDropdown.Bindable.Value != null)
                         foreach (KeyValuePair<string, Team> team in ts)
