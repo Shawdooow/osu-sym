@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Logging;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Backgrounds;
 using osu.Game.Graphics.Containers;
@@ -17,16 +13,18 @@ using OpenTK;
 using OpenTK.Graphics;
 using Symcol.Core.Graphics.Containers;
 using Symcol.osu.Mods.Caster.Pieces;
+using Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces.Drawables;
+using System.Linq;
 
-namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
+namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
 {
     public class TeamBox : SymcolContainer
     {
         private readonly Box box;
         private readonly Triangles triangles;
 
-        private readonly FillFlowContainer<Player> players;
-        private readonly FillFlowContainer<Team> teams;
+        private readonly FillFlowContainer<DrawablePlayer> players;
+        private readonly FillFlowContainer<DrawableTeam> teams;
 
         private readonly OsuScrollContainer bottomScrollContainer;
         private readonly OsuScrollContainer teamScrollContainer;
@@ -101,7 +99,10 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
                                             Position = new Vector2(-12, 0),
                                             Size = new Vector2(24),
                                             Rotation = 45,
-                                            Action = () => teams.Add(new Team("New Team", teams, controlPanel.Editable)),
+                                            Action = () => teams.Add(new DrawableTeam(new Team
+                                            {
+                                                Players = new List<Player> { new Player() }
+                                            }, teams, controlPanel.Editable)),
 
                                             Child = new SpriteIcon
                                             {
@@ -114,7 +115,7 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
                                         }
                                     }
                                 },
-                                teams = new FillFlowContainer<Team>
+                                teams = new FillFlowContainer<DrawableTeam>
                                 {
                                     RelativeSizeAxes = Axes.X,
                                     AutoSizeAxes = Axes.Y,
@@ -163,7 +164,7 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
                                             Position = new Vector2(-12, 0),
                                             Size = new Vector2(24),
                                             Rotation = 45,
-                                            Action = () => players.Add(new Player("New Player", 0, players, controlPanel.Editable)),
+                                            Action = () => players.Add(new DrawablePlayer(new Player(), players, controlPanel.Editable)),
 
                                             Child = new SpriteIcon
                                             {
@@ -176,7 +177,7 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
                                         }
                                     }
                                 },
-                                players = new FillFlowContainer<Player>
+                                players = new FillFlowContainer<DrawablePlayer>
                                 {
                                     RelativeSizeAxes = Axes.X,
                                     AutoSizeAxes = Axes.Y,
@@ -194,16 +195,26 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
             };
 
             //Filler info for testing
-            Team symcol = new Team("Symcol", teams, controlPanel.Editable);
-            symcol.Players.Add(new Player("Shawdooow", 7726082, players, controlPanel.Editable));
-            teams.Child = symcol;
+            Team symcol = new Team
+            {
+                Name = "Symcol",
+                Players = new List<Player>
+                {
+                    new Player
+                    {
+                        Name = "Shawdooow",
+                        PlayerID = 7726082
+                    }
+                }
+            };
+            teams.Child = new DrawableTeam(symcol, teams, controlPanel.Editable);
 
             teamsDropdown.Bindable.ValueChanged += team =>
             {
-                players.Children = new Player[]{};
+                players.Children = new DrawablePlayer[]{};
 
                 foreach (Player p in team.Players)
-                    players.Add(p);
+                    players.Add(new DrawablePlayer(p, players, controlPanel.Editable));
             };
 
             controlPanel.Stage.ValueChanged += stage =>
@@ -222,200 +233,35 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
 
                 if (!edit)
                 {
-                    List<KeyValuePair<string, Team>> ts = new List<KeyValuePair<string, Team>>();
-
-                    foreach (Team t in teams)
+                    List<KeyValuePair<string, Team>> ts = new List<KeyValuePair<string, Team>>
                     {
-                        Team r = new Team(t.TeamName, teams, controlPanel.Editable);
+                        new KeyValuePair<string, Team>("None", new Team { Name = "None" })
+                    };
 
-                        foreach (Player p in t.Players)
-                        {
-                            Player n = new Player(p.Username, p.ID, players, controlPanel.Editable);
-                            r.Players.Add(n);
-                        }
-
-                        ts.Add(new KeyValuePair<string, Team>(t.TeamName, r));
-                    }
+                    foreach (DrawableTeam t in teams)
+                        ts.Add(new KeyValuePair<string, Team>(t.Team.Name, t.Team));
 
                     if (teamsDropdown.Bindable.Value != null)
-                        foreach (KeyValuePair<string, Team> pair in ts)
-                            if (pair.Value.TeamName == teamsDropdown.Bindable.Value.TeamName)
+                        foreach (KeyValuePair<string, Team> team in ts)
+                            if (team.Value.Name == teamsDropdown.Bindable.Value.Name)
                             {
-                                pair.Value.Players = new List<Player>();
-                                foreach (Player p in players)
-                                {
-                                    Player n = new Player(p.Username, p.ID, players, controlPanel.Editable);
-                                    pair.Value.Players.Add(n);
-                                }
+                                team.Value.Players = new List<Player>();
+                                foreach (DrawablePlayer player in players)
+                                    team.Value.Players.Add(player.Player);
                             }
 
                     teamsDropdown.Items = ts;
+                    if (teamsDropdown.Bindable.Value == null)
+                        teamsDropdown.Bindable.Value = ts.First().Value;
                 }
                 else
                 {
-                    teams.Children = new Team[]{};
+                    teams.Children = new DrawableTeam[]{};
                     foreach (KeyValuePair<string, Team> pair in teamsDropdown.Items)
-                        teams.Add(new Team(pair.Value.TeamName, teams, controlPanel.Editable));
+                        teams.Add(new DrawableTeam(pair.Value, teams, controlPanel.Editable));
                 }
             };
             controlPanel.Editable.TriggerChange();
-        }
-
-        private class Player : EditableOsuSpriteText
-        {
-            public string Username;
-
-            public int ID;
-
-            public Player(string username, int id, FillFlowContainer<Player> players, Bindable<bool> bindable)
-            {
-                RelativeSizeAxes = Axes.X;
-                AutoSizeAxes = Axes.Y;
-
-                Editable.BindTo(bindable);
-
-                Username = username;
-                ID = id;
-
-                Text = username;
-                TextSize = 32;
-
-                OsuSpriteText.Position = new Vector2(18, 0);
-
-                SpriteIcon icon = new SpriteIcon
-                {
-                    Anchor = Anchor.CentreLeft,
-                    Origin = Anchor.CentreLeft,
-                    Icon = FontAwesome.fa_chevron_right,
-                    Size = new Vector2(TextSize / 2),
-                    Colour = Color4.White
-                };
-
-                OsuTextBox.Width = 0.42f;
-                OsuTextBox idBox = new OsuTextBox
-                {
-                    Alpha = 0,
-                    Anchor = Anchor.TopRight,
-                    Origin = Anchor.TopRight,
-                    Position = new Vector2(-20, 0),
-                    RelativeSizeAxes = Axes.X,
-                    Height = TextSize,
-                    Width = 0.42f,
-                    Text = id.ToString()
-                };
-
-                SymcolClickableContainer delete = new SymcolClickableContainer
-                {
-                    Anchor = Anchor.CentreRight,
-                    Origin = Anchor.CentreRight,
-
-                    Size = new Vector2(TextSize / 2),
-
-                    Action = () => players.Remove(this),
-
-                    Child = new SpriteIcon
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Icon = FontAwesome.fa_osu_cross_o,
-                        Colour = Color4.Red
-                    }
-                };
-
-                Add(idBox);
-                Add(icon);
-                Add(delete);
-
-                OsuTextBox.OnCommit += (commit, ree) => { Username = commit.Text; };
-
-                idBox.OnCommit += (commit, ree) =>
-                {
-                    try
-                    {
-                        int i = Int32.Parse(commit.Text);
-                        ID = i;
-
-                        string u = $@"https://osu.ppy.sh/users/{i}";
-
-                        OsuSpriteText.Tooltip = u;
-                        OsuSpriteText.Action = () => { Process.Start(u); };
-                    }
-                    catch { Logger.Log(commit.Text + " is not a valid user id!", LoggingTarget.Runtime, LogLevel.Error);}
-                };
-
-                Editable.ValueChanged += edit =>
-                {
-                    icon.Alpha = edit ? 0 : 1;
-                    idBox.Alpha = edit ? 1 : 0;
-                    delete.Alpha = edit ? 1 : 0;
-
-                    if (!edit)
-                    {
-                        Username = OsuTextBox.Text;
-
-                        try
-                        {
-                            int i = Int32.Parse(idBox.Text);
-                            ID = i;
-
-                            string u = $@"https://osu.ppy.sh/users/{i}";
-
-                            OsuSpriteText.Tooltip = u;
-                            OsuSpriteText.Action = () => { Process.Start(u); };
-                        }
-                        catch
-                        {
-                            Logger.Log(OsuTextBox.Text + " is not a valid user id!", LoggingTarget.Runtime, LogLevel.Error);
-                            idBox.Text = ID.ToString();
-                        }
-                    }
-                };
-                Editable.TriggerChange();
-
-                string url = $@"https://osu.ppy.sh/users/{id}";
-
-                OsuSpriteText.Tooltip = url;
-                OsuSpriteText.Action = () => { Process.Start(url); };
-            }
-        }
-
-        private class Team : EditableOsuSpriteText
-        {
-            public string TeamName;
-
-            public List<Player> Players = new List<Player>();
-
-            public Team(string name, FillFlowContainer<Team> teams, Bindable<bool> bindable)
-            {
-                TeamName = name;
-
-                if (bindable != null)
-                    Editable.BindTo(bindable);
-
-                RelativeSizeAxes = Axes.X;
-                AutoSizeAxes = Axes.Y;
-
-                Text = name;
-                TextSize = 32;
-
-                Add(new SymcolClickableContainer
-                {
-                    Anchor = Anchor.CentreRight,
-                    Origin = Anchor.CentreRight,
-
-                    Size = new Vector2(TextSize / 2),
-
-                    Action = () => teams.Remove(this),
-
-                    Child = new SpriteIcon
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Icon = FontAwesome.fa_osu_cross_o,
-                        Colour = Color4.Red
-                    }
-                });
-
-                OsuTextBox.Current.ValueChanged += team => { TeamName = team; };
-            }
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using osu.Framework.Graphics;
 using OpenTK;
-using Symcol.osu.Mods.Caster.CasterScreens.Pieces;
 using Symcol.osu.Mods.Caster.Pieces;
+using Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces;
 
 namespace Symcol.osu.Mods.Caster.CasterScreens
 {

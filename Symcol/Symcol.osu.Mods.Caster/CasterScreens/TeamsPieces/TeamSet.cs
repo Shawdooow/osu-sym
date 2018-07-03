@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using OpenTK.Graphics;
 
-namespace Symcol.osu.Mods.Caster.CasterScreens.Pieces
+namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
 {
     /// <summary>
     /// Takes a team line from a file and converts it to usable info for the caster
