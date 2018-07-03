@@ -145,37 +145,24 @@ namespace Symcol.osu.Mods.Caster.Pieces
         #region IO
 
         /// <summary>
-        /// Returns a file's contents from the selected Cup + Year + Stage. If it doesn't exist we will create an empty file with that name
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public string GetFileContents(string name)
-        {
-            try
-            {
-                StreamReader reader = new StreamReader(storage.GetStream($"caster\\Cups\\{Cup.Value}\\{Year.Value}\\{Stage.Value}\\{name}", FileAccess.Read, FileMode.Open));
-                return reader.ReadToEnd();
-            }
-            catch
-            {
-                Logger.Log($"Failed to read {Cup.Value}\\{Year.Value}\\{Stage.Value}\\{name}. Creating our own. . .", LoggingTarget.Database, LogLevel.Error);
-
-                StreamWriter writer = new StreamWriter(storage.GetStream($"caster\\Cups\\{Cup.Value}\\{Year.Value}\\{Stage.Value}\\{name}", FileAccess.Write, FileMode.Create));
-                writer.Write("");
-
-                return "";
-            }
-        }
-
-        /// <summary>
-        /// Returns a StreamWriter from the selected Cup + Year + Stage for the filename. If none is selected return null
+        /// Returns a Stream path from the selected Cup + Year + Stage for the filename.
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public StreamWriter GetStreamWriter(string filename)
+        public string GetStreamPath(string filename)
         {
             if (Stage.Value == "None") return null;
-            return new StreamWriter(storage.GetStream($"caster\\Cups\\{Cup.Value}\\{Year.Value}\\{Stage.Value}\\{filename}", FileAccess.Write, FileMode.OpenOrCreate));
+            return $"caster\\Cups\\{Cup.Value}\\{Year.Value}\\{Stage.Value}\\{filename}";
+        }
+
+        /// <summary>
+        /// Returns a Stream from the specified path
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public Stream GetStream(string path, FileAccess access, FileMode mode)
+        {
+            return storage.GetStream(path, access, mode);
         }
 
         /// <summary>
@@ -183,10 +170,21 @@ namespace Symcol.osu.Mods.Caster.Pieces
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public StreamReader GetStreamReader(string filename)
+        public StreamReader GetStreamReader(Stream stream)
         {
             if (Stage.Value == "None") return null;
-            return new StreamReader(storage.GetStream($"caster\\Cups\\{Cup.Value}\\{Year.Value}\\{Stage.Value}\\{filename}", FileAccess.Read, FileMode.Open));
+            return new StreamReader(stream);
+        }
+
+        /// <summary>
+        /// Returns a StreamWriter from the selected Cup + Year + Stage for the filename. If none is selected return null
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        public StreamWriter GetStreamWriter(Stream stream)
+        {
+            if (Stage.Value == "None") return null;
+            return new StreamWriter(stream);
         }
 
         private void createCasterStorage()
