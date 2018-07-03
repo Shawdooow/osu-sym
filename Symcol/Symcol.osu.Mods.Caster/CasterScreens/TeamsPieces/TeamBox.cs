@@ -235,10 +235,10 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
                     foreach (DrawableTeam t in teams)
                     {
                         bool b = true;
-                        foreach (KeyValuePair<string, Team> pair in teamsDropdown.Items)
-                            if (t.Team.Name != "None" || pair.Value.Name == t.Team.Name)
+                        foreach (KeyValuePair<string, Team> pair in ts)
+                            if (pair.Value.Name == t.Team.Name)
                                 b = false;
-                        if (b)
+                        if (b && t.Team.Name != "None")
                             ts.Add(new KeyValuePair<string, Team>(t.Team.Name, t.Team));
 
                     }
