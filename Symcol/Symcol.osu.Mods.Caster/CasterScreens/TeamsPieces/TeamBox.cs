@@ -16,6 +16,8 @@ using Symcol.osu.Mods.Caster.Pieces;
 using Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces.Drawables;
 using System.Linq;
 using System;
+using System.IO;
+using osu.Framework.Logging;
 
 namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
 {
@@ -29,14 +31,15 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
         private readonly FillFlowContainer<DrawablePlayer> players;
         private readonly FillFlowContainer<DrawableTeam> teams;
 
+        private readonly SettingsDropdown<Team> teamsDropdown;
+
         private readonly OsuScrollContainer bottomScrollContainer;
         private readonly OsuScrollContainer teamScrollContainer;
 
         public TeamBox(CasterControlPanel controlPanel)
-        {
+        { 
             SymcolClickableContainer addPlayer;
             SymcolClickableContainer addTeam;
-            SettingsDropdown<Team> teamsDropdown;
 
             OsuColour osu = new OsuColour();
 
@@ -197,21 +200,6 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
                 }
             };
 
-            //Filler info for testing
-            Team symcol = new Team
-            {
-                Name = "Symcol",
-                Players = new List<Player>
-                {
-                    new Player
-                    {
-                        Name = "Shawdooow",
-                        PlayerID = 7726082
-                    }
-                }
-            };
-            teams.Child = new DrawableTeam(symcol, teams, controlPanel.Editable);
-
             teamsDropdown.Bindable.ValueChanged += team =>
             {
                 players.Children = new DrawablePlayer[]{};
@@ -220,14 +208,11 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
                     players.Add(new DrawablePlayer(p, players, controlPanel.Editable));
             };
 
+
             controlPanel.Stage.ValueChanged += stage =>
             {
-                if (controlPanel.Cup == "None" || controlPanel.Year == "None" || stage == "None")
-                {
-                    return;
-                }
-
-
+                if (controlPanel.Cup == "None" || controlPanel.Year == "None" || controlPanel.Stage == "None") return;
+                controlPanel.Editable.TriggerChange();
             };
 
             controlPanel.Editable.ValueChanged += edit =>
@@ -248,8 +233,15 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
                         ts.Add(new KeyValuePair<string, Team>(t.Name, t));
 
                     foreach (DrawableTeam t in teams)
-                        if (t.Team.Name != "None")
+                    {
+                        bool b = true;
+                        foreach (KeyValuePair<string, Team> pair in teamsDropdown.Items)
+                            if (t.Team.Name != "None" || pair.Value.Name == t.Team.Name)
+                                b = false;
+                        if (b)
                             ts.Add(new KeyValuePair<string, Team>(t.Team.Name, t.Team));
+
+                    }
 
                     if (teamsDropdown.Bindable.Value != null)
                         foreach (KeyValuePair<string, Team> team in ts)
@@ -280,7 +272,20 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
         {
             List<Team> teamsList = new List<Team>();
 
-            string[] teamsRaw = controlPanel.GetFileContents(file_name).Split('\n');
+            if (controlPanel.Cup == "None" || controlPanel.Year == "None" || controlPanel.Stage == "None")
+            {
+                return teamsList;
+            }
+
+            string[] teamsRaw = null;
+
+            try
+            {
+                using (Stream stream = controlPanel.GetStream(controlPanel.GetStreamPath(file_name), FileAccess.Read, FileMode.Open))
+                using (StreamReader reader = controlPanel.GetStreamReader(stream))
+                    teamsRaw = reader.ReadToEnd().Split('\n');
+            }
+            catch { Logger.Log("Teams file doesn't exist!", LoggingTarget.Database, LogLevel.Important); }
 
             foreach (string teamRaw in teamsRaw)
             {
@@ -292,7 +297,7 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
                 {
                     string[] teamArgArgsRaw = teamArgRaw.Split(':');
 
-                    for(int i = 0; i < teamArgArgsRaw.Count(); i++)
+                    for (int i = 0; i < teamArgArgsRaw.Count(); i++)
                     {
                         string arg = teamArgArgsRaw[i];
 
@@ -329,7 +334,56 @@ namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
 
         private void save(CasterControlPanel controlPanel)
         {
+            if (controlPanel.Cup == "None" || controlPanel.Year == "None" || controlPanel.Stage == "None")
+            {
+                return;
+            }
 
+            string teamsRaw = "Name:Symcol|Players:Shawdooow.7726082";
+
+            bool first = true;
+
+            foreach (KeyValuePair<string, Team> pair in teamsDropdown.Items)
+                if (pair.Value.Name != "None")
+                {
+                    Team team = pair.Value;
+
+                    //TODO: simplify this code?
+                    if (first)
+                    {
+                        teamsRaw = $"Name:{team.Name}|Players:";
+
+                        for (int i = 0; i < team.Players.Count; i++)
+                        {
+                            Player p = team.Players[i];
+
+                            teamsRaw = teamsRaw + $"{p.Name}.{p.PlayerID}";
+
+                            if (team.Players.Count > i + 1)
+                                teamsRaw = teamsRaw + ",";
+                        }
+
+                        first = false;
+                    }
+                    else
+                    {
+                        teamsRaw = teamsRaw + $"\nName:{team.Name}|Players:";
+
+                        for (int i = 0; i < team.Players.Count; i++)
+                        {
+                            Player p = team.Players[i];
+
+                            teamsRaw = teamsRaw + $"{p.Name}.{p.PlayerID}";
+
+                            if (team.Players.Count > i + 1)
+                                teamsRaw = teamsRaw + ",";
+                        }
+                    }
+                }
+
+            using (Stream stream = controlPanel.GetStream(controlPanel.GetStreamPath(file_name), FileAccess.Write, FileMode.OpenOrCreate))
+            using (StreamWriter writer = controlPanel.GetStreamWriter(stream))
+                writer.Write(teamsRaw);
         }
     }
 }
