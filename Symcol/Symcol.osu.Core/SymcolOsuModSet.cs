@@ -29,8 +29,10 @@ namespace Symcol.osu.Core
         public static AudioManager SymcolAudio;
         public static SymcolConfigManager SymcolConfigManager;
 
-        public SymcolOsuModSet()
+        public override void LoadComplete(OsuGame game)
         {
+            base.LoadComplete(game);
+
             if (SymcolResources == null)
             {
                 SymcolResources = new ResourceStore<byte[]>();
@@ -53,11 +55,6 @@ namespace Symcol.osu.Core
                 LazerResources.AddStore(new DllResourceStore(@"osu.Game.Resources.dll"));
                 LazerTextures = new TextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(LazerResources, @"Textures")));
             }
-        }
-
-        public override void LoadComplete(OsuGame game)
-        {
-            base.LoadComplete(game);
 
             if (SymcolConfigManager == null)
                 SymcolConfigManager = new SymcolConfigManager(game.Host.Storage);
