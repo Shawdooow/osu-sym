@@ -302,7 +302,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
     internal enum TouhosuCharacters
     {
-        //The Hakurei Family
+        //The Hakurei Chapter
         [Description("Reimu Hakurei")]
         ReimuHakurei,
         [Description("Ryukoy Hakurei")]
