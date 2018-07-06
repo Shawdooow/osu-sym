@@ -117,8 +117,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                 SpellDeactivate(action);
         }
 
-        //TODO: I feel like this TODO should be obvious (figure out this bindable thing)
-        public static DrawableTouhosuPlayer GetDrawableTouhosuPlayer(VitaruPlayfield playfield, string name, VitaruNetworkingClientHandler vitaruNetworkingClientHandler, Bindable<int> bindableInt = null)
+        public static DrawableTouhosuPlayer GetDrawableTouhosuPlayer(VitaruPlayfield playfield, string name, VitaruNetworkingClientHandler vitaruNetworkingClientHandler)
         {
             switch (name)
             {
@@ -128,7 +127,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
                 case "ReimuHakurei":
                     return new DrawableReimu(playfield, vitaruNetworkingClientHandler);
                 case "RyukoyHakurei":
-                    return new DrawableRyukoy(playfield, vitaruNetworkingClientHandler, bindableInt);
+                    return new DrawableRyukoy(playfield, vitaruNetworkingClientHandler);
                 case "TomajiHakurei":
                     return new DrawableTomaji(playfield, vitaruNetworkingClientHandler);
 

@@ -1,7 +1,5 @@
 ﻿using osu.Framework.Allocation;
-using osu.Framework.Audio;
 using osu.Framework.Configuration;
-using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
@@ -17,18 +15,15 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
         private int level = 1;
 
         private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
-
-        private readonly Bindable<int> abstraction;
         #endregion
 
-        public DrawableRyukoy(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler, Bindable<int> abstraction) : base(playfield, new Ryukoy(), vitaruNetworkingClientHandler)
+        public DrawableRyukoy(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Ryukoy(), vitaruNetworkingClientHandler)
         {
-            this.abstraction = abstraction;
             Abstraction = 3;
 
             Spell += (input) =>
             {
-                abstraction.Value = level;
+                //abstraction.Value = level;
             };
         }
 
@@ -46,28 +41,13 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
             {
                 Energy -= (Clock.ElapsedFrameTime / 1000) * TouhosuPlayer.EnergyDrainRate * (level * 0.25f);
 
-                abstraction.Value = level;
-                applyToClock(workingBeatmap.Value.Track, setPitch);
+                //abstraction.Value = level;
+                //applyToClock(workingBeatmap.Value.Track, setPitch);
             }
             else
             {
-                applyToClock(workingBeatmap.Value.Track, 1);
-                abstraction.Value = 0;
-            }
-        }
-
-        private void applyToClock(IAdjustableClock clock, double pitch)
-        {
-            if (clock is IHasPitchAdjust pitchAdjust)
-            {
-                pitchAdjust.PitchAdjust = pitch;
-
-                if (setPitch > 1)
-                    clock.Rate = (1 - (pitch - 1) / 2);
-                else if (setPitch < 1)
-                    clock.Rate = (1 + (pitch - 1) * -2);
-                else
-                    clock.Rate = 1;
+                //applyToClock(workingBeatmap.Value.Track, 1);
+                //abstraction.Value = 0;
             }
         }
 

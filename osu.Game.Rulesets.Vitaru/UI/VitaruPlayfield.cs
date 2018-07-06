@@ -13,9 +13,7 @@ using osu.Framework.Configuration;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Vitaru.Multi;
 using Symcol.Rulesets.Core.Rulesets;
-using osu.Framework.Graphics.Effects;
 using osu.Game.Rulesets.Vitaru.Characters;
-using osu.Game.Graphics;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Framework.Logging;
@@ -41,9 +39,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public readonly VitaruInputManager VitaruInputManager;
 
-        public readonly AbstractionField GameField;
-
-        public readonly MirrorField Mirrorfield;
+        //public readonly MirrorField Mirrorfield;
 
         public static Action<Judgement> OnJudgement;
         //public Action<Judgement> RemoveJudgement;
@@ -112,21 +108,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
                     }
                 });
 
-            AddRange(new Drawable[]
-            {
-                GameField = new AbstractionField(abstraction, drawableHitobjectCount),
-                judgementLayer = new Container
-                {
-                    RelativeSizeAxes = Axes.Both
-                }
-            });
-
             if (!Editor)
             {
                 VitaruNetworkingClientHandler vitaruNetworkingClientHandler = RulesetNetworkingClientHandler as VitaruNetworkingClientHandler;
 
                 if (gamemode == Gamemodes.Touhosu)
-                    playerList.Add(Player = DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler, abstraction));
+                    playerList.Add(Player = DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler));
                 else
                     playerList.Add(Player = DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
 
@@ -136,9 +123,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
                     Action = () =>
                     {
                         if (gamemode == Gamemodes.Touhosu)
-                            GameField.Add(DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler, abstraction));
+                            Add(DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler));
                         else
-                            GameField.Add(DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
+                            Add(DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
                     }
                 });
 
@@ -148,16 +135,16 @@ namespace osu.Game.Rulesets.Vitaru.UI
                         Logger.Log("Loading a player recieved from internet!", LoggingTarget.Network, LogLevel.Verbose);
 
                         if (gamemode == Gamemodes.Touhosu)
-                            playerList.Add(Player = DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler, abstraction));
+                            playerList.Add(Player = DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler));
                         else
                             playerList.Add(Player = DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
                     }
 
                 foreach (DrawableVitaruPlayer player in playerList)
-                    GameField.Add(player);
+                    Add(player);
 
                 if (gamemode == Gamemodes.Touhosu && kiaiBoss)
-                    GameField.Add(Boss = new Boss(this));
+                    Add(Boss = new Boss(this));
 
                 Player.Position = new Vector2(256, 700);
                 if (gamemode == Gamemodes.Dodge || gamemode == Gamemodes.Gravaru)
@@ -256,224 +243,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
             OnJudgement = null;
             //RemoveJudgement = null;
             base.Dispose(isDisposing);
-        }
-
-        public class AbstractionField : Container
-        {
-            public readonly Bindable<int> AbstractionLevel;
-
-            private readonly DebugStat<int> drawableHitobjectCount;
-            private readonly DebugStat<int> drawableBulletCount;
-            private readonly DebugStat<int> drawableLaserCount;
-            private readonly DebugStat<int> enemyCount;
-            private readonly DebugStat<int> bossCount;
-            private readonly DebugStat<int> playerCount;
-
-            public Container Current = new Container { RelativeSizeAxes = Axes.Both, Name = "Current" };
-            public Container QuarterAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.5f, Colour = OsuColour.FromHex("#ffe6d1"), Name = "QuarterAbstraction" };
-            public Container HalfAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.25f, Colour = OsuColour.FromHex("#bff5ff"), Name = "HalfAbstraction" };
-            public Container FullAbstraction = new Container { RelativeSizeAxes = Axes.Both, Alpha = 0.125f, Colour = OsuColour.FromHex("#d191ff"), Name = "FullAbstraction" };
-
-            public AbstractionField(Bindable<int> abstraction, DebugStat<int> drawableHitobjectCount)
-            {
-                AbstractionLevel = abstraction;
-
-                this.drawableHitobjectCount = drawableHitobjectCount;
-
-                DebugToolkit.GeneralDebugItems.Add(drawableBulletCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Bullet Count" });
-                DebugToolkit.GeneralDebugItems.Add(drawableLaserCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Laser Count" });
-                DebugToolkit.GeneralDebugItems.Add(enemyCount = new DebugStat<int>(new Bindable<int>()) { Text = "Enemy Count" });
-                DebugToolkit.GeneralDebugItems.Add(bossCount = new DebugStat<int>(new Bindable<int>()) { Text = "Boss Count" });
-                DebugToolkit.GeneralDebugItems.Add(playerCount = new DebugStat<int>(new Bindable<int>()) { Text = "Player Count" });
-
-                RelativeSizeAxes = Axes.Both;
-
-                Name = "AbstractionField";
-
-                Children = new Drawable[]
-                {
-                    FullAbstraction.WithEffect(new GlowEffect
-                    {
-                        Strength = 8f,
-                        BlurSigma = new Vector2(16)
-                    }),
-                    HalfAbstraction.WithEffect(new GlowEffect
-                    {
-                        Strength = 4f,
-                        BlurSigma = new Vector2(8)
-                    }),
-                    QuarterAbstraction.WithEffect(new GlowEffect
-                    {
-                        Strength = 2f,
-                        BlurSigma = new Vector2(4)
-                    }),
-                    Current
-                };
-
-                AbstractionLevel.ValueChanged += (value) =>
-                {
-                    List<Drawable> q = new List<Drawable>();
-                    List<Drawable> h = new List<Drawable>();
-                    List<Drawable> f = new List<Drawable>();
-
-                    foreach (Drawable draw in QuarterAbstraction)
-                        q.Add(draw);
-
-                    foreach (Drawable draw in HalfAbstraction)
-                        h.Add(draw);
-
-                    foreach (Drawable draw in FullAbstraction)
-                        f.Add(draw);
-
-                    foreach (Drawable draw in q)
-                    {
-                        QuarterAbstraction.Remove(draw);
-                        Current.Add(draw);
-                    }
-
-                    foreach (Drawable draw in h)
-                    {
-                        HalfAbstraction.Remove(draw);
-                        Current.Add(draw);
-                    }
-
-                    foreach (Drawable draw in f)
-                    {
-                        FullAbstraction.Remove(draw);
-                        Current.Add(draw);
-                    }
-
-                    if (value >= 1)
-                    {
-                        List<Drawable> quarter = new List<Drawable>();
-
-                        foreach (Drawable draw in Current)
-                        {
-                            if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value)
-                                quarter.Add(bullet);
-                            if (draw is DrawableVitaruPlayer player && player.Abstraction < value)
-                                quarter.Add(player);
-                            if (draw is Enemy enemy && enemy.Abstraction < value)
-                                quarter.Add(enemy);
-                        }
-
-                        foreach (Drawable draw in quarter)
-                        {
-                            Current.Remove(draw);
-                            QuarterAbstraction.Add(draw);
-                        }
-                    }
-                    if (value >= 2)
-                    {
-                        List<Drawable> half = new List<Drawable>();
-
-                        foreach (Drawable draw in QuarterAbstraction)
-                        {
-                            if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value - 1)
-                                half.Add(bullet);
-                            if (draw is DrawableVitaruPlayer player && player.Abstraction < value - 1)
-                                half.Add(player);
-                            if (draw is Enemy enemy && enemy.Abstraction < value - 1)
-                                half.Add(enemy);
-                        }
-
-                        foreach (Drawable draw in half)
-                        {
-                            QuarterAbstraction.Remove(draw);
-                            HalfAbstraction.Add(draw);
-                        }
-                    }
-                    if (value >= 3)
-                    {
-                        List<Drawable> full = new List<Drawable>();
-
-                        foreach (Drawable draw in HalfAbstraction)
-                        {
-                            if (draw is DrawableBullet bullet && bullet.Bullet.Abstraction < value - 2)
-                                full.Add(bullet);
-
-                            if (draw is DrawableVitaruPlayer player && player.Abstraction < value - 2)
-                                full.Add(player);
-
-                            if (draw is Enemy enemy && enemy.Abstraction < value - 2)
-                                full.Add(enemy);
-                        }
-
-                        foreach (Drawable draw in full)
-                        {
-                            HalfAbstraction.Remove(draw);
-                            FullAbstraction.Add(draw);
-                        }
-                    }
-                };
-                AbstractionLevel.TriggerChange();
-            }
-
-            public new void Add (Drawable drawable)
-            {
-                if (drawable is DrawableBullet bt)
-                {
-                    drawableHitobjectCount.Bindable.Value++;
-                    bt.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
-
-                    drawableBulletCount.Bindable.Value++;
-                    bt.OnDispose += (isDisposing) => { drawableBulletCount.Bindable.Value--; };
-                }
-                if (drawable is DrawableLaser l)
-                {
-                    drawableHitobjectCount.Bindable.Value++;
-                    l.OnDispose += (isDisposing) => { drawableHitobjectCount.Bindable.Value--; };
-
-                    drawableLaserCount.Bindable.Value++;
-                    l.OnDispose += (isDisposing) => { drawableLaserCount.Bindable.Value--; };
-                }
-                else if (drawable is Enemy e)
-                {
-                    enemyCount.Bindable.Value++;
-                    e.OnDispose += (isDisposing) => { enemyCount.Bindable.Value--; };
-                }
-                else if (drawable is Boss bs)
-                {
-                    bossCount.Bindable.Value++;
-                    bs.OnDispose += (isDisposing) => { bossCount.Bindable.Value--; };
-                }
-                else if (drawable is DrawableVitaruPlayer p)
-                {
-                    playerCount.Bindable.Value++;
-                    p.OnDispose += (isDisposing) => { playerCount.Bindable.Value--; };
-                }
-
-                Current.Add(drawable);
-                AbstractionLevel.TriggerChange();
-            }
-
-            public new void Remove (Drawable drawable)
-            {
-                foreach (Drawable draw in Current)
-                    if (draw == drawable)
-                    {
-                        Current.Remove(drawable);
-                        return;
-                    }
-                foreach (Drawable draw in QuarterAbstraction)
-                    if (draw == drawable)
-                    {
-                        QuarterAbstraction.Remove(drawable);
-                        return;
-                    }
-                foreach (Drawable draw in HalfAbstraction)
-                    if (draw == drawable)
-                    {
-                        HalfAbstraction.Remove(drawable);
-                        return;
-                    }
-                foreach (Drawable draw in FullAbstraction)
-                    if (draw == drawable)
-                    {
-                        FullAbstraction.Remove(drawable);
-                        return;
-                    }
-            }
         }
     }
 }

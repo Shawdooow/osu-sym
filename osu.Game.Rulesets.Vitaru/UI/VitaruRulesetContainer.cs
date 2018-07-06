@@ -100,16 +100,15 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 return ControlScheme.Dodge;
             else
             {
-                if (character == "SakuyaIzayoi" || character == "RyukoyHakurei" || character == "TomajiHakurei")
-                    return ControlScheme.Sakuya;
-                //else if (currentCharacter == Player.KokoroHatano)
-                    //return ControlScheme.Kokoro;
-                //else if (currentCharacter == Player.NueHoujuu)
-                    //return ControlScheme.NueHoujuu;
-                //else if (currentCharacter == Player.AliceMuyart)
-                    //return ControlScheme.AliceMuyart;
-                else
-                    return ControlScheme.Touhosu;
+                switch (character.Value)
+                {
+                    default:
+                        return ControlScheme.Touhosu;
+                    case "SakuyaIzayoi":
+                        return ControlScheme.Sakuya;
+                    case "RyukoyHakurei":
+                        return ControlScheme.Ryukoy;
+                }
             }
         }
 
@@ -141,5 +140,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             return new Vector2(aspectSize.X / DrawSize.X, aspectSize.Y / DrawSize.Y);
         }
+
+        protected override Vector2 PlayfieldArea => new Vector2(0.8f);
     }
 }

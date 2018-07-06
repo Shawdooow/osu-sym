@@ -12,7 +12,7 @@ namespace Symcol.Rulesets.Core.Rulesets
 
         public SymcolInputManager(RulesetInfo ruleset, int variant, SimultaneousBindingMode unique) : base(ruleset, variant, unique)
         {
-            Child = new VectorVideo();
+            //Child = new VectorVideo();
         }
     }
 }
