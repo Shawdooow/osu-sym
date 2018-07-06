@@ -191,6 +191,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public override void Add(DrawableHitObject h)
         {
+            throw new NotImplementedException("Its pretty fucked.");
+
             DrawablePattern drawable = h as DrawablePattern;
 
             if (Editor || !goodFps)
