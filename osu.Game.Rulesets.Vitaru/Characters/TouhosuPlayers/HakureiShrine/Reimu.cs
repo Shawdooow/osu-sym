@@ -20,9 +20,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override Color4 SecondaryColor => Color4.White;
 
-        public override Color4 ComplementaryColor => Color4.Yellow;
+        public override Color4 TrinaryColor => Color4.Yellow;
 
-        public override string Spell => "Leader";
+        public override string Ability => "Leader";
 
         public override Role Role => Role.Support;
 

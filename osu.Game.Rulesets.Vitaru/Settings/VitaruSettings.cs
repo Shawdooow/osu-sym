@@ -310,21 +310,70 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         [Description("Tomaji Hakurei")]
         TomajiHakurei,
 
-        //Hakurei Family Friends, 
+        //The Scarlet Mansion Upgrade
+        //[Description("Elly")]
+        //Elly,
         [Description("Sakuya Izayoi")]
         SakuyaIzayoi,
-        //[System.ComponentModel.Description("Flandre Scarlet")]
+        //[Description("Flandre Scarlet")]
         //FlandreScarlet,
-        //[System.ComponentModel.Description("Remilia Scarlet")]
+        //[Description("Remilia Scarlet")]
         //RemiliaScarlet,
 
-        //Uncle Vaster and Aunty Alice
-        //[System.ComponentModel.Description("Alice Letrunce")]
+        //The Mechatronics Upgrade
+        //[Description("Alice Letrunce")]
         //AliceLetrunce,
-        //[System.ComponentModel.Description("Vaster Letrunce")]
+        //[Description("Vaster Letrunce")]
         //VasterLetrunce,
 
-        //[System.ComponentModel.Description("Marisa Kirisame")]
+        //The Rational Upgrade
+        //[Description("Marisa Kirisame")]
         //MarisaKirisame,
+
+        ///Everything below is what we call "wishful" thinking
+
+        //The Media Upgrade
+        //[Description("Aya Shameimaru")]
+        //AyaShameimaru,
+        //[Description("Hatate Himekaidou")]
+        //HatateHimekaidou,
+
+        //The Insanity Upgrade
+        //[Description("Clownpiece")]
+        //Clownpiece
+        //[Description("Junko")]
+        //Junko
+        //[Description("Hecatia Lapislazuli")]
+        //HecatiaLapislazuli
+
+        //The Orbital Upgrade
+        //[Description("Kaguya Houraisan")]
+        //KaguyaHouraisan
+        //[Description("Eirin Yagokoro")]
+        //EirinYagokoro
+        //[Description("Nue Houjuu")]
+        //Nue Houjuu
+
+        //The Stray Upgrade
+        //[Description("Ran Yakumo")]
+        //RanYakumo,
+        //[Description("Chen")]
+        //Chen
+
+        //The Cultists Upgrade
+        //[Description("Byakuren Hijiri")]
+        //ByakurenHijiri
+        //[Description("Shou Toramaru")]
+        //Shou Toramaru
+        //[Description("Nazrin")]
+        //Nazrin
+        //[Description("Ichirin Kumoi")]
+        //Ichirin Kumoi
+        //[Description("Minamitsu Murasa")]
+        //Minamitsu Murasa
+
+        //The Unveiled Upgrade
+        //[Description("Yukari Yakumo")]
+        //YukariYakumo
     }
 }

@@ -20,13 +20,13 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override Color4 SecondaryColor => base.SecondaryColor;
 
-        public override Color4 ComplementaryColor => base.ComplementaryColor;
+        public override Color4 TrinaryColor => base.TrinaryColor;
 
-        public override string Spell => "Out of Tune";
+        public override string Ability => "Out of Tune";
 
         public override Role Role => Role.Defense;
 
-        public override Difficulty Difficulty => Difficulty.Hard;
+        public override Difficulty Difficulty => Difficulty.Another;
 
         public override string Background => "Being the elder sibling comes with many responsabilitys in the Hakurei family. " +
             "She has the weight of the Hakurei name to uphold as the next inline to be the keeper of their family shrine. " +

@@ -21,9 +21,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override Color4 SecondaryColor => OsuColour.FromHex("#92a0dd");
 
-        public override Color4 ComplementaryColor => OsuColour.FromHex("#d6d6d6");
+        public override Color4 TrinaryColor => OsuColour.FromHex("#d6d6d6");
 
-        public override string Spell => "Time Keeper";
+        public override string Ability => "Time Waster";
 
         public override Role Role => Role.Defense;
 
@@ -33,6 +33,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
             "Her perfect record has only been tainted by one person, but The Hakureis are close friends of hers now. " +
             "They have put there differences aside once to fight off something bigger then all of them combined, but as the phrase goes: \"Greater than the sum of its parts\" they were able to hold the fort long enough to succeed.";
 
-        public override bool Implemented => true;
+        public override bool Implemented => false;
     }
 }

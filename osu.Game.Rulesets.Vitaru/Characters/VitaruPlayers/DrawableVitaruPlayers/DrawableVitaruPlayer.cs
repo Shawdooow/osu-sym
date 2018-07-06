@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         public override Color4 SecondaryColor => Player.SecondaryColor;
 
-        public override Color4 ComplementaryColor => Player.ComplementaryColor;
+        public override Color4 ComplementaryColor => Player.TrinaryColor;
 
         public int ScoreZone = 100;
 

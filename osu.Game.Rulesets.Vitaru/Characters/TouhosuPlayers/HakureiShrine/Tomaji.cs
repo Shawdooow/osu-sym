@@ -20,9 +20,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public override Color4 SecondaryColor => base.SecondaryColor;
 
-        public override Color4 ComplementaryColor => base.ComplementaryColor;
+        public override Color4 TrinaryColor => base.TrinaryColor;
 
-        public override string Spell => "Blink";
+        public override string Ability => "Blink";
 
         public override Role Role => Role.Offense;
 

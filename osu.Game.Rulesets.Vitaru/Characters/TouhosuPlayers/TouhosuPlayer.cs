@@ -1,4 +1,5 @@
 ﻿using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
+using System.ComponentModel;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 {
@@ -10,7 +11,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public virtual double EnergyDrainRate { get; } = 0;
 
-        public virtual string Spell { get; } = "None";
+        public virtual string Ability { get; } = "None";
+
+        //public virtual string[] Abilities { get; } = null;
 
         public virtual Role Role { get; } = Role.Offense;
 
@@ -65,5 +68,17 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
         Insane,
         Another,
         Extra,
+
+        //Crazy Town
+        [Description("Time Freeze")]
+        TimeFreeze,
+        [Description("Arcanum Barrier")]
+        ArcanumBarrier,
+
+        //No
+        [Description("Centipede")]
+        Centipede,
+        [Description("Serious")]
+        SeriousShit
     }
 }
