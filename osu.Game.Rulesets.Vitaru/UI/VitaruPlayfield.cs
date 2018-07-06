@@ -79,6 +79,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public VitaruPlayfield(VitaruInputManager vitaruInput) : base(BaseSize)
         {
+            throw new NotImplementedException("Its pretty fucked.");
+
             VitaruInputManager = vitaruInput;
 
             DrawableBullet.BoundryHacks = false;
