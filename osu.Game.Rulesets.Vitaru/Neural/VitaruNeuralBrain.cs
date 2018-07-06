@@ -27,8 +27,8 @@ namespace osu.Game.Rulesets.Vitaru.Neural
 
             TFTensor output;
 
-            for (int i = 0; i < vitaruPlayfield.GameField.Current.Count; i++)
-                if (vitaruPlayfield.GameField.Current[i] is DrawableBullet drawableBullet && drawableBullet.Bullet.Team != player.Team)
+            for (int i = 0; i < vitaruPlayfield.Children.Count; i++)
+                if (vitaruPlayfield.Children[i] is DrawableBullet drawableBullet && drawableBullet.Bullet.Team != player.Team)
                 {
                     float xPow = (float)Math.Pow(drawableBullet.Position.X - player.Position.X, 2);
                     float yPow = (float)Math.Pow(drawableBullet.Position.Y - player.Position.Y, 2);

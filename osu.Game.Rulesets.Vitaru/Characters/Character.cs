@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
             if (HitDetection)
             {
-                foreach (Drawable draw in VitaruPlayfield.GameField.Current)
+                foreach (Drawable draw in VitaruPlayfield)
                 {
                     DrawableBullet bullet = draw as DrawableBullet;
                     if (bullet?.Hitbox != null)

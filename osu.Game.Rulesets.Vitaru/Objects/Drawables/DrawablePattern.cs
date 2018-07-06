@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Load();
 
-            VitaruPlayfield.GameField.Add(starPiece = new StarPiece
+            VitaruPlayfield.Add(starPiece = new StarPiece
             {
                 Alpha = 0,
                 Masking = true,
@@ -151,7 +151,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             if (gamemode != Gamemodes.Dodge)
             {
                 //load the enemy
-                VitaruPlayfield.GameField.Add(enemy = new Enemy(VitaruPlayfield, this)
+                VitaruPlayfield.Add(enemy = new Enemy(VitaruPlayfield, this)
                 {
                     Alpha = 0,
                     Anchor = Anchor.TopLeft,
@@ -208,7 +208,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     }
 
                     DrawableBullet drawableBullet = new DrawableBullet(b, VitaruPlayfield);
-                    VitaruPlayfield.GameField.Add(drawableBullet);
+                    VitaruPlayfield.Add(drawableBullet);
                     AddNested(drawableBullet);
                 }
             }

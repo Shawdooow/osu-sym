@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlay
 
             if (SpellActive)
             {
-                foreach (Drawable drawable in VitaruPlayfield.GameField.Current)
+                foreach (Drawable drawable in VitaruPlayfield)
                     if (drawable is DrawableTouhosuPlayer drawableTouhosuPlayer)
                     {
                         

@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             Actions[VitaruAction.Slow] = false;
             Actions[VitaruAction.Shoot] = false;
 
-            VitaruPlayfield.GameField.Add(Cursor = new Container
+            VitaruPlayfield.Add(Cursor = new Container
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.Centre,
@@ -268,18 +268,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             if (HealthHacks)
                 Heal(999999);
 
-            foreach (Drawable draw in VitaruPlayfield.GameField.QuarterAbstraction)
-                if (draw is DrawableBullet bullet && bullet.Hitbox != null)
-                    ParseBullet(bullet);
-
-            foreach (Drawable draw in VitaruPlayfield.GameField.HalfAbstraction)
-                if (draw is DrawableBullet bullet && bullet.Hitbox != null)
-                    ParseBullet(bullet);
-
-            foreach (Drawable draw in VitaruPlayfield.GameField.FullAbstraction)
-                if (draw is DrawableBullet bullet && bullet.Hitbox != null)
-                    ParseBullet(bullet);
-
             Position = GetNewPlayerPosition(0.25d);
 
             if (Auto)
@@ -287,7 +275,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Character closestCharacter = null;
                 double closestCharaterDistance = double.MaxValue;
 
-                foreach (Drawable draw in VitaruPlayfield.GameField.Current)
+                foreach (Drawable draw in VitaruPlayfield)
                     if (draw is Character character)
                     {
                         if (character.Team != Team)
@@ -392,7 +380,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 float behindBulletEdgeDitance = float.MaxValue;
                 float behindBulletAngle = 0;
 
-                foreach (Drawable draw in VitaruPlayfield.GameField.Current)
+                foreach (Drawable draw in VitaruPlayfield)
                     if (draw is DrawableBullet)
                     {
                         DrawableBullet bullet = draw as DrawableBullet;
@@ -499,7 +487,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         {
             DrawableBullet drawableBullet;
 
-            VitaruPlayfield.GameField.Add(drawableBullet = new DrawableBullet(new Bullet
+            VitaruPlayfield.Add(drawableBullet = new DrawableBullet(new Bullet
             {
                 StartTime = Time.Current,
                 Position = Position,
