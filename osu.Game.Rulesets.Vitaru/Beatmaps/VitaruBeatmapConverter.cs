@@ -27,6 +27,8 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 
         protected override IEnumerable<VitaruHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
         {
+            throw new NotImplementedException("Its pretty fucked.");
+
             var endTimeData = original as IHasEndTime;
             var positionData = original as IHasPosition;
             var comboData = original as IHasCombo;
