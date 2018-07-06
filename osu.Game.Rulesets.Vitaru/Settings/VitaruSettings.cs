@@ -310,7 +310,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         [Description("Tomaji Hakurei")]
         TomajiHakurei,
 
-        //The Scarlet Mansion Upgrade
+        //The Leftovers Chapter
         //[Description("Elly")]
         //Elly,
         [Description("Sakuya Izayoi")]
@@ -320,60 +320,60 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         //[Description("Remilia Scarlet")]
         //RemiliaScarlet,
 
-        //The Mechatronics Upgrade
+        //The Inlaws Chapter
         //[Description("Alice Letrunce")]
         //AliceLetrunce,
         //[Description("Vaster Letrunce")]
         //VasterLetrunce,
 
-        //The Rational Upgrade
+        //The Rational Chapter
         //[Description("Marisa Kirisame")]
         //MarisaKirisame,
 
         ///Everything below is what we call "wishful" thinking
 
-        //The Media Upgrade
+        //The Media Chapter
         //[Description("Aya Shameimaru")]
         //AyaShameimaru,
         //[Description("Hatate Himekaidou")]
         //HatateHimekaidou,
 
-        //The Insanity Upgrade
+        //The Insanity Chapter
         //[Description("Clownpiece")]
-        //Clownpiece
+        //Clownpiece,
         //[Description("Junko")]
-        //Junko
+        //Junko,
         //[Description("Hecatia Lapislazuli")]
-        //HecatiaLapislazuli
+        //HecatiaLapislazuli,
 
-        //The Orbital Upgrade
+        //The World from Beyond Chapter
         //[Description("Kaguya Houraisan")]
-        //KaguyaHouraisan
+        //KaguyaHouraisan,
         //[Description("Eirin Yagokoro")]
-        //EirinYagokoro
+        //EirinYagokoro,
         //[Description("Nue Houjuu")]
-        //Nue Houjuu
+        //NueHoujuu,
 
-        //The Stray Upgrade
+        //The Stray Chapter
         //[Description("Ran Yakumo")]
         //RanYakumo,
         //[Description("Chen")]
-        //Chen
+        //Chen,
 
-        //The Cultists Upgrade
+        //The Lunatic Chapter
         //[Description("Byakuren Hijiri")]
-        //ByakurenHijiri
+        //ByakurenHijiri,
         //[Description("Shou Toramaru")]
-        //Shou Toramaru
+        //Shou Toramaru,
         //[Description("Nazrin")]
-        //Nazrin
+        //Nazrin,
         //[Description("Ichirin Kumoi")]
-        //Ichirin Kumoi
+        //Ichirin Kumoi,
         //[Description("Minamitsu Murasa")]
-        //Minamitsu Murasa
+        //Minamitsu Murasa,
 
-        //The Unveiled Upgrade
+        //The Veiled Chapter
         //[Description("Yukari Yakumo")]
-        //YukariYakumo
+        //YukariYakumo,
     }
 }

@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
         public override Difficulty Difficulty => Difficulty.Easy;
 
         public override string Background => "When she was young Reimu feared the idea of having kids after how much trouble her mother would tease she was. " +
-            "However age has a funny way of changing peoples views, one day she fell head over heals for a friend of Vaster's. " +
+            "However age has a funny way of changing peoples views, one day she fell head over heals for Vaster's brother. " +
             "Twenty years later despite being a widow she still has her two beautiful children, a girl and a boy. " +
             "The girl reminds her of herself, while the boy of him. " +
             "Ever since he died it has been quiet, Reimu has no idea what happened that day but seemingly all the fairies disappeard. " +
