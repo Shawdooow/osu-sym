@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private void nearestEnemy()
         {
-            foreach (Drawable draw in VitaruPlayfield)
+            foreach (Drawable draw in VitaruPlayfield.Gamefield)
             {
                 Character enemy = draw as Character;
                 if (enemy?.Hitbox != null && enemy.Hitbox.Team != SeekingBullet.Team)

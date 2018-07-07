@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             Actions[VitaruAction.Slow] = false;
             Actions[VitaruAction.Shoot] = false;
 
-            VitaruPlayfield.Add(Cursor = new Container
+            VitaruPlayfield.Gamefield.Add(Cursor = new Container
             {
                 Anchor = Anchor.TopLeft,
                 Origin = Anchor.Centre,
