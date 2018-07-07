@@ -22,6 +22,7 @@ using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
+using Symcol.Core.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -43,6 +44,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public static Action<Judgement> OnJudgement;
         //public Action<Judgement> RemoveJudgement;
+
+        public readonly SymcolContainer Gamefield;
 
         private readonly Container judgementLayer;
         private readonly List<DrawableVitaruPlayer> playerList = new List<DrawableVitaruPlayer>();
@@ -79,14 +82,24 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public VitaruPlayfield(VitaruInputManager vitaruInput) : base(BaseSize)
         {
-            throw new NotImplementedException("Its pretty fucked.");
-
             VitaruInputManager = vitaruInput;
 
             DrawableBullet.BoundryHacks = false;
 
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
+
+            Children = new Drawable[]
+            {
+                judgementLayer = new Container
+                {
+                    RelativeSizeAxes = Axes.Both
+                },
+                Gamefield = new SymcolContainer
+                {
+                    RelativeSizeAxes = Axes.Both
+                }
+            };
 
             Bindable<int> abstraction = new Bindable<int>() { Value = 0 };
 
@@ -143,10 +156,10 @@ namespace osu.Game.Rulesets.Vitaru.UI
                     }
 
                 foreach (DrawableVitaruPlayer player in playerList)
-                    Add(player);
+                    Gamefield.Add(player);
 
                 if (gamemode == Gamemodes.Touhosu && kiaiBoss)
-                    Add(Boss = new Boss(this));
+                    Gamefield.Add(Boss = new Boss(this));
 
                 Player.Position = new Vector2(256, 700);
                 if (gamemode == Gamemodes.Dodge || gamemode == Gamemodes.Gravaru)

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
         public void Shoot()
         {
             DrawableSeekingBullet s;
-            vitaruPlayfield.Add(s = new DrawableSeekingBullet(new SeekingBullet
+            vitaruPlayfield.Gamefield.Add(s = new DrawableSeekingBullet(new SeekingBullet
             {
                 Team = ParentCharacter.Team,
                 BulletSpeed = 0.8f,

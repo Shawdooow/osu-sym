@@ -151,7 +151,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             if (gamemode != Gamemodes.Dodge)
             {
                 //load the enemy
-                VitaruPlayfield.Add(enemy = new Enemy(VitaruPlayfield, this)
+                VitaruPlayfield.Gamefield.Add(enemy = new Enemy(VitaruPlayfield, this)
                 {
                     Alpha = 0,
                     Anchor = Anchor.TopLeft,
@@ -208,7 +208,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     }
 
                     DrawableBullet drawableBullet = new DrawableBullet(b, VitaruPlayfield);
-                    VitaruPlayfield.Add(drawableBullet);
+                    VitaruPlayfield.Gamefield.Add(drawableBullet);
                     AddNested(drawableBullet);
                 }
             }

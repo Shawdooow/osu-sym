@@ -275,7 +275,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Character closestCharacter = null;
                 double closestCharaterDistance = double.MaxValue;
 
-                foreach (Drawable draw in VitaruPlayfield)
+                foreach (Drawable draw in VitaruPlayfield.Gamefield)
                     if (draw is Character character)
                     {
                         if (character.Team != Team)
@@ -380,7 +380,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 float behindBulletEdgeDitance = float.MaxValue;
                 float behindBulletAngle = 0;
 
-                foreach (Drawable draw in VitaruPlayfield)
+                foreach (Drawable draw in VitaruPlayfield.Gamefield)
                     if (draw is DrawableBullet)
                     {
                         DrawableBullet bullet = draw as DrawableBullet;
@@ -487,7 +487,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         {
             DrawableBullet drawableBullet;
 
-            VitaruPlayfield.Add(drawableBullet = new DrawableBullet(new Bullet
+            VitaruPlayfield.Gamefield.Add(drawableBullet = new DrawableBullet(new Bullet
             {
                 StartTime = Time.Current,
                 Position = Position,
