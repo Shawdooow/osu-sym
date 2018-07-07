@@ -310,9 +310,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         [Description("Tomaji Hakurei")]
         TomajiHakurei,
 
-        //The Leftovers Chapter
-        //[Description("Elly")]
-        //Elly,
+        //The Scarlet Chapter
         [Description("Sakuya Izayoi")]
         SakuyaIzayoi,
         //[Description("Flandre Scarlet")]
@@ -320,17 +318,27 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         //[Description("Remilia Scarlet")]
         //RemiliaScarlet,
 
+        //The Rational Chapter
+        //[Description("Marisa Kirisame")]
+        //MarisaKirisame,
+
         //The Inlaws Chapter
         //[Description("Alice Letrunce")]
         //AliceLetrunce,
         //[Description("Vaster Letrunce")]
         //VasterLetrunce,
 
-        //The Rational Chapter
-        //[Description("Marisa Kirisame")]
-        //MarisaKirisame,
-
         ///Everything below is what we call "wishful" thinking
+
+        //The Underworldly Chapter
+        //[Description("Komachi Onozuka")]
+        //KomachiOnozuka,
+        //[Description("Sikieiki Yamaxanadu")]
+        //SikieikiYamaxanadu,
+        //[Description("Youmu Konpaku")]
+        //YoumuKonpaku,
+        //[Description("Yuyuko Saigyouji")]
+        //YuyukoSaigyouji,
 
         //The Media Chapter
         //[Description("Aya Shameimaru")]
@@ -359,6 +367,14 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         //RanYakumo,
         //[Description("Chen")]
         //Chen,
+
+        //The Leftovers Chapter
+        //[Description("Elly")]
+        //Elly,
+        //[Description("Patchouli Knowledge")]
+        //PatchouliKnowledge,
+        //[Description("Koakuma")]
+        //Koakuma?
 
         //The Lunatic Chapter
         //[Description("Byakuren Hijiri")]
