@@ -329,6 +329,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         //VasterLetrunce,
 
         ///Everything below is what we call "wishful" thinking
+        ///They are ordered extremely loosely, and will likely not come out in this order if at all
 
         //The Underworldly Chapter
         //[Description("Komachi Onozuka")]
