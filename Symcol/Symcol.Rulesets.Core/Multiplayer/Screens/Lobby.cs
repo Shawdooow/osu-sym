@@ -7,6 +7,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
     {
         public Lobby()
         {
+            /*
             NetworkingClientHandler client = new NetworkingClientHandler
             {
                 ClientType = ClientType.Peer,
@@ -19,6 +20,7 @@ namespace Symcol.Rulesets.Core.Multiplayer.Screens
             };
             Child = client;
             client.Connect();
+            */
         }
     }
 }
