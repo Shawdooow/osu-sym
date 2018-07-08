@@ -6,9 +6,9 @@ namespace osu.Game.Rulesets.Mix.Wiki.Sections
     {
         public override string Title => "Changelog";
 
-        protected override string RulesetVersion => MixRuleset.RulesetVersion;
+        protected override string Version => MixRuleset.RulesetVersion;
 
-        protected override string RulesetStorage => "mix";
+        protected override string StoragePath => "mix";
 
         protected override string FileExtention => ".mix";
 

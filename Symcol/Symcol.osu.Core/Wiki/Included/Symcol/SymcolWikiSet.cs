@@ -1,4 +1,5 @@
 ﻿using osu.Framework.Graphics.Textures;
+using Symcol.osu.Core.Wiki.Included.Symcol.Sections;
 using Symcol.osu.Core.Wiki.Sections;
 
 namespace Symcol.osu.Core.Wiki.Included.Symcol
@@ -17,7 +18,7 @@ namespace Symcol.osu.Core.Wiki.Included.Symcol
 
         public override WikiSection[] GetSections() => new WikiSection[]
         {
-
+            new SymcolChangelog()
         };
     }
 }

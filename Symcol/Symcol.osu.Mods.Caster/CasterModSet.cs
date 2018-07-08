@@ -21,7 +21,7 @@ namespace Symcol.osu.Mods.Caster
             ButtonColorTop = Color4.BlueViolet,
             ButtonColorBottom = Color4.Cyan,
             ButtonSize = 100,
-            ButtonPosition = new Vector2(40, -200),
+            ButtonPosition = new Vector2(180, -160),
         };
 
         public override OsuScreen GetMenuScreen() => new CasterScreen();

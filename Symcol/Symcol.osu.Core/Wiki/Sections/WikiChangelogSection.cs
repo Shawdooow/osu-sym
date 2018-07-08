@@ -9,9 +9,9 @@ namespace Symcol.osu.Core.Wiki.Sections
 {
     public abstract class WikiChangelogSection : WikiSection
     {
-        protected abstract string RulesetVersion { get; }
+        protected abstract string Version { get; }
 
-        protected abstract string RulesetStorage { get; }
+        protected abstract string StoragePath { get; }
 
         protected abstract string FileExtention { get; }
 
@@ -23,11 +23,11 @@ namespace Symcol.osu.Core.Wiki.Sections
         [BackgroundDependencyLoader]
         private void load(Storage storage)
         {
-            Storage changelogStorage = storage.GetStorageForDirectory(RulesetStorage);
+            Storage changelogStorage = storage.GetStorageForDirectory(StoragePath);
 
             Content.Add(new WikiParagraph("This changelog is cumulative, meaning only versions you install and run will be added here. " +
                 "They are saved as text files in your osu! storage. " +
-                "Below are all the versions you have saved + this version (" + RulesetVersion + ")."));
+                "Below are all the versions you have saved + this version (" + Version + ")."));
 
             try
             {
@@ -35,7 +35,7 @@ namespace Symcol.osu.Core.Wiki.Sections
                     Logger.Log("changelogStorage == null", LoggingTarget.Database, LogLevel.Error);
                 else
                 {
-                    using (Stream stream = changelogStorage.GetStream(RulesetVersion + FileExtention, FileAccess.Write, FileMode.Create))
+                    using (Stream stream = changelogStorage.GetStream(Version + FileExtention, FileAccess.Write, FileMode.Create))
                     using (StreamWriter w = new StreamWriter(stream))
                         w.WriteLine(VersionChangelog);
                 }
