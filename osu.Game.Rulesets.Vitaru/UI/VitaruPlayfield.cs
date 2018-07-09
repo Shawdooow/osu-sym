@@ -235,8 +235,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
         protected override void Dispose(bool isDisposing)
         {
             BulletPiece.ExclusiveTestingHax = false;
-            //OnJudgement = null;
-            //RemoveJudgement = null;
+            OnJudgement = null;
             base.Dispose(isDisposing);
         }
     }

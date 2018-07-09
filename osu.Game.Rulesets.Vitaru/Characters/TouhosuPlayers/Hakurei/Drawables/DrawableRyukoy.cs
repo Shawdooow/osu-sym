@@ -1,5 +1,13 @@
-﻿using osu.Game.Rulesets.Vitaru.Multi;
+﻿using System;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Multi;
+using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.UI;
+using OpenTK;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 {
@@ -65,15 +73,29 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 
             if (SpellActive)
             {
-                //Energy -= Clock.ElapsedFrameTime / 1000 * TouhosuPlayer.EnergyDrainRate * 0.25f;
+                int bullets = 0;
+                int players = 0;
+                int enemies = 0;
+                int bosses = 0;
 
-                //abstraction.Value = level;
-                //applyToClock(workingBeatmap.Value.Track, setPitch);
-            }
-            else
-            {
-                //applyToClock(workingBeatmap.Value.Track, 1);
-                //abstraction.Value = 0;
+                foreach (Drawable draw in VitaruPlayfield.VitaruInputManager.BlurredPlayfield)
+                    switch (draw)
+                    {
+                        case DrawableBullet bullet:
+                            bullets++;
+                            break;
+                        case DrawableVitaruPlayer player:
+                            players++;
+                            break;
+                        case Enemy enemy:
+                            enemies++;
+                            break;
+                        case Boss boss:
+                            bosses++;
+                            break;
+                    }
+
+                Energy -= Clock.ElapsedFrameTime / 1000 * (bullets * 0.2f + players * 0.5f + enemies * 0.25f + bosses * 2f);
             }
         }
 
@@ -86,6 +108,23 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
         protected override void Pressed(VitaruAction action)
         {
             base.Pressed(action);
+
+            if (action == VitaruAction.Pull)
+            {
+                restart:
+                foreach (Drawable draw in Untuned ? VitaruPlayfield.Gamefield : VitaruPlayfield.VitaruInputManager.BlurredPlayfield)
+                    if (draw is ITuneable tunable)
+                    {
+                        Vector2 drawPos = Cursor.ToSpaceOfOtherDrawable(Vector2.Zero, draw);
+                        float distance = (float)Math.Sqrt(Math.Pow(drawPos.X, 2) + Math.Pow(drawPos.Y, 2));
+
+                        if (100 >= distance)
+                        {
+                            tunable.Untuned = !tunable.Untuned;
+                            goto restart;
+                        }
+                    }
+            }
         }
     }
 }

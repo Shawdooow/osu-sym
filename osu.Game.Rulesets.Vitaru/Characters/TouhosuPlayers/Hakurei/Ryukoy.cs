@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei
 
         public override double EnergyCost => 2;
 
-        public override double EnergyDrainRate => 6;
+        public override double EnergyDrainRate => 0;
 
         public override Color4 PrimaryColor => Color4.Violet;
 
