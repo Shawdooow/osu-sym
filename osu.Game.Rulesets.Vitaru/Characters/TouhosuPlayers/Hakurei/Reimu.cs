@@ -26,10 +26,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei
 
         #region Ability Values
 
-        public override string AbilityStats => "-Leader Max Buff Multiplier: " + LEADER_MAX_BUFF +
-                                               "\n-Leader Min Buff Multiplier: " + LEADER_MIN_BUFF +
-                                               "\n-Leader Farthest Range: " + LEADER_FARTHEST_RANGE +
-                                               "\n-Leader Closest Range: " + LEADER_CLOSEST_RANGE;
+        public override string AbilityStats => "-Max Buff Multiplier: " + LEADER_MAX_BUFF +
+                                               "\n-Min Buff Multiplier: " + LEADER_MIN_BUFF +
+                                               "\n-Farthest Range: " + LEADER_FARTHEST_RANGE +
+                                               "\n-Closest Range: " + LEADER_CLOSEST_RANGE;
 
         public const double LEADER_MAX_BUFF = 2d;
 

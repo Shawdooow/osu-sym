@@ -24,6 +24,16 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei
 
         public override string Ability => "Blink";
 
+        #region Ability Values
+
+        public override string AbilityStats => "-Max Distance: " + BLINK_DISTANCE +
+                                               "\n-Charge Time: " + CHARGE_TIME;
+
+        public const double CHARGE_TIME = 1000;
+
+        public const double BLINK_DISTANCE = 320;
+        #endregion
+
         public override Role Role => Role.Offense;
 
         public override Difficulty Difficulty => Difficulty.Another;

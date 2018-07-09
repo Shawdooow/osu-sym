@@ -8,10 +8,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 {
     public class DrawableTomaji : DrawableTouhosuPlayer
     {
-        private const double charge_time = 1000;
-
-        private const double blink_distance = 320;
-
         /// <summary>
         /// scale from 0 - 1 on how charged our blink is
         /// </summary>
@@ -27,17 +23,17 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 
             if (SpellActive)
             {
-                double fullChargeTime = SpellStartTime + charge_time;
+                double fullChargeTime = SpellStartTime + Tomaji.CHARGE_TIME;
 
-                charge = Math.Min(1 - ((fullChargeTime - Time.Current) / charge_time), 1);
+                charge = Math.Min(1 - ((fullChargeTime - Time.Current) / Tomaji.CHARGE_TIME), 1);
 
                 Energy -= (Clock.ElapsedFrameTime / 1000) * TouhosuPlayer.EnergyDrainRate * charge;
             }
             else if (charge > 0)
             {
                 double cursorAngle = (MathHelper.RadiansToDegrees(Math.Atan2((Cursor.Position.Y - Position.Y), (Cursor.Position.X - Position.X))) + Rotation) - 12;
-                double x = Position.X + (charge * blink_distance) * Math.Cos(MathHelper.DegreesToRadians(cursorAngle));
-                double y = Position.Y + (charge * blink_distance) * Math.Sin(MathHelper.DegreesToRadians(cursorAngle));
+                double x = Position.X + (charge * Tomaji.BLINK_DISTANCE) * Math.Cos(MathHelper.DegreesToRadians(cursorAngle));
+                double y = Position.Y + (charge * Tomaji.BLINK_DISTANCE) * Math.Sin(MathHelper.DegreesToRadians(cursorAngle));
 
                 Hitbox.HitDetection = false;
                 SpellEndTime = Time.Current + 200 * charge;
