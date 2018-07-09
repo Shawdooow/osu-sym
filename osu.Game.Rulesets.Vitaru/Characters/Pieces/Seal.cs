@@ -10,8 +10,9 @@ using osu.Framework.Platform;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.MathUtils;
 using osu.Framework.Graphics.Effects;
-using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet.Drawables;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.Pieces

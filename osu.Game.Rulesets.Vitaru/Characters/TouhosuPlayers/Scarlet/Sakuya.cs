@@ -1,7 +1,7 @@
-﻿using OpenTK.Graphics;
-using osu.Game.Graphics;
+﻿using osu.Game.Graphics;
+using OpenTK.Graphics;
 
-namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
+namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet
 {
     public class Sakuya : TouhosuPlayer
     {

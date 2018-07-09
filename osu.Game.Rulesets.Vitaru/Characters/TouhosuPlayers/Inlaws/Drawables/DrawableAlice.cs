@@ -2,7 +2,7 @@
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
 
-namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
+namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Inlaws.Drawables
 {
     public class DrawableAlice : DrawableTouhosuPlayer
     {

@@ -1,4 +1,4 @@
-﻿using OpenTK.Graphics;
+﻿using System;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Configuration;
@@ -10,10 +10,10 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
+using OpenTK.Graphics;
 using Symcol.Core.Graphics.Sprites;
-using System;
 
-namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
+namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet.Drawables
 {
     public class DrawableSakuya : DrawableTouhosuPlayer
     {

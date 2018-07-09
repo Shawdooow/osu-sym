@@ -1,12 +1,14 @@
-﻿using osu.Framework.Allocation;
-using osu.Framework.Configuration;
+﻿using System;
+using osu.Framework.Allocation;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Inlaws.Drawables;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet.Drawables;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
-using System;
 
-namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
+namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 {
     public class DrawableTouhosuPlayer : DrawableVitaruPlayer
     {

@@ -1,5 +1,9 @@
 ﻿using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
 using System.ComponentModel;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Inlaws;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Rational;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 {

@@ -1,4 +1,4 @@
-﻿namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
+﻿namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Inlaws
 {
     public class Alice : TouhosuPlayer
     {

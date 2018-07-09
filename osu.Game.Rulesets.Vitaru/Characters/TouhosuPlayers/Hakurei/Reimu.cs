@@ -1,6 +1,6 @@
 ﻿using OpenTK.Graphics;
 
-namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
+namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei
 {
     public class Reimu : TouhosuPlayer
     {

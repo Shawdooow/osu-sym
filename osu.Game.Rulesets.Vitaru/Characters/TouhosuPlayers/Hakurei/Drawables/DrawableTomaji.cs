@@ -1,10 +1,10 @@
-﻿using OpenTK;
+﻿using System;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
-using System;
+using OpenTK;
 
-namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.DrawableTouhosuPlayers
+namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 {
     public class DrawableTomaji : DrawableTouhosuPlayer
     {
