@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Vitaru.Beatmaps
 
             float ar = calculateAr(beatmap.BeatmapInfo.BaseDifficulty.ApproachRate);
             float cs = 20 + (beatmap.BeatmapInfo.BaseDifficulty.CircleSize - 4);
-            double speed = 0.2d;
+            double speed = 0.25d;
 
             if (gamemode == Gamemodes.Dodge || gamemode == Gamemodes.Gravaru)
             {
