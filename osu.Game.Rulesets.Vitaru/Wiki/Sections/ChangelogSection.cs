@@ -23,9 +23,9 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             "-\"Spells\" are now called \"Abilities\"\n" +
             "-Ryukoy's ability heavily reworked\n" +
             "-Removed dependency on osu.Game hacks and will now utilize the new \"Symcol Modloader\" system in place. " +
-            "As such this ruleset is now a \"Mod Enhanced\" ruleset.\n\n" +
+            "As such this ruleset is now a \"Mod Enhanced\" ruleset.\n" +
             "-Adjusted all pattern easings (and increased base pattern speed by 25% so most patterns seem to travel at the same speed as before, " +
-            "now they will change speed less)\n" +
+            "now they will change speed less)\n\n" +
             "Fixes:\n\n" +
             "\n\n" + 
             "Dev Notes:\n\n" +
