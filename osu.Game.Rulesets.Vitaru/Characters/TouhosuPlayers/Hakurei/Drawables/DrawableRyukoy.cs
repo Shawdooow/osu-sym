@@ -1,8 +1,6 @@
 ﻿using System;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities;
-using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
@@ -97,6 +95,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 
                 Energy -= Clock.ElapsedFrameTime / 1000 * (bullets * 0.2f + players * 0.5f + enemies * 0.25f + bosses * 2f);
             }
+            else if (Untuned)
+                Untuned = false;
         }
 
         protected override void SpellDeactivate(VitaruAction action)
