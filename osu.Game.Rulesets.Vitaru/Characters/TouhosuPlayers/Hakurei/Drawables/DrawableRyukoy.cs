@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
             {
                 restart:
                 foreach (Drawable draw in Untuned ? VitaruPlayfield.Gamefield : VitaruPlayfield.VitaruInputManager.BlurredPlayfield)
-                    if (draw is ITuneable tunable)
+                    if (draw is ITuneable tunable && draw.Alpha > 0)
                     {
                         Vector2 drawPos = Cursor.ToSpaceOfOtherDrawable(Vector2.Zero, draw);
                         float distance = (float)Math.Sqrt(Math.Pow(drawPos.X, 2) + Math.Pow(drawPos.Y, 2));
