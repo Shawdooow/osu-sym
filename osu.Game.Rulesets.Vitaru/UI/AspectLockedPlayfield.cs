@@ -4,17 +4,16 @@ using osu.Framework.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
-    public class BlurredPlayfield : Container
+    public class AspectLockedPlayfield : Container
     {
         public override Vector2 Size => VitaruPlayfield.BaseSize;
 
-        public new virtual float Margin => 0.8f;
+        public new float Margin = 0.8f;
 
-        public virtual Vector2 AspectRatio => new Vector2(20, 16);
+        protected virtual Vector2 AspectRatio => new Vector2(20, 16);
 
-        public BlurredPlayfield()
+        public AspectLockedPlayfield()
         {
-            Name = "BlurredPlayfield";
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
         }

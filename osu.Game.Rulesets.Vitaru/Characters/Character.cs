@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
         public Container CurrentPlayfield { get; set; }
 
-        public bool Untuned
+        public virtual bool Untuned
         {
             get => untuned;
             set

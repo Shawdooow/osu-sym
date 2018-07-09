@@ -15,14 +15,12 @@ using osu.Game.Rulesets.Vitaru.Multi;
 using Symcol.Rulesets.Core.Rulesets;
 using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
-using osu.Framework.Logging;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
-using Symcol.Core.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -45,7 +43,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public static Action<Judgement> OnJudgement;
         //public Action<Judgement> RemoveJudgement;
 
-        public readonly SymcolContainer Gamefield;
+        public readonly AspectLockedPlayfield Gamefield;
 
         private readonly Container judgementLayer;
         private readonly List<DrawableVitaruPlayer> playerList = new List<DrawableVitaruPlayer>();
@@ -53,8 +51,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
         //TODO: Make this not need to be static?
         public static List<VitaruClientInfo> LoadPlayerList = new List<VitaruClientInfo>();
 
-        //TODO: Make this not need to be static
-        public DrawableVitaruPlayer Player;
+        public readonly DrawableVitaruPlayer Player;
 
         public Boss Boss;
 
@@ -95,9 +92,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 {
                     RelativeSizeAxes = Axes.Both
                 },
-                Gamefield = new SymcolContainer
+                Gamefield = new AspectLockedPlayfield
                 {
-                    RelativeSizeAxes = Axes.Both
+                    Margin = 1
                 }
             };
 
@@ -141,17 +138,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
                             Add(DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
                     }
                 });
-
-                foreach (VitaruClientInfo client in LoadPlayerList)
-                    if (client.PlayerInformation.PlayerID != Player.PlayerID)
-                    {
-                        Logger.Log("Loading a player recieved from internet!", LoggingTarget.Network, LogLevel.Verbose);
-
-                        if (gamemode == Gamemodes.Touhosu)
-                            playerList.Add(Player = DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler));
-                        else
-                            playerList.Add(Player = DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
-                    }
 
                 foreach (DrawableVitaruPlayer player in playerList)
                     Gamefield.Add(player);
