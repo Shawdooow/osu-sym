@@ -129,8 +129,12 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                     "\n-Energy Drain Rate: " + touhosuPlayer.EnergyDrainRate +
                     "\n-Role: " + touhosuPlayer.Role +
                     "\n-Difficulty: " + touhosuPlayer.Difficulty +
-                    "\n-Ability: " + touhosuPlayer.Ability;// +
-                    //"\n\nCharacter Background:\n\n" + touhosuPlayer.Background;
+                    "\n-Ability: " + touhosuPlayer.Ability;
+
+                    if (touhosuPlayer.AbilityStats != null)
+                        stats = stats + "\n" + touhosuPlayer.AbilityStats;
+
+                    //stats = stats + "\n\nCharacter Background:\n\n" + touhosuPlayer.Background;
                 }
 
                 characterDescription.Text = stats;

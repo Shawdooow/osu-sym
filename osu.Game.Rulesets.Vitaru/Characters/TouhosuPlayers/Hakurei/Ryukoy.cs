@@ -24,6 +24,23 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei
 
         public override string Ability => "Out of Tune";
 
+        #region Ability Values
+
+        public override string AbilityStats => "-Bullet drain: " + BULLET_DRAIN_MULTIPLIER +
+                                               "\n-Player drain: " + PLAYER_DRAIN_MULTIPLIER +
+                                               "\n-Enemy drain: " + ENEMY_DRAIN_MULTIPLIER +
+                                               "\n-Boss drain: " + BOSS_DRAIN_MULTIPLIER;
+
+        public const double BULLET_DRAIN_MULTIPLIER = 0.1d;
+
+        public const double PLAYER_DRAIN_MULTIPLIER = 0.25d;
+
+        public const double ENEMY_DRAIN_MULTIPLIER = 0.2d;
+
+        public const double BOSS_DRAIN_MULTIPLIER = 1d;
+
+        #endregion
+
         public override Role Role => Role.Defense;
 
         public override Difficulty Difficulty => Difficulty.Another;

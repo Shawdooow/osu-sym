@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
                             break;
                     }
 
-                Energy -= Clock.ElapsedFrameTime / 1000 * (bullets * 0.1f + players * 0.25f + enemies * 0.2f + bosses * 1f);
+                Energy -= Clock.ElapsedFrameTime / 1000 * (bullets * Ryukoy.BULLET_DRAIN_MULTIPLIER + players * Ryukoy.PLAYER_DRAIN_MULTIPLIER + enemies * Ryukoy.ENEMY_DRAIN_MULTIPLIER + bosses * Ryukoy.BOSS_DRAIN_MULTIPLIER);
             }
             else if (Untuned)
                 Untuned = false;

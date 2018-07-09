@@ -8,11 +8,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 {
     public class DrawableReimu : DrawableTouhosuPlayer
     {
-        private const double leader_max = 2d;
-        private const double leader_min = 1d;
-        private const double leader_max_range = 64;
-        private const double leader_min_range = 128;
-
         //private readonly List<DrawableTouhosuPlayer> leaderedPlayers = new List<DrawableTouhosuPlayer>();
 
         public DrawableReimu(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Reimu(), vitaruNetworkingClientHandler)
@@ -31,7 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
                         Vector2 object2Pos = drawableTouhosuPlayer.ToSpaceOfOtherDrawable(Vector2.Zero, this) + new Vector2(6);
                         double distance = Math.Sqrt(Math.Pow(object2Pos.X, 2) + Math.Pow(object2Pos.Y, 2));
 
-                        if (distance <= leader_min_range)
+                        if (distance <= Reimu.LEADER_CLOSEST_RANGE)
                         {
                             drawableTouhosuPlayer.HealingMultiplier = getLeaderDistanceMultiplier(distance);
                             drawableTouhosuPlayer.EnergyGainMultiplier = getLeaderDistanceMultiplier(distance);
@@ -48,8 +43,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 
         private double getLeaderDistanceMultiplier(double value)
         {
-            double scale = (leader_max - leader_min) / (leader_max_range - leader_min_range);
-            return leader_min + ((value - leader_min_range) * scale);
+            double scale = (Reimu.LEADER_MAX_BUFF - Reimu.LEADER_MIN_BUFF) / (Reimu.LEADER_FARTHEST_RANGE - Reimu.LEADER_CLOSEST_RANGE);
+            return Reimu.LEADER_MIN_BUFF + ((value - Reimu.LEADER_CLOSEST_RANGE) * scale);
         }
     }
 }

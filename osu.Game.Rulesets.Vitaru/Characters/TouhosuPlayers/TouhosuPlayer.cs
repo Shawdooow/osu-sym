@@ -15,7 +15,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public virtual double EnergyDrainRate { get; } = 0;
 
-        public virtual string Ability { get; } = "None";
+        public virtual string Ability => "None";
+
+        public virtual string AbilityStats => null;
 
         //public virtual string[] Abilities { get; } = null;
 

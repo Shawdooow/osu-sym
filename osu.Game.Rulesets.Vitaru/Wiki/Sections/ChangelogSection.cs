@@ -19,14 +19,18 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
             //"-New Patterns\n\n" +
             "\n\n" +
             "Tweaks / Changes:\n\n" +
-            "-Removed Ryukoy's spell in preperation for a heavy rework\n" +
+            "-Allow characters to specify additional ability stats\n" +
+            "-\"Spells\" are now called \"Abilities\"\n" +
+            "-Ryukoy's ability heavily reworked\n" +
             "-Removed dependency on osu.Game hacks and will now utilize the new \"Symcol Modloader\" system in place. " +
             "As such this ruleset is now a \"Mod Enhanced\" ruleset.\n\n" +
+            "-Adjusted all pattern easings (and increased base pattern speed by 25% so most patterns seem to travel at the same speed as before, " +
+            "now they will change speed less)\n" +
             "Fixes:\n\n" +
             "\n\n" + 
             "Dev Notes:\n\n" +
             "   Ryukoy was just designed poorly, she was either gonna be way too powerful or absolute garbage, " +
-            "hopefully the planned changes will allow her to find a middle ground where she is boh fun to play and balanced.\n" +
+            "hopefully the new changes will allow her to find a middle ground where she is boh fun to play and balanced.\n" +
             "   Removing the osu.Game hacks dependency was on my list of things todo for awhile and I am glad that its finally been done, " +
             "however not all is sunshine and rainbows. Unfortunetly this now means the wiki is now a Modloader exclusive feature " +
             "making accessing imporant information about the ruleset all the harder for new players.";
