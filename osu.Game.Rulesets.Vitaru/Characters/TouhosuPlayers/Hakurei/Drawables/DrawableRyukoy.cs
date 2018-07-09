@@ -1,5 +1,4 @@
-﻿using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Vitaru.Multi;
+﻿using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.UI;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables

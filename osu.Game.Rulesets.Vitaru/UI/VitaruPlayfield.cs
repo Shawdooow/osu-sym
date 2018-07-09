@@ -90,6 +90,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             {
                 judgementLayer = new Container
                 {
+                    Name = "Judgements",
                     RelativeSizeAxes = Axes.Both
                 },
                 Gamefield = new AspectLockedPlayfield
@@ -168,10 +169,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         private readonly List<Pattern> patterns = new List<Pattern>();
 
-        private void add(Pattern p, DrawablePattern drawable = null)
+        private void add(Pattern p)
         {
-            if (drawable == null)
-                drawable = new DrawablePattern(p, this);
+            DrawablePattern drawable = new DrawablePattern(p, this);
 
             drawable.Depth = (float)drawable.HitObject.StartTime;
 
@@ -188,12 +188,15 @@ namespace osu.Game.Rulesets.Vitaru.UI
             base.Add(drawable);
         }
 
-        public void Add(DrawablePattern p)
+        public override void Add(DrawableHitObject h)
         {
+            if (!(h is DrawablePattern drawable))
+                throw new InvalidOperationException("Only DrawablePatterss can be added to playfield!");
+
             if (Editor || !goodFps)
-                add(null, p);
+                add((Pattern)h.HitObject);
             else
-                patterns.Add((Pattern)p.HitObject);
+                patterns.Add((Pattern)h.HitObject);
         }
 
         protected override void Update()
@@ -201,14 +204,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
             base.Update();
 
             foreach (Pattern p in patterns)
-            {
                 if (Time.Current >= p.StartTime - p.TimePreempt * 2)
                 {
                     add(p);
                     patterns.Remove(p);
                     break;
                 }
-            }
         }
 
         private void onJudgement(DrawableHitObject judgedObject, Judgement judgement)
@@ -217,19 +218,16 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             OnJudgement?.Invoke(vitaruJudgement);
 
-            if (Player != null)
+            returnedJudgementCount.Bindable.Value++;
+
+            DrawableVitaruJudgement explosion = new DrawableVitaruJudgement(judgement, judgedObject)
             {
-                returnedJudgementCount.Bindable.Value++;
+                Alpha = 0.5f,
+                Origin = Anchor.Centre,
+                Position = judgedObject.Position
+            };
 
-                DrawableVitaruJudgement explosion = new DrawableVitaruJudgement(judgement, judgedObject)
-                {
-                    Alpha = 0.5f,
-                    Origin = Anchor.Centre,
-                    Position = judgedObject.Position
-                };
-
-                judgementLayer.Add(explosion);
-            }
+            judgementLayer.Add(explosion);
         }
 
         protected virtual CursorContainer CreateCursor() => new GameplayCursor();
@@ -237,7 +235,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
         protected override void Dispose(bool isDisposing)
         {
             BulletPiece.ExclusiveTestingHax = false;
-            OnJudgement = null;
+            //OnJudgement = null;
             //RemoveJudgement = null;
             base.Dispose(isDisposing);
         }

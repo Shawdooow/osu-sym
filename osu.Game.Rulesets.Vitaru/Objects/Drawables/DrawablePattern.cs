@@ -27,8 +27,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private int currentRepeat;
 
-        private readonly double endTime;
-        
         private Enemy enemy;
 
         private AudioManager audio;
@@ -46,7 +44,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (!pattern.IsSlider && !pattern.IsSpinner)
             {
-                endTime = this.pattern.StartTime + HitObject.TimePreempt * 2 - HitObject.TimeFadein;
+                double endTime = this.pattern.StartTime + HitObject.TimePreempt * 2 - HitObject.TimeFadein;
                 this.pattern.EndTime = endTime;
             }
 
@@ -138,7 +136,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Load();
 
-            VitaruPlayfield.Add(starPiece = new StarPiece
+            CurrentPlayfield.Add(starPiece = new StarPiece
             {
                 Alpha = 0,
                 Masking = true,
@@ -151,7 +149,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             if (gamemode != Gamemodes.Dodge)
             {
                 //load the enemy
-                VitaruPlayfield.Gamefield.Add(enemy = new Enemy(VitaruPlayfield, this)
+                CurrentPlayfield.Add(enemy = new Enemy(VitaruPlayfield, this)
                 {
                     Alpha = 0,
                     Anchor = Anchor.TopLeft,
@@ -203,7 +201,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     }
 
                     DrawableBullet drawableBullet = new DrawableBullet(b, VitaruPlayfield);
-                    VitaruPlayfield.Gamefield.Add(drawableBullet);
+                    CurrentPlayfield.Add(drawableBullet);
                     AddNested(drawableBullet);
                 }
             }

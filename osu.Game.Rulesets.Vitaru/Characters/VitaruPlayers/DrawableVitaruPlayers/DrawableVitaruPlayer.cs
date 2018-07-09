@@ -487,7 +487,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         {
             DrawableBullet drawableBullet;
 
-            VitaruPlayfield.Gamefield.Add(drawableBullet = new DrawableBullet(new Bullet
+            CurrentPlayfield.Add(drawableBullet = new DrawableBullet(new Bullet
             {
                 StartTime = Time.Current,
                 Position = Position,
@@ -502,8 +502,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Abstraction = 3,
             }, VitaruPlayfield));
 
-            //if (vampuric)
-            //drawableBullet.OnHit = () => Heal(0.5f);
             drawableBullet.MoveTo(Position);
         }
 

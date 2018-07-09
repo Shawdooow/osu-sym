@@ -56,6 +56,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public DrawableVitaruHitObject(VitaruHitObject hitObject, VitaruPlayfield playfield) : base(hitObject)
         {
             VitaruPlayfield = playfield;
+            CurrentPlayfield = playfield.Gamefield;
 
             AlwaysPresent = true;
         }
@@ -93,13 +94,29 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 End();
         }
 
-        protected virtual void Load() { Loaded = true; }
+        protected virtual void Load()
+        {
+            if (Loaded) return;
+            Loaded = true;
+        }
 
-        protected virtual void Start() { Started = true; }
+        protected virtual void Start()
+        {
+            if (Started) return;
+            Started = true;
+        }
 
-        protected virtual void End() { Started = false; }
+        protected virtual void End()
+        {
+            if (!Started) return;
+            Started = false;
+        }
 
-        protected virtual void Unload() { Loaded = false; }
+        protected virtual void Unload()
+        {
+            if (!Loaded) return;
+            Loaded = false;
+        }
 
         protected override void Dispose(bool isDisposing)
         {
