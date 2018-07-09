@@ -161,11 +161,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                     Team = 1,
                 });
 
-                if (pattern.IsSpinner)
-                    enemy.Abstraction = 2;
-                else if (!pattern.IsSlider)
-                    enemy.Abstraction = 1;
-
                 enemy.Position = getPatternStartPosition();
                 enemy.FadeIn(Math.Min(HitObject.TimeFadein * 2, HitObject.TimePreempt))
                     .MoveTo(pattern.Position, HitObject.TimePreempt);

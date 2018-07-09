@@ -43,6 +43,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         public DrawableBullet(Bullet bullet, VitaruPlayfield playfield) : base(bullet, playfield)
         {
+            CurrentPlayfield = playfield.Gamefield;
+
             Anchor = Anchor.TopLeft;
             Origin = Anchor.Centre;
 

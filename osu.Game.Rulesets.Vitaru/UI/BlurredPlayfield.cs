@@ -4,7 +4,7 @@ using osu.Framework.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
-    public class BlurredPlayfield : Container<Drawable>
+    public class BlurredPlayfield : Container
     {
         public override Vector2 Size => VitaruPlayfield.BaseSize;
 

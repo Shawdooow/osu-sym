@@ -1,19 +1,49 @@
 ﻿using osu.Game.Rulesets.Objects.Drawables;
 using Symcol.Rulesets.Core.HitObjects;
-using System.ComponentModel;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Skinning;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
+using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
-    public class DrawableVitaruHitObject : DrawableSymcolHitObject<VitaruHitObject>
+    public class DrawableVitaruHitObject : DrawableSymcolHitObject<VitaruHitObject>, ITuneable
     {
         public override bool HandleMouseInput => false;
 
         protected readonly VitaruPlayfield VitaruPlayfield;
+
+        public Container CurrentPlayfield { get; set; }
+
+        public bool Untuned
+        {
+            get => untuned;
+            set
+            {
+                if (value == untuned) return;
+
+                untuned = value;
+
+                if (value)
+                {
+                    VitaruPlayfield.Gamefield.Remove(this);
+                    VitaruPlayfield.VitaruInputManager.BlurredPlayfield.Add(this);
+                    CurrentPlayfield = VitaruPlayfield.VitaruInputManager.BlurredPlayfield;
+                }
+                else
+                {
+                    VitaruPlayfield.VitaruInputManager.BlurredPlayfield.Remove(this);
+                    VitaruPlayfield.Gamefield.Add(this);
+                    CurrentPlayfield = VitaruPlayfield.Gamefield;
+                }
+            }
+
+        }
+
+        private bool untuned;
 
         public bool Editor;
 
@@ -80,11 +110,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
     public enum ComboResult
     {
-        [Description(@"")]
+        [System.ComponentModel.Description(@"")]
         None,
-        [Description(@"Good")]
+        [System.ComponentModel.Description(@"Good")]
         Good,
-        [Description(@"Amazing")]
+        [System.ComponentModel.Description(@"Amazing")]
         Perfect
     }
 }

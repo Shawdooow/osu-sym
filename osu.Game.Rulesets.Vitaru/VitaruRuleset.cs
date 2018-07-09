@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Vitaru
         {
             get
             {
-                for (int i = 0; i <= 3; i++)
+                for (int i = 0; i <= 4; i++)
                     yield return (int)ControlScheme.Vitaru + i;
             }
         }

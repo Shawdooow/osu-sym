@@ -6,6 +6,7 @@ using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
+using OpenTK;
 using Symcol.Rulesets.Core.Rulesets;
 
 namespace osu.Game.Rulesets.Vitaru
@@ -33,6 +34,7 @@ namespace osu.Game.Rulesets.Vitaru
                 RelativeSizeAxes = Axes.Both,
                 Masking = true,
                 Name = "BlurContainer",
+                BlurSigma = new Vector2(0.5f),
 
                 Child = BlurredPlayfield = new BlurredPlayfield()
             });

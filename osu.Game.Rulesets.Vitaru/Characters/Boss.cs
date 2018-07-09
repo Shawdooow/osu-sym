@@ -27,7 +27,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         {
             Position = new Vector2(256 , 384 / 2);
             AlwaysPresent = true;
-            Abstraction = 3;
             Alpha = 0;
             Team = 1;
         }

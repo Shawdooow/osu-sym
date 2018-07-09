@@ -275,7 +275,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 Character closestCharacter = null;
                 double closestCharaterDistance = double.MaxValue;
 
-                foreach (Drawable draw in VitaruPlayfield.Gamefield)
+                foreach (Drawable draw in CurrentPlayfield)
                     if (draw is Character character)
                     {
                         if (character.Team != Team)
@@ -318,10 +318,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             if (edgeDistance < 64 && bullet.Bullet.Team != Team)
             {
                 bool add = true;
-                foreach (HealingBullet HealingBullet in HealingBullets)
-                    if (HealingBullet.DrawableBullet == bullet)
+                foreach (HealingBullet healingBullet in HealingBullets)
+                    if (healingBullet.DrawableBullet == bullet)
                     {
-                        HealingBullet.EdgeDistance = edgeDistance;
+                        healingBullet.EdgeDistance = edgeDistance;
                         add = false;
                     }
 

@@ -91,8 +91,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
                 for (int i = 0; i < HealingBullets.Count - 1; i++)
                     fallOff *= HEALING_FALL_OFF;
 
-                foreach (HealingBullet HealingBullet in HealingBullets)
-                    Energy = Math.Min(((Clock.ElapsedFrameTime / 500) * (GetBulletHealingMultiplier(HealingBullet.EdgeDistance) * fallOff)) + Energy, TouhosuPlayer.MaxEnergy);
+                foreach (HealingBullet healingBullet in HealingBullets)
+                    Energy = Math.Min(((Clock.ElapsedFrameTime / 500) * (GetBulletHealingMultiplier(healingBullet.EdgeDistance) * fallOff)) + Energy, TouhosuPlayer.MaxEnergy);
             }
 
             if (Energy <= 0)

@@ -14,10 +14,11 @@ using osu.Framework.Platform;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Characters.Pieces;
 using System;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities;
 
 namespace osu.Game.Rulesets.Vitaru.Characters
 {
-    public abstract class Character : BeatSyncedContainer
+    public abstract class Character : BeatSyncedContainer, ITuneable
     {
         #region Fields
         public override bool HandleMouseInput => false;
@@ -42,6 +43,35 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
         protected abstract string CharacterName { get; }
 
+        public Container CurrentPlayfield { get; set; }
+
+        public bool Untuned
+        {
+            get => untuned;
+            set
+            {
+                if (value == untuned) return;
+
+                untuned = value;
+
+                if (value)
+                {
+                    VitaruPlayfield.Gamefield.Remove(this);
+                    VitaruPlayfield.VitaruInputManager.BlurredPlayfield.Add(this);
+                    CurrentPlayfield = VitaruPlayfield.VitaruInputManager.BlurredPlayfield;
+                }
+                else
+                {
+                    VitaruPlayfield.VitaruInputManager.BlurredPlayfield.Remove(this);
+                    VitaruPlayfield.Gamefield.Add(this);
+                    CurrentPlayfield = VitaruPlayfield.Gamefield;
+                }
+            }
+
+        }
+
+        private bool untuned;
+
         public virtual Color4 PrimaryColor { get; } = Color4.Green;
 
         public virtual Color4 SecondaryColor { get; } = Color4.LightBlue;
@@ -54,8 +84,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
         protected readonly VitaruPlayfield VitaruPlayfield;
 
-        public int Abstraction { get; set; }
-
         public Action<bool> OnDispose;
 
         public int Team { get; set; }
@@ -67,6 +95,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
         protected Character(VitaruPlayfield vitaruPlayfield)
         {
             VitaruPlayfield = vitaruPlayfield;
+            CurrentPlayfield = VitaruPlayfield.Gamefield;
         }
 
         /// <summary>
@@ -141,7 +170,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
 
             if (HitDetection)
             {
-                foreach (Drawable draw in VitaruPlayfield.Gamefield)
+                foreach (Drawable draw in CurrentPlayfield)
                 {
                     DrawableBullet bullet = draw as DrawableBullet;
                     if (bullet?.Hitbox != null)

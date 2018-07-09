@@ -101,8 +101,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 }
             };
 
-            Bindable<int> abstraction = new Bindable<int>() { Value = 0 };
-
             DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judgement Count" });
             DebugToolkit.GeneralDebugItems.Add(drawableHitobjectCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Hitobject Count" });
             DebugToolkit.GeneralDebugItems.Add(drawablePatternCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Pattern Count" });
@@ -204,14 +202,12 @@ namespace osu.Game.Rulesets.Vitaru.UI
             base.Add(drawable);
         }
 
-        public override void Add(DrawableHitObject h)
+        public void Add(DrawablePattern p)
         {
-            DrawablePattern drawable = h as DrawablePattern;
-
             if (Editor || !goodFps)
-                add(null, drawable);
+                add(null, p);
             else
-                patterns.Add((Pattern)drawable.HitObject);
+                patterns.Add((Pattern)p.HitObject);
         }
 
         protected override void Update()

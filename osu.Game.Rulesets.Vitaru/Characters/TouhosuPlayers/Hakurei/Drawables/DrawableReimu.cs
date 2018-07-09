@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 
             if (SpellActive)
             {
-                foreach (Drawable drawable in VitaruPlayfield.Gamefield)
+                foreach (Drawable drawable in CurrentPlayfield)
                     if (drawable is DrawableTouhosuPlayer drawableTouhosuPlayer && drawableTouhosuPlayer.Team == Team)
                     {
                         Vector2 object2Pos = drawableTouhosuPlayer.ToSpaceOfOtherDrawable(Vector2.Zero, this) + new Vector2(6);
