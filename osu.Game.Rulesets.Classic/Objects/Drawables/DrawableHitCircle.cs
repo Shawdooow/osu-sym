@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Scoring;
 using OpenTK.Graphics;
 using Symcol.Rulesets.Core.Skinning;
 using osu.Game.Audio;
+using osu.Game.Rulesets.Classic.Scoring;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
@@ -98,9 +99,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             }
 
             if (ClassicBeatmapConverter.CurrentHitCircle < hitObject.ID || timeOffset <= -400)
-            {
                 jiggle();
-            }
 
             else if (ClassicBeatmapConverter.CurrentHitCircle >= hitObject.ID)
             {
@@ -182,8 +181,9 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     {
                         if (!hitObject.Hidden)
                         {
-                            this.FadeOut(250, Easing.InSine)
-                                .ScaleTo(Scale * 1.33f, 250, Easing.OutSine);
+                            number.FadeOut(100, Easing.OutSine);
+                            this.FadeOut(250, Easing.InCubic)
+                                .ScaleTo(Scale * 1.33f, 250, Easing.OutQuad);
                         }
                     }
 

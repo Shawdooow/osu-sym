@@ -18,6 +18,8 @@ namespace osu.Game.Rulesets.Classic.Scoring
 {
     internal class ClassicScoreProcessor : ScoreProcessor<ClassicHitObject>
     {
+        public new static int Combo;
+
         public ClassicScoreProcessor(RulesetContainer<ClassicHitObject> rulesetContainer)
             : base(rulesetContainer)
         {
@@ -79,6 +81,8 @@ namespace osu.Game.Rulesets.Classic.Scoring
         {
             base.Reset(storeResults);
 
+            Combo = 0;
+
             scoreResultCounts.Clear();
             comboResultCounts.Clear();
         }
@@ -105,6 +109,8 @@ namespace osu.Game.Rulesets.Classic.Scoring
                 comboResultCounts[osuJudgement.Combo] = comboResultCounts.GetOrDefault(osuJudgement.Combo) + 1;
             }
 
+            Combo++;                
+
             switch (judgement.Result)
             {
                 case HitResult.Great:
@@ -127,6 +133,9 @@ namespace osu.Game.Rulesets.Classic.Scoring
                     break;*/
 
                 case HitResult.Miss:
+                    if (Combo >= 10)
+                        ClassicRuleset.ClassicAudio.Sample.Get("combobreak").Play();
+                    Combo = 0;
                     ClassicUi.CurrentHealth = Math.Max(ClassicUi.CurrentHealth - hpDrainRate * 0.03, 0);
                     Health.Value = ClassicUi.CurrentHealth;
                     break;
