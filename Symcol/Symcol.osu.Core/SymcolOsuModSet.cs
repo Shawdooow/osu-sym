@@ -61,6 +61,9 @@ namespace Symcol.osu.Core
 
             SymcolModStore.ReloadModSets();
 
+            foreach (SymcolModSet mod in SymcolModStore.LoadedModSets)
+                mod.LoadComplete(game);
+
             if (WikiOverlay == null)
                 game.Add(WikiOverlay = new WikiOverlay());
         }

@@ -7,5 +7,13 @@ namespace osu.Game.Rulesets.Classic
     public sealed class ClassicModSet : SymcolModSet
     {
         public override WikiSet GetWikiSet() => new ClassicWikiSet();
+
+        public override void LoadComplete(OsuGame game)
+        {
+            base.LoadComplete(game);
+
+            ClassicRuleset.ClassicAudio.VolumeSample.BindTo(game.Audio.VolumeSample);
+            ClassicRuleset.ClassicAudio.VolumeTrack.BindTo(game.Audio.VolumeTrack);
+        }
     }
 }
