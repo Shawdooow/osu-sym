@@ -68,7 +68,7 @@ namespace osu.Game.Skinning
                 ch = RulesetAudio.GetSampleManager().Get($"{info.Bank}-{info.Name}");
 
             if (ch != null)
-                ch.Volume.Value = info.Volume / 100.0;
+                ch.Volume.Value = RulesetAudio != null ? info.Volume / 100.0 * 0.8f : info.Volume / 100.0;
 
             return ch;
         }
