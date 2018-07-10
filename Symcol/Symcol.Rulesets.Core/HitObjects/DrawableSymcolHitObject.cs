@@ -6,6 +6,7 @@ using osu.Game.Rulesets.Objects.Drawables;
 using Symcol.Rulesets.Core.Skinning;
 using System;
 using System.Collections.Generic;
+using osu.Framework.Audio;
 
 namespace Symcol.Rulesets.Core.HitObjects
 {
@@ -16,6 +17,8 @@ namespace Symcol.Rulesets.Core.HitObjects
     public abstract class DrawableSymcolHitObject<TObject> : DrawableHitObject<TObject>
         where TObject : SymcolHitObject
     {
+        protected AudioManager RulesetAudio { get; set; }
+
         #region Container
         protected virtual Container<Drawable> Content => new Container();
 
@@ -129,7 +132,7 @@ namespace Symcol.Rulesets.Core.HitObjects
                 Name = info.Name,
                 Volume = info.Volume > 0 ? info.Volume : HitObject.SampleControlPoint.SampleVolume,
                 Namespace = SampleNamespace
-            });
+            }){ RulesetAudio = RulesetAudio };
         }
 
         public override bool UpdateSubTree()

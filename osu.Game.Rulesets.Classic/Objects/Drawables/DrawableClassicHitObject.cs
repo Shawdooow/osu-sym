@@ -20,6 +20,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             : base(hitObject)
         {
             Alpha = 0;
+            RulesetAudio = ClassicRuleset.ClassicAudio;
         }
 
         protected sealed override void UpdateState(ArmedState state)

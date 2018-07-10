@@ -80,12 +80,6 @@ namespace osu.Game.Rulesets.Classic.UI
             workingBeatmap.BindTo(beatmap);
         }
 
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            AddInternal(new GameplayCursor());
-        }
-
         protected override void Update()
         {
             base.Update();
@@ -182,8 +176,8 @@ namespace osu.Game.Rulesets.Classic.UI
 
         public override void PostProcess()
         {
-            connectionLayer.HitObjects = HitObjects.Objects
-                .Select(d => d.HitObject)
+            connectionLayer.HitObjects = hitobjects
+                .Select(d => d)
                 .OrderBy(h => h.StartTime).OfType<ClassicHitObject>();
         }
 

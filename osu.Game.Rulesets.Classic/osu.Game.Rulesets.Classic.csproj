@@ -9,6 +9,29 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\Samples\combobreak.mp3" />
+    <None Remove="Assets\Samples\drum-hitclap.wav" />
+    <None Remove="Assets\Samples\drum-hitfinish.wav" />
+    <None Remove="Assets\Samples\drum-hitnormal.wav" />
+    <None Remove="Assets\Samples\drum-hitwhistle.wav" />
+    <None Remove="Assets\Samples\drum-sliderslide.wav" />
+    <None Remove="Assets\Samples\drum-slidertick.wav" />
+    <None Remove="Assets\Samples\drum-sliderwhistle.wav" />
+    <None Remove="Assets\Samples\normal-hitclap.wav" />
+    <None Remove="Assets\Samples\normal-hitfinish.wav" />
+    <None Remove="Assets\Samples\normal-hitnormal.wav" />
+    <None Remove="Assets\Samples\normal-hitwhistle.wav" />
+    <None Remove="Assets\Samples\normal-sliderslide.wav" />
+    <None Remove="Assets\Samples\normal-slidertick.wav" />
+    <None Remove="Assets\Samples\normal-sliderwhistle.wav" />
+    <None Remove="Assets\Samples\soft-hitclap.wav" />
+    <None Remove="Assets\Samples\soft-hitfinish.wav" />
+    <None Remove="Assets\Samples\soft-hitnormal.wav" />
+    <None Remove="Assets\Samples\soft-hitwhistle.wav" />
+    <None Remove="Assets\Samples\soft-sliderslide.wav" />
+    <None Remove="Assets\Samples\soft-slidertick.wav" />
+    <None Remove="Assets\Samples\soft-sliderwhistle.wav" />
+    <None Remove="Assets\Samples\spinnerbonus.wav" />
+    <None Remove="Assets\Samples\spinnerspin.wav" />
     <None Remove="Assets\Textures\approachcircle%402x.png" />
     <None Remove="Assets\Textures\comboburst%402x.png" />
     <None Remove="Assets\Textures\cursor%402x.png" />
@@ -114,6 +137,29 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Samples\combobreak.mp3" />
+    <EmbeddedResource Include="Assets\Samples\drum-hitclap.wav" />
+    <EmbeddedResource Include="Assets\Samples\drum-hitfinish.wav" />
+    <EmbeddedResource Include="Assets\Samples\drum-hitnormal.wav" />
+    <EmbeddedResource Include="Assets\Samples\drum-hitwhistle.wav" />
+    <EmbeddedResource Include="Assets\Samples\drum-sliderslide.wav" />
+    <EmbeddedResource Include="Assets\Samples\drum-slidertick.wav" />
+    <EmbeddedResource Include="Assets\Samples\drum-sliderwhistle.wav" />
+    <EmbeddedResource Include="Assets\Samples\normal-hitclap.wav" />
+    <EmbeddedResource Include="Assets\Samples\normal-hitfinish.wav" />
+    <EmbeddedResource Include="Assets\Samples\normal-hitnormal.wav" />
+    <EmbeddedResource Include="Assets\Samples\normal-hitwhistle.wav" />
+    <EmbeddedResource Include="Assets\Samples\normal-sliderslide.wav" />
+    <EmbeddedResource Include="Assets\Samples\normal-slidertick.wav" />
+    <EmbeddedResource Include="Assets\Samples\normal-sliderwhistle.wav" />
+    <EmbeddedResource Include="Assets\Samples\soft-hitclap.wav" />
+    <EmbeddedResource Include="Assets\Samples\soft-hitfinish.wav" />
+    <EmbeddedResource Include="Assets\Samples\soft-hitnormal.wav" />
+    <EmbeddedResource Include="Assets\Samples\soft-hitwhistle.wav" />
+    <EmbeddedResource Include="Assets\Samples\soft-sliderslide.wav" />
+    <EmbeddedResource Include="Assets\Samples\soft-slidertick.wav" />
+    <EmbeddedResource Include="Assets\Samples\soft-sliderwhistle.wav" />
+    <EmbeddedResource Include="Assets\Samples\spinnerbonus.wav" />
+    <EmbeddedResource Include="Assets\Samples\spinnerspin.wav" />
     <EmbeddedResource Include="Assets\Textures\approachcircle@2x.png" />
     <EmbeddedResource Include="Assets\Textures\comboburst@2x.png" />
     <EmbeddedResource Include="Assets\Textures\cursor-smoke@2x.png" />

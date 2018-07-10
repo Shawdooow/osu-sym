@@ -13,6 +13,8 @@ namespace osu.Game.Skinning
 {
     public class SkinnableSound : SkinReloadableDrawable
     {
+        public AudioManager RulesetAudio;
+
         private readonly SampleInfo[] samples;
         private SampleChannel[] channels;
 
@@ -53,13 +55,17 @@ namespace osu.Game.Skinning
             if (info.Namespace != null && ch == null)
                 ch = getSampleFunction($"Gameplay/{info.Namespace}/{info.Bank}-{info.Name}");
 
-            // try without namespace as a fallback.
+            // try without namespace as a fallback.	
             if (ch == null)
                 ch = getSampleFunction($"Gameplay/{info.Bank}-{info.Name + info.BankNumber}");
-            
-            // try without number as a fallback.	
+
+            // try without number as a fallback.
             if (ch == null)
                 ch = getSampleFunction($"Gameplay/{info.Bank}-{info.Name}");
+
+            // try with ruleset as a fallback.
+            if (RulesetAudio != null && ch == null)
+                ch = RulesetAudio.GetSampleManager().Get($"{info.Bank}-{info.Name}");
 
             if (ch != null)
                 ch.Volume.Value = info.Volume / 100.0;
