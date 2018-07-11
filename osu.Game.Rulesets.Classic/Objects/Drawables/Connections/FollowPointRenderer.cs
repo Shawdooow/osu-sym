@@ -69,13 +69,10 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Connections
                     double endTime = currHitObject.StartTime;
 
                     Vector2 distanceVector = endPosition - startPosition;
-                    int distance = (int)distanceVector.Length;
+                    int distance = (int)(distanceVector.Length - (prevHitObject.Radius + currHitObject.Radius));
                     float rotation = MathHelper.RadiansToDegrees((float)Math.Atan2(currHitObject.Position.Y - prevHitObject.Position.Y, currHitObject.Position.X - prevHitObject.Position.X));
-                    if (prevHitObject is Slider)
-                    {
-                        Slider slider = prevHitObject as Slider;
+                    if (prevHitObject is Slider slider)
                         rotation = MathHelper.RadiansToDegrees((float)Math.Atan2(currHitObject.Position.Y - slider.EndPosition.Y, currHitObject.Position.X - slider.EndPosition.X));
-                    }
                     double duration = endTime - startTime;
 
                     for (int d = (int)(PointDistance * 1.5); d < distance - PointDistance; d += PointDistance)
@@ -103,7 +100,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Connections
 
                             fp.MoveTo(pointEndPosition, currHitObject.TimeFadein, Easing.Out);
 
-                            fp.Delay(fadeOutTime - fadeInTime).FadeOut(currHitObject.TimeFadein / 2);
+                            fp.Delay(fadeOutTime - fadeInTime).FadeOut(currHitObject.TimeFadein / 4);
                         }
 
                         fp.Expire(true);
