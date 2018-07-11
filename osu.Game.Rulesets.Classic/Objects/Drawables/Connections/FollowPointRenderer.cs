@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Connections
                 return;
 
             ClassicHitObject prevHitObject = null;
-            foreach (var currHitObject in hitObjects)
+            foreach (ClassicHitObject currHitObject in hitObjects)
             {
                 if (prevHitObject != null && !currHitObject.NewCombo && !(prevHitObject is Spinner) && !(currHitObject is Spinner))
                 {
@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Connections
                         Vector2 pointStartPosition = startPosition + (fraction - 0.1f) * distanceVector;
                         Vector2 pointEndPosition = startPosition + fraction * distanceVector;
                         double fadeOutTime = startTime + fraction * duration;
-                        double fadeInTime = fadeOutTime - PreEmpt;
+                        double fadeInTime = fadeOutTime - currHitObject.TimePreempt;
 
                         FollowPoint fp;
 
@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Connections
                             Position = pointStartPosition,
                             Rotation = rotation,
                             Alpha = 0,
-                            Scale = new Vector2(1.5f),
+                            //Scale = new Vector2(1.5f),
                         });
 
                         using (fp.BeginAbsoluteSequence(fadeInTime))
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Connections
 
                             fp.MoveTo(pointEndPosition, currHitObject.TimeFadein, Easing.Out);
 
-                            fp.Delay(fadeOutTime - fadeInTime).FadeOut(currHitObject.TimeFadein);
+                            fp.Delay(fadeOutTime - fadeInTime).FadeOut(currHitObject.TimeFadein / 2);
                         }
 
                         fp.Expire(true);

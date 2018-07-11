@@ -15,26 +15,24 @@ namespace osu.Game.Rulesets.Classic
     {
         private ClassicUi classicUi;
 
-        public readonly Container<BufferedContainer> SliderBodyContainer;
+        public Container<BufferedContainer> Hitobjects;
 
         public IEnumerable<ClassicAction> PressedActions => KeyBindingContainer.PressedActions;
 
         public ClassicInputManager(RulesetInfo ruleset) : base(ruleset, 0, SimultaneousBindingMode.Unique)
         {
-            if (SliderBodyContainer == null)
-            {
-                Add(SliderBodyContainer = new Container<BufferedContainer>
-                {
-                    RelativeSizeAxes = Axes.Both,
-                });
-            }
         }
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
+
             AddRange(new Drawable[] 
             {
+                Hitobjects = new Container<BufferedContainer>
+                {
+                    RelativeSizeAxes = Axes.Both,
+                },
                 classicUi = new ClassicUi
                 {
                     Anchor = Anchor.Centre,

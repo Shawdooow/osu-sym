@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Connections
         public FollowPoint()
         {
             Origin = Anchor.Centre;
-            FillMode = FillMode.Fill;
+            //FillMode = FillMode.Fill;
         }
 
         [BackgroundDependencyLoader]

@@ -156,7 +156,7 @@ namespace osu.Game.Rulesets.Classic.UI
             b.Child = new PlayfieldHitobjectContainer(drawable, q);
             b.Attach(RenderbufferInternalFormat.DepthComponent16);
 
-            classicInputManager.SliderBodyContainer.Add(b);
+            classicInputManager.Hitobjects.Add(b);
         }
 
         public override void Add(DrawableHitObject h)
