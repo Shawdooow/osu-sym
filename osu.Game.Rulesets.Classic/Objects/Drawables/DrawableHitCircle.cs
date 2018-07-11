@@ -182,8 +182,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                         if (!hitObject.Hidden)
                         {
                             number.FadeOut(100, Easing.OutSine);
-                            this.FadeOut(250, Easing.InCubic)
-                                .ScaleTo(Scale * 1.33f, 250, Easing.OutQuad);
+                            this.FadeOut(225, Easing.InSine)
+                                .ScaleTo(Scale * 1.33f, 225, Easing.OutSine);
                         }
                     }
 
