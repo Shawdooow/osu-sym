@@ -15,7 +15,7 @@
     <ProjectReference Include="..\osu-resources\osu.Game.Resources\osu.Game.Resources.csproj" />
   </ItemGroup>
   <ItemGroup Label="Package References">
-    <PackageReference Include="Humanizer" Version="2.3.3" />
+    <PackageReference Include="Humanizer" Version="2.4.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="2.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
