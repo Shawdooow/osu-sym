@@ -313,10 +313,10 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         //The Scarlet Chapter
         [Description("Sakuya Izayoi")]
         SakuyaIzayoi,
+        [Description("Remilia Scarlet")]
+        RemiliaScarlet,
         //[Description("Flandre Scarlet")]
         //FlandreScarlet,
-        //[Description("Remilia Scarlet")]
-        //RemiliaScarlet,
 
         //The Rational Chapter
         //[Description("Marisa Kirisame")]

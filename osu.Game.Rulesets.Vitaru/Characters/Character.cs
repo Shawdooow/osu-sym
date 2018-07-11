@@ -178,8 +178,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters
                         ParseBullet(bullet);
                         if (Hitbox.HitDetect(Hitbox, bullet.Hitbox))
                         {
-                            Hurt(bullet.Bullet.BulletDamage);
-                            bullet.Bullet.BulletDamage = 0;
+                            Hurt(bullet.Bullet.Damage);
+                            bullet.Bullet.Damage = 0;
                             bullet.Hit = true;
                         }
                     }
@@ -189,8 +189,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters
                     {
                         if (Hitbox.HitDetect(Hitbox, seekingBullet.Hitbox))
                         {
-                            Hurt(seekingBullet.SeekingBullet.BulletDamage);
-                            seekingBullet.SeekingBullet.BulletDamage = 0;
+                            Hurt(seekingBullet.SeekingBullet.Damage);
+                            seekingBullet.SeekingBullet.Damage = 0;
                             seekingBullet.Hit = true;
                         }
                     }

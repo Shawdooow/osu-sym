@@ -136,7 +136,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
                 case "SakuyaIzayoi":
                     return new DrawableSakuya(playfield, vitaruNetworkingClientHandler);
                 case "RemiliaScarlet":
-                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+                    return new DrawableRemilia(playfield, vitaruNetworkingClientHandler);
                 case "FlandreScarlet":
                     return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
 

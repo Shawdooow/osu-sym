@@ -164,11 +164,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         {
                             b.Ar = Ar;
 
-                            if (IsSpinner)
-                                b.Abstraction = 2;
-                            else if (!IsSlider)
-                                b.Abstraction = 1;
-
                             b.NewCombo = NewCombo;
                             b.IndexInCurrentCombo = IndexInCurrentCombo;
                             b.ComboIndex = ComboIndex;
@@ -183,11 +178,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                         foreach (Bullet b in getPattern(Position, getPatternID(info)))
                         {
                             b.Ar = Ar;
-
-                            if (IsSpinner)
-                                b.Abstraction = 2;
-                            else if (!IsSlider)
-                                b.Abstraction = 1;
 
                             b.NewCombo = NewCombo;
                             b.IndexInCurrentCombo = IndexInCurrentCombo;

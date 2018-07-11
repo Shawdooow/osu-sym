@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Children = new Drawable[]
             {
                 new SeekingBulletPiece(this),
-                Hitbox = new SymcolHitbox(Size, Shape.Rectangle)
+                //Hitbox = new SymcolHitbox(Size, Shape.Rectangle)
             };
         }
 
@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         private Vector2 getBulletVelocity(double angle)
         {
-            Vector2 velocity = new Vector2((float)SeekingBullet.BulletSpeed * (float)Math.Cos(angle), (float)SeekingBullet.BulletSpeed * (float)Math.Sin(angle));
+            Vector2 velocity = new Vector2((float)SeekingBullet.Speed * (float)Math.Cos(angle), (float)SeekingBullet.Speed * (float)Math.Sin(angle));
             return velocity;
         }
 

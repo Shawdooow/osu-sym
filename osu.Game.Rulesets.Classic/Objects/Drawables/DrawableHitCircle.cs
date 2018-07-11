@@ -178,14 +178,12 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     const double flash_in = 40;
 
                     using (BeginDelayedSequence(flash_in, true))
-                    {
                         if (!hitObject.Hidden)
                         {
                             number.FadeOut(100, Easing.OutSine);
                             this.FadeOut(225, Easing.InSine)
                                 .ScaleTo(Scale * 1.33f, 225, Easing.OutSine);
                         }
-                    }
 
                     Expire();
                     break;

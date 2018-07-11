@@ -22,12 +22,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                 {
                     StartTime = startTime,
                     Position = position,
-                    BulletSpeed = (float)speed,
-                    BulletAngle = direction,
+                    Speed = (float)speed,
+                    Angle = direction,
                     SliderType = SliderType.Straight,
                     //SpeedEasing = Easing.OutSine,
-                    BulletDiameter = i % 2 == 1 ? (float)diameter : (float)diameter * 1.5f,
-                    BulletDamage = i % 2 == 1 ? (float)damage : (float)damage * 0.8f,
+                    Diameter = i % 2 == 1 ? (float)diameter : (float)diameter * 1.5f,
+                    Damage = i % 2 == 1 ? (float)damage : (float)damage * 0.8f,
                     Team = team,
                 });
                 direction += directionModifier;
@@ -50,12 +50,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                 {
                     StartTime = startTime,
                     Position = position,
-                    BulletSpeed = (float)speed,
-                    BulletAngle = angle,
+                    Speed = (float)speed,
+                    Angle = angle,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutQuad,
-                    BulletDiameter = (float)diameter,
-                    BulletDamage = (float)damage,
+                    Diameter = (float)diameter,
+                    Damage = (float)damage,
                     Team = team,
                 });
                 speed += speedModifier;
@@ -84,12 +84,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                 {
                     StartTime = startTime,
                     Position = position,
-                    BulletSpeed = (float)speed,
-                    BulletAngle = direction,
+                    Speed = (float)speed,
+                    Angle = direction,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutQuad,
-                    BulletDiameter = (float)diameter,
-                    BulletDamage = (float)damage,
+                    Diameter = (float)diameter,
+                    Damage = (float)damage,
                     Team = team,
                 });
                 direction += directionModifier;
@@ -135,12 +135,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                 {
                     StartTime = startTime,
                     Position = position,
-                    BulletSpeed = (float)speed,
-                    BulletAngle = i % 2 == 0 ? (angle - direction) : (angle + direction),
+                    Speed = (float)speed,
+                    Angle = i % 2 == 0 ? (angle - direction) : (angle + direction),
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutSine,
-                    BulletDiameter = (float)diameter,
-                    BulletDamage = (float)damage,
+                    Diameter = (float)diameter,
+                    Damage = (float)damage,
                     Team = team,
                 });
 
@@ -168,12 +168,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                 {
                     StartTime = startTime,
                     Position = position,
-                    BulletSpeed = (float)speed,
-                    BulletAngle = direction,
+                    Speed = (float)speed,
+                    Angle = direction,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutCubic,
-                    BulletDiameter = i % 2 == 1 ? (float)diameter : (float)diameter * 1.5f,
-                    BulletDamage = i % 2 == 1 ? (float)damage : (float)damage * 0.8f,
+                    Diameter = i % 2 == 1 ? (float)diameter : (float)diameter * 1.5f,
+                    Damage = i % 2 == 1 ? (float)damage : (float)damage * 0.8f,
                     Team = team,
                 });
                 direction += directionModifier;
@@ -203,10 +203,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                     {
                         StartTime = j,
                         Position = position,
-                        BulletSpeed = (float)speed,
-                        BulletAngle = direction,
-                        BulletDiameter = (float)diameter,
-                        BulletDamage = (float)damage,
+                        Speed = (float)speed,
+                        Angle = direction,
+                        Diameter = (float)diameter,
+                        Damage = (float)damage,
                         SpeedEasing = Easing.OutCubic,
                         SliderType = type,
                         Curviness = 2,

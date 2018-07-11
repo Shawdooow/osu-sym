@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             base.Load();
 
             Alpha = 0;
-            Size = new Vector2((float)Bullet.BulletDiameter);
+            Size = new Vector2((float)Bullet.Diameter);
 
             if (graphics != GraphicsOptions.StandardV2)
                 Scale = new Vector2(0.1f);
@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Children = new Drawable[]
             {
                 bulletPiece = new BulletPiece(this),
-                Hitbox = new SymcolHitbox(new Vector2((float)Bullet.BulletDiameter), Shape.Circle)
+                Hitbox = new SymcolHitbox(new Vector2((float)Bullet.Diameter))
                 {
                     Team = Bullet.Team,
                     HitDetection = false
@@ -152,10 +152,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             if (graphics == GraphicsOptions.StandardV2)
             {
                 Alpha = 1;
+                bulletPiece.Rotation = (float)MathHelper.RadiansToDegrees(Bullet.Angle) + 90;
                 bulletPiece.Scale = new Vector2(1.5f);
                 bulletPiece.FadeInFromZero(100, Easing.OutSine)
                            .ScaleTo(Vector2.One, 100, Easing.InSine);
-                bulletPiece.Box.FadeInFromZero(150, Easing.InSine);
+                if (Bullet.Shape == Shape.Circle)
+                    bulletPiece.Box.FadeInFromZero(150, Easing.InSine);
             }
             else
                 this.FadeInFromZero(100)
@@ -171,12 +173,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             {
                 bulletPiece.FadeOut(300, Easing.OutCubic)
                            .ScaleTo(new Vector2(1.5f), 300, Easing.OutSine)
-                           .OnComplete((b) => { Unload(); });
+                           .OnComplete(b => { Unload(); });
                 bulletPiece.Box.FadeOut(150, Easing.InSine);
             }
             else
                 bulletPiece.FadeOut(100)
-                    .OnComplete((b) => { Unload(); });
+                    .OnComplete(b => { Unload(); });
 
             returnJudgement = true;
         }

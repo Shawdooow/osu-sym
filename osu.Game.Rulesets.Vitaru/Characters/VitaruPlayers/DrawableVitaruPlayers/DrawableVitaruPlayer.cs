@@ -491,15 +491,14 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             {
                 StartTime = Time.Current,
                 Position = Position,
-                BulletAngle = angle,
-                BulletSpeed = speed,
-                BulletDiameter = size,
-                BulletDamage = damage,
+                Angle = angle,
+                Speed = speed,
+                Diameter = size,
+                Damage = damage,
                 ColorOverride = color,
                 Team = Team,
                 DummyMode = true,
                 SliderType = SliderType.Straight,
-                Abstraction = 3,
             }, VitaruPlayfield));
 
             drawableBullet.MoveTo(Position);
@@ -517,8 +516,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
             if (Actions[VitaruAction.Slow])
             {
-                cursorAngle = (MathHelper.RadiansToDegrees(Math.Atan2((Cursor.Position.Y - Position.Y), (Cursor.Position.X - Position.X))) + 90 + Rotation) - 12;
-                directionModifier = 0.1d;
+                cursorAngle = (MathHelper.RadiansToDegrees(Math.Atan2((Cursor.Position.Y - Position.Y), (Cursor.Position.X - Position.X))) + 90 + Rotation);
+                directionModifier = -0.1d;
             }
 
             for (int i = 1; i <= numberbullets; i++)

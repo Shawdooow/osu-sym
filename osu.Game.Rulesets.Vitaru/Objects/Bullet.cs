@@ -19,17 +19,15 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
         public bool DummyMode { get; set; }
 
-        public double BulletDamage { get; set; } = 10;
-        public double BulletSpeed { get; set; } = 1f;
-        public double BulletDiameter { get; set; } = 16f;
-        public double BulletAngle { get; set; }
-        public bool DynamicBulletVelocity { get; set; }
+        public double Damage { get; set; } = 10;
+        public double Speed { get; set; } = 1f;
+        public double Diameter { get; set; } = 16f;
+        public double Angle { get; set; }
+        public bool DynamicVelocity { get; set; }
         public bool Piercing { get; set; }
         public int Team { get; set; } = -1;
         public bool ShootPlayer { get; set; }
         public bool ObeyBoundries { get; } = true;
-
-        public int Abstraction { get; set; }
 
         public double Curviness
         {
@@ -42,6 +40,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         }
 
         private double curviness = 1;
+
+        public Shape Shape;
 
         public SliderType SliderType
         {
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                             ControlPoints = new List<Vector2>
                             {
                                 Position,
-                                new Vector2((float)Math.Cos(BulletAngle) * 1000 + Position.X, (float)Math.Sin(BulletAngle) * 1000 + Position.Y)
+                                new Vector2((float)Math.Cos(Angle) * 1000 + Position.X, (float)Math.Sin(Angle) * 1000 + Position.Y)
                             },
                         };
                         break;
@@ -74,8 +74,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                             ControlPoints = new List<Vector2>
                             {
                                 Position,
-                                new Vector2((float)Math.Cos((BulletAngle + offset) - 0.4f) * 600 + Position.X, (float)Math.Sin((BulletAngle + offset) - 0.4f) * 600 + Position.Y),
-                                new Vector2((float)Math.Cos(BulletAngle + offset) * (float)(1200 / Curviness) + Position.X, (float)Math.Sin(BulletAngle + offset) * (float)(1200 / Curviness) + Position.Y),
+                                new Vector2((float)Math.Cos((Angle + offset) - 0.4f) * 600 + Position.X, (float)Math.Sin((Angle + offset) - 0.4f) * 600 + Position.Y),
+                                new Vector2((float)Math.Cos(Angle + offset) * (float)(1200 / Curviness) + Position.X, (float)Math.Sin(Angle + offset) * (float)(1200 / Curviness) + Position.Y),
                             },
                         };
                         break;
@@ -87,8 +87,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects
                             ControlPoints = new List<Vector2>
                             {
                                 Position,
-                                new Vector2((float)Math.Cos((BulletAngle - offset) + 0.4f) * 600 + Position.X, (float)Math.Sin((BulletAngle - offset) + 0.4f) * 600 + Position.Y),
-                                new Vector2((float)Math.Cos(BulletAngle - offset) * (float)(1200 / Curviness) + Position.X, (float)Math.Sin(BulletAngle - offset) * (float)(1200 / Curviness) + Position.Y),
+                                new Vector2((float)Math.Cos((Angle - offset) + 0.4f) * 600 + Position.X, (float)Math.Sin((Angle - offset) + 0.4f) * 600 + Position.Y),
+                                new Vector2((float)Math.Cos(Angle - offset) * (float)(1200 / Curviness) + Position.X, (float)Math.Sin(Angle - offset) * (float)(1200 / Curviness) + Position.Y),
                             },
                         };
                         break;
@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects
         private const float base_scoring_distance = 100;
         public double Duration => EndTime - StartTime;
         public SliderCurve Curve { get; private set; } = new SliderCurve();
-        public double Velocity => BulletSpeed;
+        public double Velocity => Speed;
         public double SpanDuration => Duration / this.SpanCount();
         public int RepeatCount { get; set; }
 
@@ -146,5 +146,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects
 
         CurveRight,
         CurveLeft,
+    }
+
+    public enum Shape
+    {
+        Circle,
+        Triangle,
+        Square
     }
 }

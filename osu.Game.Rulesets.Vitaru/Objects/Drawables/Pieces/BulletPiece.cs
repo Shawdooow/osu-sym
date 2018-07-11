@@ -41,12 +41,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
             randomRotationValue = (float)RNG.Next(10, 15) / 10;
             randomRotateDirection = RNG.NextBool();
 
-            Size = new Vector2((float)drawableBullet.Bullet.BulletDiameter + 12);
+            Size = new Vector2((float)drawableBullet.Bullet.Diameter + 12);
 
             if (graphics != GraphicsOptions.HighPerformance && graphics != GraphicsOptions.StandardV2)
                 Child = bulletKiai = new Sprite
                 {
-                    //Just to look nice for the time being, will fix the sprite later
                     Scale = new Vector2(2),
                     Alpha = 0,
                     Origin = Anchor.Centre,
@@ -72,11 +71,22 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                 }
             });
 
+            if (drawableBullet.Bullet.Shape == Shape.Triangle)
+            {
+                Add(new EquilateralTriangle
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                });
+                Box.Alpha = 0;
+            }
+
             if (graphics != GraphicsOptions.HighPerformance)
                 circle.EdgeEffect = new EdgeEffectParameters
                 {
-                    Hollow = true,
-                    Radius = (float)drawableBullet.Bullet.BulletDiameter,
+                    Hollow = drawableBullet.Bullet.Shape == Shape.Circle ? true : false,
+                    Radius = (float)drawableBullet.Bullet.Diameter,
                     Type = EdgeEffectType.Shadow,
                     Colour = drawableBullet.AccentColour.Opacity(graphics == GraphicsOptions.StandardV2 ? 0.5f : 0.2f)
                 };
