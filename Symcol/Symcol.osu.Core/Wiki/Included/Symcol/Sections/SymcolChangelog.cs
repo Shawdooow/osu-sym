@@ -12,7 +12,8 @@ namespace Symcol.osu.Core.Wiki.Included.Symcol.Sections
 
         protected override string FileExtention => ".symcol";
 
-        protected override string VersionChangelog => "-Initial release on lazer version 2018.702.0\n\n" +
+        protected override string VersionChangelog => "-Updated to lazer version 2018.710.0\n" +
+            "-Initial release on lazer version 2018.702.0\n\n" +
             "Features:\n\n" +
             "-Add changelog section to wiki\n\n" +
             "Tweaks / Changes:\n\n" +
