@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class VitaruPlayfield : SymcolPlayfield
     {
-        private static readonly Bindable<Gamemodes> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private static readonly Bindable<Gamemodes> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.Gamemode);
 
         private readonly Bindable<bool> goodFps = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.GoodFPS);
 
@@ -65,8 +65,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
                     return new Vector2(512 * 2, 820);
                 else if (gamemode == Gamemodes.Dodge)
                     return new Vector2(512, 384);
-                else if (gamemode == Gamemodes.Gravaru)
-                    return new Vector2(384 * 2, 384);
                 else
                     return new Vector2(512, 820);
             }
@@ -147,7 +145,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                     Gamefield.Add(Boss = new Boss(this));
 
                 Player.Position = new Vector2(256, 700);
-                if (gamemode == Gamemodes.Dodge || gamemode == Gamemodes.Gravaru)
+                if (gamemode == Gamemodes.Dodge)
                     Player.Position = BaseSize / 2;
                 else if (gamemode == Gamemodes.Touhosu)
                     Player.Position = new Vector2(512, 700);

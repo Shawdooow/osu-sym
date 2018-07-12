@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
         protected override void InitialiseDefaults()
         {
-            Set(VitaruSetting.GameMode, Gamemodes.Vitaru);
+            Set(VitaruSetting.Gamemode, Gamemodes.Vitaru);
 
             Set(VitaruSetting.Character, "Alex");
             Set(VitaruSetting.VitaruCharacter, "Alex");
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
     public enum VitaruSetting
     {
-        GameMode,
+        Gamemode,
 
         Character,
         VitaruCharacter,

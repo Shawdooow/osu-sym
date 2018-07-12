@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         [BackgroundDependencyLoader]
         private void load()
         {
-            selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+            selectedGamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.Gamemode);
 
             Content.Add(new WikiParagraph("This ruleset has multiple gamemodes built in, similar to how Mania can have different key amounts. " +
                 "However instead of just increasing the lanes these change how bullets will be coming at you. " +
@@ -32,10 +32,6 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
                     case Gamemodes.Vitaru:
                         gamemodeDescription.Description.Text = "The default gamemode in this ruleset which is based on the touhou series danmaku games. " +
                         "Allows you to kill enemies while dodging bullets to the beat!";
-                        break;
-                    case Gamemodes.Gravaru:
-                        gamemodeDescription.Description.Text = "Gravity Enabled!\n" +
-                        "Currently a very incomplete experiance, just messing with gravity physics atm. Stay tuned!";
                         break;
                     case Gamemodes.Dodge:
                         gamemodeDescription.Description.Text = "Completly changes how vitaru is played. " +

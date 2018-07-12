@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableBullet : DrawableVitaruHitObject
     { 
-        private readonly Gamemodes gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private readonly Gamemodes gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.Gamemode);
 
         private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
 
@@ -50,8 +50,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (gamemode == Gamemodes.Dodge)
                 BulletBounds = new Vector4(-10, -10, 522, 394);
-            else if (gamemode == Gamemodes.Gravaru)
-                BulletBounds = new Vector4(-10, -10, 384 * 2 + 10, 394);
             else if (gamemode == Gamemodes.Touhosu)
                 BulletBounds = new Vector4(-10, -10, 512 * 2 + 10, 820);
         }

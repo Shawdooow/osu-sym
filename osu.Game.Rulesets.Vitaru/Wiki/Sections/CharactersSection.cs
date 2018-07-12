@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
         [BackgroundDependencyLoader]
         private void load()
         {
-            gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+            gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.Gamemode);
             character = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
             selectedVitaruCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.VitaruCharacter);

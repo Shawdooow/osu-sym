@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
             showDebugUi = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
 
-            gamemode = VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+            gamemode = VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.Gamemode);
 
             graphics = VitaruConfigManager.GetBindable<GraphicsPresets>(VitaruSetting.GraphicsPreset);
 

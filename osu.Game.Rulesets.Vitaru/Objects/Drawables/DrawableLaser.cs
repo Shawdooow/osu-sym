@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 {
     public class DrawableLaser : DrawableVitaruHitObject
     {
-        private Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.Gamemode);
 
         //Set to "true" when a judgement should be returned
         private bool returnJudgement;

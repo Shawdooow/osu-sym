@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
         public override int Variant => (int)variant();
 
         private readonly Bindable<string> character = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
-        private readonly Bindable<Gamemodes> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private readonly Bindable<Gamemodes> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.Gamemode);
 
         private ControlScheme variant()
         {
@@ -135,8 +135,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 aspectSize = new Vector2(DrawSize.Y * 20f / 16f, DrawSize.Y);
             else if (gamemode == Gamemodes.Dodge)
                 aspectSize = new Vector2(DrawSize.Y * 4f / 3f, DrawSize.Y);
-            else if (gamemode == Gamemodes.Gravaru)
-                aspectSize = new Vector2(DrawSize.Y * 2f / 1f, DrawSize.Y);
 
             return new Vector2(aspectSize.X / DrawSize.X, aspectSize.Y / DrawSize.Y);
         }

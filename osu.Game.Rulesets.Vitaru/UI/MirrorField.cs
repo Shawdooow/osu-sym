@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 {
     public class MirrorField : VitaruPlayfield
     {
-        private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        private readonly Gamemodes currentGameMode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.Gamemode);
 
         private readonly List<DrawableVitaruPlayer> enemyList = new List<DrawableVitaruPlayer>();
 

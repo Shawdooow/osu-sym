@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
     public class DrawableVitaruPlayer : Character
     {
         #region Fields
-        protected readonly Gamemodes Gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.GameMode);
+        protected readonly Gamemodes Gamemode = VitaruSettings.VitaruConfigManager.GetBindable<Gamemodes>(VitaruSetting.Gamemode);
 
         protected readonly GraphicsOptions PlayerVisuals = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.PlayerVisuals);
 
@@ -203,7 +203,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
             if (effectPoint.KiaiMode && SoulContainer.Alpha == 1 && PlayerVisuals != GraphicsOptions.StandardV2)
             {
-                if (!Dead && Gamemode != Gamemodes.Gravaru)
+                if (!Dead)
                 {
                     KiaiContainer.FadeInFromZero(timingPoint.BeatLength / 4);
                     SoulContainer.FadeOutFromOne(timingPoint.BeatLength / 4);
@@ -214,7 +214,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             }
             if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1 && PlayerVisuals != GraphicsOptions.StandardV2)
             {
-                if (!Dead && Gamemode != Gamemodes.Gravaru)
+                if (!Dead)
                 {
                     SoulContainer.FadeInFromZero(timingPoint.BeatLength);
                     KiaiContainer.FadeOutFromOne(timingPoint.BeatLength);
