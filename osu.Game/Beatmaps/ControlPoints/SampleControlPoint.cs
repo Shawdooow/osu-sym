@@ -1,6 +1,7 @@
 // Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using System;
 using osu.Game.Audio;
 
 namespace osu.Game.Beatmaps.ControlPoints
@@ -19,7 +20,7 @@ namespace osu.Game.Beatmaps.ControlPoints
         /// </summary>
         public int SampleVolume = 100;
 
-        public int SampleSuffix = 1;
+        public int SampleSuffix = 0;
 
         /// <summary>
         /// Create a SampleInfo based on the sample settings in this control point.
@@ -45,6 +46,7 @@ namespace osu.Game.Beatmaps.ControlPoints
             newSampleInfo.Bank = sampleInfo.Bank ?? SampleBank;
             newSampleInfo.Name = sampleInfo.Name;
             newSampleInfo.Volume = sampleInfo.Volume > 0 ? sampleInfo.Volume : SampleVolume;
+            newSampleInfo.Suffix = Int32.Parse(sampleInfo.Suffix) > 0 ? sampleInfo.Suffix : SampleSuffix.ToString();
             return newSampleInfo;
         }
 
@@ -52,6 +54,7 @@ namespace osu.Game.Beatmaps.ControlPoints
             => base.EquivalentTo(other)
                && other is SampleControlPoint sample
                && SampleBank.Equals(sample.SampleBank)
-               && SampleVolume.Equals(sample.SampleVolume);
+               && SampleVolume.Equals(sample.SampleVolume)
+               && SampleSuffix.Equals(sample.SampleSuffix);
     }
 }
