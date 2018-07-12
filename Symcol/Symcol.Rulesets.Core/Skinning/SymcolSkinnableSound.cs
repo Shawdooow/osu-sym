@@ -57,7 +57,7 @@ namespace Symcol.Rulesets.Core.Skinning
                 if (ch == null)
                     continue;
 
-                ch.Volume.Value = info.Volume / 100.0;
+                ch.Volume.Value = (info.Volume / 100.0) * 0.75f;
                 return ch;
             }
 
