@@ -289,7 +289,7 @@ namespace osu.Game.Beatmaps.Formats
                 if (split.Length >= 4)
                     sampleSet = (LegacySampleBank)int.Parse(split[3]);
 
-                int customSampleBank = 0;
+                int customSampleBank = 1;
                 if (split.Length >= 5)
                     customSampleBank = int.Parse(split[4]);
 

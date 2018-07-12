@@ -19,7 +19,7 @@ namespace osu.Game.Beatmaps.ControlPoints
         /// </summary>
         public int SampleVolume = 100;
 
-        public int SampleSuffix = 0;
+        public int SampleSuffix = 1;
 
         /// <summary>
         /// Create a SampleInfo based on the sample settings in this control point.

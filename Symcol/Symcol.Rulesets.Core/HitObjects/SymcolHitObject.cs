@@ -18,7 +18,7 @@ namespace Symcol.Rulesets.Core.HitObjects
 
             info.Bank = info.Bank ?? control.SampleBank;
             info.Volume = info.Volume > 0 ? info.Volume : control.SampleVolume;
-            info.Suffix = control.SampleSuffix > 0 ? control.SampleSuffix.ToString() : info.Suffix;
+            info.Suffix = control.SampleSuffix.ToString();
 
             return info;
         }
