@@ -169,25 +169,5 @@ namespace osu.Game.Beatmaps.Formats
             Pass = 2,
             Foreground = 3
         }
-
-        internal class LegacySampleControlPoint : SampleControlPoint
-        {
-            public int CustomSampleBank;
-
-            public override SampleInfo ApplyTo(SampleInfo sampleInfo)
-            {
-                var baseInfo = base.ApplyTo(sampleInfo);
-
-                if (CustomSampleBank > 1)
-                    baseInfo.Suffix = CustomSampleBank.ToString();
-
-                return baseInfo;
-            }
-
-            public override bool EquivalentTo(ControlPoint other)
-                => base.EquivalentTo(other)
-                   && other is LegacySampleControlPoint legacy
-                   && CustomSampleBank == legacy.CustomSampleBank;
-        }
     }
 }

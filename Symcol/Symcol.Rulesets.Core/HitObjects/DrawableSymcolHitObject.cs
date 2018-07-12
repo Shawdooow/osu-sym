@@ -116,7 +116,6 @@ namespace Symcol.Rulesets.Core.HitObjects
             Dispose();
         }
 
-        //TODO: share logic with GetAdjustedSample
         protected SymcolSkinnableSound GetSkinnableSound(SampleInfo info, SampleControlPoint point = null)
         {
             SampleControlPoint control = HitObject.SampleControlPoint;
@@ -124,7 +123,7 @@ namespace Symcol.Rulesets.Core.HitObjects
             if (point != null)
                 control = point;
 
-            return new SymcolSkinnableSound(info){ RulesetAudio = RulesetAudio };
+            return new SymcolSkinnableSound(HitObject.GetAdjustedSample(info, control)){ RulesetAudio = RulesetAudio };
         }
 
         public override bool UpdateSubTree()

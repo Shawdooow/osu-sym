@@ -19,6 +19,8 @@ namespace osu.Game.Beatmaps.ControlPoints
         /// </summary>
         public int SampleVolume = 100;
 
+        public int SampleSuffix = 0;
+
         /// <summary>
         /// Create a SampleInfo based on the sample settings in this control point.
         /// </summary>
@@ -29,6 +31,7 @@ namespace osu.Game.Beatmaps.ControlPoints
             Bank = SampleBank,
             Name = sampleName,
             Volume = SampleVolume,
+            Suffix = SampleSuffix.ToString(),
         };
 
         /// <summary>

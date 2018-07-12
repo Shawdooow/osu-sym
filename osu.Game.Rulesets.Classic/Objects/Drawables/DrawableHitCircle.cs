@@ -14,7 +14,6 @@ using osu.Game.Rulesets.Scoring;
 using OpenTK.Graphics;
 using Symcol.Rulesets.Core.Skinning;
 using osu.Game.Audio;
-using osu.Game.Rulesets.Classic.Scoring;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {

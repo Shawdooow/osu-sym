@@ -337,12 +337,12 @@ namespace osu.Game.Beatmaps.Formats
                     OmitFirstBarLine = omitFirstBarSignature
                 });
 
-                handleSampleControlPoint(new LegacySampleControlPoint
+                handleSampleControlPoint(new SampleControlPoint
                 {
                     Time = time,
                     SampleBank = stringSampleSet,
                     SampleVolume = sampleVolume,
-                    CustomSampleBank = customSampleBank
+                    SampleSuffix = customSampleBank
                 });
             }
             catch (FormatException e)
