@@ -16,13 +16,10 @@ namespace Symcol.Rulesets.Core.HitObjects
             if (point != null)
                 control = point;
 
-            return new SampleInfo
-            {
-                Bank = info.Bank ?? SampleControlPoint.SampleBank,
-                Suffix = info.Suffix,
-                Name = info.Name,
-                Volume = info.Volume > 0 ? info.Volume : SampleControlPoint.SampleVolume,
-            };
+            info.Bank = info.Bank ?? SampleControlPoint.SampleBank;
+            info.Volume = info.Volume > 0 ? info.Volume : SampleControlPoint.SampleVolume;
+
+            return info;
         }
     }
 }

@@ -169,6 +169,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.End();
 
+            if (bulletPiece == null) return;
+
             if (graphics == GraphicsOptions.StandardV2)
             {
                 bulletPiece.FadeOut(300, Easing.OutCubic)
