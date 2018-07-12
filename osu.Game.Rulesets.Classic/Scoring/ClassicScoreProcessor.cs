@@ -134,7 +134,7 @@ namespace osu.Game.Rulesets.Classic.Scoring
 
                 case HitResult.Miss:
                     if (Combo >= 10)
-                        ClassicRuleset.ClassicAudio.Sample.Get("combobreak").Play();
+                        ClassicRuleset.ClassicAudio.Sample.Get("Gameplay/combobreak").Play();
                     Combo = 0;
                     ClassicUi.CurrentHealth = Math.Max(ClassicUi.CurrentHealth - hpDrainRate * 0.03, 0);
                     Health.Value = ClassicUi.CurrentHealth;
