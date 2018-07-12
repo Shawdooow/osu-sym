@@ -34,7 +34,7 @@ namespace Symcol.osu.Core.Containers.SymcolToolbar
                         {
                             Action = () => OnHome?.Invoke()
                         },
-                        new ToolbarModeSelector()
+                        new ToolbarRulesetSelector(), 
                     }
                 },
                 new FillFlowContainer

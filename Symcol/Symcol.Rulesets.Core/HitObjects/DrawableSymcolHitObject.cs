@@ -124,15 +124,7 @@ namespace Symcol.Rulesets.Core.HitObjects
             if (point != null)
                 control = point;
 
-            return new SymcolSkinnableSound(new SampleInfo
-            {
-                Bank = info.Bank ?? HitObject.SampleControlPoint.SampleBank,
-                //TODO: this here
-                BankNumber = control.SampleBankCount,
-                Name = info.Name,
-                Volume = info.Volume > 0 ? info.Volume : HitObject.SampleControlPoint.SampleVolume,
-                Namespace = SampleNamespace
-            }){ RulesetAudio = RulesetAudio };
+            return new SymcolSkinnableSound(info){ RulesetAudio = RulesetAudio };
         }
 
         public override bool UpdateSubTree()

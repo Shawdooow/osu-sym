@@ -19,8 +19,7 @@ namespace Symcol.Rulesets.Core.HitObjects
             return new SampleInfo
             {
                 Bank = info.Bank ?? SampleControlPoint.SampleBank,
-                //TODO: Find a way around this
-                BankNumber = control.SampleBankCount,
+                Suffix = info.Suffix,
                 Name = info.Name,
                 Volume = info.Volume > 0 ? info.Volume : SampleControlPoint.SampleVolume,
             };
