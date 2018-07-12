@@ -34,7 +34,7 @@ namespace Symcol.Rulesets.Core.Skinning
             this.audio = audio;
         }
 
-        public void Play() => channels?.ForEach(c => c.Play());
+        public new void Play() => channels?.ForEach(c => c.Play());
 
         protected override void SkinChanged(ISkinSource skin, bool allowFallback)
         {
