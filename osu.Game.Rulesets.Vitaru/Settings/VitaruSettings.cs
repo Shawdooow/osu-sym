@@ -322,14 +322,17 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         //[Description("Marisa Kirisame")]
         //MarisaKirisame,
 
+#pragma warning disable 1587
+        ///Everything below is what we call "wishful" thinking
+        ///They are ordered extremely loosely, and will likely not come out in this order if at all
+        /// I also reserve the right to add characters to this list, old or new
+#pragma warning restore 1587
+
         //The Inlaws Chapter
         //[Description("Alice Letrunce")]
         //AliceLetrunce,
         //[Description("Vaster Letrunce")]
         //VasterLetrunce,
-
-        ///Everything below is what we call "wishful" thinking
-        ///They are ordered extremely loosely, and will likely not come out in this order if at all
 
         //The Underworldly Chapter
         //[Description("Komachi Onozuka")]
