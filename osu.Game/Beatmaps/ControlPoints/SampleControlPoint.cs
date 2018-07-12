@@ -20,6 +20,9 @@ namespace osu.Game.Beatmaps.ControlPoints
         /// </summary>
         public int SampleVolume = 100;
 
+        /// <summary>
+        /// suffix number
+        /// </summary>
         public int SampleSuffix = 0;
 
         /// <summary>
@@ -46,7 +49,7 @@ namespace osu.Game.Beatmaps.ControlPoints
             newSampleInfo.Bank = sampleInfo.Bank ?? SampleBank;
             newSampleInfo.Name = sampleInfo.Name;
             newSampleInfo.Volume = sampleInfo.Volume > 0 ? sampleInfo.Volume : SampleVolume;
-            newSampleInfo.Suffix = Int32.Parse(sampleInfo.Suffix) > 0 ? sampleInfo.Suffix : SampleSuffix.ToString();
+            newSampleInfo.Suffix = Int32.Parse(sampleInfo.Suffix ?? "0") > 0 ? sampleInfo.Suffix : SampleSuffix.ToString();
             return newSampleInfo;
         }
 
