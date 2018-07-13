@@ -6,6 +6,7 @@ using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.UI;
 using System;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Classic;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
@@ -57,6 +58,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             VitaruPlayfield = playfield;
             CurrentPlayfield = playfield.Gamefield;
+            RulesetAudio = ClassicRuleset.ClassicAudio;
 
             AlwaysPresent = true;
         }
