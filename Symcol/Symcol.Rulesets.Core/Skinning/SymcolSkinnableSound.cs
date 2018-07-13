@@ -41,7 +41,7 @@ namespace Symcol.Rulesets.Core.Skinning
             channels = samples.Select(s =>
             {
                 var ch = loadChannel(s, skin.GetSample);
-                if (ch == null && allowFallback)
+                if (ch == null && allowFallback && RulesetAudio != null)
                     ch = loadChannel(s, RulesetAudio.Sample.Get);
                 if (ch == null && allowFallback)
                     ch = loadChannel(s, audio.Sample.Get);
