@@ -501,7 +501,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                         double weight = 0;
 
                         foreach (IndexedBullet bullet in visibleBullets)
-                            weight = (bullet.EdgeDistance / bullet.DrawableBullet.Bullet.Speed + weight) / 2;
+                            weight = (1000 - bullet.EdgeDistance + weight) / 2;
 
                         if (weight < leastWeight)
                         {
