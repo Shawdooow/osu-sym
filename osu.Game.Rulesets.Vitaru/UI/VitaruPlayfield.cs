@@ -13,10 +13,10 @@ using osu.Framework.Configuration;
 using System.Collections.Generic;
 using osu.Game.Rulesets.Vitaru.Multi;
 using Symcol.Rulesets.Core.Rulesets;
-using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Vitaru.Characters.Bosses;
+using osu.Game.Rulesets.Vitaru.Characters.Bosses.DrawableBosses;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Debug;
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public readonly DrawableVitaruPlayer Player;
 
-        public Boss Boss;
+        public DrawableBoss DrawableBoss;
 
         public virtual bool Editor => false;
 
@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                     Gamefield.Add(player);
 
                 if (gamemode == Gamemodes.Touhosu && kiaiBoss)
-                    Gamefield.Add(Boss = new Kokoro(this));
+                    Gamefield.Add(DrawableBoss = new DrawableBoss(this, new Kokoro()));
 
                 Player.Position = new Vector2(256, 700);
                 if (gamemode == Gamemodes.Dodge)

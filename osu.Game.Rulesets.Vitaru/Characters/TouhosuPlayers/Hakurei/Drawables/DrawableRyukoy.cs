@@ -1,5 +1,6 @@
 ﻿using System;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Vitaru.Characters.Bosses.DrawableBosses;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Multi;
@@ -88,7 +89,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
                         case Enemy enemy:
                             enemies++;
                             break;
-                        case Boss boss:
+                        case DrawableBoss boss:
                             bosses++;
                             break;
                     }

@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
             {
                 SoulContainer.FadeOutFromOne(timingPoint.BeatLength / 4);
 
-                if (VitaruPlayfield.Boss == null)
+                if (VitaruPlayfield.DrawableBoss == null)
                     KiaiContainer.FadeInFromZero(timingPoint.BeatLength / 4);
                 else
                     Hitbox.HitDetection = false;
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters
             {
                 SoulContainer.FadeInFromZero(timingPoint.BeatLength);
 
-                if (VitaruPlayfield.Boss == null)
+                if (VitaruPlayfield.DrawableBoss == null)
                     KiaiContainer.FadeOutFromOne(timingPoint.BeatLength);
                 else
                     Hitbox.HitDetection = true;

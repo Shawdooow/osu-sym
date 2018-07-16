@@ -78,14 +78,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.Update();
 
-            if (VitaruPlayfield.Boss != null && VitaruPlayfield.Boss.Free && Time.Current >= HitObject.StartTime - pattern.TimePreempt)
+            if (VitaruPlayfield.DrawableBoss != null && VitaruPlayfield.DrawableBoss.Free && Time.Current >= HitObject.StartTime - pattern.TimePreempt)
             {
                 double moveTime = HitObject.StartTime - Time.Current;
-                VitaruPlayfield.Boss.MoveTo(Position, moveTime < 100 ? 100 : moveTime, Easing.OutSine);
-                VitaruPlayfield.Boss.Free = false;
+                VitaruPlayfield.DrawableBoss.MoveTo(Position, moveTime < 100 ? 100 : moveTime, Easing.OutSine);
+                VitaruPlayfield.DrawableBoss.Free = false;
 
                 //TODO: make Dean not so loud
-                if (VitaruPlayfield.Boss.Alpha == 1 && BulletPiece.ExclusiveTestingHax)
+                if (VitaruPlayfield.DrawableBoss.Alpha == 1 && BulletPiece.ExclusiveTestingHax)
                     VitaruRuleset.VitaruAudio.Sample.Get($"skeletron").Play();
             }
 
@@ -206,8 +206,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 }
             }
 
-            if (VitaruPlayfield.Boss != null)
-                VitaruPlayfield.Boss.Free = true;
+            if (VitaruPlayfield.DrawableBoss != null)
+                VitaruPlayfield.DrawableBoss.Free = true;
         }
 
         protected override void End()

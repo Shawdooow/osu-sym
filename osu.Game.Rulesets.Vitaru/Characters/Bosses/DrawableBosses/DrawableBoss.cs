@@ -1,30 +1,42 @@
-﻿using OpenTK;
-using osu.Framework.Graphics;
-using System;
+﻿using System;
 using osu.Framework.Audio.Track;
-using osu.Game.Beatmaps.ControlPoints;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
-using osu.Game.Rulesets.Vitaru.UI;
+using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
-using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Vitaru.UI;
+using OpenTK;
+using OpenTK.Graphics;
 
-namespace osu.Game.Rulesets.Vitaru.Characters
+namespace osu.Game.Rulesets.Vitaru.Characters.Bosses.DrawableBosses
 {
-    public abstract class Boss : DrawableCharacter
+    public class DrawableBoss : DrawableCharacter
     {
+        public readonly Boss Boss;
+
         public bool Free = true;
+
+        protected override string CharacterName => Boss.Name;
 
         //TODO: make this depend on amout of kiai time (if there even is any)
         public override double MaxHealth => 20000;
+
+        public override Color4 PrimaryColor => Boss.PrimaryColor;
+
+        public override Color4 SecondaryColor => Boss.SecondaryColor;
+
+        public override Color4 ComplementaryColor => Boss.TrinaryColor;
 
         protected override float HitboxWidth => 64;
 
         private Sprite dean;
 
-        protected Boss(VitaruPlayfield playfield) : base(playfield)
+        public DrawableBoss(VitaruPlayfield playfield, Boss boss) : base(playfield)
         {
-            Position = new Vector2(256 , 384 / 2);
+            Boss = boss;
+            Position = new Vector2(256, 384 / 2);
             AlwaysPresent = true;
             Alpha = 0;
             Team = 1;
