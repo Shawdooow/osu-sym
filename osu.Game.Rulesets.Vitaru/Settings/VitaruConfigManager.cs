@@ -24,6 +24,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.DebugConfiguration, DebugConfiguration.General);
             Set(VitaruSetting.NeuralNetworkState, NeuralNetworkState.Idle);
             Set(VitaruSetting.RankedFilter, false);
+            Set(VitaruSetting.NewAuto, false);
 
             Set(VitaruSetting.GraphicsPreset, GraphicsPresets.Standard);
             Set(VitaruSetting.BulletVisuals, GraphicsOptions.Standard);
@@ -81,6 +82,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         DebugConfiguration,
         NeuralNetworkState,
         RankedFilter,
+        NewAuto,
 
         GraphicsPreset,
         BulletVisuals,

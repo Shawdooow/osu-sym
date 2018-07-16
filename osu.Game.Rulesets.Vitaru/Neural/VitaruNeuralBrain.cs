@@ -21,14 +21,15 @@ namespace osu.Game.Rulesets.Vitaru.Neural
 
         public override TFTensor GetTensor(TFSession session, VitaruAction action)
         {
-            int s = 0;
+            const int s = 2;
             TFShape shape = new TFShape(s, s);
             TFTensor tensor = new TFTensor(s);
 
             TFTensor output;
 
-            for (int i = 0; i < vitaruPlayfield.Children.Count; i++)
-                if (vitaruPlayfield.Children[i] is DrawableBullet drawableBullet && drawableBullet.Bullet.Team != player.Team)
+            // ReSharper disable once ForCanBeConvertedToForeach
+            for (int i = 0; i < vitaruPlayfield.Gamefield.Children.Count; i++)
+                if (vitaruPlayfield.Gamefield.Children[i] is DrawableBullet drawableBullet && drawableBullet.Bullet.Team != player.Team)
                 {
                     float xPow = (float)Math.Pow(drawableBullet.Position.X - player.Position.X, 2);
                     float yPow = (float)Math.Pow(drawableBullet.Position.Y - player.Position.Y, 2);

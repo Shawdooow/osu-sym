@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using osu.Framework.Configuration;
-using osu.Framework.Input.Bindings;
+﻿using osu.Framework.Configuration;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;

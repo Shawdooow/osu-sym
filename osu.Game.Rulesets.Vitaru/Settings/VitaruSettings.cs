@@ -195,6 +195,11 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                         {
                             LabelText = "Enable Ranked Play Filter",
                             Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.RankedFilter)
+                        },
+                        new SettingsCheckbox
+                        {
+                            LabelText = "Enable Auto V3",
+                            Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.NewAuto)
                         }
                     }
                 },
