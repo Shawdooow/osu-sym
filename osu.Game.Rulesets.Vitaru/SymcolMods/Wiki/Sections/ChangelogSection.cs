@@ -1,6 +1,6 @@
 ﻿using Symcol.osu.Core.Wiki.Sections;
 
-namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
+namespace osu.Game.Rulesets.Vitaru.SymcolMods.Wiki.Sections
 {
     public class ChangelogSection : WikiChangelogSection
     {

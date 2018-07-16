@@ -5,7 +5,7 @@ using Symcol.osu.Core.Wiki.Sections;
 using Symcol.osu.Core.Wiki.Sections.OptionExplanations;
 using Symcol.osu.Core.Wiki.Sections.SectionPieces;
 
-namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
+namespace osu.Game.Rulesets.Vitaru.SymcolMods.Wiki.Sections
 {
     public class GamemodeSection : WikiSection
     {

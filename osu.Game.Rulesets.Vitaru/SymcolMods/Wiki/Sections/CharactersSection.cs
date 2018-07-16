@@ -2,8 +2,8 @@
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
@@ -13,7 +13,7 @@ using Symcol.Core.Extentions;
 using Symcol.osu.Core.Wiki.Sections;
 using Symcol.osu.Core.Wiki.Sections.SectionPieces;
 
-namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
+namespace osu.Game.Rulesets.Vitaru.SymcolMods.Wiki.Sections
 {
     public class CharactersSection : WikiSection
     {

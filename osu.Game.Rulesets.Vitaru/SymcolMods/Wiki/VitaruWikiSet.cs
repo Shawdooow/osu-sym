@@ -1,9 +1,9 @@
 ﻿using osu.Framework.Graphics.Textures;
-using osu.Game.Rulesets.Vitaru.Wiki.Sections;
+using osu.Game.Rulesets.Vitaru.SymcolMods.Wiki.Sections;
 using Symcol.osu.Core.Wiki;
 using Symcol.osu.Core.Wiki.Sections;
 
-namespace osu.Game.Rulesets.Vitaru.Wiki
+namespace osu.Game.Rulesets.Vitaru.SymcolMods.Wiki
 {
     public sealed class VitaruWikiSet : WikiSet
     {

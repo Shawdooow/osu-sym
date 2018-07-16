@@ -1,18 +1,18 @@
 ﻿using osu.Framework.Allocation;
 using osu.Framework.Configuration;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics;
-using OpenTK;
-using osu.Framework.Graphics.Shapes;
-using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using OpenTK;
+using OpenTK.Graphics;
 using Symcol.osu.Core.Wiki.Sections;
 using Symcol.osu.Core.Wiki.Sections.OptionExplanations;
 using Symcol.osu.Core.Wiki.Sections.SectionPieces;
 using Symcol.osu.Core.Wiki.Sections.Subsection;
 
-namespace osu.Game.Rulesets.Vitaru.Wiki.Sections
+namespace osu.Game.Rulesets.Vitaru.SymcolMods.Wiki.Sections
 {
     public class GeneralSection : WikiSection
     {
