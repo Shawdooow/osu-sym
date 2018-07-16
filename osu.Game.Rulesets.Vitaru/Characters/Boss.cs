@@ -11,19 +11,18 @@ using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru.Characters
 {
-    public class Boss : Character
+    public abstract class Boss : Character
     {
         public bool Free = true;
 
+        //TODO: make this depend on amout of kiai time (if there even is any)
         public override double MaxHealth => 20000;
-
-        protected override string CharacterName => "Kokoro Hatano";
 
         protected override float HitboxWidth => 64;
 
         private Sprite dean;
 
-        public Boss(VitaruPlayfield playfield) : base(playfield)
+        protected Boss(VitaruPlayfield playfield) : base(playfield)
         {
             Position = new Vector2(256 , 384 / 2);
             AlwaysPresent = true;

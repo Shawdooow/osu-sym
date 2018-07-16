@@ -16,6 +16,7 @@ using Symcol.Rulesets.Core.Rulesets;
 using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Rulesets.Vitaru.Characters.Bosses;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers;
 using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Debug;
@@ -142,7 +143,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                     Gamefield.Add(player);
 
                 if (gamemode == Gamemodes.Touhosu && kiaiBoss)
-                    Gamefield.Add(Boss = new Boss(this));
+                    Gamefield.Add(Boss = new Kokoro(this));
 
                 Player.Position = new Vector2(256, 700);
                 if (gamemode == Gamemodes.Dodge)
