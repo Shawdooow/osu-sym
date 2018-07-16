@@ -11,7 +11,7 @@ using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru.Characters
 {
-    public abstract class Boss : Character
+    public abstract class Boss : DrawableCharacter
     {
         public bool Free = true;
 

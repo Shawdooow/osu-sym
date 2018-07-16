@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
         private CircularProgress health;
         private CircularProgress energy;
 
-        private Character character;
+        private DrawableCharacter character;
 
         private Sprite gear1;
         private Sprite gear2;
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.Pieces
         private Sprite gear4;
         private Sprite gear5;
 
-        public Seal(Character character)
+        public Seal(DrawableCharacter character)
         {
             this.character = character;
         }

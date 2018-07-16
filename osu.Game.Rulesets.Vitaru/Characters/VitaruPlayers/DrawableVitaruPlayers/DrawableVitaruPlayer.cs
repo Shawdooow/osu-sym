@@ -24,7 +24,7 @@ using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers
 {
-    public class DrawableVitaruPlayer : Character
+    public class DrawableVitaruPlayer : DrawableCharacter
     {
         #region Fields
         protected readonly Gamemodes Gamemode = VitaruSettings.VitaruConfigManager.Get<Gamemodes>(VitaruSetting.Gamemode);
@@ -282,11 +282,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
             if (Auto)
             {
-                Character closestCharacter = null;
+                DrawableCharacter closestCharacter = null;
                 double closestCharaterDistance = double.MaxValue;
 
                 foreach (Drawable draw in CurrentPlayfield)
-                    if (draw is Character character)
+                    if (draw is DrawableCharacter character)
                     {
                         if (character.Team != Team)
                         {

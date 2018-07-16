@@ -133,7 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Tracks\" />
-    <Folder Include="Wiki\Sections\SubSections\" />
+    <Folder Include="SymcolMods\Wiki\Sections\SubSections\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\osu.Game.Rulesets.Classic\osu.Game.Rulesets.Classic.csproj" />

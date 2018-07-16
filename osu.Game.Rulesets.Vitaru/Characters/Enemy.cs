@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Vitaru.Characters
 {
-    public class Enemy : Character
+    public class Enemy : DrawableCharacter
     {
         public override double MaxHealth => 60;
 

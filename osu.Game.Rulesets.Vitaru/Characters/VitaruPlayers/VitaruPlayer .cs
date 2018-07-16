@@ -2,22 +2,22 @@
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers
 {
-    public class VitaruPlayer
+    public class VitaruPlayer : Character
     {
-        public virtual string Name { get; } = "Alex";
+        public override string Name { get; } = "Alex";
 
         //TODO: this field is redundant
         public virtual string FileName { get; } = "Alex";
 
-        public virtual double MaxHealth => 80;
+        public override double MaxHealth => 80;
 
-        public virtual Color4 PrimaryColor { get; } = Color4.Green;
+        public override Color4 PrimaryColor { get; } = Color4.Green;
 
-        public virtual Color4 SecondaryColor { get; } = Color4.LightBlue;
+        public override Color4 SecondaryColor { get; } = Color4.LightBlue;
 
-        public virtual Color4 TrinaryColor { get; } = Color4.LightGreen;
+        public override Color4 TrinaryColor { get; } = Color4.LightGreen;
 
-        public virtual string Background { get; } = "Alex always had a thing for music.";
+        public override string Background { get; } = "Alex always had a thing for music.";
 
         public static VitaruPlayer GetVitaruPlayer(string name)
         {
