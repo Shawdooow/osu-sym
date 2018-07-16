@@ -35,6 +35,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         private readonly bool newAuto = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.NewAuto);
 
+        private readonly Bindable<double> directionBindable = new Bindable<double>();
+
         protected readonly VitaruNeuralContainer VitaruNeuralContainer;
 
         public readonly VitaruPlayer Player;
@@ -153,6 +155,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                         DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { BoundryHacks = !BoundryHacks; DrawableBullet.BoundryHacks = !DrawableBullet.BoundryHacks; }) { Text = "Boundry Hacks" });
                         DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
                         break;
+                    case DebugConfiguration.AI:
+                        HitDetection = true;
+                        DebugToolkit.AIDebugItems.Add(new DebugAction(() => { HealthHacks = !HealthHacks; }) { Text = "Health Hacks" });
+                        DebugToolkit.AIDebugItems.Add(new DebugAction(() => { Auto = !Auto; }) { Text = "Auto Hacks" });
+                        DebugToolkit.AIDebugItems.Add(new DebugStat<double>(directionBindable) { Text = "Direction" });
+                        break;
                     case DebugConfiguration.NeuralNetworking:
                         Bindable<NeuralNetworkState> bindable = VitaruSettings.VitaruConfigManager.GetBindable<NeuralNetworkState>(VitaruSetting.NeuralNetworkState);
                         bindable.ValueChanged += value => { VitaruNeuralContainer.TensorFlowBrain.NeuralNetworkState = value; };
@@ -247,9 +255,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 for (int i = 0; i < HealingBullets.Count - 1; i++)
                     fallOff *= HEALING_FALL_OFF;
 
-                foreach (HealingBullet HealingBullet in HealingBullets)
+                foreach (HealingBullet healingBullet in HealingBullets)
                 {
-                    Heal((GetBulletHealingMultiplier(HealingBullet.EdgeDistance) * fallOff) * HealingMultiplier);
+                    Heal((GetBulletHealingMultiplier(healingBullet.EdgeDistance) * fallOff) * HealingMultiplier);
                 }
                 HealingBullets = new List<HealingBullet>();
                 HealingMultiplier = 1;
@@ -415,9 +423,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                             }
                         }
 
-                    if (closestBulletEdgeDitance <= 20)
+                    if (closestBulletEdgeDitance <= 8)
                     {
-                        if (closestBulletEdgeDitance <= 16 && closestBulletEdgeDitance >= 8)
+                        if (closestBulletEdgeDitance <= 8 && closestBulletEdgeDitance >= 4)
                         {
                             Actions[VitaruAction.Down] = true;
                             Actions[VitaruAction.Slow] = true;
@@ -447,10 +455,88 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 }
                 else
                 {
-                    List<DrawableBullet> bullets = new List<DrawableBullet>();
+                    List<IndexedBullet> bullets = new List<IndexedBullet>();
                     foreach (Drawable draw in CurrentPlayfield)
-                        if (draw is DrawableBullet bullet)
-                            bullets.Add(bullet);
+                        if (draw is DrawableBullet bullet && bullet.Bullet.Team != Team)
+                            bullets.Add(new IndexedBullet(bullet, this));
+
+                    restart:
+                    foreach (IndexedBullet bullet in bullets)
+                    {
+                        //Ignore bullets that wont be near us for a bit
+                        if (bullet.EdgeDistance / bullet.DrawableBullet.Bullet.Speed > 200)
+                        {
+                            bullets.Remove(bullet);
+                            goto restart;
+                        }
+
+                        //TODO: Ignore bullets that aren't aimmed at us
+                        if (false)//bullet.DrawableBullet.Bullet.Angle < (bullet.AngleRadian + Math.PI) - 10 || bullet.DrawableBullet.Bullet.Angle > (bullet.AngleRadian + Math.PI) + 10)
+                        {
+                            bullets.Remove(bullet);
+                            goto restart;
+                        }
+                    }
+
+                    const double fov = Math.PI / 2;
+
+                    double direction = 8;
+                    double leastWeight = double.MaxValue;
+                    bool bulletNearby = false;
+
+                    for (int i = 0; i < 8; i++)
+                    {
+                        List<IndexedBullet> visibleBullets = new List<IndexedBullet>();
+
+                        double a = i * (Math.PI / 4);
+
+                        //Get bullets that we see looking this direction
+                        foreach (IndexedBullet bullet in bullets)
+                            if (bullet.AngleRadian >= a - fov / 2 && bullet.AngleRadian <= a + fov / 2)
+                                visibleBullets.Add(bullet);
+
+                        if (visibleBullets.Count > 0)
+                            bulletNearby = true;
+
+                        double weight = 0;
+
+                        foreach (IndexedBullet bullet in visibleBullets)
+                            weight = (bullet.EdgeDistance / bullet.DrawableBullet.Bullet.Speed + weight) / 2;
+
+                        if (weight < leastWeight)
+                        {
+                            direction = i;
+                            leastWeight = weight;
+                        }
+                    }
+
+                    if (bulletNearby)
+                    {
+                        if (direction == 7 || direction == 8 || direction == 0 || direction == 1)
+                            Actions[VitaruAction.Up] = true;
+                        if (direction == 1 || direction == 2 || direction == 3)
+                            Actions[VitaruAction.Right] = true;
+                        if (direction == 3 || direction == 4 || direction == 5)
+                            Actions[VitaruAction.Down] = true;
+                        if (direction == 5 || direction == 6 || direction == 7)
+                            Actions[VitaruAction.Left] = true;
+
+                        directionBindable.Value = direction;
+                    }
+                    else
+                    {
+                        if (Position.X > VitaruPlayfield.DrawWidth - 250)
+                            Actions[VitaruAction.Left] = true;
+                        else if (Position.X < 250)
+                            Actions[VitaruAction.Right] = true;
+
+                        if (Position.Y < 640)
+                            Actions[VitaruAction.Down] = true;
+                        else if (Position.Y > 680)
+                            Actions[VitaruAction.Up] = true;
+
+                        Actions[VitaruAction.Slow] = true;
+                    }
                 }
 
                 Actions[VitaruAction.Shoot] = true;
@@ -666,6 +752,35 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                     return new DrawableVitaruPlayer(playfield, VitaruPlayer.GetVitaruPlayer(name), vitaruNetworkingClientHandler);
                 case "Alex":
                     return new DrawableVitaruPlayer(playfield, VitaruPlayer.GetVitaruPlayer(name), vitaruNetworkingClientHandler);
+            }
+        }
+
+        private class IndexedBullet
+        {
+            public readonly DrawableBullet DrawableBullet;
+
+            public readonly DrawableVitaruPlayer Player;
+
+            public readonly Vector2 RelativePosition;
+
+            public readonly double Distance;
+
+            public readonly double EdgeDistance;
+
+            public readonly double AngleDegree;
+
+            public readonly double AngleRadian;
+
+            public IndexedBullet(DrawableBullet bullet, DrawableVitaruPlayer player)
+            {
+                DrawableBullet = bullet;
+                Player = player;
+
+                RelativePosition = bullet.ToSpaceOfOtherDrawable(Vector2.Zero, player);
+                Distance = (float)Math.Sqrt(Math.Pow(RelativePosition.X, 2) + Math.Pow(RelativePosition.Y, 2));
+                EdgeDistance = Distance - (bullet.Width / 2 + player.Hitbox.Width / 2);
+                AngleRadian = (float)Math.Atan2(bullet.Position.Y - player.Position.Y, (bullet.Position.X - player.Position.X)) + Math.PI / 2 + MathHelper.DegreesToRadians(player.Rotation);
+                AngleDegree = MathHelper.RadiansToDegrees(AngleRadian);
             }
         }
     }

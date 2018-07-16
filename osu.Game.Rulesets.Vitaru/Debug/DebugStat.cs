@@ -1,14 +1,14 @@
 ﻿using OpenTK.Graphics;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
+using Symcol.Core.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Debug
 {
-    public class DebugStat<T> : Container
+    public class DebugStat<T> : SymcolContainer
         where T : struct
     {
         public readonly Bindable<T> Bindable;

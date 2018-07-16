@@ -1,15 +1,15 @@
 ﻿using OpenTK.Graphics;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input;
 using osu.Game.Graphics;
 using System;
+using Symcol.Core.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Debug
 {
-    public class DebugAction : ClickableContainer
+    public class DebugAction : SymcolClickableContainer
     {
         public string Text
         {

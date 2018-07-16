@@ -15,6 +15,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
     public class DebugToolkit : Container
     {
         public static List<Container> GeneralDebugItems = new List<Container>();
+        public static List<Container> AIDebugItems = new List<Container>();
         public static List<Container> MachineLearningDebugItems = new List<Container>();
 
         private readonly FillFlowContainer<Container> debugItems;
@@ -77,6 +78,10 @@ namespace osu.Game.Rulesets.Vitaru.Debug
                     foreach (Container container in GeneralDebugItems)
                         debugItems.Add(container);
                     break;
+                case DebugConfiguration.AI:
+                    foreach (Container container in AIDebugItems)
+                        debugItems.Add(container);
+                    break;
                 case DebugConfiguration.NeuralNetworking:
                     foreach (Container container in MachineLearningDebugItems)
                         debugItems.Add(container);
@@ -85,6 +90,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
 
 
             GeneralDebugItems = new List<Container>();
+            AIDebugItems = new List<Container>();
             MachineLearningDebugItems = new List<Container>();
         }
     }
@@ -92,6 +98,7 @@ namespace osu.Game.Rulesets.Vitaru.Debug
     public enum DebugConfiguration
     {
         General,
+        AI,
         [System.ComponentModel.Description("Neural Networking")]
         NeuralNetworking,
         Networking,
