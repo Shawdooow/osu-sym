@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei
 
         public override double MaxEnergy => 20;
 
-        public override double EnergyCost => 0.2;
+        public override double EnergyCost => 0.25;
 
         public override double EnergyDrainRate => 0;
 
@@ -30,9 +30,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei
                                                "\n-Enemy drain: " + ENEMY_DRAIN_MULTIPLIER +
                                                "\n-Boss drain: " + BOSS_DRAIN_MULTIPLIER;
 
-        public const double PLAYER_DRAIN_MULTIPLIER = 0.25d;
+        public const double PLAYER_DRAIN_MULTIPLIER = 0.5d;
 
-        public const double ENEMY_DRAIN_MULTIPLIER = 0.2d;
+        public const double ENEMY_DRAIN_MULTIPLIER = 0.25d;
 
         public const double BOSS_DRAIN_MULTIPLIER = 1d;
 
