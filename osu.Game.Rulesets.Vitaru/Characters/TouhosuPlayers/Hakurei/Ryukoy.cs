@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei
 
         public override double MaxEnergy => 20;
 
-        public override double EnergyCost => 2;
+        public override double EnergyCost => 0.2;
 
         public override double EnergyDrainRate => 0;
 
@@ -26,12 +26,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei
 
         #region Ability Values
 
-        public override string AbilityStats => "-Bullet drain: " + BULLET_DRAIN_MULTIPLIER +
-                                               "\n-Player drain: " + PLAYER_DRAIN_MULTIPLIER +
+        public override string AbilityStats => "-Player drain: " + PLAYER_DRAIN_MULTIPLIER +
                                                "\n-Enemy drain: " + ENEMY_DRAIN_MULTIPLIER +
                                                "\n-Boss drain: " + BOSS_DRAIN_MULTIPLIER;
-
-        public const double BULLET_DRAIN_MULTIPLIER = 0.1d;
 
         public const double PLAYER_DRAIN_MULTIPLIER = 0.25d;
 

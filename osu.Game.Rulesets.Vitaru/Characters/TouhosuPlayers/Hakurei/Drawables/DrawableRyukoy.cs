@@ -72,7 +72,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 
             if (SpellActive)
             {
-                int bullets = 0;
                 int players = 0;
                 int enemies = 0;
                 int bosses = 0;
@@ -80,9 +79,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
                 foreach (Drawable draw in VitaruPlayfield.VitaruInputManager.BlurredPlayfield)
                     switch (draw)
                     {
-                        case DrawableBullet bullet:
-                            bullets++;
-                            break;
                         case DrawableVitaruPlayer player:
                             players++;
                             break;
@@ -94,7 +90,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
                             break;
                     }
 
-                Energy -= Clock.ElapsedFrameTime / 1000 * (bullets * Ryukoy.BULLET_DRAIN_MULTIPLIER + players * Ryukoy.PLAYER_DRAIN_MULTIPLIER + enemies * Ryukoy.ENEMY_DRAIN_MULTIPLIER + bosses * Ryukoy.BOSS_DRAIN_MULTIPLIER);
+                Energy -= Clock.ElapsedFrameTime / 1000 * (players * Ryukoy.PLAYER_DRAIN_MULTIPLIER + enemies * Ryukoy.ENEMY_DRAIN_MULTIPLIER + bosses * Ryukoy.BOSS_DRAIN_MULTIPLIER);
             }
             else if (Untuned)
                 Untuned = false;
@@ -119,8 +115,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
                         Vector2 drawPos = Cursor.ToSpaceOfOtherDrawable(Vector2.Zero, draw);
                         float distance = (float)Math.Sqrt(Math.Pow(drawPos.X, 2) + Math.Pow(drawPos.Y, 2));
 
-                        if (100 >= distance)
+                        if (80 >= distance && Energy >= TouhosuPlayer.EnergyCost)
                         {
+                            Energy -= TouhosuPlayer.EnergyCost;
                             tunable.Untuned = !tunable.Untuned;
                             goto restart;
                         }
