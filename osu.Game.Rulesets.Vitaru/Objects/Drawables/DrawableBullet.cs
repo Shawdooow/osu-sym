@@ -79,12 +79,12 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             else if (Hit)
             {
-                if (graphics == GraphicsOptions.StandardV2)
+                if (graphics == GraphicsOptions.Old)
+                    bulletPiece.Alpha = 0;
+                else
                     bulletPiece.ScaleTo(new Vector2(0.75f))
                                .FadeColour(Color4.Red, 500, Easing.OutCubic)
                                .FadeOut(500, Easing.InCubic);
-                else
-                    bulletPiece.Alpha = 0;
 
                 AddJudgement(new VitaruJudgement { Result = HitResult.Miss });
                 End();
@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Alpha = 0;
             Size = new Vector2((float)Bullet.Diameter);
 
-            if (graphics != GraphicsOptions.StandardV2)
+            if (graphics == GraphicsOptions.Old)
                 Scale = new Vector2(0.1f);
 
             Children = new Drawable[]
@@ -147,7 +147,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Position = Bullet.PositionAt(0);
             Hitbox.HitDetection = true;
 
-            if (graphics == GraphicsOptions.StandardV2)
+            if (graphics == GraphicsOptions.Old)
+                this.FadeInFromZero(100)
+                    .ScaleTo(Vector2.One, 100);
+            else
             {
                 Alpha = 1;
                 bulletPiece.Rotation = (float)MathHelper.RadiansToDegrees(Bullet.Angle) + 90;
@@ -157,10 +160,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 if (Bullet.Shape == Shape.Circle)
                     bulletPiece.Box.FadeInFromZero(150, Easing.InSine);
             }
-            else
-                this.FadeInFromZero(100)
-                    .ScaleTo(Vector2.One, 100);
-
         }
 
         protected override void End()
@@ -169,16 +168,16 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
             if (bulletPiece == null) return;
 
-            if (graphics == GraphicsOptions.StandardV2)
+            if (graphics == GraphicsOptions.Old)
+                bulletPiece.FadeOut(100)
+                           .OnComplete(b => { Unload(); });
+            else
             {
                 bulletPiece.FadeOut(300, Easing.OutCubic)
                            .ScaleTo(new Vector2(1.5f), 300, Easing.OutSine)
                            .OnComplete(b => { Unload(); });
                 bulletPiece.Box.FadeOut(150, Easing.InSine);
             }
-            else
-                bulletPiece.FadeOut(100)
-                    .OnComplete(b => { Unload(); });
 
             returnJudgement = true;
         }

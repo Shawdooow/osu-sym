@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 
             Size = new Vector2((float)drawableBullet.Bullet.Diameter + 12);
 
-            if (graphics != GraphicsOptions.HighPerformance && graphics != GraphicsOptions.StandardV2)
+            if (graphics == GraphicsOptions.Old)
                 Child = bulletKiai = new Sprite
                 {
                     Scale = new Vector2(2),
@@ -60,9 +60,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                 Origin = Anchor.Centre,
                 Alpha = 1,
                 RelativeSizeAxes = Axes.Both,
-                Size = new Vector2(graphics == GraphicsOptions.StandardV2 ? 1 : 1.05f),
+                Size = new Vector2(graphics != GraphicsOptions.Old ? 1 : 1.05f),
                 BorderColour = drawableBullet.AccentColour,
-                BorderThickness = graphics == GraphicsOptions.StandardV2 ? 0 : 6,
+                BorderThickness = graphics != GraphicsOptions.Old ? 0 : 6,
                 Masking = true,
 
                 Child = Box = new Box
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
                     Hollow = drawableBullet.Bullet.Shape == Shape.Circle ? true : false,
                     Radius = (float)drawableBullet.Bullet.Diameter,
                     Type = EdgeEffectType.Shadow,
-                    Colour = drawableBullet.AccentColour.Opacity(graphics == GraphicsOptions.StandardV2 ? 0.5f : 0.2f)
+                    Colour = drawableBullet.AccentColour.Opacity(graphics != GraphicsOptions.Old ? 0.5f : 0.2f)
                 };
         }
 
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
         {
             base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
 
-            if (graphics != GraphicsOptions.HighPerformance && graphics != GraphicsOptions.StandardV2)
+            if (graphics == GraphicsOptions.Old)
             {
                 if (effectPoint.KiaiMode && bulletKiai.Alpha == 0)
                     bulletKiai.FadeInFromZero(timingPoint.BeatLength / 4);
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
         {
             base.Update();
 
-            if (graphics != GraphicsOptions.HighPerformance && graphics != GraphicsOptions.StandardV2 && bulletKiai.Alpha > 0)
+            if (graphics == GraphicsOptions.Old && bulletKiai.Alpha > 0)
             {
                 if (randomRotateDirection)
                     bulletKiai.Rotation += (float)(Clock.ElapsedFrameTime / 1000 * 90) * randomRotationValue;

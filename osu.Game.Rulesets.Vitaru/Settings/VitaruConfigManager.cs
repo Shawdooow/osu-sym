@@ -30,8 +30,8 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.BulletVisuals, GraphicsOptions.Standard);
             Set(VitaruSetting.PlayerVisuals, GraphicsOptions.Standard);
             Set(VitaruSetting.PitchShade, true);
-            Set(VitaruSetting.KiaiBoss, false);
-            Set(VitaruSetting.PlayfieldBorder, false);
+            Set(VitaruSetting.KiaiBoss, true);
+            Set(VitaruSetting.PlayfieldBorder, true);
             Set(VitaruSetting.ComboFire, true);
             Set(VitaruSetting.GoodFPS, false);
 
@@ -127,15 +127,17 @@ namespace osu.Game.Rulesets.Vitaru.Settings
     public enum GraphicsPresets
     {
         Standard,
-        StandardV2,
+        Classic,
         HighPerformance,
+        Old,
         Custom
     }
 
     public enum GraphicsOptions
     {
         Standard,
-        StandardV2,
-        HighPerformance
+        Classic,
+        HighPerformance,
+        Old
     }
 }

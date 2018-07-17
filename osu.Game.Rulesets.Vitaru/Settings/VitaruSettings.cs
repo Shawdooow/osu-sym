@@ -250,19 +250,9 @@ namespace osu.Game.Rulesets.Vitaru.Settings
 
                 switch (value)
                 {
-                    
                     case GraphicsPresets.Standard:
                         VitaruConfigManager.Set(VitaruSetting.BulletVisuals, GraphicsOptions.Standard);
                         VitaruConfigManager.Set(VitaruSetting.PlayerVisuals, GraphicsOptions.Standard);
-                        VitaruConfigManager.Set<bool>(VitaruSetting.PitchShade, true);
-                        VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, false);
-                        VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, false);
-                        VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, true);
-                        VitaruConfigManager.Set<bool>(VitaruSetting.GoodFPS, false);
-                        break;
-                    case GraphicsPresets.StandardV2:
-                        VitaruConfigManager.Set(VitaruSetting.BulletVisuals, GraphicsOptions.StandardV2);
-                        VitaruConfigManager.Set(VitaruSetting.PlayerVisuals, GraphicsOptions.StandardV2);
                         VitaruConfigManager.Set<bool>(VitaruSetting.PitchShade, true);
                         VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, true);
                         VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, true);
@@ -276,6 +266,15 @@ namespace osu.Game.Rulesets.Vitaru.Settings
                         VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, false);
                         VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, false);
                         VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, false);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.GoodFPS, true);
+                        break;
+                    case GraphicsPresets.Old:
+                        VitaruConfigManager.Set(VitaruSetting.BulletVisuals, GraphicsOptions.Old);
+                        VitaruConfigManager.Set(VitaruSetting.PlayerVisuals, GraphicsOptions.Old);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.PitchShade, true);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, false);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, false);
+                        VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, true);
                         VitaruConfigManager.Set<bool>(VitaruSetting.GoodFPS, false);
                         break;
                 }

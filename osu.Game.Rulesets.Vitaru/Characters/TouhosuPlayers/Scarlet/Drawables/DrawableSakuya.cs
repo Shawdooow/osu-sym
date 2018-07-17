@@ -49,7 +49,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet.Drawables
 
         protected override void LoadAnimationSprites(TextureStore textures, Storage storage)
         {
-            if (PlayerVisuals == GraphicsOptions.StandardV2)
+            if (PlayerVisuals == GraphicsOptions.Old)
+                base.LoadAnimationSprites(textures, storage);
+            else
             {
                 SoulContainer.Alpha = 0;
                 KiaiContainer.Alpha = 1;
@@ -112,14 +114,13 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet.Drawables
                     }
                 });
             }
-            else
-                base.LoadAnimationSprites(textures, storage);
-
         }
 
         protected override void MovementAnimations()
         {
-            if (PlayerVisuals == GraphicsOptions.StandardV2)
+            if (PlayerVisuals == GraphicsOptions.Old)
+                base.MovementAnimations();
+            else
             {
                 if (Position.X > LastX && Right.Alpha < 1)
                 {
@@ -145,8 +146,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet.Drawables
 
                 LastX = Position.X;
             }
-            else
-                base.MovementAnimations();
         }
 
         [BackgroundDependencyLoader]

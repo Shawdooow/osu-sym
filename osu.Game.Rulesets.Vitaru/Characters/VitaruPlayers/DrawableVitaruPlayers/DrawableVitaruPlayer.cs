@@ -211,7 +211,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                     Seal.Sign.FadeOut(beatLength);
             }
 
-            if (effectPoint.KiaiMode && SoulContainer.Alpha == 1 && PlayerVisuals != GraphicsOptions.StandardV2)
+            if (effectPoint.KiaiMode && SoulContainer.Alpha == 1 && PlayerVisuals == GraphicsOptions.Old)
             {
                 if (!Dead)
                 {
@@ -222,7 +222,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                 if (Gamemode != Gamemodes.Touhosu)
                     Seal.Sign.FadeTo(0.15f, timingPoint.BeatLength / 4);
             }
-            if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1 && PlayerVisuals != GraphicsOptions.StandardV2)
+            if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1 && PlayerVisuals == GraphicsOptions.Old)
             {
                 if (!Dead)
                 {
