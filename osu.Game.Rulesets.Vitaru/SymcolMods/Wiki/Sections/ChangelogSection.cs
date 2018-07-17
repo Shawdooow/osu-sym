@@ -20,8 +20,9 @@ namespace osu.Game.Rulesets.Vitaru.SymcolMods.Wiki.Sections
             //"-New Patterns\n\n" +
             "\n\n" +
             "Tweaks / Changes:\n\n" +
-            "-Allow characters to specify additional ability stats\n" +
+            "-Swap to the new skin\n" +
             "-\"Spells\" are now called \"Abilities\"\n" +
+            "-Allow characters to specify additional ability stats\n" +
             "-Ryukoy's ability heavily reworked\n" +
             "-Removed dependency on osu.Game hacks and will now utilize the new \"Symcol Modloader\" system in place. " +
             "As such this ruleset is now a \"Mod Enhanced\" ruleset.\n" +
