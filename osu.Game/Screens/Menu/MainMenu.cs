@@ -61,8 +61,8 @@ namespace osu.Game.Screens.Menu
                             OnMulti = delegate { Push(new Multiplayer()); },
                             OnMod = delegate
                             {
-                                if (ModStore.ModSets.Count > 0)
-                                    Push(ModStore.ModSets.First().GetMenuScreen());
+                                if (ModStore.SymcolBaseSet != null)
+                                    Push(ModStore.SymcolBaseSet.GetMenuScreen());
                             },
                             OnExit = Exit,
                         }

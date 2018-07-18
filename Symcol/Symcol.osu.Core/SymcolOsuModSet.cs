@@ -13,7 +13,7 @@ using Symcol.osu.Core.Wiki;
 
 namespace Symcol.osu.Core
 {
-    public class SymcolOsuModSet : ModSet
+    public class SymcolOsuModSet : SymcolBaseSet
     {
         public static WikiOverlay WikiOverlay;
 

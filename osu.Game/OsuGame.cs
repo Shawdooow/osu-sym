@@ -278,9 +278,9 @@ namespace osu.Game
                 },
             };
 
-            if (ModStore.ModSets.Count > 0 && ModStore.ModSets.First().GetToolbar() != null)
+            if (ModStore.SymcolBaseSet != null)
             {
-                Toolbar = ModStore.ModSets.First().GetToolbar();
+                Toolbar = ModStore.SymcolBaseSet.GetToolbar();
                 Toolbar.Depth = -5;
                 Toolbar.OnHome = delegate
                 {
@@ -413,8 +413,7 @@ namespace osu.Game
             settings.StateChanged += _ => updateScreenOffset();
             notifications.StateChanged += _ => updateScreenOffset();
 
-            foreach (ModSet s in ModStore.ModSets)
-                s.LoadComplete(this);
+            ModStore.SymcolBaseSet?.LoadComplete(this);
         }
 
         private void forwardLoggedErrorsToNotifications()
@@ -601,8 +600,7 @@ namespace osu.Game
 
         protected override void Dispose(bool isDisposing)
         {
-            foreach (ModSet s in ModStore.ModSets)
-                s.Dispose();
+            ModStore.SymcolBaseSet?.Dispose();
 
             base.Dispose(isDisposing);
         }

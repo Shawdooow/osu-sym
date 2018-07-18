@@ -9,14 +9,12 @@ namespace osu.Game.ModLoader
 {
     public static class ModStore
     {
-        public static List<ModSet> ModSets = new List<ModSet>();
+        public static SymcolBaseSet SymcolBaseSet;
 
         private static Dictionary<Assembly, Type> loadedAssemblies = new Dictionary<Assembly, Type>();
 
         public static void LoadModSets()
         {
-            ModSets = new List<ModSet>();
-
             loadedAssemblies = new Dictionary<Assembly, Type>();
 
             foreach (string file in Directory.GetFiles(Environment.CurrentDirectory, "Symcol.osu.Core.dll"))
@@ -28,7 +26,7 @@ namespace osu.Game.ModLoader
                 try
                 {
                     var assembly = Assembly.LoadFrom(file);
-                    loadedAssemblies[assembly] = assembly.GetTypes().First(t => t.IsPublic && t.IsSubclassOf(typeof(ModSet)));
+                    loadedAssemblies[assembly] = assembly.GetTypes().First(t => t.IsPublic && t.IsSubclassOf(typeof(SymcolBaseSet)));
                 }
                 catch (Exception)
                 {
@@ -36,10 +34,10 @@ namespace osu.Game.ModLoader
                 }
             }
 
-            var instances = loadedAssemblies.Values.Select(g => (ModSet)Activator.CreateInstance(g)).ToList();
+            var instances = loadedAssemblies.Values.Select(g => (SymcolBaseSet)Activator.CreateInstance(g)).ToList();
 
-            foreach (ModSet s in instances)
-                ModSets.Add(s);
+            foreach (SymcolBaseSet s in instances)
+                SymcolBaseSet = s;
         }
     }
 }

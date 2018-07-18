@@ -4,7 +4,7 @@ using System;
 
 namespace osu.Game.ModLoader
 {
-    public abstract class ModSet : IDisposable
+    public abstract class SymcolBaseSet : IDisposable
     {
         public abstract OsuScreen GetMenuScreen();
 
