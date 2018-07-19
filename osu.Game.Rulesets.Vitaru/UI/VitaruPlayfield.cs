@@ -46,6 +46,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         public readonly AspectLockedPlayfield Gamefield;
 
+        public readonly Container BorderContainer;
+
         private readonly Container judgementLayer;
         private readonly List<DrawableVitaruPlayer> playerList = new List<DrawableVitaruPlayer>();
 
@@ -103,7 +105,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
             DebugToolkit.GeneralDebugItems.Add(drawablePatternCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Pattern Count" });
             
             if (playfieldBorder)
-                Add(new Container
+                Add(BorderContainer = new Container
                 {
                     Name = "Border",
                     RelativeSizeAxes = Axes.Both,

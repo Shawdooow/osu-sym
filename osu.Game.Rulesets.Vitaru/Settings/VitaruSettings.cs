@@ -349,8 +349,8 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         //YuyukoSaigyouji,
 
         //The Media Chapter
-        //[Description("Aya Shameimaru")]
-        //AyaShameimaru,
+        [Description("Aya Shameimaru")]
+        AyaShameimaru,
         //[Description("Hatate Himekaidou")]
         //HatateHimekaidou,
 
