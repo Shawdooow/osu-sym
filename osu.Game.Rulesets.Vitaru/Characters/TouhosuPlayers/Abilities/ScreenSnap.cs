@@ -46,19 +46,19 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
 
             try
             {
-                Rectangle rect = new Rectangle(new Point((int)area.DrawSize.X, (int)area.DrawSize.Y), new Size((int)area.ToScreenSpace(Vector2.Zero).X, (int)area.ToScreenSpace(Vector2.Zero).Y));
+                Rectangle rect = new Rectangle(new Point((int)area.DrawRectangle.Location.X, (int)area.DrawRectangle.Location.Y), new Size((int)area.DrawRectangle.Size.X, (int)area.DrawRectangle.Size.Y));
 
                 Bitmap bitmap = snapshot(rect);
 
                 switch (screenshotFormat.Value)
                 {
                     case ScreenshotFormat.Png:
-                        bitmap.Save(storage.GetStream("vitaru\\temp\\snapshot" + img_count, FileAccess.Write, FileMode.Create), ImageFormat.Png);
+                        bitmap.Save(storage.GetStream("vitaru\\temp\\snapshot" + img_count + ".png", FileAccess.Write, FileMode.Create), ImageFormat.Png);
                         imgCount = img_count;
                         img_count++;
                         break;
                     case ScreenshotFormat.Jpg:
-                        bitmap.Save(storage.GetStream("vitaru\\temp\\snapshot" + img_count, FileAccess.Write, FileMode.Create), ImageFormat.Jpeg);
+                        bitmap.Save(storage.GetStream("vitaru\\temp\\snapshot" + img_count + ".jpeg", FileAccess.Write, FileMode.Create), ImageFormat.Jpeg);
                         imgCount = img_count;
                         img_count++;
                         break;
@@ -72,14 +72,14 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
                     img_textures = new TextureStore(new RawTextureLoaderStore(img_resources));
                 }
             }
-            catch (Exception e) { Logger.Error(e, "Failed to take ScreenSnap!", LoggingTarget.Runtime); }
+            catch (Exception e) { Logger.Error(e, "Failed to take ScreenSnap!"); }
         }
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
 
-            Texture = img_textures?.Get("snapshot" + imgCount);
+            Texture = img_textures?.Get("snapshot" + imgCount + ".png") ?? img_textures?.Get("snapshot" + imgCount + ".jpeg");
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
                 if (GraphicsContext.CurrentContext == null)
                     throw new GraphicsContextMissingException();
 
-                OpenTK.Graphics.OpenGL.GL.ReadPixels(0, 0, rectangle.Width, rectangle.Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, OpenTK.Graphics.OpenGL.PixelType.UnsignedByte, data.Scan0);
+                OpenTK.Graphics.OpenGL.GL.ReadPixels(rectangle.Location.X, rectangle.Location.Y, rectangle.Width, rectangle.Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, OpenTK.Graphics.OpenGL.PixelType.UnsignedByte, data.Scan0);
             });
 
             bitmap.UnlockBits(data);
