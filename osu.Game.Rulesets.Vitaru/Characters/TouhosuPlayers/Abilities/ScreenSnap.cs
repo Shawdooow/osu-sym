@@ -2,7 +2,8 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using OpenTK;
+using System.Threading;
+using System.Threading.Tasks;
 using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
@@ -42,14 +43,18 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
         {
             this.host = host;
 
-            Bindable<ScreenshotFormat> screenshotFormat = config.GetBindable<ScreenshotFormat>(OsuSetting.ScreenshotFormat);
+#pragma warning disable 4014
+            snap(storage, config.GetBindable<ScreenshotFormat>(OsuSetting.ScreenshotFormat));
+#pragma warning restore 4014
 
-            try
+        }
+
+        public async Task snap(Storage storage, Bindable<ScreenshotFormat> screenshotFormat) => await Task.Run(async () =>
+        {
+            Rectangle rect = new Rectangle(new Point((int)area.DrawRectangle.Location.X, (int)area.DrawRectangle.Location.Y), new Size((int)area.DrawRectangle.Size.X, (int)area.DrawRectangle.Size.Y));
+
+            using (var bitmap = await snapshot(rect))
             {
-                Rectangle rect = new Rectangle(new Point((int)area.DrawRectangle.Location.X, (int)area.DrawRectangle.Location.Y), new Size((int)area.DrawRectangle.Size.X, (int)area.DrawRectangle.Size.Y));
-
-                Bitmap bitmap = snapshot(rect);
-
                 switch (screenshotFormat.Value)
                 {
                     case ScreenshotFormat.Png:
@@ -72,8 +77,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
                     img_textures = new TextureStore(new RawTextureLoaderStore(img_resources));
                 }
             }
-            catch (Exception e) { Logger.Error(e, "Failed to take ScreenSnap!"); }
-        }
+        });
 
         protected override void LoadComplete()
         {
@@ -85,10 +89,12 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
         /// <summary>
         /// FROM: osu.Framework.Platform.GameHost
         /// </summary>
-        private Bitmap snapshot(Rectangle rectangle)
+        private async Task<Bitmap> snapshot(Rectangle rectangle)
         {
             Bitmap bitmap = new Bitmap(rectangle.Width, rectangle.Height);
             BitmapData data = bitmap.LockBits(rectangle, ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
+
+            bool complete = false;
 
             host.DrawThread.Scheduler.Add(() =>
             {
@@ -96,6 +102,13 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
                     throw new GraphicsContextMissingException();
 
                 OpenTK.Graphics.OpenGL.GL.ReadPixels(rectangle.Location.X, rectangle.Location.Y, rectangle.Width, rectangle.Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, OpenTK.Graphics.OpenGL.PixelType.UnsignedByte, data.Scan0);
+                complete = true;
+            });
+
+            await Task.Run(() =>
+            {
+                while (!complete)
+                    Thread.Sleep(50);
             });
 
             bitmap.UnlockBits(data);
