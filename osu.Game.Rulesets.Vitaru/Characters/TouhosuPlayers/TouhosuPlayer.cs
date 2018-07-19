@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Inlaws;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Media;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Rational;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet;
 
@@ -55,6 +56,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
                 case "MarisaKirisame":
                     return new Marisa();
+
+                case "AyaShameimaru":
+                    return new Aya();
             }
         }
     }

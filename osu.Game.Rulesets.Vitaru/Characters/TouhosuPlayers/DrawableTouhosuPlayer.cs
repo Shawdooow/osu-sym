@@ -2,6 +2,7 @@
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Inlaws.Drawables;
+using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Media.Drawables;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet.Drawables;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Debug;
@@ -16,6 +17,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
         public double Energy { get; protected set; }
 
+        /// <summary>
+        /// Called if a spell is becomimg active
+        /// </summary>
         public Action<VitaruAction> Spell;
 
         protected bool SpellActive { get; set; }
@@ -61,6 +65,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
         }
 
         #region Spell Handling
+        /// <summary>
+        /// Called to see if a spell should go active
+        /// </summary>
         protected virtual bool SpellActivate(VitaruAction action)
         {
             if (Energy >= TouhosuPlayer.EnergyCost && !SpellActive)
@@ -77,6 +84,10 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
                 return false;
         }
 
+        /// <summary>
+        /// Called when a spell is de-activated
+        /// </summary>
+        /// <param name="action"></param>
         protected virtual void SpellDeactivate(VitaruAction action)
         {
             SpellActive = false;
@@ -147,6 +158,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
 
                 case "MarisaKirisame":
                     return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+
+                case "AyaShameimaru":
+                    return new DrawableAya(playfield, vitaruNetworkingClientHandler);
             }
         }
     }

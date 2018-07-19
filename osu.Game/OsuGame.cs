@@ -43,8 +43,6 @@ namespace osu.Game
     /// </summary>
     public class OsuGame : OsuGameBase, IKeyBindingHandler<GlobalAction>
     {
-        public GameHost Host => base.Host;
-
         public Toolbar Toolbar;
 
         private ChatOverlay chat;
@@ -413,7 +411,7 @@ namespace osu.Game
             settings.StateChanged += _ => updateScreenOffset();
             notifications.StateChanged += _ => updateScreenOffset();
 
-            ModStore.SymcolBaseSet?.LoadComplete(this);
+            ModStore.SymcolBaseSet?.LoadComplete(this, Host);
         }
 
         private void forwardLoggedErrorsToNotifications()

@@ -1,6 +1,7 @@
 ﻿using osu.Framework.Audio;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
+using osu.Framework.Platform;
 using osu.Game;
 using osu.Game.ModLoader;
 using osu.Game.Overlays.Toolbar;
@@ -29,9 +30,9 @@ namespace Symcol.osu.Core
         public static AudioManager SymcolAudio;
         public static SymcolConfigManager SymcolConfigManager;
 
-        public override void LoadComplete(OsuGame game)
+        public override void LoadComplete(OsuGame game, GameHost host)
         {
-            base.LoadComplete(game);
+            base.LoadComplete(game, host);
 
             if (SymcolResources == null)
             {
@@ -57,7 +58,7 @@ namespace Symcol.osu.Core
             }
 
             if (SymcolConfigManager == null)
-                SymcolConfigManager = new SymcolConfigManager(game.Host.Storage);
+                SymcolConfigManager = new SymcolConfigManager(host.Storage);
 
             SymcolModStore.ReloadModSets();
 
