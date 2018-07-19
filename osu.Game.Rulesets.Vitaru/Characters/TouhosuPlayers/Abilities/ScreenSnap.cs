@@ -10,7 +10,6 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
-using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Game.Configuration;
 using Symcol.Core.Graphics.Sprites;
