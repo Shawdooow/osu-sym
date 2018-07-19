@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
         {
             base.LoadComplete();
 
-            Texture = img_textures.Get("snapshot" + imgCount);
+            Texture = img_textures?.Get("snapshot" + imgCount);
         }
 
         /// <summary>
