@@ -18,9 +18,9 @@
 
         //public override Color4 TrinaryColor => Color4.Yellow;
 
-        public override string Ability => "Snap";
+        public override string Ability => "Snapshot";
 
-        public override Role Role => Role.Support;
+        public override Role Role => Role.Offense;
 
         public override Difficulty Difficulty => Difficulty.Normal;
 
