@@ -1,6 +1,4 @@
-﻿using OpenTK.Graphics;
-
-namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Media
+﻿namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Media
 {
     public class Aya : TouhosuPlayer
     {
