@@ -21,7 +21,13 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         public Vector4 BulletBounds = new Vector4(-10, -10, 522, 830);
 
         //Set to "true" when a judgement should be returned
-        private bool returnJudgement;
+        public bool ReturnJudgement;
+
+        public new bool Masking
+        {
+            get => base.Masking;
+            set => base.Masking = value;
+        }
 
         public bool ReturnGreat = false;
 
@@ -58,7 +64,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.CheckForJudgements(userTriggered, timeOffset);
 
-            if (returnJudgement)
+            if (ReturnJudgement)
             {
                 switch (ScoreZone)
                 {
@@ -113,7 +119,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
                 Position = Bullet.PositionAt(completionProgress);
 
-                if (Bullet.ObeyBoundries && (Position.Y < BulletBounds.Y || Position.X < BulletBounds.X || Position.Y > BulletBounds.W || Position.X > BulletBounds.Z) && !returnJudgement && !BoundryHacks)
+                if (Bullet.ObeyBoundries && (Position.Y < BulletBounds.Y || Position.X < BulletBounds.X || Position.Y > BulletBounds.W || Position.X > BulletBounds.Z) && !BoundryHacks)
                     End();
             }
         }
@@ -131,8 +137,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
             Children = new Drawable[]
             {
                 bulletPiece = new BulletPiece(this),
-                Hitbox = new SymcolHitbox(new Vector2((float)Bullet.Diameter))
+                Hitbox = new SymcolHitbox
                 {
+                    Size = new Vector2((float)Bullet.Diameter),
                     Team = Bullet.Team,
                     HitDetection = false
                 }
@@ -141,7 +148,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         protected override void Start()
         {
-            if (returnJudgement) return;
+            if (ReturnJudgement) return;
             base.Start();
 
             Position = Bullet.PositionAt(0);
@@ -179,7 +186,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 bulletPiece.Box.FadeOut(150, Easing.InSine);
             }
 
-            returnJudgement = true;
+            ReturnJudgement = true;
         }
 
         protected override void Unload()

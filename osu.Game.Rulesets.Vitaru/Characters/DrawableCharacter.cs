@@ -325,7 +325,11 @@ namespace osu.Game.Rulesets.Vitaru.Characters
                 }
             });
 
-            Add(Hitbox = new SymcolHitbox(new Vector2(HitboxWidth)) { Team = Team });
+            Add(Hitbox = new SymcolHitbox
+            {
+                Size = new Vector2(HitboxWidth),
+                Team = Team
+            });
 
             if (CharacterName == "player" || CharacterName == "enemy")
                 KiaiContainer.Colour = PrimaryColor;

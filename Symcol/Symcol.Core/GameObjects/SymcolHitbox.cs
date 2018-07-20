@@ -1,5 +1,4 @@
 ﻿using osu.Framework.Graphics;
-using OpenTK;
 using osu.Framework.Graphics.Containers;
 using Symcol.Core.Graphics.Containers;
 
@@ -20,28 +19,39 @@ namespace Symcol.Core.GameObjects
         /// <summary>
         /// the shape of this object (used for hit detection)
         /// </summary>
-        public Shape Shape { get; }
+        public Shape Shape
+        {
+            get => shape;
+            set
+            {
+                if (value != shape)
+                {
+                    shape = value;
 
-        //TODO: make all these properties settable
-        public SymcolHitbox(Vector2 size, Shape shape = Shape.Circle)
+                    if (value == Shape.Circle)
+                        Child = new Container
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            CornerRadius = Width / 2
+                        };
+                    else if (value == Shape.Rectangle)
+                        Child = new Container
+                        {
+                            RelativeSizeAxes = Axes.Both
+                        };
+                }
+            }
+
+        }
+
+        private Shape shape = Shape.Complex;
+
+        public SymcolHitbox(Shape shape = Shape.Circle)
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 
             Shape = shape;
-            Size = size;
-
-            if (Shape == Shape.Circle)
-                Child = new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    CornerRadius = Width / 2
-                };
-            else if (Shape == Shape.Rectangle)
-                Child = new Container
-                {
-                    RelativeSizeAxes = Axes.Both
-                };
         }
 
         public bool HitDetect(SymcolHitbox hitbox1, SymcolHitbox hitbox2)
