@@ -45,12 +45,18 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
 #pragma warning disable 4014
             snap(storage, config.GetBindable<ScreenshotFormat>(OsuSetting.ScreenshotFormat));
 #pragma warning restore 4014
-
         }
 
-        public async Task snap(Storage storage, Bindable<ScreenshotFormat> screenshotFormat) => await Task.Run(async () =>
+        protected override void LoadComplete()
         {
-            Rectangle rect = new Rectangle(new Point((int)area.DrawRectangle.Location.X, (int)area.DrawRectangle.Location.Y), new Size((int)area.DrawRectangle.Size.X, (int)area.DrawRectangle.Size.Y));
+            base.LoadComplete();
+
+            Texture = img_textures?.Get("snapshot" + imgCount + ".png") ?? img_textures?.Get("snapshot" + imgCount + ".jpeg");
+        }
+
+        private async Task snap(Storage storage, Bindable<ScreenshotFormat> screenshotFormat) => await Task.Run(async () =>
+        {
+            Rectangle rect = new Rectangle(new Point(0, 0), new Size((int)area.ScreenSpaceDrawQuad.Width, (int)area.ScreenSpaceDrawQuad.Height));
 
             using (var bitmap = await snapshot(rect))
             {
@@ -78,13 +84,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
             }
         });
 
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            Texture = img_textures?.Get("snapshot" + imgCount + ".png") ?? img_textures?.Get("snapshot" + imgCount + ".jpeg");
-        }
-
         /// <summary>
         /// FROM: osu.Framework.Platform.GameHost
         /// </summary>
@@ -100,7 +99,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
                 if (GraphicsContext.CurrentContext == null)
                     throw new GraphicsContextMissingException();
 
-                OpenTK.Graphics.OpenGL.GL.ReadPixels(rectangle.Location.X, rectangle.Location.Y, rectangle.Width, rectangle.Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, OpenTK.Graphics.OpenGL.PixelType.UnsignedByte, data.Scan0);
+                OpenTK.Graphics.OpenGL.GL.ReadPixels((int)area.ScreenSpaceDrawQuad.TopLeft.X, (int)area.ScreenSpaceDrawQuad.TopLeft.Y, rectangle.Width, rectangle.Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, OpenTK.Graphics.OpenGL.PixelType.UnsignedByte, data.Scan0);
                 complete = true;
             });
 
