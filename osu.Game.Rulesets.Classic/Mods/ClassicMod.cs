@@ -40,10 +40,7 @@ namespace osu.Game.Rulesets.Classic.Mods
         public void ApplyToDrawableHitObjects(IEnumerable<DrawableHitObject> drawables)
         {
             foreach (var d in drawables.OfType<DrawableClassicHitObject>())
-            {
                 d.ApplyCustomUpdateState += ApplyHiddenState;
-                d.HitObject.TimeFadein = d.HitObject.TimePreempt * fade_in_duration_multiplier;
-            }
         }
 
         protected void ApplyHiddenState(DrawableHitObject drawable, ArmedState state)
@@ -51,7 +48,7 @@ namespace osu.Game.Rulesets.Classic.Mods
             if (!(drawable is DrawableClassicHitObject d))
                 return;
 
-            var fadeOutStartTime = d.HitObject.StartTime - d.HitObject.TimePreempt + d.HitObject.TimeFadein;
+            var fadeOutStartTime = d.HitObject.StartTime - (d.HitObject.TimePreempt / 3) * 2;
             var fadeOutDuration = d.HitObject.TimePreempt * fade_out_duration_multiplier;
 
             // new duration from completed fade in to end (before fading out)

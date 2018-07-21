@@ -95,12 +95,12 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Connections
 
                         using (fp.BeginAbsoluteSequence(fadeInTime))
                         {
-                            fp.FadeIn(currHitObject.TimeFadein);
-                            fp.ScaleTo(1, currHitObject.TimeFadein, Easing.Out);
+                            fp.FadeIn(DrawableClassicHitObject.TIME_FADEIN);
+                            fp.ScaleTo(1, DrawableClassicHitObject.TIME_FADEIN, Easing.Out);
 
-                            fp.MoveTo(pointEndPosition, currHitObject.TimeFadein, Easing.Out);
+                            fp.MoveTo(pointEndPosition, DrawableClassicHitObject.TIME_FADEIN, Easing.Out);
 
-                            fp.Delay(fadeOutTime - fadeInTime).FadeOut(currHitObject.TimeFadein / 4);
+                            fp.Delay(fadeOutTime - fadeInTime).FadeOut(DrawableClassicHitObject.TIME_FADEIN / 4);
                         }
 
                         fp.Expire(true);
