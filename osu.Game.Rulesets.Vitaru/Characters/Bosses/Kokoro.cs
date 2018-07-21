@@ -2,6 +2,6 @@
 {
     public class Kokoro : Boss
     {
-        public override string Name => "KokoroHatano";
+        public override string Name => "Kokoro Hatano";
     }
 }
