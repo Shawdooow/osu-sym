@@ -23,6 +23,9 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         //Set to "true" when a judgement should be returned
         public bool ReturnJudgement;
 
+        //Set to "true" when a judgement has been returned
+        private bool returnedJudgement;
+
         public new bool Masking
         {
             get => base.Masking;
@@ -64,8 +67,11 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.CheckForJudgements(userTriggered, timeOffset);
 
+            if (returnedJudgement) return;
+
             if (ReturnJudgement)
             {
+                returnedJudgement = true;
                 switch (ScoreZone)
                 {
                     case 0:
@@ -93,12 +99,14 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                                .FadeOut(500, Easing.InCubic);
 
                 AddJudgement(new VitaruJudgement { Result = HitResult.Miss });
+                returnedJudgement = true;
                 End();
             }
 
             else if (ReturnGreat)
             {
                 AddJudgement(new VitaruJudgement { Result = HitResult.Great });
+                returnedJudgement = true;
                 End();
             }
         }
@@ -126,6 +134,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         protected override void Load()
         {
+            if (returnedJudgement) return;
             base.Load();
 
             Alpha = 0;
@@ -148,7 +157,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         protected override void Start()
         {
-            if (ReturnJudgement) return;
+            if (returnedJudgement) return;
             base.Start();
 
             Position = Bullet.PositionAt(0);
@@ -173,6 +182,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
         {
             base.End();
 
+            Hit = false;
+            ReturnGreat = false;
+            ReturnJudgement = true;
+
             if (bulletPiece == null) return;
 
             if (graphics == GraphicsOptions.Old)
@@ -185,10 +198,6 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                            .OnComplete(b => { Unload(); });
                 bulletPiece.Box.FadeOut(150, Easing.InSine);
             }
-
-            Hit = false;
-            ReturnGreat = false;
-            ReturnJudgement = true;
         }
 
         protected override void Unload()

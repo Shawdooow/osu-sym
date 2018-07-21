@@ -18,7 +18,9 @@ namespace osu.Game.Rulesets.Vitaru.SymcolMods.Wiki.Sections
             "Features:\n\n" +
             //TODO: The new patterns!
             //"-New Patterns\n\n" +
-            "\n\n" +
+            "-AutoV3\n" +
+            "-Implement Remilia's ability: Vampuric\n" +
+            "-Implement Aya's ability: Snapshot\n\n" +
             "Tweaks / Changes:\n\n" +
             "-Swap to the new skin\n" +
             "-\"Spells\" are now called \"Abilities\"\n" +

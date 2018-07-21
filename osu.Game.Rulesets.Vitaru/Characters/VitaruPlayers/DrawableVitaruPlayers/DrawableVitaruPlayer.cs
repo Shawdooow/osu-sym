@@ -473,7 +473,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
                         //TODO: Ignore bullets that aren't aimmed at us
                         if (false)//bullet.DrawableBullet.Bullet.Angle < (bullet.AngleRadian + Math.PI) - 10 || bullet.DrawableBullet.Bullet.Angle > (bullet.AngleRadian + Math.PI) + 10)
                         {
+#pragma warning disable CS0162 // Unreachable code detected
                             bullets.Remove(bullet);
+#pragma warning restore CS0162 // Unreachable code detected
                             goto restart;
                         }
                     }
