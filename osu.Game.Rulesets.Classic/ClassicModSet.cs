@@ -12,6 +12,7 @@ namespace osu.Game.Rulesets.Classic
         {
             base.LoadComplete(game);
 
+            ClassicRuleset.ClassicAudio.Volume.BindTo(game.Audio.Volume);
             ClassicRuleset.ClassicAudio.VolumeSample.BindTo(game.Audio.VolumeSample);
             ClassicRuleset.ClassicAudio.VolumeTrack.BindTo(game.Audio.VolumeTrack);
         }
