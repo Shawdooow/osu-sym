@@ -180,6 +180,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
 
         protected override void End()
         {
+            if (returnedJudgement) return;
             base.End();
 
             Hit = false;
@@ -193,10 +194,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                            .OnComplete(b => { Unload(); });
             else
             {
-                bulletPiece.FadeOut(300, Easing.OutCubic)
-                           .ScaleTo(new Vector2(1.5f), 300, Easing.OutSine)
+                bulletPiece.FadeOut(250, Easing.OutCubic)
+                           .ScaleTo(new Vector2(1.5f), 250, Easing.OutSine)
                            .OnComplete(b => { Unload(); });
-                bulletPiece.Box.FadeOut(150, Easing.InSine);
+                bulletPiece.Box.FadeOut(75, Easing.InSine);
             }
         }
 

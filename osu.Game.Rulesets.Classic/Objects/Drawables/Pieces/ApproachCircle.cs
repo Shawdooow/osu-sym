@@ -12,6 +12,9 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
 {
     public class ApproachCircle : Container
     {
+        public override bool HandleMouseInput => false;
+        public override bool HandleKeyboardInput => false;
+
         private readonly Sprite approachCircle;
 
         public ApproachCircle()

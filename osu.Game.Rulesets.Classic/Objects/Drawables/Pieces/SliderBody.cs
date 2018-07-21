@@ -19,6 +19,9 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
 {
     public class SliderBody : SymcolContainer, ISliderProgress
     {
+        public override bool HandleMouseInput => false;
+        public override bool HandleKeyboardInput => false;
+
         private readonly Path path;
 
         public float PathWidth

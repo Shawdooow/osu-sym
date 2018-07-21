@@ -11,6 +11,9 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Connections
 {
     public class FollowPoint : Sprite
     {
+        public override bool HandleMouseInput => false;
+        public override bool HandleKeyboardInput => false;
+
         private const float width = 8;
 
         public FollowPoint()

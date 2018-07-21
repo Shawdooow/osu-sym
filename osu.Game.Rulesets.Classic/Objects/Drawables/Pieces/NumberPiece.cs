@@ -13,6 +13,9 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
 {
     public class NumberPiece : Container
     {
+        public override bool HandleMouseInput => false;
+        public override bool HandleKeyboardInput => false;
+
         private readonly Sprite number;
         private int numberValue;
 
