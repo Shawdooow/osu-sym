@@ -186,6 +186,8 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 bulletPiece.Box.FadeOut(150, Easing.InSine);
             }
 
+            Hit = false;
+            ReturnGreat = false;
             ReturnJudgement = true;
         }
 
