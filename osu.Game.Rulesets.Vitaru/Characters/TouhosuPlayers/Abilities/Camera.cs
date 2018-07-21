@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
                     Anchor = Anchor.TopRight,
                     Origin = Anchor.TopRight,
                     Font = "Venera",
-                    TextSize = 10,
+                    TextSize = 12,
                     Alpha = 0.75f
                 },
                 yPos = new OsuSpriteText
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
                     Anchor = Anchor.BottomRight,
                     Origin = Anchor.BottomRight,
                     Font = "Venera",
-                    TextSize = 10,
+                    TextSize = 12,
                     Alpha = 0.75f
                 },
                 xSize = new OsuSpriteText
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,
                     Font = "Venera",
-                    TextSize = 10,
+                    TextSize = 12,
                     Alpha = 0.75f
                 },
                 ySize = new OsuSpriteText
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
                     Font = "Venera",
-                    TextSize = 10,
+                    TextSize = 12,
                     Alpha = 0.75f
                 },
             };
@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities
 
         private class Corner : SymcolContainer
         {
-            internal const int height = 6;
+            internal const int height = 5;
             internal const int width = 16;
 
             internal Corner()

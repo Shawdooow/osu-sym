@@ -94,20 +94,18 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 if (graphics == GraphicsOptions.Old)
                     bulletPiece.Alpha = 0;
                 else
-                    bulletPiece.ScaleTo(new Vector2(0.75f))
-                               .FadeColour(Color4.Red, 500, Easing.OutCubic)
-                               .FadeOut(500, Easing.InCubic);
+                    bulletPiece.FadeColour(Color4.Red, 50, Easing.OutCubic);
 
                 AddJudgement(new VitaruJudgement { Result = HitResult.Miss });
-                returnedJudgement = true;
                 End();
+                returnedJudgement = true;
             }
 
             else if (ReturnGreat)
             {
                 AddJudgement(new VitaruJudgement { Result = HitResult.Great });
-                returnedJudgement = true;
                 End();
+                returnedJudgement = true;
             }
         }
 
@@ -194,10 +192,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                            .OnComplete(b => { Unload(); });
             else
             {
-                bulletPiece.FadeOut(250, Easing.OutCubic)
-                           .ScaleTo(new Vector2(1.5f), 250, Easing.OutSine)
+                bulletPiece.FadeOut(250)
+                           .ScaleTo(new Vector2(1.5f), 250, Easing.OutCubic)
                            .OnComplete(b => { Unload(); });
-                bulletPiece.Box.FadeOut(75, Easing.InSine);
+                bulletPiece.Box.FadeOut(100, Easing.InSine);
             }
         }
 

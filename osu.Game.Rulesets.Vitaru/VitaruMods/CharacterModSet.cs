@@ -1,4 +1,5 @@
 ﻿using osu.Game.Rulesets.Vitaru.Characters;
+using osu.Game.Rulesets.Vitaru.Characters.Bosses.DrawableBosses;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Multi;
@@ -10,10 +11,10 @@ namespace osu.Game.Rulesets.Vitaru.VitaruMods
     {
         public abstract VitaruPlayer[] GetPlayers();
 
-        public abstract DrawableVitaruPlayer[] GetDrawablePlayers(VitaruPlayfield playfield, VitaruPlayer player, VitaruNetworkingClientHandler vitaruNetworkingClientHandler);
+        public abstract DrawableVitaruPlayer[] GetDrawablePlayers(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler);
 
         public abstract Boss[] GetBosses();
 
-        //public abstract DrawableBoss[] GetDrawableBosses(VitaruPlayfield vitaruPlayfield);
+        public abstract DrawableBoss[] GetDrawableBosses(VitaruPlayfield vitaruPlayfield);
     }
 }
