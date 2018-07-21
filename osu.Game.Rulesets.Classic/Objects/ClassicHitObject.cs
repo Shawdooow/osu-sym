@@ -17,7 +17,6 @@ namespace osu.Game.Rulesets.Classic.Objects
         public const double OBJECT_RADIUS = 64;
 
         public float TimePreempt = 600;
-        public float TimeFadein = 400;
 
         private double hittable_range = 300;
         public double HitWindow50 = 150;
@@ -95,7 +94,6 @@ namespace osu.Game.Rulesets.Classic.Objects
             base.ApplyDefaultsToSelf(controlPointInfo, difficulty);
 
             TimePreempt = (float)BeatmapDifficulty.DifficultyRange(difficulty.ApproachRate, 1800, 1200, 450);
-            TimeFadein = (float)BeatmapDifficulty.DifficultyRange(difficulty.ApproachRate, 1200, 800, 300);
 
             HitWindow50 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 200, 150, 100);
             HitWindow100 = BeatmapDifficulty.DifficultyRange(difficulty.OverallDifficulty, 140, 100, 60);

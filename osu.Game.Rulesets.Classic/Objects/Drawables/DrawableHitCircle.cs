@@ -144,8 +144,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             base.UpdatePreemptState();
 
             if (!hitObject.Hidden || hitObject.First)
-                ApproachCircle.FadeIn(Math.Min(HitObject.TimeFadein * 2, HitObject.TimePreempt));
-            ApproachCircle.ScaleTo(1.1f, HitObject.TimePreempt);
+                ApproachCircle.FadeTo(0.9f, HitObject.TimePreempt);
+            ApproachCircle.ScaleTo(1f, HitObject.TimePreempt);
         }
 
         protected override void UpdateCurrentState(ArmedState state)
@@ -155,7 +155,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             switch (state)
             {
                 case ArmedState.Idle:
-                    this.Delay(duration + HitObject.TimePreempt).FadeOut(TIME_FADEOUT);
+                    this.Delay(duration + HitObject.TimePreempt + HitObject.HitWindow100)
+                        .FadeOut(HitObject.HitWindow300 - HitObject.HitWindow100);
                     Expire(true);
                     break;
                 case ArmedState.Miss:
@@ -170,15 +171,14 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
                     break;
                 case ArmedState.Hit:
                     if (!hitObject.Hidden)
-                        ApproachCircle.FadeOut(50);
+                        ApproachCircle.FadeOut(60);
                     if (hitObject.Hidden && hitObject.First)
                         ApproachCircle.Expire();
 
                     if (!hitObject.Hidden)
                     {
-                        number.FadeOut(100, Easing.OutSine);
-                        this.FadeOut(250, Easing.InSine)
-                            .ScaleTo(Scale * 1.33f, 250, Easing.OutSine);
+                        this.FadeOut(240)
+                            .ScaleTo(Scale * 1.4f, 240, Easing.OutQuad);
                     }
 
                     Expire();
@@ -194,11 +194,11 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
             ClassicUi.BreakStartTime = Time.Current + 1000;
 
-            if (hitObject.Hidden && Time.Current >= (hitObject.StartTime - HitObject.TimePreempt) + HitObject.TimeFadein && !hidden)
+            if (hitObject.Hidden && Time.Current >= (hitObject.StartTime - (HitObject.TimePreempt / 3) * 2) && !hidden)
             {
-                ring.FadeOut(HitObject.TimeFadein);
-                circle.FadeOut(HitObject.TimeFadein);
-                number.FadeOut(HitObject.TimeFadein);
+                ring.FadeOut(HitObject.TimePreempt / 3);
+                circle.FadeOut(HitObject.TimePreempt / 3);
+                number.FadeOut(HitObject.TimePreempt / 3);
                 hidden = true;
             }
 

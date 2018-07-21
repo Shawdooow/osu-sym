@@ -14,7 +14,8 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
     public class DrawableClassicHitObject : DrawableSymcolHitObject<ClassicHitObject>
     {
-        public const float TIME_FADEOUT = 500;
+        public const float TIME_FADEIN = 400;
+        public const float TIME_FADEOUT = 240;
 
         protected DrawableClassicHitObject(ClassicHitObject hitObject)
             : base(hitObject)
@@ -53,7 +54,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
         protected virtual void UpdatePreemptState()
         {
-            this.FadeIn(HitObject.TimeFadein);
+            this.FadeIn(TIME_FADEIN);
         }
 
         protected virtual void UpdateCurrentState(ArmedState state)

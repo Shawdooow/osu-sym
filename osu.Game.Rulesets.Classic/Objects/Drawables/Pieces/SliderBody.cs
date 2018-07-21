@@ -153,7 +153,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
         public void UpdateProgress(double progress, int repeat)
         {
             double start = 0;
-            double end = snakingIn ? MathHelper.Clamp((Time.Current - (slider.StartTime - slider.TimePreempt)) / slider.TimeFadein, 0, 1) : 1;
+            double end = snakingIn ? MathHelper.Clamp((Time.Current - (slider.StartTime - slider.TimePreempt)) / DrawableClassicHitObject.TIME_FADEIN, 0, 1) : 1;
 
             if (repeat >= slider.RepeatCount - 1)
             {
