@@ -156,7 +156,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             {
                 case ArmedState.Idle:
                     this.Delay(duration + HitObject.TimePreempt + HitObject.HitWindow100)
-                        .FadeOut(HitObject.HitWindow300 - HitObject.HitWindow100);
+                        .FadeOut(HitObject.HitWindow50 - HitObject.HitWindow100);
                     Expire(true);
                     break;
                 case ArmedState.Miss:
