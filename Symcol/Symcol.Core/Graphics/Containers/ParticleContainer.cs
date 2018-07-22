@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using osu.Framework.Graphics;
+﻿using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
 using OpenTK;
 

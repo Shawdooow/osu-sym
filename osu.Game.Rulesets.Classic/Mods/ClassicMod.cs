@@ -37,13 +37,13 @@ namespace osu.Game.Rulesets.Classic.Mods
         private const float fade_in_duration_multiplier = 0.4f;
         private const double fade_out_duration_multiplier = 0.3;
 
-        public void ApplyToDrawableHitObjects(IEnumerable<DrawableHitObject> drawables)
+        public new void ApplyToDrawableHitObjects(IEnumerable<DrawableHitObject> drawables)
         {
             foreach (var d in drawables.OfType<DrawableClassicHitObject>())
                 d.ApplyCustomUpdateState += ApplyHiddenState;
         }
 
-        protected void ApplyHiddenState(DrawableHitObject drawable, ArmedState state)
+        protected new void ApplyHiddenState(DrawableHitObject drawable, ArmedState state)
         {
             if (!(drawable is DrawableClassicHitObject d))
                 return;

@@ -89,6 +89,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             Children = new Drawable[]
             {
+                new PlayfieldDust(),
                 judgementLayer = new Container
                 {
                     Name = "Judgements",
