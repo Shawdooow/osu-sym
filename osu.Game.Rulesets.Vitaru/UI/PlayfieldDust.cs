@@ -27,16 +27,18 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         private class DustParticle : SymcolCircularContainer
         {
+            public override bool HandleMouseInput => false;
+            public override bool HandleKeyboardInput => false;
+
             internal DustParticle()
             {
                 Masking = true;
-                Alpha = 0.5f;
-
-                Size = new Vector2(8);
+                Size = new Vector2(6);
 
                 Child = new Box
                 {
-                    RelativeSizeAxes = Axes.Both
+                    RelativeSizeAxes = Axes.Both,
+                    Alpha = 0.2f
                 };
             }
         }
