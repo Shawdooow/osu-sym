@@ -33,6 +33,8 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         private readonly bool playfieldBorder = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.PlayfieldBorder);
 
+        private readonly bool playfieldDust = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.PlayfieldDust);
+
         private readonly bool kiaiBoss = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.KiaiBoss);
 
         private readonly string character = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
@@ -87,9 +89,11 @@ namespace osu.Game.Rulesets.Vitaru.UI
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 
-            Children = new Drawable[]
+            if (playfieldDust)
+                Child = new PlayfieldDust();
+
+            AddRange(new Drawable[]
             {
-                new PlayfieldDust(),
                 judgementLayer = new Container
                 {
                     Name = "Judgements",
@@ -99,7 +103,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
                 {
                     Margin = 1
                 }
-            };
+            });
 
             DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judgement Count" });
             DebugToolkit.GeneralDebugItems.Add(drawableHitobjectCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Hitobject Count" });

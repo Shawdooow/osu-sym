@@ -32,6 +32,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
             Set(VitaruSetting.PitchShade, true);
             Set(VitaruSetting.KiaiBoss, true);
             Set(VitaruSetting.PlayfieldBorder, true);
+            Set(VitaruSetting.PlayfieldDust, true);
             Set(VitaruSetting.ComboFire, true);
             Set(VitaruSetting.GoodFPS, false);
 
@@ -90,6 +91,7 @@ namespace osu.Game.Rulesets.Vitaru.Settings
         PitchShade,
         KiaiBoss,
         PlayfieldBorder,
+        PlayfieldDust,
         ComboFire,
         GoodFPS,
 
