@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces
 
         public StarPiece()
         {
-            Size = new Vector2(30);
+            Size = new Vector2(64);
 
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
