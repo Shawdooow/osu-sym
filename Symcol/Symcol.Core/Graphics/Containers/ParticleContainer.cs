@@ -75,8 +75,9 @@ namespace Symcol.Core.Graphics.Containers
         {
             base.Update();
 
-            if (RNG.NextDouble(0, (float)Clock.ElapsedFrameTime / 1000) >= Spawnrate)
-                Spawn();
+            if (Clock.ElapsedFrameTime > 0)
+                if (RNG.NextDouble(0, Clock.ElapsedFrameTime / 100 * Spawnrate) > 1)
+                    Spawn();
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace Symcol.Core.Graphics.Containers
         /// </summary>
         protected virtual void Spawn()
         {
-            Drawable particle = GetParticles()[RNG.Next(0, GetParticles().Length)];
+            Drawable particle = GetParticles()[GetParticles().Length > 1 ? RNG.Next(0, GetParticles().Length - 1) : 0];
 
             switch (MotionType)
             {
@@ -92,10 +93,10 @@ namespace Symcol.Core.Graphics.Containers
                     AddParticle(particle, Anchor.Centre, Vector2.Zero);
                     break;
                 case MotionType.Top:
-                    AddParticle(particle, Anchor.TopLeft, new Vector2(0, DrawSize.X));
+                    AddParticle(particle, Anchor.TopLeft, new Vector2((float)RNG.NextDouble(0, DrawSize.X), 0));
                     particle.FadeInFromZero(FadeInDuration, FadeInEasing)
-                            .MoveTo(new Vector2(0, (float)Distance), 1000 * Speed, Easing)
-                            .Delay(1000 * Speed - FadeOutDuration)
+                            .MoveTo(new Vector2(particle.Position.X, (float)Distance), 1000 / Speed, Easing)
+                            .Delay(1000 / Speed - FadeOutDuration)
                             .FadeOut(FadeOutDuration, FadeOutEasing)
                             .Delay(FadeOutDuration)
                             .Expire();
@@ -112,9 +113,10 @@ namespace Symcol.Core.Graphics.Containers
             }
         }
 
-        protected virtual void AddParticle(Drawable particle, Anchor anchor, Vector2 spawns)
+        protected virtual void AddParticle(Drawable particle, Anchor anchor, Vector2 spawn)
         {
             particle.Anchor = anchor;
+            particle.Position = spawn;
 
             Add(particle);
         }
