@@ -4,7 +4,6 @@ using OpenTK;
 using OpenTK.Graphics;
 using Symcol.osu.Core.Containers.Shawdooow;
 using Symcol.osu.Core.SymcolMods;
-using Symcol.osu.Core.Wiki;
 
 namespace Symcol.osu.Mods.MapMixer
 {

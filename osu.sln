@@ -57,6 +57,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.osu.Mods.Caster", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Framework.Tests", "osu-framework\osu.Framework.Tests\osu.Framework.Tests.csproj", "{50304705-D6C1-4753-9EEA-758EEA547B3D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.osu.Mods.Multi", "Symcol\Symcol.osu.Mods.Multi\Symcol.osu.Mods.Multi.csproj", "{AAFAB29E-9266-441F-B772-1EAA3EB6E2C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,10 @@ Global
 		{50304705-D6C1-4753-9EEA-758EEA547B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50304705-D6C1-4753-9EEA-758EEA547B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50304705-D6C1-4753-9EEA-758EEA547B3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAFAB29E-9266-441F-B772-1EAA3EB6E2C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAFAB29E-9266-441F-B772-1EAA3EB6E2C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAFAB29E-9266-441F-B772-1EAA3EB6E2C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAFAB29E-9266-441F-B772-1EAA3EB6E2C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,6 +183,7 @@ Global
 		{F3500297-9AA7-4DDC-8EDF-EFB5D45F3199} = {E507C08A-AA0D-4E33-9332-39685CB8BAA8}
 		{2DF027A9-1B44-4CA7-BDBB-05021AA44832} = {E507C08A-AA0D-4E33-9332-39685CB8BAA8}
 		{50304705-D6C1-4753-9EEA-758EEA547B3D} = {69FC0F0C-8860-4452-82F0-718FF9781EB1}
+		{AAFAB29E-9266-441F-B772-1EAA3EB6E2C0} = {E507C08A-AA0D-4E33-9332-39685CB8BAA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {671B0BEC-2403-45B0-9357-2C97CC517668}
