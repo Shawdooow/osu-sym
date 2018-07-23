@@ -15,10 +15,6 @@ namespace Symcol.Core.NeuralNetworking
         /// </summary>
         public abstract T[] GetActiveActions { get; }
 
-        protected NeuralInputContainer(SimultaneousBindingMode bindingMode = SimultaneousBindingMode.Unique) : base()
-        {
-        }
-
         protected override void Update()
         {
             base.Update();

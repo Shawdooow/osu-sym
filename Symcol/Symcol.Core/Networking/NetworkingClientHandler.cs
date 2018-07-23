@@ -5,6 +5,8 @@ using osu.Framework.Timing;
 using Symcol.Core.Graphics.Containers;
 using Symcol.Core.Networking.NetworkingClients;
 using Symcol.Core.Networking.Packets;
+// ReSharper disable InconsistentNaming
+// ReSharper disable CollectionNeverUpdated.Global
 
 namespace Symcol.Core.Networking
 {
@@ -72,6 +74,7 @@ namespace Symcol.Core.Networking
             get => tcp;
             set
             {
+                // ReSharper disable once RedundantCheckBeforeAssignment
                 if (value != tcp)
                 {
                     tcp = value;
@@ -207,7 +210,7 @@ namespace Symcol.Core.Networking
                     ReceiveClient.Address = address;
             };
 
-            OnClientTypeChange += (type) =>
+            OnClientTypeChange += type =>
             {
                 switch (type)
                 {
@@ -518,6 +521,7 @@ namespace Symcol.Core.Networking
 
         #endregion
 
+        // ReSharper disable once RedundantOverriddenMember
         protected override void Dispose(bool isDisposing)
         {
             //TODO: is this neccesary?

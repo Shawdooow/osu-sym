@@ -4,6 +4,7 @@ namespace Symcol.Core.Networking.NetworkingClients
 {
     public class TCPNetworkingClient : NetworkingClient
     {
+        // ReSharper disable once UnassignedGetOnlyAutoProperty
         public override int Avalable { get; }
 
         public override void SendPacket(Packet packet)
