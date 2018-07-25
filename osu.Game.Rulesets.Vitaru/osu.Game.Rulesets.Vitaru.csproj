@@ -133,11 +133,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Tracks\" />
-    <Folder Include="Multi\" />
     <Folder Include="SymcolMods\Wiki\Sections\SubSections\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\osu.Game.Rulesets.Classic\osu.Game.Rulesets.Classic.csproj" />
-    <ProjectReference Include="..\Symcol\Symcol.osu.Mods.Multi\Symcol.osu.Mods.Multi.csproj" />
   </ItemGroup>
 </Project>
