@@ -62,7 +62,7 @@ namespace Symcol.Core.Networking.NetworkingClients
             INatDevice device = args.Device;
             if (Equals(NatMapping.NatDevice.LocalAddress, device.LocalAddress))
             {
-                NatMapping.NatDevice.DeletePortMap(CurrentMapping);
+                NatMapping.Remove(CurrentMapping);
                 NatMapping.NatDevice = null;
             }
         }
@@ -81,7 +81,10 @@ namespace Symcol.Core.Networking.NetworkingClients
         {
             UdpClient?.Dispose();
 
-            try { NatMapping.NatDevice.DeletePortMap(CurrentMapping); }
+            try
+            {
+                NatMapping.Remove(CurrentMapping);
+            }
             catch { Logger.Log("Error trying to release port mapping!", LoggingTarget.Network, LogLevel.Error); }
         }
     }

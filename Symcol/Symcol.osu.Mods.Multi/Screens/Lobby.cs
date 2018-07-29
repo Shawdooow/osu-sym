@@ -1,22 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.States;
 using osu.Framework.Screens;
+using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Online.Multiplayer;
 using osu.Game.Overlays.SearchableList;
+using osu.Game.Rulesets;
 using osu.Game.Screens.Multi.Components;
 using osu.Game.Screens.Multi.Screens.Lounge;
+using osu.Game.Users;
 using OpenTK;
 using Symcol.Core.Networking;
 using Symcol.Core.Networking.Packets;
 using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
 using Symcol.osu.Mods.Multi.Networking;
+using Symcol.osu.Mods.Multi.Networking.Packets;
 
 namespace Symcol.osu.Mods.Multi.Screens
 {
@@ -57,18 +62,27 @@ namespace Symcol.osu.Mods.Multi.Screens
             }
         }
 
+        private RulesetStore rulesets;
+
+        private static bool dummy = true;
+
         public Lobby()
         {
-            OsuNetworkingClientHandler = new OsuNetworkingClientHandler
+            if (OsuNetworkingClientHandler == null && !dummy)
             {
-                ClientType = ClientType.Peer,
-                Address = localip.Value + ":" + localport.Value
-            };
-            OsuNetworkingClientHandler.ServerInfo = OsuNetworkingClientHandler.GenerateConnectingClientInfo(new ConnectPacket
-            {
-                Address = "10.0.0.25:25580",
-                Gamekey = "osu"
-            });
+                OsuNetworkingClientHandler = new OsuNetworkingClientHandler
+                {
+                    ClientType = ClientType.Peer,
+                    Address = localip.Value + ":" + localport.Value
+                };
+                OsuNetworkingClientHandler.ServerInfo = OsuNetworkingClientHandler.GenerateConnectingClientInfo(new ConnectPacket
+                {
+                    Address = "10.0.0.25:25580",
+                    Gamekey = "osu"
+                });
+            }
+
+            dummy = false;
 
             Children = new Drawable[]
             {
@@ -116,11 +130,92 @@ namespace Symcol.osu.Mods.Multi.Screens
             Filter.Search.Exit += Exit;
         }
 
-        private double lastUpdate = double.MinValue;
-
-        protected override void Update()
+        [BackgroundDependencyLoader]
+        private void load(RulesetStore rulesets)
         {
-            base.Update();
+            this.rulesets = rulesets;
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            MatchListPacket m = new MatchListPacket();
+
+            Rooms = new[]
+            {
+                new Room
+                {
+                    Name = { Value = m.Name },
+                    Host = { Value = new User { Username = m.Username, Id = m.UserID, Country = new Country { FlagName = m.UserCountry } } },
+                    Status = { Value = new RoomStatusOpen() },
+                    Type = { Value = new GameTypeVersus() },
+                    Beatmap =
+                    {
+                        Value = new BeatmapInfo
+                        {
+                            StarDifficulty = m.BeatmapStars,
+                            Ruleset = rulesets.GetRuleset(m.RulesetID),
+                            Metadata = new BeatmapMetadata
+                            {
+                                Title = m.BeatmapTitle,
+                                Artist = m.BeatmapArtist,
+                            },
+                            BeatmapSet = new BeatmapSetInfo
+                            {
+                                OnlineInfo = new BeatmapSetOnlineInfo
+                                {
+                                    Covers = new BeatmapSetOnlineCovers
+                                    {
+                                        Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            if (OsuNetworkingClientHandler != null)
+            {
+                OsuNetworkingClientHandler.OnPacketReceive += packet =>
+                {
+                    if (packet is MatchListPacket matchListPacket)
+                        Rooms = new[]
+                        {
+                            new Room
+                            {
+                                Name = { Value = m.Name },
+                                Host = { Value = new User { Username = m.Username, Id = m.UserID, Country = new Country { FlagName = m.UserCountry } } },
+                                Status = { Value = new RoomStatusOpen() },
+                                Type = { Value = new GameTypeVersus() },
+                                Beatmap =
+                                {
+                                    Value = new BeatmapInfo
+                                    {
+                                        StarDifficulty = m.BeatmapStars,
+                                        Ruleset = rulesets.GetRuleset(m.RulesetID),
+                                        Metadata = new BeatmapMetadata
+                                        {
+                                            Title = m.BeatmapTitle,
+                                            Artist = m.BeatmapArtist,
+                                        },
+                                        BeatmapSet = new BeatmapSetInfo
+                                        {
+                                            OnlineInfo = new BeatmapSetOnlineInfo
+                                            {
+                                                Covers = new BeatmapSetOnlineCovers
+                                                {
+                                                    Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                };
+            }
         }
 
         protected override void UpdateAfterChildren()
@@ -209,12 +304,6 @@ namespace Symcol.osu.Mods.Multi.Screens
                 LayoutDuration = 200;
                 LayoutEasing = Easing.OutQuint;
             }
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            OsuNetworkingClientHandler.Dispose();
-            base.Dispose(isDisposing);
         }
     }
 }
