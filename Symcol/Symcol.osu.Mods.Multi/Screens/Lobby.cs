@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Configuration;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -11,11 +12,19 @@ using osu.Game.Overlays.SearchableList;
 using osu.Game.Screens.Multi.Components;
 using osu.Game.Screens.Multi.Screens.Lounge;
 using OpenTK;
+using Symcol.Core.Networking;
+using Symcol.Core.Networking.Packets;
+using Symcol.osu.Core;
+using Symcol.osu.Core.Config;
+using Symcol.osu.Mods.Multi.Networking;
 
 namespace Symcol.osu.Mods.Multi.Screens
 {
     public class Lobby : MultiScreen
     {
+        private readonly Bindable<string> localip = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.LocalIP);
+        private readonly Bindable<int> localport = SymcolOsuModSet.SymcolConfigManager.GetBindable<int>(SymcolSetting.LocalPort);
+
         private readonly Container content;
         private readonly SearchContainer search;
 
@@ -50,6 +59,17 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         public Lobby()
         {
+            OsuNetworkingClientHandler = new OsuNetworkingClientHandler
+            {
+                ClientType = ClientType.Peer,
+                Address = localip.Value + ":" + localport.Value
+            };
+            OsuNetworkingClientHandler.ServerInfo = OsuNetworkingClientHandler.GenerateConnectingClientInfo(new ConnectPacket
+            {
+                Address = "10.0.0.25:25580",
+                Gamekey = "osu"
+            });
+
             Children = new Drawable[]
             {
                 Filter = new FilterControl(),
@@ -77,8 +97,8 @@ namespace Symcol.osu.Mods.Multi.Screens
                                     AutoSizeAxes = Axes.Y,
                                     Direction = FillDirection.Vertical,
                                     Spacing = new Vector2(10 - DrawableRoom.SELECTION_BORDER_WIDTH * 2),
-                                },
-                            },
+                                }
+                            }
                         },
                         Inspector = new RoomInspector
                         {
@@ -86,9 +106,9 @@ namespace Symcol.osu.Mods.Multi.Screens
                             Origin = Anchor.TopRight,
                             RelativeSizeAxes = Axes.Both,
                             Width = 0.45f,
-                        },
-                    },
-                },
+                        }
+                    }
+                }
             };
 
             Filter.Search.Current.ValueChanged += s => filterRooms();
@@ -189,6 +209,12 @@ namespace Symcol.osu.Mods.Multi.Screens
                 LayoutDuration = 200;
                 LayoutEasing = Easing.OutQuint;
             }
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            OsuNetworkingClientHandler.Dispose();
+            base.Dispose(isDisposing);
         }
     }
 }

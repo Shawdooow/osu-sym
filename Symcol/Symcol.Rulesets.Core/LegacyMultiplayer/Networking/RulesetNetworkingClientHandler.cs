@@ -6,7 +6,6 @@ using osu.Game.Online.API;
 using Symcol.Core.LegacyNetworking;
 using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
-using Symcol.Rulesets.Core.Rulesets;
 
 namespace Symcol.Rulesets.Core.LegacyMultiplayer.Networking
 {

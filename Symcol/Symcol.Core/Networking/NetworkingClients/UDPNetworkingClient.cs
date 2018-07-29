@@ -29,6 +29,7 @@ namespace Symcol.Core.Networking.NetworkingClients
                 else
                 {
                     NatUtility.DeviceFound += deviceFound;
+                    NatUtility.DeviceLost += deviceLost;
                     NatUtility.StartDiscovery();
                 }
 
@@ -54,6 +55,16 @@ namespace Symcol.Core.Networking.NetworkingClients
                 return;
 
             NatMapping.NatDevice = device;
+        }
+
+        private void deviceLost(object sender, DeviceEventArgs args)
+        {
+            INatDevice device = args.Device;
+            if (Equals(NatMapping.NatDevice.LocalAddress, device.LocalAddress))
+            {
+                NatMapping.NatDevice.DeletePortMap(CurrentMapping);
+                NatMapping.NatDevice = null;
+            }
         }
 
         public override void SendBytes(byte[] bytes)

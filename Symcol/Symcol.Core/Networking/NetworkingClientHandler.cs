@@ -436,7 +436,7 @@ namespace Symcol.Core.Networking
         /// </summary>
         /// <param name="packet"></param>
         /// <returns></returns>
-        protected ClientInfo GenerateConnectingClientInfo(ConnectPacket packet)
+        public ClientInfo GenerateConnectingClientInfo(ConnectPacket packet)
         {
             string[] split = packet.Address.Split(':');
 

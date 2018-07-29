@@ -1,6 +1,8 @@
 ﻿using osu.Framework.Input;
+using osu.Framework.Input.EventArgs;
 using OpenTK;
 using OpenTK.Input;
+using osu.Framework.Input.States;
 
 namespace Symcol.Core.Graphics.Containers
 {
