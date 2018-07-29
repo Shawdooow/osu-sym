@@ -22,6 +22,7 @@ namespace osu.Game.Online.API
         private readonly OsuConfigManager config;
         private readonly OAuth authentication;
 
+        public virtual string FallbackEndpoint => null;
         public string Endpoint = @"https://osu.ppy.sh";
         private const string client_id = @"5";
         private const string client_secret = @"FGc9GAtyHzeQDshWP5Ah7dega8hJACAJpQtw6OXk";
@@ -193,15 +194,31 @@ namespace osu.Game.Online.API
         {
             try
             {
-                Logger.Log($@"Performing request {req}", LoggingTarget.Network);
-                req.Perform(this);
+                //try
+                //{
+                    Logger.Log($@"Performing request {req}", LoggingTarget.Network);
+                    req.Perform(this);
 
-                //we could still be in initialisation, at which point we don't want to say we're Online yet.
-                if (IsLoggedIn)
-                    State = APIState.Online;
+                    //we could still be in initialisation, at which point we don't want to say we're Online yet.
+                    if (IsLoggedIn)
+                        State = APIState.Online;
 
-                failureCount = 0;
-                return true;
+                    failureCount = 0;
+                    return true;
+                    /*
+                }
+                catch
+                {
+                    Logger.Log($@"Fallback on request {req}", LoggingTarget.Network);
+                    req.Fallback(this);
+
+                    if (IsLoggedIn)
+                        State = APIState.Online;
+
+                    failureCount = 0;
+                    return true;
+                }
+                */
             }
             catch (WebException we)
             {
@@ -271,7 +288,7 @@ namespace osu.Game.Online.API
 
         public bool IsLoggedIn => LocalUser.Value.Id > 1;
 
-        public void Queue(APIRequest request) => queue.Enqueue(request);
+        public virtual void Queue(APIRequest request) => queue.Enqueue(request);
 
         public event StateChangeDelegate OnStateChange;
 
