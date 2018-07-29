@@ -17,7 +17,7 @@ namespace Symcol.Core.Networking
         //30 Seconds by default
         protected virtual double TimeOutTime => 30000;
 
-        protected virtual string GameID => "";
+        protected virtual string Gamekey => null;
 
         protected NetworkingClient ReceiveClient;
 
@@ -203,7 +203,7 @@ namespace Symcol.Core.Networking
                     Address = address,
                     IP = ip,
                     Port = port,
-                    Gamekey = GameID
+                    Gamekey = Gamekey
                 };
 
                 if (ReceiveClient != null)
