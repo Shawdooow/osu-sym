@@ -1,6 +1,7 @@
 ﻿using System;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using OpenTK;
 
 namespace Symcol.osu.Core.Containers.Shawdooow

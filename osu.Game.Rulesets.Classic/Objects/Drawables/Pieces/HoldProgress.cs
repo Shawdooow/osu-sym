@@ -8,6 +8,8 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Graphics.Containers;
 using System;
 using System.Linq;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 
 namespace osu.Game.Rulesets.Classic.Objects.Drawables.Pieces
 {

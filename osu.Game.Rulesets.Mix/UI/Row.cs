@@ -10,8 +10,9 @@ namespace osu.Game.Rulesets.Mix.UI
     {
         public readonly int RowNumber;
 
-        public Row(int row) : base(ScrollingDirection.Left)
+        public Row(int row)
         {
+            Direction.Value = ScrollingDirection.Left;
             RowNumber = row;
 
             Position = new Vector2(0, (MixPlayfield.DEFAULT_HEIGHT + 4) * (row - 1) + 80);

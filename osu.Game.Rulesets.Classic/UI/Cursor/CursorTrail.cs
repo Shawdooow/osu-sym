@@ -17,6 +17,7 @@ using osu.Framework.Timing;
 using OpenTK;
 using OpenTK.Graphics.ES30;
 using System.Runtime.InteropServices;
+using osu.Framework.Input.States;
 using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Classic.UI.Cursor

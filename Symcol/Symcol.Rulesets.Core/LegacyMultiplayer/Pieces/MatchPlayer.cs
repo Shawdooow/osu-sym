@@ -6,6 +6,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input;
+using osu.Framework.Input.States;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Users;
 using OpenTK;

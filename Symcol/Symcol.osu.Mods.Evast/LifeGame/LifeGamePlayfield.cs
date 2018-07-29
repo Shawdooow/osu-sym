@@ -2,6 +2,7 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Input;
+using osu.Framework.Input.States;
 using osu.Framework.MathUtils;
 
 namespace Symcol.osu.Mods.Evast.LifeGame

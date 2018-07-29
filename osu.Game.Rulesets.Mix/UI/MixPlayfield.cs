@@ -17,8 +17,10 @@ namespace osu.Game.Rulesets.Mix.UI
 
         private List<Row> rows = new List<Row>();
 
-        public MixPlayfield() : base(ScrollingDirection.Left)
+        public MixPlayfield()
         {
+            Direction.Value = ScrollingDirection.Left;
+
             Anchor = Anchor.TopCentre;
             Origin = Anchor.TopCentre;
 

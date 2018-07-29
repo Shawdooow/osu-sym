@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Framework.MathUtils;
 using osu.Game.Graphics.Containers;
 using OpenTK;

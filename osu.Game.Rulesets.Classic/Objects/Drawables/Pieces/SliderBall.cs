@@ -11,6 +11,8 @@ using osu.Framework.Input;
 using OpenTK;
 using OpenTK.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Classic.Settings;
 using osu.Game.Rulesets.Classic.UI;
