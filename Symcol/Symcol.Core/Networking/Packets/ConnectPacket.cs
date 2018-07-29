@@ -7,6 +7,6 @@ namespace Symcol.Core.Networking.Packets
     {
         public override int PacketSize => 256;
 
-        public string GameID;
+        public string Gamekey;
     }
 }

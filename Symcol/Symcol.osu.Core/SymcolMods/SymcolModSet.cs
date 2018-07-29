@@ -9,7 +9,7 @@ namespace Symcol.osu.Core.SymcolMods
     {
         public virtual SymcolButton GetMenuButton() => null;
 
-        public virtual OsuScreen GetMenuScreen() => null;
+        public virtual OsuScreen GetScreen() => null;
 
         public virtual WikiSet GetWikiSet() => null;
 

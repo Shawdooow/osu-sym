@@ -21,7 +21,7 @@ namespace Symcol.osu.Mods.MapMixer
             ButtonPosition = new Vector2(-200, -150),
         };
 
-        public override OsuScreen GetMenuScreen() => new MapMixer();
+        public override OsuScreen GetScreen() => new MapMixer();
 
         //public override WikiSet GetWikiSet() => new MapMixerWikiSet();
     }

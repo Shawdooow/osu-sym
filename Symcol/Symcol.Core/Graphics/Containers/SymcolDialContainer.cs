@@ -2,7 +2,6 @@
 using osu.Framework.Graphics;
 using osu.Framework.Input;
 using System;
-using osu.Framework.Input.States;
 
 namespace Symcol.Core.Graphics.Containers
 {

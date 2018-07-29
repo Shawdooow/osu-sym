@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\osu.Game.props" />
+  <Import Project="..\Symcol.Server.props" />
   <PropertyGroup Label="Project">
     <TargetFramework>netstandard2.0</TargetFramework>
     <OutputType>Library</OutputType>
@@ -12,7 +12,7 @@
     <PackageReference Include="TensorFlowSharp" Version="1.8.0-pre1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\osu-framework\osu.Framework\osu.Framework.csproj" />
+    <ProjectReference Include="..\osu-framework\osu.Framework\osu.Framework.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="libtensorflow.dll">

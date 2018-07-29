@@ -20,6 +20,6 @@ namespace Symcol.osu.Mods.Evast
             ButtonPosition = new Vector2(20, 200),
         };
 
-        public override OsuScreen GetMenuScreen() => new MoreScreen();
+        public override OsuScreen GetScreen() => new MoreScreen();
     }
 }

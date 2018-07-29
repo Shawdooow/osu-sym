@@ -203,7 +203,7 @@ namespace Symcol.Core.Networking
                     Address = address,
                     IP = ip,
                     Port = port,
-                    GameID = GameID
+                    Gamekey = GameID
                 };
 
                 if (ReceiveClient != null)
@@ -382,9 +382,27 @@ namespace Symcol.Core.Networking
         protected virtual Packet SignPacket(Packet packet)
         {
             if (packet is ConnectPacket c)
-                c.GameID = ClientInfo.GameID;
+                c.Gamekey = ClientInfo.Gamekey;
             packet.Address = ReceiveClient.Address;
             return packet;
+        }
+
+        /// <summary>
+        /// Get a matching client info from currently connecting/connected clients
+        /// </summary>
+        /// <param name="packet"></param>
+        /// <returns></returns>
+        protected ClientInfo GetClientInfo(Packet packet)
+        {
+            foreach (ClientInfo info in ConnectingClients)
+                if (info.Address == packet.Address)
+                    return info;
+
+            foreach (ClientInfo info in ConnectedClients)
+                if (info.Address == packet.Address)
+                    return info;
+
+            return null;
         }
 
         /// <summary>
@@ -431,7 +449,7 @@ namespace Symcol.Core.Networking
                 IP = i,
                 Port = p,
                 LastConnectionTime = Time.Current,
-                GameID = packet.GameID
+                Gamekey = packet.Gamekey
             };
         }
 
@@ -521,11 +539,9 @@ namespace Symcol.Core.Networking
 
         #endregion
 
-        // ReSharper disable once RedundantOverriddenMember
         protected override void Dispose(bool isDisposing)
         {
-            //TODO: is this neccesary?
-            //ReceiveClient?.Dispose();
+            ReceiveClient?.Dispose();
             base.Dispose(isDisposing);
         }
     }

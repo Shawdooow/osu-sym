@@ -82,11 +82,11 @@ namespace Symcol.osu.Core.Screens
             };
 
             foreach (SymcolModSet set in SymcolModStore.LoadedModSets)
-                if (set.GetMenuButton() != null && set.GetMenuScreen() != null)
+                if (set.GetMenuButton() != null && set.GetScreen() != null)
                 {
                     SymcolButton s = set.GetMenuButton();
                     buttonsContainer.Add(s);
-                    s.Action = () => Push(set.GetMenuScreen());
+                    s.Action = () => Push(set.GetScreen());
                 }
         }
 

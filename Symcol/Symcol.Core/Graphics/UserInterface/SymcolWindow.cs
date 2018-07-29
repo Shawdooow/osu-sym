@@ -6,8 +6,6 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Input.EventArgs;
-using osu.Framework.Input.States;
 using Symcol.Core.Graphics.Containers;
 
 namespace Symcol.Core.Graphics.UserInterface

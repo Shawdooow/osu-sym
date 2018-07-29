@@ -24,7 +24,7 @@ namespace Symcol.osu.Mods.Caster
             ButtonPosition = new Vector2(180, -160),
         };
 
-        public override OsuScreen GetMenuScreen() => new CasterScreen();
+        public override OsuScreen GetScreen() => new CasterScreen();
 
         public override WikiSet GetWikiSet() => new CasterWikiSet();
 
