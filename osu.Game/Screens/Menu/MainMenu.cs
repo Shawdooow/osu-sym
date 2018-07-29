@@ -1,13 +1,13 @@
 // Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using System.Linq;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Input;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.Containers;
@@ -57,7 +57,7 @@ namespace osu.Game.Screens.Menu
                             OnChart = delegate { Push(new ChartListing()); },
                             OnDirect = delegate { Push(new OnlineListing()); },
                             OnEdit = delegate { Push(new Editor()); },
-                            OnSolo = delegate { Push(consumeSongSelect()); },
+                            OnSolo = onSolo,
                             OnMulti = delegate { Push(new Multiplayer()); },
                             OnMod = delegate
                             {
@@ -91,6 +91,10 @@ namespace osu.Game.Screens.Menu
             if (songSelect == null)
                 LoadComponentAsync(songSelect = new PlaySongSelect());
         }
+
+        public void LoadToSolo() => Schedule(onSolo);
+
+        private void onSolo() => Push(consumeSongSelect());
 
         private Screen consumeSongSelect()
         {

@@ -288,7 +288,7 @@ namespace osu.Game.Online.API
 
         public bool IsLoggedIn => LocalUser.Value.Id > 1;
 
-        public virtual void Queue(APIRequest request) => queue.Enqueue(request);
+        public void Queue(APIRequest request) => queue.Enqueue(request);
 
         public event StateChangeDelegate OnStateChange;
 
