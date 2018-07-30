@@ -252,9 +252,6 @@ namespace Symcol.Core.Networking
         {
             switch (packet)
             {
-                default:
-                    Logger.Log("Recieved an unknown packet! - " + packet.Address, LoggingTarget.Network, LogLevel.Error);
-                    break;
                 case ConnectPacket connectPacket:
                     ConnectingClients.Add(GenerateConnectingClientInfo(connectPacket));
                     SendToClient(new ConnectedPacket(), connectPacket);
