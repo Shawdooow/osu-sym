@@ -20,7 +20,6 @@ using OpenTK;
 using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
 using Symcol.osu.Mods.Multi.Networking;
-using Symcol.osu.Mods.Multi.Networking.Packets;
 using Symcol.osu.Mods.Multi.Networking.Packets.Lobby;
 
 namespace Symcol.osu.Mods.Multi.Screens

@@ -5,7 +5,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Overlays.Settings;
 using Symcol.Core.Networking;
 using Symcol.osu.Mods.Multi.Networking;
-using Symcol.osu.Mods.Multi.Networking.Packets;
 using Symcol.osu.Mods.Multi.Networking.Packets.Lobby;
 using Symcol.osu.Mods.Multi.Networking.Packets.Match;
 using Symcol.osu.Mods.Multi.Screens.Pieces;
@@ -76,6 +75,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                                 }
                             break;
                         }
+                        //try to fallback for old maps
                         else if (mapPacket.BeatmapName == beatmapSet.Metadata.Title && mapPacket.Mapper == beatmapSet.Metadata.Author.Username)
                         {
                             foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
@@ -124,6 +124,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                 }
                 catch
                 {
+                    //try to fallback for old maps
                     OsuNetworkingClientHandler.SendPacket(new SetMapPacket
                     {
                         BeatmapName = map.Metadata.Title,

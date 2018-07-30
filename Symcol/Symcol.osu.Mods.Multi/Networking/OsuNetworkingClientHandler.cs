@@ -10,17 +10,11 @@ namespace Symcol.osu.Mods.Multi.Networking
     {
         protected override string Gamekey => "osu";
 
-        public OsuClientInfo OsuClientInfo = new OsuClientInfo();
+        public OsuClientInfo OsuClientInfo => (OsuClientInfo)ClientInfo;
 
         public OsuNetworkingClientHandler()
         {
-            OnAddressChange += (ip, port) =>
-            {
-                OsuClientInfo.Address = ip + ":" + port;
-                OsuClientInfo.IP = ip;
-                OsuClientInfo.Port = port;
-                OsuClientInfo.Gamekey = Gamekey;
-            };
+            ClientInfo = new OsuClientInfo();
         }
 
         [BackgroundDependencyLoader]

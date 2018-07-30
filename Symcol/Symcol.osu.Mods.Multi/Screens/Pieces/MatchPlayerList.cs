@@ -6,6 +6,7 @@ using osu.Framework.Graphics.Shapes;
 using OpenTK;
 using OpenTK.Graphics;
 using Symcol.osu.Mods.Multi.Networking;
+using Symcol.osu.Mods.Multi.Networking.Packets.Match;
 
 namespace Symcol.osu.Mods.Multi.Screens.Pieces
 {
@@ -51,7 +52,12 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
             {
                 switch (packet)
                 {
-                        
+                    case PlayerJoinedPacket playerJoined:
+                        break;
+                    case PlayerDisconnectedPacket playerDisconnected:
+                        break;
+                    case PlayerListPacket playerListPacket:
+                        break;
                 }
             };
 

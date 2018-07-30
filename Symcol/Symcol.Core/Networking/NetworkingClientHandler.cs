@@ -24,7 +24,7 @@ namespace Symcol.Core.Networking
         /// <summary>
         /// Just a client signature basically
         /// </summary>
-        public ClientInfo ClientInfo;
+        public ClientInfo ClientInfo = new ClientInfo();
 
         /// <summary>
         /// If we are connected to a host / server this will be it
@@ -198,13 +198,11 @@ namespace Symcol.Core.Networking
             OnAddressChange += (ip, port) =>
             {
                 string address = ip + ":" + port;
-                ClientInfo = new ClientInfo
-                {
-                    Address = address,
-                    IP = ip,
-                    Port = port,
-                    Gamekey = Gamekey
-                };
+
+                ClientInfo.Address = address;
+                ClientInfo.IP = ip;
+                ClientInfo.Port = port;
+                ClientInfo.Gamekey = Gamekey;
 
                 if (ReceiveClient != null)
                     ReceiveClient.Address = address;
@@ -345,7 +343,7 @@ namespace Symcol.Core.Networking
                     break;
                 case ClientType.Host:
                 case ClientType.Server:
-                    SendToAllConnectedClients(packet);
+                    ShareWithAllClients(packet);
                     break;
 
             }
@@ -501,9 +499,21 @@ namespace Symcol.Core.Networking
             GetNetworkingClient(ServerInfo).SendPacket(packet);
         }
 
-        protected void SendToAllConnectedClients(Packet packet)
+        protected void ShareWithAllClients(Packet packet)
+        {
+            ShareWithAllConnectingClients(packet);
+            ShareWithAllConnectedClients(packet);
+        }
+
+        protected void ShareWithAllConnectingClients(Packet packet)
         {
             foreach (ClientInfo info in ConnectingClients)
+                GetNetworkingClient(info).SendPacket(packet);
+        }
+
+        protected void ShareWithAllConnectedClients(Packet packet)
+        {
+            foreach (ClientInfo info in ConnectedClients)
                 GetNetworkingClient(info).SendPacket(packet);
         }
 
@@ -556,7 +566,7 @@ namespace Symcol.Core.Networking
         protected override void Dispose(bool isDisposing)
         {
             SendToServer(new DisconnectPacket());
-            SendToAllConnectedClients(new DisconnectPacket());
+            ShareWithAllClients(new DisconnectPacket());
             ReceiveClient?.Dispose();
             base.Dispose(isDisposing);
         }
