@@ -44,7 +44,6 @@ namespace Symcol.osu.Mods.Multi.Screens
             get => rooms;
             set
             {
-                if (Equals(value, rooms)) return;
                 rooms = value;
 
                 var enumerable = rooms.ToList();
