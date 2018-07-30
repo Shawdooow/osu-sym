@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Logging;
 using osu.Game.Beatmaps;
 using osu.Game.Online.Multiplayer;
 using osu.Game.Overlays.Settings;
 using Symcol.Core.Networking;
 using Symcol.osu.Mods.Multi.Networking;
+using Symcol.osu.Mods.Multi.Networking.Packets;
 using Symcol.osu.Mods.Multi.Screens.Pieces;
 
 namespace Symcol.osu.Mods.Multi.Screens
@@ -57,6 +57,41 @@ namespace Symcol.osu.Mods.Multi.Screens
                 MatchTools = new MatchTools(),
                 chat = new Chat(OsuNetworkingClientHandler)
             };
+
+            OsuNetworkingClientHandler.OnPacketReceive += packet =>
+            {
+                if (packet is SetMapPacket mapPacket)
+                {
+                    foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
+                        if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
+                        {
+                            foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
+                                if (beatmap.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
+                                {
+                                    Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
+                                    Beatmap.Value.Track.Start();
+                                    MatchTools.MapChange(Beatmap);
+                                    return;
+                                }
+                            break;
+                        }
+                        else if (mapPacket.BeatmapName == beatmapSet.Metadata.Title && mapPacket.Mapper == beatmapSet.Metadata.Author.Username)
+                        {
+                            foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
+                                if (mapPacket.BeatmapDifficulty == beatmap.Version)
+                                {
+                                    Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
+                                    Beatmap.Value.Track.Start();
+                                    MatchTools.MapChange(Beatmap);
+                                    return;
+                                }
+                            break;
+                        }
+
+                    MatchTools.MapChange(mapPacket.OnlineBeatmapSetID);
+                }
+            };
+            playerList.Add(OsuNetworkingClientHandler.OsuClientInfo);
         }
 
         [BackgroundDependencyLoader]
@@ -69,8 +104,6 @@ namespace Symcol.osu.Mods.Multi.Screens
         {
             if (MatchTools.SelectedBeatmap != null)
                 Beatmap.Value = MatchTools.SelectedBeatmap;
-            else
-                Logger.Log("Match started for a map we don't have!", LoggingTarget.Network, LogLevel.Error);
 
             Push(new Player(OsuNetworkingClientHandler));
         }
@@ -79,7 +112,26 @@ namespace Symcol.osu.Mods.Multi.Screens
         {
             SongSelect songSelect = new SongSelect(OsuNetworkingClientHandler);
             Push(songSelect);
-            //songSelect.SelectionFinalised = (map) => OsuNetworkingClientHandler.SetMap(map);
+            songSelect.SelectionFinalised = map =>
+            {
+                try
+                {
+                    OsuNetworkingClientHandler.SendPacket(new SetMapPacket
+                    {
+                        OnlineBeatmapSetID = (int)map.BeatmapSetInfo.OnlineBeatmapSetID,
+                        OnlineBeatmapID = (int)map.BeatmapInfo.OnlineBeatmapID
+                    });
+                }
+                catch
+                {
+                    OsuNetworkingClientHandler.SendPacket(new SetMapPacket
+                    {
+                        BeatmapName = map.Metadata.Title,
+                        BeatmapDifficulty = map.BeatmapInfo.Version,
+                        Mapper = map.Metadata.Author.Username
+                    });
+                }
+            };
         }
     }
 }

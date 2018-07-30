@@ -1,9 +1,54 @@
-﻿using Symcol.Core.Networking;
+﻿using osu.Framework.Allocation;
+using osu.Game.Online.API;
+using Symcol.Core.Networking;
+using Symcol.osu.Core;
+using Symcol.osu.Core.Config;
 
 namespace Symcol.osu.Mods.Multi.Networking
 {
-    public class OsuNetworkingClientHandler : NetworkingClientHandler
+    public class OsuNetworkingClientHandler : NetworkingClientHandler, IOnlineComponent
     {
         protected override string Gamekey => "osu";
+
+        public OsuClientInfo OsuClientInfo = new OsuClientInfo();
+
+        public OsuNetworkingClientHandler()
+        {
+            OnAddressChange += (ip, port) =>
+            {
+                OsuClientInfo.Address = ip + ":" + port;
+                OsuClientInfo.IP = ip;
+                OsuClientInfo.Port = port;
+                OsuClientInfo.Gamekey = Gamekey;
+            };
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(APIAccess api)
+        {
+            api.Register(this);
+        }
+
+        public void APIStateChanged(APIAccess api, APIState state)
+        {
+            switch (state)
+            {
+                default:
+                    OsuClientInfo.Username = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
+                    OsuClientInfo.UserID = SymcolOsuModSet.SymcolConfigManager.Get<int>(SymcolSetting.SavedUserID);
+                    break;
+                case APIState.Online:
+                    SymcolOsuModSet.SymcolConfigManager.Set(SymcolSetting.SavedName, api.LocalUser.Value.Username);
+                    SymcolOsuModSet.SymcolConfigManager.Set(SymcolSetting.SavedUserID, api.LocalUser.Value.Id);
+
+                    OsuClientInfo.Username = api.LocalUser.Value.Username;
+                    OsuClientInfo.UserID = api.LocalUser.Value.Id;
+                    OsuClientInfo.UserCountry = api.LocalUser.Value.Country.FullName;
+                    OsuClientInfo.CountryFlagName = api.LocalUser.Value.Country.FlagName;
+                    OsuClientInfo.UserPic = api.LocalUser.Value.AvatarUrl;
+                    OsuClientInfo.UserBackground = api.LocalUser.Value.CoverUrl;
+                    break;
+            }
+        }
     }
 }

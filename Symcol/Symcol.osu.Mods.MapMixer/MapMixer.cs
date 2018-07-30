@@ -185,8 +185,8 @@ namespace Symcol.osu.Mods.MapMixer
 
         private void setClockSpeed(IAdjustableClock clock)
         {
-            var pitchAdjust = clock as IHasPitchAdjust;
-            clockPitch.Bindable.Value = pitchAdjust.PitchAdjust;
+            if (clock is IHasPitchAdjust pitchAdjust)
+                clockPitch.Bindable.Value = pitchAdjust.PitchAdjust;
             clockSpeed.Bindable.Value = clock.Rate;
         }
 
@@ -198,8 +198,7 @@ namespace Symcol.osu.Mods.MapMixer
 
         private void applyToClock(IAdjustableClock clock)
         {
-            var pitchAdjust = clock as IHasPitchAdjust;
-            if (pitchAdjust != null)
+            if (clock is IHasPitchAdjust pitchAdjust)
             {
                 if (clockPitch.Bindable.Value > 1)
                 {

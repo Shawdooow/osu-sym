@@ -21,6 +21,7 @@ using osu.Game.Rulesets.Objects.Types;
 using OpenTK;
 using OpenTK.Graphics;
 using Symcol.osu.Core.Containers.Shawdooow;
+using Symcol.osu.Mods.Multi.Networking.Settings;
 
 #if SymcolMods
 #endif
@@ -103,7 +104,7 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
 
                             Children = new Drawable[]
                             {
-                                //new MultiplayerDropdownEnumOption<MatchGamemode>(GameMode, "Match Gamemode", 1)
+                                new MultiplayerDropdownEnumOption<MatchGamemode>(GameMode, "Match Gamemode", 1)
                             }
                         };
                         break;

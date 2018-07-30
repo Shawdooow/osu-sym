@@ -26,7 +26,7 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
         {
             this.osuNetworkingClientHandler = osuNetworkingClientHandler;
 
-            osuNetworkingClientHandler.OnPacketReceive += (packet) =>
+            osuNetworkingClientHandler.OnPacketReceive += packet =>
             {
                 if (packet is ChatPacket chatPacket)
                     Add(chatPacket);
@@ -103,15 +103,12 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
                 playerColorHex = "#ffffff";
             }
 
-            ChatPacket packet = new ChatPacket()
+            osuNetworkingClientHandler.SendPacket(new ChatPacket
             {
                 Author = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.SavedName),
                 AuthorColor = playerColorHex,
                 Message = message,
-            };
-
-            osuNetworkingClientHandler.SendPacket(packet);
-            Add(packet);
+            });
         }
     }
 }
