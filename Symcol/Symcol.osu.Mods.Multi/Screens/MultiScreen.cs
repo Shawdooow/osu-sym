@@ -1,38 +1,39 @@
 ﻿using osu.Framework.Screens;
-using osu.Game.Screens;
+using Symcol.osu.Core.Screens.Evast;
 using Symcol.osu.Mods.Multi.Networking;
 
 namespace Symcol.osu.Mods.Multi.Screens
 {
-    public class MultiScreen : OsuScreen
+    public class MultiScreen : BeatmapScreen
     {
-        protected static OsuNetworkingClientHandler OsuNetworkingClientHandler;
+        public OsuNetworkingClientHandler OsuNetworkingClientHandler;
+
+        public MultiScreen(OsuNetworkingClientHandler osuNetworkingClientHandler)
+        {
+            OsuNetworkingClientHandler = osuNetworkingClientHandler;
+        }
 
         protected override void OnEntering(Screen last)
         {
-            if (OsuNetworkingClientHandler != null)
-                Add(OsuNetworkingClientHandler);
+            Add(OsuNetworkingClientHandler);
             base.OnEntering(last);
         }
 
         protected override void OnSuspending(Screen next)
         {
-            if (OsuNetworkingClientHandler != null)
-                Remove(OsuNetworkingClientHandler);
+            Remove(OsuNetworkingClientHandler);
             base.OnSuspending(next);
         }
 
         protected override void OnResuming(Screen last)
         {
-            if (OsuNetworkingClientHandler != null)
-                Add(OsuNetworkingClientHandler);
+            Add(OsuNetworkingClientHandler);
             base.OnResuming(last);
         }
 
         protected override bool OnExiting(Screen next)
         {
-            if (OsuNetworkingClientHandler != null)
-                Remove(OsuNetworkingClientHandler);
+            Remove(OsuNetworkingClientHandler);
             return base.OnExiting(next);
         }
     }

@@ -257,9 +257,7 @@ namespace Symcol.Core.Networking
                     break;
                 case ConnectPacket connectPacket:
                     ConnectingClients.Add(GenerateConnectingClientInfo(connectPacket));
-                    ConnectedPacket connected = new ConnectedPacket();
-                    SignPacket(connected);
-                    GetNetworkingClient(GetConnectingClientInfo(connectPacket)).SendPacket(connected);
+                    SendToClient(new ConnectedPacket(), connectPacket);
                     break;
                 case ConnectedPacket connectedPacket:
                     ConnectionStatues = ConnectionStatues.Connected;
@@ -512,6 +510,12 @@ namespace Symcol.Core.Networking
                 GetNetworkingClient(info).SendPacket(packet);
         }
 
+        protected void SendToClient(Packet packet, Packet recievedPacket)
+        {
+            SignPacket(packet);
+            GetNetworkingClient(GetClientInfo(recievedPacket)).SendPacket(packet);
+        }
+
         #endregion
 
         #region Network Actions
@@ -528,7 +532,10 @@ namespace Symcol.Core.Networking
             }
 
             if (ConnectionStatues <= ConnectionStatues.Disconnected)
+            {
+                Logger.Log($"Attempting to connect to {ServerInfo.Address}", LoggingTarget.Network);
                 SendPacket(new ConnectPacket());
+            }
             else
                 Logger.Log("We are already connecting, please wait for us to fail before retrying!", LoggingTarget.Network);
         }

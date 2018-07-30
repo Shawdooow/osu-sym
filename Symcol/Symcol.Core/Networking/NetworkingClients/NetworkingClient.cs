@@ -40,7 +40,8 @@ namespace Symcol.Core.Networking.NetworkingClients
                             break;
                         }
 
-                    NatMapping.Add(new Mapping(Protocol.Udp, p, p));
+                    if (p > 200)
+                        NatMapping.Add(new Mapping(Protocol.Udp, p, p));
                     IP = i;
                     Port = p;
                     OnAddressChange?.Invoke(i, p);

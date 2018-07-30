@@ -16,8 +16,6 @@ using osu.Game.Screens.Multi.Components;
 using osu.Game.Screens.Multi.Screens.Lounge;
 using osu.Game.Users;
 using OpenTK;
-using Symcol.Core.Networking;
-using Symcol.Core.Networking.Packets;
 using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
 using Symcol.osu.Mods.Multi.Networking;
@@ -64,113 +62,50 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         private RulesetStore rulesets;
 
-        private static bool dummy = true;
-
-        public Lobby()
+        public Lobby(OsuNetworkingClientHandler osuNetworkingClientHandler)
+            : base(osuNetworkingClientHandler)
         {
-            if (OsuNetworkingClientHandler == null && !dummy)
+            OsuNetworkingClientHandler.SendPacket(new GetMatchListPacket { Address = OsuNetworkingClientHandler.Address });
+
+            OsuNetworkingClientHandler.OnPacketReceive += packet =>
             {
-                OsuNetworkingClientHandler = new OsuNetworkingClientHandler
+                if (packet is MatchListPacket matchListPacket)
                 {
-                    ClientType = ClientType.Peer,
-                    Address = localip.Value + ":" + localport.Value
-                };
-                OsuNetworkingClientHandler.ServerInfo = OsuNetworkingClientHandler.GenerateConnectingClientInfo(new ConnectPacket
-                {
-                    Address = "10.0.0.25:25580",
-                    Gamekey = "osu"
-                });
-                OsuNetworkingClientHandler.Connect();
-
-                OsuNetworkingClientHandler.OnConnectedToHost += list =>
-                    OsuNetworkingClientHandler.SendPacket(new GetMatchListPacket { Address = OsuNetworkingClientHandler.Address });
-
-                OsuNetworkingClientHandler.OnPacketReceive += packet =>
-                {
-                    if (packet is MatchListPacket matchListPacket)
-                    {
-                        List<Room> rooms = new List<Room>();
-                        foreach (MatchListPacket.MatchInfo info in matchListPacket.MatchInfoList)
-                            rooms.Add(new Room
+                    List<Room> rooms = new List<Room>();
+                    foreach (MatchListPacket.MatchInfo info in matchListPacket.MatchInfoList)
+                        rooms.Add(new Room
+                        {
+                            Name = { Value = info.Name },
+                            Host = { Value = new User { Username = info.Username, Id = info.UserID, Country = new Country { FlagName = info.UserCountry } } },
+                            Status = { Value = new RoomStatusOpen() },
+                            Type = { Value = new GameTypeVersus() },
+                            Beatmap =
                             {
-                                Name = { Value = info.Name },
-                                Host = { Value = new User { Username = info.Username, Id = info.UserID, Country = new Country { FlagName = info.UserCountry } } },
-                                Status = { Value = new RoomStatusOpen() },
-                                Type = { Value = new GameTypeVersus() },
-                                Beatmap =
+                                Value = new BeatmapInfo
                                 {
-                                    Value = new BeatmapInfo
+                                    StarDifficulty = info.BeatmapStars,
+                                    Ruleset = rulesets.GetRuleset(info.RulesetID),
+                                    Metadata = new BeatmapMetadata
                                     {
-                                        StarDifficulty = info.BeatmapStars,
-                                        Ruleset = rulesets.GetRuleset(info.RulesetID),
-                                        Metadata = new BeatmapMetadata
+                                        Title = info.BeatmapTitle,
+                                        Artist = info.BeatmapArtist,
+                                    },
+                                    BeatmapSet = new BeatmapSetInfo
+                                    {
+                                        OnlineInfo = new BeatmapSetOnlineInfo
                                         {
-                                            Title = info.BeatmapTitle,
-                                            Artist = info.BeatmapArtist,
-                                        },
-                                        BeatmapSet = new BeatmapSetInfo
-                                        {
-                                            OnlineInfo = new BeatmapSetOnlineInfo
+                                            Covers = new BeatmapSetOnlineCovers
                                             {
-                                                Covers = new BeatmapSetOnlineCovers
-                                                {
-                                                    Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
-                                                }
+                                                Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
                                             }
                                         }
                                     }
                                 }
-                            });
-                        Rooms = rooms;
-                    }
-                };
-            }
-            else if (OsuNetworkingClientHandler != null && !dummy)
-            {
-                OsuNetworkingClientHandler.SendPacket(new GetMatchListPacket { Address = OsuNetworkingClientHandler.Address });
-
-                OsuNetworkingClientHandler.OnPacketReceive += packet =>
-                {
-                    if (packet is MatchListPacket matchListPacket)
-                    {
-                        List<Room> rooms = new List<Room>();
-                        foreach (MatchListPacket.MatchInfo info in matchListPacket.MatchInfoList)
-                            rooms.Add(new Room
-                            {
-                                Name = { Value = info.Name },
-                                Host = { Value = new User { Username = info.Username, Id = info.UserID, Country = new Country { FlagName = info.UserCountry } } },
-                                Status = { Value = new RoomStatusOpen() },
-                                Type = { Value = new GameTypeVersus() },
-                                Beatmap =
-                                {
-                                    Value = new BeatmapInfo
-                                    {
-                                        StarDifficulty = info.BeatmapStars,
-                                        Ruleset = rulesets.GetRuleset(info.RulesetID),
-                                        Metadata = new BeatmapMetadata
-                                        {
-                                            Title = info.BeatmapTitle,
-                                            Artist = info.BeatmapArtist,
-                                        },
-                                        BeatmapSet = new BeatmapSetInfo
-                                        {
-                                            OnlineInfo = new BeatmapSetOnlineInfo
-                                            {
-                                                Covers = new BeatmapSetOnlineCovers
-                                                {
-                                                    Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        Rooms = rooms;
-                    }
-                };
-            }
-
-            dummy = false;
+                            }
+                        });
+                    Rooms = rooms;
+                }
+            };
 
             Children = new Drawable[]
             {
@@ -288,7 +223,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 
             // open the room if its selected and is clicked again
             if (room.State == SelectionState.Selected)
-                Push(new Match(room.Room));
+                Push(new Match(OsuNetworkingClientHandler, room.Room));
         }
 
         private class RoomsFilterContainer : FillFlowContainer<DrawableRoom>, IHasFilterableChildren

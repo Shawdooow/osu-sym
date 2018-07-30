@@ -21,6 +21,6 @@ namespace Symcol.osu.Mods.Multi
             ButtonPosition = new Vector2(10, -220),
         };
 
-        public override OsuScreen GetScreen() => new Lobby();
+        public override OsuScreen GetScreen() => new ConnectToServer();
     }
 }

@@ -31,13 +31,15 @@ namespace Symcol.Core.Networking
 
         public static void Add(Mapping mapping)
         {
+            if (NatDevice == null) return;
+            //NatDevice.CreatePortMap(mapping);
             Mappings.Add(mapping);
-            NatDevice?.CreatePortMap(mapping);
         }
 
         public static void Remove(Mapping mapping)
         {
-            NatDevice?.DeletePortMap(mapping);
+            if (NatDevice == null) return;
+            //NatDevice.DeletePortMap(mapping);
             Mappings.Remove(mapping);
         }
     }

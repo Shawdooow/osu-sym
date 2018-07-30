@@ -44,7 +44,11 @@ namespace Symcol.Core.Networking.NetworkingClients
                 };
             }
             else
-                OnAddressChange += (i, p) => UdpClient = new UdpClient(i, p);
+                OnAddressChange += (i, p) =>
+                {
+                    UdpClient?.Dispose();
+                    UdpClient = new UdpClient(i, p);
+                };
         }
 
         private void deviceFound(object sender, DeviceEventArgs args)
