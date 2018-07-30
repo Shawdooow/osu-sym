@@ -125,8 +125,50 @@ namespace Symcol.osu.Mods.Multi.Screens
                     }
                 };
             }
-            else if (!dummy)
-                OsuNetworkingClientHandler?.SendPacket(new GetMatchListPacket { Address = OsuNetworkingClientHandler.Address });
+            else if (OsuNetworkingClientHandler != null && !dummy)
+            {
+                OsuNetworkingClientHandler.SendPacket(new GetMatchListPacket { Address = OsuNetworkingClientHandler.Address });
+
+                OsuNetworkingClientHandler.OnPacketReceive += packet =>
+                {
+                    if (packet is MatchListPacket matchListPacket)
+                    {
+                        List<Room> rooms = new List<Room>();
+                        foreach (MatchListPacket.MatchInfo info in matchListPacket.MatchInfoList)
+                            rooms.Add(new Room
+                            {
+                                Name = { Value = info.Name },
+                                Host = { Value = new User { Username = info.Username, Id = info.UserID, Country = new Country { FlagName = info.UserCountry } } },
+                                Status = { Value = new RoomStatusOpen() },
+                                Type = { Value = new GameTypeVersus() },
+                                Beatmap =
+                                {
+                                    Value = new BeatmapInfo
+                                    {
+                                        StarDifficulty = info.BeatmapStars,
+                                        Ruleset = rulesets.GetRuleset(info.RulesetID),
+                                        Metadata = new BeatmapMetadata
+                                        {
+                                            Title = info.BeatmapTitle,
+                                            Artist = info.BeatmapArtist,
+                                        },
+                                        BeatmapSet = new BeatmapSetInfo
+                                        {
+                                            OnlineInfo = new BeatmapSetOnlineInfo
+                                            {
+                                                Covers = new BeatmapSetOnlineCovers
+                                                {
+                                                    Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        Rooms = rooms;
+                    }
+                };
+            }
 
             dummy = false;
 

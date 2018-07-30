@@ -16,8 +16,13 @@ namespace Symcol.Core.Networking
                 {
                     device = value;
 
-                    foreach (Mapping m in Mappings)
-                        device.CreatePortMap(m);
+                    //TODO: Don't be old Dean
+                    try
+                    {
+                        foreach (Mapping m in Mappings)
+                            device.CreatePortMap(m);
+                    }
+                    catch { }
                 }
             }
         }
