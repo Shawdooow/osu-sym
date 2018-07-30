@@ -1,13 +1,13 @@
-﻿using OpenTK;
-using OpenTK.Graphics;
-using osu.Framework.Configuration;
+﻿using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using Symcol.Core.Graphics.Containers;
 using Symcol.osu.Mods.Caster.CasterScreens.Pieces;
 
-namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces
+namespace Symcol.osu.Mods.Caster.CasterScreens.TeamsPieces.Drawables
 {
     public class DrawableTeam : EditableOsuSpriteText
     {

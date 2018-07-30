@@ -3,7 +3,6 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Platform;
-using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Overlays.Settings;
 using Symcol.Rulesets.Core.Rulesets;
 using System.ComponentModel;
@@ -11,6 +10,7 @@ using System.Collections.Generic;
 using Symcol.Core.Extentions;
 using System.Linq;
 using osu.Game.Rulesets.Vitaru.Debug;
+using osu.Game.Rulesets.Vitaru.OldMulti;
 using Symcol.Core.NeuralNetworking;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 

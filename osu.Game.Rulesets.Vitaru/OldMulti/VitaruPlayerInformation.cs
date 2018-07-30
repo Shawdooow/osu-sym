@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace osu.Game.Rulesets.Vitaru.Multi
+namespace osu.Game.Rulesets.Vitaru.OldMulti
 {
     [Serializable]
     public class VitaruPlayerInformation

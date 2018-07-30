@@ -1,10 +1,9 @@
 ﻿using osu.Framework.Graphics.Textures;
-using osu.Game.Rulesets.Shape;
 using osu.Game.Rulesets.Shape.Wiki.Sections;
 using Symcol.osu.Core.Wiki;
 using Symcol.osu.Core.Wiki.Sections;
 
-namespace osu.Game.Rulesets.Classic.Wiki
+namespace osu.Game.Rulesets.Shape.Wiki
 {
     public sealed class ShapeWikiSet : WikiSet
     {

@@ -6,9 +6,8 @@ using Symcol.Core.LegacyNetworking;
 using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Networking;
-using Symcol.Rulesets.Core.Rulesets;
 
-namespace osu.Game.Rulesets.Vitaru.Multi
+namespace osu.Game.Rulesets.Vitaru.OldMulti
 {
     public class VitaruNetworkingClientHandler : RulesetNetworkingClientHandler, IOnlineComponent
     {

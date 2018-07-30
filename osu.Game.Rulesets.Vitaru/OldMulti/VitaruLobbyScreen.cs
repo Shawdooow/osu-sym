@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Symcol.Core.LegacyNetworking;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 
-namespace osu.Game.Rulesets.Vitaru.Multi
+namespace osu.Game.Rulesets.Vitaru.OldMulti
 {
     public class VitaruLobbyScreen : RulesetLobbyScreen
     {

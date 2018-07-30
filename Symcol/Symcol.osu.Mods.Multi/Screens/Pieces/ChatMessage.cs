@@ -4,6 +4,7 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using Symcol.Core.Graphics.Containers;
 using Symcol.osu.Mods.Multi.Networking.Packets;
+using Symcol.osu.Mods.Multi.Networking.Packets.Match;
 
 namespace Symcol.osu.Mods.Multi.Screens.Pieces
 {

@@ -10,7 +10,6 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Vitaru.Debug;
-using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.Neural;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
@@ -19,6 +18,7 @@ using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.NeuralNetworking;
 using System;
 using System.Collections.Generic;
+using osu.Game.Rulesets.Vitaru.OldMulti;
 using Symcol.Core.LegacyNetworking;
 using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
 

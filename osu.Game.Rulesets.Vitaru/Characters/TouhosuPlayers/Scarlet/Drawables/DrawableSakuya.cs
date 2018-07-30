@@ -7,7 +7,7 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Vitaru.Multi;
+using osu.Game.Rulesets.Vitaru.OldMulti;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using OpenTK.Graphics;

@@ -21,6 +21,7 @@ using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
 using Symcol.osu.Mods.Multi.Networking;
 using Symcol.osu.Mods.Multi.Networking.Packets;
+using Symcol.osu.Mods.Multi.Networking.Packets.Lobby;
 
 namespace Symcol.osu.Mods.Multi.Screens
 {
@@ -279,7 +280,14 @@ namespace Symcol.osu.Mods.Multi.Screens
 
             // open the room if its selected and is clicked again
             if (room.State == SelectionState.Selected)
-                Push(new Match(OsuNetworkingClientHandler, room.Room));
+            {
+                OsuNetworkingClientHandler.SendPacket(new JoinMatchPacket());
+                OsuNetworkingClientHandler.OnPacketReceive += packet =>
+                {
+                    if (packet is JoinedMatchPacket joinedMatch)
+                        Push(new Match(OsuNetworkingClientHandler, joinedMatch));
+                };
+            }
         }
 
         private class RoomsFilterContainer : FillFlowContainer<DrawableRoom>, IHasFilterableChildren

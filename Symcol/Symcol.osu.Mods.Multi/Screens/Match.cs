@@ -2,11 +2,12 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
-using osu.Game.Online.Multiplayer;
 using osu.Game.Overlays.Settings;
 using Symcol.Core.Networking;
 using Symcol.osu.Mods.Multi.Networking;
 using Symcol.osu.Mods.Multi.Networking.Packets;
+using Symcol.osu.Mods.Multi.Networking.Packets.Lobby;
+using Symcol.osu.Mods.Multi.Networking.Packets.Match;
 using Symcol.osu.Mods.Multi.Screens.Pieces;
 
 namespace Symcol.osu.Mods.Multi.Screens
@@ -21,7 +22,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         private readonly Chat chat;
 
-        public Match(OsuNetworkingClientHandler osuNetworkingClientHandler, Room room)
+        public Match(OsuNetworkingClientHandler osuNetworkingClientHandler, JoinedMatchPacket joindPacket)
             : base(osuNetworkingClientHandler)
         {
             Children = new Drawable[]
@@ -91,7 +92,6 @@ namespace Symcol.osu.Mods.Multi.Screens
                     MatchTools.MapChange(mapPacket.OnlineBeatmapSetID);
                 }
             };
-            playerList.Add(OsuNetworkingClientHandler.OsuClientInfo);
         }
 
         [BackgroundDependencyLoader]

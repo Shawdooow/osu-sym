@@ -1,17 +1,17 @@
-﻿using osu.Framework.Configuration;
+﻿using System.Collections.Generic;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
-using Symcol.Rulesets.Core.Rulesets;
-using System.Collections.Generic;
 using Symcol.Core.LegacyNetworking;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Options;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Pieces;
 using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
+using Symcol.Rulesets.Core.Rulesets;
 
-namespace osu.Game.Rulesets.Vitaru.Multi
+namespace osu.Game.Rulesets.Vitaru.OldMulti
 {
     public class VitaruMatchScreen : RulesetMatchScreen
     {

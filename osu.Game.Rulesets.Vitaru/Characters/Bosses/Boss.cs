@@ -1,4 +1,4 @@
-﻿namespace osu.Game.Rulesets.Vitaru.Characters
+﻿namespace osu.Game.Rulesets.Vitaru.Characters.Bosses
 {
     public abstract class Boss : Character
     {

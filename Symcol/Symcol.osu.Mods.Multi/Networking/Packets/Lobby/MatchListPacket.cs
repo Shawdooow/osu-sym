@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Symcol.Core.Networking.Packets;
 
-namespace Symcol.osu.Mods.Multi.Networking.Packets
+namespace Symcol.osu.Mods.Multi.Networking.Packets.Lobby
 {
     [Serializable]
     public class MatchListPacket : Packet
@@ -15,6 +15,8 @@ namespace Symcol.osu.Mods.Multi.Networking.Packets
         public class MatchInfo
         {
             public string Name = @"Welcome to Symcol!";
+
+            public List<OsuClientInfo> Players = new List<OsuClientInfo>();
 
             #region User
 

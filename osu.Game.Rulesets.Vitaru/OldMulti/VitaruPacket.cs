@@ -1,7 +1,7 @@
 ﻿using System;
 using Symcol.Core.LegacyNetworking;
 
-namespace osu.Game.Rulesets.Vitaru.Multi
+namespace osu.Game.Rulesets.Vitaru.OldMulti
 {
     [Serializable]
     public class VitaruPacket : Packet

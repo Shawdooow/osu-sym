@@ -1,8 +1,8 @@
 ﻿using System;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Vitaru.Multi;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
+using osu.Game.Rulesets.Vitaru.OldMulti;
 using osu.Game.Rulesets.Vitaru.UI;
 using OpenTK;
 using OpenTK.Graphics;

@@ -10,4 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Symcol.osu.Core\Symcol.osu.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Networking\Packets\Player\" />
+  </ItemGroup>
 </Project>

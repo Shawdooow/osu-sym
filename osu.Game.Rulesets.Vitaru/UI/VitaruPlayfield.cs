@@ -11,7 +11,6 @@ using osu.Framework.Graphics.Cursor;
 using osu.Game.Rulesets.Vitaru.UI.Cursor;
 using osu.Framework.Configuration;
 using System.Collections.Generic;
-using osu.Game.Rulesets.Vitaru.Multi;
 using Symcol.Rulesets.Core.Rulesets;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Framework.Graphics.Shapes;
@@ -22,6 +21,7 @@ using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
+using osu.Game.Rulesets.Vitaru.OldMulti;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {

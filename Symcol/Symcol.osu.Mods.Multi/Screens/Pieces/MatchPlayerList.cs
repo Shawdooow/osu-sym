@@ -5,7 +5,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using OpenTK;
 using OpenTK.Graphics;
-using Symcol.Core.LegacyNetworking;
 using Symcol.osu.Mods.Multi.Networking;
 
 namespace Symcol.osu.Mods.Multi.Screens.Pieces
@@ -48,12 +47,20 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
                 }
             };
 
+            osuNetworkingClientHandler.OnPacketReceive += packet =>
+            {
+                switch (packet)
+                {
+                        
+                }
+            };
+
             /*
             osuNetworkingClientHandler.OnReceivePlayerList += (players) =>
             {
                 restart:
                 foreach (MatchPlayer matchPlayer in MatchPlayers)
-                    foreach (ClientInfo clientInfo in players)
+                    foreach (OsuClientInfo clientInfo in players)
                         if (clientInfo is OsuClientInfo rulesetClientInfo)
                             if (rulesetClientInfo.IP + rulesetClientInfo.Port != matchPlayer.ClientInfo.IP + matchPlayer.ClientInfo.Port)
                             {
