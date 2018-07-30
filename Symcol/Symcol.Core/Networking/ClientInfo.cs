@@ -1,8 +1,11 @@
-﻿namespace Symcol.Core.Networking
+﻿using System;
+
+namespace Symcol.Core.Networking
 {
     /// <summary>
     /// Just a client signature
     /// </summary>
+    [Serializable]
     public class ClientInfo
     {
         public string Address;

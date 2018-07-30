@@ -1,12 +1,16 @@
-﻿using osu.Game.Users;
+﻿using System;
 using Symcol.Core.Networking;
 
 namespace Symcol.osu.Mods.Multi.Networking
 {
+    /// <summary>
+    /// Includes osu User information
+    /// </summary>
+    [Serializable]
     public class OsuClientInfo : ClientInfo
     {
-        //TODO: Use User instead
-        public User User;
+        //TODO: use User instead?
+        //public User User;
 
         public string Username = "";
 
