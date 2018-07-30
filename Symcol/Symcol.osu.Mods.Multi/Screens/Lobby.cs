@@ -140,7 +140,7 @@ namespace Symcol.osu.Mods.Multi.Screens
         {
             base.LoadComplete();
 
-            MatchListPacket m = new MatchListPacket();
+            MatchListPacket.MatchInfo m = new MatchListPacket.MatchInfo();
 
             Rooms = new[]
             {
@@ -181,39 +181,40 @@ namespace Symcol.osu.Mods.Multi.Screens
                 OsuNetworkingClientHandler.OnPacketReceive += packet =>
                 {
                     if (packet is MatchListPacket matchListPacket)
-                        Rooms = new[]
-                        {
-                            new Room
+                        foreach (MatchListPacket.MatchInfo info in matchListPacket.MatchInfoList)
+                            Rooms = new[]
                             {
-                                Name = { Value = m.Name },
-                                Host = { Value = new User { Username = m.Username, Id = m.UserID, Country = new Country { FlagName = m.UserCountry } } },
-                                Status = { Value = new RoomStatusOpen() },
-                                Type = { Value = new GameTypeVersus() },
-                                Beatmap =
+                                new Room
                                 {
-                                    Value = new BeatmapInfo
+                                    Name = { Value = info.Name },
+                                    Host = { Value = new User { Username = info.Username, Id = info.UserID, Country = new Country { FlagName = info.UserCountry } } },
+                                    Status = { Value = new RoomStatusOpen() },
+                                    Type = { Value = new GameTypeVersus() },
+                                    Beatmap =
                                     {
-                                        StarDifficulty = m.BeatmapStars,
-                                        Ruleset = rulesets.GetRuleset(m.RulesetID),
-                                        Metadata = new BeatmapMetadata
+                                        Value = new BeatmapInfo
                                         {
-                                            Title = m.BeatmapTitle,
-                                            Artist = m.BeatmapArtist,
-                                        },
-                                        BeatmapSet = new BeatmapSetInfo
-                                        {
-                                            OnlineInfo = new BeatmapSetOnlineInfo
+                                            StarDifficulty = info.BeatmapStars,
+                                            Ruleset = rulesets.GetRuleset(info.RulesetID),
+                                            Metadata = new BeatmapMetadata
                                             {
-                                                Covers = new BeatmapSetOnlineCovers
+                                                Title = info.BeatmapTitle,
+                                                Artist = info.BeatmapArtist,
+                                            },
+                                            BeatmapSet = new BeatmapSetInfo
+                                            {
+                                                OnlineInfo = new BeatmapSetOnlineInfo
                                                 {
-                                                    Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
+                                                    Covers = new BeatmapSetOnlineCovers
+                                                    {
+                                                        Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
-                        };
+                            };
                 };
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Symcol.Core.Networking.Packets;
 
 namespace Symcol.osu.Mods.Multi.Networking.Packets
@@ -6,30 +7,35 @@ namespace Symcol.osu.Mods.Multi.Networking.Packets
     [Serializable]
     public class MatchListPacket : Packet
     {
-        public override int PacketSize => 1024;
+        public override int PacketSize => MatchInfoList.Count * 512;
 
-        public string Name = @"Welcome to Symcol!";
+        public List<MatchInfo> MatchInfoList = new List<MatchInfo>();
 
-        #region User
+        public class MatchInfo
+        {
+            public string Name = @"Welcome to Symcol!";
 
-        public string Username = @"Shawdooow";
+            #region User
 
-        public int UserID = 7726082;
+            public string Username = @"Shawdooow";
 
-        public string UserCountry = "US";
+            public int UserID = 7726082;
 
-        #endregion
+            public string UserCountry = "US";
 
-        #region Beatmap
+            #endregion
 
-        public string BeatmapTitle = "Lost Emotion";
+            #region Beatmap
 
-        public string BeatmapArtist = "Masayoshi Minoshima feat.nomico";
+            public string BeatmapTitle = "Lost Emotion";
 
-        public double BeatmapStars = 1.96d;
+            public string BeatmapArtist = "Masayoshi Minoshima feat.nomico";
 
-        #endregion
+            public double BeatmapStars = 1.96d;
 
-        public int RulesetID = 4;
+            #endregion
+
+            public int RulesetID = 0;
+        }
     }
 }
