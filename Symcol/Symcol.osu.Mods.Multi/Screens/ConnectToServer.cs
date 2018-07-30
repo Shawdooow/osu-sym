@@ -23,6 +23,8 @@ namespace Symcol.osu.Mods.Multi.Screens
 {
     public class ConnectToServer : BeatmapScreen
     {
+        public override string Title => "Connect To Server";
+
         protected OsuNetworkingClientHandler OsuNetworkingClientHandler;
 
         public readonly SettingsButton HostGameButton;

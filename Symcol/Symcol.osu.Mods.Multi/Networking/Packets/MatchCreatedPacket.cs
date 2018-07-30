@@ -1,7 +1,9 @@
-﻿using Symcol.Core.Networking.Packets;
+﻿using System;
+using Symcol.Core.Networking.Packets;
 
 namespace Symcol.osu.Mods.Multi.Networking.Packets
 {
+    [Serializable]
     public class MatchCreatedPacket : Packet
     {
         public override int PacketSize => 512;

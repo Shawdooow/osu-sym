@@ -11,6 +11,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Online.Multiplayer;
 using osu.Game.Overlays.SearchableList;
+using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets;
 using osu.Game.Screens.Multi.Components;
 using osu.Game.Screens.Multi.Screens.Lounge;
@@ -62,6 +63,8 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         private RulesetStore rulesets;
 
+        private List<Room> roomList = new List<Room>();
+
         public Lobby(OsuNetworkingClientHandler osuNetworkingClientHandler)
             : base(osuNetworkingClientHandler)
         {
@@ -69,26 +72,60 @@ namespace Symcol.osu.Mods.Multi.Screens
 
             OsuNetworkingClientHandler.OnPacketReceive += packet =>
             {
-                if (packet is MatchListPacket matchListPacket)
+                switch (packet)
                 {
-                    List<Room> rooms = new List<Room>();
-                    foreach (MatchListPacket.MatchInfo info in matchListPacket.MatchInfoList)
-                        rooms.Add(new Room
+                    case MatchListPacket matchListPacket:
+                        roomList = new List<Room>();
+                        foreach (MatchListPacket.MatchInfo info in matchListPacket.MatchInfoList)
+                            roomList.Add(new Room
+                            {
+                                Name = { Value = info.Name },
+                                Host = { Value = new User { Username = info.Username, Id = info.UserID, Country = new Country { FlagName = info.UserCountry } } },
+                                Status = { Value = new RoomStatusOpen() },
+                                Type = { Value = new GameTypeVersus() },
+                                Beatmap =
+                                {
+                                    Value = new BeatmapInfo
+                                    {
+                                        StarDifficulty = info.BeatmapStars,
+                                        Ruleset = rulesets.GetRuleset(info.RulesetID),
+                                        Metadata = new BeatmapMetadata
+                                        {
+                                            Title = info.BeatmapTitle,
+                                            Artist = info.BeatmapArtist,
+                                        },
+                                        BeatmapSet = new BeatmapSetInfo
+                                        {
+                                            OnlineInfo = new BeatmapSetOnlineInfo
+                                            {
+                                                Covers = new BeatmapSetOnlineCovers
+                                                {
+                                                    Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        Rooms = roomList;
+                        break;
+                    case MatchCreatedPacket matchCreated:
+                        roomList.Add(new Room
                         {
-                            Name = { Value = info.Name },
-                            Host = { Value = new User { Username = info.Username, Id = info.UserID, Country = new Country { FlagName = info.UserCountry } } },
+                            Name = { Value = matchCreated.MatchInfo.Name },
+                            Host = { Value = new User { Username = matchCreated.MatchInfo.Username, Id = matchCreated.MatchInfo.UserID, Country = new Country { FlagName = matchCreated.MatchInfo.UserCountry } } },
                             Status = { Value = new RoomStatusOpen() },
                             Type = { Value = new GameTypeVersus() },
                             Beatmap =
                             {
                                 Value = new BeatmapInfo
                                 {
-                                    StarDifficulty = info.BeatmapStars,
-                                    Ruleset = rulesets.GetRuleset(info.RulesetID),
+                                    StarDifficulty = matchCreated.MatchInfo.BeatmapStars,
+                                    Ruleset = rulesets.GetRuleset(matchCreated.MatchInfo.RulesetID),
                                     Metadata = new BeatmapMetadata
                                     {
-                                        Title = info.BeatmapTitle,
-                                        Artist = info.BeatmapArtist,
+                                        Title = matchCreated.MatchInfo.BeatmapTitle,
+                                        Artist = matchCreated.MatchInfo.BeatmapArtist,
                                     },
                                     BeatmapSet = new BeatmapSetInfo
                                     {
@@ -103,7 +140,8 @@ namespace Symcol.osu.Mods.Multi.Screens
                                 }
                             }
                         });
-                    Rooms = rooms;
+                        Rooms = roomList;
+                        break;
                 }
             };
 
@@ -118,7 +156,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                         new ScrollContainer
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Width = 0.55f,
+                            Size = new Vector2(0.55f, 0.9f),
                             Padding = new MarginPadding
                             {
                                 Vertical = 35 - DrawableRoom.SELECTION_BORDER_WIDTH,
@@ -135,6 +173,25 @@ namespace Symcol.osu.Mods.Multi.Screens
                                     Direction = FillDirection.Vertical,
                                     Spacing = new Vector2(10 - DrawableRoom.SELECTION_BORDER_WIDTH * 2),
                                 }
+                            }
+                        },
+                        new SettingsButton
+                        {
+                            Anchor = Anchor.BottomLeft,
+                            Origin = Anchor.BottomLeft,
+                            Position = new Vector2(12, -12),
+                            RelativeSizeAxes = Axes.X,
+                            Width = 0.2f,
+                            Text = "Create Game",
+                            Action = () =>
+                            {
+                                OsuNetworkingClientHandler.SendPacket(new CreateMatchPacket
+                                {
+                                    MatchInfo = new MatchListPacket.MatchInfo
+                                    {
+
+                                    }
+                                });
                             }
                         },
                         Inspector = new RoomInspector
