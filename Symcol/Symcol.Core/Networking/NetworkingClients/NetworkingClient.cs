@@ -135,11 +135,7 @@ namespace Symcol.Core.Networking.NetworkingClients
 
                 BinaryFormatter formatter = new BinaryFormatter();
                 if (formatter.Deserialize(stream) is Packet packet)
-                {
-                    //TODO: not this, each client should send the packet with this information somehow
-                    packet.Address = EndPoint.Address + ":" + EndPoint.Port.ToString();
                     return packet;
-                }
 
                 throw new NullReferenceException("Whatever we recieved isnt a packet!");
             }

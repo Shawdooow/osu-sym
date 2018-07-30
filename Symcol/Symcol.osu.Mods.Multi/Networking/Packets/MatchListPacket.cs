@@ -11,6 +11,7 @@ namespace Symcol.osu.Mods.Multi.Networking.Packets
 
         public List<MatchInfo> MatchInfoList = new List<MatchInfo>();
 
+        [Serializable]
         public class MatchInfo
         {
             public string Name = @"Welcome to Symcol!";

@@ -13,6 +13,6 @@ namespace Symcol.Core.Networking.Packets
         /// <summary>
         /// Specify starting size of a packet (bytes) for efficiency
         /// </summary>
-        public virtual int PacketSize => 512;
+        public virtual int PacketSize => 256;
     }
 }

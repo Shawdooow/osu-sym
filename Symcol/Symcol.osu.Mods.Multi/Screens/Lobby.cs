@@ -42,7 +42,7 @@ namespace Symcol.osu.Mods.Multi.Screens
         private IEnumerable<Room> rooms;
         public IEnumerable<Room> Rooms
         {
-            get { return rooms; }
+            get => rooms;
             set
             {
                 if (Equals(value, rooms)) return;
@@ -80,7 +80,53 @@ namespace Symcol.osu.Mods.Multi.Screens
                     Address = "10.0.0.25:25580",
                     Gamekey = "osu"
                 });
+                OsuNetworkingClientHandler.Connect();
+
+                OsuNetworkingClientHandler.OnConnectedToHost += list =>
+                    OsuNetworkingClientHandler.SendPacket(new GetMatchListPacket { Address = OsuNetworkingClientHandler.Address });
+
+                OsuNetworkingClientHandler.OnPacketReceive += packet =>
+                {
+                    if (packet is MatchListPacket matchListPacket)
+                    {
+                        List<Room> rooms = new List<Room>();
+                        foreach (MatchListPacket.MatchInfo info in matchListPacket.MatchInfoList)
+                            rooms.Add(new Room
+                            {
+                                Name = { Value = info.Name },
+                                Host = { Value = new User { Username = info.Username, Id = info.UserID, Country = new Country { FlagName = info.UserCountry } } },
+                                Status = { Value = new RoomStatusOpen() },
+                                Type = { Value = new GameTypeVersus() },
+                                Beatmap =
+                                {
+                                    Value = new BeatmapInfo
+                                    {
+                                        StarDifficulty = info.BeatmapStars,
+                                        Ruleset = rulesets.GetRuleset(info.RulesetID),
+                                        Metadata = new BeatmapMetadata
+                                        {
+                                            Title = info.BeatmapTitle,
+                                            Artist = info.BeatmapArtist,
+                                        },
+                                        BeatmapSet = new BeatmapSetInfo
+                                        {
+                                            OnlineInfo = new BeatmapSetOnlineInfo
+                                            {
+                                                Covers = new BeatmapSetOnlineCovers
+                                                {
+                                                    Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        Rooms = rooms;
+                    }
+                };
             }
+            else if (!dummy)
+                OsuNetworkingClientHandler?.SendPacket(new GetMatchListPacket { Address = OsuNetworkingClientHandler.Address });
 
             dummy = false;
 
@@ -134,89 +180,6 @@ namespace Symcol.osu.Mods.Multi.Screens
         private void load(RulesetStore rulesets)
         {
             this.rulesets = rulesets;
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            MatchListPacket.MatchInfo m = new MatchListPacket.MatchInfo();
-
-            Rooms = new[]
-            {
-                new Room
-                {
-                    Name = { Value = m.Name },
-                    Host = { Value = new User { Username = m.Username, Id = m.UserID, Country = new Country { FlagName = m.UserCountry } } },
-                    Status = { Value = new RoomStatusOpen() },
-                    Type = { Value = new GameTypeVersus() },
-                    Beatmap =
-                    {
-                        Value = new BeatmapInfo
-                        {
-                            StarDifficulty = m.BeatmapStars,
-                            Ruleset = rulesets.GetRuleset(m.RulesetID),
-                            Metadata = new BeatmapMetadata
-                            {
-                                Title = m.BeatmapTitle,
-                                Artist = m.BeatmapArtist,
-                            },
-                            BeatmapSet = new BeatmapSetInfo
-                            {
-                                OnlineInfo = new BeatmapSetOnlineInfo
-                                {
-                                    Covers = new BeatmapSetOnlineCovers
-                                    {
-                                        Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            };
-
-            if (OsuNetworkingClientHandler != null)
-            {
-                OsuNetworkingClientHandler.OnPacketReceive += packet =>
-                {
-                    if (packet is MatchListPacket matchListPacket)
-                        foreach (MatchListPacket.MatchInfo info in matchListPacket.MatchInfoList)
-                            Rooms = new[]
-                            {
-                                new Room
-                                {
-                                    Name = { Value = info.Name },
-                                    Host = { Value = new User { Username = info.Username, Id = info.UserID, Country = new Country { FlagName = info.UserCountry } } },
-                                    Status = { Value = new RoomStatusOpen() },
-                                    Type = { Value = new GameTypeVersus() },
-                                    Beatmap =
-                                    {
-                                        Value = new BeatmapInfo
-                                        {
-                                            StarDifficulty = info.BeatmapStars,
-                                            Ruleset = rulesets.GetRuleset(info.RulesetID),
-                                            Metadata = new BeatmapMetadata
-                                            {
-                                                Title = info.BeatmapTitle,
-                                                Artist = info.BeatmapArtist,
-                                            },
-                                            BeatmapSet = new BeatmapSetInfo
-                                            {
-                                                OnlineInfo = new BeatmapSetOnlineInfo
-                                                {
-                                                    Covers = new BeatmapSetOnlineCovers
-                                                    {
-                                                        Cover = @"https://assets.ppy.sh/beatmaps/734008/covers/cover.jpg?1523042189",
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            };
-                };
-            }
         }
 
         protected override void UpdateAfterChildren()

@@ -252,8 +252,18 @@ namespace Symcol.Core.Networking
         {
             switch (packet)
             {
+                default:
+                    Logger.Log("Recieved an unknown packet! - " + packet.Address, LoggingTarget.Network, LogLevel.Error);
+                    break;
                 case ConnectPacket connectPacket:
                     ConnectingClients.Add(GenerateConnectingClientInfo(connectPacket));
+                    ConnectedPacket connected = new ConnectedPacket();
+                    SignPacket(connected);
+                    GetNetworkingClient(GetConnectingClientInfo(connectPacket)).SendPacket(connected);
+                    break;
+                case ConnectedPacket connectedPacket:
+                    ConnectionStatues = ConnectionStatues.Connected;
+                    OnConnectedToHost?.Invoke(null);
                     break;
                 case DisconnectPacket disconnectPacket:
                     ClientDisconnecting(disconnectPacket);
@@ -541,6 +551,8 @@ namespace Symcol.Core.Networking
 
         protected override void Dispose(bool isDisposing)
         {
+            SendToServer(new DisconnectPacket());
+            SendToAllConnectedClients(new DisconnectPacket());
             ReceiveClient?.Dispose();
             base.Dispose(isDisposing);
         }
