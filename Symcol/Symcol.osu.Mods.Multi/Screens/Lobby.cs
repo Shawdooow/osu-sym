@@ -286,6 +286,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                 };
                 OsuNetworkingClientHandler.SendPacket(new JoinMatchPacket
                 {
+                    Match = match,
                     OsuClientInfo = OsuNetworkingClientHandler.OsuClientInfo
                 });
 
