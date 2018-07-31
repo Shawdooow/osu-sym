@@ -7,9 +7,7 @@ namespace Symcol.osu.Mods.Multi.Networking.Packets.Match
     [Serializable]
     public class LeavePacket : Packet
     {
-        public override int PacketSize => 2048;
-
-        public MatchListPacket.MatchInfo Match;
+        public override int PacketSize => 1024;
 
         public OsuClientInfo Player;
     }

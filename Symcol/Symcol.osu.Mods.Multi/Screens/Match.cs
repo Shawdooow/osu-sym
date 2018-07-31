@@ -116,14 +116,13 @@ namespace Symcol.osu.Mods.Multi.Screens
             Push(new Player(OsuNetworkingClientHandler));
         }
 
-        protected override bool OnExiting(Screen next)
+        protected override void Dispose(bool isDisposing)
         {
             OsuNetworkingClientHandler.SendPacket(new LeavePacket
             {
-                Player = OsuNetworkingClientHandler.OsuClientInfo,
-                Match = match
+                Player = OsuNetworkingClientHandler.OsuClientInfo
             });
-            return base.OnExiting(next);
+            base.Dispose(isDisposing);
         }
 
         private void openSongSelect()

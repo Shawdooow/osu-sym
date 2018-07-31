@@ -182,16 +182,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                             RelativeSizeAxes = Axes.X,
                             Width = 0.2f,
                             Text = "Create Game",
-                            Action = () =>
-                            {
-                                OsuNetworkingClientHandler.SendPacket(new CreateMatchPacket
-                                {
-                                    MatchInfo = new MatchListPacket.MatchInfo
-                                    {
-
-                                    }
-                                });
-                            }
+                            Action = () => { OsuNetworkingClientHandler.SendPacket(new CreateMatchPacket { MatchInfo = new MatchListPacket.MatchInfo() }); }
                         },
                         Inspector = new RoomInspector
                         {
@@ -295,8 +286,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                 };
                 OsuNetworkingClientHandler.SendPacket(new JoinMatchPacket
                 {
-                    OsuClientInfo = OsuNetworkingClientHandler.OsuClientInfo,
-                    MatchInfo = match
+                    OsuClientInfo = OsuNetworkingClientHandler.OsuClientInfo
                 });
 
                 //TODO: dont keep adding this every click >.>
