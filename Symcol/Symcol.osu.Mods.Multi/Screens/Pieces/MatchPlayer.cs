@@ -16,7 +16,7 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
 {
     public class MatchPlayer : ClickableContainer, IHasContextMenu
     {
-        public readonly OsuClientInfo ClientInfo;
+        public readonly OsuClientInfo OsuClientInfo;
 
         private readonly Box dim;
 
@@ -26,7 +26,7 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
 
         public MatchPlayer(OsuClientInfo clientInfo)
         {
-            ClientInfo = clientInfo;
+            OsuClientInfo = clientInfo;
 
             Alpha = 0;
             Masking = true;
@@ -36,17 +36,17 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
 
             Country country = new Country
             {
-                FullName = ClientInfo.UserCountry,
-                FlagName = ClientInfo.CountryFlagName,
+                FullName = OsuClientInfo.UserCountry,
+                FlagName = OsuClientInfo.CountryFlagName,
             };
 
             User user = new User
             {
-                Username = ClientInfo.Username,
-                Id = ClientInfo.UserID,
+                Username = OsuClientInfo.Username,
+                Id = OsuClientInfo.UserID,
                 Country = country,
-                AvatarUrl = ClientInfo.UserPic,
-                CoverUrl = ClientInfo.UserBackground,
+                AvatarUrl = OsuClientInfo.UserPic,
+                CoverUrl = OsuClientInfo.UserBackground,
             };
 
             Children = new Drawable[]

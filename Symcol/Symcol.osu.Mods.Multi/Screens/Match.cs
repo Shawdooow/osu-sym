@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Overlays.Settings;
-using Symcol.Core.Networking;
 using Symcol.osu.Mods.Multi.Networking;
 using Symcol.osu.Mods.Multi.Networking.Packets.Lobby;
 using Symcol.osu.Mods.Multi.Networking.Packets.Match;
@@ -13,7 +14,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 {
     public class Match : MultiScreen
     {
-        private readonly MatchPlayerList playerList;
+        private readonly MatchListPacket.MatchInfo match;
 
         private BeatmapManager beatmaps;
 
@@ -21,9 +22,12 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         private readonly Chat chat;
 
-        public Match(OsuNetworkingClientHandler osuNetworkingClientHandler, JoinedMatchPacket joindPacket)
+        public Match(OsuNetworkingClientHandler osuNetworkingClientHandler, JoinedMatchPacket joinedPacket, MatchListPacket.MatchInfo match)
             : base(osuNetworkingClientHandler)
         {
+            this.match = match;
+
+            MatchPlayerList playerList;
             Children = new Drawable[]
             {
                 new SettingsButton
@@ -58,39 +62,43 @@ namespace Symcol.osu.Mods.Multi.Screens
                 chat = new Chat(OsuNetworkingClientHandler)
             };
 
+            foreach (OsuClientInfo player in joinedPacket.Players)
+                playerList.Add(player);
+
             OsuNetworkingClientHandler.OnPacketReceive += packet =>
             {
+                //Don't freeze anymore :P
                 if (packet is SetMapPacket mapPacket)
-                {
-                    foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
-                        if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
-                        {
-                            foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
-                                if (beatmap.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
-                                {
-                                    Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
-                                    Beatmap.Value.Track.Start();
-                                    MatchTools.MapChange(Beatmap);
-                                    return;
-                                }
-                            break;
-                        }
-                        //try to fallback for old maps
-                        else if (mapPacket.BeatmapName == beatmapSet.Metadata.Title && mapPacket.Mapper == beatmapSet.Metadata.Author.Username)
-                        {
-                            foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
-                                if (mapPacket.BeatmapDifficulty == beatmap.Version)
-                                {
-                                    Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
-                                    Beatmap.Value.Track.Start();
-                                    MatchTools.MapChange(Beatmap);
-                                    return;
-                                }
-                            break;
-                        }
-
-                    MatchTools.MapChange(mapPacket.OnlineBeatmapSetID);
-                }
+                    Task.Factory.StartNew(() =>
+                    {
+                        MatchTools.MapChange(mapPacket.OnlineBeatmapSetID);
+                        foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
+                            if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
+                            {
+                                foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
+                                    if (beatmap.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
+                                    {
+                                        Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
+                                        Beatmap.Value.Track.Start();
+                                        MatchTools.MapChange(Beatmap);
+                                        return;
+                                    }
+                                break;
+                            }
+                            //try to fallback for old maps
+                            else if (mapPacket.BeatmapName == beatmapSet.Metadata.Title && mapPacket.Mapper == beatmapSet.Metadata.Author.Username)
+                            {
+                                foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
+                                    if (mapPacket.BeatmapDifficulty == beatmap.Version)
+                                    {
+                                        Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
+                                        Beatmap.Value.Track.Start();
+                                        MatchTools.MapChange(Beatmap);
+                                        return;
+                                    }
+                                break;
+                            }
+                    }, TaskCreationOptions.LongRunning);
             };
         }
 
@@ -100,12 +108,22 @@ namespace Symcol.osu.Mods.Multi.Screens
             this.beatmaps = beatmaps;
         }
 
-        protected virtual void Load(List<ClientInfo> playerList)
+        protected virtual void Load(List<OsuClientInfo> players)
         {
             if (MatchTools.SelectedBeatmap != null)
                 Beatmap.Value = MatchTools.SelectedBeatmap;
 
             Push(new Player(OsuNetworkingClientHandler));
+        }
+
+        protected override bool OnExiting(Screen next)
+        {
+            OsuNetworkingClientHandler.SendPacket(new LeavePacket
+            {
+                Player = OsuNetworkingClientHandler.OsuClientInfo,
+                Match = match
+            });
+            return base.OnExiting(next);
         }
 
         private void openSongSelect()

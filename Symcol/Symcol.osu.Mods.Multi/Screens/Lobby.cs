@@ -280,26 +280,30 @@ namespace Symcol.osu.Mods.Multi.Screens
             // open the room if its selected and is clicked again
             if (room.State == SelectionState.Selected)
             {
+                MatchListPacket.MatchInfo match = new MatchListPacket.MatchInfo
+                {
+                    Name = room.Room.Name.Value,
+                    Username = room.Room.Host.Value.Username,
+                    //Status = { Value = new RoomStatusOpen() },
+                    //Type = { Value = new GameTypeVersus() },
+                    BeatmapStars = room.Room.Beatmap.Value.StarDifficulty,
+                    //TODO: null check this, some ruleset devs aren't dumb
+                    RulesetID = room.Room.Beatmap.Value.Ruleset.ID.Value,
+                    BeatmapTitle = room.Room.Beatmap.Value.Metadata.Title,
+                    BeatmapArtist = room.Room.Beatmap.Value.Metadata.Artist,
+                    //TODO: Players
+                };
                 OsuNetworkingClientHandler.SendPacket(new JoinMatchPacket
                 {
                     OsuClientInfo = OsuNetworkingClientHandler.OsuClientInfo,
-                    MatchInfo = new MatchListPacket.MatchInfo
-                    {
-                        Name = room.Room.Name.Value,
-                        Username = room.Room.Host.Value.Username,
-                        //Status = { Value = new RoomStatusOpen() },
-                        //Type = { Value = new GameTypeVersus() },
-                        BeatmapStars = room.Room.Beatmap.Value.StarDifficulty,
-                        RulesetID = room.Room.Beatmap.Value.Ruleset.ID.Value,
-                        BeatmapTitle = room.Room.Beatmap.Value.Metadata.Title,
-                        BeatmapArtist = room.Room.Beatmap.Value.Metadata.Artist,
-                        //TODO: Players
-                    }
+                    MatchInfo = match
                 });
+
+                //TODO: dont keep adding this every click >.>
                 OsuNetworkingClientHandler.OnPacketReceive += packet =>
                 {
-                    if (packet is JoinedMatchPacket joinedMatch)
-                        Push(new Match(OsuNetworkingClientHandler, joinedMatch));
+                    if (packet is JoinedMatchPacket joinedMatch && IsCurrentScreen)
+                        Push(new Match(OsuNetworkingClientHandler, joinedMatch, match));
                 };
             }
         }
