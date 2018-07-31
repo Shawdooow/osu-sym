@@ -10,11 +10,12 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Users;
 using OpenTK;
 using OpenTK.Graphics;
+using Symcol.Core.Graphics.Containers;
 using Symcol.osu.Mods.Multi.Networking;
 
 namespace Symcol.osu.Mods.Multi.Screens.Pieces
 {
-    public class MatchPlayer : ClickableContainer, IHasContextMenu
+    public class MatchPlayer : SymcolClickableContainer, IHasContextMenu
     {
         public readonly OsuClientInfo OsuClientInfo;
 

@@ -1,8 +1,4 @@
-﻿//Symcol.Rulesets.Core.Multiplayer.Screens.RulesetMultiplayerSelection
-//Symcol.Rulesets.Core.Rulesets.SymcolSettingsSubsection
-#define SymcolMods
-
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using osu.Framework.Configuration;
@@ -20,15 +16,14 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using OpenTK;
 using OpenTK.Graphics;
+using Symcol.Core.Graphics.Containers;
+using Symcol.Core.Graphics.Sprites;
 using Symcol.osu.Core.Containers.Shawdooow;
 using Symcol.osu.Mods.Multi.Networking.Settings;
 
-#if SymcolMods
-#endif
-
 namespace Symcol.osu.Mods.Multi.Screens.Pieces
 {
-    public class MatchTools : Container
+    public class MatchTools : SymcolContainer
     {
         public readonly Bindable<MatchScreenMode> Mode = new Bindable<MatchScreenMode>() { Default = MatchScreenMode.MapDetails };
 
@@ -36,13 +31,13 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
 
         public readonly OsuTabControl<MatchScreenMode> TabControl;
 
-        public readonly Container SelectedContent;
+        public readonly SymcolContainer SelectedContent;
 
-        public readonly Container MapDetails;
+        public readonly SymcolContainer MapDetails;
 
-        public Container RulesetSettings;
+        public SymcolContainer RulesetSettings;
 
-        public readonly Container SoundBoard;
+        public readonly SymcolContainer SoundBoard;
 
         public WorkingBeatmap SelectedBeatmap { get; private set; }
 
@@ -75,7 +70,7 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
                     Height = 0.08f,
                     Width = 0.8f
                 },
-                SelectedContent = new Container
+                SelectedContent = new SymcolContainer
                 {
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomCentre,
@@ -112,14 +107,12 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
                         SelectedContent.Child = new Container
                         {
                             RelativeSizeAxes = Axes.Both,
-#if SymcolMods
                             Child = new HitSoundBoard
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 ButtonSize = 80
                             }
-#endif
                         };
                         break;
                 }
@@ -161,9 +154,9 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
         }
     }
 
-    public class MapDetailsSection : ClickableContainer
+    public class MapDetailsSection : SymcolClickableContainer
     {
-        private Sprite beatmapBG;
+        private SymcolSprite beatmapBG;
         private SpriteText name;
         private SpriteText artist;
         private SpriteText difficulty;
@@ -234,7 +227,7 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
 
             Children = new Drawable[]
             {
-                beatmapBG = new Sprite
+                beatmapBG = new SymcolSprite
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
