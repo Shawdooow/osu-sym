@@ -64,6 +64,12 @@ namespace Symcol.osu.Mods.Multi.Screens
 
             foreach (OsuClientInfo player in joinedPacket.Players)
                 playerList.Add(player);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(BeatmapManager beatmaps)
+        {
+            this.beatmaps = beatmaps;
 
             OsuNetworkingClientHandler.OnPacketReceive += packet =>
             {
@@ -100,12 +106,6 @@ namespace Symcol.osu.Mods.Multi.Screens
                             }
                     }, TaskCreationOptions.LongRunning);
             };
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(BeatmapManager beatmaps)
-        {
-            this.beatmaps = beatmaps;
         }
 
         protected virtual void Load(List<OsuClientInfo> players)
