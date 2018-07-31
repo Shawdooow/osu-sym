@@ -280,7 +280,22 @@ namespace Symcol.osu.Mods.Multi.Screens
             // open the room if its selected and is clicked again
             if (room.State == SelectionState.Selected)
             {
-                OsuNetworkingClientHandler.SendPacket(new JoinMatchPacket());
+                OsuNetworkingClientHandler.SendPacket(new JoinMatchPacket
+                {
+                    OsuClientInfo = OsuNetworkingClientHandler.OsuClientInfo,
+                    MatchInfo = new MatchListPacket.MatchInfo
+                    {
+                        Name = room.Room.Name.Value,
+                        Username = room.Room.Host.Value.Username,
+                        //Status = { Value = new RoomStatusOpen() },
+                        //Type = { Value = new GameTypeVersus() },
+                        BeatmapStars = room.Room.Beatmap.Value.StarDifficulty,
+                        RulesetID = room.Room.Beatmap.Value.Ruleset.ID.Value,
+                        BeatmapTitle = room.Room.Beatmap.Value.Metadata.Title,
+                        BeatmapArtist = room.Room.Beatmap.Value.Metadata.Artist,
+                        //TODO: Players
+                    }
+                });
                 OsuNetworkingClientHandler.OnPacketReceive += packet =>
                 {
                     if (packet is JoinedMatchPacket joinedMatch)
