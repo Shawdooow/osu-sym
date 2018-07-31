@@ -3,7 +3,6 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using Symcol.Core.Graphics.Containers;
-using Symcol.osu.Mods.Multi.Networking.Packets;
 using Symcol.osu.Mods.Multi.Networking.Packets.Match;
 
 namespace Symcol.osu.Mods.Multi.Screens.Pieces
@@ -26,7 +25,7 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
                     Origin = Anchor.TopLeft,
                     Colour = OsuColour.FromHex(packet.AuthorColor),
                     TextSize = 24,
-                    Text = packet.Author + ":"
+                    Text = packet.Player.Username + ":"
                 },
                 new OsuTextFlowContainer(t => { t.TextSize = 24; })
                 {

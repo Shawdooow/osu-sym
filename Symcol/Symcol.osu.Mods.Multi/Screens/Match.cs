@@ -117,10 +117,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         protected override void Dispose(bool isDisposing)
         {
-            OsuNetworkingClientHandler.SendPacket(new LeavePacket
-            {
-                Player = OsuNetworkingClientHandler.OsuClientInfo
-            });
+            OsuNetworkingClientHandler.SendPacket(new LeavePacket());
             base.Dispose(isDisposing);
         }
 
@@ -134,7 +131,6 @@ namespace Symcol.osu.Mods.Multi.Screens
                 {
                     OsuNetworkingClientHandler.SendPacket(new SetMapPacket
                     {
-                        Player = OsuNetworkingClientHandler.OsuClientInfo,
                         OnlineBeatmapSetID = (int)map.BeatmapSetInfo.OnlineBeatmapSetID,
                         OnlineBeatmapID = (int)map.BeatmapInfo.OnlineBeatmapID,
                         BeatmapTitle = map.Metadata.Title,
@@ -148,7 +144,6 @@ namespace Symcol.osu.Mods.Multi.Screens
                     //try to fallback for old maps
                     OsuNetworkingClientHandler.SendPacket(new SetMapPacket
                     {
-                        Player = OsuNetworkingClientHandler.OsuClientInfo,
                         BeatmapTitle = map.Metadata.Title,
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,

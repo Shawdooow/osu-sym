@@ -1,8 +1,10 @@
 ﻿using osu.Framework.Allocation;
 using osu.Game.Online.API;
 using Symcol.Core.Networking;
+using Symcol.Core.Networking.Packets;
 using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
+using Symcol.osu.Mods.Multi.Networking.Packets.Match;
 
 namespace Symcol.osu.Mods.Multi.Networking
 {
@@ -21,6 +23,13 @@ namespace Symcol.osu.Mods.Multi.Networking
         private void load(APIAccess api)
         {
             api.Register(this);
+        }
+
+        protected override Packet SignPacket(Packet packet)
+        {
+            if (packet is MatchPacket matchPacket)
+                matchPacket.Player = OsuClientInfo;
+            return base.SignPacket(packet);
         }
 
         public void APIStateChanged(APIAccess api, APIState state)

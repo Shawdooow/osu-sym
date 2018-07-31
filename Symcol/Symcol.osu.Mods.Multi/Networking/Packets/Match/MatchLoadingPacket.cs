@@ -5,7 +5,7 @@ using Symcol.Core.Networking.Packets;
 namespace Symcol.osu.Mods.Multi.Networking.Packets.Match
 {
     [Serializable]
-    public class PlayerListPacket : Packet
+    public class MatchLoadingPacket : Packet
     {
         public override int PacketSize => Players.Count > 0 ? Players.Count * 1024 : 1024;
 

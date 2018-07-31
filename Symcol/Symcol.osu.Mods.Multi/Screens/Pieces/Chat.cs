@@ -9,7 +9,6 @@ using OpenTK.Graphics;
 using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
 using Symcol.osu.Mods.Multi.Networking;
-using Symcol.osu.Mods.Multi.Networking.Packets;
 using Symcol.osu.Mods.Multi.Networking.Packets.Match;
 
 namespace Symcol.osu.Mods.Multi.Screens.Pieces
@@ -106,7 +105,6 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
 
             osuNetworkingClientHandler.SendPacket(new ChatPacket
             {
-                Author = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.SavedName),
                 AuthorColor = playerColorHex,
                 Message = message,
             });

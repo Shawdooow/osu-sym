@@ -1,8 +1,9 @@
-﻿using Symcol.Core.Networking.Packets;
+﻿using System;
 
 namespace Symcol.osu.Mods.Multi.Networking.Packets.Match
 {
-    public class StartMatchPacket : Packet
+    [Serializable]
+    public class StartMatchPacket : MatchPacket
     {
     }
 }

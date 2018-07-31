@@ -1,11 +1,9 @@
 ﻿using System;
-using Symcol.Core.Networking.Packets;
 
 namespace Symcol.osu.Mods.Multi.Networking.Packets.Match
 {
     [Serializable]
-    public class PlayerDisconnectedPacket : Packet
+    public class PlayerDisconnectedPacket : MatchPacket
     {
-        public OsuClientInfo Player;
     }
 }
