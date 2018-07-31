@@ -92,7 +92,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                                 break;
                             }
                             //try to fallback for old maps
-                            else if (mapPacket.BeatmapName == beatmapSet.Metadata.Title && mapPacket.Mapper == beatmapSet.Metadata.Author.Username)
+                            else if (mapPacket.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.BeatmapMapper == beatmapSet.Metadata.Author.Username)
                             {
                                 foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
                                     if (mapPacket.BeatmapDifficulty == beatmap.Version)
@@ -135,8 +135,13 @@ namespace Symcol.osu.Mods.Multi.Screens
                 {
                     OsuNetworkingClientHandler.SendPacket(new SetMapPacket
                     {
+                        Player = OsuNetworkingClientHandler.OsuClientInfo,
                         OnlineBeatmapSetID = (int)map.BeatmapSetInfo.OnlineBeatmapSetID,
-                        OnlineBeatmapID = (int)map.BeatmapInfo.OnlineBeatmapID
+                        OnlineBeatmapID = (int)map.BeatmapInfo.OnlineBeatmapID,
+                        BeatmapTitle = map.Metadata.Title,
+                        BeatmapArtist = map.Metadata.Artist,
+                        BeatmapMapper = map.Metadata.Author.Username,
+                        BeatmapDifficulty = map.BeatmapInfo.Version,
                     });
                 }
                 catch
@@ -144,9 +149,11 @@ namespace Symcol.osu.Mods.Multi.Screens
                     //try to fallback for old maps
                     OsuNetworkingClientHandler.SendPacket(new SetMapPacket
                     {
-                        BeatmapName = map.Metadata.Title,
+                        Player = OsuNetworkingClientHandler.OsuClientInfo,
+                        BeatmapTitle = map.Metadata.Title,
+                        BeatmapArtist = map.Metadata.Artist,
+                        BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
-                        Mapper = map.Metadata.Author.Username
                     });
                 }
             };
