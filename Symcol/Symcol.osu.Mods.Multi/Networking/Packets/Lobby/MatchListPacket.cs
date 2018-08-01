@@ -34,7 +34,15 @@ namespace Symcol.osu.Mods.Multi.Networking.Packets.Lobby
 
             public string BeatmapArtist = "Masayoshi Minoshima feat.nomico";
 
-            public double BeatmapStars = 1.96d;
+            public string BeatmapMapper = "Shawdooow";
+
+            public string BeatmapDifficulty = "Last Dance Heaven";
+
+            public int OnlineBeatmapSetID = 734008;
+
+            public int OnlineBeatmapID = 1548917;
+
+            public double BeatmapStars = 4.85d;
 
             #endregion
 

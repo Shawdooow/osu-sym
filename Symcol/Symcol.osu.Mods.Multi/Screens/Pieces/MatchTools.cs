@@ -156,6 +156,7 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
 
     public class MapDetailsSection : SymcolClickableContainer
     {
+        // ReSharper disable once InconsistentNaming
         private SymcolSprite beatmapBG;
         private SpriteText name;
         private SpriteText artist;
@@ -167,6 +168,8 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
         public MapDetailsSection(WorkingBeatmap workingBeatmap)
         {
             draw();
+
+            if (workingBeatmap is DummyWorkingBeatmap) return;
 
             HitObject lastObject = workingBeatmap.Beatmap.HitObjects.LastOrDefault();
             double endTime = (lastObject as IHasEndTime)?.EndTime ?? lastObject?.StartTime ?? 0;

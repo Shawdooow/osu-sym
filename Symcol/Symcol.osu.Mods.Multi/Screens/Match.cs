@@ -4,6 +4,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Overlays.Settings;
+using Symcol.Core.Networking.Packets;
 using Symcol.osu.Mods.Multi.Networking;
 using Symcol.osu.Mods.Multi.Networking.Packets.Lobby;
 using Symcol.osu.Mods.Multi.Networking.Packets.Match;
@@ -25,6 +26,8 @@ namespace Symcol.osu.Mods.Multi.Screens
             : base(osuNetworkingClientHandler)
         {
             this.match = match;
+
+            osuNetworkingClientHandler.SendPacket(new GetMapPacket());
 
             MatchPlayerList playerList;
             Children = new Drawable[]
@@ -70,41 +73,45 @@ namespace Symcol.osu.Mods.Multi.Screens
         {
             this.beatmaps = beatmaps;
 
-            OsuNetworkingClientHandler.OnPacketReceive += packet =>
-            {
-                //Don't freeze anymore :P
-                if (packet is SetMapPacket mapPacket)
-                    Task.Factory.StartNew(() =>
-                    {
-                        MatchTools.MapChange(mapPacket.OnlineBeatmapSetID);
-                        foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
-                            if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
-                            {
-                                foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
-                                    if (beatmap.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
-                                    {
-                                        Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
-                                        Beatmap.Value.Track.Start();
-                                        MatchTools.MapChange(Beatmap);
-                                        return;
-                                    }
-                                break;
-                            }
-                            //try to fallback for old maps
-                            else if (mapPacket.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.BeatmapMapper == beatmapSet.Metadata.Author.Username)
-                            {
-                                foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
-                                    if (mapPacket.BeatmapDifficulty == beatmap.Version)
-                                    {
-                                        Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
-                                        Beatmap.Value.Track.Start();
-                                        MatchTools.MapChange(Beatmap);
-                                        return;
-                                    }
-                                break;
-                            }
-                    }, TaskCreationOptions.LongRunning);
-            };
+            OsuNetworkingClientHandler.OnPacketReceive += setMap;
+        }
+
+        private void setMap(Packet packet)
+        {
+            //Don't freeze anymore :P
+            if (packet is SetMapPacket mapPacket)
+                Task.Factory.StartNew(() =>
+                {
+                    MatchTools.MapChange(mapPacket.OnlineBeatmapSetID);
+                    foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
+                        if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
+                        {
+                            foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
+                                if (beatmap.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
+                                {
+                                    Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
+                                    Beatmap.Value.Track.Start();
+                                    MatchTools.MapChange(Beatmap);
+                                    return;
+                                }
+
+                            break;
+                        }
+                        //try to fallback for old maps
+                        else if (mapPacket.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.BeatmapMapper == beatmapSet.Metadata.Author.Username)
+                        {
+                            foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
+                                if (mapPacket.BeatmapDifficulty == beatmap.Version)
+                                {
+                                    Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
+                                    Beatmap.Value.Track.Start();
+                                    MatchTools.MapChange(Beatmap);
+                                    return;
+                                }
+
+                            break;
+                        }
+                }, TaskCreationOptions.LongRunning);
         }
 
         protected virtual void Load(List<OsuClientInfo> players)
@@ -118,6 +125,7 @@ namespace Symcol.osu.Mods.Multi.Screens
         protected override void Dispose(bool isDisposing)
         {
             OsuNetworkingClientHandler.SendPacket(new LeavePacket());
+            OsuNetworkingClientHandler.OnPacketReceive -= setMap;
             base.Dispose(isDisposing);
         }
 
