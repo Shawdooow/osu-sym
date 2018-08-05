@@ -94,9 +94,12 @@ namespace Symcol.osu.Mods.Multi.Screens
                                 foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
                                     if (beatmap.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
                                     {
-                                        Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
-                                        Beatmap.Value.Track.Start();
                                         MatchTools.MapChange(Beatmap);
+                                        if (!Beatmap.Disabled)
+                                        {
+                                            Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
+                                            Beatmap.Value.Track.Start();
+                                        }
                                         return;
                                     }
 
@@ -108,9 +111,12 @@ namespace Symcol.osu.Mods.Multi.Screens
                                 foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
                                     if (mapPacket.BeatmapDifficulty == beatmap.Version)
                                     {
-                                        Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
-                                        Beatmap.Value.Track.Start();
                                         MatchTools.MapChange(Beatmap);
+                                        if (!Beatmap.Disabled)
+                                        {
+                                            Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
+                                            Beatmap.Value.Track.Start();
+                                        }
                                         return;
                                     }
 
@@ -126,10 +132,10 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         protected virtual void Load(List<OsuClientInfo> players)
         {
-            if (MatchTools.SelectedBeatmap != null)
+            if (MatchTools.SelectedBeatmap != null && !Beatmap.Disabled)
                 Beatmap.Value = MatchTools.SelectedBeatmap;
 
-            if (MatchTools.SelectedRuleset != null)
+            if (MatchTools.SelectedRuleset != null && !Ruleset.Disabled)
                 Ruleset.Value = MatchTools.SelectedRuleset;
 
             Push(new Player(OsuNetworkingClientHandler));
