@@ -67,7 +67,7 @@ namespace Symcol.osu.Mods.Multi.Screens
         public Lobby(OsuNetworkingClientHandler osuNetworkingClientHandler)
             : base(osuNetworkingClientHandler)
         {
-            OsuNetworkingClientHandler.SendPacket(new GetMatchListPacket { Address = OsuNetworkingClientHandler.Address });
+            OsuNetworkingClientHandler.SendPacket(new GetMatchListPacket());
 
             OsuNetworkingClientHandler.OnPacketReceive += packet =>
             {
@@ -183,6 +183,16 @@ namespace Symcol.osu.Mods.Multi.Screens
                             Width = 0.2f,
                             Text = "Create Game",
                             Action = () => { OsuNetworkingClientHandler.SendPacket(new CreateMatchPacket { MatchInfo = new MatchListPacket.MatchInfo() }); }
+                        },
+                        new SettingsButton
+                        {
+                            Anchor = Anchor.BottomLeft,
+                            Origin = Anchor.BottomLeft,
+                            Position = new Vector2(-12),
+                            RelativeSizeAxes = Axes.X,
+                            Width = 0.2f,
+                            Text = "Refresh",
+                            Action = () => { OsuNetworkingClientHandler.SendPacket(new GetMatchListPacket()); }
                         },
                         Inspector = new RoomInspector
                         {

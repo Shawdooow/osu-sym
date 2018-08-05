@@ -21,8 +21,6 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         protected MatchTools MatchTools;
 
-        private readonly Chat chat;
-
         private RulesetStore rulesets;
 
         public Match(OsuNetworkingClientHandler osuNetworkingClientHandler, JoinedMatchPacket joinedPacket, MatchListPacket.MatchInfo match)
@@ -64,7 +62,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                 },
                 playerList = new MatchPlayerList(OsuNetworkingClientHandler),
                 MatchTools = new MatchTools(),
-                chat = new Chat(OsuNetworkingClientHandler)
+                new Chat(OsuNetworkingClientHandler)
             };
 
             foreach (OsuClientInfo player in joinedPacket.Players)
