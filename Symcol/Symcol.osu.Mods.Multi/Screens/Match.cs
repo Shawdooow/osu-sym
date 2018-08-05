@@ -80,7 +80,6 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         private void handlePackets(Packet packet)
         {
-
             switch (packet)
             {
                 case SetMapPacket mapPacket:

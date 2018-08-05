@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using osu.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
-using osu.Framework.Audio.Sample;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -18,6 +17,7 @@ using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Cursor;
 using osu.Game.Online.API;
 using osu.Game.Overlays;
 using osu.Game.Rulesets;
@@ -33,7 +33,7 @@ using Symcol.osu.Mods.Multi.Networking.Packets.Player;
 
 namespace Symcol.osu.Mods.Multi.Screens
 {
-    public class Player : ScreenWithBeatmapBackground
+    public class Player : ScreenWithBeatmapBackground, IProvideCursor
     {
         protected override float BackgroundParallaxAmount => 0.1f;
 
@@ -41,11 +41,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         protected override OverlayActivation InitialOverlayActivationMode => OverlayActivation.UserTriggered;
 
-        public bool HasFailed { get; private set; }
-
-        public bool AllowPause { get; set; } = true;
         public bool AllowLeadIn { get; set; } = true;
-        public bool AllowResults { get; set; } = true;
 
         private Bindable<bool> mouseWheelDisabled;
         private Bindable<double> userAudioOffset;
@@ -88,7 +84,6 @@ namespace Symcol.osu.Mods.Multi.Screens
                         adjustableClock.Start();
                         break;
                     case MatchExitPacket exit:
-                        fadeOut();
                         Exit();
                         break;
                 }
@@ -250,8 +245,6 @@ namespace Symcol.osu.Mods.Multi.Screens
 
             ValidForResume = false;
 
-            if (!AllowResults) return;
-
             using (BeginDelayedSequence(1000))
             {
                 onCompletionEvent = Schedule(delegate
@@ -275,8 +268,6 @@ namespace Symcol.osu.Mods.Multi.Screens
         {
             if (Beatmap.Value.Mods.Value.OfType<IApplicableFailOverride>().Any(m => !m.AllowFail))
                 return false;
-
-            HasFailed = true;
             return true;
         }
 
@@ -329,16 +320,10 @@ namespace Symcol.osu.Mods.Multi.Screens
         protected override bool OnExiting(Screen next)
         {
             Remove(OsuNetworkingClientHandler);
-            if ((!AllowPause || HasFailed || !ValidForResume || RulesetContainer?.HasReplayLoaded != false))
-            {
-                // In the case of replays, we may have changed the playback rate.
-                applyRateFromMods();
+            applyRateFromMods();
 
-                fadeOut();
-                return base.OnExiting(next);
-            }
-
-            return true;
+            fadeOut();
+            return base.OnExiting(next);
         }
 
         private void fadeOut()
@@ -358,7 +343,10 @@ namespace Symcol.osu.Mods.Multi.Screens
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
             if (args.Key == Key.Escape && !args.Repeat)
+            {
                 OsuNetworkingClientHandler.SendPacket(new MatchExitPacket());
+                return true;
+            }
 
             return base.OnKeyDown(state, args);
         }
