@@ -271,6 +271,7 @@ namespace Symcol.Core.Networking
                             {
                                 ConnectingClients.Remove(info);
                                 info.LastConnectionTime = Time.Current;
+                                info.ConnectionTryCount = 0;
                                 ConnectedClients.Add(info);
                                 break;
                             }
@@ -278,6 +279,7 @@ namespace Symcol.Core.Networking
                         if (info.Address == testPacket.Address)
                         {
                             info.LastConnectionTime = Time.Current;
+                            info.ConnectionTryCount = 0;
                             break;
                         }
                     break;
