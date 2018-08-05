@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -12,6 +13,7 @@ using osu.Framework.MathUtils;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using OpenTK;
@@ -41,7 +43,11 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
 
         public WorkingBeatmap SelectedBeatmap { get; private set; }
 
+        public RulesetInfo SelectedRuleset { get; private set; }
+
         private int selectedBeatmapSetID;
+
+        private RulesetStore rulesets;
 
         public MatchTools()
         {
@@ -120,11 +126,17 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
             Mode.BindTo(TabControl.Current);
         }
 
+        [BackgroundDependencyLoader]
+        private void load(RulesetStore rulesets)
+        {
+            this.rulesets = rulesets;
+        }
+
         public void MapChange(WorkingBeatmap workingBeatmap)
         {
             if (workingBeatmap == null)
             {
-                MapChange(-1);
+                MapChange(-1, 0);
                 return;
             }
 
@@ -139,8 +151,9 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
                 SelectedContent.Child = new MapDetailsSection(SelectedBeatmap);
         }
 
-        public void MapChange(int onlineBeatmapSetID)
+        public void MapChange(int onlineBeatmapSetID, int rulesetID)
         {
+            SelectedRuleset = rulesets.GetRuleset(rulesetID);
             SelectedBeatmap = null;
             selectedBeatmapSetID = onlineBeatmapSetID;
 

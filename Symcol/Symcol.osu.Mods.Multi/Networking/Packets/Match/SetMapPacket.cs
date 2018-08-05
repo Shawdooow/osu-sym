@@ -16,5 +16,7 @@ namespace Symcol.osu.Mods.Multi.Networking.Packets.Match
         public string BeatmapMapper;
 
         public string BeatmapDifficulty;
+
+        public int RulesetID;
     }
 }

@@ -4,6 +4,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets;
 using Symcol.Core.Networking.Packets;
 using Symcol.osu.Mods.Multi.Networking;
 using Symcol.osu.Mods.Multi.Networking.Packets.Lobby;
@@ -21,6 +22,8 @@ namespace Symcol.osu.Mods.Multi.Screens
         protected MatchTools MatchTools;
 
         private readonly Chat chat;
+
+        private RulesetStore rulesets;
 
         public Match(OsuNetworkingClientHandler osuNetworkingClientHandler, JoinedMatchPacket joinedPacket, MatchListPacket.MatchInfo match)
             : base(osuNetworkingClientHandler)
@@ -69,9 +72,10 @@ namespace Symcol.osu.Mods.Multi.Screens
         }
 
         [BackgroundDependencyLoader]
-        private void load(BeatmapManager beatmaps)
+        private void load(BeatmapManager beatmaps, RulesetStore rulesets)
         {
             this.beatmaps = beatmaps;
+            this.rulesets = rulesets;
 
             OsuNetworkingClientHandler.OnPacketReceive += setMap;
         }
@@ -82,7 +86,8 @@ namespace Symcol.osu.Mods.Multi.Screens
             if (packet is SetMapPacket mapPacket)
                 Task.Factory.StartNew(() =>
                 {
-                    MatchTools.MapChange(mapPacket.OnlineBeatmapSetID);
+                    Ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID);
+                    MatchTools.MapChange(mapPacket.OnlineBeatmapSetID, mapPacket.RulesetID);
                     foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
                         if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
                         {
@@ -119,12 +124,16 @@ namespace Symcol.osu.Mods.Multi.Screens
             if (MatchTools.SelectedBeatmap != null)
                 Beatmap.Value = MatchTools.SelectedBeatmap;
 
+            if (MatchTools.SelectedRuleset != null)
+                Ruleset.Value = MatchTools.SelectedRuleset;
+
             Push(new Player(OsuNetworkingClientHandler));
         }
 
         protected override void Dispose(bool isDisposing)
         {
             OsuNetworkingClientHandler.SendPacket(new LeavePacket());
+            // ReSharper disable once DelegateSubtraction
             OsuNetworkingClientHandler.OnPacketReceive -= setMap;
             base.Dispose(isDisposing);
         }
@@ -145,6 +154,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
+                        RulesetID = Ruleset.Value.ID.Value
                     });
                 }
                 catch
@@ -156,6 +166,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
+                        RulesetID = Ruleset.Value.ID.Value
                     });
                 }
             };
