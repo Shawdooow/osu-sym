@@ -176,13 +176,13 @@ namespace Symcol.Rulesets.Core.LegacyMultiplayer.Screens
 
             scoreProcessor = RulesetContainer.CreateScoreProcessor();
 
-            Children = new Drawable[]
+            Children = new[]
             {
                 new Container
                 {
                     RelativeSizeAxes = Axes.Both,
                     Clock = offsetClock,
-                    Children = new Drawable[]
+                    Children = new[]
                     {
                         storyboardContainer = new Container
                         {
