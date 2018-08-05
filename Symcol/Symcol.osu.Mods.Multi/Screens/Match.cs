@@ -85,7 +85,6 @@ namespace Symcol.osu.Mods.Multi.Screens
                 case SetMapPacket mapPacket:
                     Task.Factory.StartNew(() =>
                     {
-                        Ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID);
                         MatchTools.MapChange(mapPacket.OnlineBeatmapSetID, mapPacket.RulesetID);
                         foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
                             if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
@@ -93,6 +92,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                                 foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
                                     if (beatmap.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
                                     {
+                                        Ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID);
                                         if (!Beatmap.Disabled)
                                         {
                                             Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
@@ -110,6 +110,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                                 foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
                                     if (mapPacket.BeatmapDifficulty == beatmap.Version)
                                     {
+                                        Ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID);
                                         if (!Beatmap.Disabled)
                                         {
                                             Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
