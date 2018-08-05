@@ -88,6 +88,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                         adjustableClock.Start();
                         break;
                     case MatchExitPacket exit:
+                        fadeOut();
                         Exit();
                         break;
                 }
@@ -327,6 +328,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         protected override bool OnExiting(Screen next)
         {
+            Remove(OsuNetworkingClientHandler);
             if ((!AllowPause || HasFailed || !ValidForResume || RulesetContainer?.HasReplayLoaded != false))
             {
                 // In the case of replays, we may have changed the playback rate.
@@ -336,7 +338,6 @@ namespace Symcol.osu.Mods.Multi.Screens
                 return base.OnExiting(next);
             }
 
-            Remove(OsuNetworkingClientHandler);
             return true;
         }
 
@@ -356,7 +357,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (args.Key == Key.Escape)
+            if (args.Key == Key.Escape && !args.Repeat)
                 OsuNetworkingClientHandler.SendPacket(new MatchExitPacket());
 
             return base.OnKeyDown(state, args);

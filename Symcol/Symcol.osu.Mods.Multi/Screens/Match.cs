@@ -94,12 +94,12 @@ namespace Symcol.osu.Mods.Multi.Screens
                                 foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
                                     if (beatmap.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
                                     {
-                                        MatchTools.MapChange(Beatmap);
                                         if (!Beatmap.Disabled)
                                         {
                                             Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
                                             Beatmap.Value.Track.Start();
                                         }
+                                        MatchTools.MapChange(Beatmap);
                                         return;
                                     }
 
@@ -111,12 +111,12 @@ namespace Symcol.osu.Mods.Multi.Screens
                                 foreach (BeatmapInfo beatmap in beatmapSet.Beatmaps)
                                     if (mapPacket.BeatmapDifficulty == beatmap.Version)
                                     {
-                                        MatchTools.MapChange(Beatmap);
                                         if (!Beatmap.Disabled)
                                         {
                                             Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmap, Beatmap.Value);
                                             Beatmap.Value.Track.Start();
                                         }
+                                        MatchTools.MapChange(Beatmap);
                                         return;
                                     }
 
