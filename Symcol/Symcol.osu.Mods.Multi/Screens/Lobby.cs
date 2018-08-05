@@ -186,8 +186,8 @@ namespace Symcol.osu.Mods.Multi.Screens
                         },
                         new SettingsButton
                         {
-                            Anchor = Anchor.BottomLeft,
-                            Origin = Anchor.BottomLeft,
+                            Anchor = Anchor.BottomRight,
+                            Origin = Anchor.BottomRight,
                             Position = new Vector2(-12),
                             RelativeSizeAxes = Axes.X,
                             Width = 0.2f,
