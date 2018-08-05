@@ -192,9 +192,10 @@ namespace Symcol.Core.Networking
         {
             AlwaysPresent = true;
 
-            //TODO: make sure this works as intended
-            Clock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
-
+            DecoupleableInterpolatingFramedClock clock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
+            Clock = clock;
+            clock.Start();
+            
             OnAddressChange += (ip, port) =>
             {
                 string address = ip + ":" + port;

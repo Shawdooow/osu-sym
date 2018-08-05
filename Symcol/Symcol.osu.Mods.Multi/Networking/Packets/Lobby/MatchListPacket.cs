@@ -7,7 +7,7 @@ namespace Symcol.osu.Mods.Multi.Networking.Packets.Lobby
     [Serializable]
     public class MatchListPacket : Packet
     {
-        public override int PacketSize => MatchInfoList.Count > 0 ? MatchInfoList.Count * 1024 : 512;
+        public override int PacketSize => MatchInfoList.Count > 0 ? MatchInfoList.Count * 1024 + 1024 : 2048;
 
         public List<MatchInfo> MatchInfoList = new List<MatchInfo>();
 
