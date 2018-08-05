@@ -28,6 +28,7 @@ using osu.Game.Screens.Play;
 using osu.Game.Skinning;
 using osu.Game.Storyboards.Drawables;
 using OpenTK.Input;
+using Symcol.Core.Networking.Packets;
 using Symcol.osu.Mods.Multi.Networking;
 using Symcol.osu.Mods.Multi.Networking.Packets.Player;
 
@@ -75,19 +76,20 @@ namespace Symcol.osu.Mods.Multi.Screens
         public Player(OsuNetworkingClientHandler osuNetworkingClientHandler)
         {
             OsuNetworkingClientHandler = osuNetworkingClientHandler;
+            OsuNetworkingClientHandler.OnPacketReceive += handlePackets;
+        }
 
-            OsuNetworkingClientHandler.OnPacketReceive += packet =>
+        private void handlePackets(Packet packet)
+        {
+            switch (packet)
             {
-                switch (packet)
-                {
-                    case MatchStartingPacket start:
-                        adjustableClock.Start();
-                        break;
-                    case MatchExitPacket exit:
-                        Exit();
-                        break;
-                }
-            };
+                case MatchStartingPacket start:
+                    adjustableClock.Start();
+                    break;
+                case MatchExitPacket exit:
+                    Exit();
+                    break;
+            }
         }
 
         [BackgroundDependencyLoader]
@@ -319,6 +321,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         protected override bool OnExiting(Screen next)
         {
+            OsuNetworkingClientHandler.OnPacketReceive -= handlePackets;
             Remove(OsuNetworkingClientHandler);
             applyRateFromMods();
 
