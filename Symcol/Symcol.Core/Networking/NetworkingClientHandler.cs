@@ -266,15 +266,20 @@ namespace Symcol.Core.Networking
                     if (clientType == ClientType.Peer)
                         SendPacket(new TestPacket());
                     else
-                    {
                         foreach (ClientInfo info in ConnectingClients)
                             if (info.Address == testPacket.Address)
                             {
                                 ConnectingClients.Remove(info);
+                                info.LastConnectionTime = Time.Current;
                                 ConnectedClients.Add(info);
                                 break;
                             }
-                    }
+                    foreach (ClientInfo info in ConnectedClients)
+                        if (info.Address == testPacket.Address)
+                        {
+                            info.LastConnectionTime = Time.Current;
+                            break;
+                        }
                     break;
             }
 
@@ -488,7 +493,7 @@ namespace Symcol.Core.Networking
         {
             info.ConnectionTryCount++;
             NetworkingClient client = GetNetworkingClient(info);
-            client.SendPacket(new TestPacket());
+            client.SendPacket(SignPacket(new TestPacket()));
         }
 
         #endregion
