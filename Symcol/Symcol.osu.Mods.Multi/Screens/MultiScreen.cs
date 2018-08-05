@@ -6,7 +6,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 {
     public class MultiScreen : BeatmapScreen
     {
-        public OsuNetworkingClientHandler OsuNetworkingClientHandler;
+        public readonly OsuNetworkingClientHandler OsuNetworkingClientHandler;
 
         public MultiScreen(OsuNetworkingClientHandler osuNetworkingClientHandler)
         {
