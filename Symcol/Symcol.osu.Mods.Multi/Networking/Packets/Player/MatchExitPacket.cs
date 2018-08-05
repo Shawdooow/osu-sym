@@ -1,10 +1,10 @@
 ﻿using System;
-using Symcol.Core.Networking.Packets;
+using Symcol.osu.Mods.Multi.Networking.Packets.Match;
 
 namespace Symcol.osu.Mods.Multi.Networking.Packets.Player
 {
     [Serializable]
-    public class MatchExitPacket : Packet
+    public class MatchExitPacket : MatchPacket
     {
     }
 }

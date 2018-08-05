@@ -25,7 +25,6 @@ using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 using osu.Game.Screens.Play;
-using osu.Game.Screens.Ranking;
 using osu.Game.Skinning;
 using osu.Game.Storyboards.Drawables;
 using OpenTK.Input;
@@ -165,6 +164,47 @@ namespace Symcol.osu.Mods.Multi.Screens
             userAudioOffset.TriggerChange();
 
             ScoreProcessor = RulesetContainer.CreateScoreProcessor();
+
+            Children = new[]
+            {
+                storyboardContainer = new Container
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Alpha = 0,
+                },
+                new LocalSkinOverrideContainer(working.Skin)
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Child = RulesetContainer
+                },
+                new BreakOverlay(beatmap.BeatmapInfo.LetterboxInBreaks, ScoreProcessor)
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    ProcessCustomClock = false,
+                    Breaks = beatmap.Breaks
+                },
+                RulesetContainer.Cursor?.CreateProxy() ?? new Container(),
+                hudOverlay = new HUDOverlay(ScoreProcessor, RulesetContainer, working, offsetClock, adjustableClock)
+                {
+                    Clock = Clock, // hud overlay doesn't want to use the audio clock directly
+                    ProcessCustomClock = false,
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre
+                },
+                //TODO: voting on this
+                /*
+                new SkipOverlay(RulesetContainer.GameplayStartTime)
+                {
+                    Clock = Clock, // skip button doesn't want to use the audio clock directly
+                    ProcessCustomClock = false,
+                    AdjustableClock = adjustableClock,
+                    FramedClock = offsetClock,
+                },
+                scoreboard = new MultiplayerScoreboard(OsuNetworkingClientHandler, scoreProcessor)
+                */
+            };
+
             if (!ScoreProcessor.Mode.Disabled)
                 config.BindWith(OsuSetting.ScoreDisplayMode, ScoreProcessor.Mode);
 
@@ -189,12 +229,6 @@ namespace Symcol.osu.Mods.Multi.Screens
             sourceClock.Rate = 1;
             foreach (var mod in Beatmap.Value.Mods.Value.OfType<IApplicableToClock>())
                 mod.ApplyToClock(sourceClock);
-        }
-
-        public void Restart()
-        {
-            ValidForResume = false;
-            Exit();
         }
 
         private ScheduledDelegate onCompletionEvent;
@@ -263,6 +297,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 
                     this.Delay(750).Schedule(() =>
                     {
+                        Logger.Log("Client finnished loading", LoggingTarget.Network);
                         OsuNetworkingClientHandler.SendPacket(new PlayerLoadedPacket());
                     });
                 });
@@ -313,7 +348,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (args.Key == Key.Escape && args.Repeat)
+            if (args.Key == Key.Escape)
                 OsuNetworkingClientHandler.SendPacket(new MatchExitPacket());
 
             return base.OnKeyDown(state, args);
