@@ -186,9 +186,9 @@ namespace Symcol.osu.Mods.Multi.Screens
                         },
                         new SettingsButton
                         {
-                            Anchor = Anchor.BottomRight,
-                            Origin = Anchor.BottomRight,
-                            Position = new Vector2(-12),
+                            Anchor = Anchor.BottomCentre,
+                            Origin = Anchor.BottomCentre,
+                            Position = new Vector2(-80, -12),
                             RelativeSizeAxes = Axes.X,
                             Width = 0.2f,
                             Text = "Refresh",
