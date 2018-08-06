@@ -1,9 +1,7 @@
 ﻿using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
-using osu.Game.Rulesets.Vitaru.OldMulti;
 using osu.Game.Rulesets.Vitaru.UI;
-using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Media.Drawables
 {
@@ -12,8 +10,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Media.Drawables
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly Camera camera;
 
-        public DrawableAya(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler)
-            : base(playfield, new Aya(), vitaruNetworkingClientHandler)
+        public DrawableAya(VitaruPlayfield playfield)
+            : base(playfield, new Aya())
         {
             VitaruPlayfield.Gamefield.Add(camera = new Camera());
 

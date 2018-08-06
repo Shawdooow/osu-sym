@@ -6,8 +6,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Platform;
 using osu.Game.Overlays.Settings;
 using Symcol.Rulesets.Core.Rulesets;
-using osu.Game.Rulesets.Classic.Multi;
-using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 
 namespace osu.Game.Rulesets.Classic.Settings
 {
@@ -19,10 +17,6 @@ namespace osu.Game.Rulesets.Classic.Settings
         private SettingsDropdown<string> skin;
         private Bindable<string> currentSkin;
         private Storage storage;
-
-        public override RulesetLobbyItem RulesetLobbyItem => classicLobby;
-
-        private readonly ClassicLobbyItem classicLobby = new ClassicLobbyItem();
 
         [BackgroundDependencyLoader]
         private void load(GameHost host, Storage storage)

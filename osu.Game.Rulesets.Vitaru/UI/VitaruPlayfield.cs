@@ -21,7 +21,6 @@ using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
-using osu.Game.Rulesets.Vitaru.OldMulti;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -52,9 +51,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         private readonly Container judgementLayer;
         private readonly List<DrawableVitaruPlayer> playerList = new List<DrawableVitaruPlayer>();
-
-        //TODO: Make this not need to be static?
-        public static List<VitaruClientInfo> LoadPlayerList = new List<VitaruClientInfo>();
 
         public readonly DrawableVitaruPlayer Player;
 
@@ -127,12 +123,10 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
             if (!Editor)
             {
-                VitaruNetworkingClientHandler vitaruNetworkingClientHandler = RulesetNetworkingClientHandler as VitaruNetworkingClientHandler;
-
                 if (gamemode == Gamemodes.Touhosu)
-                    playerList.Add(Player = DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler));
+                    playerList.Add(Player = DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character));
                 else
-                    playerList.Add(Player = DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
+                    playerList.Add(Player = DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character));
 
                 DebugToolkit.GeneralDebugItems.Add(new DebugAction()
                 {
@@ -140,9 +134,9 @@ namespace osu.Game.Rulesets.Vitaru.UI
                     Action = () =>
                     {
                         if (gamemode == Gamemodes.Touhosu)
-                            Add(DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character, vitaruNetworkingClientHandler));
+                            Add(DrawableTouhosuPlayer.GetDrawableTouhosuPlayer(this, character));
                         else
-                            Add(DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character, vitaruNetworkingClientHandler));
+                            Add(DrawableVitaruPlayer.GetDrawableVitaruPlayer(this, character));
                     }
                 });
 

@@ -1,12 +1,11 @@
 ﻿using osu.Framework.Graphics;
-using osu.Game.Rulesets.Vitaru.OldMulti;
 using osu.Game.Rulesets.Vitaru.UI;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Inlaws.Drawables
 {
     public class DrawableAlice : DrawableTouhosuPlayer
     {
-        public DrawableAlice(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Alice(), vitaruNetworkingClientHandler)
+        public DrawableAlice(VitaruPlayfield playfield) : base(playfield, new Alice())
         {
             Spell += (input) =>
             {

@@ -2,7 +2,6 @@
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
-using osu.Game.Rulesets.Vitaru.OldMulti;
 using osu.Game.Rulesets.Vitaru.UI;
 using OpenTK;
 using OpenTK.Graphics;
@@ -11,8 +10,8 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet.Drawables
 {
     public class DrawableRemilia : DrawableTouhosuPlayer
     {
-        public DrawableRemilia(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler)
-            : base(playfield, new Remilia(), vitaruNetworkingClientHandler)
+        public DrawableRemilia(VitaruPlayfield playfield)
+            : base(playfield, new Remilia())
         {
             Spell += action => leechPattern();
         }

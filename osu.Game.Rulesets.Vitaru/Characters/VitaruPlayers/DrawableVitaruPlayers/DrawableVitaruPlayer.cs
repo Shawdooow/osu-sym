@@ -18,8 +18,6 @@ using osu.Game.Rulesets.Vitaru.UI;
 using Symcol.Core.NeuralNetworking;
 using System;
 using System.Collections.Generic;
-using osu.Game.Rulesets.Vitaru.OldMulti;
-using Symcol.Core.LegacyNetworking;
 using static osu.Game.Rulesets.Vitaru.UI.Cursor.GameplayCursor;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers
@@ -71,8 +69,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
 
         protected readonly Container Cursor;
 
-        protected readonly VitaruNetworkingClientHandler VitaruNetworkingClientHandler;
-
         /// <summary>
         /// Are we a slave over the net?
         /// </summary>
@@ -108,10 +104,9 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
         private const double healing_max = 2d;
         #endregion
 
-        public DrawableVitaruPlayer(VitaruPlayfield playfield, VitaruPlayer player, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield)
+        public DrawableVitaruPlayer(VitaruPlayfield playfield, VitaruPlayer player) : base(playfield)
         {
             Player = player;
-            VitaruNetworkingClientHandler = vitaruNetworkingClientHandler;
 
             Add(VitaruNeuralContainer = new VitaruNeuralContainer(playfield, this));
 
@@ -668,8 +663,6 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             //Mouse Stuff
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = true;
-
-            sendPacket(action);
         }
 
         protected virtual void Released(VitaruAction action)
@@ -691,69 +684,17 @@ namespace osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayer
             //Mouse Stuff
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = false;
-
-            sendPacket(VitaruAction.None, action);
         }
         #endregion
 
-        #region Networking Handling
-        private void sendPacket(VitaruAction pressedAction = VitaruAction.None, VitaruAction releasedAction = VitaruAction.None)
-        {
-            if (VitaruNetworkingClientHandler != null && !Puppet)
-            {
-                VitaruPlayerInformation playerInformation = new VitaruPlayerInformation
-                {
-                    Character = Player.FileName,
-                    CursorX = Cursor.Position.X,
-                    CursorY = Cursor.Position.Y,
-                    PlayerX = Position.X,
-                    PlayerY = Position.Y,
-                    PlayerID = PlayerID,
-                    PressedAction = pressedAction,
-                    ReleasedAction = releasedAction,
-                };
-
-                ClientInfo clientInfo = new ClientInfo
-                {
-                    IP = VitaruNetworkingClientHandler.ClientInfo.IP,
-                    Port = VitaruNetworkingClientHandler.ClientInfo.Port
-                };
-
-                VitaruInMatchPacket packet = new VitaruInMatchPacket(clientInfo) { PlayerInformation = playerInformation };
-
-                VitaruNetworkingClientHandler.SendToHost(packet);
-                VitaruNetworkingClientHandler.SendToInGameClients(packet);
-            }
-        }
-
-        private void packetReceived(Packet p)
-        {
-            if (p is VitaruInMatchPacket packet && Puppet)
-            {
-                VitaruNetworkingClientHandler.ShareWithOtherPeers(packet);
-
-                if (packet.PlayerInformation.PlayerID == PlayerID)
-                {
-                    Position = new Vector2(packet.PlayerInformation.PlayerX, packet.PlayerInformation.PlayerY);
-                    Cursor.Position = new Vector2(packet.PlayerInformation.CursorX, packet.PlayerInformation.CursorY);
-
-                    if (packet.PlayerInformation.PressedAction != VitaruAction.None)
-                        Pressed(packet.PlayerInformation.PressedAction);
-                    if (packet.PlayerInformation.ReleasedAction != VitaruAction.None)
-                        Released(packet.PlayerInformation.ReleasedAction);
-                }
-            }
-        }
-        #endregion
-
-        public static DrawableVitaruPlayer GetDrawableVitaruPlayer(VitaruPlayfield playfield, string name, VitaruNetworkingClientHandler vitaruNetworkingClientHandler)
+        public static DrawableVitaruPlayer GetDrawableVitaruPlayer(VitaruPlayfield playfield, string name)
         {
             switch (name)
             {
                 default:
-                    return new DrawableVitaruPlayer(playfield, VitaruPlayer.GetVitaruPlayer(name), vitaruNetworkingClientHandler);
+                    return new DrawableVitaruPlayer(playfield, VitaruPlayer.GetVitaruPlayer(name));
                 case "Alex":
-                    return new DrawableVitaruPlayer(playfield, VitaruPlayer.GetVitaruPlayer(name), vitaruNetworkingClientHandler);
+                    return new DrawableVitaruPlayer(playfield, VitaruPlayer.GetVitaruPlayer(name));
             }
         }
 

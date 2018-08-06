@@ -10,19 +10,13 @@ using System.Collections.Generic;
 using Symcol.Core.Extentions;
 using System.Linq;
 using osu.Game.Rulesets.Vitaru.Debug;
-using osu.Game.Rulesets.Vitaru.OldMulti;
 using Symcol.Core.NeuralNetworking;
-using Symcol.Rulesets.Core.LegacyMultiplayer.Screens;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {
     public class VitaruSettings : SymcolSettingsSubsection
     {
         protected override string Header => "vitaru!";
-
-        public override RulesetLobbyItem RulesetLobbyItem => vitaruLobby;
-
-        private readonly VitaruLobbyItem vitaruLobby = new VitaruLobbyItem();
 
         public static VitaruConfigManager VitaruConfigManager;
 

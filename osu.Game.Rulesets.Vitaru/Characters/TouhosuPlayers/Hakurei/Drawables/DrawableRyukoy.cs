@@ -3,8 +3,6 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Characters.Bosses.DrawableBosses;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Abilities;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
-using osu.Game.Rulesets.Vitaru.Objects.Drawables;
-using osu.Game.Rulesets.Vitaru.OldMulti;
 using osu.Game.Rulesets.Vitaru.UI;
 using OpenTK;
 
@@ -61,7 +59,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Hakurei.Drawables
 
         private bool untuned;
 
-        public DrawableRyukoy(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Ryukoy(), vitaruNetworkingClientHandler)
+        public DrawableRyukoy(VitaruPlayfield playfield) : base(playfield, new Ryukoy())
         {
             Spell += input => { Untuned = true; };
         }

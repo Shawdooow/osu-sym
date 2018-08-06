@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Vitaru.OldMulti;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using OpenTK.Graphics;
@@ -31,7 +30,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet.Drawables
         private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
         #endregion
 
-        public DrawableSakuya(VitaruPlayfield playfield, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, new Sakuya(), vitaruNetworkingClientHandler)
+        public DrawableSakuya(VitaruPlayfield playfield) : base(playfield, new Sakuya())
         {
             Spell += action =>
             {

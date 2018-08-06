@@ -6,7 +6,6 @@ using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Media.Drawables;
 using osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers.Scarlet.Drawables;
 using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Debug;
-using osu.Game.Rulesets.Vitaru.OldMulti;
 using osu.Game.Rulesets.Vitaru.UI;
 
 namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
@@ -35,7 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
         //reset after healing is done
         public double EnergyGainMultiplier = 1;
 
-        public DrawableTouhosuPlayer(VitaruPlayfield playfield, TouhosuPlayer player, VitaruNetworkingClientHandler vitaruNetworkingClientHandler) : base(playfield, player, vitaruNetworkingClientHandler)
+        public DrawableTouhosuPlayer(VitaruPlayfield playfield, TouhosuPlayer player) : base(playfield, player)
         {
             TouhosuPlayer = player;
         }
@@ -130,37 +129,37 @@ namespace osu.Game.Rulesets.Vitaru.Characters.TouhosuPlayers
                 SpellDeactivate(action);
         }
 
-        public static DrawableTouhosuPlayer GetDrawableTouhosuPlayer(VitaruPlayfield playfield, string name, VitaruNetworkingClientHandler vitaruNetworkingClientHandler)
+        public static DrawableTouhosuPlayer GetDrawableTouhosuPlayer(VitaruPlayfield playfield, string name)
         {
             switch (name)
             {
                 default:
-                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name));
 
                 case "ReimuHakurei":
-                    return new DrawableReimu(playfield, vitaruNetworkingClientHandler);
+                    return new DrawableReimu(playfield);
                 case "RyukoyHakurei":
-                    return new DrawableRyukoy(playfield, vitaruNetworkingClientHandler);
+                    return new DrawableRyukoy(playfield);
                 case "TomajiHakurei":
-                    return new DrawableTomaji(playfield, vitaruNetworkingClientHandler);
+                    return new DrawableTomaji(playfield);
 
                 case "SakuyaIzayoi":
-                    return new DrawableSakuya(playfield, vitaruNetworkingClientHandler);
+                    return new DrawableSakuya(playfield);
                 case "RemiliaScarlet":
-                    return new DrawableRemilia(playfield, vitaruNetworkingClientHandler);
+                    return new DrawableRemilia(playfield);
                 case "FlandreScarlet":
-                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name));
 
                 case "AliceLetrunce":
-                    return new DrawableAlice(playfield, vitaruNetworkingClientHandler);
+                    return new DrawableAlice(playfield);
                 case "VasterLetrunce":
-                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name));
 
                 case "MarisaKirisame":
-                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name), vitaruNetworkingClientHandler);
+                    return new DrawableTouhosuPlayer(playfield, TouhosuPlayer.GetTouhosuPlayer(name));
 
                 case "AyaShameimaru":
-                    return new DrawableAya(playfield, vitaruNetworkingClientHandler);
+                    return new DrawableAya(playfield);
             }
         }
     }
