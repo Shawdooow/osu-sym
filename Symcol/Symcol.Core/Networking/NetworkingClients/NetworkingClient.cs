@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
-using Mono.Nat;
 using osu.Framework.Logging;
 using Symcol.Core.Networking.Packets;
 
@@ -14,7 +13,7 @@ namespace Symcol.Core.Networking.NetworkingClients
     {
         public IPEndPoint EndPoint;
 
-        public abstract int Avalable { get; }
+        public abstract int Available { get; }
 
         /// <summary>
         /// Called when the address is changed
@@ -33,15 +32,6 @@ namespace Symcol.Core.Networking.NetworkingClients
 
                 if (IP + Port != value)
                 {
-                    foreach (Mapping m in NatMapping.Mappings)
-                        if (m.PrivatePort == Port)
-                        {
-                            NatMapping.Remove(m);
-                            break;
-                        }
-
-                    if (p > 200)
-                        NatMapping.Add(new Mapping(Protocol.Udp, p, p));
                     IP = i;
                     Port = p;
                     OnAddressChange?.Invoke(i, p);

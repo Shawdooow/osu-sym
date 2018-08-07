@@ -2,11 +2,9 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
-using osu.Game.Screens;
 using Symcol.Core.Networking;
 using System;
 using System.Collections.Generic;
-using Mono.Nat;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
@@ -195,7 +193,6 @@ namespace Symcol.osu.Mods.Multi.Screens
             {
                 Remove(OsuNetworkingClientHandler);
                 OsuNetworkingClientHandler.Dispose();
-                NatMapping.Mappings = new List<Mapping>();
             }
             Add(OsuNetworkingClientHandler = new OsuNetworkingClientHandler
             {

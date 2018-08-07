@@ -214,14 +214,14 @@ namespace Symcol.Core.Networking
                 switch (type)
                 {
                     case ClientType.Peer:
-                        ReceiveClient = new UDPNetworkingClient(false)
+                        ReceiveClient = new UdpNetworkingClient
                         {
                             Address = Address
                         };
                         break;
                     case ClientType.Host:
                     case ClientType.Server:
-                        ReceiveClient = new UDPNetworkingClient(false)
+                        ReceiveClient = new UdpNetworkingClient
                         {
                             Address = Address
                         };
@@ -365,7 +365,7 @@ namespace Symcol.Core.Networking
         protected List<Packet> ReceivePackets()
         {
             List<Packet> packets = new List<Packet>();
-            for (int i = 0; i < ReceiveClient?.Avalable; i++)
+            for (int i = 0; i < ReceiveClient?.Available; i++)
                 packets.Add(ReceiveClient.GetPacket());
             return packets;
         }
@@ -379,7 +379,7 @@ namespace Symcol.Core.Networking
         {
             if (TCP)
                 throw new NotImplementedException("TCP client is not implemented!");
-            return new UDPNetworkingClient(true)
+            return new UdpNetworkingClient
             {
                 Address = info.IP + ":" + info.Port
             };

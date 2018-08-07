@@ -8,7 +8,6 @@
     <Description>symcol framework tools</Description>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Mono.Nat" Version="1.2.24" />
     <PackageReference Include="TensorFlowSharp" Version="1.8.0-pre1" />
   </ItemGroup>
   <ItemGroup>
