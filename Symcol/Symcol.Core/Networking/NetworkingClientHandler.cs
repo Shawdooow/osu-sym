@@ -6,7 +6,6 @@ using Symcol.Core.Graphics.Containers;
 using Symcol.Core.Networking.NetworkingClients;
 using Symcol.Core.Networking.Packets;
 // ReSharper disable InconsistentNaming
-// ReSharper disable CollectionNeverUpdated.Global
 
 namespace Symcol.Core.Networking
 {
@@ -19,17 +18,16 @@ namespace Symcol.Core.Networking
 
         protected virtual string Gamekey => null;
 
-        protected NetworkingClient ReceiveClient;
+        protected NetworkingClient Client;
 
         /// <summary>
         /// Just a client signature basically
         /// </summary>
         public ClientInfo ClientInfo = new ClientInfo();
 
-        /// <summary>
-        /// If we are connected to a host / server this will be it
-        /// </summary>
         public ClientInfo ServerInfo;
+
+        public static readonly List<NetworkingClient> NetworkingClients = new List<NetworkingClient>();
 
         /// <summary>
         /// All Connecting clients / clients losing connection
@@ -40,21 +38,6 @@ namespace Symcol.Core.Networking
         /// All Connected clients
         /// </summary>
         public readonly List<ClientInfo> ConnectedClients = new List<ClientInfo>();
-
-        /// <summary>
-        /// Clients waiting in our lobby
-        /// </summary>
-        public readonly List<ClientInfo> InMatchClients = new List<ClientInfo>();
-
-        /// <summary>
-        /// Clients loaded and ready to start
-        /// </summary>
-        public readonly List<ClientInfo> LoadedClients = new List<ClientInfo>();
-
-        /// <summary>
-        /// Clients ingame playing
-        /// </summary>
-        public readonly List<ClientInfo> InGameClients = new List<ClientInfo>();
 
         /// <summary>
         /// Gets hit when we get + send a Packet
@@ -69,7 +52,7 @@ namespace Symcol.Core.Networking
         /// <summary>
         /// TODO: Implement TCP connections
         /// </summary>
-        public bool TCP
+        public bool Tcp
         {
             get => tcp;
             set
@@ -168,15 +151,6 @@ namespace Symcol.Core.Networking
                 {
                     clientType = value;
 
-                    switch (value)
-                    {
-                        case ClientType.Peer:
-                            break;
-                        case ClientType.Host:
-                        case ClientType.Server:
-                            break;
-                    }
-
                     OnClientTypeChange?.Invoke(value);
                 }
             }
@@ -204,31 +178,7 @@ namespace Symcol.Core.Networking
                 ClientInfo.IP = ip;
                 ClientInfo.Port = port;
                 ClientInfo.Gamekey = Gamekey;
-
-                if (ReceiveClient != null)
-                    ReceiveClient.Address = address;
             };
-
-            OnClientTypeChange += type =>
-            {
-                switch (type)
-                {
-                    case ClientType.Peer:
-                        ReceiveClient = new UdpNetworkingClient
-                        {
-                            Address = Address
-                        };
-                        break;
-                    case ClientType.Host:
-                    case ClientType.Server:
-                        ReceiveClient = new UdpNetworkingClient
-                        {
-                            Address = Address
-                        };
-                        break;
-                }
-            };
-            OnClientTypeChange?.Invoke(clientType);
         }
 
         #region Update Loop
@@ -323,9 +273,6 @@ namespace Symcol.Core.Networking
                 if (client.LastConnectionTime + TimeOutTime <= Time.Current)
                 {
                     ConnectedClients.Remove(client);
-                    InGameClients.Remove(client);
-                    LoadedClients.Remove(client);
-                    InGameClients.Remove(client);
                     Logger.Log("Connection to a connected client lost! - " + client.Address, LoggingTarget.Network, LogLevel.Error);
                     break;
                 }
@@ -365,8 +312,8 @@ namespace Symcol.Core.Networking
         protected List<Packet> ReceivePackets()
         {
             List<Packet> packets = new List<Packet>();
-            for (int i = 0; i < ReceiveClient?.Available; i++)
-                packets.Add(ReceiveClient.GetPacket());
+            for (int i = 0; i < Client?.Available; i++)
+                packets.Add(Client.GetPacket());
             return packets;
         }
 
@@ -375,14 +322,19 @@ namespace Symcol.Core.Networking
         /// </summary>
         /// <param name="info"></param>
         /// <returns></returns>
-        protected virtual NetworkingClient GetNetworkingClient(ClientInfo info)
+        protected NetworkingClient GetNetworkingClient(ClientInfo info)
         {
-            if (TCP)
+            foreach (NetworkingClient c in NetworkingClients)
+                if (c.Address == info.Address)
+                    return c;
+
+            if (Tcp)
                 throw new NotImplementedException("TCP client is not implemented!");
-            return new UdpNetworkingClient
-            {
-                Address = info.IP + ":" + info.Port
-            };
+
+            UdpNetworkingClient client = new UdpNetworkingClient(info.Address);
+            NetworkingClients.Add(client);
+
+            return client;
         }
 
         /// <summary>
@@ -394,7 +346,7 @@ namespace Symcol.Core.Networking
         {
             if (packet is ConnectPacket c)
                 c.Gamekey = ClientInfo.Gamekey;
-            packet.Address = ReceiveClient.Address;
+            packet.Address = Client.Address;
             return packet;
         }
 
@@ -474,9 +426,6 @@ namespace Symcol.Core.Networking
                 if (client.Address == packet.Address)
                 {
                     ConnectedClients.Remove(client);
-                    InMatchClients.Remove(client);
-                    LoadedClients.Remove(client);
-                    InGameClients.Remove(client);
                     return;
                 }
             foreach (ClientInfo client in ConnectingClients)
@@ -575,7 +524,7 @@ namespace Symcol.Core.Networking
         {
             SendToServer(new DisconnectPacket());
             ShareWithAllClients(new DisconnectPacket());
-            ReceiveClient?.Dispose();
+            Client?.Dispose();
             base.Dispose(isDisposing);
         }
     }

@@ -15,69 +15,23 @@ namespace Symcol.Core.Networking.NetworkingClients
 
         public abstract int Available { get; }
 
-        /// <summary>
-        /// Called when the address is changed
-        /// </summary>
-        public event Action<string, int> OnAddressChange;
+        public readonly string Address;
 
-        public string Address
+        public readonly string IP;
+
+        public readonly int Port;
+
+        protected NetworkingClient(string address)
         {
-            get => IP + ":" + Port;
-            set
-            {
-                string[] split = value.Split(':');
-                
-                string i = split[0];
-                int p = int.Parse(split[1]);
+            Address = address;
 
-                if (IP + Port != value)
-                {
-                    IP = i;
-                    Port = p;
-                    OnAddressChange?.Invoke(i, p);
-                }
-            }
+            string[] split = address.Split(':');
+            string i = split[0];
+            int p = int.Parse(split[1]);
+
+            IP = i;
+            Port = p;
         }
-
-        /// <summary>
-        /// Called when the ip is changed
-        /// </summary>
-        public event Action<string> OnIPChange;
-
-        public string IP
-        {
-            get => ip;
-            private set
-            {
-                if (ip != value)
-                {
-                    ip = value;
-                    OnIPChange?.Invoke(ip);
-                }
-            }
-        }
-
-        private string ip;
-
-        /// <summary>
-        /// Called when the port is changed
-        /// </summary>
-        public event Action<int> OnPortChange;
-
-        public int Port
-        {
-            get => port;
-            private set
-            {
-                if (port != value)
-                {
-                    port = value;
-                    OnPortChange?.Invoke(port);
-                }
-            }
-        }
-
-        private int port;
 
         /// <summary>
         /// Send a packet
