@@ -2,10 +2,15 @@
 
 namespace Symcol.Core.Networking.NetworkingClients
 {
-    public class TCPNetworkingClient : NetworkingClient
+    public class TcpNetworkingClient : NetworkingClient
     {
         // ReSharper disable once UnassignedGetOnlyAutoProperty
         public override int Available { get; }
+
+        public TcpNetworkingClient(string address)
+            : base(address)
+        {
+        }
 
         public override void SendPacket(Packet packet)
         {
