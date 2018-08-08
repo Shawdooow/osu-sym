@@ -22,9 +22,6 @@ namespace Symcol.Core.Networking.NetworkingClients
                 string[] a = IP.Split('.');
                 byte[] addressBytes = { (byte)int.Parse(a[0]), (byte)int.Parse(a[1]), (byte)int.Parse(a[2]), (byte)int.Parse(a[3]) };
 
-                UdpClient?.Close();
-                UdpClient?.Dispose();
-
                 EndPoint = new IPEndPoint(new IPAddress(addressBytes), Port);
                 UdpClient = new UdpClient(EndPoint);
                 UdpClient.Connect(EndPoint);

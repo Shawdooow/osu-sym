@@ -4,7 +4,6 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
 using Symcol.Core.Networking;
 using System;
-using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
@@ -175,37 +174,23 @@ namespace Symcol.osu.Mods.Multi.Screens
             return base.OnExiting(next);
         }
 
-        /*
-        protected virtual void HostServer()
-        {
-            if (OsuNetworkingClientHandler != null)
-            {
-                Remove(OsuNetworkingClientHandler);
-                OsuNetworkingClientHandler.Dispose();
-            }
-            Add(OsuNetworkingClientHandler = new OsuNetworkingClientHandler(ClientType.Host, LocalIp.Text, Int32.Parse(LocalPort.Text)));
-        }
-        */
-
         protected virtual void JoinServer()
         {
-            if (OsuNetworkingClientHandler != null)
+            if (OsuNetworkingClientHandler == null)
             {
-                Remove(OsuNetworkingClientHandler);
-                OsuNetworkingClientHandler.Dispose();
+                Add(OsuNetworkingClientHandler = new OsuNetworkingClientHandler
+                {
+                    Address = LocalIp.Text + ":" + LocalPort.Text,
+                    ClientType = ClientType.Peer,
+                });
+                OsuNetworkingClientHandler.ServerInfo = OsuNetworkingClientHandler.GenerateConnectingClientInfo(new ConnectPacket
+                {
+                    Address = HostIp.Text + ":" + HostPort.Text,
+                    Gamekey = "osu"
+                });
+                OsuNetworkingClientHandler.OnConnectedToHost += list => Connected();
             }
-            Add(OsuNetworkingClientHandler = new OsuNetworkingClientHandler
-            {
-                Address = LocalIp.Text + ":" + LocalPort.Text,
-                ClientType = ClientType.Peer,
-            });
-            OsuNetworkingClientHandler.ServerInfo = OsuNetworkingClientHandler.GenerateConnectingClientInfo(new ConnectPacket
-            {
-                Address = HostIp.Text + ":" + HostPort.Text,
-                Gamekey = "osu"
-            });
             OsuNetworkingClientHandler.Connect();
-            OsuNetworkingClientHandler.OnConnectedToHost += list => Connected();
         }
 
         protected virtual void Connected()

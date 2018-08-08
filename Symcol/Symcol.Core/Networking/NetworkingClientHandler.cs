@@ -18,8 +18,6 @@ namespace Symcol.Core.Networking
 
         protected virtual string Gamekey => null;
 
-        protected NetworkingClient Client;
-
         /// <summary>
         /// Just a client signature basically
         /// </summary>
@@ -27,7 +25,7 @@ namespace Symcol.Core.Networking
 
         public ClientInfo ServerInfo;
 
-        public static readonly List<NetworkingClient> NetworkingClients = new List<NetworkingClient>();
+        public static List<NetworkingClient> NetworkingClients { get; private set; } = new List<NetworkingClient>();
 
         /// <summary>
         /// All Connecting clients / clients losing connection
@@ -312,8 +310,8 @@ namespace Symcol.Core.Networking
         protected List<Packet> ReceivePackets()
         {
             List<Packet> packets = new List<Packet>();
-            for (int i = 0; i < Client?.Available; i++)
-                packets.Add(Client.GetPacket());
+            for (int i = 0; i < GetNetworkingClient(ClientInfo)?.Available; i++)
+                packets.Add(GetNetworkingClient(ClientInfo).GetPacket());
             return packets;
         }
 
@@ -332,7 +330,9 @@ namespace Symcol.Core.Networking
                 throw new NotImplementedException("TCP client is not implemented!");
 
             UdpNetworkingClient client = new UdpNetworkingClient(info.Address);
-            NetworkingClients.Add(client);
+
+            if (client.UdpClient != null)
+                NetworkingClients.Add(client);
 
             return client;
         }
@@ -346,7 +346,7 @@ namespace Symcol.Core.Networking
         {
             if (packet is ConnectPacket c)
                 c.Gamekey = ClientInfo.Gamekey;
-            packet.Address = Client.Address;
+            packet.Address = ClientInfo.Address;
             return packet;
         }
 
@@ -491,11 +491,11 @@ namespace Symcol.Core.Networking
         {
             if (ClientType != ClientType.Peer)
             {
-                Logger.Log("We are not a peer!", LoggingTarget.Network);
+                Logger.Log("There is nothing for us to connect to!", LoggingTarget.Network);
                 return;
             }
 
-            if (ConnectionStatues <= ConnectionStatues.Disconnected)
+            if (true)//ConnectionStatues <= ConnectionStatues.Disconnected)
             {
                 Logger.Log($"Attempting to connect to {ServerInfo.Address}", LoggingTarget.Network);
                 SendPacket(new ConnectPacket());
@@ -522,9 +522,13 @@ namespace Symcol.Core.Networking
 
         protected override void Dispose(bool isDisposing)
         {
-            SendToServer(new DisconnectPacket());
-            ShareWithAllClients(new DisconnectPacket());
-            Client?.Dispose();
+            SendPacket(new DisconnectPacket());
+
+            foreach (NetworkingClient c in NetworkingClients)
+                c?.Dispose();
+
+            NetworkingClients = new List<NetworkingClient>();
+
             base.Dispose(isDisposing);
         }
     }
