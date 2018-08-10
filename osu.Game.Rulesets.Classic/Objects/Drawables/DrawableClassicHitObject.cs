@@ -5,6 +5,7 @@ using System.ComponentModel;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Framework.Graphics;
 using System.Linq;
+using osu.Game.Rulesets.Classic.Settings;
 using Symcol.Rulesets.Core.HitObjects;
 using osu.Game.Skinning;
 using osu.Game.Rulesets.Objects.Types;
@@ -14,12 +15,25 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 {
     public class DrawableClassicHitObject : DrawableSymcolHitObject<ClassicHitObject>
     {
+        private readonly bool approaching = ClassicSettings.ClassicConfigManager.Get<bool>(ClassicSetting.Approaching);
+
         public const float TIME_FADEIN = 400;
         public const float TIME_FADEOUT = 240;
 
         protected DrawableClassicHitObject(ClassicHitObject hitObject)
             : base(hitObject)
         {
+            if (approaching)
+            {
+                HitObject.TimePreempt *= (float)getSv(HitObject.SliderVelocity);
+
+                double getSv(double value)
+                {
+                    double scale = (ClassicHitObject.MinSliderVelocity - ClassicHitObject.MaxSliderVelocity) / (0.75 - 1.5);
+                    return ClassicHitObject.MaxSliderVelocity + (value - 1.5) * scale;
+                }
+            }
+
             Alpha = 0;
             RulesetAudio = ClassicRuleset.ClassicAudio;
         }

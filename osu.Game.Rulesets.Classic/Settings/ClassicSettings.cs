@@ -39,8 +39,13 @@ namespace osu.Game.Rulesets.Classic.Settings
                 },
                 new SettingsCheckbox
                 {
-                    LabelText = "Enable Accelerando Mod",
-                    Bindable = ClassicConfigManager.GetBindable<bool>(ClassicSetting.Accelerando)
+                    LabelText = "Enable Accel Mod",
+                    Bindable = ClassicConfigManager.GetBindable<bool>(ClassicSetting.Accel)
+                },
+                new SettingsCheckbox
+                {
+                    LabelText = "Enable Approaching Mod",
+                    Bindable = ClassicConfigManager.GetBindable<bool>(ClassicSetting.Approaching)
                 },
                 new SettingsEnumDropdown<Easing>
                 {

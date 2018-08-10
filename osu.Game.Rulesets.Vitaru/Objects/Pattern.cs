@@ -6,7 +6,6 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Beatmaps;
 using System;
-using osu.Framework.Audio.Sample;
 using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
 

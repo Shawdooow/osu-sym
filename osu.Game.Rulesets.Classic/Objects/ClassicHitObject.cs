@@ -47,6 +47,27 @@ namespace osu.Game.Rulesets.Classic.Objects
 
         public double Radius => OBJECT_RADIUS * Scale;
 
+        public static double MaxSliderVelocity;
+
+        public double SliderVelocity
+        {
+            get => sv;
+            set
+            {
+                sv = value;
+
+                if (sv > MaxSliderVelocity)
+                    MaxSliderVelocity = sv;
+
+                if (sv < MinSliderVelocity)
+                    MinSliderVelocity = sv;
+            }
+        }
+
+        private double sv;
+
+        public static double MinSliderVelocity;
+
         public float Scale { get; set; } = 1;
 
         public int ID { get; set; }
@@ -92,6 +113,13 @@ namespace osu.Game.Rulesets.Classic.Objects
         protected override void ApplyDefaultsToSelf(ControlPointInfo controlPointInfo, BeatmapDifficulty difficulty)
         {
             base.ApplyDefaultsToSelf(controlPointInfo, difficulty);
+
+            TimingControlPoint timingPoint = controlPointInfo.TimingPointAt(StartTime);
+            DifficultyControlPoint difficultyPoint = controlPointInfo.DifficultyPointAt(StartTime);
+
+            double scoringDistance = 100 * difficulty.SliderMultiplier * difficultyPoint.SpeedMultiplier;
+
+            SliderVelocity = scoringDistance / timingPoint.BeatLength;
 
             TimePreempt = (float)BeatmapDifficulty.DifficultyRange(difficulty.ApproachRate, 1800, 1200, 450);
 

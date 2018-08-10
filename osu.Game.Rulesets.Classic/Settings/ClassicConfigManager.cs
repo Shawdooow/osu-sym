@@ -14,7 +14,8 @@ namespace osu.Game.Rulesets.Classic.Settings
         {
             Set(ClassicSetting.Black, false);
             Set(ClassicSetting.Hold, false);
-            Set(ClassicSetting.Accelerando, false);
+            Set(ClassicSetting.Accel, false);
+            Set(ClassicSetting.Approaching, false);
             Set(ClassicSetting.SliderEasing, Easing.None);
             Set(ClassicSetting.Skin, "default");
         }
@@ -25,7 +26,8 @@ namespace osu.Game.Rulesets.Classic.Settings
     {
         Black,
         Hold,
-        Accelerando,
+        Accel,
+        Approaching,
         SliderEasing,
         Skin
     }

@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Classic.UI
         private readonly Container judgementLayer;
         private readonly ConnectionRenderer<ClassicHitObject> connectionLayer;
 
-        private readonly Bindable<bool> fast = ClassicSettings.ClassicConfigManager.GetBindable<bool>(ClassicSetting.Accelerando);
+        private readonly Bindable<bool> fast = ClassicSettings.ClassicConfigManager.GetBindable<bool>(ClassicSetting.Accel);
 
         private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
 
@@ -200,6 +200,8 @@ namespace osu.Game.Rulesets.Classic.UI
         protected override void Dispose(bool isDisposing)
         {
             OnJudgement = null;
+            ClassicHitObject.MaxSliderVelocity = double.MinValue;
+            ClassicHitObject.MinSliderVelocity = double.MaxValue;
             base.Dispose(isDisposing);
         }
 

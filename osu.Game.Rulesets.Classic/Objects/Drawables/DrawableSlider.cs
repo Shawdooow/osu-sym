@@ -14,7 +14,6 @@ using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Objects.Types;
 using OpenTK.Graphics;
 using osu.Game.Audio;
-using osu.Game.Graphics;
 using osu.Game.Rulesets.Classic.Settings;
 using Symcol.Rulesets.Core.Skinning;
 
@@ -135,7 +134,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
             set
             {
                 base.AccentColour = value;
-                Body.AccentColour = black ? OsuColour.FromHex("#3d3d3d") : AccentColour;
+                Body.AccentColour = black ? Color4.Black : AccentColour;
                 Ball.AccentColour = AccentColour;
             }
         }
