@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
         {
             if (approaching)
             {
-                HitObject.TimePreempt *= (float)getSv(HitObject.SliderVelocity); ;
+                HitObject.TimePreempt /= (float)getSv(HitObject.SliderVelocity); ;
 
                 double getSv(double value)
                 {
