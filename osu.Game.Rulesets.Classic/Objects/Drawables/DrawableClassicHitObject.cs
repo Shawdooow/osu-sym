@@ -29,8 +29,11 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
 
                 double getSv(double value)
                 {
-                    double scale = (0.75 - 1.5) / (ClassicHitObject.MinSliderVelocity - ClassicHitObject.MaxSliderVelocity);
-                    return 1.5 + (value - ClassicHitObject.MaxSliderVelocity) * scale;
+                    const double fast = 1.25d;
+                    const double slow = 0.75d + 0.25d / 2;
+
+                    double scale = (slow - fast) / (ClassicHitObject.MinSliderVelocity - ClassicHitObject.MaxSliderVelocity);
+                    return fast + (value - ClassicHitObject.MaxSliderVelocity) * scale;
                 }
             }
 
