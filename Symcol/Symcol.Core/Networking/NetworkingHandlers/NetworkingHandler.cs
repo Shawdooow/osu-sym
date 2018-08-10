@@ -7,9 +7,9 @@ using Symcol.Core.Networking.NetworkingClients;
 using Symcol.Core.Networking.Packets;
 // ReSharper disable InconsistentNaming
 
-namespace Symcol.Core.Networking
+namespace Symcol.Core.Networking.NetworkingHandlers
 {
-    public class NetworkingClientHandler : SymcolContainer
+    public abstract class NetworkingHandler : SymcolContainer
     {
         #region Fields
 
@@ -160,7 +160,7 @@ namespace Symcol.Core.Networking
 
         #endregion
 
-        public NetworkingClientHandler()
+        public NetworkingHandler()
         {
             AlwaysPresent = true;
 
@@ -524,10 +524,10 @@ namespace Symcol.Core.Networking
         {
             SendPacket(new DisconnectPacket());
 
-            foreach (NetworkingClient c in NetworkingClients)
-                c?.Dispose();
+            //foreach (NetworkingClient c in NetworkingClients)
+                //c?.Dispose();
 
-            NetworkingClients = new List<NetworkingClient>();
+            //NetworkingClients = new List<NetworkingClient>();
 
             base.Dispose(isDisposing);
         }
