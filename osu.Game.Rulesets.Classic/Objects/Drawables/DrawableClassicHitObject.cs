@@ -25,12 +25,12 @@ namespace osu.Game.Rulesets.Classic.Objects.Drawables
         {
             if (approaching)
             {
-                HitObject.TimePreempt *= (float)getSv(HitObject.SliderVelocity);
+                HitObject.TimePreempt *= (float)getSv(HitObject.SliderVelocity); ;
 
                 double getSv(double value)
                 {
-                    double scale = (ClassicHitObject.MinSliderVelocity - ClassicHitObject.MaxSliderVelocity) / (0.75 - 1.5);
-                    return ClassicHitObject.MaxSliderVelocity + (value - 1.5) * scale;
+                    double scale = (0.75 - 1.5) / (ClassicHitObject.MinSliderVelocity - ClassicHitObject.MaxSliderVelocity);
+                    return 1.5 + (value - ClassicHitObject.MaxSliderVelocity) * scale;
                 }
             }
 
