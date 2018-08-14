@@ -50,8 +50,6 @@ namespace Symcol.Networking.NetworkingClients
         /// <param name="packet"></param>
         public virtual void SendPacket(Packet packet)
         {
-            if (packet.Address == Address) return;
-
             using (MemoryStream stream = new MemoryStream())
             {
                 BinaryFormatter formatter = new BinaryFormatter();

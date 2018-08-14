@@ -263,8 +263,7 @@ namespace Symcol.Networking.NetworkingHandlers
         protected virtual void TestConnection(ClientInfo info)
         {
             info.ConnectionTryCount++;
-            NetworkingClient client = GetNetworkingClient(info);
-            client.SendPacket(SignPacket(new TestPacket()));
+            GetNetworkingClient(info).SendPacket(SignPacket(new TestPacket()));
         }
 
         #endregion
