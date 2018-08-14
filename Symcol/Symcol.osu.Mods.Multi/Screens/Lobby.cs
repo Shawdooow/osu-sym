@@ -17,8 +17,6 @@ using osu.Game.Screens.Multi.Components;
 using osu.Game.Screens.Multi.Screens.Lounge;
 using osu.Game.Users;
 using OpenTK;
-using Symcol.osu.Core;
-using Symcol.osu.Core.Config;
 using Symcol.osu.Mods.Multi.Networking;
 using Symcol.osu.Mods.Multi.Networking.Packets.Lobby;
 
@@ -26,9 +24,6 @@ namespace Symcol.osu.Mods.Multi.Screens
 {
     public class Lobby : MultiScreen
     {
-        private readonly Bindable<string> localip = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.LocalIP);
-        private readonly Bindable<int> localport = SymcolOsuModSet.SymcolConfigManager.GetBindable<int>(SymcolSetting.LocalPort);
-
         private readonly Container content;
         private readonly SearchContainer search;
 
