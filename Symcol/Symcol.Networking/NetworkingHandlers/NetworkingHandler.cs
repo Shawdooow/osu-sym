@@ -188,6 +188,7 @@ namespace Symcol.Networking.NetworkingHandlers
         {
             if (packet is ConnectPacket c)
                 c.Gamekey = ClientInfo.Gamekey;
+            packet.Address = ReceivingClient.EndPoint.ToString();
             return packet;
         }
 
