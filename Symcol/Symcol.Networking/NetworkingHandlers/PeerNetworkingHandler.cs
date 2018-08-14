@@ -1,5 +1,6 @@
 ﻿using System;
 using osu.Framework.Logging;
+using Symcol.Networking.NetworkingClients;
 using Symcol.Networking.Packets;
 
 namespace Symcol.Networking.NetworkingHandlers
@@ -13,7 +14,19 @@ namespace Symcol.Networking.NetworkingHandlers
         /// </summary>
         public Action<ClientInfo> OnConnectedToHost;
 
+        public NetworkingClient SendingClient { get; protected set; }
+
         #endregion
+
+        public PeerNetworkingHandler()
+        {
+            OnAddressChange += (ip, port) =>
+            {
+                SendingClient = new UdpNetworkingClient(ip + ":" + port);
+                UdpNetworkingClient udp = (UdpNetworkingClient)SendingClient;
+                ReceivingClient = new UdpNetworkingClient(udp.UdpClient.Client.LocalEndPoint.ToString());
+            };
+        }
 
         #region Update Loop
 
@@ -59,7 +72,7 @@ namespace Symcol.Networking.NetworkingHandlers
 
         public virtual void SendToServer(Packet packet)
         {
-            GetNetworkingClient(ClientInfo).SendPacket(packet);
+            ReceivingClient.SendPacket(SignPacket(packet));
         }
 
         #endregion

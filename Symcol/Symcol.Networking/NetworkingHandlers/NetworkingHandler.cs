@@ -23,7 +23,7 @@ namespace Symcol.Networking.NetworkingHandlers
         /// </summary>
         public ClientInfo ClientInfo = new ClientInfo();
 
-        public static List<NetworkingClient> NetworkingClients { get; private set; } = new List<NetworkingClient>();
+        public NetworkingClient ReceivingClient { get; protected set; }
 
         /// <summary>
         /// Gets hit when we get + send a Packet
@@ -171,34 +171,12 @@ namespace Symcol.Networking.NetworkingHandlers
         /// returns a list of all avalable packets
         /// </summary>
         /// <returns></returns>
-        protected List<Packet> ReceivePackets()
+        protected virtual List<Packet> ReceivePackets()
         {
             List<Packet> packets = new List<Packet>();
-            for (int i = 0; i < GetNetworkingClient(ClientInfo)?.Available; i++)
-                packets.Add(GetNetworkingClient(ClientInfo).GetPacket());
+            for (int i = 0; i < ReceivingClient?.Available; i++)
+                packets.Add(ReceivingClient.GetPacket());
             return packets;
-        }
-
-        /// <summary>
-        /// Returns a send only networking client for the inputed ClientInfo
-        /// </summary>
-        /// <param name="info"></param>
-        /// <returns></returns>
-        protected NetworkingClient GetNetworkingClient(ClientInfo info)
-        {
-            foreach (NetworkingClient c in NetworkingClients)
-                if (c.Address == info.Address)
-                    return c;
-
-            if (Tcp)
-                throw new NotImplementedException("TCP client is not implemented!");
-
-            UdpNetworkingClient client = new UdpNetworkingClient(info.Address);
-
-            if (client.UdpClient != null)
-                NetworkingClients.Add(client);
-
-            return client;
         }
 
         /// <summary>

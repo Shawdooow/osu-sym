@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using osu.Framework.Logging;
 using Symcol.Networking.NetworkingClients;
 using Symcol.Networking.Packets;
@@ -19,7 +20,14 @@ namespace Symcol.Networking.NetworkingHandlers
         /// </summary>
         public readonly List<ClientInfo> ConnectedClients = new List<ClientInfo>();
 
+        public static List<NetworkingClient> NetworkingClients { get; private set; } = new List<NetworkingClient>();
+
         #endregion
+
+        public ServerNetworkingHandler()
+        {
+            OnAddressChange += (ip, port) => { ReceivingClient = new UdpNetworkingClient(port); };
+        }
 
         #region Update Loop
 
@@ -199,6 +207,28 @@ namespace Symcol.Networking.NetworkingHandlers
                 }
         }
 
+        /// <summary>
+        /// Returns a send only networking client for the inputed ClientInfo
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        protected NetworkingClient GetNetworkingClient(ClientInfo info)
+        {
+            foreach (NetworkingClient c in NetworkingClients)
+                if (c.Address == info.Address)
+                    return c;
+
+            if (Tcp)
+                throw new NotImplementedException("TCP client is not implemented!");
+
+            UdpNetworkingClient client = new UdpNetworkingClient(info.Address);
+
+            if (client.UdpClient != null)
+                NetworkingClients.Add(client);
+
+            return client;
+        }
+
         #endregion
 
         #region Send Functions
@@ -212,19 +242,18 @@ namespace Symcol.Networking.NetworkingHandlers
         protected void ShareWithAllConnectingClients(Packet packet)
         {
             foreach (ClientInfo info in ConnectingClients)
-                GetNetworkingClient(info).SendPacket(packet);
+                GetNetworkingClient(info).SendPacket(SignPacket(packet));
         }
 
         protected void ShareWithAllConnectedClients(Packet packet)
         {
             foreach (ClientInfo info in ConnectedClients)
-                GetNetworkingClient(info).SendPacket(packet);
+                GetNetworkingClient(info).SendPacket(SignPacket(packet));
         }
 
         protected void SendToClient(Packet packet, Packet recievedPacket)
         {
-            SignPacket(packet);
-            GetNetworkingClient(GetClientInfo(recievedPacket)).SendPacket(packet);
+            GetNetworkingClient(GetClientInfo(recievedPacket)).SendPacket(SignPacket(packet));
         }
 
         /// <summary>

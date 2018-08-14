@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using System.Net.Sockets;
 using osu.Framework.Logging;
 
@@ -19,17 +18,31 @@ namespace Symcol.Networking.NetworkingClients
 
             try
             {
-                string[] a = IP.Split('.');
-                byte[] addressBytes = { (byte)int.Parse(a[0]), (byte)int.Parse(a[1]), (byte)int.Parse(a[2]), (byte)int.Parse(a[3]) };
-
-                EndPoint = new IPEndPoint(new IPAddress(addressBytes), Port);
-                UdpClient = new UdpClient(EndPoint);
+                UdpClient = new UdpClient();
                 UdpClient.Connect(EndPoint);
-                Logger.Log("Successfully Updated UdpClient!", LoggingTarget.Runtime, LogLevel.Debug);
+                Logger.Log("Successfully Updated Peer UdpClient!", LoggingTarget.Runtime, LogLevel.Debug);
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error while setting up a new UdpClient!");
+                Logger.Error(e, "Error while setting up a new Peer UdpClient!");
+                Dispose();
+            }
+        }
+
+        public UdpNetworkingClient(int port)
+            : base(port)
+        {
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                Logger.Log("No Network Connection Detected!", LoggingTarget.Network, LogLevel.Error);
+
+            try
+            {
+                UdpClient = new UdpClient(port);
+                Logger.Log("Successfully Updated Server UdpClient!", LoggingTarget.Runtime, LogLevel.Debug);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Error while setting up a new Server UdpClient!");
                 Dispose();
             }
         }
