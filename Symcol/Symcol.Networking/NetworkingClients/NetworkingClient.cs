@@ -32,10 +32,7 @@ namespace Symcol.Networking.NetworkingClients
             IP = i;
             Port = p;
 
-            string[] a = IP.Split('.');
-            byte[] addressBytes = { (byte)int.Parse(a[0]), (byte)int.Parse(a[1]), (byte)int.Parse(a[2]), (byte)int.Parse(a[3]) };
-
-            EndPoint = new IPEndPoint(new IPAddress(addressBytes), Port);
+            EndPoint = new IPEndPoint(IPAddress.Parse(IP), Port);
         }
 
         protected NetworkingClient(int port)
