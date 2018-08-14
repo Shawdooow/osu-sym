@@ -15,10 +15,8 @@ namespace Symcol.osu.Core.Config
             Set(SymcolSetting.FreshInstall, true);
 
             Set(SymcolSetting.PlayerColor, "#ffffff");
-            Set(SymcolSetting.HostIP, "Host's IP Address");
-            Set(SymcolSetting.LocalIP, "Local IP Address");
-            Set(SymcolSetting.HostPort, 25570);
-            Set(SymcolSetting.LocalPort, 25570);
+            Set(SymcolSetting.SavedIP, "IP Address");
+            Set(SymcolSetting.SavedPort, 25570);
             Set(SymcolSetting.SavedName, "Guest");
             Set(SymcolSetting.SavedUserID, -1);
         }
@@ -31,10 +29,8 @@ namespace Symcol.osu.Core.Config
 
         //Old networking stuff
         PlayerColor,
-        HostIP,
-        LocalIP,
-        HostPort,
-        LocalPort,
+        SavedIP,
+        SavedPort,
         SavedName,
         SavedUserID
     }
