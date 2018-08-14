@@ -1,8 +1,8 @@
 ﻿using osu.Game.Rulesets.Vitaru.Characters.VitaruPlayers.DrawableVitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.UI;
-using Symcol.Core.NeuralNetworking;
 using System;
+using Symcol.NeuralNetworking;
 using TensorFlow;
 
 namespace osu.Game.Rulesets.Vitaru.Neural

@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using osu.Framework.Logging;
 
-namespace Symcol.Core.Networking.NetworkingClients
+namespace Symcol.Networking.NetworkingClients
 {
     public class UdpNetworkingClient : NetworkingClient
     {

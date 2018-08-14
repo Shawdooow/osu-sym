@@ -1,5 +1,4 @@
 ﻿using osu.Game.Screens;
-using Symcol.Core.Networking;
 
 namespace Symcol.Rulesets.Core.Multiplayer.Screens
 {

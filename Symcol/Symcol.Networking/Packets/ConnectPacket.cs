@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Symcol.Core.Networking.Packets
+namespace Symcol.Networking.Packets
 {
     [Serializable]
     public class ConnectPacket : Packet

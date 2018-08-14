@@ -1,8 +1,8 @@
 ﻿using osu.Framework.Configuration;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Vitaru.Debug;
-using Symcol.Core.NeuralNetworking;
 using osu.Game.Rulesets.Vitaru.Edit;
+using Symcol.NeuralNetworking;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {

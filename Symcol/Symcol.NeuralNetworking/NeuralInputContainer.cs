@@ -1,9 +1,9 @@
-﻿using OpenTK;
-using osu.Framework.Input.Bindings;
-using System;
+﻿using System;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Input.Bindings;
+using OpenTK;
 
-namespace Symcol.Core.NeuralNetworking
+namespace Symcol.NeuralNetworking
 {
     public abstract class NeuralInputContainer<T> : Container, IKeyBindingHandler<T>
         where T : struct, IConvertible

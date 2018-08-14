@@ -5,7 +5,7 @@ using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets;
-using Symcol.Core.Networking.Packets;
+using Symcol.Networking.Packets;
 using Symcol.osu.Mods.Multi.Networking;
 using Symcol.osu.Mods.Multi.Networking.Packets.Lobby;
 using Symcol.osu.Mods.Multi.Networking.Packets.Match;

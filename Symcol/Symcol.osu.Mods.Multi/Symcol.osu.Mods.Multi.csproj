@@ -8,6 +8,7 @@
     <Description>multi mod!</Description>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Symcol.Networking\Symcol.Networking.csproj" />
     <ProjectReference Include="..\Symcol.osu.Core\Symcol.osu.Core.csproj" />
   </ItemGroup>
 </Project>

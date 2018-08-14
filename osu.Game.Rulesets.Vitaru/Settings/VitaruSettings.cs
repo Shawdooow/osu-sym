@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Symcol.Core.Extentions;
 using System.Linq;
 using osu.Game.Rulesets.Vitaru.Debug;
-using Symcol.Core.NeuralNetworking;
+using Symcol.NeuralNetworking;
 
 namespace osu.Game.Rulesets.Vitaru.Settings
 {

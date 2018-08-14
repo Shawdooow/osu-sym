@@ -3,11 +3,11 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Formatters.Binary;
 using osu.Framework.Logging;
-using Symcol.Core.Networking.Packets;
+using Symcol.Networking.Packets;
 
 // ReSharper disable InconsistentNaming
 
-namespace Symcol.Core.Networking.NetworkingClients
+namespace Symcol.Networking.NetworkingClients
 {
     public abstract class NetworkingClient : IDisposable
     {

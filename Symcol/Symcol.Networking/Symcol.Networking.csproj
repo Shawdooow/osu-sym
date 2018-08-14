@@ -5,9 +5,9 @@
     <OutputType>Library</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Description>core symcol framework tools</Description>
+    <Description>symcol networking tools</Description>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\osu-framework\osu.Framework\osu.Framework.csproj" />
+    <ProjectReference Include="..\Symcol.Core\Symcol.Core.csproj" />
   </ItemGroup>
 </Project>

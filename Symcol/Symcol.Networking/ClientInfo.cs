@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Symcol.Core.Networking
+namespace Symcol.Networking
 {
     /// <summary>
     /// Just a client signature

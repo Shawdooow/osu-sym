@@ -1,6 +1,4 @@
-﻿using Symcol.Core.NeuralNetworking;
-
-namespace osu.Game.Rulesets.Shape.Neural
+﻿namespace osu.Game.Rulesets.Shape.Neural
 {
     public class ShapeNeuralContainer// : NeuralInputContainer<ShapeAction>
     {

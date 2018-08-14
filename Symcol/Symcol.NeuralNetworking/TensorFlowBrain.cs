@@ -1,7 +1,6 @@
 ﻿using TensorFlow;
-using static TensorFlow.TFSession;
 
-namespace Symcol.Core.NeuralNetworking
+namespace Symcol.NeuralNetworking
 {
     /// <summary>
     /// Will act like high-level input / output for TensorFlow
@@ -45,7 +44,7 @@ namespace Symcol.Core.NeuralNetworking
         {
             TFSession session = new TFSession();
             // ReSharper disable once UnusedVariable
-            Runner runner = session.GetRunner();
+            TFSession.Runner runner = session.GetRunner();
 
             TFTensor result = GetTensor(session, t);
             

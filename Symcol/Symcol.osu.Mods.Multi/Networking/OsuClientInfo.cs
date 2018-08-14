@@ -1,5 +1,5 @@
 ﻿using System;
-using Symcol.Core.Networking;
+using Symcol.Networking;
 
 namespace Symcol.osu.Mods.Multi.Networking
 {

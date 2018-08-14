@@ -28,7 +28,7 @@ using osu.Game.Screens.Play;
 using osu.Game.Skinning;
 using osu.Game.Storyboards.Drawables;
 using OpenTK.Input;
-using Symcol.Core.Networking.Packets;
+using Symcol.Networking.Packets;
 using Symcol.osu.Mods.Multi.Networking;
 using Symcol.osu.Mods.Multi.Networking.Packets.Player;
 

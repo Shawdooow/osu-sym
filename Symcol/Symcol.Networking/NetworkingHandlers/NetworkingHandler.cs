@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using osu.Framework.Timing;
 using Symcol.Core.Graphics.Containers;
-using Symcol.Core.Networking.NetworkingClients;
-using Symcol.Core.Networking.Packets;
+using Symcol.Networking.NetworkingClients;
+using Symcol.Networking.Packets;
+
 // ReSharper disable InconsistentNaming
 
-namespace Symcol.Core.Networking.NetworkingHandlers
+namespace Symcol.Networking.NetworkingHandlers
 {
     public abstract class NetworkingHandler : SymcolContainer
     {

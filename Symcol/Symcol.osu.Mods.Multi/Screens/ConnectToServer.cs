@@ -9,8 +9,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays.Settings;
 using OpenTK.Graphics;
-using Symcol.Core.Networking.NetworkingHandlers;
-using Symcol.Core.Networking.Packets;
 using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
 using Symcol.osu.Core.Screens.Evast;

@@ -1,6 +1,6 @@
-﻿using Symcol.Core.Networking.Packets;
+﻿using Symcol.Networking.Packets;
 
-namespace Symcol.Core.Networking.NetworkingClients
+namespace Symcol.Networking.NetworkingClients
 {
     public class TcpNetworkingClient : NetworkingClient
     {

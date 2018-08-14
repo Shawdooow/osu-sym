@@ -1,7 +1,7 @@
 ﻿using osu.Framework.Allocation;
 using osu.Game.Online.API;
-using Symcol.Core.Networking.NetworkingHandlers;
-using Symcol.Core.Networking.Packets;
+using Symcol.Networking.NetworkingHandlers;
+using Symcol.Networking.Packets;
 using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
 using Symcol.osu.Mods.Multi.Networking.Packets.Match;

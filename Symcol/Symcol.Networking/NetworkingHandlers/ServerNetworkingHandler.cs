@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using osu.Framework.Logging;
-using Symcol.Core.Networking.NetworkingClients;
-using Symcol.Core.Networking.Packets;
+using Symcol.Networking.NetworkingClients;
+using Symcol.Networking.Packets;
 
-namespace Symcol.Core.Networking.NetworkingHandlers
+namespace Symcol.Networking.NetworkingHandlers
 {
     public class ServerNetworkingHandler: NetworkingHandler
     {
