@@ -188,7 +188,6 @@ namespace Symcol.Networking.NetworkingHandlers
         {
             if (packet is ConnectPacket c)
                 c.Gamekey = ClientInfo.Gamekey;
-            packet.Address = ClientInfo.Address;
             return packet;
         }
 

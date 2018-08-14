@@ -72,7 +72,7 @@ namespace Symcol.Networking.NetworkingHandlers
 
         public virtual void SendToServer(Packet packet)
         {
-            ReceivingClient.SendPacket(SignPacket(packet));
+            SendingClient.SendPacket(SignPacket(packet));
         }
 
         #endregion
