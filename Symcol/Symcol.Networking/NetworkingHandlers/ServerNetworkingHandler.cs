@@ -121,6 +121,15 @@ namespace Symcol.Networking.NetworkingHandlers
 
         #region Packet and Client Helper Functions
 
+        protected override Packet SignPacket(Packet packet)
+        { 
+            if (packet is ConnectPacket c)
+                c.Gamekey = ClientInfo.Gamekey;
+            UdpNetworkingClient udp = (UdpNetworkingClient)ReceivingClient;
+            packet.Address = udp.UdpClient.Client.LocalEndPoint.ToString();
+            return packet;
+        }
+
         /// <summary>
         /// Get a matching client info from currently connecting/connected clients
         /// </summary>
@@ -172,7 +181,7 @@ namespace Symcol.Networking.NetworkingHandlers
         /// <returns></returns>
         public ClientInfo GenerateConnectingClientInfo(ConnectPacket packet)
         {
-            string[] split = packet.Address.Split(':');
+            string[] split = ReceivingClient.EndPoint.ToString().Split(':');
 
             string i = split[0];
             int p = int.Parse(split[1]);

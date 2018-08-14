@@ -189,7 +189,7 @@ namespace Symcol.Networking.NetworkingHandlers
             if (packet is ConnectPacket c)
                 c.Gamekey = ClientInfo.Gamekey;
             UdpNetworkingClient udp = (UdpNetworkingClient)ReceivingClient;
-            packet.Address = udp.UdpClient.Client.LocalEndPoint.ToString();
+            packet.Address = udp.UdpClient.Client.RemoteEndPoint.ToString();
             return packet;
         }
 
