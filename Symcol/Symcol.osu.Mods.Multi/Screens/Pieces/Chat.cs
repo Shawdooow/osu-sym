@@ -103,7 +103,7 @@ namespace Symcol.osu.Mods.Multi.Screens.Pieces
                 playerColorHex = "#ffffff";
             }
 
-            osuNetworkingClientHandler.SendPacket(new ChatPacket
+            osuNetworkingClientHandler.SendToServer(new ChatPacket
             {
                 AuthorColor = playerColorHex,
                 Message = message,

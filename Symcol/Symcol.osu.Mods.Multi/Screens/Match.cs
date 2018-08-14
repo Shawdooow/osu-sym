@@ -28,7 +28,7 @@ namespace Symcol.osu.Mods.Multi.Screens
         {
             this.match = match;
 
-            osuNetworkingClientHandler.SendPacket(new GetMapPacket());
+            osuNetworkingClientHandler.SendToServer(new GetMapPacket());
 
             MatchPlayerList playerList;
             Children = new Drawable[]
@@ -58,7 +58,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                     RelativeSizeAxes = Axes.X,
                     Width = 0.35f,
                     Text = "Start Match",
-                    Action = () => OsuNetworkingClientHandler.SendPacket(new StartMatchPacket())
+                    Action = () => OsuNetworkingClientHandler.SendToServer(new StartMatchPacket())
                 },
                 playerList = new MatchPlayerList(OsuNetworkingClientHandler),
                 MatchTools = new MatchTools(),
@@ -143,7 +143,7 @@ namespace Symcol.osu.Mods.Multi.Screens
 
         protected override void Dispose(bool isDisposing)
         {
-            OsuNetworkingClientHandler.SendPacket(new LeavePacket());
+            OsuNetworkingClientHandler.SendToServer(new LeavePacket());
             // ReSharper disable once DelegateSubtraction
             OsuNetworkingClientHandler.OnPacketReceive -= handlePackets;
             base.Dispose(isDisposing);
@@ -157,7 +157,7 @@ namespace Symcol.osu.Mods.Multi.Screens
             {
                 try
                 {
-                    OsuNetworkingClientHandler.SendPacket(new SetMapPacket
+                    OsuNetworkingClientHandler.SendToServer(new SetMapPacket
                     {
                         OnlineBeatmapSetID = (int)map.BeatmapSetInfo.OnlineBeatmapSetID,
                         OnlineBeatmapID = (int)map.BeatmapInfo.OnlineBeatmapID,
@@ -171,7 +171,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                 catch
                 {
                     //try to fallback for old maps
-                    OsuNetworkingClientHandler.SendPacket(new SetMapPacket
+                    OsuNetworkingClientHandler.SendToServer(new SetMapPacket
                     {
                         BeatmapTitle = map.Metadata.Title,
                         BeatmapArtist = map.Metadata.Artist,

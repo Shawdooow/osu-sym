@@ -300,7 +300,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                     this.Delay(750).Schedule(() =>
                     {
                         Logger.Log("Client finnished loading", LoggingTarget.Network);
-                        OsuNetworkingClientHandler.SendPacket(new PlayerLoadedPacket());
+                        OsuNetworkingClientHandler.SendToServer(new PlayerLoadedPacket());
                     });
                 });
             });
@@ -347,7 +347,7 @@ namespace Symcol.osu.Mods.Multi.Screens
         {
             if (args.Key == Key.Escape && !args.Repeat)
             {
-                OsuNetworkingClientHandler.SendPacket(new MatchExitPacket());
+                OsuNetworkingClientHandler.SendToServer(new MatchExitPacket());
                 return true;
             }
 

@@ -8,7 +8,7 @@ using Symcol.osu.Mods.Multi.Networking.Packets.Match;
 
 namespace Symcol.osu.Mods.Multi.Networking
 {
-    public class OsuNetworkingClientHandler : NetworkingHandler, IOnlineComponent
+    public class OsuNetworkingClientHandler : PeerNetworkingHandler, IOnlineComponent
     {
         protected override string Gamekey => "osu";
 

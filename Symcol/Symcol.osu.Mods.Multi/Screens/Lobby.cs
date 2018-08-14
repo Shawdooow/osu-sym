@@ -67,7 +67,7 @@ namespace Symcol.osu.Mods.Multi.Screens
         public Lobby(OsuNetworkingClientHandler osuNetworkingClientHandler)
             : base(osuNetworkingClientHandler)
         {
-            OsuNetworkingClientHandler.SendPacket(new GetMatchListPacket());
+            OsuNetworkingClientHandler.SendToServer(new GetMatchListPacket());
 
             OsuNetworkingClientHandler.OnPacketReceive += packet =>
             {
@@ -182,7 +182,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                             RelativeSizeAxes = Axes.X,
                             Width = 0.2f,
                             Text = "Create Game",
-                            Action = () => { OsuNetworkingClientHandler.SendPacket(new CreateMatchPacket { MatchInfo = new MatchListPacket.MatchInfo() }); }
+                            Action = () => { OsuNetworkingClientHandler.SendToServer(new CreateMatchPacket { MatchInfo = new MatchListPacket.MatchInfo() }); }
                         },
                         new SettingsButton
                         {
@@ -192,7 +192,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                             RelativeSizeAxes = Axes.X,
                             Width = 0.2f,
                             Text = "Refresh",
-                            Action = () => { OsuNetworkingClientHandler.SendPacket(new GetMatchListPacket()); }
+                            Action = () => { OsuNetworkingClientHandler.SendToServer(new GetMatchListPacket()); }
                         },
                         Inspector = new RoomInspector
                         {
@@ -294,7 +294,7 @@ namespace Symcol.osu.Mods.Multi.Screens
                     BeatmapArtist = room.Room.Beatmap.Value.Metadata.Artist,
                     //TODO: Players
                 };
-                OsuNetworkingClientHandler.SendPacket(new JoinMatchPacket
+                OsuNetworkingClientHandler.SendToServer(new JoinMatchPacket
                 {
                     Match = match,
                     OsuClientInfo = OsuNetworkingClientHandler.OsuClientInfo

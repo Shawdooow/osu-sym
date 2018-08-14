@@ -180,15 +180,9 @@ namespace Symcol.osu.Mods.Multi.Screens
             {
                 Add(OsuNetworkingClientHandler = new OsuNetworkingClientHandler
                 {
-                    Address = LocalIp.Text + ":" + LocalPort.Text,
-                    ClientType = ClientType.Peer,
+                    Address = LocalIp.Text + ":" + LocalPort.Text
                 });
-                OsuNetworkingClientHandler.ServerInfo = OsuNetworkingClientHandler.GenerateConnectingClientInfo(new ConnectPacket
-                {
-                    Address = HostIp.Text + ":" + HostPort.Text,
-                    Gamekey = "osu"
-                });
-                OsuNetworkingClientHandler.OnConnectedToHost += list => Connected();
+                OsuNetworkingClientHandler.OnConnectedToHost += host => Connected();
             }
             OsuNetworkingClientHandler.Connect();
         }
