@@ -1,6 +1,6 @@
 ﻿using osu.Framework.Allocation;
 using osu.Game.Online.API;
-using Symcol.Core.Networking;
+using Symcol.Core.Networking.NetworkingHandlers;
 using Symcol.Core.Networking.Packets;
 using Symcol.osu.Core;
 using Symcol.osu.Core.Config;
