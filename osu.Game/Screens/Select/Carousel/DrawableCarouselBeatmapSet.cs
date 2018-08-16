@@ -110,10 +110,12 @@ namespace osu.Game.Screens.Select.Carousel
             }
         }
 
-        private class PanelBackground : Container
+        private class PanelBackground : BufferedContainer
         {
             public PanelBackground(WorkingBeatmap working)
             {
+                CacheDrawnFrameBuffer = true;
+
                 Children = new Drawable[]
                 {
                     new BeatmapBackgroundSprite(working)

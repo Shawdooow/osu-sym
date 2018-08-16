@@ -101,36 +101,6 @@ namespace osu.Game.Online.API
             api.Schedule(delegate { Success?.Invoke(); });
         }
 
-        public void Fallback(APIAccess api)
-        {
-            API = api;
-
-            if (checkAndProcessFailure())
-                return;
-
-            if (startTime == null)
-                startTime = DateTimeOffset.UtcNow;
-
-            if (remainingTime <= 0)
-                throw new TimeoutException(@"API request timeout hit");
-
-            //WebRequest = CreateWebRequest();
-            //WebRequest.Failed += Fail;
-            //WebRequest.AllowRetryOnTimeout = false;
-            //WebRequest.AddHeader("Authorization", $"Bearer {api.AccessToken}");
-
-            if (checkAndProcessFailure())
-                return;
-
-            if (!WebRequest.Aborted) //could have been aborted by a Cancel() call
-                WebRequest.Perform();
-
-            if (checkAndProcessFailure())
-                return;
-
-            api.Schedule(delegate { Success?.Invoke(); });
-        }
-
         public void Cancel() => Fail(new OperationCanceledException(@"Request cancelled"));
 
         public void Fail(Exception e)
