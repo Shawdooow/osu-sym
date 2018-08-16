@@ -1,12 +1,10 @@
-﻿using System;
-using OpenTK;
-using osu.Game.Rulesets.Judgements;
+﻿using OpenTK;
 using osu.Game.Rulesets.Shape.Objects.Drawables;
-using osu.Framework.Extensions;
+using Symcol.Rulesets.Core.Judgements;
 
 namespace osu.Game.Rulesets.Shape.Judgements
 {
-    public class ShapeJudgement : Judgement
+    public class ShapeJudgement : SymcolJudgement
     {
         /// <summary>
         /// The positional hit offset.

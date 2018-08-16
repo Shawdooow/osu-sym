@@ -3,7 +3,6 @@
 
 using osu.Game.Beatmaps;
 using OpenTK;
-using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Scoring;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using Symcol.Rulesets.Core.HitObjects;
 
 namespace osu.Game.Rulesets.Classic.Objects
 {
-    public abstract class ClassicHitObject : SymcolHitObject, IHasComboInformation
+    public abstract class ClassicHitObject : SymcolHitObject
     {
         public const double OBJECT_RADIUS = 64;
 
@@ -71,14 +70,6 @@ namespace osu.Game.Rulesets.Classic.Objects
         public float Scale { get; set; } = 1;
 
         public int ID { get; set; }
-
-        public virtual bool NewCombo { get; set; }
-
-        public int IndexInCurrentCombo { get; set; }
-
-        public int ComboIndex { get; set; }
-
-        public bool LastInCombo { get; set; }
 
         public double HitWindowFor(HitResult result)
         {

@@ -20,7 +20,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Classic.Judgements;
 using osu.Game.Rulesets.Classic.Settings;
-using osu.Game.Rulesets.Classic.UI.Cursor;
 using OpenTK.Graphics.ES30;
 using Symcol.Core.Graphics.Containers;
 

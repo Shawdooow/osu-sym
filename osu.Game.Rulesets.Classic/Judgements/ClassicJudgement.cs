@@ -2,13 +2,13 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using OpenTK;
-using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Classic.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
+using Symcol.Rulesets.Core.Judgements;
 
 namespace osu.Game.Rulesets.Classic.Judgements
 {
-    public class ClassicJudgement : Judgement
+    public class ClassicJudgement : SymcolJudgement
     {
         public override HitResult MaxResult => HitResult.Great;
 

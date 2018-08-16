@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
+using osu.Game.Rulesets.Objects.Types;
 
 namespace Symcol.Rulesets.Core.HitObjects
 {
-    public abstract class SymcolHitObject : HitObject
+    public abstract class SymcolHitObject : HitObject, IHasComboInformation
     {
         public SampleInfo GetAdjustedSample(SampleInfo info, SampleControlPoint point = null)
         {
@@ -23,5 +24,11 @@ namespace Symcol.Rulesets.Core.HitObjects
 
             return info;
         }
+
+        public bool NewCombo { get; set; }
+        public int ComboOffset { get; set; }
+        public int IndexInCurrentCombo { get; set; }
+        public int ComboIndex { get; set; }
+        public bool LastInCombo { get; set; }
     }
 }

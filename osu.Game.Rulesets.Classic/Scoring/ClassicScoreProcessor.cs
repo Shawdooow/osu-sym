@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Classic.Scoring
             : base(rulesetContainer)
         {
             if (ClassicPlayfield.OnJudgement == null)
-                ClassicPlayfield.OnJudgement += AddJudgement;
+                ClassicPlayfield.OnJudgement += j => CreateResult(j);
         }
 
         //public override bool PassiveHealthDrain => true;
@@ -44,38 +44,27 @@ namespace osu.Game.Rulesets.Classic.Scoring
                 {
                     // Ticks
                     foreach (var unused in slider.NestedHitObjects.OfType<SliderTick>())
-                        AddJudgement(new ClassicJudgement { Result = HitResult.Great });
+                        CreateResult(new ClassicJudgement { Result = HitResult.Great });
 
                     // RepeatPoints
                     foreach (var unused in slider.NestedHitObjects.OfType<RepeatPoint>())
-                        AddJudgement(new ClassicJudgement { Result = HitResult.Great });
+                        CreateResult(new ClassicJudgement { Result = HitResult.Great });
                 }
 
                 if (obj is Hold hold)
                 {
                     // Ticks
                     foreach (var unused in hold.NestedHitObjects.OfType<SliderTick>())
-                        AddJudgement(new ClassicJudgement { Result = HitResult.Great });
+                        CreateResult(new ClassicJudgement { Result = HitResult.Great });
 
                     // RepeatPoints
                     foreach (var unused in hold.NestedHitObjects.OfType<RepeatPoint>())
-                        AddJudgement(new ClassicJudgement { Result = HitResult.Great });
+                        CreateResult(new ClassicJudgement { Result = HitResult.Great });
                 }
 
-                AddJudgement(new ClassicJudgement { Result = HitResult.Great });
+                CreateResult(new ClassicJudgement { Result = HitResult.Great });
             }
         }
-
-        /*
-        public override void UpdateHealth(IFrameBasedClock clock)
-        {
-            base.UpdateHealth(clock);
-
-            float d = 15;
-
-            Health.Value -= ((float)clock.ElapsedFrameTime / (d * BeatmapInfo.BaseDifficulty.DrainRate)) / 100;
-        }
-        */
 
         protected override void Reset(bool storeResults)
         {
@@ -97,21 +86,21 @@ namespace osu.Game.Rulesets.Classic.Scoring
             score.Statistics[HitResult.Miss] = scoreResultCounts.GetOrDefault(HitResult.Miss);
         }
 
-        protected override void OnNewJudgement(Judgement judgement)
+        protected override void ApplyResult(JudgementResult result)
         {
-            base.OnNewJudgement(judgement);
+            base.ApplyResult(result);
 
-            var osuJudgement = (ClassicJudgement)judgement;
+            var osuJudgement = (ClassicJudgement)result.Judgement;
 
-            if (judgement.Result != HitResult.None)
+            if (osuJudgement.Result != HitResult.None)
             {
-                scoreResultCounts[judgement.Result] = scoreResultCounts.GetOrDefault(judgement.Result) + 1;
+                scoreResultCounts[osuJudgement.Result] = scoreResultCounts.GetOrDefault(osuJudgement.Result) + 1;
                 comboResultCounts[osuJudgement.Combo] = comboResultCounts.GetOrDefault(osuJudgement.Combo) + 1;
             }
 
             Combo++;                
 
-            switch (judgement.Result)
+            switch (osuJudgement.Result)
             {
                 case HitResult.Great:
                     ClassicUi.CurrentHealth = Math.Min(ClassicUi.CurrentHealth + (10.2 - hpDrainRate) * 0.02, 1);

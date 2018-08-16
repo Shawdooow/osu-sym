@@ -10,10 +10,7 @@ using osu.Game.Rulesets.Objects.Types;
 using System;
 using osu.Game.Rulesets.Classic.UI;
 using osu.Framework.Configuration;
-using osu.Framework.Logging;
 using osu.Game.Rulesets.Classic.Settings;
-using osu.Game.Beatmaps.ControlPoints;
-using osu.Game.Audio;
 
 namespace osu.Game.Rulesets.Classic.Beatmaps
 {
@@ -75,6 +72,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                             RepeatCount = curveData.RepeatCount,
                             Position = positionData?.Position ?? Vector2.Zero,
                             NewCombo = comboData?.NewCombo ?? false,
+                            ComboOffset = comboData?.ComboOffset ?? 0,
                             ID = hitCircleCount
                         };
                     else
@@ -90,6 +88,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                             RepeatCount = curveData.RepeatCount,
                             Position = positionData?.Position ?? Vector2.Zero,
                             NewCombo = comboData?.NewCombo ?? false,
+                            ComboOffset = comboData?.ComboOffset ?? 0,
                             ID = hitCircleCount,
                             First = true
                         };
@@ -108,6 +107,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                             RepeatCount = curveData.RepeatCount,
                             Position = positionData?.Position ?? Vector2.Zero,
                             NewCombo = comboData?.NewCombo ?? false,
+                            ComboOffset = comboData?.ComboOffset ?? 0,
                             ID = hitCircleCount
                         };
                     else
@@ -123,6 +123,7 @@ namespace osu.Game.Rulesets.Classic.Beatmaps
                             RepeatCount = curveData.RepeatCount,
                             Position = positionData?.Position ?? Vector2.Zero,
                             NewCombo = comboData?.NewCombo ?? false,
+                            ComboOffset = comboData?.ComboOffset ?? 0,
                             ID = hitCircleCount,
                             First = true
                         };
