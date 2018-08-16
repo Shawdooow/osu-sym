@@ -285,6 +285,7 @@ namespace osu.Game
 
         protected override void Dispose(bool isDisposing)
         {
+            ModStore.SymcolBaseSet?.Dispose();
             base.Dispose(isDisposing);
             RavenLogger.Dispose();
         }
@@ -646,13 +647,6 @@ namespace osu.Game
 
             if (newScreen == null)
                 Exit();
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            ModStore.SymcolBaseSet?.Dispose();
-
-            base.Dispose(isDisposing);
         }
     }
 }
