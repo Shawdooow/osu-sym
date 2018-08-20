@@ -107,19 +107,7 @@ namespace osu.Framework.Threading
             initializedEvent.Set();
 
             while (!exitCompleted)
-            {
-                try
-                {
-                    ProcessFrame();
-                }
-                catch (Exception e)
-                {
-                    if (UnhandledException != null)
-                        UnhandledException.Invoke(this, new UnhandledExceptionEventArgs(e, false));
-                    else
-                        throw;
-                }
-            }
+                ProcessFrame();
         }
 
         protected void ProcessFrame()

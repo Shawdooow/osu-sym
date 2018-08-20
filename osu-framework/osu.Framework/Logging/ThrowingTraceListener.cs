@@ -20,8 +20,8 @@ namespace osu.Framework.Logging
         {
         }
 
-        public override void Fail(string message) => throw new AssertionException(message);
+        //public override void Fail(string message) => throw new AssertionException(message);
 
-        public override void Fail(string message1, string message2) => throw new AssertionException($"{message1}: {message2}");
+        //public override void Fail(string message1, string message2) => throw new AssertionException($"{message1}: {message2}");
     }
 }

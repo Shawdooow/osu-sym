@@ -204,7 +204,7 @@ namespace osu.Framework.Platform
                 {
                     OnThreadStart = UpdateInitialize,
                     Monitor = { HandleGC = true },
-                    UnhandledException = unhandledExceptionHandler,
+                    //UnhandledException = unhandledExceptionHandler,
                 }),
                 (InputThread = new InputThread(null)
                 {
