@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 
@@ -24,6 +25,8 @@ namespace Symcol.Rulesets.Core.HitObjects
 
             return info;
         }
+
+        public override Judgement CreateJudgement() => new Judgement();
 
         public bool NewCombo { get; set; }
         public int ComboOffset { get; set; }

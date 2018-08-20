@@ -2,7 +2,6 @@
 using OpenTK;
 using System;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
-using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Game.Rulesets.Vitaru.Settings;
 using osu.Game.Rulesets.Vitaru.UI;
 using osu.Game.Rulesets.Scoring;
@@ -75,10 +74,10 @@ namespace osu.Game.Rulesets.Vitaru.Objects.Drawables
                 switch (ScoreZone)
                 {
                     case 0:
-                        ApplyResult(r => r.Type = HitResult.Miss );
+                        ApplyResult(r => r.Type = HitResult.Miss);
                         break;
                     case 50:
-                        ApplyResult(r => r.Type = HitResult.Meh);
+                        ApplyResult(r => r.Type = HitResult.Meh );
                         break;
                     case 100:
                         ApplyResult(r => r.Type = HitResult.Good);

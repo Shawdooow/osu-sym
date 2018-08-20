@@ -21,7 +21,6 @@ using OpenTK.Graphics;
 using osu.Game.Rulesets.Vitaru.Debug;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables.Pieces;
-using Symcol.Rulesets.Core.Judgements;
 
 namespace osu.Game.Rulesets.Vitaru.UI
 {
@@ -43,7 +42,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         //public readonly MirrorField Mirrorfield;
 
-        public static Action<SymcolJudgement> OnNewJudgement;
+        public static Action<JudgementResult> OnNewJudgement;
         //public Action<Judgement> RemoveJudgement;
 
         public readonly AspectLockedPlayfield Gamefield;
@@ -217,7 +216,7 @@ namespace osu.Game.Rulesets.Vitaru.UI
         {
             var vitaruJudgement = (VitaruJudgement)judgement.Judgement;
 
-            OnNewJudgement?.Invoke(vitaruJudgement);
+            OnNewJudgement?.Invoke(judgement);
 
             returnedJudgementCount.Bindable.Value++;
 

@@ -11,7 +11,6 @@ using osu.Framework.Audio;
 using osu.Game.Rulesets.Vitaru.Characters;
 using osu.Game.Audio;
 using osu.Game.Rulesets.Scoring;
-using osu.Game.Rulesets.Vitaru.Judgements;
 using Symcol.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Vitaru.Objects.Drawables

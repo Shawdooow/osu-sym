@@ -1,11 +1,11 @@
-﻿using OpenTK;
+﻿using osu.Game.Rulesets.Judgements;
+using OpenTK;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
-using Symcol.Rulesets.Core.Judgements;
 
 namespace osu.Game.Rulesets.Vitaru.Judgements
 {
-    public class VitaruJudgement : SymcolJudgement
+    public class VitaruJudgement : Judgement
     {
         public override HitResult MaxResult => HitResult.Great;
 

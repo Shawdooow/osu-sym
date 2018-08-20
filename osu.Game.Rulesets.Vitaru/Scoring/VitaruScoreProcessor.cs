@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using osu.Framework.Extensions;
-using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Game.Rulesets.Vitaru.Objects;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
@@ -29,9 +28,9 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
             if (VitaruPlayfield.OnNewJudgement == null)
                 VitaruPlayfield.OnNewJudgement +=  j =>
                 {
-                    var result = CreateResult(j);
+                    var result = CreateResult(j.Judgement);
 
-                    result.Type = j.Result;
+                    result.Type = j.Type;
                     ApplyResult(result);
                 };
         }
@@ -101,16 +100,14 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
         {
             base.ApplyResult(result);
 
-            var vitaruJudgement = (VitaruJudgement)result.Judgement;
-
-            if (vitaruJudgement.Result != HitResult.None)
+            if (result.Type != HitResult.None)
             {
-                scoreResultCounts[vitaruJudgement.Result] = scoreResultCounts.GetOrDefault(vitaruJudgement.Result) + 1;
-                comboResultCounts[vitaruJudgement.Combo] = comboResultCounts.GetOrDefault(vitaruJudgement.Combo) + 1;
+                scoreResultCounts[result.Type] = scoreResultCounts.GetOrDefault(result.Type) + 1;
+                //comboResultCounts[vitaruJudgement.ComboType] = comboResultCounts.GetOrDefault(vitaruJudgement.ComboType) + 1;
 
                 Combo++;
 
-                if (vitaruJudgement.Result == HitResult.Miss)
+                if (result.Type == HitResult.Miss)
                     Combo = 0;
             }
 
