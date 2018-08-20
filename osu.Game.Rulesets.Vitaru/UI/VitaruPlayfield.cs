@@ -214,8 +214,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
 
         private void onResult(DrawableHitObject judgedObject, JudgementResult judgement)
         {
-            var vitaruJudgement = (VitaruJudgement)judgement.Judgement;
-
             OnNewJudgement?.Invoke(judgement);
 
             returnedJudgementCount.Bindable.Value++;
