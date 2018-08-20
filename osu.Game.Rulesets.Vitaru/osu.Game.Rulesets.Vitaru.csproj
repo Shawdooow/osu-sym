@@ -1,0 +1,143 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\osu.Game.props" />
+  <PropertyGroup Label="Project">
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Description>dodge the bullets. to the beat.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Assets\Samples\skeletron.mp3" />
+    <None Remove="Assets\Textures\bulletKiai.png" />
+    <None Remove="Assets\Textures\chen.png" />
+    <None Remove="Assets\Textures\chenKiai.png" />
+    <None Remove="Assets\Textures\chenKiaiRight.png" />
+    <None Remove="Assets\Textures\chenRight.png" />
+    <None Remove="Assets\Textures\crystal.png" />
+    <None Remove="Assets\Textures\Dean.png" />
+    <None Remove="Assets\Textures\enemy.png" />
+    <None Remove="Assets\Textures\enemyKiai.png" />
+    <None Remove="Assets\Textures\gearLarge.png" />
+    <None Remove="Assets\Textures\gearMedium.png" />
+    <None Remove="Assets\Textures\gearSmall.png" />
+    <None Remove="Assets\Textures\icon.png" />
+    <None Remove="Assets\Textures\icon@2x.png" />
+    <None Remove="Assets\Textures\kaguya.png" />
+    <None Remove="Assets\Textures\kaguyaKiai.png" />
+    <None Remove="Assets\Textures\kaguyaKiaiRight.png" />
+    <None Remove="Assets\Textures\kaguyaRight.png" />
+    <None Remove="Assets\Textures\Kokoro Hatano Kiai.png" />
+    <None Remove="Assets\Textures\marisa.png" />
+    <None Remove="Assets\Textures\marisaKiai.png" />
+    <None Remove="Assets\Textures\marisaKiaiRight.png" />
+    <None Remove="Assets\Textures\marisaRight.png" />
+    <None Remove="Assets\Textures\nue.png" />
+    <None Remove="Assets\Textures\nueKiai.png" />
+    <None Remove="Assets\Textures\nueKiaiRight.png" />
+    <None Remove="Assets\Textures\nueRight.png" />
+    <None Remove="Assets\Textures\player.png" />
+    <None Remove="Assets\Textures\playerKiai.png" />
+    <None Remove="Assets\Textures\playerKiaiRight.png" />
+    <None Remove="Assets\Textures\playerRight.png" />
+    <None Remove="Assets\Textures\reimu.png" />
+    <None Remove="Assets\Textures\reimuGravaruIdle.png" />
+    <None Remove="Assets\Textures\reimuKiai.png" />
+    <None Remove="Assets\Textures\reimuKiaiRight.png" />
+    <None Remove="Assets\Textures\reimuRight.png" />
+    <None Remove="Assets\Textures\ring.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai 0.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai 1.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai 2.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai 3.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai 4.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai 5.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai 6.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai 7.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Left 0.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Left 1.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Left 2.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Left 3.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Left 4.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Left 5.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Left 6.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Left 7.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Right 0.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Right 1.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Right 2.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Right 3.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Right 4.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Right 5.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Right 6.png" />
+    <None Remove="Assets\Textures\Sakuya Izayoi Kiai Right 7.png" />
+    <None Remove="Assets\Textures\SakuyaIzayoi.png" />
+    <None Remove="Assets\Textures\SakuyaIzayoiKiai.png" />
+    <None Remove="Assets\Textures\SakuyaIzayoiKiaiRight.png" />
+    <None Remove="Assets\Textures\SakuyaIzayoiRight.png" />
+    <None Remove="Assets\Textures\seal.png" />
+    <None Remove="Assets\Textures\sign.png" />
+    <None Remove="Assets\Textures\star.png" />
+    <None Remove="Assets\Textures\starFill.png" />
+    <None Remove="Assets\Textures\vitaru spring 2018.png" />
+    <None Remove="Assets\Textures\VitaruTouhosuModeTrue2560x1440.png" />
+    <None Remove="Assets\Textures\vortex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Samples\skeletron.mp3" />
+    <EmbeddedResource Include="Assets\Textures\bulletKiai.png" />
+    <EmbeddedResource Include="Assets\Textures\Dean.png" />
+    <EmbeddedResource Include="Assets\Textures\enemy.png" />
+    <EmbeddedResource Include="Assets\Textures\enemyKiai.png" />
+    <EmbeddedResource Include="Assets\Textures\gearLarge.png" />
+    <EmbeddedResource Include="Assets\Textures\gearMedium.png" />
+    <EmbeddedResource Include="Assets\Textures\gearSmall.png" />
+    <EmbeddedResource Include="Assets\Textures\icon.png" />
+    <EmbeddedResource Include="Assets\Textures\Kokoro Hatano Kiai.png" />
+    <EmbeddedResource Include="Assets\Textures\ring.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai 0.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai 1.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai 2.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai 3.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai 4.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai 5.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai 6.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai 7.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Left 0.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Left 1.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Left 2.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Left 3.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Left 4.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Left 5.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Left 6.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Left 7.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Right 0.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Right 1.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Right 2.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Right 3.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Right 4.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Right 5.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Right 6.png" />
+    <EmbeddedResource Include="Assets\Textures\Sakuya Izayoi Kiai Right 7.png" />
+    <EmbeddedResource Include="Assets\Textures\SakuyaIzayoi.png" />
+    <EmbeddedResource Include="Assets\Textures\SakuyaIzayoiKiai.png" />
+    <EmbeddedResource Include="Assets\Textures\SakuyaIzayoiKiaiRight.png" />
+    <EmbeddedResource Include="Assets\Textures\SakuyaIzayoiRight.png" />
+    <EmbeddedResource Include="Assets\Textures\seal.png" />
+    <EmbeddedResource Include="Assets\Textures\star.png" />
+    <EmbeddedResource Include="Assets\Textures\starFill.png" />
+    <EmbeddedResource Include="Assets\Textures\vitaru spring 2018.png" />
+    <EmbeddedResource Include="Assets\Textures\icon%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Tracks\" />
+    <Folder Include="SymcolMods\Wiki\Sections\SubSections\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symcol\Symcol.NeuralNetworking\Symcol.NeuralNetworking.csproj" />
+    <ProjectReference Include="..\Symcol\Symcol.osu.Mods.Multi\Symcol.osu.Mods.Multi.csproj" />
+    <ProjectReference Include="..\Symcol\Symcol.Rulesets.Core\Symcol.Rulesets.Core.csproj" />
+  </ItemGroup>
+</Project>

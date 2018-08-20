@@ -477,15 +477,7 @@ namespace osu.Game
 
                 const int short_term_display_limit = 3;
 
-                if (recentLogCount < short_term_display_limit)
-                {
-                    Schedule(() => notifications.Post(new SimpleNotification
-                    {
-                        Icon = entry.Level == LogLevel.Important ? FontAwesome.fa_exclamation_circle : FontAwesome.fa_bomb,
-                        Text = entry.Message + (entry.Exception != null ? "\n\nThis error has been automatically reported to the devs." : string.Empty),
-                    }));
-                }
-                else if (recentLogCount == short_term_display_limit)
+                if (recentLogCount == short_term_display_limit)
                 {
                     Schedule(() => notifications.Post(new SimpleNotification
                     {
