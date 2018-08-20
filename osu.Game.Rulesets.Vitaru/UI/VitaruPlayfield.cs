@@ -2,7 +2,6 @@
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Objects.Drawables;
 using OpenTK;
-using osu.Game.Rulesets.Vitaru.Judgements;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Judgements;
@@ -43,7 +42,6 @@ namespace osu.Game.Rulesets.Vitaru.UI
         //public readonly MirrorField Mirrorfield;
 
         public static Action<JudgementResult> OnNewJudgement;
-        //public Action<Judgement> RemoveJudgement;
 
         public readonly AspectLockedPlayfield Gamefield;
 

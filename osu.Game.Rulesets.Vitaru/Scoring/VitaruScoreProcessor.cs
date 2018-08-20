@@ -26,13 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.Scoring
             this.vitaruRulesetContainer = vitaruRulesetContainer;
 
             if (VitaruPlayfield.OnNewJudgement == null)
-                VitaruPlayfield.OnNewJudgement +=  j =>
-                {
-                    var result = CreateResult(j.Judgement);
-
-                    result.Type = j.Type;
-                    ApplyResult(result);
-                };
+                VitaruPlayfield.OnNewJudgement +=  j => ApplyResult(CreateResult(j.Judgement));
         }
 
         protected override void Reset(bool storeResults)
