@@ -53,8 +53,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.NeuralNetworking", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Symcol.Networking", "Symcol\Symcol.Networking\Symcol.Networking.csproj", "{9CDB49D2-FCB9-45D3-8E5C-405EB5173071}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osu.Game.Rulesets.Vitaru", "osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj", "{5DAD624E-CE2F-467F-992A-7851CCB98E67}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,10 +151,6 @@ Global
 		{9CDB49D2-FCB9-45D3-8E5C-405EB5173071}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CDB49D2-FCB9-45D3-8E5C-405EB5173071}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CDB49D2-FCB9-45D3-8E5C-405EB5173071}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DAD624E-CE2F-467F-992A-7851CCB98E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DAD624E-CE2F-467F-992A-7851CCB98E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DAD624E-CE2F-467F-992A-7851CCB98E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DAD624E-CE2F-467F-992A-7851CCB98E67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
