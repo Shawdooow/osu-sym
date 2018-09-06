@@ -76,10 +76,10 @@ namespace osu.Game
         {
             get
             {
-                Screen s = screenStack;
-                while (s != null && !(s is Intro))
-                    s = s.ChildScreen;
-                return s as Intro;
+                Screen screen = screenStack;
+                while (screen != null && !(screen is Intro))
+                    screen = screen.ChildScreen;
+                return screen as Intro;
             }
         }
 
@@ -128,8 +128,8 @@ namespace osu.Game
         /// <param name="toolbar">Whether the toolbar should also be hidden.</param>
         public void CloseAllOverlays(bool toolbar = true)
         {
-            foreach (var o in overlays)
-                o.State = Visibility.Hidden;
+            foreach (var overlay in overlays)
+                overlay.State = Visibility.Hidden;
             if (toolbar) Toolbar.State = Visibility.Hidden;
         }
 
@@ -246,7 +246,7 @@ namespace osu.Game
         /// <param name="beatmapId">The beatmap to show.</param>
         public void ShowBeatmap(int beatmapId) => beatmapSetOverlay.FetchAndShowBeatmap(beatmapId);
 
-        protected void LoadScore(Score s)
+        protected void LoadScore(Score score)
         {
             scoreLoad?.Cancel();
 
@@ -254,18 +254,18 @@ namespace osu.Game
 
             if (menu == null)
             {
-                scoreLoad = Schedule(() => LoadScore(s));
+                scoreLoad = Schedule(() => LoadScore(score));
                 return;
             }
 
             if (!menu.IsCurrentScreen)
             {
                 menu.MakeCurrent();
-                this.Delay(500).Schedule(() => LoadScore(s), out scoreLoad);
+                this.Delay(500).Schedule(() => LoadScore(score), out scoreLoad);
                 return;
             }
 
-            if (s.Beatmap == null)
+            if (score.Beatmap == null)
             {
                 notifications.Post(new SimpleNotification
                 {
@@ -275,17 +275,16 @@ namespace osu.Game
                 return;
             }
 
-            ruleset.Value = s.Ruleset;
+            ruleset.Value = score.Ruleset;
 
-            Beatmap.Value = BeatmapManager.GetWorkingBeatmap(s.Beatmap);
-            Beatmap.Value.Mods.Value = s.Mods;
+            Beatmap.Value = BeatmapManager.GetWorkingBeatmap(score.Beatmap);
+            Beatmap.Value.Mods.Value = score.Mods;
 
-            menu.Push(new PlayerLoader(new ReplayPlayer(s.Replay)));
+            menu.Push(new PlayerLoader(new ReplayPlayer(score.Replay)));
         }
 
         protected override void Dispose(bool isDisposing)
         {
-            ModStore.SymcolBaseSet?.Dispose();
             base.Dispose(isDisposing);
             RavenLogger.Dispose();
         }
@@ -515,7 +514,27 @@ namespace osu.Game
             // schedule is here to ensure that all component loads are done after LoadComplete is run (and thus all dependencies are cached).
             // with some better organisation of LoadComplete to do construction and dependency caching in one step, followed by calls to loadComponentSingleFile,
             // we could avoid the need for scheduling altogether.
-            Schedule(() => { asyncLoadStream = asyncLoadStream?.ContinueWith(t => LoadComponentAsync(d, add).Wait()) ?? LoadComponentAsync(d, add); });
+            Schedule(() =>
+            {
+                var previousLoadStream = asyncLoadStream;
+
+                //chain with existing load stream
+                asyncLoadStream = Task.Run(async () =>
+                {
+                    if (previousLoadStream != null)
+                        await previousLoadStream;
+
+                    try
+                    {
+                        Logger.Log($"Loading {d}...", LoggingTarget.Debug);
+                        await LoadComponentAsync(d, add);
+                        Logger.Log($"Loaded {d}!", LoggingTarget.Debug);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                });
+            });
         }
 
         public bool OnPressed(GlobalAction action)

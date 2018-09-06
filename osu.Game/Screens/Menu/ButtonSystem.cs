@@ -176,6 +176,9 @@ namespace osu.Game.Screens.Menu
                 ButtonSystemState lastState = state;
                 state = value;
 
+                if (game != null)
+                    game.OverlayActivationMode.Value = state == ButtonSystemState.Exit ? OverlayActivation.Disabled : OverlayActivation.All;
+
                 updateLogoState(lastState);
 
                 Logger.Log($"{nameof(ButtonSystem)}'s state changed from {lastState} to {state}");
@@ -207,11 +210,7 @@ namespace osu.Game.Screens.Menu
                         {
                             logoTracking = false;
 
-                            if (game != null)
-                            {
-                                game.OverlayActivationMode.Value = state == ButtonSystemState.Exit ? OverlayActivation.Disabled : OverlayActivation.All;
-                                game.Toolbar.Hide();
-                            }
+                            game?.Toolbar.Hide();
 
                             logo.ClearTransforms(targetMember: nameof(Position));
                             logo.RelativePositionAxes = Axes.Both;
@@ -245,11 +244,7 @@ namespace osu.Game.Screens.Menu
                                 if (impact)
                                     logo.Impact();
 
-                                if (game != null)
-                                {
-                                    game.OverlayActivationMode.Value = OverlayActivation.All;
-                                    game.Toolbar.State = Visibility.Visible;
-                                }
+                                game?.Toolbar.Show();
                             }, 200);
                             break;
                         default:
@@ -280,7 +275,7 @@ namespace osu.Game.Screens.Menu
 
             if (logo != null)
             {
-                if (logoTracking && iconFacade.IsLoaded)
+                if (logoTracking && logo.RelativePositionAxes == Axes.None && iconFacade.IsLoaded)
                     logo.Position = logoTrackingPosition;
 
                 iconFacade.Width = logo.SizeForFlow * 0.5f;
