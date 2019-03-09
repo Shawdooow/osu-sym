@@ -1,10 +1,9 @@
-﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
-// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// See the LICENCE file in the repository root for full licence text.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using osu.Framework.Input.States;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Osu.Objects;
@@ -77,7 +76,7 @@ namespace osu.Game.Rulesets.Osu.Mods
                 wasLeft = !wasLeft;
             }
 
-            osuInputManager.HandleCustomInput(new InputState(), state);
+            state.Apply(osuInputManager.CurrentState, osuInputManager);
         }
 
         public void ApplyToRulesetContainer(RulesetContainer<OsuHitObject> rulesetContainer)

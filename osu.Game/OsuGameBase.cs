@@ -1,5 +1,5 @@
-// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
-// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// See the LICENCE file in the repository root for full licence text.
 
 using System;
 using System.Collections.Generic;
@@ -24,13 +24,14 @@ using osu.Framework.Input;
 using osu.Framework.Logging;
 using osu.Game.Audio;
 using osu.Game.Database;
+using osu.Game.Graphics.Containers;
 using osu.Game.Input;
 using osu.Game.Input.Bindings;
 using osu.Game.IO;
 using osu.Game.Rulesets;
-using osu.Game.Rulesets.Scoring;
+using osu.Game.Scoring;
 using osu.Game.Skinning;
-using OpenTK.Input;
+using osuTK.Input;
 using DebugUtils = osu.Game.Utils.DebugUtils;
 
 namespace osu.Game
@@ -46,13 +47,13 @@ namespace osu.Game
 
         protected BeatmapManager BeatmapManager;
 
+        protected ScoreManager ScoreManager;
+
         protected SkinManager SkinManager;
 
         protected RulesetStore RulesetStore;
 
         protected FileStore FileStore;
-
-        protected ScoreStore ScoreStore;
 
         protected KeyBindingStore KeyBindingStore;
 
@@ -60,14 +61,17 @@ namespace osu.Game
 
         protected RulesetConfigCache RulesetConfigCache;
 
+        protected APIAccess API;
+
         protected MenuCursorContainer MenuCursorContainer;
 
         private Container content;
 
         protected override Container<Drawable> Content => content;
 
-        private OsuBindableBeatmap beatmap;
-        protected BindableBeatmap Beatmap => beatmap;
+        private Bindable<WorkingBeatmap> beatmap;
+
+        protected Bindable<WorkingBeatmap> Beatmap => beatmap;
 
         private Bindable<bool> fpsDisplayVisible;
 
@@ -108,7 +112,9 @@ namespace osu.Game
 
             dependencies.Cache(contextFactory = new DatabaseContextFactory(Host.Storage));
 
-            dependencies.Cache(new LargeTextureStore(new RawTextureLoaderStore(new NamespacedResourceStore<byte[]>(Resources, @"Textures"))));
+            var largeStore = new LargeTextureStore(Host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(Resources, @"Textures")));
+            largeStore.AddStore(Host.CreateTextureLoaderStore(new OnlineStore()));
+            dependencies.Cache(largeStore);
 
             dependencies.CacheAs(this);
             dependencies.Cache(LocalConfig);
@@ -144,38 +150,38 @@ namespace osu.Game
             dependencies.Cache(SkinManager = new SkinManager(Host.Storage, contextFactory, Host, Audio));
             dependencies.CacheAs<ISkinSource>(SkinManager);
 
-            var api = new APIAccess(LocalConfig);
+            API = new APIAccess(LocalConfig);
 
-            dependencies.Cache(api);
-            dependencies.CacheAs<IAPIProvider>(api);
+            dependencies.Cache(API);
+            dependencies.CacheAs<IAPIProvider>(API);
+
+            var defaultBeatmap = new DummyWorkingBeatmap(this);
 
             dependencies.Cache(RulesetStore = new RulesetStore(contextFactory));
             dependencies.Cache(FileStore = new FileStore(contextFactory, Host.Storage));
-            dependencies.Cache(BeatmapManager = new BeatmapManager(Host.Storage, contextFactory, RulesetStore, api, Audio, Host));
-            dependencies.Cache(ScoreStore = new ScoreStore(Host.Storage, contextFactory, Host, BeatmapManager, RulesetStore));
+            dependencies.Cache(BeatmapManager = new BeatmapManager(Host.Storage, contextFactory, RulesetStore, API, Audio, Host, defaultBeatmap));
+            dependencies.Cache(ScoreManager = new ScoreManager(RulesetStore, BeatmapManager, Host.Storage, contextFactory, Host));
             dependencies.Cache(KeyBindingStore = new KeyBindingStore(contextFactory, RulesetStore));
             dependencies.Cache(SettingsStore = new SettingsStore(contextFactory));
             dependencies.Cache(RulesetConfigCache = new RulesetConfigCache(SettingsStore));
             dependencies.Cache(new OsuColour());
 
             fileImporters.Add(BeatmapManager);
-            fileImporters.Add(ScoreStore);
+            fileImporters.Add(ScoreManager);
             fileImporters.Add(SkinManager);
-
-            var defaultBeatmap = new DummyWorkingBeatmap(this);
-            beatmap = new OsuBindableBeatmap(defaultBeatmap, Audio);
-            BeatmapManager.DefaultBeatmap = defaultBeatmap;
 
             // tracks play so loud our samples can't keep up.
             // this adds a global reduction of track volume for the time being.
             Audio.Track.AddAdjustment(AdjustableProperty.Volume, new BindableDouble(0.8));
 
-            dependencies.CacheAs<BindableBeatmap>(beatmap);
-            dependencies.CacheAs<IBindableBeatmap>(beatmap);
+            beatmap = new OsuBindableBeatmap(defaultBeatmap, Audio);
+
+            dependencies.CacheAs<IBindable<WorkingBeatmap>>(beatmap);
+            dependencies.CacheAs(beatmap);
 
             FileStore.Cleanup();
 
-            AddInternal(api);
+            AddInternal(API);
 
             GlobalActionContainer globalBinding;
 
@@ -186,7 +192,7 @@ namespace osu.Game
                 Child = content = new OsuTooltipContainer(MenuCursorContainer.Cursor) { RelativeSizeAxes = Axes.Both }
             };
 
-            base.Content.Add(new DrawSizePreservingFillContainer { Child = MenuCursorContainer });
+            base.Content.Add(new ScalingContainer(ScalingMode.Everything) { Child = MenuCursorContainer });
 
             KeyBindingStore.Register(globalBinding);
             dependencies.Cache(globalBinding);
@@ -241,10 +247,11 @@ namespace osu.Game
 
         public void Import(params string[] paths)
         {
-            var extension = Path.GetExtension(paths.First());
+            var extension = Path.GetExtension(paths.First())?.ToLowerInvariant();
 
             foreach (var importer in fileImporters)
-                if (importer.HandledExtensions.Contains(extension)) importer.Import(paths);
+                if (importer.HandledExtensions.Contains(extension))
+                    importer.Import(paths);
         }
 
         public string[] HandledExtensions => fileImporters.SelectMany(i => i.HandledExtensions).ToArray();
@@ -257,7 +264,7 @@ namespace osu.Game
                 RegisterAudioManager(audioManager);
             }
 
-            private OsuBindableBeatmap(WorkingBeatmap defaultValue)
+            public OsuBindableBeatmap(WorkingBeatmap defaultValue)
                 : base(defaultValue)
             {
             }

@@ -1,7 +1,7 @@
-﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
-// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// See the LICENCE file in the repository root for full licence text.
 
-using OpenTK;
+using osuTK;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -18,11 +18,8 @@ namespace osu.Game.Storyboards.Drawables
         protected override Container<DrawableStoryboardLayer> Content => content;
 
         protected override Vector2 DrawScale => new Vector2(Parent.DrawHeight / 480);
-        public override bool HandleKeyboardInput => false;
-        public override bool HandleMouseInput => false;
 
         private bool passing = true;
-
         public bool Passing
         {
             get { return passing; }
@@ -37,7 +34,6 @@ namespace osu.Game.Storyboards.Drawables
         public override bool RemoveCompletedTransforms => false;
 
         private DependencyContainer dependencies;
-
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
             dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
@@ -59,7 +55,7 @@ namespace osu.Game.Storyboards.Drawables
         [BackgroundDependencyLoader]
         private void load(FileStore fileStore)
         {
-            dependencies.Cache(new TextureStore(new RawTextureLoaderStore(fileStore.Store), false, scaleAdjust: 1));
+            dependencies.Cache(new TextureStore(new TextureLoaderStore(fileStore.Store), false, scaleAdjust: 1));
 
             foreach (var layer in Storyboard.Layers)
                 Add(layer.CreateDrawable());

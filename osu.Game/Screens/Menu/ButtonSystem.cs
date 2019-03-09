@@ -1,5 +1,5 @@
-﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
-// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// See the LICENCE file in the repository root for full licence text.
 
 using System;
 using System.Collections.Generic;
@@ -8,17 +8,21 @@ using osu.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Logging;
 using osu.Framework.Threading;
 using osu.Game.Graphics;
+using osu.Game.Input;
 using osu.Game.Input.Bindings;
+using osu.Game.Online.API;
 using osu.Game.Overlays;
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Input;
+using osu.Game.Overlays.Notifications;
+using osuTK;
+using osuTK.Graphics;
+using osuTK.Input;
 
 namespace osu.Game.Screens.Menu
 {
@@ -26,14 +30,16 @@ namespace osu.Game.Screens.Menu
     {
         public event Action<ButtonSystemState> StateChanged;
 
+        private readonly IBindable<bool> isIdle = new BindableBool();
+
         public Action OnEdit;
         public Action OnExit;
         public Action OnDirect;
         public Action OnSolo;
         public Action OnSettings;
         public Action OnMulti;
-        public Action OnMod;
         public Action OnChart;
+        public Action OnSym;
 
         public const float BUTTON_WIDTH = 140f;
         public const float WEDGE_WIDTH = 20;
@@ -87,9 +93,9 @@ namespace osu.Game.Screens.Menu
             buttonArea.Flow.CentreTarget = iconFacade;
 
             buttonsPlay.Add(new Button(@"solo", @"button-solo-select", FontAwesome.fa_user, new Color4(102, 68, 204, 255), () => OnSolo?.Invoke(), WEDGE_WIDTH, Key.P));
-            buttonsPlay.Add(new Button(@"multi", @"button-generic-select", FontAwesome.fa_users, new Color4(94, 63, 186, 255), () => OnMulti?.Invoke(), 0, Key.M));
+            buttonsPlay.Add(new Button(@"multi", @"button-generic-select", FontAwesome.fa_users, new Color4(94, 63, 186, 255), onMulti, 0, Key.M));
             buttonsPlay.Add(new Button(@"chart", @"button-generic-select", FontAwesome.fa_osu_charts, new Color4(80, 53, 160, 255), () => OnChart?.Invoke()));
-            buttonsPlay.Add(new Button(@"shrek", @"button-generic-select", FontAwesome.fa_osu_gear, new Color4(70, 48, 146, 255), () => OnMod?.Invoke()));
+            buttonsPlay.Add(new Button(@"sym", @"button-generic-select", FontAwesome.fa_osu_gear, new Color4(70, 48, 146, 255), () => OnSym?.Invoke()));
             buttonsPlay.ForEach(b => b.VisibleState = ButtonSystemState.Play);
 
             buttonsTopLevel.Add(new Button(@"play", @"button-play-select", FontAwesome.fa_osu_logo, new Color4(102, 68, 204, 255), () => State = ButtonSystemState.Play, WEDGE_WIDTH, Key.P));
@@ -101,13 +107,45 @@ namespace osu.Game.Screens.Menu
             buttonArea.AddRange(buttonsTopLevel);
         }
 
-        private OsuGame game;
+        [Resolved(CanBeNull = true)]
+        private OsuGame game { get; set; }
+
+        [Resolved]
+        private APIAccess api { get; set; }
+
+        [Resolved(CanBeNull = true)]
+        private NotificationOverlay notifications { get; set; }
 
         [BackgroundDependencyLoader(true)]
-        private void load(AudioManager audio, OsuGame game)
+        private void load(AudioManager audio, IdleTracker idleTracker)
         {
-            this.game = game;
+            isIdle.ValueChanged += updateIdleState;
+
+            if (idleTracker != null) isIdle.BindTo(idleTracker.IsIdle);
+
             sampleBack = audio.Sample.Get(@"Menu/button-back-select");
+        }
+
+        private void onMulti()
+        {
+            if (!api.IsLoggedIn)
+            {
+                notifications?.Post(new SimpleNotification
+                {
+                    Text = "You gotta be logged in to multi 'yo!",
+                    Icon = FontAwesome.fa_globe
+                });
+
+                return;
+            }
+
+            OnMulti?.Invoke();
+        }
+
+        private void updateIdleState(bool isIdle)
+        {
+            if (isIdle && State != ButtonSystemState.Exit)
+                State = ButtonSystemState.Initial;
         }
 
         public bool OnPressed(GlobalAction action)
@@ -117,7 +155,7 @@ namespace osu.Game.Screens.Menu
                 case GlobalAction.Back:
                     return goBack();
                 case GlobalAction.Select:
-                    logo?.TriggerOnClick();
+                    logo?.Click();
                     return true;
                 default:
                     return false;
@@ -135,7 +173,7 @@ namespace osu.Game.Screens.Menu
                     sampleBack?.Play();
                     return true;
                 case ButtonSystemState.Play:
-                    backButton.TriggerOnClick();
+                    backButton.Click();
                     return true;
                 default:
                     return false;
@@ -152,18 +190,18 @@ namespace osu.Game.Screens.Menu
                     State = ButtonSystemState.TopLevel;
                     return true;
                 case ButtonSystemState.TopLevel:
-                    buttonsTopLevel.First().TriggerOnClick();
+                    buttonsTopLevel.First().Click();
                     return false;
                 case ButtonSystemState.Play:
-                    buttonsPlay.First().TriggerOnClick();
+                    buttonsPlay.First().Click();
                     return false;
             }
         }
 
         private ButtonSystemState state = ButtonSystemState.Initial;
 
-        public override bool HandleKeyboardInput => state != ButtonSystemState.Exit;
-        public override bool HandleMouseInput => state != ButtonSystemState.Exit;
+        public override bool HandleNonPositionalInput => state != ButtonSystemState.Exit;
+        public override bool HandlePositionalInput => state != ButtonSystemState.Exit;
 
         public ButtonSystemState State
         {
@@ -268,9 +306,6 @@ namespace osu.Game.Screens.Menu
 
         protected override void Update()
         {
-            //if (OsuGame.IdleTime > 6000 && State != MenuState.Exit)
-            //    State = MenuState.Initial;
-
             base.Update();
 
             if (logo != null)

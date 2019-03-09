@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\osu.Game.props" />
+  <PropertyGroup Label="Project">
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Description>dodge the bullets. to the beat.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\**\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Edit\**" />
+    <Compile Remove="Mods\Multi\**" />
+    <Compile Remove="Mods\Sym\Wiki\Sections\SubSections\**" />
+    <Compile Remove="Ruleset\Chapters\Touhosu\**" />
+    <Compile Remove="Ruleset\Chapters\Vitaru\**" />
+    <EmbeddedResource Remove="Edit\**" />
+    <EmbeddedResource Remove="Mods\Multi\**" />
+    <EmbeddedResource Remove="Mods\Sym\Wiki\Sections\SubSections\**" />
+    <EmbeddedResource Remove="Ruleset\Chapters\Touhosu\**" />
+    <EmbeddedResource Remove="Ruleset\Chapters\Vitaru\**" />
+    <None Remove="Edit\**" />
+    <None Remove="Mods\Multi\**" />
+    <None Remove="Mods\Sym\Wiki\Sections\SubSections\**" />
+    <None Remove="Ruleset\Chapters\Touhosu\**" />
+    <None Remove="Ruleset\Chapters\Vitaru\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Tracks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sym.osu\osu.Mods.MapMixer\osu.Mods.MapMixer.csproj" />
+    <ProjectReference Include="..\Sym.osu\osu.Mods.Online\osu.Mods.Online.csproj" />
+  </ItemGroup>
+</Project>

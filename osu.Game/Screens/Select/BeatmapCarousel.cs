@@ -1,14 +1,14 @@
-﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
-// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// See the LICENCE file in the repository root for full licence text.
 
-using OpenTK;
+using osuTK;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Configuration;
-using OpenTK.Input;
+using osuTK.Input;
 using osu.Framework.MathUtils;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -17,8 +17,7 @@ using osu.Framework.Caching;
 using osu.Framework.Threading;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Framework.Input.EventArgs;
-using osu.Framework.Input.States;
+using osu.Framework.Input.Events;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Cursor;
@@ -52,8 +51,8 @@ namespace osu.Game.Screens.Select
         /// </summary>
         public Action<BeatmapInfo> SelectionChanged;
 
-        public override bool HandleKeyboardInput => AllowSelection;
-        public override bool HandleMouseInput => AllowSelection;
+        public override bool HandleNonPositionalInput => AllowSelection;
+        public override bool HandlePositionalInput => AllowSelection;
 
         /// <summary>
         /// Used to avoid firing null selections before the initial beatmaps have been loaded via <see cref="BeatmapSets"/>.
@@ -101,7 +100,6 @@ namespace osu.Game.Screens.Select
         private Cached scrollPositionCache = new Cached();
 
         private readonly Container<DrawableCarouselItem> scrollableContent;
-
 
         public Bindable<bool> RightClickScrollingEnabled = new Bindable<bool>();
 
@@ -381,12 +379,12 @@ namespace osu.Game.Screens.Select
 
         public void ScrollToSelected() => scrollPositionCache.Invalidate();
 
-        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
+        protected override bool OnKeyDown(KeyDownEvent e)
         {
             int direction = 0;
             bool skipDifficulties = false;
 
-            switch (args.Key)
+            switch (e.Key)
             {
                 case Key.Up:
                     direction = -1;
@@ -405,7 +403,7 @@ namespace osu.Game.Screens.Select
             }
 
             if (direction == 0)
-                return base.OnKeyDown(state, args);
+                return base.OnKeyDown(e);
 
             SelectNext(direction, skipDifficulties);
             return true;

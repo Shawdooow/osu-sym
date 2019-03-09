@@ -1,5 +1,5 @@
-﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
-// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
+﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Audio.Track;
 using osu.Framework.Configuration;
@@ -41,8 +41,13 @@ namespace osu.Game.Beatmaps
             beatmap = new RecyclableLazy<IBeatmap>(() =>
             {
                 var b = GetBeatmap() ?? new Beatmap();
-                // use the database-backed info.
+
+                // The original beatmap version needs to be preserved as the database doesn't contain it
+                BeatmapInfo.BeatmapVersion = b.BeatmapInfo.BeatmapVersion;
+
+                // Use the database-backed info for more up-to-date values (beatmap id, ranked status, etc)
                 b.BeatmapInfo = BeatmapInfo;
+
                 return b;
             });
 
@@ -135,7 +140,7 @@ namespace osu.Game.Beatmaps
 
         public bool BackgroundLoaded => background.IsResultAvailable;
         public Texture Background => background.Value;
-        protected virtual bool BackgroundStillValid(Texture b) => b == null || !b.IsDisposed;
+        protected virtual bool BackgroundStillValid(Texture b) => b == null || b.Available;
         protected abstract Texture GetBackground();
         private readonly RecyclableLazy<Texture> background;
 
@@ -146,7 +151,7 @@ namespace osu.Game.Beatmaps
 
         public bool WaveformLoaded => waveform.IsResultAvailable;
         public Waveform Waveform => waveform.Value;
-        protected virtual Waveform GetWaveform() => new Waveform();
+        protected virtual Waveform GetWaveform() => new Waveform(null);
         private readonly RecyclableLazy<Waveform> waveform;
 
         public bool StoryboardLoaded => storyboard.IsResultAvailable;
