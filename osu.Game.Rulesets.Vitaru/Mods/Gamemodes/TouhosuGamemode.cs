@@ -1,4 +1,4 @@
-﻿using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
+﻿using osu.Game.Rulesets.Vitaru.Mods.Chaptersets.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Rational;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship;

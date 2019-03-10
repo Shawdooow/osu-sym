@@ -5,22 +5,22 @@ using System.Linq;
 using System.Reflection;
 using osu.Framework.Configuration;
 using osu.Framework.Logging;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
+using osu.Game.Rulesets.Vitaru.Mods.Chaptersets.Chapters;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 
-namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
+namespace osu.Game.Rulesets.Vitaru.Mods.Chaptersets
 {
     public static class ChapterStore
     {
-        public static List<ChapterSet> LoadedChapterSets { get; private set; } = new List<ChapterSet>();
+        public static List<Chapterset> LoadedChapterSets { get; private set; } = new List<Chapterset>();
 
         public static List<LoadedGamemode> LoadedGamemodes { get; private set; } = new List<LoadedGamemode>();
 
         public static void ReloadChapterSets()
         {
-            LoadedChapterSets = new List<ChapterSet>
+            LoadedChapterSets = new List<Chapterset>
             {
                 new VitaruChapterSet(),
             };
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
                 try
                 {
                     var assembly = Assembly.LoadFrom(file);
-                    loadedAssemblies[assembly] = assembly.GetTypes().First(t => t.IsPublic && t.IsSubclassOf(typeof(ChapterSet)));
+                    loadedAssemblies[assembly] = assembly.GetTypes().First(t => t.IsPublic && t.IsSubclassOf(typeof(Chapterset)));
                 }
                 catch (Exception)
                 {
@@ -44,9 +44,9 @@ namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
                 }
             }
 
-            var instances = loadedAssemblies.Values.Select(g => (ChapterSet)Activator.CreateInstance(g)).ToList();
+            var instances = loadedAssemblies.Values.Select(g => (Chapterset)Activator.CreateInstance(g)).ToList();
 
-            foreach (ChapterSet s in instances)
+            foreach (Chapterset s in instances)
                 LoadedChapterSets.Add(s);
 
             ReloadGamemodes();
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
         {
             LoadedGamemodes = new List<LoadedGamemode>();
 
-            foreach (ChapterSet chapter in LoadedChapterSets)
+            foreach (Chapterset chapter in LoadedChapterSets)
             foreach (VitaruGamemode g in chapter.GetGamemodes())
             {
                 bool add = true;

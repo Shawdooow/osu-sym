@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
+using osu.Game.Rulesets.Vitaru.Mods.Chaptersets;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;

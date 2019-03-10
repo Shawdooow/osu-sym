@@ -5,7 +5,7 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
+using osu.Game.Rulesets.Vitaru.Mods.Chaptersets;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;

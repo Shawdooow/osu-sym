@@ -1,5 +1,5 @@
 ﻿using osu.Framework.Graphics;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
+using osu.Game.Rulesets.Vitaru.Mods.Chaptersets;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
