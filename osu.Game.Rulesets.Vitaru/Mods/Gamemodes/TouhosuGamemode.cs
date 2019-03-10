@@ -17,7 +17,6 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Gamemodes
             new WorshipChapter(),
             new ScarletChapter(),
             new RationalChapter(),
-            //new AlkiChapter(),
         };
 
         public override Vector2 PlayfieldAspectRatio => new Vector2(5, 4);

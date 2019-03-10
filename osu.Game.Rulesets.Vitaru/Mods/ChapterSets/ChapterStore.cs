@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Chaptersets
                 }
             }
 
-            var instances = loadedAssemblies.Values.Select(g => (Chapterset)Activator.CreateInstance(g)).ToList();
+            List<Chapterset> instances = loadedAssemblies.Values.Select(g => (Chapterset)Activator.CreateInstance(g)).ToList();
 
             foreach (Chapterset s in instances)
                 LoadedChapterSets.Add(s);
@@ -64,6 +64,12 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Chaptersets
                     if (m.Gamemode.Name == g.Name)
                     {
                         add = false;
+
+                        foreach (VitaruChapter ch in m.Chapters)
+                            m.Chapters.Add(ch);
+                        foreach (VitaruPlayer pl in m.Players)
+                            m.Players.Add(pl);
+
                         break;
                     }
                 if (add)
