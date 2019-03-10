@@ -1,18 +1,16 @@
 ﻿using osu.Framework.Graphics;
+using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Mods.Online.Multi.Packets.Lobby;
+using osuTK.Graphics;
 using Symcol.Base.Graphics.Containers;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
 {
-    public class MatchTile : SymcolContainer
+    public class MatchTile : SymcolClickableContainer
     {
-        private readonly MatchListPacket.MatchInfo match;
-
         public MatchTile(MatchListPacket.MatchInfo match)
         {
-            this.match = match;
-
             Anchor = Anchor.TopCentre;
             Origin = Anchor.TopCentre;
 
@@ -22,6 +20,12 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
             Children = new Drawable[]
             {
+                new Box
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = Color4.Black,
+                    Alpha = 0.8f,
+                },
                 new OsuSpriteText
                 {
                     Anchor = Anchor.BottomLeft,

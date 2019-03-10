@@ -18,7 +18,8 @@ namespace osu.Core.Config
             Set(SymcolSetting.SavedIP, "IP Address");
             Set(SymcolSetting.SavedPort, 25570);
             Set(SymcolSetting.SavedName, "Guest");
-            Set(SymcolSetting.SavedUserID, -1);
+            Set(SymcolSetting.SavedUserID, -1L);
+            Set(SymcolSetting.Auto, 0);
         }
     }
 
@@ -32,6 +33,7 @@ namespace osu.Core.Config
         SavedIP,
         SavedPort,
         SavedName,
-        SavedUserID
+        SavedUserID,
+        Auto
     }
 }

@@ -118,6 +118,11 @@ namespace osu.Mods.Online.Base.Screens
 
         protected virtual void JoinServer()
         {
+            ipBindable.Value = IpBox.Text;
+
+            try { portBindable.Value = Int32.Parse(PortBox.Text); }
+            catch { portBindable.Value = 25590; }
+
             if (OnlineModset.OsuNetworkingHandler != null)
             {
                 game.Remove(OnlineModset.OsuNetworkingHandler);
@@ -143,6 +148,11 @@ namespace osu.Mods.Online.Base.Screens
 
         protected virtual void HostServer()
         {
+            ipBindable.Value = IpBox.Text;
+
+            try { portBindable.Value = Int32.Parse(PortBox.Text); }
+            catch { portBindable.Value = 25590; }
+
             if (OnlineModset.OsuNetworkingHandler != null)
             {
                 game.Remove(OnlineModset.OsuNetworkingHandler);
@@ -158,7 +168,7 @@ namespace osu.Mods.Online.Base.Screens
 
                 OnlineModset.OsuNetworkingHandler.Add(new OsuServerNetworkingHandler
                 {
-                    Address = IpBox.Text + ":" + PortBox.Text
+                    Address = ipBindable.Value + ":" + portBindable.Value
                 });
 
                 game.Add(OnlineModset.OsuNetworkingHandler);

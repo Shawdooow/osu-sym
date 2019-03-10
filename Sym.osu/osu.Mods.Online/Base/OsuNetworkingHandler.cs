@@ -1,4 +1,5 @@
-﻿using osu.Core;
+﻿using System;
+using osu.Core;
 using osu.Core.Config;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
@@ -84,7 +85,7 @@ namespace osu.Mods.Online.Base
             {
                 default:
                     OsuUserInfo.Username = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
-                    OsuUserInfo.ID = SymcolOsuModSet.SymcolConfigManager.Get<int>(SymcolSetting.SavedUserID);
+                    OsuUserInfo.ID = SymcolOsuModSet.SymcolConfigManager.Get<long>(SymcolSetting.SavedUserID);
                     break;
                 case APIState.Online:
                     SymcolOsuModSet.SymcolConfigManager.Set(SymcolSetting.SavedName, api.LocalUser.Value.Username);

@@ -18,6 +18,7 @@ namespace osu.Mods.Online
     {
         public static OsuNetworkingHandler OsuNetworkingHandler;
 
+        private readonly Bindable<int> auto = SymcolOsuModSet.SymcolConfigManager.GetBindable<int>(SymcolSetting.Auto);
         private readonly Bindable<string> ipBindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.SavedIP);
         private readonly Bindable<int> portBindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<int>(SymcolSetting.SavedPort);
 
@@ -38,20 +39,33 @@ namespace osu.Mods.Online
         {
             base.LoadComplete(game);
 
-            try
+            switch (auto.Value)
             {
-                OsuNetworkingHandler = new OsuNetworkingHandler
-                {
-                    Address = ipBindable.Value + ":" + portBindable.Value
-                };
+                case 1:
+                    OsuNetworkingHandler = new OsuNetworkingHandler
+                    {
+                        Address = ipBindable.Value + ":" + portBindable.Value
+                    };
 
-                game.Add(OsuNetworkingHandler);
-                OsuNetworkingHandler.OnConnectedToHost += host => Logger.Log("Connected to server", LoggingTarget.Network, LogLevel.Debug);
-                OsuNetworkingHandler.Connect();
-            }
-            catch(Exception e)
-            {
-                Logger.Error(e, "Failed to create Networking Handler!");
+                    game.Add(OsuNetworkingHandler);
+                    OsuNetworkingHandler.OnConnectedToHost += host => Logger.Log("Connected to server", LoggingTarget.Network, LogLevel.Debug);
+                    OsuNetworkingHandler.Connect();
+                    break;
+                case 2:
+                    OsuNetworkingHandler = new OsuNetworkingHandler
+                    {
+                        Address = ipBindable.Value + ":" + portBindable.Value
+                    };
+
+                    OsuNetworkingHandler.Add(new OsuServerNetworkingHandler
+                    {
+                        Address = ipBindable.Value + ":" + portBindable.Value
+                    });
+
+                    game.Add(OsuNetworkingHandler);
+                    OsuNetworkingHandler.OnConnectedToHost += host => Logger.Log("Connected to local server", LoggingTarget.Network, LogLevel.Debug);
+                    OsuNetworkingHandler.Connect();
+                    break;
             }
         }
     }
