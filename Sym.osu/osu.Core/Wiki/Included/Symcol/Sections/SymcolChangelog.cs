@@ -4,11 +4,11 @@ namespace osu.Core.Wiki.Included.Symcol.Sections
 {
     public sealed class SymcolChangelog : WikiChangelogSection
     {
-        public const string SYMCOL_VERSION = "0.10.0";
+        public const string SYM_VERSION = "0.10.0";
 
         public override string Title => "Changelog";
 
-        protected override string Version => SYMCOL_VERSION;
+        protected override string Version => SYM_VERSION;
 
         protected override string StoragePath => "symcol\\changelogs";
 

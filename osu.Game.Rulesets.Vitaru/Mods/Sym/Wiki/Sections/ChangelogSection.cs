@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
     {
         public override string Title => "Changelog";
 
-        protected override string Version => SymcolChangelog.SYMCOL_VERSION;
+        protected override string Version => SymcolChangelog.SYM_VERSION;
 
         protected override string StoragePath => "vitaru\\changelogs";
 
@@ -85,14 +85,16 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
 
         private readonly string[] features =
         {
+            //"[Experimental] Patterns V2",
+            "[Experimental] New bullet visuals",
             "[Windows] Score Submission (Leaderboards don't work but scores are uploaded and saved when connected)",
             "OSX Support",
             "iOS Support",
             "Touch screen controls (they are a toggle in settings for now)",
             //"Linux Support",
             //"Added classic enemy visuals",
-            "Added experimental bullet visuals",
             "Added touhou sounds (Experimental)",
+            "Remove Storymode",
         };
 
         private readonly string[] tweaksAndChanges =
@@ -105,7 +107,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
         private readonly string[] fixes =
         {
             "Fix ComboColors not working basically at all",
-            "Fix storymode making Ryukoy crash the game",
+            //"Fix storymode making Ryukoy crash the game",
         };
 
         private readonly string devNotes = null;

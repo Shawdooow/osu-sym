@@ -1,6 +1,6 @@
 ﻿using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
 using osuTK;

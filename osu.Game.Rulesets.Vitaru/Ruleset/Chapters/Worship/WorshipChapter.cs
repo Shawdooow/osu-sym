@@ -1,8 +1,8 @@
 ﻿using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters.Drawables;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship
 {

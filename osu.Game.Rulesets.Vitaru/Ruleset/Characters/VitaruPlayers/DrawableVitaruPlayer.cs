@@ -24,7 +24,7 @@ using osuTK;
 using osuTK.Graphics;
 using Symcol.Base.Extentions;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.VitaruPlayers
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 {
     public class DrawableVitaruPlayer : DrawableCharacter
     {

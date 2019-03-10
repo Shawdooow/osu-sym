@@ -1,7 +1,7 @@
 ﻿//using Vitaru.Plot.Story;
 //using Vitaru.Plot.Story.CharacterSpeech;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
 {
     /*
     public class OldVitaruPlayerClass : Character, IKeyBindingHandler<VitaruAction>

@@ -7,9 +7,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Platform;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.VitaruPlayers;
 using osu.Mods.Rulesets.Core.Rulesets;
 
 // ReSharper disable UnusedMember.Global

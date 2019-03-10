@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using Symcol.Base.Graphics.Containers;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 {
     public class AspectLockedPlayfield : AspectLockedContainer
     {

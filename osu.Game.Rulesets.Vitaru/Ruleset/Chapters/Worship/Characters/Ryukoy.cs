@@ -1,4 +1,4 @@
-﻿using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
+﻿using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters
 
         public override Role Role => Role.Defense;
 
-        public override Objects.Characters.TouhosuPlayers.Difficulty Difficulty => Objects.Characters.TouhosuPlayers.Difficulty.Another;
+        public override Ruleset.Characters.TouhosuPlayers.Difficulty Difficulty => Ruleset.Characters.TouhosuPlayers.Difficulty.Another;
 
         public override string Background => "      Being the elder sibling comes with many responsabilitys in the Hakurei family. " +
             "She has the weight of the Hakurei name to uphold as the next inline to be the keeper of their family shrine. " +

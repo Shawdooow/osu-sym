@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
 {
     public class ComboFire : Container
     {

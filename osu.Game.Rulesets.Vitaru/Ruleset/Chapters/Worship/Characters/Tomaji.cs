@@ -1,4 +1,4 @@
-﻿using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
+﻿using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters
 
         public override Role Role => Role.Offense;
 
-        public override Objects.Characters.TouhosuPlayers.Difficulty Difficulty => Objects.Characters.TouhosuPlayers.Difficulty.Another;
+        public override Ruleset.Characters.TouhosuPlayers.Difficulty Difficulty => Ruleset.Characters.TouhosuPlayers.Difficulty.Another;
 
         public override string Background => "      Tomaji has always been over shadowed by his older sister Ryukoy who is next in line to be the Hakurei Maiden, though he has never minded. " +
             "He had the option to take off to some exotic place far away if he wanted, but he didn't.\n\n" +

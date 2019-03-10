@@ -1,4 +1,4 @@
-﻿using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
+﻿using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Media
 {
@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Media
 
         public override Role Role => Role.Offense;
 
-        public override Objects.Characters.TouhosuPlayers.Difficulty Difficulty => Objects.Characters.TouhosuPlayers.Difficulty.Normal;
+        public override Characters.TouhosuPlayers.Difficulty Difficulty => Characters.TouhosuPlayers.Difficulty.Normal;
 
         public override string Background => "";
 

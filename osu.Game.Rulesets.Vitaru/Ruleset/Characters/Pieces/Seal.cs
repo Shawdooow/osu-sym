@@ -9,13 +9,13 @@ using osu.Framework.MathUtils;
 using osu.Framework.Platform;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters.Drawables;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.VitaruPlayers;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.Pieces
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces
 {
     public class Seal : Container
     {

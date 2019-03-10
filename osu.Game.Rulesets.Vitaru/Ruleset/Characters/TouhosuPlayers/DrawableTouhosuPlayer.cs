@@ -4,15 +4,15 @@ using osu.Framework.Graphics;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.Pieces;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers
 {
     public class DrawableTouhosuPlayer : DrawableVitaruPlayer
     {

@@ -1,4 +1,4 @@
-﻿namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.Bosses
+﻿namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses
 {
     public class Kokoro : Boss
     {

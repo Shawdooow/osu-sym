@@ -1,4 +1,4 @@
-﻿using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
+﻿using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Inlaws
 {

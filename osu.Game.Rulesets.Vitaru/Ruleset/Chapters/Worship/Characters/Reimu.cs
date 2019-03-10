@@ -1,4 +1,4 @@
-﻿using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
+﻿using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters
 
         public override Role Role => Role.Support;
 
-        public override Objects.Characters.TouhosuPlayers.Difficulty Difficulty => Objects.Characters.TouhosuPlayers.Difficulty.Insane;
+        public override Ruleset.Characters.TouhosuPlayers.Difficulty Difficulty => Ruleset.Characters.TouhosuPlayers.Difficulty.Insane;
 
         public override string Background => "      When she was young Reimu feared the idea of having kids after how much trouble her mother would tease she was. " +
             "However age has a funny way of changing peoples views. " +

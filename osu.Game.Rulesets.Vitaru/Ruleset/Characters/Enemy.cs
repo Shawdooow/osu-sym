@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
 {
     public class Enemy : DrawableCharacter
     {

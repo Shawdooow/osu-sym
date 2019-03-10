@@ -1,6 +1,6 @@
 ﻿using osu.Framework.Graphics;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Inlaws.Drawables
 {

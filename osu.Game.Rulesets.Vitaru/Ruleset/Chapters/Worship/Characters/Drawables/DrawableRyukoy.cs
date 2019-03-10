@@ -3,13 +3,13 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.Bosses.DrawableBosses;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
@@ -152,8 +152,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters.Drawables
 
         protected override bool CheckSpellActivate(VitaruAction action)
         {
-            if (action == VitaruAction.Pull)
-                return true;
+            if (action == VitaruAction.Pull) return true;
             return base.CheckSpellActivate(action);
         }
 

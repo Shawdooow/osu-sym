@@ -1,6 +1,6 @@
 ﻿using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.VitaruPlayers
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 {
     public class VitaruPlayer : Character
     {

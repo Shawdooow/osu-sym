@@ -1,5 +1,5 @@
-﻿using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
+﻿using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
+using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Rational.Characters.Drawables
 {

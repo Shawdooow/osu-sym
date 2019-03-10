@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.VitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers
 {
     public class TouhosuPlayer : VitaruPlayer
     {

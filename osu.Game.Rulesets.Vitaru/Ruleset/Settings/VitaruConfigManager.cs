@@ -1,7 +1,7 @@
 ﻿using osu.Framework.Configuration;
 using osu.Framework.Platform;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.VitaruPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 {

@@ -14,7 +14,7 @@ using osuTK;
 using osuTK.Graphics;
 using Symcol.Base.Graphics.Sprites;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.Bosses.DrawableBosses
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
 {
     public class DrawableBoss : DrawableCharacter
     {

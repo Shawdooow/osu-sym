@@ -9,17 +9,17 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities;
-using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.Pieces;
+using osu.Game.Rulesets.Vitaru.Ruleset.Objects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
 using osuTK;
 using osuTK.Graphics;
 
 // ReSharper disable InconsistentNaming
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
 {
     public abstract class DrawableCharacter : BeatSyncedContainer, ITuneable, IHasTeam
     {

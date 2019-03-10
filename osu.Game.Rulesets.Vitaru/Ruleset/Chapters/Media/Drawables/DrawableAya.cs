@@ -1,8 +1,8 @@
 ﻿using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Media.Drawables

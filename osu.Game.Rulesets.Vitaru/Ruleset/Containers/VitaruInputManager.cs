@@ -5,6 +5,8 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.UI;
+using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
+using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
 using osu.Game.Rulesets.Vitaru.Ruleset.Input;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;

@@ -2,13 +2,12 @@
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities;
-using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
 using osuTK;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.Pieces
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces
 {
     public class Totem : BeatSyncedContainer, ITuneable
     {

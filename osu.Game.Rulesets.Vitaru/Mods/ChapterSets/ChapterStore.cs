@@ -7,8 +7,8 @@ using osu.Framework.Configuration;
 using osu.Framework.Logging;
 using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.Characters.VitaruPlayers;
 
 namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
 {
