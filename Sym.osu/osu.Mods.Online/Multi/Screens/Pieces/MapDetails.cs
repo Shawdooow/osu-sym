@@ -132,11 +132,11 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
             Action = () => openLink($"https://osu.ppy.sh/beatmapsets/{onlineBeatmapSetID}");
         }
 
-        public void SetMap(bool selecting, int? onlineBeatmapSetID = -1)
+        public void SetMap(bool searching, int? onlineBeatmapSetID)
         {
-            name.Text = selecting ? "Searching for Map!" : "Invalid / No Map Selected!";
-            artist.Text = selecting ?  "osu! is looking for the selected map. . ." : "Don't hit start, weird things might happen";
-            Action = () => openLink(selecting ? $"https://osu.ppy.sh/beatmapsets/{onlineBeatmapSetID}" : "https://osu.ppy.sh/home");
+            name.Text = searching ? "Searching for Map!" : "Invalid / No Map Selected!";
+            artist.Text = searching ?  "osu! is looking for the selected map. . ." : "Don't hit start, weird things might happen";
+            Action = () => openLink(searching ? $"https://osu.ppy.sh/beatmapsets/{onlineBeatmapSetID}" : "https://osu.ppy.sh/home");
         }
 
         private GameHost host;

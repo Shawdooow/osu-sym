@@ -52,6 +52,8 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         private Bindable<WorkingBeatmap> beatmap;
 
+        private bool searching;
+
         public MatchTools(OsuNetworkingHandler osuNetworkingHandler) : base(osuNetworkingHandler)
         {
             Masking = true;
@@ -106,7 +108,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                             mapDetails.SetMap(selectedBeatmapSetID);
                         }
                         else
-                            mapDetails.SetMap(false);
+                            mapDetails.SetMap(searching, selectedBeatmapSetID);
                         break;
                     case MatchScreenMode.MatchSettings:
                         SelectedContent.Child = new Container
@@ -156,48 +158,56 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         protected override void OnPacketRecieve(PacketInfo info)
         {
             if (info.Packet is SetMapPacket mapPacket)
-                    Task.Factory.StartNew(() =>
-                    {
-                        //TODO: make `for` loops
-                        MapChange(mapPacket.OnlineBeatmapSetID, mapPacket.RulesetID);
-                        foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
-                            if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
-                            {
-                                foreach (BeatmapInfo b in beatmapSet.Beatmaps)
-                                    if (b.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
+            {
+                searching = true;
+                Task.Factory.StartNew(() =>
+                {
+                    //TODO: make `for` loops
+                    MapChange(mapPacket.OnlineBeatmapSetID, mapPacket.RulesetID);
+                    foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
+                        if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
+                        {
+                            foreach (BeatmapInfo b in beatmapSet.Beatmaps)
+                                if (b.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
+                                {
+                                    ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID ?? 0);
+                                    if (!beatmap.Disabled)
                                     {
-                                        ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID ?? 0);
-                                        if (!beatmap.Disabled)
-                                        {
-                                            beatmap.Value = beatmaps.GetWorkingBeatmap(b, beatmap.Value);
-                                            beatmap.Value.Track.Start();
-                                        }
-                                        MapChange(beatmap);
-                                        return;
+                                        beatmap.Value = beatmaps.GetWorkingBeatmap(b, beatmap.Value);
+                                        beatmap.Value.Track.Start();
                                     }
 
-                                break;
-                            }
-                            //try to fallback for old maps
-                            else if (mapPacket.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.BeatmapMapper == beatmapSet.Metadata.Author.Username)
-                            {
-                                foreach (BeatmapInfo b in beatmapSet.Beatmaps)
-                                    if (mapPacket.BeatmapDifficulty == b.Version)
+                                    MapChange(beatmap);
+                                    goto complete;
+                                }
+
+                            break;
+                        }
+                        //try to fallback for old maps
+                        else if (mapPacket.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.BeatmapMapper == beatmapSet.Metadata.Author.Username)
+                        {
+                            foreach (BeatmapInfo b in beatmapSet.Beatmaps)
+                                if (mapPacket.BeatmapDifficulty == b.Version)
+                                {
+                                    ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID ?? 0);
+                                    if (!beatmap.Disabled)
                                     {
-                                        ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID ?? 0);
-                                        if (!beatmap.Disabled)
-                                        {
-                                            beatmap.Value = beatmaps.GetWorkingBeatmap(b, beatmap.Value);
-                                            beatmap.Value.Track.Start();
-                                        }
-                                        MapChange(beatmap);
-                                        return;
+                                        beatmap.Value = beatmaps.GetWorkingBeatmap(b, beatmap.Value);
+                                        beatmap.Value.Track.Start();
                                     }
 
-                                break;
-                            }
-                        mapDetails.SetMap(selectedBeatmapSetID);
-                    }, TaskCreationOptions.LongRunning);
+                                    MapChange(beatmap);
+                                    goto complete;
+                                }
+
+                            break;
+                        }
+
+                    mapDetails.SetMap(selectedBeatmapSetID);
+                    complete:;
+                }, TaskCreationOptions.LongRunning);
+                searching = false;
+            }
         }
 
         public void MapChange(WorkingBeatmap workingBeatmap)
@@ -230,7 +240,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                 if (selectedBeatmapSetID != 0 && selectedBeatmapSetID != -1)
                     mapDetails.SetMap(true, selectedBeatmapSetID);
                 else
-                    mapDetails.SetMap(false);
+                    mapDetails.SetMap(false, selectedBeatmapSetID);
             }
         }
     }
