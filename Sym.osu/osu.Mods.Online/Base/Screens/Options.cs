@@ -137,7 +137,7 @@ namespace osu.Mods.Online.Base.Screens
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Failed to create Networking Handler!");
+                Logger.Error(e, "Failed to create Networking Handler!", LoggingTarget.Network);
             }
         }
 
@@ -167,7 +167,7 @@ namespace osu.Mods.Online.Base.Screens
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Failed to create Networking Handler!");
+                Logger.Error(e, "Failed to create Networking Handler!", LoggingTarget.Network);
             }
         }
 

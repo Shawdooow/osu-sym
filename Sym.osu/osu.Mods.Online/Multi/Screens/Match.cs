@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using osu.Framework.Allocation;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Screens;
 using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Packets.Lobby;
 using osu.Mods.Online.Multi.Packets.Match;
@@ -13,6 +16,8 @@ namespace osu.Mods.Online.Multi.Screens
     public class Match : MultiScreen
     {
         protected MatchTools MatchTools;
+
+        private Bindable<RulesetInfo> ruleset;
 
         public Match(OsuNetworkingHandler osuNetworkingHandler, JoinedMatchPacket joinedPacket)
             : base(osuNetworkingHandler)
@@ -52,12 +57,18 @@ namespace osu.Mods.Online.Multi.Screens
                     Action = () => SendPacket(new StartMatchPacket())
                 },
                 playerList = new MatchPlayerList(OsuNetworkingHandler),
-                MatchTools = new MatchTools(OsuNetworkingHandler, Ruleset),
+                MatchTools = new MatchTools(OsuNetworkingHandler),
                 new Chat(OsuNetworkingHandler)
             };
 
             foreach (OsuUserInfo user in joinedPacket.MatchInfo.Users)
                 playerList.Add(user);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(Bindable<RulesetInfo> ruleset)
+        {
+            this.ruleset = ruleset;
         }
 
         protected override void OnPacketRecieve(PacketInfo info)
@@ -71,8 +82,8 @@ namespace osu.Mods.Online.Multi.Screens
             if (MatchTools.SelectedBeatmap != null && !Beatmap.Disabled)
                 Beatmap.Value = MatchTools.SelectedBeatmap;
 
-            if (MatchTools.SelectedRuleset != null && !Ruleset.Disabled)
-                Ruleset.Value = MatchTools.SelectedRuleset;
+            if (MatchTools.SelectedRuleset != null && !ruleset.Disabled)
+                ruleset.Value = MatchTools.SelectedRuleset;
 
             Push(new MultiPlayer(OsuNetworkingHandler, users));
         }
@@ -99,7 +110,7 @@ namespace osu.Mods.Online.Multi.Screens
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
-                        RulesetID = Ruleset.Value.ID.Value
+                        RulesetID = ruleset.Value.ID.Value
                     });
                 }
                 catch
@@ -111,7 +122,7 @@ namespace osu.Mods.Online.Multi.Screens
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
-                        RulesetID = Ruleset.Value.ID.Value
+                        RulesetID = ruleset.Value.ID.Value
                     });
                 }
             };

@@ -58,7 +58,7 @@ namespace osu.Mods.Online.Base
 
             OsuUserInfo.Colour = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.PlayerColor);
             OsuUserInfo.Username = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
-            OsuUserInfo.ID = SymcolOsuModSet.SymcolConfigManager.Get<int>(SymcolSetting.SavedUserID);
+            OsuUserInfo.ID = SymcolOsuModSet.SymcolConfigManager.Get<long>(SymcolSetting.SavedUserID);
         }
 
         protected override Packet SignPacket(Packet packet)

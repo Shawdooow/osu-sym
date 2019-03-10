@@ -46,16 +46,14 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         private RulesetStore rulesets;
 
-        private readonly Bindable<RulesetInfo> ruleset;
+        private Bindable<RulesetInfo> ruleset;
 
         private BeatmapManager beatmaps;
 
-        private BindableBeatmap beatmap;
+        private Bindable<WorkingBeatmap> beatmap;
 
-        public MatchTools(OsuNetworkingHandler osuNetworkingHandler, Bindable<RulesetInfo> ruleset) : base(osuNetworkingHandler)
+        public MatchTools(OsuNetworkingHandler osuNetworkingHandler) : base(osuNetworkingHandler)
         {
-            this.ruleset = ruleset;
-
             Masking = true;
             CornerRadius = 16;
             Anchor = Anchor.TopRight;
@@ -147,8 +145,9 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         }
 
         [BackgroundDependencyLoader]
-        private void load(RulesetStore rulesets, BindableBeatmap beatmap, BeatmapManager beatmaps)
+        private void load(RulesetStore rulesets, Bindable<RulesetInfo> ruleset, Bindable<WorkingBeatmap> beatmap, BeatmapManager beatmaps)
         {
+            this.ruleset = ruleset;
             this.rulesets = rulesets;
             this.beatmap = beatmap;
             this.beatmaps = beatmaps;
