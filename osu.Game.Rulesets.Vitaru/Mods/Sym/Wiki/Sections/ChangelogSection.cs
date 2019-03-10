@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
 
         private readonly string[] features =
         {
-            //"[Experimental] Patterns V2",
+            "[Experimental] Patterns V2",
             "[Experimental] New bullet visuals",
             "[Windows] Score Submission (Leaderboards don't work but scores are uploaded and saved when connected)",
             "OSX Support",
