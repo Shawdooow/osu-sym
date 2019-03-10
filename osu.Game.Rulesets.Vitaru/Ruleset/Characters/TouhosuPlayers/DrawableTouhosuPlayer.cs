@@ -89,12 +89,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers
                 RightTotem.FadeIn(timingPoint.BeatLength);
             }
 
-            if (LeftTotem.Alpha > 0 && Actions[VitaruAction.Shoot])
-            {
-                LeftTotem.Shoot();
-                RightTotem.Shoot();
-            }
-
             if (!effectPoint.KiaiMode && Gamemode is TouhosuGamemode && boss && LeftTotem.Alpha > 0)
             {
                 LeftTotem.FadeOut(timingPoint.BeatLength);
@@ -173,6 +167,18 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers
                 Energy = 0;
 
             return Energy;
+        }
+
+        protected override void PatternWave()
+        {
+            base.PatternWave();
+
+            if (LeftTotem.Alpha > 0)
+            {
+                //TODO: fix totems
+                //LeftTotem.Shoot();
+                //RightTotem.Shoot();
+            }
         }
 
         protected override bool Pressed(VitaruAction action)

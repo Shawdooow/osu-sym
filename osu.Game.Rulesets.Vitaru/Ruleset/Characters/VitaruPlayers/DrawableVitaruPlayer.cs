@@ -71,6 +71,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         //Is reset after healing applied
         public double HealingMultiplier = 1;
 
+        private double nextShoot = -1;
+
         private double lastQuarterBeat = -1;
         private double nextHalfBeat = -1;
         private double nextQuarterBeat = -1;
@@ -188,10 +190,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
             const double beat_in_time = 60;
 
-            Seal.Sign.ScaleTo(1 - 0.02f * amplitudeAdjust, beat_in_time, Easing.Out);
-            using (Seal.Sign.BeginDelayedSequence(beat_in_time))
-                Seal.Sign.ScaleTo(1, BeatLength * 2, Easing.OutQuint);
-
             if (effectPoint.KiaiMode && !(Gamemode is TouhosuGamemode))
             {
                 Seal.Sign.FadeTo(0.25f * amplitudeAdjust, beat_in_time, Easing.Out);
@@ -226,9 +224,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         protected virtual void OnHalfBeat()
         {
             nextHalfBeat = -1;
-
-            if (Actions[VitaruAction.Shoot])
-                PatternWave();
         }
 
         protected virtual void OnQuarterBeat()
@@ -302,6 +297,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
             if (nextQuarterBeat <= VitaruPlayfield.Current && nextQuarterBeat != -1)
                 OnQuarterBeat();
+
+            if ((VitaruPlayfield.Current >= nextShoot || VitaruPlayfield.Current <= nextShoot - BeatLength) && Actions[VitaruAction.Shoot])
+                PatternWave();
         }
 
         protected override void ParseProjectile(DrawableProjectile projectile)
@@ -598,6 +596,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
         protected virtual void PatternWave()
         {
+            nextShoot = VitaruPlayfield.Current + BeatLength / 2f;
             const int numberbullets = 3;
             double directionModifier = -0.2d;
 
@@ -660,7 +659,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
             //Mouse Stuff
             if (action == VitaruAction.Shoot)
+            {
                 Actions[VitaruAction.Shoot] = true;
+                PatternWave();
+            }
 
             return true;
         }
