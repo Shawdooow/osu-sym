@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
+namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
 {
     public class Patterns
     {
@@ -191,6 +192,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
                 {
                     ObeyBoundries = false,
                     ShootPlayer = true,
+                    Shape = Shape.Triangle,
                     PatternStartTime = startTime,
                     Position = offset,
                     Speed = (float)speed,

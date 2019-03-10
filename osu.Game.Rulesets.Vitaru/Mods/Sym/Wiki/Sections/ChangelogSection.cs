@@ -87,13 +87,13 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
         {
             "[Experimental] Patterns V2",
             "[Experimental] New bullet visuals",
+            "[Experimental] Touhou sounds",
             "[Windows] Score Submission (Leaderboards don't work but scores are uploaded and saved when connected)",
             "OSX Support",
             "iOS Support",
             "Touch screen controls (they are a toggle in settings for now)",
             //"Linux Support",
             //"Added classic enemy visuals",
-            "Added touhou sounds (Experimental)",
             "Remove Storymode",
         };
 
