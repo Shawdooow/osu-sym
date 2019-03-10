@@ -60,6 +60,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         private readonly Container judgementLayer;
         private readonly List<DrawableVitaruPlayer> playerList = new List<DrawableVitaruPlayer>();
 
+        public Vector2 PlayerPosition => Player?.Position ?? gamemode.PlayerStartingPosition;
+
         public DrawableVitaruPlayer Player;
 
         public DrawableBoss DrawableBoss;

@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters.Drawables
 
             CurrentPlayfield.Add(drawableBullet = new DrawableBullet(new Bullet
             {
-                StartTime = VitaruPlayfield.Current,
+                PatternStartTime = VitaruPlayfield.Current,
                 Position = Position,
                 Angle = angle,
                 Speed = speed,

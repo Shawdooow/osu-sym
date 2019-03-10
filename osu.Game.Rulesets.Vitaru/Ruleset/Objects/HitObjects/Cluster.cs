@@ -277,6 +277,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
                     return Patterns.Circle(ClusterSpeed * (float)Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity);
                 case 6:
                     return Patterns.Flower(ClusterSpeed * (float)Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Duration, Team, beatLength, ClusterDensity);
+                case 7:
+                    return Patterns.Cross(ClusterSpeed * (float)Velocity * 2, ClusterDiameter, ClusterDamage, StartTime, Team, ClusterDensity);
             }
         }
 
@@ -293,7 +295,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
                 case "normal" when info.Name == "hitwhistle":
                     return 2;
                 case "normal" when info.Name == "hitfinish":
-                    return 3;
+                    return 7;
                 case "normal" when info.Name == "hitclap":
                     return 5;
                 case "drum" when info.Name == "hitnormal":
@@ -309,7 +311,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
                 case "soft" when info.Name == "hitwhistle":
                     return 2;
                 case "soft" when info.Name == "hitfinish":
-                    return 3;
+                    return 7;
                 case "soft" when info.Name == "hitclap":
                     return 5;
             }

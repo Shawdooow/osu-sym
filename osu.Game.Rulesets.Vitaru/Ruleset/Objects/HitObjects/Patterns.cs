@@ -17,10 +17,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
 
             for (int i = 1; i <= bulletCount; i++)
             {
-
                 projectiles.Add(new Bullet
                 {
-                    StartTime = startTime,
+                    PatternStartTime = startTime,
                     Position = position,
                     Speed = (float)speed,
                     Angle = direction,
@@ -48,7 +47,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
             {
                 projectiles.Add(new Bullet
                 {
-                    StartTime = startTime,
+                    PatternStartTime = startTime,
                     Position = position,
                     Speed = (float)speed,
                     Angle = angle,
@@ -82,7 +81,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
             {
                 projectiles.Add(new Bullet
                 {
-                    StartTime = startTime,
+                    PatternStartTime = startTime,
                     Position = position,
                     Speed = (float)speed,
                     Angle = direction,
@@ -116,12 +115,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
             int bulletCount = (int)(complexity * 7);
 
             if (bulletCount % 2 == 0)
-            {
                 bulletCount++;
-            }
-            else
-            {
-            }
 
             double directionModifier = Math.PI / 2 / (bulletCount - 1);
             double direction = angle - Math.PI / 4;
@@ -132,7 +126,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
             {
                 projectiles.Add(new Bullet
                 {
-                    StartTime = startTime,
+                    PatternStartTime = startTime,
                     Position = position,
                     Speed = (float)speed,
                     Angle = i % 2 == 0 ? angle - direction : angle + direction,
@@ -165,7 +159,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
             {
                 projectiles.Add(new Bullet
                 {
-                    StartTime = startTime,
+                    PatternStartTime = startTime,
                     Position = position,
                     Speed = (float)speed,
                     Angle = direction,
@@ -173,6 +167,38 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
                     SpeedEasing = Easing.OutCubic,
                     Diameter = i % 2 == 1 ? (float)diameter : (float)diameter * 1.5f,
                     Damage = i % 2 == 1 ? (float)damage : (float)damage * 0.8f,
+                    Team = team,
+                });
+                direction += directionModifier;
+            }
+
+            return projectiles;
+        }
+
+        public static List<Projectile> Cross(double speed, double diameter, double damage, double startTime, int team, double complexity = 1)
+        {
+            List<Projectile> projectiles = new List<Projectile>();
+
+            int bulletCount = (int)(complexity * 4);
+            double directionModifier = Math.PI * 2 / bulletCount;
+            double direction = Math.PI / 4;
+
+            for (int i = 1; i <= bulletCount; i++)
+            {
+                Vector2 offset = new Vector2((float)Math.Cos(direction) * -200, (float)Math.Sin(direction) * -200);
+
+                projectiles.Add(new Bullet
+                {
+                    ObeyBoundries = false,
+                    ShootPlayer = true,
+                    PatternStartTime = startTime,
+                    Position = offset,
+                    Speed = (float)speed,
+                    Angle = direction,
+                    SliderType = SliderType.Target,
+                    SpeedEasing = Easing.InOutExpo,
+                    Diameter = diameter,
+                    Damage = damage,
                     Team = team,
                 });
                 direction += directionModifier;
@@ -209,7 +235,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
 
                     projectiles.Add(new Bullet
                     {
-                        StartTime = j,
+                        PatternStartTime = j,
                         Position = position,
                         Speed = (float)speed,
                         Angle = direction,

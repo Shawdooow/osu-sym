@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
 
         private Vector2 position;
 
-        public Vector2 Position
+        public virtual Vector2 Position
         {
             get => position;
             set

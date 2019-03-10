@@ -580,7 +580,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             DrawableBullet b;
             VitaruPlayfield.Gamefield.Add(b = new DrawableBullet(new Bullet
             {
-                StartTime = VitaruPlayfield.Current,
+                PatternStartTime = VitaruPlayfield.Current,
                 Position = Position,
                 Angle = angle,
                 Speed = speed,

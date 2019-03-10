@@ -3,11 +3,13 @@
 
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
+using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Logging;
+using osu.Game.Rulesets;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
@@ -27,7 +29,7 @@ namespace osu.Game.Screens.Edit.Compose
         private HitObjectComposer composer;
 
         [BackgroundDependencyLoader(true)]
-        private void load([CanBeNull] BindableBeatDivisor beatDivisor)
+        private void load([CanBeNull] BindableBeatDivisor beatDivisor, Bindable<RulesetInfo> ri)
         {
             if (beatDivisor != null)
                 this.beatDivisor.BindTo(beatDivisor);
@@ -99,7 +101,8 @@ namespace osu.Game.Screens.Edit.Compose
                 },
             };
 
-            var ruleset = Beatmap.Value.BeatmapInfo.Ruleset?.CreateInstance();
+            RulesetInfo r = ri.Value ?? Beatmap.Value.BeatmapInfo.Ruleset;
+            var ruleset = r?.CreateInstance() ?? Beatmap.Value.BeatmapInfo.Ruleset?.CreateInstance();
             if (ruleset == null)
             {
                 Logger.Log("Beatmap doesn't have a ruleset assigned.");

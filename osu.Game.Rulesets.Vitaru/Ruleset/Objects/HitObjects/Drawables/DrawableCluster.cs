@@ -127,6 +127,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
                         b.SliderType = b.SliderType;
                     }
 
+                    if (b.ShootPlayer)
+                        b.Position = VitaruPlayfield.PlayerPosition;
+
                     DrawableBullet drawableBullet = Gamemode.GetDrawableBullet(b, VitaruPlayfield);
                     CurrentPlayfield.Add(drawableBullet);
                     AddNested(drawableBullet);
@@ -259,7 +262,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         {
             if (VitaruPlayfield.Player == null)
                 return 0;
-            return Math.Atan2(VitaruPlayfield.Player.Position.Y - Position.Y, VitaruPlayfield.Player.Position.X - Position.X);
+            return Math.Atan2(VitaruPlayfield.PlayerPosition.Y - Position.Y, VitaruPlayfield.PlayerPosition.X - Position.X);
         }
 
         public override void Delete()

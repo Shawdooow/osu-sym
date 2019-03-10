@@ -19,14 +19,22 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
 
         public double Speed { get; set; } = 1f;
         public double Diameter { get; set; } = 28f;
-        public bool DynamicVelocity { get; set; }
-        public bool Piercing { get; set; }
         public bool ShootPlayer { get; set; }
-        public bool ObeyBoundries { get; } = true;
+        public bool ObeyBoundries { get; set; } = true;
+
+        public override Vector2 Position
+        {
+            get => base.Position;
+            set
+            {
+                base.Position = value;
+                SliderType = sliderType;
+            }
+        }
 
         public double Curviness
         {
-            get { return curviness; }
+            get => curviness;
             set
             {
                 curviness = value;
@@ -40,7 +48,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
 
         public SliderType SliderType
         {
-            get { return sliderType; }
+            get => sliderType;
             set
             {
                 sliderType = value;
@@ -56,6 +64,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
                             Position,
                             new Vector2((float)Math.Cos(Angle) * 1000 + Position.X, (float)Math.Sin(Angle) * 1000 + Position.Y)
                         }, 1000);
+                        break;
+                    case SliderType.Target:
+
+                        Path = new SliderPath(PathType.Linear, new[]
+                        {
+                            new Vector2((float)Math.Cos(Angle) * -200 + Position.X, (float)Math.Sin(Angle) * -200 + Position.Y),
+                            new Vector2((float)Math.Cos(Angle) * 200 + Position.X, (float)Math.Sin(Angle) * 200 + Position.Y),
+                        }, 400);
                         break;
                     case SliderType.CurveLeft:
 
@@ -75,10 +91,30 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
                         }, 1200);
                         break;
                 }
-                EndTime = StartTime + Path.Distance / Velocity;
+                switch (value)
+                {
+                    default:
+                        EndTime = StartTime + Path.Distance / Velocity;
+                        break;
+                    case SliderType.Target:
+                        StartTime = PatternStartTime - Path.Distance / Velocity / 2f;
+                        break;
+                }
             }
         }
         private SliderType sliderType;
+
+        public double PatternStartTime
+        {
+            get => patternStartTime;
+            set
+            {
+                patternStartTime = value;
+                StartTime = value;
+            }
+        }
+
+        private double patternStartTime;
 
         public override double StartTime
         {
@@ -94,30 +130,18 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
         private double startTime;
 
         public List<List<SampleInfo>> NodeSamples { get; set; } = new List<List<SampleInfo>>();
-        public bool IsSlider { get; set; } = false;
-        private const float base_scoring_distance = 100;
         public double Duration => EndTime - StartTime;
         public SliderPath Path { get; private set; } = new SliderPath();
         public double Velocity => Speed;
-        public double SpanDuration => Duration / this.SpanCount();
         public int RepeatCount { get; set; }
 
         public Easing SpeedEasing { get; set; } = Easing.None;
 
-        public ReadOnlySpan<Vector2> ControlPoints
-        {
-            get { return Path.ControlPoints; }
-        }
+        public ReadOnlySpan<Vector2> ControlPoints => Path.ControlPoints;
 
-        public PathType Type
-        {
-            get { return Path.Type; }
-        }
+        public PathType Type => Path.Type;
 
-        public double Distance
-        {
-            get { return Path.Distance; }
-        }
+        public double Distance => Path.Distance;
 
         public override Vector2 EndPosition => this.CurvePositionAt(1);
         public Vector2 PositionAt(double t) => this.CurvePositionAt(Interpolation.ApplyEasing(SpeedEasing, t));
@@ -133,6 +157,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
     public enum SliderType
     {
         Straight,
+        Target,
 
         CurveRight,
         CurveLeft,
