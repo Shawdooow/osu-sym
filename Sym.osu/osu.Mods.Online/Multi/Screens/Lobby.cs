@@ -12,15 +12,15 @@ using Symcol.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Screens
 {
-    public class Lounge : MultiScreen
+    public class Lobby : MultiScreen
     {
-        public override string Title => "Lounge";
+        public override string Title => "Lobby";
 
         private RulesetStore rulesets;
 
         private readonly FillFlowContainer rooms;
 
-        public Lounge(OsuNetworkingHandler osuNetworkingHandler)
+        public Lobby(OsuNetworkingHandler osuNetworkingHandler)
             : base(osuNetworkingHandler)
         {
             Children = new Drawable[]
@@ -75,10 +75,10 @@ namespace osu.Mods.Online.Multi.Screens
                 case MatchListPacket matchListPacket:
                     rooms.Children = new Container();
                     foreach (MatchListPacket.MatchInfo m in matchListPacket.MatchInfoList)
-                        rooms.Add(new MatchTile(m));
+                        rooms.Add(new MatchTile(OsuNetworkingHandler, m));
                     break;
                 case MatchCreatedPacket matchCreated:
-                    rooms.Add(new MatchTile(matchCreated.MatchInfo));
+                    rooms.Add(new MatchTile(OsuNetworkingHandler, matchCreated.MatchInfo));
                     SendPacket(new JoinMatchPacket
                     {
                         Match = matchCreated.MatchInfo,

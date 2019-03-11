@@ -1,6 +1,7 @@
 ﻿using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
+using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Packets.Lobby;
 using osuTK.Graphics;
 using Symcol.Base.Graphics.Containers;
@@ -9,7 +10,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 {
     public class MatchTile : SymcolClickableContainer
     {
-        public MatchTile(MatchListPacket.MatchInfo match)
+        public MatchTile(OsuNetworkingHandler osuNetworkingHandler, MatchListPacket.MatchInfo match)
         {
             Anchor = Anchor.TopCentre;
             Origin = Anchor.TopCentre;
@@ -34,6 +35,12 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     Text = match.Name,
                 }
             };
+
+            Action = () => osuNetworkingHandler.SendToServer(new JoinMatchPacket
+            {
+                User = osuNetworkingHandler.OsuUserInfo,
+                Match = match,
+            });
         }
     }
 }

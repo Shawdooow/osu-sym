@@ -28,7 +28,7 @@ namespace osu.Mods.Online
                     Action = () =>
                     {
                         if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.ConnectionStatues >= ConnectionStatues.Connected)
-                            Push(new Lounge(OnlineModset.OsuNetworkingHandler));
+                            Push(new Lobby(OnlineModset.OsuNetworkingHandler));
                         else
                             Logger.Log("Connect to a server first!", LoggingTarget.Network, LogLevel.Error);
                     }
