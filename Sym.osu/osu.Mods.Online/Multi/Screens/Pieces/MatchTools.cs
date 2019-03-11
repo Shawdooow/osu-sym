@@ -50,7 +50,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         public BeatmapManager Beatmaps { get; private set; }
 
-        private Bindable<WorkingBeatmap> beatmap;
+        private Bindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
 
         private bool searching;
 
@@ -149,7 +149,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         {
             this.ruleset = ruleset;
             this.rulesets = rulesets;
-            this.beatmap = beatmap;
+            this.beatmap.BindTo(beatmap);
             Beatmaps = beatmaps;
         }
 
