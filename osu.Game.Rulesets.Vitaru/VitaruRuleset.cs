@@ -163,6 +163,7 @@ namespace osu.Game.Rulesets.Vitaru
                     {
                         new VitaruModEasy(),
                         new VitaruModNoFail(),
+                        new VitaruModCharged(), 
                         new MultiMod(new VitaruModHalfTime(), new VitaruModTrueHalfTime(), new VitaruModDaycore(), new VitaruModTrueDaycore())
                     };
                 case ModType.DifficultyIncrease:

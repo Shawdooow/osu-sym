@@ -1,5 +1,4 @@
-﻿using System;
-using osu.Core;
+﻿using osu.Core;
 using osu.Core.Config;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
@@ -28,7 +27,7 @@ namespace osu.Mods.Online.Base
             if (apiState != APIState.Online)
             {
                 connectReady = true;
-                forceTime = Time.Current + 1000;
+                forceTime = Time.Current + 2000;
             }
             else
                 connect();
