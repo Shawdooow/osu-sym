@@ -83,6 +83,7 @@ namespace osu.Mods.Online.Wiki.Sections
         {
             "Fix not being able to host or join",
             "Fix incorrect text being displayed when searching for a map",
+            "Fix the \"Super Noise Bug\"",
         };
     }
 }
