@@ -16,6 +16,26 @@ namespace osu.Mods.Online.Score.Rulesets
 
         protected readonly RulesetContainer<TObject> RulesetContainer;
 
+        protected virtual OnlineScore GetOnlineScore() => new OnlineScore
+        {
+            OnlineBeatmapSetID = RulesetContainer.Beatmap.BeatmapInfo.BeatmapSet.OnlineBeatmapSetID ?? 0,
+            OnlineBeatmapID = RulesetContainer.Beatmap.BeatmapInfo.OnlineBeatmapID ?? 0,
+            BeatmapTitle = RulesetContainer.Beatmap.Metadata.Title,
+            BeatmapArtist = RulesetContainer.Beatmap.Metadata.Artist,
+            BeatmapMapper = RulesetContainer.Beatmap.Metadata.Author.Username,
+            BeatmapDifficulty = RulesetContainer.Beatmap.BeatmapInfo.Version,
+            RulesetShortname = RulesetContainer.Ruleset.ShortName,
+            Score = TotalScore.Value,
+            Combo = Combo.Value,
+            Accuracy = Accuracy.Value,
+            PP = PP,
+        };
+
+        protected virtual ScoreSubmissionPacket GetScoreSubmissionPacket(OnlineScore score) => new ScoreSubmissionPacket
+        {
+            Score = score,
+        };
+
         protected override bool HasCompleted
         {
             get
@@ -23,20 +43,7 @@ namespace osu.Mods.Online.Score.Rulesets
                 if (JudgedHits != MaxHits) return false;
 
                 if (Ranked)
-                    OnCompletion?.Invoke(new OnlineScore
-                    {
-                        OnlineBeatmapSetID = RulesetContainer.Beatmap.BeatmapInfo.BeatmapSet.OnlineBeatmapSetID ?? 0,
-                        OnlineBeatmapID = RulesetContainer.Beatmap.BeatmapInfo.OnlineBeatmapID ?? 0,
-                        BeatmapTitle = RulesetContainer.Beatmap.Metadata.Title,
-                        BeatmapArtist = RulesetContainer.Beatmap.Metadata.Artist,
-                        BeatmapMapper = RulesetContainer.Beatmap.Metadata.Author.Username,
-                        BeatmapDifficulty = RulesetContainer.Beatmap.BeatmapInfo.Version,
-                        RulesetShortname = RulesetContainer.Ruleset.ShortName,
-                        Score = TotalScore.Value,
-                        Combo = Combo.Value,
-                        Accuracy = Accuracy.Value,
-                        PP = PP,
-                    });
+                    OnCompletion?.Invoke(GetOnlineScore());
                 return true;
 
             }
@@ -52,10 +59,7 @@ namespace osu.Mods.Online.Score.Rulesets
             OnCompletion += score =>
             {
                 if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.ConnectionStatues >= ConnectionStatues.Connected)
-                    OnlineModset.OsuNetworkingHandler.SendToServer(new ScoreSubmissionPacket
-                    {
-                        Score = score
-                    });
+                    OnlineModset.OsuNetworkingHandler.SendToServer(GetScoreSubmissionPacket(score));
             };
         }
     }
