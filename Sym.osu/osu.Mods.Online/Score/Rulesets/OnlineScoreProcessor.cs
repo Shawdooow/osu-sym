@@ -12,7 +12,7 @@ namespace osu.Mods.Online.Score.Rulesets
     {
         protected virtual bool Ranked => false;
 
-        protected event Action<OnlineScore> OnCompletion;
+        protected Action<OnlineScore> OnCompletion;
 
         protected readonly RulesetContainer<TObject> RulesetContainer;
 
@@ -45,7 +45,6 @@ namespace osu.Mods.Online.Score.Rulesets
                 if (Ranked)
                     OnCompletion?.Invoke(GetOnlineScore());
                 return true;
-
             }
         }
 
