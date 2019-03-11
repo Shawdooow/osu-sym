@@ -284,7 +284,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             if (!Editor)
             {
                 OnResult.Invoke(vitaruResult);
-                returnedJudgementCount.Bindable.Value++;
+
+                if (!vitaruResult.VitaruJudgement.BonusScore)
+                    returnedJudgementCount.Bindable.Value++;
 
                 DrawableVitaruJudgement explosion = new DrawableVitaruJudgement(result, judgedObject)
                 {

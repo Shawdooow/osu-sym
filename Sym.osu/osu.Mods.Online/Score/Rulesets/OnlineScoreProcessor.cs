@@ -20,8 +20,9 @@ namespace osu.Mods.Online.Score.Rulesets
         {
             get
             {
-                if (JudgedHits == MaxHits && Ranked)
-                {
+                if (JudgedHits != MaxHits) return false;
+
+                if (Ranked)
                     OnCompletion?.Invoke(new OnlineScore
                     {
                         OnlineBeatmapSetID = RulesetContainer.Beatmap.BeatmapInfo.BeatmapSet.OnlineBeatmapSetID ?? 0,
@@ -36,10 +37,8 @@ namespace osu.Mods.Online.Score.Rulesets
                         Accuracy = Accuracy.Value,
                         PP = PP,
                     });
-                    return true;
-                }
+                return true;
 
-                return false;
             }
         }
 
