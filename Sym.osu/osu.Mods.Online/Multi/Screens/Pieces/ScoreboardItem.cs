@@ -21,11 +21,11 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     score = value;
                     scoreText.Text = value.ToString();
 
-                    foreach(ScoreboardItem item in itemList)
+                    foreach(ScoreboardItem item in item_list)
                         if (value > item.Score && Place > item.Place)
                         {
                             Place = item.Place;
-                            foreach (ScoreboardItem i in itemList)
+                            foreach (ScoreboardItem i in item_list)
                                 if (i.Place < Place)
                                     i.Place -= 1;
                         }
@@ -56,14 +56,14 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         private readonly SpriteText scoreText;
 
-        private static List<ScoreboardItem> itemList = new List<ScoreboardItem>();
+        private static readonly List<ScoreboardItem> item_list = new List<ScoreboardItem>();
 
         public ScoreboardItem(OsuUserInfo user, int place)
         {
             User = user;
             this.place = place;
 
-            itemList.Add(this);
+            item_list.Add(this);
 
             RelativeSizeAxes = Axes.X;
             Height = height;
@@ -100,7 +100,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         protected override void Dispose(bool isDisposing)
         {
-            itemList.Remove(this);
+            item_list.Remove(this);
             base.Dispose(isDisposing);
         }
     }
