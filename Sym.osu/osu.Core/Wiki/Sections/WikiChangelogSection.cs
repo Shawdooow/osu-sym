@@ -9,6 +9,8 @@ namespace osu.Core.Wiki.Sections
 {
     public abstract class WikiChangelogSection : WikiSection
     {
+        public override string Title => "Changelog";
+
         protected abstract string Version { get; }
 
         protected abstract string StoragePath { get; }

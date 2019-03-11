@@ -1,15 +1,15 @@
 ﻿using osu.Core.Wiki.Included.Symcol.Sections;
 using osu.Core.Wiki.Sections;
 
-namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
+namespace osu.Mods.Online.Wiki.Sections
 {
-    public class ChangelogSection : WikiChangelogSection
+    public class Changelog : WikiChangelogSection
     {
         protected override string Version => SymcolChangelog.SYM_VERSION;
 
-        protected override string StoragePath => "vitaru\\changelogs";
+        protected override string StoragePath => "online\\changelogs";
 
-        protected override string FileExtention => ".vitaru";
+        protected override string FileExtention => ".online";
 
         protected override string VersionChangelog => changelog;
 
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
                 if (versions != null)
                 {
                     foreach (string version in versions)
-                        add(tab + "Updated to osu!lazer version "  +  version);
+                        add(tab + "Updated to osu!lazer version " + version);
                     add("");
                 }
 
@@ -59,12 +59,6 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
                     add("");
                 }
 
-                if (devNotes != null)
-                {
-                    add("Dev Notes:\n");
-                    change = change + "     " + devNotes;
-                }
-
                 return change;
 
                 void add(string a)
@@ -77,37 +71,18 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
         private readonly string[] versions =
         {
             "1414",
-            "1303",
-            "1227",
         };
 
-        private readonly string[] features =
-        {
-            "[Experimental] Patterns V2",
-            "[Experimental] New bullet visuals",
-            "[Experimental] Touhou sounds",
-            "[Windows] Score Submission (Leaderboards don't work but scores are uploaded and saved when connected)",
-            "OSX Support",
-            "iOS Support",
-            "Touch screen controls (they are a toggle in settings for now)",
-            //"Linux Support",
-            //"Added classic enemy visuals",
-            "Remove Storymode",
-        };
+        private readonly string[] features = null;
 
-        private readonly string[] tweaksAndChanges =
-        {
-            "Get Time.Current less (Bullets + Enemies hurt fps less now)",
-        };
+        private readonly string[] tweaksAndChanges = null;
 
         private readonly string[] balances = null;
 
         private readonly string[] fixes =
         {
-            "Fix ComboColors not working basically at all",
-            //"Fix storymode making Ryukoy crash the game",
+            "Fix not being able to host or join",
+            "Fix incorrect text being displayed when searching for a map",
         };
-
-        private readonly string devNotes = null;
     }
 }

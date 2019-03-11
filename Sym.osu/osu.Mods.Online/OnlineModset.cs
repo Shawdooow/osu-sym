@@ -1,14 +1,15 @@
-﻿using System;
-using osu.Core;
+﻿using osu.Core;
 using osu.Core.Config;
 using osu.Core.Containers.Shawdooow;
 using osu.Core.OsuMods;
+using osu.Core.Wiki;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Game;
 using osu.Game.Screens;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Wiki;
 using osuTK;
 using osuTK.Graphics;
 
@@ -32,6 +33,8 @@ namespace osu.Mods.Online
             Size = 90,
             Position = new Vector2(220, 20),
         };
+
+        public override WikiSet GetWikiSet() => new OnlineWiki();
 
         public override OsuScreen GetScreen() => new OnlineMenu();
 

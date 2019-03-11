@@ -8,8 +8,6 @@ namespace osu.Core.Wiki.Included.Lazer
     {
         public override string Name => "lazer";
 
-        public override string Description => "osu!lazer is the complete re-write of osu! and will one day replace osu!stable as the new and improved client!";
-
         public override string IndexTooltip => "not so official lazer wiki!";
 
         public override Texture Icon => SymcolOsuModSet.LazerTextures.Get("Menu/logo");

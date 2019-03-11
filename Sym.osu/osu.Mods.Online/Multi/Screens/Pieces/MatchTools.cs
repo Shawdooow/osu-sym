@@ -158,12 +158,13 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         protected override void OnPacketRecieve(PacketInfo info)
         {
             if (info.Packet is SetMapPacket mapPacket)
-            {
-                searching = true;
                 Task.Factory.StartNew(() =>
                 {
-                    //TODO: make `for` loops
+                    searching = true;
+
+                    //Tell the user we are searching!
                     MapChange(mapPacket.OnlineBeatmapSetID, mapPacket.RulesetID);
+
                     foreach (BeatmapSetInfo beatmapSet in beatmaps.GetAllUsableBeatmapSets())
                         if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
                         {
@@ -203,11 +204,13 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                             break;
                         }
 
+                    //Tell the user they are missing this / we couldn't find it
                     mapDetails.SetMap(selectedBeatmapSetID);
+
                     complete:;
+                    searching = false;
+
                 }, TaskCreationOptions.LongRunning);
-                searching = false;
-            }
         }
 
         public void MapChange(WorkingBeatmap workingBeatmap)

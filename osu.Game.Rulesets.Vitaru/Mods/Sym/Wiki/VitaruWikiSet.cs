@@ -9,9 +9,6 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki
     {
         public override string Name => "vitaru!";
 
-        public override string Description => "vitaru! is a 3rd party ruleset developed for osu!lazer. "
-                                              + "It is a \"Dodge the Beat\" style ruleset where projectiles will be flying towards you while you must avoid them.";
-
         public override string IndexTooltip => "official vitaru wiki!";
 
         public override Texture Icon => VitaruRuleset.VitaruTextures.Get("icon@2x");

@@ -8,8 +8,6 @@ namespace osu.Core.Wiki
     {
         public abstract string Name { get; }
 
-        public abstract string Description { get; }
-
         public virtual string IndexTooltip => "";
 
         public virtual Texture Icon => null;
