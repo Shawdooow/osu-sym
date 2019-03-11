@@ -104,9 +104,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                         if (SelectedBeatmap != null)
                             mapDetails.SetMap(Beatmaps.GetWorkingBeatmap(SelectedBeatmap));
                         else if (selectedBeatmapSetID != 0)
-                        {
                             mapDetails.SetMap(selectedBeatmapSetID);
-                        }
                         else
                             mapDetails.SetMap(searching, selectedBeatmapSetID);
                         break;
@@ -152,7 +150,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
             this.ruleset = ruleset;
             this.rulesets = rulesets;
             this.beatmap = beatmap;
-            this.Beatmaps = beatmaps;
+            Beatmaps = beatmaps;
         }
 
         protected override void OnPacketRecieve(PacketInfo info)
@@ -172,11 +170,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                                 if (b.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
                                 {
                                     ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID ?? 0);
-                                    if (!beatmap.Disabled)
-                                    {
-                                        Beatmaps.GetWorkingBeatmap(b, beatmap);
-                                        //beatmap.Value.Track.Start();
-                                    }
+                                    Beatmaps.GetWorkingBeatmap(b, beatmap);
 
                                     MapChange(b);
                                     goto complete;
@@ -191,11 +185,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                                 if (mapPacket.BeatmapDifficulty == b.Version)
                                 {
                                     ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID ?? 0);
-                                    if (!beatmap.Disabled)
-                                    {
-                                        Beatmaps.GetWorkingBeatmap(b, beatmap);
-                                        //beatmap.Value.Track.Start();
-                                    }
+                                    Beatmaps.GetWorkingBeatmap(b, beatmap);
 
                                     MapChange(b);
                                     goto complete;
@@ -229,7 +219,10 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
             {
                 selectedBeatmapSetID = working.BeatmapSetInfo.OnlineBeatmapSetID;
             }
-            catch { selectedBeatmapSetID = -1; }
+            catch
+            {
+                selectedBeatmapSetID = -1;
+            }
 
             if (Mode.Value == MatchScreenMode.MapDetails)
                 mapDetails.SetMap(working);
