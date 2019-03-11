@@ -20,6 +20,20 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
 
     }
 
+    public class VitaruModCharged : Mod, IApplicableToDrawableHitObjects
+    {
+        public override string Name => "Charged";
+        public override string Acronym => "CD";
+        public override string Description => "Full energy, all the time.";
+        public override double ScoreMultiplier => 0.2f;
+        public override bool Ranked => true;
+
+        public void ApplyToDrawableHitObjects(IEnumerable<DrawableHitObject> drawables)
+        {
+            VitaruPlayfield.CHARGED = true;
+        }
+    }
+
     public class VitaruModHalfTime : ModHalfTime
     {
         public override Type[] IncompatibleMods => new[]

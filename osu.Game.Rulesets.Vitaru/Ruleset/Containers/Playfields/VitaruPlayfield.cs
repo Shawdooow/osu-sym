@@ -34,6 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 {
     public class VitaruPlayfield : SymcolPlayfield
     {
+        public static bool CHARGED;
         public static bool ACCEL;
         //For Sakuya only pretty much
         public static double ACCELMULTIPLIER = 1;
@@ -94,6 +95,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             //VitaruRuleset.InitThread();
             VitaruInputManager = vitaruInput;
 
+            CHARGED = false;
             ACCEL = false;
             ACCELMULTIPLIER = 1;
             HIDDEN = false;
@@ -240,6 +242,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             base.Update();
 
             Current = (float)Time.Current;
+
+            if (CHARGED && Player is DrawableTouhosuPlayer t)
+                t.Charge(999);
 
             if (ACCEL)
                 applyToClock(workingBeatmap.Value.Track, (getSpeed(Current) < 0.75f ? 0.75f : getSpeed(Current)) * ACCELMULTIPLIER);
