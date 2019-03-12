@@ -8,6 +8,8 @@ namespace osu.Mods.Online.Wiki
     {
         public override string Name => "online";
 
+        public override Creator Creator => Creator.Shawdooow;
+
         public override WikiSection[] GetSections() => new WikiSection[]
         {
             new Changelog(),
