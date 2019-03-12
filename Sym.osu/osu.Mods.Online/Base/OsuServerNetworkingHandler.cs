@@ -55,185 +55,203 @@ namespace osu.Mods.Online.Base
                 default:
                     base.HandlePackets(info);
                     break;
+
                 #region Score
                 case ScoreSubmissionPacket scoreSubmission:
                     OnlineScoreStore.SetScore(scoreSubmission);
                     break;
                 #endregion
+
                 #region Multi
-                case GetMatchListPacket getMatch:
-                    MatchListPacket matchList = new MatchListPacket
-                    {
-                        MatchInfoList = GetMatches()
-                    };
-                    ReturnToClient(matchList);
-                    break;
-                case CreateMatchPacket createMatch:
-                    OsuMatches.Add(new OsuMatch
-                    {
-                        MatchInfo = createMatch.MatchInfo,
-                        MatchLastUpdateTime = Time.Current
-                    });
-                    ReturnToClient(new MatchCreatedPacket{ MatchInfo = createMatch.MatchInfo });
-                    break;
-                case JoinMatchPacket joinPacket:
-                    if (joinPacket.User == null) break;
 
-                    foreach (MatchListPacket.MatchInfo m in GetMatches())
-                        if (m.BeatmapTitle == joinPacket.Match.BeatmapTitle &&
-                            m.BeatmapArtist == joinPacket.Match.BeatmapArtist &&
-                            m.Name == joinPacket.Match.Name &&
-                            m.Username == joinPacket.Match.Username)
-                            match = m;
+                    #region Lobby
 
-                    if (match != null)
-                    {
-                        //Tell everyone already there someone joined
-                        ShareWithMatchClients(match, new PlayerJoinedPacket
+                    case GetMatchListPacket getMatch:
+                        MatchListPacket matchList = new MatchListPacket
                         {
-                            User = joinPacket.User
+                            MatchInfoList = GetMatches()
+                        };
+                        ReturnToClient(matchList);
+                        break;
+                    case CreateMatchPacket createMatch:
+                        OsuMatches.Add(new OsuMatch
+                        {
+                            MatchInfo = createMatch.MatchInfo,
+                            MatchLastUpdateTime = Time.Current
                         });
+                        ReturnToClient(new MatchCreatedPacket{ MatchInfo = createMatch.MatchInfo });
+                        break;
+                    case JoinMatchPacket joinPacket:
+                        if (joinPacket.User == null) break;
 
-                        //Add them
-                        match.Users.Add(joinPacket.User);
+                        foreach (MatchListPacket.MatchInfo m in GetMatches())
+                            if (m.BeatmapTitle == joinPacket.Match.BeatmapTitle &&
+                                m.BeatmapArtist == joinPacket.Match.BeatmapArtist &&
+                                m.Name == joinPacket.Match.Name &&
+                                m.Username == joinPacket.Match.Username)
+                                match = m;
 
-                        foreach (OsuMatch s in OsuMatches)
-                            if (s.MatchInfo == match)
+                        if (match != null)
+                        {
+                            //Tell everyone already there someone joined
+                            ShareWithMatchClients(match, new PlayerJoinedPacket
                             {
-                                OsuClient osu = GetClient(joinPacket.User);
-                                osu.User = joinPacket.User;
-                                s.Clients.Add(osu);
-                            }
+                                User = joinPacket.User
+                            });
 
-                        //Tell them they have joined
-                        ReturnToClient(new JoinedMatchPacket { MatchInfo = match });
-                    }
-                    else
-                        Logger.Log("Couldn't find a match matching one in packet!", LoggingTarget.Network, LogLevel.Error);
+                            //Add them
+                            match.Users.Add(joinPacket.User);
 
-                    break;
-                case GetMapPacket getMap:
-                    match = GetMatch(getMap.User);
-                    NetworkingClient.SendPacket(SignPacket(new SetMapPacket
-                    {
-                        OnlineBeatmapSetID = match.OnlineBeatmapSetID,
-                        OnlineBeatmapID = match.OnlineBeatmapID,
-                        BeatmapTitle = match.BeatmapTitle,
-                        BeatmapArtist = match.BeatmapArtist,
-                        BeatmapMapper = match.BeatmapMapper,
-                        BeatmapDifficulty = match.BeatmapDifficulty,
-                        RulesetID = match.RulesetID,
-                    }), GetLastClient().EndPoint);
-                    break;
-                case SetMapPacket map:
-                    match = GetMatch(map.User);
-
-                    match.OnlineBeatmapSetID = map.OnlineBeatmapSetID;
-                    match.OnlineBeatmapID = map.OnlineBeatmapID;
-                    match.BeatmapTitle = map.BeatmapTitle;
-                    match.BeatmapArtist = map.BeatmapArtist;
-                    match.BeatmapMapper = map.BeatmapMapper;
-                    match.BeatmapDifficulty = map.BeatmapDifficulty;
-                    match.RulesetID = map.RulesetID;
-
-                    ShareWithMatchClients(match, map);
-                    break;
-                case SettingPacket setting:
-                    ShareWithMatchClients(GetMatch(setting.User), setting);
-                    break;
-                case ChatPacket chat:
-                    ShareWithMatchClients(GetMatch(chat.User), chat);
-                    break;
-                case LeavePacket leave:
-                    match = GetMatch(leave.User);
-                    if (match != null)
-                        foreach (OsuUserInfo player in match.Users)
-                            if (player.ID == leave.User.ID)
-                            {
-                                match.Users.Remove(player);
-                                //Tell everyone already there someone joined
-                                ShareWithMatchClients(match, new PlayerDisconnectedPacket
+                            foreach (OsuMatch s in OsuMatches)
+                                if (s.MatchInfo == match)
                                 {
-                                    User = leave.User
-                                });
-
-                                foreach (OsuMatch m in OsuMatches)
-                                {
-                                    foreach (OsuClient p in m.Clients)
-                                        if (p.User.ID == leave.User.ID)
-                                        {
-                                            m.Clients.Remove(p);
-                                            break;
-                                        }
-                                    foreach (OsuClient p in m.LoadedClients)
-                                        if (p.User.ID == leave.User.ID)
-                                        {
-                                            m.LoadedClients.Remove(p);
-                                            break;
-                                        }
+                                    OsuClient osu = GetClient(joinPacket.User);
+                                    osu.User = joinPacket.User;
+                                    s.Clients.Add(osu);
                                 }
 
-                                //Update their matchlist next
-                                MatchListPacket list = new MatchListPacket();
-                                list = (MatchListPacket)SignPacket(list);
-                                list.MatchInfoList = GetMatches();
-                                NetworkingClient.SendPacket(list, GetLastClient().EndPoint);
-                                return;
-                            }
-                    Logger.Log("Couldn't find a player to remove who told us they were leaving!", LoggingTarget.Network, LogLevel.Error);
-                    break;
-                case StartMatchPacket start:
-                    match = GetMatch(start.User);
-                    ShareWithMatchClients(match, new MatchLoadingPacket
-                    {
-                        Users = match.Users
-                    });
-                    break;
-                case PlayerLoadedPacket loaded:
-                    foreach (OsuMatch m in OsuMatches)
-                        foreach (OsuClient p in m.Clients)
-                            if (p.User.ID == loaded.User.ID)
-                            {
-                                m.Clients.Remove(p);
-                                m.LoadedClients.Add(p);
+                            //Tell them they have joined
+                            ReturnToClient(new JoinedMatchPacket { MatchInfo = match });
+                        }
+                        else
+                            Logger.Log("Couldn't find a match matching one in packet!", LoggingTarget.Network, LogLevel.Error);
 
-                                if (m.Clients.Count == 0)
-                                    ShareWithMatchClients(m.MatchInfo, new MatchStartingPacket());
+                        break;
 
-                                return;
-                            }
+                    #endregion
 
-                    Logger.Log("A Player we can't find told us they have loaded!", LoggingTarget.Network, LogLevel.Error);
-                    break;
-                case ScorePacket score:
-                    foreach (OsuMatch m in OsuMatches)
-                        foreach (OsuClient p in m.LoadedClients)
-                            if (p.User.ID == score.UserID)
-                                ShareWithMatchClients(m.MatchInfo, score);
-                    break;
-                case CursorPositionPacket cursor:
-                    foreach (OsuMatch m in OsuMatches)
-                        foreach (OsuClient p in m.LoadedClients)
-                            if (p.User.ID == cursor.ID)
-                                ShareWithMatchClients(m.MatchInfo, cursor);
-                    break;
-                case MatchExitPacket exit:
-                    foreach (OsuMatch m in OsuMatches)
-                        foreach (OsuClient p in m.LoadedClients)
-                            if (p.User.ID == exit.User.ID)
-                            {
-                                restart:
-                                foreach (OsuClient r in m.LoadedClients)
+                    #region Match
+
+                    case GetMapPacket getMap:
+                        match = GetMatch(getMap.User);
+                        NetworkingClient.SendPacket(SignPacket(new SetMapPacket
+                        {
+                            OnlineBeatmapSetID = match.OnlineBeatmapSetID,
+                            OnlineBeatmapID = match.OnlineBeatmapID,
+                            BeatmapTitle = match.BeatmapTitle,
+                            BeatmapArtist = match.BeatmapArtist,
+                            BeatmapMapper = match.BeatmapMapper,
+                            BeatmapDifficulty = match.BeatmapDifficulty,
+                            RulesetID = match.RulesetID,
+                        }), GetLastClient().EndPoint);
+                        break;
+                    case SetMapPacket map:
+                        match = GetMatch(map.User);
+
+                        match.OnlineBeatmapSetID = map.OnlineBeatmapSetID;
+                        match.OnlineBeatmapID = map.OnlineBeatmapID;
+                        match.BeatmapTitle = map.BeatmapTitle;
+                        match.BeatmapArtist = map.BeatmapArtist;
+                        match.BeatmapMapper = map.BeatmapMapper;
+                        match.BeatmapDifficulty = map.BeatmapDifficulty;
+                        match.RulesetID = map.RulesetID;
+
+                        ShareWithMatchClients(match, map);
+                        break;
+                    case SettingPacket setting:
+                        ShareWithMatchClients(GetMatch(setting.User), setting);
+                        break;
+                    case ChatPacket chat:
+                        ShareWithMatchClients(GetMatch(chat.User), chat);
+                        break;
+                    case LeavePacket leave:
+                        match = GetMatch(leave.User);
+                        if (match != null)
+                            foreach (OsuUserInfo player in match.Users)
+                                if (player.ID == leave.User.ID)
                                 {
-                                    m.LoadedClients.Remove(r);
-                                    m.Clients.Add(r);
-                                    goto restart;
+                                    match.Users.Remove(player);
+                                    //Tell everyone already there someone joined
+                                    ShareWithMatchClients(match, new PlayerDisconnectedPacket
+                                    {
+                                        User = leave.User
+                                    });
+
+                                    foreach (OsuMatch m in OsuMatches)
+                                    {
+                                        foreach (OsuClient p in m.Clients)
+                                            if (p.User.ID == leave.User.ID)
+                                            {
+                                                m.Clients.Remove(p);
+                                                break;
+                                            }
+                                        foreach (OsuClient p in m.LoadedClients)
+                                            if (p.User.ID == leave.User.ID)
+                                            {
+                                                m.LoadedClients.Remove(p);
+                                                break;
+                                            }
+                                    }
+
+                                    //Update their matchlist next
+                                    MatchListPacket list = new MatchListPacket();
+                                    list = (MatchListPacket)SignPacket(list);
+                                    list.MatchInfoList = GetMatches();
+                                    NetworkingClient.SendPacket(list, GetLastClient().EndPoint);
+                                    return;
                                 }
-                                ShareWithMatchClients(m.MatchInfo, exit);
-                                return;
-                            }
-                    break;
-#endregion
+                        Logger.Log("Couldn't find a player to remove who told us they were leaving!", LoggingTarget.Network, LogLevel.Error);
+                        break;
+                    case StartMatchPacket start:
+                        match = GetMatch(start.User);
+                        ShareWithMatchClients(match, new MatchLoadingPacket
+                        {
+                            Users = match.Users
+                        });
+                        break;
+
+                #endregion
+
+                    #region MultiPlayer
+
+                    case PlayerLoadedPacket loaded:
+                        foreach (OsuMatch m in OsuMatches)
+                            foreach (OsuClient p in m.Clients)
+                                if (p.User.ID == loaded.User.ID)
+                                {
+                                    m.Clients.Remove(p);
+                                    m.LoadedClients.Add(p);
+
+                                    if (m.Clients.Count == 0)
+                                        ShareWithMatchClients(m.MatchInfo, new MatchStartingPacket());
+
+                                    return;
+                                }
+
+                        Logger.Log("A Player we can't find told us they have loaded!", LoggingTarget.Network, LogLevel.Error);
+                        break;
+                    case ScorePacket score:
+                        foreach (OsuMatch m in OsuMatches)
+                            foreach (OsuClient p in m.LoadedClients)
+                                if (p.User.ID == score.UserID)
+                                    ShareWithMatchClients(m.MatchInfo, score);
+                        break;
+                    case CursorPositionPacket cursor:
+                        foreach (OsuMatch m in OsuMatches)
+                            foreach (OsuClient p in m.LoadedClients)
+                                if (p.User.ID == cursor.ID)
+                                    ShareWithMatchClients(m.MatchInfo, cursor);
+                        break;
+                    case MatchExitPacket exit:
+                        foreach (OsuMatch m in OsuMatches)
+                            foreach (OsuClient p in m.LoadedClients)
+                                if (p.User.ID == exit.User.ID)
+                                {
+                                    restart:
+                                    foreach (OsuClient r in m.LoadedClients)
+                                    {
+                                        m.LoadedClients.Remove(r);
+                                        m.Clients.Add(r);
+                                        goto restart;
+                                    }
+                                    ShareWithMatchClients(m.MatchInfo, exit);
+                                    return;
+                                }
+                        break;
+
+                    #endregion
+
+                #endregion
             }
         }
 
