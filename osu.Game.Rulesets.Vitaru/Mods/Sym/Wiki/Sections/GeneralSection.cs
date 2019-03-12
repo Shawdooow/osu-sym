@@ -105,6 +105,9 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
                         "Basically they work like a bullet in that the white rectangle in the middle is the actual dangerous part " +
                         "but unlike a bullet their damage will be spread out for as long as you are getting hit."),
                     new LaserPiece(Color4.Red, 8)));
+            Content.Add(new WikiSplitColum(
+                new Container(),
+                new WikiParagraph("Over on the left will be a seeking bullet, once they are working.")));
             Content.Add(new WikiSubSectionHeader("Scoring"));
             Content.Add(new WikiParagraph("Score per bullet is based on how close it got to hitting you, the closer a bullet got the more score it will give. The \"Great\" area is about the same size as the green health ring, " +
                 "the \"Good\" is twice that and \"Meh\" is infinite (so by default a bullet gives meh unless you got close)."));
