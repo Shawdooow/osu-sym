@@ -97,14 +97,22 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
                     }
                 }));
             Content.Add(new WikiSplitColum(
-                new BulletPiece(Color4.Green, 32, Shape.Circle),
+                new BulletPiece(Color4.Green, 32, Shape.Circle)
+                {
+                    RelativeSizeAxes = Axes.None,
+                    Size = new Vector2(32),
+                },
                 new WikiParagraph("On the left we have a bullet. Bullets are pretty simple, " +
                 "see the white circle in the middle? If that touches the white circle in your hitbox you take damage.")));
             Content.Add(new WikiSplitColum(
                 new WikiParagraph("On the right here is a laser. " +
                         "Basically they work like a bullet in that the white rectangle in the middle is the actual dangerous part " +
                         "but unlike a bullet their damage will be spread out for as long as you are getting hit."),
-                    new LaserPiece(Color4.Red, 8)));
+                    new LaserPiece(Color4.Red, 8)
+                    {
+                        RelativeSizeAxes = Axes.None,
+                        Size = new Vector2(128, 16),
+                    }));
             Content.Add(new WikiSplitColum(
                 new Container(),
                 new WikiParagraph("Over on the left will be a seeking bullet, once they are working.")));
