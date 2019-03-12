@@ -80,7 +80,7 @@ namespace osu.Mods.Online.Multi.Screens
         protected virtual void Load(List<OsuUserInfo> users)
         {
             if (MatchTools.SelectedBeatmap != null && !Beatmap.Disabled)
-                MatchTools.Beatmaps.GetWorkingBeatmap(MatchTools.SelectedBeatmap, Beatmap);
+                Beatmap.Value = MatchTools.Beatmaps.GetWorkingBeatmap(MatchTools.SelectedBeatmap, Beatmap);
 
             if (MatchTools.SelectedRuleset != null && !ruleset.Disabled)
                 ruleset.Value = MatchTools.SelectedRuleset;

@@ -170,7 +170,8 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                                 if (b.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
                                 {
                                     ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID ?? 0);
-                                    Beatmaps.GetWorkingBeatmap(b, beatmap);
+                                    beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
+                                    beatmap.Value.Track.Start();
 
                                     MapChange(b);
                                     goto complete;
@@ -185,7 +186,8 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                                 if (mapPacket.BeatmapDifficulty == b.Version)
                                 {
                                     ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID ?? 0);
-                                    Beatmaps.GetWorkingBeatmap(b, beatmap);
+                                    beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
+                                    beatmap.Value.Track.Start();
 
                                     MapChange(b);
                                     goto complete;
