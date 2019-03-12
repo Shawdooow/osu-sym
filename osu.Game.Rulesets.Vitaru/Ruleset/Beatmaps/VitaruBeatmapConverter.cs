@@ -28,18 +28,18 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
             var positionData = original as IHasPosition;
             var comboData = original as IHasCombo;
 
-            double complexity = 1;
+            float complexity = 1;
 
             float ar = calculateAr(beatmap.BeatmapInfo.BaseDifficulty.ApproachRate);
             float cs = 28 + (beatmap.BeatmapInfo.BaseDifficulty.CircleSize - 4);
-            double speed = 0.25d;
+            float speed = 0.25f;
 
             if (gamemode is DodgeGamemode)
             {
                 complexity *= 0.66f;
                 cs *= 0.5f;
                 ar *= 0.5f;
-                speed *= 0.5d;
+                speed *= 0.5f;
             }
 
             Cluster c = gamemode.GetCluster();

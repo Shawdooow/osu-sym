@@ -59,13 +59,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
         }
 
         public bool Convert { get; set; }
-        public double ClusterSpeed { get; set; } = 0.25d;
-        public double ClusterDensity { get; set; } = 1;
+        public float ClusterSpeed { get; set; } = 0.25f;
+        public float ClusterDensity { get; set; } = 1;
 
         //Radians
-        public double ClusterAngle { get; set; } = Math.PI / 2;
-        public double ClusterDiameter { get; set; } = 20;
-        public double ClusterDamage { get; set; } = 20;
+        public float ClusterAngle { get; set; } = (float)Math.PI / 2;
+        public float ClusterDiameter { get; set; } = 20;
+        public float ClusterDamage { get; set; } = 20;
         private double beatLength;
 
         public List<SampleInfo> BetterSamples = new List<SampleInfo>();
@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
             set => PathBindable.Value = value;
         }
         public int RepeatCount { get; set; }
-        public double Velocity;
+        public float Velocity;
         public double SpanDuration => Duration / this.SpanCount();
 
         public List<SampleInfo> GetRepeatSamples(int repeat)
@@ -150,7 +150,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
 
             double scoringDistance = base_scoring_distance * difficulty.SliderMultiplier * difficultyPoint.SpeedMultiplier;
 
-            Velocity = scoringDistance / timingPoint.BeatLength;
+            Velocity = (float)(scoringDistance / timingPoint.BeatLength);
 
             beatLength = timingPoint.BeatLength;
 

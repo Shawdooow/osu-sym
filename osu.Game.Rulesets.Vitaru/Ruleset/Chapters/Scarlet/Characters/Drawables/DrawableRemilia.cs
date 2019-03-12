@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters.Drawables
             leechPattern();
         }
 
-        private void bulletAddRad(double speed, double angle, Color4 color, double size, double damage)
+        private void bulletAddRad(float speed, float angle, Color4 color, float size, float damage)
         {
             DrawableBullet drawableBullet;
 
@@ -50,14 +50,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters.Drawables
         private void leechPattern()
         {
             const int numberbullets = 5;
-            double directionModifier = -0.2d;
-            double cursorAngle = MathHelper.RadiansToDegrees(Math.Atan2(Cursor.Position.Y - Position.Y, Cursor.Position.X - Position.X)) + 90 + Rotation;
+            float directionModifier = -0.2f;
+            float cursorAngle = MathHelper.RadiansToDegrees((float)Math.Atan2(Cursor.Position.Y - Position.Y, Cursor.Position.X - Position.X)) + 90 + Rotation;
 
             for (int i = 1; i <= numberbullets; i++)
             {
                 Color4 color;
-                double size;
-                double damage;
+                float size;
+                float damage;
 
                 if (i % 2 == 0)
                 {
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters.Drawables
 
                 //-90 = up
                 bulletAddRad(1.25f, MathHelper.DegreesToRadians(-90 + cursorAngle) + directionModifier, color, size, damage);
-                directionModifier += 0.1d;
+                directionModifier += 0.1f;
             }
         }
     }

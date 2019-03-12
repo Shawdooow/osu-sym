@@ -123,7 +123,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
                 {
                     if (DrawableBullet.BoundryHacks || Gamemode is DodgeGamemode)
                     {
-                        b.Angle += getPlayerAngle() - Math.PI / 2;
+                        b.Angle += getPlayerAngle() - (float)Math.PI / 2;
                         b.SliderType = b.SliderType;
                     }
 
@@ -137,7 +137,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
                 else if (o is Laser l)
                 {
                     if (DrawableBullet.BoundryHacks || Gamemode is DodgeGamemode)
-                        l.Angle += getPlayerAngle() - Math.PI / 2;
+                        l.Angle += getPlayerAngle() - (float)Math.PI / 2;
 
                     DrawableLaser drawableLaser = Gamemode.GetDrawableLaser(l, VitaruPlayfield);
                     CurrentPlayfield.Add(drawableLaser);
@@ -258,11 +258,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             return new Vector2(HitObject.Position.X - 384f / 2, HitObject.Position.Y + 512f / 2);
         }
 
-        private double getPlayerAngle()
+        private float getPlayerAngle()
         {
             if (VitaruPlayfield.Player == null)
                 return 0;
-            return Math.Atan2(VitaruPlayfield.PlayerPosition.Y - Position.Y, VitaruPlayfield.PlayerPosition.X - Position.X);
+            return (float)Math.Atan2(VitaruPlayfield.PlayerPosition.Y - Position.Y, VitaruPlayfield.PlayerPosition.X - Position.X);
         }
 
         public override void Delete()

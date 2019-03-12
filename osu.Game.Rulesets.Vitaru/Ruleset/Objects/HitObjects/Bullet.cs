@@ -17,8 +17,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
 
         public bool DummyMode { get; set; }
 
-        public double Speed { get; set; } = 1f;
-        public double Diameter { get; set; } = 28f;
+        public float Speed { get; set; } = 1f;
+        public float Diameter { get; set; } = 28f;
         public bool ShootPlayer { get; set; }
         public bool ObeyBoundries { get; set; } = true;
 

@@ -21,12 +21,12 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki
         {
             new GeneralSection(),
             new GamemodeSection(),
-            //new ChapterSection(),
+            new ChapterSection(),
             new CharactersSection(),
-            //new EditorSection(),
-            //new MappingSection(),
-            //new MultiplayerSection(),
-            //new CodeSection(),
+            new EditorSection(),
+            new MappingSection(),
+            new MultiplayerSection(),
+            new CodeSection(),
             new CreditsSection(),
             new ChangelogSection()
         };

@@ -4,8 +4,8 @@
     {
         public int Team { get; set; }
 
-        public double Damage { get; set; } = 10;
+        public float Damage { get; set; } = 10;
 
-        public double Angle { get; set; }
+        public float Angle { get; set; }
     }
 }

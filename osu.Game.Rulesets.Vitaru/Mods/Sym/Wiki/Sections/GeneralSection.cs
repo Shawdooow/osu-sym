@@ -1,12 +1,16 @@
 ﻿using osu.Core.Wiki.Sections;
+using osu.Core.Wiki.Sections.OptionExplanations;
 using osu.Core.Wiki.Sections.SectionPieces;
 using osu.Core.Wiki.Sections.Subsection;
 using osu.Framework.Allocation;
+using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
+using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
 using osuTK;
 using osuTK.Graphics;
 
@@ -22,16 +26,21 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
             Content.Add(new WikiParagraph("Your objective in vitaru is simple, don't get hit by the bullets flying at you, although this is easier said than done."));
 
             Content.Add(new WikiSubSectionHeader("Converts (Standard => Vitaru)"));
-            Content.Add(new WikiParagraph("Circle Size (CS) affects bullet size.\n" +
+            Content.Add(new WikiParagraph("Circle Size (CS) affects projectile size.\n" +
                         "Accuracy (OD) affects how large the graze box is / how forgiving the score zones are.\n" +
-                        "Health Drain (HP) affects nothing atm (will affect how much damage bullets do to you).\n" +
+                        "Health Drain (HP) affects how much damage bullets do to you.\n" +
                         "Approach Rate (AR) affects enemy enter + leave speeds.\n" +
                         "Slider Velocity (SV) affects bullet speeds.\n" +
                         "Hitsounds affect the pattern that will be thrown, see the \"Patterns\" subsection for more\n\n" +
                         "Object positions are mapped to the top half of the playfield (or whole playfield for dodge) in the same orientation as standard."));
 
             Content.Add(new WikiSubSectionHeader("Patterns"));
-            Content.Add(new WikiParagraph("Check back later!"));
+            Content.Add(new WikiOptionEnumSplitExplanation<Patterns>(new Bindable<Patterns>(),
+                new Container
+                {
+
+                },
+                new WikiParagraph("Check back later!")));
 
             Content.Add(new WikiSubSectionHeader("Controls"));
             Content.Add(new WikiParagraph("Controls by default will probably be the most confortable and fitting for all of the gamemodes in this ruleset (if they aren't / weren't they will be changed before release).\n\n" +
@@ -69,8 +78,8 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Scale = new Vector2(2),
-                            Size = new Vector2(4),
-                            BorderThickness = 4 / 3,
+                            Size = new Vector2(8),
+                            BorderThickness = 3,
                             BorderColour = Color4.Navy,
                             Masking = true,
 
@@ -88,51 +97,26 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
                     }
                 }));
             Content.Add(new WikiSplitColum(
-                new CircularContainer
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Scale = new Vector2(2),
-                    Size = new Vector2(16),
-                    BorderThickness = 16 / 4,
-                    BorderColour = Color4.Green,
-                    Masking = true,
-
-                    Child = new Box
-                    {
-                        RelativeSizeAxes = Axes.Both
-                    },
-                    EdgeEffect = new EdgeEffectParameters
-                    {
-                        Radius = 4,
-                        Type = EdgeEffectType.Shadow,
-                        Colour = Color4.Green.Opacity(0.5f)
-                    }
-                },
+                new BulletPiece(Color4.Green, 32, Shape.Circle),
                 new WikiParagraph("On the left we have a bullet. Bullets are pretty simple, " +
                 "see the white circle in the middle? If that touches the white circle in your hitbox you take damage.")));
             Content.Add(new WikiSplitColum(
                 new WikiParagraph("On the right here is a laser. " +
                         "Basically they work like a bullet in that the white rectangle in the middle is the actual dangerous part " +
                         "but unlike a bullet their damage will be spread out for as long as you are getting hit."),
-                    new Container
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Size = new Vector2(200, 40),
-                        Masking = true,
-                        CornerRadius = 16,
-                        BorderThickness = 8,
-                        BorderColour = Color4.Aquamarine,
-
-                        Child = new Box
-                        {
-                            RelativeSizeAxes = Axes.Both
-                        }
-                    }));
+                    new LaserPiece(Color4.Red, 8)));
             Content.Add(new WikiSubSectionHeader("Scoring"));
             Content.Add(new WikiParagraph("Score per bullet is based on how close it got to hitting you, the closer a bullet got the more score it will give. The \"Great\" area is about the same size as the green health ring, " +
                 "the \"Good\" is twice that and \"Meh\" is infinite (so by default a bullet gives meh unless you got close)."));
+        }
+
+        private enum Patterns
+        {
+            Wave,
+            Line,
+            Triangle,
+            Cross,
+            Flower,
         }
     }
 }

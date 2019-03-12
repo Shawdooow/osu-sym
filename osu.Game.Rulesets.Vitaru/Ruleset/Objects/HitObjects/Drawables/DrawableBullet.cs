@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
             InternalChildren = new Drawable[]
             {
-                bulletPiece = new BulletPiece(this),
+                bulletPiece = new BulletPiece(AccentColour, HitObject.Diameter, HitObject.Shape),
                 Hitbox = new VitaruHitbox
                 {
                     Size = Size,

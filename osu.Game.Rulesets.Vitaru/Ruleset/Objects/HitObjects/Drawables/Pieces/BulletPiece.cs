@@ -1,5 +1,4 @@
-﻿using System;
-using osu.Framework.Audio.Track;
+﻿using osu.Framework.Audio.Track;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -9,7 +8,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.MathUtils;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
@@ -31,15 +29,15 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
         private readonly float randomRotationValue;
         private readonly bool randomRotateDirection;
 
-        private readonly DrawableBullet drawableBullet;
+        private readonly Color4 accent;
 
-        public BulletPiece(DrawableBullet drawableBullet)
+        public BulletPiece(Color4 accent, float diameter, Shape shape)
         {
+            this.accent = accent;
+
             RelativeSizeAxes = Axes.Both;
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
-
-            this.drawableBullet = drawableBullet;
 
             randomRotationValue = (float)RNG.Next(10, 15) / 10;
             randomRotateDirection = RNG.NextBool();
@@ -51,7 +49,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
                     Alpha = 0,
                     Origin = Anchor.Centre,
                     Anchor = Anchor.Centre,
-                    Colour = drawableBullet.AccentColour,
+                    Colour = accent,
                     Texture = VitaruRuleset.VitaruTextures.Get("bulletKiai"),
                 };
 
@@ -62,7 +60,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
                 Alpha = 1,
                 RelativeSizeAxes = Axes.Both,
                 Size = new Vector2(graphics != GraphicsOptions.Old && graphics != GraphicsOptions.Experimental ? 1 : 1.05f),
-                BorderColour = drawableBullet.AccentColour,
+                BorderColour = accent,
                 BorderThickness = graphics != GraphicsOptions.Old ? 0 : 6,
                 Masking = true,
 
@@ -72,7 +70,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
                 }
             });
 
-            if (drawableBullet.HitObject.Shape == Shape.Triangle)
+            if (shape == Shape.Triangle)
             {
                 Add(new EquilateralTriangle
                 {
@@ -86,24 +84,24 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
             if (graphics != GraphicsOptions.HighPerformance)
                 circle.EdgeEffect = new EdgeEffectParameters
                 {
-                    Hollow = drawableBullet.HitObject.Shape == Shape.Circle,
-                    Radius = (float)drawableBullet.HitObject.Diameter,
+                    Hollow = shape == Shape.Circle,
+                    Radius = diameter,
                     Type = EdgeEffectType.Shadow,
-                    Colour = drawableBullet.AccentColour.Opacity(graphics != GraphicsOptions.Old ? 0.8f : 0.2f)
+                    Colour = accent.Opacity(graphics != GraphicsOptions.Old ? 0.8f : 0.2f)
                 };
 
             if (graphics == GraphicsOptions.Experimental)
             {
                 circle.BorderThickness = 4;
                 circle.BorderColour = Color4.White;
-                Box.Colour = ColourInfo.GradientVertical(drawableBullet.AccentColour.Darken(0.4f), drawableBullet.AccentColour.Lighten(0.4f));
+                Box.Colour = ColourInfo.GradientVertical(accent.Darken(0.4f), accent.Lighten(0.4f));
 
                 circle.EdgeEffect = new EdgeEffectParameters
                 {
-                    Hollow = drawableBullet.HitObject.Shape == Shape.Circle,
+                    Hollow = shape == Shape.Circle,
                     Radius = 4f,
                     Type = EdgeEffectType.Shadow,
-                    Colour = drawableBullet.AccentColour.Opacity(0.5f)
+                    Colour = accent.Opacity(0.5f)
                 };
             }
         }
@@ -141,7 +139,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
                     RelativeSizeAxes = Axes.Both,
                     Origin = Anchor.Centre,
                     Anchor = Anchor.Centre,
-                    Colour = drawableBullet.AccentColour.Lighten(0.4f),
+                    Colour = accent.Lighten(0.4f),
                     Texture = VitaruRuleset.VitaruTextures.Get("Dean"),
                 });
             }
@@ -154,12 +152,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
 
             if (ExclusiveTestingHax)
                 dean.Rotation += (float)Clock.ElapsedFrameTime / 2;
-
-            if (graphics == GraphicsOptions.Experimental)
-            {
-                Vector2 pos = SymcolCursor.VitaruCursor.CenterCircle.ToSpaceOfOtherDrawable(Vector2.Zero, Parent.Parent) + new Vector2(6);
-                circle.Rotation = (float)MathHelper.RadiansToDegrees(Math.Atan2(pos.Y - drawableBullet.Position.Y, pos.X - drawableBullet.Position.X));
-            }
         }
     }
 }

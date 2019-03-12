@@ -8,13 +8,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
 {
     public class Patterns
     {
-        public static List<Projectile> Wave(double speed, double diameter, double damage, Vector2 position, double startTime, int team, double complexity = 1, double angle = Math.PI / 2)
+        public static List<Projectile> Wave(float speed, float diameter, float damage, Vector2 position, double startTime, int team, float complexity = 1, float angle = (float)Math.PI / 2)
         {
             List<Projectile> projectiles = new List<Projectile>();
 
             int bulletCount = (int)(complexity * 5);
-            double directionModifier = Math.PI / 2 / (bulletCount - 1);
-            double direction = angle - Math.PI / 4;
+            float directionModifier = (float)Math.PI / 2 / (bulletCount - 1);
+            float direction = angle - (float)Math.PI / 4;
 
             for (int i = 1; i <= bulletCount; i++)
             {
@@ -22,12 +22,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
                 {
                     PatternStartTime = startTime,
                     Position = position,
-                    Speed = (float)speed,
+                    Speed = speed,
                     Angle = direction,
                     SliderType = SliderType.Straight,
                     //SpeedEasing = Easing.OutSine,
-                    Diameter = i % 2 == 1 ? (float)diameter : (float)diameter * 1.5f,
-                    Damage = i % 2 == 1 ? (float)damage : (float)damage * 0.8f,
+                    Diameter = i % 2 == 1 ? diameter : diameter * 1.5f,
+                    Damage = i % 2 == 1 ? damage : damage * 0.8f,
                     Team = team,
                 });
                 direction += directionModifier;
@@ -36,13 +36,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
             return projectiles;
         }
 
-        public static List<Projectile> Line(double startSpeed, double endSpeed, double diameter, double damage, Vector2 position, double startTime, int team, double complexity = 1, double angle = Math.PI / 2)
+        public static List<Projectile> Line(float startSpeed, float endSpeed, float diameter, float damage, Vector2 position, double startTime, int team, float complexity = 1, float angle = (float)Math.PI / 2)
         {
             List<Projectile> projectiles = new List<Projectile>();
 
             int bulletCount = (int)(complexity * 3);
-            double speedModifier = (endSpeed - startSpeed) / bulletCount;
-            double speed = startSpeed;
+            float speedModifier = (endSpeed - startSpeed) / bulletCount;
+            float speed = startSpeed;
 
             for (int i = 1; i <= bulletCount; i++)
             {
@@ -50,12 +50,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
                 {
                     PatternStartTime = startTime,
                     Position = position,
-                    Speed = (float)speed,
+                    Speed = speed,
                     Angle = angle,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutQuad,
-                    Diameter = (float)diameter,
-                    Damage = (float)damage,
+                    Diameter = diameter,
+                    Damage = damage,
                     Team = team,
                 });
                 speed += speedModifier;
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
             return projectiles;
         }
 
-        public static List<Projectile> Triangle(double speed, double diameter, double damage, Vector2 position, double startTime, int team, double complexity = 1, double angle = Math.PI / 2)
+        public static List<Projectile> Triangle(float speed, float diameter, float damage, Vector2 position, double startTime, int team, float complexity = 1, float angle = (float)Math.PI / 2)
         {
             List<Projectile> projectiles = new List<Projectile>();
 
@@ -75,8 +75,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
             if (bulletCount % 3 != 0)
                 bulletCount++;
 
-            double directionModifier = Math.PI / 4 / (bulletCount - 1);
-            double direction = angle;
+            float directionModifier = (float)Math.PI / 4 / (bulletCount - 1);
+            float direction = angle;
 
             for (int i = 1; i <= bulletCount; i++)
             {
@@ -84,12 +84,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
                 {
                     PatternStartTime = startTime,
                     Position = position,
-                    Speed = (float)speed,
+                    Speed = speed,
                     Angle = direction,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutQuad,
-                    Diameter = (float)diameter,
-                    Damage = (float)damage,
+                    Diameter = diameter,
+                    Damage = damage,
                     Team = team,
                 });
                 direction += directionModifier;
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
             return projectiles;
         }
 
-        public static List<Projectile> Wedge(double speed, double diameter, double damage, Vector2 position, double startTime, int team, double complexity = 1, double angle = Math.PI / 2)
+        public static List<Projectile> Wedge(float speed, float diameter, float damage, Vector2 position, double startTime, int team, float complexity = 1, float angle = (float)Math.PI / 2)
         {
             List<Projectile> projectiles = new List<Projectile>();
 
@@ -118,10 +118,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
             if (bulletCount % 2 == 0)
                 bulletCount++;
 
-            double directionModifier = Math.PI / 2 / (bulletCount - 1);
-            double direction = angle - Math.PI / 4;
+            float directionModifier = (float)Math.PI / 2 / (bulletCount - 1);
+            float direction = angle - (float)Math.PI / 4;
 
-            double speedModifier = (speed * 1.5f - speed * 0.75f) / bulletCount;
+            float speedModifier = (speed * 1.5f - speed * 0.75f) / bulletCount;
 
             for (int i = 1; i <= bulletCount; i++)
             {
@@ -129,12 +129,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
                 {
                     PatternStartTime = startTime,
                     Position = position,
-                    Speed = (float)speed,
+                    Speed = speed,
                     Angle = i % 2 == 0 ? angle - direction : angle + direction,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutSine,
-                    Diameter = (float)diameter,
-                    Damage = (float)damage,
+                    Diameter = diameter,
+                    Damage = damage,
                     Team = team,
                 });
 
@@ -148,13 +148,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
             return projectiles;
         }
 
-        public static List<Projectile> Circle(double speed, double diameter, double damage, Vector2 position, double startTime, int team, double complexity = 1)
+        public static List<Projectile> Circle(float speed, float diameter, float damage, Vector2 position, double startTime, int team, float complexity = 1)
         {
             List<Projectile> projectiles = new List<Projectile>();
 
             int bulletCount = (int)(complexity * 12);
-            double directionModifier = Math.PI * 2 / bulletCount;
-            double direction = Math.PI / 2;
+            float directionModifier = (float)Math.PI * 2 / bulletCount;
+            float direction = (float)Math.PI / 2;
 
             for (int i = 1; i <= bulletCount; i++)
             {
@@ -162,12 +162,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
                 {
                     PatternStartTime = startTime,
                     Position = position,
-                    Speed = (float)speed,
+                    Speed = speed,
                     Angle = direction,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutCubic,
-                    Diameter = i % 2 == 1 ? (float)diameter : (float)diameter * 1.5f,
-                    Damage = i % 2 == 1 ? (float)damage : (float)damage * 0.8f,
+                    Diameter = i % 2 == 1 ? diameter : diameter * 1.5f,
+                    Damage = i % 2 == 1 ? damage : damage * 0.8f,
                     Team = team,
                 });
                 direction += directionModifier;
@@ -176,13 +176,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
             return projectiles;
         }
 
-        public static List<Projectile> Cross(double speed, double diameter, double damage, double startTime, int team, double complexity = 1)
+        public static List<Projectile> Cross(float speed, float diameter, float damage, double startTime, int team, float complexity = 1)
         {
             List<Projectile> projectiles = new List<Projectile>();
 
             int bulletCount = (int)(complexity * 4);
-            double directionModifier = Math.PI * 2 / bulletCount;
-            double direction = Math.PI / 4;
+            float directionModifier = (float)Math.PI * 2 / bulletCount;
+            float direction = (float)Math.PI / 4;
 
             for (int i = 1; i <= bulletCount; i++)
             {
@@ -195,7 +195,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
                     Shape = Shape.Triangle,
                     PatternStartTime = startTime,
                     Position = offset,
-                    Speed = (float)speed,
+                    Speed = speed,
                     Angle = direction,
                     SliderType = SliderType.Target,
                     SpeedEasing = Easing.InOutExpo,
@@ -209,11 +209,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
             return projectiles;
         }
 
-        public static List<Projectile> Flower(double speed, double diameter, double damage, Vector2 position, double startTime, double duration, int team, double beatLength = 500, double complexity = 1, int arms = 16)
+        public static List<Projectile> Flower(float speed, float diameter, float damage, Vector2 position, double startTime, double duration, int team, double beatLength = 500, float complexity = 1, int arms = 16)
         {
             List<Projectile> projectiles = new List<Projectile>();
 
-            double direction = 0;
+            float direction = 0;
 
             for (int i = 1; i <= 4; i++)
             {
@@ -223,8 +223,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
                     EndTime = startTime + duration,
                     Position = position,
                     Angle = 90 * i + 45,
-                    Size = new Vector2((float)diameter, (float)diameter * 32),
-                    Damage = (float)damage * 2,
+                    Size = new Vector2(diameter, diameter * 32),
+                    Damage = damage * 2,
                     Team = team,
                 });
             }
@@ -239,10 +239,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
                     {
                         PatternStartTime = j,
                         Position = position,
-                        Speed = (float)speed,
+                        Speed = speed,
                         Angle = direction,
-                        Diameter = (float)diameter,
-                        Damage = (float)damage,
+                        Diameter = diameter,
+                        Damage = damage,
                         SpeedEasing = Easing.OutCubic,
                         SliderType = type,
                         Curviness = 2,
@@ -250,10 +250,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
                     });
 
                     if (i % 2 == 0)
-                        direction += Math.PI / (arms / 4f);
+                        direction += (float)Math.PI / (arms / 4f);
 
                 }
-                direction += Math.PI / (arms / 2f);
+                direction += (float)Math.PI / (arms / 2f);
             }
 
             return projectiles;

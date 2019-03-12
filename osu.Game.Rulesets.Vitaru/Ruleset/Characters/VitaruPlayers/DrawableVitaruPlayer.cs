@@ -573,7 +573,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         }
 
         #region Shooting Handling
-        protected virtual DrawableBullet BulletAddRad(double speed, double angle, Color4 color, double size, double damage)
+        protected virtual DrawableBullet BulletAddRad(float speed, float angle, Color4 color, float size, float damage)
         {
             DrawableBullet b;
             VitaruPlayfield.Gamefield.Add(b = new DrawableBullet(new Bullet
@@ -598,20 +598,20 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         {
             nextShoot = VitaruPlayfield.Current + BeatLength / 2f;
             const int numberbullets = 3;
-            double directionModifier = -0.2d;
+            float directionModifier = -0.2f;
 
-            double cursorAngle = 0;
+            float cursorAngle = 0;
 
             if (Actions[VitaruAction.Slow])
             {
-                cursorAngle = MathHelper.RadiansToDegrees(Math.Atan2((Cursor.Position.Y - Position.Y), (Cursor.Position.X - Position.X))) + 90 + Rotation;
-                directionModifier = -0.1d;
+                cursorAngle = MathHelper.RadiansToDegrees((float)Math.Atan2((Cursor.Position.Y - Position.Y), (Cursor.Position.X - Position.X))) + 90 + Rotation;
+                directionModifier = -0.1f;
             }
 
             for (int i = 1; i <= numberbullets; i++)
             {
-                double size;
-                double damage;
+                float size;
+                float damage;
                 Color4 color;
 
                 if (i % 2 == 0)
@@ -631,9 +631,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                 BulletAddRad(1, MathHelper.DegreesToRadians(-90 + cursorAngle) + directionModifier, color, size, damage);
 
                 if (Actions[VitaruAction.Slow])
-                    directionModifier += 0.1d;
+                    directionModifier += 0.1f;
                 else
-                    directionModifier += 0.2d;
+                    directionModifier += 0.2f;
             }
         }
         #endregion

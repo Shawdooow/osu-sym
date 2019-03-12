@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
             InternalChildren = new Drawable[]
             {
-                laserPiece = new LaserPiece(this)
+                laserPiece = new LaserPiece(AccentColour, HitObject.Width)
                 {
                     Scale = new Vector2(1, 0.1f)
                 },

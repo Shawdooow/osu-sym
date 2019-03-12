@@ -4,6 +4,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
 {
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
 
         public readonly Box Box;
 
-        public LaserPiece(DrawableLaser drawableLaser)
+        public LaserPiece(Color4 accent, float width)
         {
             Anchor = Anchor.BottomCentre;
             Origin = Anchor.BottomCentre;
@@ -24,16 +25,16 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
             if (graphics != GraphicsOptions.HighPerformance)
                 EdgeEffect = new EdgeEffectParameters
                 {
-                    Radius = drawableLaser.HitObject.Width,
+                    Radius = width,
                     Type = EdgeEffectType.Shadow,
-                    Colour = drawableLaser.AccentColour.Opacity(graphics != GraphicsOptions.Old ? 0.5f : 0.2f)
+                    Colour = accent.Opacity(graphics != GraphicsOptions.Old ? 0.5f : 0.2f)
                 };
 
             if (graphics == GraphicsOptions.Old)
             {
-                CornerRadius = drawableLaser.HitObject.Width / 4;
+                CornerRadius = width / 4;
                 BorderThickness = 8;
-                BorderColour = drawableLaser.AccentColour;
+                BorderColour = accent;
             }
 
             Child = Box = new Box

@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters.Drawables
         }
 
         //TODO: Share base logic?
-        protected override DrawableBullet BulletAddRad(double speed, double angle, Color4 color, double size, double damage)
+        protected override DrawableBullet BulletAddRad(float speed, float angle, Color4 color, float size, float damage)
         {
             DrawableBullet drawableBullet = base.BulletAddRad(speed, angle, color, size, damage);
 
