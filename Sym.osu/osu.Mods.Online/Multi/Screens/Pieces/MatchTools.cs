@@ -161,15 +161,15 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     searching = true;
 
                     //Tell the user we are searching!
-                    MapChange(mapPacket.OnlineBeatmapSetID, mapPacket.RulesetID);
+                    MapChange(mapPacket.Map.OnlineBeatmapSetID, mapPacket.Map.RulesetID);
 
                     foreach (BeatmapSetInfo beatmapSet in Beatmaps.GetAllUsableBeatmapSets())
-                        if (mapPacket.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.OnlineBeatmapSetID)
+                        if (mapPacket.Map.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.Map.OnlineBeatmapSetID)
                         {
                             foreach (BeatmapInfo b in beatmapSet.Beatmaps)
-                                if (b.OnlineBeatmapID == mapPacket.OnlineBeatmapID)
+                                if (b.OnlineBeatmapID == mapPacket.Map.OnlineBeatmapID)
                                 {
-                                    ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID ?? 0);
+                                    ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetID ?? 0);
                                     beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
                                     beatmap.Value.Track.Start();
 
@@ -180,12 +180,12 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                             break;
                         }
                         //try to fallback for old maps
-                        else if (mapPacket.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.BeatmapMapper == beatmapSet.Metadata.Author.Username)
+                        else if (mapPacket.Map.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.Map.BeatmapMapper == beatmapSet.Metadata.Author.Username)
                         {
                             foreach (BeatmapInfo b in beatmapSet.Beatmaps)
-                                if (mapPacket.BeatmapDifficulty == b.Version)
+                                if (mapPacket.Map.BeatmapDifficulty == b.Version)
                                 {
-                                    ruleset.Value = rulesets.GetRuleset(mapPacket.RulesetID ?? 0);
+                                    ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetID ?? 0);
                                     beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
                                     beatmap.Value.Track.Start();
 

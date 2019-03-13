@@ -93,7 +93,7 @@ namespace osu.Mods.Online.Multi.Screens
             {
                 case MatchListPacket matchListPacket:
                     rooms.Children = new Container();
-                    foreach (MatchInfo m in MatchInfoList)
+                    foreach (MatchInfo m in matchListPacket.MatchInfoList)
                         rooms.Add(new MatchTile(OsuNetworkingHandler, m));
                     break;
                 case MatchCreatedPacket matchCreated:

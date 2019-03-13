@@ -2,6 +2,7 @@
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Multi.Packets;
 using osu.Mods.Online.Multi.Packets.Lobby;
 using osuTK.Graphics;
 using Symcol.Base.Graphics.Containers;

@@ -25,7 +25,7 @@ namespace osu.Mods.Online.Multi.Settings
                 Bindable = bindable,
             };
 
-            BindableEnum.ValueChanged += value => SendPacket(new SettingPacket(new Setting<T>
+            BindableEnum.ValueChanged += value => SendPacket(new SettingsPacket(new Setting<T>
             {
                 Name = Title.Text,
                 Value = value,

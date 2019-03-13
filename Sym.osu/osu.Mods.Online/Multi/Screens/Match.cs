@@ -6,6 +6,7 @@ using osu.Framework.Screens;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Multi.Packets;
 using osu.Mods.Online.Multi.Packets.Lobby;
 using osu.Mods.Online.Multi.Packets.Match;
 using osu.Mods.Online.Multi.Screens.Pieces;
@@ -102,7 +103,7 @@ namespace osu.Mods.Online.Multi.Screens
             {
                 try
                 {
-                    OsuNetworkingHandler.SendToServer(new SetMapPacket
+                    OsuNetworkingHandler.SendToServer(new SetMapPacket(new Map
                     {
                         OnlineBeatmapSetID = (int)map.BeatmapSetInfo.OnlineBeatmapSetID,
                         OnlineBeatmapID = (int)map.BeatmapInfo.OnlineBeatmapID,
@@ -110,20 +111,20 @@ namespace osu.Mods.Online.Multi.Screens
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
-                        RulesetID = ruleset.Value.ID.Value
-                    });
+                        RulesetID = ruleset.Value.ID.Value,
+                    }));
                 }
                 catch
                 {
                     //try to fallback for old maps
-                    OsuNetworkingHandler.SendToServer(new SetMapPacket
+                    OsuNetworkingHandler.SendToServer(new SetMapPacket(new Map
                     {
                         BeatmapTitle = map.Metadata.Title,
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
-                        RulesetID = ruleset.Value.ID.Value
-                    });
+                        RulesetID = ruleset.Value.ID.Value,
+                    }));
                 }
             };
         }
