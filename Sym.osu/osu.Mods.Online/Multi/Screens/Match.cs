@@ -25,8 +25,6 @@ namespace osu.Mods.Online.Multi.Screens
         {
             Name = "Match";
 
-            SendPacket(new GetMapPacket());
-
             MatchPlayerList playerList;
             Children = new Drawable[]
             {
@@ -70,6 +68,7 @@ namespace osu.Mods.Online.Multi.Screens
         private void load(Bindable<RulesetInfo> ruleset)
         {
             this.ruleset = ruleset;
+            SendPacket(new GetMapPacket());
         }
 
         protected override void OnPacketRecieve(PacketInfo info)
