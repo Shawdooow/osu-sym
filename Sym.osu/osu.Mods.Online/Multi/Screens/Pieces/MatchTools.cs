@@ -24,15 +24,15 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 {
     public class MatchTools : MultiplayerContainer
     {
-        public readonly Bindable<MatchScreenMode> Mode = new Bindable<MatchScreenMode>() { Default = MatchScreenMode.MapDetails };
+        public readonly Bindable<MatchScreenMode> Mode = new Bindable<MatchScreenMode> { Default = MatchScreenMode.MapDetails };
 
-        public readonly Bindable<MatchGamemode> GameMode = new Bindable<MatchGamemode>() { Default = MatchGamemode.HeadToHead };
+        public readonly Bindable<MatchGamemode> GameMode = new Bindable<MatchGamemode> { Default = MatchGamemode.HeadToHead };
 
-        public readonly Bindable<MatchObjective> Objective = new Bindable<MatchObjective>() { Default = MatchObjective.Score };
+        public readonly Bindable<MatchObjective> Objective = new Bindable<MatchObjective> { Default = MatchObjective.Score };
 
-        public readonly Bindable<bool> LiveSpectator = new Bindable<bool>() { Default = false };
+        public readonly Bindable<bool> LiveSpectator = new Bindable<bool> { Default = false };
 
-        public readonly Bindable<bool> Powerups = new Bindable<bool>() { Default = false };
+        public readonly Bindable<bool> Powerups = new Bindable<bool> { Default = false };
 
         public readonly OsuTabControl<MatchScreenMode> TabControl;
 
