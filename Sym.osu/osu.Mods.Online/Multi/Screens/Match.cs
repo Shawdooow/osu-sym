@@ -2,6 +2,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets;
@@ -28,32 +29,70 @@ namespace osu.Mods.Online.Multi.Screens
             MatchPlayerList playerList;
             Children = new Drawable[]
             {
-                new SettingsButton
+                new Container
                 {
+                    Name = "Left Buttons",
+
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
+
                     RelativeSizeAxes = Axes.X,
-                    Width = 0.35f,
-                    Text = "Leave",
-                    Action = this.Exit
+                    Width = 0.5f,
+
+                    Children = new Drawable[]
+                    {
+                        new SettingsButton
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.CentreRight,
+                            RelativeSizeAxes = Axes.X,
+                            Width = 0.46f,
+                            Text = "Leave",
+                            Action = this.Exit
+                        },
+                        new SettingsButton
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.CentreLeft,
+                            RelativeSizeAxes = Axes.X,
+                            Width = 0.46f,
+                            Text = "Open Song Select",
+                            Action = openSongSelect
+                        },
+                    }
                 },
-                new SettingsButton
+                new Container
                 {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    RelativeSizeAxes = Axes.X,
-                    Width = 0.3f,
-                    Text = "Open Song Select",
-                    Action = openSongSelect
-                },
-                new SettingsButton
-                {
+                    Name = "Right Buttons",
+
                     Anchor = Anchor.CentreRight,
                     Origin = Anchor.CentreRight,
+
                     RelativeSizeAxes = Axes.X,
-                    Width = 0.35f,
-                    Text = "Start Match",
-                    Action = () => SendPacket(new LoadPlayerPacket())
+                    Width = 0.5f,
+
+                    Children = new Drawable[]
+                    {
+                        new SettingsButton
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            RelativeSizeAxes = Axes.X,
+                            Width = 0.92f,
+                            Text = "Start Match",
+                            Action = () => SendPacket(new LoadPlayerPacket())
+                        },
+                        new SettingsButton
+                        {
+                            Alpha = 0,
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.CentreLeft,
+                            RelativeSizeAxes = Axes.X,
+                            Width = 0.46f,
+                            Text = "Ready Up",
+                            //Action = toggleReady
+                        },
+                    }
                 },
                 playerList = new MatchPlayerList(OsuNetworkingHandler),
                 MatchTools = new MatchTools(OsuNetworkingHandler),
