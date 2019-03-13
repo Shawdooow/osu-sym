@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using osu.Core.Containers.Shawdooow;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
@@ -6,6 +7,7 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Logging;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets;
@@ -162,48 +164,55 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                 {
                     searching = true;
 
-                    //Tell the user we are searching!
-                    MapChange(mapPacket.Map.OnlineBeatmapSetID, mapPacket.Map.RulesetShortname);
+                    try
+                    {
+                        //Tell the user we are searching!
+                        MapChange(mapPacket.Map.OnlineBeatmapSetID, mapPacket.Map.RulesetShortname);
 
-                    foreach (BeatmapSetInfo beatmapSet in Beatmaps.GetAllUsableBeatmapSets())
-                        if (mapPacket.Map.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.Map.OnlineBeatmapSetID)
-                        {
-                            foreach (BeatmapInfo b in beatmapSet.Beatmaps)
-                                if (b.OnlineBeatmapID == mapPacket.Map.OnlineBeatmapID)
-                                {
-                                    ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
-                                    beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
-                                    beatmap.Value.Track.Start();
+                        foreach (BeatmapSetInfo beatmapSet in Beatmaps.GetAllUsableBeatmapSets())
+                            if (mapPacket.Map.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.Map.OnlineBeatmapSetID)
+                            {
+                                foreach (BeatmapInfo b in beatmapSet.Beatmaps)
+                                    if (b.OnlineBeatmapID == mapPacket.Map.OnlineBeatmapID)
+                                    {
+                                        ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
+                                        beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
+                                        beatmap.Value.Track.Start();
 
-                                    MapChange(b);
-                                    goto complete;
-                                }
+                                        MapChange(b);
+                                        goto complete;
+                                    }
 
-                            break;
-                        }
-                        //try to fallback for old maps
-                        else if (mapPacket.Map.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.Map.BeatmapMapper == beatmapSet.Metadata.Author.Username)
-                        {
-                            foreach (BeatmapInfo b in beatmapSet.Beatmaps)
-                                if (mapPacket.Map.BeatmapDifficulty == b.Version)
-                                {
-                                    ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
-                                    beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
-                                    beatmap.Value.Track.Start();
+                                break;
+                            }
+                            //try to fallback for old maps
+                            else if (mapPacket.Map.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.Map.BeatmapMapper == beatmapSet.Metadata.Author.Username)
+                            {
+                                foreach (BeatmapInfo b in beatmapSet.Beatmaps)
+                                    if (mapPacket.Map.BeatmapDifficulty == b.Version)
+                                    {
+                                        ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
+                                        beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
+                                        beatmap.Value.Track.Start();
 
-                                    MapChange(b);
-                                    goto complete;
-                                }
+                                        MapChange(b);
+                                        goto complete;
+                                    }
 
-                            break;
-                        }
+                                break;
+                            }
 
-                    //Tell the user they are missing this / we couldn't find it
-                    mapDetails.SetMap(selectedBeatmapSetID);
+                        //Tell the user they are missing this / we couldn't find it
+                        mapDetails.SetMap(selectedBeatmapSetID);
 
-                    complete:;
+                        complete:;
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error(e, "Exception while trying to set map!", LoggingTarget.Network);
+                    }
+
                     searching = false;
-
                 }, TaskCreationOptions.LongRunning);
         }
 
