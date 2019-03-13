@@ -111,9 +111,9 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
             beatmapBG.Texture = beatmap.Background;
             name.Text = beatmap.BeatmapSetInfo.Metadata.Title;
-            artist.Text = "By: " + beatmap.BeatmapSetInfo.Metadata.Artist;
-            difficulty.Text = beatmap.BeatmapInfo.Version + " (" + Math.Round(beatmap.BeatmapInfo.StarDifficulty, 2) + " stars) mapped by " + beatmap.BeatmapInfo.Metadata.AuthorString;
-            time.Text = getBPMRange(beatmap.Beatmap) + " bpm for " + TimeSpan.FromMilliseconds(endTime - beatmap.Beatmap.HitObjects.First().StartTime).ToString(@"m\:ss");
+            artist.Text = $"By: {beatmap.BeatmapSetInfo.Metadata.Artist}";
+            difficulty.Text = $"{beatmap.BeatmapInfo.Version} ({Math.Round(beatmap.BeatmapInfo.StarDifficulty, 2)} stars) mapped by {beatmap.BeatmapInfo.Metadata.AuthorString}";
+            time.Text = $"{getBPMRange(beatmap.Beatmap)} bpm for {TimeSpan.FromMilliseconds(endTime - beatmap.Beatmap.HitObjects.First().StartTime):m\\:ss}";
 
             BorderColour = getColour(beatmap.BeatmapInfo);
             EdgeEffect = new EdgeEffectParameters
