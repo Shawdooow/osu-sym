@@ -1,23 +1,12 @@
 ﻿using System;
+using osu.Mods.Online.Multi.Packets;
 
 namespace osu.Mods.Online.Score
 {
     [Serializable]
     public class OnlineScore
     {
-        public int OnlineBeatmapSetID;
-
-        public int OnlineBeatmapID;
-
-        public string BeatmapTitle;
-
-        public string BeatmapArtist;
-
-        public string BeatmapMapper;
-
-        public string BeatmapDifficulty;
-
-        public string RulesetShortname;
+        public Map Map;
 
         public double Score;
 

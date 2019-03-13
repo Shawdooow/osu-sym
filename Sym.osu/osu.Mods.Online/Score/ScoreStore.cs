@@ -20,7 +20,7 @@ namespace osu.Mods.Online.Score
 
         public void SetScore(ScoreSubmissionPacket scoreSubmission)
         {
-            string username = $"{scoreSubmission.User.ID}\\{scoreSubmission.Score.RulesetShortname}\\{scoreSubmission.Score.OnlineBeatmapSetID}\\{scoreSubmission.Score.OnlineBeatmapID}{ext}";
+            string username = $"{scoreSubmission.User.ID}\\{scoreSubmission.Score.Map.RulesetShortname}\\{scoreSubmission.Score.Map.OnlineBeatmapSetID}\\{scoreSubmission.Score.Map.OnlineBeatmapID}{ext}";
             Stream stream = UserStorage.GetStream(username, FileAccess.Read, FileMode.Open);
 
             if (stream != null)
@@ -37,7 +37,7 @@ namespace osu.Mods.Online.Score
             else
                 save(username, UserStorage);
 
-            string beatmap = $"{scoreSubmission.Score.OnlineBeatmapSetID}\\{scoreSubmission.Score.OnlineBeatmapID}\\{scoreSubmission.Score.RulesetShortname}\\{scoreSubmission.User.ID}{ext}";
+            string beatmap = $"{scoreSubmission.Score.Map.OnlineBeatmapSetID}\\{scoreSubmission.Score.Map.OnlineBeatmapID}\\{scoreSubmission.Score.Map.RulesetShortname}\\{scoreSubmission.User.ID}{ext}";
             stream = BeatmapStorage.GetStream(beatmap, FileAccess.Read, FileMode.Open);
 
             if (stream != null)

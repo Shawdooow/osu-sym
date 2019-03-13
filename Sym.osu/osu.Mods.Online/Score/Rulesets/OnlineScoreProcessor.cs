@@ -1,6 +1,7 @@
 ﻿using System;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.UI;
+using osu.Mods.Online.Multi.Packets;
 using osu.Mods.Online.Score.Packets;
 using osu.Mods.Rulesets.Core.Rulesets;
 using Symcol.Networking.NetworkingHandlers;
@@ -18,13 +19,16 @@ namespace osu.Mods.Online.Score.Rulesets
 
         protected virtual OnlineScore GetOnlineScore() => new OnlineScore
         {
-            OnlineBeatmapSetID = RulesetContainer.Beatmap.BeatmapInfo.BeatmapSet.OnlineBeatmapSetID ?? 0,
-            OnlineBeatmapID = RulesetContainer.Beatmap.BeatmapInfo.OnlineBeatmapID ?? 0,
-            BeatmapTitle = RulesetContainer.Beatmap.Metadata.Title,
-            BeatmapArtist = RulesetContainer.Beatmap.Metadata.Artist,
-            BeatmapMapper = RulesetContainer.Beatmap.Metadata.Author.Username,
-            BeatmapDifficulty = RulesetContainer.Beatmap.BeatmapInfo.Version,
-            RulesetShortname = RulesetContainer.Ruleset.ShortName,
+            Map = new Map
+            {
+                OnlineBeatmapSetID = RulesetContainer.Beatmap.BeatmapInfo.BeatmapSet.OnlineBeatmapSetID ?? 0,
+                OnlineBeatmapID = RulesetContainer.Beatmap.BeatmapInfo.OnlineBeatmapID ?? 0,
+                BeatmapTitle = RulesetContainer.Beatmap.Metadata.Title,
+                BeatmapArtist = RulesetContainer.Beatmap.Metadata.Artist,
+                BeatmapMapper = RulesetContainer.Beatmap.Metadata.Author.Username,
+                BeatmapDifficulty = RulesetContainer.Beatmap.BeatmapInfo.Version,
+                RulesetShortname = RulesetContainer.Ruleset.ShortName,
+            },
             Score = TotalScore.Value,
             Combo = Combo.Value,
             Accuracy = Accuracy.Value,

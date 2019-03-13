@@ -111,7 +111,7 @@ namespace osu.Mods.Online.Multi.Screens
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
-                        RulesetID = ruleset.Value.ID.Value,
+                        RulesetShortname = ruleset.Value.ShortName,
                     }));
                 }
                 catch
@@ -123,7 +123,7 @@ namespace osu.Mods.Online.Multi.Screens
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
-                        RulesetID = ruleset.Value.ID.Value,
+                        RulesetShortname = ruleset.Value.ShortName,
                     }));
                 }
             };

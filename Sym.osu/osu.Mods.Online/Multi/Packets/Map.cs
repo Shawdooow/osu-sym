@@ -19,6 +19,6 @@ namespace osu.Mods.Online.Multi.Packets
 
         public double BeatmapStars;
 
-        public int? RulesetID;
+        public string RulesetShortname;
     }
 }
