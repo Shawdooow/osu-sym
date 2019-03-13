@@ -237,12 +237,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
             selectedBeatmapSetID = onlineBeatmapSetID;
 
             if (Mode.Value == MatchScreenMode.MapDetails)
-            {
-                if (selectedBeatmapSetID != 0 && selectedBeatmapSetID != -1)
-                    mapDetails.SetMap(true, selectedBeatmapSetID);
-                else
-                    mapDetails.SetMap(false, selectedBeatmapSetID);
-            }
+                mapDetails.SetMap(true, selectedBeatmapSetID);
         }
     }
 
@@ -254,10 +249,10 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         Knockout,
         [System.ComponentModel.Description("Team Versus")]
         TeamVS,
-        [System.ComponentModel.Description("TAG4")]
-        TAG4,
-        [System.ComponentModel.Description("Team TAG4")]
-        TeamTAG4,
+        [System.ComponentModel.Description("TAG")]
+        TAG,
+        [System.ComponentModel.Description("Team TAG")]
+        TeamTAG,
         [System.ComponentModel.Description("Tourny Mode")]
         Tournement,
     }

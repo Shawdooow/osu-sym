@@ -135,7 +135,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         public void SetMap(bool searching, int? onlineBeatmapSetID)
         {
             name.Text = searching ? "Searching for Map!" : "Invalid / No Map Selected!";
-            artist.Text = searching ?  "osu! is looking for the selected map. . ." : "Don't hit start, weird things might happen";
+            artist.Text = searching ?  "osu! is looking for the selected map. . ." : "Don't hit start, weird things might happen. . .";
             Action = () => openLink(searching ? $"https://osu.ppy.sh/beatmapsets/{onlineBeatmapSetID}" : "https://osu.ppy.sh/home");
         }
 
