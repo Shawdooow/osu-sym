@@ -63,6 +63,12 @@ namespace osu.Mods.Online.Multi.Screens
                                     OnlineBeatmapSetID = 734008,
                                     OnlineBeatmapID = 1548917,
                                     BeatmapStars = 4.85d,
+                                },
+                                Host = new Host
+                                {
+                                    Username = @"Shawdooow",
+                                    UserID = 7726082,
+                                    UserCountry = "US",
                                 }
                             }
                         });

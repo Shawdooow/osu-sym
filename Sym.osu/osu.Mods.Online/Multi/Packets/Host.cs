@@ -5,7 +5,7 @@ namespace osu.Mods.Online.Multi.Packets
     [Serializable]
     public class Host
     {
-        public string Username = @"Shawdooow";
+        public string Username = @"Guest";
 
         public int UserID = 7726082;
 
