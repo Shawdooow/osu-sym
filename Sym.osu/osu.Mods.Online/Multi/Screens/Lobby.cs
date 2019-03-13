@@ -5,6 +5,7 @@ using osu.Framework.Screens;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Multi.Packets;
 using osu.Mods.Online.Multi.Packets.Lobby;
 using osu.Mods.Online.Multi.Screens.Pieces;
 using osuTK;
@@ -47,7 +48,25 @@ namespace osu.Mods.Online.Multi.Screens
                     RelativeSizeAxes = Axes.X,
                     Width = 0.4f,
                     Text = "Create Game",
-                    Action = () => { SendPacket(new CreateMatchPacket { MatchInfo = new MatchListPacket.MatchInfo() }); }
+                    Action = () =>
+                    {
+                        SendPacket(new CreateMatchPacket
+                        {
+                            MatchInfo = new MatchInfo
+                            {
+                                Map = new Map
+                                {
+                                    BeatmapTitle = "Lost Emotion",
+                                    BeatmapArtist = "Masayoshi Minoshima feat.nomico",
+                                    BeatmapMapper = "Shawdooow",
+                                    BeatmapDifficulty = "Last Dance Heaven",
+                                    OnlineBeatmapSetID = 734008,
+                                    OnlineBeatmapID = 1548917,
+                                    BeatmapStars = 4.85d,
+                                }
+                            }
+                        });
+                    }
                 },
                 new SettingsButton
                 {
@@ -74,7 +93,7 @@ namespace osu.Mods.Online.Multi.Screens
             {
                 case MatchListPacket matchListPacket:
                     rooms.Children = new Container();
-                    foreach (MatchListPacket.MatchInfo m in matchListPacket.MatchInfoList)
+                    foreach (MatchInfo m in MatchInfoList)
                         rooms.Add(new MatchTile(OsuNetworkingHandler, m));
                     break;
                 case MatchCreatedPacket matchCreated:

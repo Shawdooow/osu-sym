@@ -10,7 +10,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 {
     public class MatchTile : SymcolClickableContainer
     {
-        public MatchTile(OsuNetworkingHandler osuNetworkingHandler, MatchListPacket.MatchInfo match)
+        public MatchTile(OsuNetworkingHandler osuNetworkingHandler, MatchInfo match)
         {
             Anchor = Anchor.TopCentre;
             Origin = Anchor.TopCentre;

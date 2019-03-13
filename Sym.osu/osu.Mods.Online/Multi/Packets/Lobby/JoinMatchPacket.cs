@@ -11,6 +11,6 @@ namespace osu.Mods.Online.Multi.Packets.Lobby
 
         public OsuUserInfo User;
 
-        public MatchListPacket.MatchInfo Match;
+        public MatchInfo Match;
     }
 }

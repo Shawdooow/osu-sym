@@ -26,14 +26,14 @@ namespace osu.Mods.Online.Multi.Settings
                 Position = new Vector2(-16, 24),
             };
 
-            BindableBool.ValueChanged += value => SendPacket(new SettingPacket(new Setting<bool>
+            BindableBool.ValueChanged += value => SendPacket(new SettingsPacket(new Setting<bool>
             {
                 Name = Title.Text,
                 Value = value,
             }));
         }
 
-        protected override void SetValue(SettingPacket settings)
+        protected override void SetValue(SettingsPacket settings)
         {
             foreach (Setting s in settings.Settings)
                 if (Sync && s is Setting<bool> setting && setting.Name == Title.Text)

@@ -8,6 +8,8 @@ namespace osu.Mods.Online.Multi.Packets.Lobby
     {
         public override uint PacketSize => 1024;
 
-        public MatchListPacket.MatchInfo MatchInfo;
+        public MatchInfo MatchInfo;
+
+        public bool Join;
     }
 }

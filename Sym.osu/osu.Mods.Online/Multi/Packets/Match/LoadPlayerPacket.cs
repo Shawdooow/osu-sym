@@ -4,7 +4,7 @@ using osu.Mods.Online.Base.Packets;
 namespace osu.Mods.Online.Multi.Packets.Match
 {
     [Serializable]
-    public class StartMatchPacket : OnlinePacket
+    public class LoadPlayerPacket : OnlinePacket
     {
     }
 }

@@ -24,14 +24,14 @@ namespace osu.Mods.Online.Multi.Settings
                 Bindable = bindable,
             };
 
-            Bindable.ValueChanged += value => SendPacket(new SettingPacket(new Setting<T>
+            Bindable.ValueChanged += value => SendPacket(new SettingsPacket(new Setting<T>
             {
                 Name = Title.Text,
                 Value = value,
             }));
         }
 
-        protected override void SetValue(SettingPacket settings)
+        protected override void SetValue(SettingsPacket settings)
         {
             foreach (Setting s in settings.Settings)
                 if (Sync && s is Setting<T> setting && setting.Name == Title.Text)

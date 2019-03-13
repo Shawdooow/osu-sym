@@ -32,7 +32,7 @@ namespace osu.Mods.Online.Multi.Settings
             }));
         }
 
-        protected override void SetValue(SettingPacket settings)
+        protected override void SetValue(SettingsPacket settings)
         {
             foreach (Setting s in settings.Settings)
                 if (Sync && s is Setting<T> setting && setting.Name == Title.Text)

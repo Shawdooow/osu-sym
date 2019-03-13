@@ -96,10 +96,10 @@ namespace osu.Mods.Online.Multi.Settings
         {
             base.OnPacketRecieve(info);
 
-            if (Sync && info.Packet is SettingPacket s)
+            if (info.Packet is SettingsPacket s && Sync)
                 SetValue(s);
         }
 
-        protected abstract void SetValue(SettingPacket settings);
+        protected abstract void SetValue(SettingsPacket settings);
     }
 }

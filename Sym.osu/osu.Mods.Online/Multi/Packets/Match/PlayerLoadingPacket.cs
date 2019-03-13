@@ -6,7 +6,7 @@ using Symcol.Networking.Packets;
 namespace osu.Mods.Online.Multi.Packets.Match
 {
     [Serializable]
-    public class MatchLoadingPacket : Packet
+    public class PlayerLoadingPacket : Packet
     {
         public override uint PacketSize => Convert.ToUInt32(Users.Count > 0 ? Users.Count * 1024 : 1024);
 

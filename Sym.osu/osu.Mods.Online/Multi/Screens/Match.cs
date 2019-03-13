@@ -54,7 +54,7 @@ namespace osu.Mods.Online.Multi.Screens
                     RelativeSizeAxes = Axes.X,
                     Width = 0.35f,
                     Text = "Start Match",
-                    Action = () => SendPacket(new StartMatchPacket())
+                    Action = () => SendPacket(new LoadPlayerPacket())
                 },
                 playerList = new MatchPlayerList(OsuNetworkingHandler),
                 MatchTools = new MatchTools(OsuNetworkingHandler),
@@ -73,7 +73,7 @@ namespace osu.Mods.Online.Multi.Screens
 
         protected override void OnPacketRecieve(PacketInfo info)
         {
-            if (info.Packet is MatchLoadingPacket loading)
+            if (info.Packet is PlayerLoadingPacket loading)
                 Load(loading.Users);
         }
 
