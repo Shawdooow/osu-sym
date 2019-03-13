@@ -101,12 +101,14 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     case MatchScreenMode.MapDetails:
                         SelectedContent.Child = mapDetails;
 
-                        if (SelectedBeatmap != null)
+                        if (searching)
+                            mapDetails.SetMap(true, selectedBeatmapSetID);
+                        else if (SelectedBeatmap != null)
                             mapDetails.SetMap(Beatmaps.GetWorkingBeatmap(SelectedBeatmap));
                         else if (selectedBeatmapSetID != 0)
                             mapDetails.SetMap(selectedBeatmapSetID);
                         else
-                            mapDetails.SetMap(searching, selectedBeatmapSetID);
+                            mapDetails.SetMap(false, selectedBeatmapSetID);
                         break;
                     case MatchScreenMode.MatchSettings:
                         SelectedContent.Child = new Container
