@@ -19,7 +19,5 @@ namespace osu.Mods.Online.Multi.Packets
         public Host Host;
 
         public Map Map;
-
-        public int? RulesetID = 0;
     }
 }

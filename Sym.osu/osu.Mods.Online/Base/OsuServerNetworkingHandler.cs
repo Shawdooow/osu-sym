@@ -148,8 +148,15 @@ namespace osu.Mods.Online.Base
                         //Hacky was of setting the Setting but should work
                         for(int i = 0; i < match.MatchInfo.Settings.Count; i++)
                             if (match.MatchInfo.Settings[i].Name == setting.Settings[0].Name)
+                            {
                                 match.MatchInfo.Settings[i] = setting.Settings[0];
+                                goto finish;
+                            }
 
+                        //Hacky way of adding ones we dont have but also should work for now
+                        match.MatchInfo.Settings.Add(setting.Settings[0]);
+
+                        finish:
                         //Send them ALL the settings just incase, you never know with these things...
                         ShareWithMatchClients(match, new SettingsPacket(match.MatchInfo.Settings.ToArray()));
                         break;

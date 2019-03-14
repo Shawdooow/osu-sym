@@ -1,4 +1,5 @@
-﻿using osu.Framework.Allocation;
+﻿using System.Collections.Generic;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
@@ -54,6 +55,12 @@ namespace osu.Mods.Online.Multi.Screens
                         {
                             MatchInfo = new MatchInfo
                             {
+                                Host = new Host
+                                {
+                                    Username = @"Shawdooow",
+                                    UserID = 7726082,
+                                    UserCountry = "US",
+                                },
                                 Map = new Map
                                 {
                                     BeatmapTitle = "Lost Emotion",
@@ -65,12 +72,6 @@ namespace osu.Mods.Online.Multi.Screens
                                     BeatmapStars = 4.85d,
                                     RulesetShortname = "osu",
                                 },
-                                Host = new Host
-                                {
-                                    Username = @"Shawdooow",
-                                    UserID = 7726082,
-                                    UserCountry = "US",
-                                }
                             }
                         });
                     }
