@@ -8,7 +8,7 @@ using osuTK;
 
 namespace osu.Mods.Online.Multi.Settings
 {
-    public class MultiplayerToggleOption : MultiplayerOption<bool>
+    public class MultiplayerToggleOption : MultiplayerOption
     {
         public readonly Bindable<bool> BindableBool;
 
@@ -32,6 +32,8 @@ namespace osu.Mods.Online.Multi.Settings
                 Value = value,
             }));
         }
+
+        protected override void TriggerBindableChange() => BindableBool.TriggerChange();
 
         protected override void SetValue(SettingsPacket settings)
         {

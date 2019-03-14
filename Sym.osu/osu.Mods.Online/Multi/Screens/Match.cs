@@ -113,10 +113,10 @@ namespace osu.Mods.Online.Multi.Screens
         protected override void OnPacketRecieve(PacketInfo info)
         {
             if (info.Packet is PlayerLoadingPacket loading)
-                Load(loading.Users);
+                Load(loading.Match);
         }
 
-        protected virtual void Load(List<OsuUserInfo> users)
+        protected virtual void Load(MatchInfo match)
         {
             if (MatchTools.SelectedBeatmap != null && !Beatmap.Disabled)
                 Beatmap.Value = MatchTools.Beatmaps.GetWorkingBeatmap(MatchTools.SelectedBeatmap, Beatmap);
@@ -124,7 +124,7 @@ namespace osu.Mods.Online.Multi.Screens
             if (MatchTools.SelectedRuleset != null && !ruleset.Disabled)
                 ruleset.Value = MatchTools.SelectedRuleset;
 
-            Push(new MultiPlayer(OsuNetworkingHandler, users));
+            Push(new MultiPlayer(OsuNetworkingHandler, match));
         }
 
         protected override void Dispose(bool isDisposing)

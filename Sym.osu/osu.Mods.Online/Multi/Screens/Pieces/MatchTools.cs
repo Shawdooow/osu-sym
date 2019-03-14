@@ -40,6 +40,8 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         private readonly MapDetails mapDetails = new MapDetails();
 
+        private readonly Container<MultiplayerOption> matchSettings;
+
         public BeatmapInfo SelectedBeatmap { get; private set; }
 
         public RulesetInfo SelectedRuleset { get; private set; }
@@ -93,6 +95,22 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
             };
             TabControl.Current.Value = MatchScreenMode.MapDetails;
 
+            matchSettings = new Container<MultiplayerOption>
+            {
+                RelativeSizeAxes = Axes.Both,
+
+                Children = new MultiplayerOption[]
+                {
+                    new MultiplayerDropdownEnumOption<MatchObjective>(OsuNetworkingHandler, Objective, "Match Objective", 4),
+                    new MultiplayerDropdownEnumOption<MatchGamemode>(OsuNetworkingHandler, GameMode, "Match Gamemode", 3),
+                    new MultiplayerToggleOption(OsuNetworkingHandler, Powerups, "Combo Powerups", 2),
+                    new MultiplayerToggleOption(OsuNetworkingHandler, LiveSpectator, "Live Spectator", 1),
+                }
+            };
+
+            foreach (MultiplayerOption option in matchSettings)
+                option.Set();
+
             Mode.ValueChanged += value =>
             {
                 if (SelectedContent.Children.Count == 1)
@@ -113,18 +131,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                             mapDetails.SetMap(false, selectedBeatmapSetID);
                         break;
                     case MatchScreenMode.MatchSettings:
-                        SelectedContent.Child = new Container
-                        {
-                            RelativeSizeAxes = Axes.Both,
-
-                            Children = new Drawable[]
-                            {
-                                new MultiplayerDropdownEnumOption<MatchObjective>(OsuNetworkingHandler, Objective, "Match Objective", 4),
-                                new MultiplayerDropdownEnumOption<MatchGamemode>(OsuNetworkingHandler, GameMode, "Match Gamemode", 3),
-                                new MultiplayerToggleOption(OsuNetworkingHandler, Powerups, "Combo Powerups", 2),
-                                new MultiplayerToggleOption(OsuNetworkingHandler, LiveSpectator, "Live Spectator", 1),
-                            }
-                        };
+                        SelectedContent.Child = matchSettings;
                         break;
                     case MatchScreenMode.RulesetSettings:
                         if (SelectedRuleset.CreateInstance() is IRulesetMulti multiRuleset)
@@ -244,6 +251,11 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         public void MapChange(int? onlineBeatmapSetID, string rulesetShortname)
         {
             SelectedRuleset = rulesets.GetRuleset(rulesetShortname);
+
+            if (SelectedRuleset.CreateInstance() is IRulesetMulti multiRuleset)
+                foreach (MultiplayerOption option in multiRuleset.RulesetSettings(OsuNetworkingHandler))
+                    option.Set();
+
             SelectedBeatmap = null;
             selectedBeatmapSetID = onlineBeatmapSetID;
 

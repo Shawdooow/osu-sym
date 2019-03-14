@@ -2,13 +2,15 @@
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.UI;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Multi.Packets;
+using osu.Mods.Online.Multi.Settings;
 
 namespace osu.Mods.Online.Multi.Rulesets
 {
     public interface IRulesetMulti
     {
-        RulesetContainer CreateRulesetContainerMulti(WorkingBeatmap beatmap, OsuNetworkingHandler networking);
+        RulesetContainer CreateRulesetContainerMulti(WorkingBeatmap beatmap, OsuNetworkingHandler networking, MatchInfo match);
 
-        Container RulesetSettings(OsuNetworkingHandler networking);
+        Container<MultiplayerOption> RulesetSettings(OsuNetworkingHandler networking);
     }
 }

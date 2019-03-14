@@ -33,6 +33,7 @@ using osu.Game.Screens.Play;
 using osu.Game.Skinning;
 using osu.Game.Storyboards.Drawables;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Multi.Packets;
 using osu.Mods.Online.Multi.Packets.Player;
 using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Screens.Pieces;
@@ -91,15 +92,15 @@ namespace osu.Mods.Online.Multi.Screens
 
         public readonly OsuNetworkingHandler OsuNetworkingHandler;
 
-        protected readonly List<OsuUserInfo> Users;
+        protected readonly MatchInfo Match;
 
         protected DeadContainer<MultiCursorContainer> CursorContainer;
 
-        public MultiPlayer(OsuNetworkingHandler osuNetworkingHandler, List<OsuUserInfo> users)
+        public MultiPlayer(OsuNetworkingHandler osuNetworkingHandler, MatchInfo match)
         {
             Name = "MultiPlayer";
             OsuNetworkingHandler = osuNetworkingHandler;
-            Users = users;
+            Match = match;
             OsuNetworkingHandler.OnPacketReceive += handlePackets;
         }
 
@@ -151,7 +152,7 @@ namespace osu.Mods.Online.Multi.Screens
                 try
                 {
                     if (rulesetInstance is IRulesetMulti multiInstance)
-                        RulesetContainer = multiInstance.CreateRulesetContainerMulti(working, OsuNetworkingHandler);
+                        RulesetContainer = multiInstance.CreateRulesetContainerMulti(working, OsuNetworkingHandler, Match);
                 }
                 catch (Exception e)
                 {
@@ -222,7 +223,7 @@ namespace osu.Mods.Online.Multi.Screens
                             RelativeSizeAxes = Axes.Both,
                             Child = RulesetContainer
                         },
-                        new Scoreboard(OsuNetworkingHandler, Users, ScoreProcessor),
+                        new Scoreboard(OsuNetworkingHandler, Match.Users, ScoreProcessor),
                         new BreakOverlay(beatmap.BeatmapInfo.LetterboxInBreaks, ScoreProcessor)
                         {
                             Anchor = Anchor.Centre,
@@ -256,7 +257,7 @@ namespace osu.Mods.Online.Multi.Screens
                 }
             };
 
-            foreach (OsuUserInfo user in Users)
+            foreach (OsuUserInfo user in Match.Users)
                 if (user.ID != OsuNetworkingHandler.OsuUserInfo.ID)
                 {
                     try

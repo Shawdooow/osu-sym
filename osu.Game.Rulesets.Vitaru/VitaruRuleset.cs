@@ -21,6 +21,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Edit;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Multi.Packets;
 using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings;
 
@@ -43,13 +44,13 @@ namespace osu.Game.Rulesets.Vitaru
             }
         }
 
-        public RulesetContainer CreateRulesetContainerMulti(WorkingBeatmap beatmap, OsuNetworkingHandler networking) => new VitaruRulesetContainer(this, beatmap, networking);
+        public RulesetContainer CreateRulesetContainerMulti(WorkingBeatmap beatmap, OsuNetworkingHandler networking, MatchInfo match) => new VitaruRulesetContainer(this, beatmap, networking, match);
 
-        public Container RulesetSettings(OsuNetworkingHandler networking) => new Container
+        public Container<MultiplayerOption> RulesetSettings(OsuNetworkingHandler networking) => new Container<MultiplayerOption>
         {
             RelativeSizeAxes = Axes.Both,
 
-            Children = new Drawable[]
+            Children = new MultiplayerOption[]
             {
                 new MultiplayerDropdownOption<string>(networking, new Bindable<string>(), "Gamemode", 4),
                 new MultiplayerDropdownOption<string>(networking, new Bindable<string>(), "Character", 3),

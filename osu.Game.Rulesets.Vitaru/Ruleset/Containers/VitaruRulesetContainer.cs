@@ -17,6 +17,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Multi.Packets;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 {
@@ -26,7 +27,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         private readonly Bindable<bool> rankedFilter = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.RankedFilter);
 
-        public VitaruRulesetContainer(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap, OsuNetworkingHandler osuNetworkingHandler = null)
+        public VitaruRulesetContainer(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap, OsuNetworkingHandler osuNetworkingHandler = null, MatchInfo match = null)
             : base(ruleset, beatmap)
         {
             //TODO: make this a function if it works
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
                 DebugToolkit.GeneralDebugItems = new List<Container>();
 
             DebugToolkit.GeneralDebugItems.Add(ranked = new DebugStat<int>(new Bindable<int>()) { Text = "Ranked" });
-            VitaruPlayfield = CreateVitaruPlayfield((VitaruInputManager)KeyBindingInputManager, osuNetworkingHandler);
+            VitaruPlayfield = CreateVitaruPlayfield((VitaruInputManager)KeyBindingInputManager, osuNetworkingHandler, match);
         }
 
         protected override void LoadComplete()
@@ -87,7 +88,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         public VitaruPlayfield VitaruPlayfield { get; protected set; }
 
-        protected virtual VitaruPlayfield CreateVitaruPlayfield(VitaruInputManager inputManager, OsuNetworkingHandler networkingHandler) => new VitaruPlayfield(inputManager, networkingHandler);
+        protected virtual VitaruPlayfield CreateVitaruPlayfield(VitaruInputManager inputManager, OsuNetworkingHandler osuNetworkingHandler, MatchInfo match) => new VitaruPlayfield(inputManager, osuNetworkingHandler, match);
 
         public override int Variant => (int)variant();
 

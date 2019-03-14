@@ -3,6 +3,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Multi.Packets;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Edit
 {
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Edit
         {
         }
 
-        protected override VitaruPlayfield CreateVitaruPlayfield(VitaruInputManager inputManager, OsuNetworkingHandler networkingHandler) => new VitaruEditPlayfield((VitaruInputManager)KeyBindingInputManager);
+        protected override VitaruPlayfield CreateVitaruPlayfield(VitaruInputManager inputManager, OsuNetworkingHandler networkingHandler, MatchInfo match) => new VitaruEditPlayfield((VitaruInputManager)KeyBindingInputManager);
 
         protected override CursorContainer CreateCursor() => null;
     }

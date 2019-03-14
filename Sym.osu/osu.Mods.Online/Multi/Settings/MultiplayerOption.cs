@@ -10,7 +10,7 @@ using Symcol.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Settings
 {
-    public abstract class MultiplayerOption<T> : MultiplayerContainer
+    public abstract class MultiplayerOption : MultiplayerContainer
     {
         protected readonly SpriteText Title;
 
@@ -99,6 +99,14 @@ namespace osu.Mods.Online.Multi.Settings
             if (info.Packet is SettingsPacket s && Sync)
                 SetValue(s);
         }
+
+        public void Set()
+        {
+            if (Sync)
+                TriggerBindableChange();
+        }
+
+        protected abstract void TriggerBindableChange();
 
         protected abstract void SetValue(SettingsPacket settings);
     }

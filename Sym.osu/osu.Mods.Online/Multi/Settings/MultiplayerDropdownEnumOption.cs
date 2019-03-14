@@ -8,7 +8,7 @@ using osu.Mods.Online.Multi.Screens.Pieces;
 
 namespace osu.Mods.Online.Multi.Settings
 {
-    public class MultiplayerDropdownEnumOption<T> : MultiplayerOption<T>
+    public class MultiplayerDropdownEnumOption<T> : MultiplayerOption
         where T : struct
     {
         public readonly Bindable<T> BindableEnum;
@@ -31,6 +31,8 @@ namespace osu.Mods.Online.Multi.Settings
                 Value = value,
             }));
         }
+
+        protected override void TriggerBindableChange() => BindableEnum.TriggerChange();
 
         protected override void SetValue(SettingsPacket settings)
         {

@@ -8,7 +8,7 @@ using osu.Mods.Online.Multi.Screens.Pieces;
 
 namespace osu.Mods.Online.Multi.Settings
 {
-    public class MultiplayerDropdownOption<T> : MultiplayerOption<T>
+    public class MultiplayerDropdownOption<T> : MultiplayerOption
     {
         public readonly Bindable<T> Bindable;
 
@@ -30,6 +30,8 @@ namespace osu.Mods.Online.Multi.Settings
                 Value = value,
             }));
         }
+
+        protected override void TriggerBindableChange() => Bindable.TriggerChange();
 
         protected override void SetValue(SettingsPacket settings)
         {

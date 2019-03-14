@@ -187,7 +187,7 @@ namespace osu.Mods.Online.Base
                         match = FindMatch(load.User);
                         ShareWithMatchClients(match, new PlayerLoadingPacket
                         {
-                            Users = match.MatchInfo.Users
+                            Match = match.MatchInfo
                         });
                         break;
 
