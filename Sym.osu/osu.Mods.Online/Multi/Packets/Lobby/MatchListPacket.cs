@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using osu.Mods.Online.Base;
-using osu.Mods.Online.Multi.Screens.Pieces;
 using Symcol.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Packets.Lobby
