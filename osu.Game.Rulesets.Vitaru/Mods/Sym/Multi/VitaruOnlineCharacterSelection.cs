@@ -6,7 +6,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
 {
     public class VitaruOnlineCharacterSelection : MultiplayerOption
     {
-        public VitaruOnlineCharacterSelection(OsuNetworkingHandler networking, string name, int quadrant, bool sync = true)
+        public VitaruOnlineCharacterSelection(OsuNetworkingHandler networking, string name, int quadrant, Sync sync = Sync.All)
             : base(networking, name, quadrant, sync)
         {
         }

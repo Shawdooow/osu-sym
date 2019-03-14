@@ -1,4 +1,5 @@
 ﻿using System;
+using osu.Mods.Online.Multi.Settings;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
 {
@@ -12,5 +13,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
     public class Setting
     {
         public string Name;
+
+        public Sync Sync;
     }
 }

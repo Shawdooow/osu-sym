@@ -16,9 +16,9 @@ namespace osu.Mods.Online.Multi.Settings
 
         protected readonly Container OptionContainer;
 
-        protected bool Sync;
+        public readonly Sync Sync;
 
-        protected MultiplayerOption(OsuNetworkingHandler networking, string name, int quadrant, bool sync = true) : base(networking)
+        protected MultiplayerOption(OsuNetworkingHandler networking, string name, int quadrant, Sync sync = Sync.All) : base(networking)
         {
             Sync = sync;
 
@@ -96,18 +96,25 @@ namespace osu.Mods.Online.Multi.Settings
         {
             base.OnPacketRecieve(info);
 
-            if (info.Packet is SettingsPacket s && Sync)
+            if (info.Packet is SettingsPacket s && Sync == Sync.All)
                 SetValue(s);
         }
 
         public void Set()
         {
-            if (Sync)
+            if (Sync > Sync.None)
                 TriggerBindableChange();
         }
 
         protected abstract void TriggerBindableChange();
 
         protected abstract void SetValue(SettingsPacket settings);
+    }
+
+    public enum Sync
+    {
+        None,
+        Client,
+        All,
     }
 }

@@ -7,6 +7,7 @@ using osu.Mods.Online.Multi.Packets;
 using osu.Mods.Online.Multi.Packets.Lobby;
 using osu.Mods.Online.Multi.Packets.Match;
 using osu.Mods.Online.Multi.Packets.Player;
+using osu.Mods.Online.Multi.Settings;
 using osu.Mods.Online.Score;
 using osu.Mods.Online.Score.Packets;
 using Symcol.Networking.NetworkingHandlers;
@@ -146,19 +147,37 @@ namespace osu.Mods.Online.Base
                         match = FindMatch(setting.User);
 
                         //Hacky was of setting the Setting but should work
-                        for(int i = 0; i < match.MatchInfo.Settings.Count; i++)
-                            if (match.MatchInfo.Settings[i].Name == setting.Settings[0].Name)
-                            {
-                                match.MatchInfo.Settings[i] = setting.Settings[0];
-                                goto finish;
-                            }
+                        if (setting.Settings[0].Sync == Sync.All)
+                        {
+                            for (int i = 0; i < match.MatchInfo.Settings.Count; i++)
+                                if (match.MatchInfo.Settings[i].Name == setting.Settings[0].Name)
+                                {
+                                    match.MatchInfo.Settings[i] = setting.Settings[0];
+                                    goto finish;
+                                }
 
-                        //Hacky way of adding ones we dont have but also should work for now
-                        match.MatchInfo.Settings.Add(setting.Settings[0]);
+                            //Hacky way of adding ones we dont have but should work for now
+                            match.MatchInfo.Settings.Add(setting.Settings[0]);
 
-                        finish:
-                        //Send them ALL the settings just incase, you never know with these things...
-                        ShareWithMatchClients(match, new SettingsPacket(match.MatchInfo.Settings.ToArray()));
+                            finish:
+                            //Send them ALL the settings just incase, you never know with these things...
+                            ShareWithMatchClients(match, new SettingsPacket(match.MatchInfo.Settings.ToArray()));
+                        }
+                        else if (setting.Settings[0].Sync == Sync.Client)
+                        {
+                            OsuUserInfo user = FindClient(setting.User).User;
+                            for (int i = 0; i < user.UserSettings.Count; i++)
+                                if (user.UserSettings[i].Name == setting.Settings[0].Name)
+                                {
+                                    user.UserSettings[i] = setting.Settings[0];
+                                    goto end;
+                                }
+
+                            //Hacky way of adding ones we dont have but should work for now
+                            user.UserSettings.Add(setting.Settings[0]);
+                        }
+
+                        end:
                         break;
                     case ChatPacket chat:
                         //Nothing we need to do on our end currently, just fire it right back out

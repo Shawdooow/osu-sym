@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using osu.Mods.Online.Multi.Screens.Pieces;
 
 namespace osu.Mods.Online.Base
 {
@@ -21,5 +23,7 @@ namespace osu.Mods.Online.Base
         public string Country;
 
         public string CountryFlagName;
+
+        public List<Setting> UserSettings = new List<Setting>();
     }
 }

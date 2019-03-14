@@ -12,7 +12,7 @@ namespace osu.Mods.Online.Multi.Settings
     {
         public readonly Bindable<T> Bindable;
 
-        public MultiplayerDropdownOption(OsuNetworkingHandler networking, Bindable<T> bindable, string name, int quadrant, bool sync = true) : base(networking, name, quadrant, sync)
+        public MultiplayerDropdownOption(OsuNetworkingHandler networking, Bindable<T> bindable, string name, int quadrant, Sync sync = Sync.All) : base(networking, name, quadrant, sync)
         {
             Bindable = bindable;
 
@@ -36,7 +36,7 @@ namespace osu.Mods.Online.Multi.Settings
         protected override void SetValue(SettingsPacket settings)
         {
             foreach (Setting s in settings.Settings)
-                if (Sync && s is Setting<T> setting && setting.Name == Title.Text)
+                if (s is Setting<T> setting && setting.Name == Title.Text)
                     Bindable.Value = setting.Value;
         }
 
