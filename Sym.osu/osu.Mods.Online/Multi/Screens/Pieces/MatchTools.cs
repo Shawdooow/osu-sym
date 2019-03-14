@@ -151,8 +151,8 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         [BackgroundDependencyLoader]
         private void load(RulesetStore rulesets, Bindable<RulesetInfo> ruleset, Bindable<WorkingBeatmap> beatmap, BeatmapManager beatmaps)
         {
-            this.ruleset = ruleset;
             this.rulesets = rulesets;
+            this.ruleset.BindTo(ruleset);
             this.beatmap.BindTo(beatmap);
             Beatmaps = beatmaps;
         }
