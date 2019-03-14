@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Audio;
-using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -15,6 +14,7 @@ using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
+using osu.Game.Rulesets.Vitaru.Mods.Sym.Multi;
 using osu.Game.Rulesets.Vitaru.Ruleset;
 using osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
@@ -52,8 +52,8 @@ namespace osu.Game.Rulesets.Vitaru
 
             Children = new MultiplayerOption[]
             {
-                new MultiplayerDropdownOption<string>(networking, new Bindable<string>(), "Gamemode", 4),
-                new MultiplayerDropdownOption<string>(networking, new Bindable<string>(), "Character", 3),
+                new VitaruOnlineGamemodeSelection(networking, 4),
+                new VitaruOnlineCharacterSelection(networking, 3), 
             }
         };
 

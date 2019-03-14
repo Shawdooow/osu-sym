@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
     {
         public readonly List<SettingsDropdown<string>> CharacterDropdowns = new List<SettingsDropdown<string>>();
 
-        private readonly Bindable<string> selectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+        public readonly Bindable<string> SelectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
         private readonly Bindable<string> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
 
@@ -56,16 +56,16 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
                 bool enabled = false;
 
-                selectedCharacter.ValueChanged += value =>
+                SelectedCharacter.ValueChanged += value =>
                 {
                     if (enabled)
-                        g.SelectedCharacter.Value = items.Contains(selectedCharacter.Value) ? selectedCharacter.Value : g.SelectedCharacter.Default;
+                        g.SelectedCharacter.Value = items.Contains(SelectedCharacter.Value) ? SelectedCharacter.Value : g.SelectedCharacter.Default;
                 };
 
                 g.SelectedCharacter.ValueChanged += value =>
                 {
                     if (enabled)
-                        selectedCharacter.Value = value;
+                        SelectedCharacter.Value = value;
                 };
 
                 CharacterDropdowns.Add(characterDropdown);
@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                         character.ResizeHeightTo(0, 0, Easing.OutQuint);
                     }
 
-                    selectedCharacter.TriggerChange();
+                    SelectedCharacter.TriggerChange();
                     g.SelectedCharacter.TriggerChange();
                 };
             }
