@@ -48,11 +48,11 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         private RulesetStore rulesets;
 
-        private Bindable<RulesetInfo> ruleset;
+        private readonly Bindable<RulesetInfo> ruleset = new Bindable<RulesetInfo>();
+
+        private readonly Bindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
 
         public BeatmapManager Beatmaps { get; private set; }
-
-        private Bindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
 
         private bool searching;
 
