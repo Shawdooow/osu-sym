@@ -82,6 +82,8 @@ namespace osu.Mods.Online.Multi.Screens
                             Text = "Start Match",
                             Action = () => SendPacket(new LoadPlayerPacket())
                         },
+                        //TODO: Ready Up!
+                        /*
                         new SettingsButton
                         {
                             Alpha = 0,
@@ -90,8 +92,9 @@ namespace osu.Mods.Online.Multi.Screens
                             RelativeSizeAxes = Axes.X,
                             Width = 0.46f,
                             Text = "Ready Up",
-                            //Action = toggleReady
+                            Action = toggleReady
                         },
+                        */
                     }
                 },
                 playerList = new MatchPlayerList(OsuNetworkingHandler),
