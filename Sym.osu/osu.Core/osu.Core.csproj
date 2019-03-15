@@ -25,7 +25,7 @@
     <EmbeddedResource Include="Assets\Textures\Symcoltober 1440 2018.png" />
   </ItemGroup>
   <ItemGroup Label="Project References">
-    <ProjectReference Include="..\..\..\Symcol.Core\Symcol.Base\Symcol.Base.csproj" />
+    <ProjectReference Include="..\..\..\osu-framework-sym\Sym.Base\Sym.Base.csproj" />
     <ProjectReference Include="..\..\osu.Game\osu.Game.csproj" />
   </ItemGroup>
   <ItemGroup>

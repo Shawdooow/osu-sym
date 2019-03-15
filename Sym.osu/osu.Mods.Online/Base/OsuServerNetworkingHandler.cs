@@ -10,9 +10,9 @@ using osu.Mods.Online.Multi.Packets.Player;
 using osu.Mods.Online.Multi.Settings;
 using osu.Mods.Online.Score;
 using osu.Mods.Online.Score.Packets;
-using Symcol.Networking.NetworkingHandlers;
-using Symcol.Networking.NetworkingHandlers.Server;
-using Symcol.Networking.Packets;
+using Sym.Networking.NetworkingHandlers;
+using Sym.Networking.NetworkingHandlers.Server;
+using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Base
 {

@@ -3,7 +3,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Mods.Online.Multi.Packets.Match;
-using Symcol.Base.Graphics.Containers;
+using Sym.Base.Graphics.Containers;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
 {

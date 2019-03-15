@@ -7,7 +7,7 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Packets.Player;
 using osuTK;
 using osuTK.Input;
-using Symcol.Networking.Packets;
+using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
 {

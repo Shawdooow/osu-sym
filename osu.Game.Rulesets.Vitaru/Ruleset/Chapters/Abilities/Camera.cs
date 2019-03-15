@@ -4,7 +4,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osuTK;
 using osuTK.Graphics;
-using Symcol.Base.Graphics.Containers;
+using Sym.Base.Graphics.Containers;
 
 // ReSharper disable InconsistentNaming
 

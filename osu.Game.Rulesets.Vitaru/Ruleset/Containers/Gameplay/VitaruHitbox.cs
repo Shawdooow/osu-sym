@@ -2,7 +2,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;
-using Symcol.Base.Game;
+using Sym.Base.Game;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
 {

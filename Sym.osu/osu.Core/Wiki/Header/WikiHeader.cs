@@ -9,7 +9,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Screens.Menu;
 using osuTK;
 using osuTK.Graphics;
-using Symcol.Base.Graphics.Containers;
+using Sym.Base.Graphics.Containers;
 using Container = osu.Framework.Graphics.Containers.Container;
 
 namespace osu.Core.Wiki.Header

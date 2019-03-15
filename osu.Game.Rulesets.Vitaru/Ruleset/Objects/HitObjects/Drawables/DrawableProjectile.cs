@@ -4,7 +4,8 @@ using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
-using Symcol.Base.Extentions;
+using Sym.Base.Extentions;
+
 // ReSharper disable InconsistentNaming
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables

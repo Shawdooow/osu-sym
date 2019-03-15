@@ -2,7 +2,7 @@
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Vitaru.Mods.Chaptersets;
+using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Packets.Match;

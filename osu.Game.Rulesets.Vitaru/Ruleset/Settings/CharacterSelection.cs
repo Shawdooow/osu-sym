@@ -4,9 +4,9 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Vitaru.Mods.Chaptersets;
+using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
-using Symcol.Base.Graphics.Containers;
+using Sym.Base.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 {

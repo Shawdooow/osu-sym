@@ -5,7 +5,7 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Packets;
 using osu.Mods.Online.Multi.Packets.Lobby;
 using osuTK.Graphics;
-using Symcol.Base.Graphics.Containers;
+using Sym.Base.Graphics.Containers;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
 {

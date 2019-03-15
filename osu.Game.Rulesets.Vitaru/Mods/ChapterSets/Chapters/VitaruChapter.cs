@@ -1,7 +1,7 @@
 ﻿using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 
-namespace osu.Game.Rulesets.Vitaru.Mods.Chaptersets.Chapters
+namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters
 {
     public class VitaruChapter
     {

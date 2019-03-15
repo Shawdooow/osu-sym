@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
-using osu.Game.Rulesets.Vitaru.Mods.Chaptersets;
+using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
@@ -22,7 +22,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
-using Symcol.Base.Extentions;
+using Sym.Base.Extentions;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 {

@@ -1,4 +1,4 @@
-﻿using osu.Game.Rulesets.Vitaru.Mods.Chaptersets.Chapters;
+﻿using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;

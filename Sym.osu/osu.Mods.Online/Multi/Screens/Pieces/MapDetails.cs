@@ -15,8 +15,8 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using osuTK;
 using osuTK.Graphics;
-using Symcol.Base.Graphics.Containers;
-using Symcol.Base.Graphics.Sprites;
+using Sym.Base.Graphics.Containers;
+using Sym.Base.Graphics.Sprites;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
 {

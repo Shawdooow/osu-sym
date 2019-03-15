@@ -8,8 +8,7 @@
     <Description>allows playing on other servers!</Description>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Symcol.Core\Symcol.Networking\Symcol.Networking.csproj" />
-    <ProjectReference Include="..\osu.Core\osu.Core.csproj" />
+    <ProjectReference Include="..\..\..\osu-framework-sym\Sym.Networking\Sym.Networking.csproj" />
     <ProjectReference Include="..\osu.Mods.Rulesets.Core\osu.Mods.Rulesets.Core.csproj" />
   </ItemGroup>
   <ItemGroup>

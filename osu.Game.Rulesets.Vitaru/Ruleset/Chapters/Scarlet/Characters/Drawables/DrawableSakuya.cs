@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK.Graphics;
-using Symcol.Base.Graphics.Sprites;
+using Sym.Base.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters.Drawables
 {

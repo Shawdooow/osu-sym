@@ -1,4 +1,4 @@
-﻿using Symcol.Networking.NetworkingHandlers.Server;
+﻿using Sym.Networking.NetworkingHandlers.Server;
 
 namespace osu.Mods.Online.Base
 {

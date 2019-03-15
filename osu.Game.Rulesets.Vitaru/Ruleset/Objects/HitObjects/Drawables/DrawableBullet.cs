@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
-using Symcol.Base.Extentions;
+using Sym.Base.Extentions;
 
 // ReSharper disable InconsistentNaming
 

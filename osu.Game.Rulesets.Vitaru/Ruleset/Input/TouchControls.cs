@@ -2,8 +2,8 @@
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
 using osuTK;
-using Symcol.Base.Graphics.Containers;
-using Symcol.Base.Touch;
+using Sym.Base.Graphics.Containers;
+using Sym.Base.Touch;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
 {

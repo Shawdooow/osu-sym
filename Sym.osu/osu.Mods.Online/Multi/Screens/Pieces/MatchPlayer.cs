@@ -11,7 +11,7 @@ using osu.Game.Users;
 using osu.Mods.Online.Base;
 using osuTK;
 using osuTK.Graphics;
-using Symcol.Base.Graphics.Containers;
+using Sym.Base.Graphics.Containers;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
 {

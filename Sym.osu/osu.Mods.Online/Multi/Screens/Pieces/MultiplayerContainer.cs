@@ -1,5 +1,5 @@
 ﻿using osu.Mods.Online.Base;
-using Symcol.Networking.Containers;
+using Sym.Networking.Containers;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
 {

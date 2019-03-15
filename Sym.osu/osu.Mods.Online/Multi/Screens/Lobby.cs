@@ -9,7 +9,7 @@ using osu.Mods.Online.Multi.Packets;
 using osu.Mods.Online.Multi.Packets.Lobby;
 using osu.Mods.Online.Multi.Screens.Pieces;
 using osuTK;
-using Symcol.Networking.Packets;
+using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Screens
 {

@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osuTK.Graphics;
-using Symcol.Base.Graphics.Containers;
+using Sym.Base.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug
 {

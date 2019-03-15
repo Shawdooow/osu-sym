@@ -2,7 +2,7 @@
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
-using Symcol.Base.Graphics.Containers;
+using Sym.Base.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
 {

@@ -4,7 +4,7 @@ using osu.Core.Wiki.Sections.OptionExplanations;
 using osu.Core.Wiki.Sections.SectionPieces;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
-using osu.Game.Rulesets.Vitaru.Mods.Chaptersets;
+using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 
 namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections

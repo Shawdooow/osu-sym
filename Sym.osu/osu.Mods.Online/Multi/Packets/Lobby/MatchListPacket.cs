@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Symcol.Networking.Packets;
+using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Packets.Lobby
 {

@@ -38,8 +38,8 @@ using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Screens.Pieces;
 using osuTK;
 using osuTK.Input;
-using Symcol.Base.Graphics.Containers;
-using Symcol.Networking.Packets;
+using Sym.Base.Graphics.Containers;
+using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Screens
 {

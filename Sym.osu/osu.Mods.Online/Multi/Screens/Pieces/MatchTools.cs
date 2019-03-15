@@ -17,8 +17,8 @@ using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings;
 using osuTK;
 using osuTK.Graphics;
-using Symcol.Base.Graphics.Containers;
-using Symcol.Networking.Packets;
+using Sym.Base.Graphics.Containers;
+using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
 {

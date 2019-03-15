@@ -6,7 +6,7 @@ using osu.Mods.Online.Base.Screens;
 using osu.Mods.Online.Multi.Screens;
 using osuTK;
 using osuTK.Graphics;
-using Symcol.Networking.NetworkingHandlers;
+using Sym.Networking.NetworkingHandlers;
 
 namespace osu.Mods.Online
 {

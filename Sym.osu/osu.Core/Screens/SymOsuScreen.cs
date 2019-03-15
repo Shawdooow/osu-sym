@@ -4,7 +4,7 @@ using System.Diagnostics;
 using osu.Framework.Graphics;
 using osu.Framework.Screens;
 using osu.Game.Screens;
-using Symcol.Base.Graphics.Containers;
+using Sym.Base.Graphics.Containers;
 
 namespace osu.Core.Screens
 {

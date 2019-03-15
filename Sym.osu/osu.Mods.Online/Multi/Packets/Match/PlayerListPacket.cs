@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using osu.Mods.Online.Base;
-using Symcol.Networking.Packets;
+using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Packets.Match
 {

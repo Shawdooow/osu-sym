@@ -4,7 +4,7 @@ using osu.Game.Rulesets.UI;
 using osu.Mods.Online.Multi.Packets;
 using osu.Mods.Online.Score.Packets;
 using osu.Mods.Rulesets.Core.Rulesets;
-using Symcol.Networking.NetworkingHandlers;
+using Sym.Networking.NetworkingHandlers;
 
 namespace osu.Mods.Online.Score.Rulesets
 {

@@ -11,7 +11,7 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Configuration;
 using osuTK.Graphics;
-using Symcol.Base.Graphics.Sprites;
+using Sym.Base.Graphics.Sprites;
 using Bitmap = System.Drawing.Bitmap;
 // ReSharper disable InconsistentNaming
 #pragma warning disable 4014

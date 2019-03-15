@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
 using osuTK;
 using osuTK.Graphics;
-using Symcol.Base.Graphics.Sprites;
+using Sym.Base.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
 {

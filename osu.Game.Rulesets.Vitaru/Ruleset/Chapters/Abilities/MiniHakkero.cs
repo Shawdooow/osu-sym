@@ -2,8 +2,8 @@
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Rational.Characters.Drawables;
 using osuTK.Graphics;
-using Symcol.Base.Game;
-using Symcol.Base.Graphics.Containers;
+using Sym.Base.Game;
+using Sym.Base.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
 {

@@ -5,9 +5,9 @@ using osu.Framework.Logging;
 using osu.Game.Online.API;
 using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi.Packets.Lobby;
-using Symcol.Networking.NetworkingHandlers;
-using Symcol.Networking.NetworkingHandlers.Peer;
-using Symcol.Networking.Packets;
+using Sym.Networking.NetworkingHandlers;
+using Sym.Networking.NetworkingHandlers.Peer;
+using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Base
 {
