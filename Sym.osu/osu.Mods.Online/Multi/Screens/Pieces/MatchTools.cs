@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using FFmpeg.AutoGen;
 using osu.Core.Containers.Shawdooow;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
@@ -164,75 +165,66 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
             Beatmaps = beatmaps;
         }
 
-        protected override void Update()
-        {
-            base.Update();
-
-            if (!searching)
-                task?.Dispose();
-        }
-
-        private Task task;
-
         protected override void OnPacketRecieve(PacketInfo info)
         {
-            if (info.Packet is SetMapPacket mapPacket)
+            if (info.Packet is SetMapPacket packet)
+                Task.Factory.StartNew(() => search(packet), TaskCreationOptions.LongRunning);
+
+            void search(SetMapPacket mapPacket)
             {
-                task?.Dispose();
-                task = Task.Factory.StartNew(() =>
+                searching = true;
+
+                try
                 {
-                    searching = true;
+                    //Tell the user we are searching!
+                    MapChange(mapPacket.Map.OnlineBeatmapSetID, mapPacket.Map.RulesetShortname);
 
-                    try
-                    {
-                        //Tell the user we are searching!
-                        MapChange(mapPacket.Map.OnlineBeatmapSetID, mapPacket.Map.RulesetShortname);
+                    bool found = false;
 
-                        foreach (BeatmapSetInfo beatmapSet in Beatmaps.GetAllUsableBeatmapSets())
-                            if (mapPacket.Map.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.Map.OnlineBeatmapSetID)
-                            {
-                                foreach (BeatmapInfo b in beatmapSet.Beatmaps)
-                                    if (b.OnlineBeatmapID == mapPacket.Map.OnlineBeatmapID)
-                                    {
-                                        ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
-                                        beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
-                                        beatmap.Value.Track.Start();
+                    foreach (BeatmapSetInfo beatmapSet in Beatmaps.GetAllUsableBeatmapSets())
+                        if (mapPacket.Map.OnlineBeatmapID != -1 && beatmapSet.OnlineBeatmapSetID == mapPacket.Map.OnlineBeatmapSetID)
+                        {
+                            foreach (BeatmapInfo b in beatmapSet.Beatmaps)
+                                if (b.OnlineBeatmapID == mapPacket.Map.OnlineBeatmapID)
+                                {
+                                    ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
+                                    beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
+                                    beatmap.Value.Track.Start();
 
-                                        MapChange(b);
-                                        goto complete;
-                                    }
+                                    MapChange(b);
+                                    found = true;
+                                    break;
+                                }
 
-                                break;
-                            }
-                            //try to fallback for old maps
-                            else if (mapPacket.Map.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.Map.BeatmapMapper == beatmapSet.Metadata.Author.Username)
-                            {
-                                foreach (BeatmapInfo b in beatmapSet.Beatmaps)
-                                    if (mapPacket.Map.BeatmapDifficulty == b.Version)
-                                    {
-                                        ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
-                                        beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
-                                        beatmap.Value.Track.Start();
+                            break;
+                        }
+                        //try to fallback for old maps
+                        else if (mapPacket.Map.BeatmapTitle == beatmapSet.Metadata.Title && mapPacket.Map.BeatmapMapper == beatmapSet.Metadata.Author.Username)
+                        {
+                            foreach (BeatmapInfo b in beatmapSet.Beatmaps)
+                                if (mapPacket.Map.BeatmapDifficulty == b.Version)
+                                {
+                                    ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
+                                    beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
+                                    beatmap.Value.Track.Start();
 
-                                        MapChange(b);
-                                        goto complete;
-                                    }
+                                    MapChange(b);
+                                    found = true;
+                                    break;
+                                }
 
-                                break;
-                            }
+                            break;
+                        }
 
-                        //Tell the user they are missing this / we couldn't find it
-                        mapDetails.SetMap(selectedBeatmapSetID);
+                    //Tell the user they are missing this / we couldn't find it
+                   if (!found) mapDetails.SetMap(selectedBeatmapSetID);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e, "Exception while trying to set map!", LoggingTarget.Network);
+                }
 
-                        complete: ;
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Error(e, "Exception while trying to set map!", LoggingTarget.Network);
-                    }
-
-                    searching = false;
-                }, TaskCreationOptions.LongRunning);
+                searching = false;
             }
         }
 
