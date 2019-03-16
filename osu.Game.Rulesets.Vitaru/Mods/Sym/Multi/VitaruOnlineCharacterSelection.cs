@@ -24,6 +24,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
             {
                 Name = Title.Text,
                 Value = value,
+                Sync = Sync,
             }));
         }
 

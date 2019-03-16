@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using FFmpeg.AutoGen;
 using osu.Core.Containers.Shawdooow;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;

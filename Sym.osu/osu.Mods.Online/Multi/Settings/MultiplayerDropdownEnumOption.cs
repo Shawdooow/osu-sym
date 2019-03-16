@@ -29,6 +29,7 @@ namespace osu.Mods.Online.Multi.Settings
             {
                 Name = Title.Text,
                 Value = value,
+                Sync = Sync,
             }));
         }
 
