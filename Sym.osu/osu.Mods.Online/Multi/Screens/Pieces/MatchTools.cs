@@ -164,10 +164,22 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
             Beatmaps = beatmaps;
         }
 
+        protected override void Update()
+        {
+            base.Update();
+
+            if (!searching)
+                task?.Dispose();
+        }
+
+        private Task task;
+
         protected override void OnPacketRecieve(PacketInfo info)
         {
             if (info.Packet is SetMapPacket mapPacket)
-                Task.Factory.StartNew(() =>
+            {
+                task?.Dispose();
+                task = Task.Factory.StartNew(() =>
                 {
                     searching = true;
 
@@ -212,7 +224,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                         //Tell the user they are missing this / we couldn't find it
                         mapDetails.SetMap(selectedBeatmapSetID);
 
-                        complete:;
+                        complete: ;
                     }
                     catch (Exception e)
                     {
@@ -221,6 +233,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
                     searching = false;
                 }, TaskCreationOptions.LongRunning);
+            }
         }
 
         public void MapChange(BeatmapInfo info)

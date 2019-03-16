@@ -16,7 +16,7 @@ namespace osu.Mods.Online.Multi.Screens
 {
     public class Match : MultiScreen
     {
-        protected MatchTools MatchTools;
+        private readonly MatchTools matchTools;
 
         private Bindable<RulesetInfo> ruleset;
 
@@ -97,7 +97,7 @@ namespace osu.Mods.Online.Multi.Screens
                     }
                 },
                 playerList = new MatchPlayerList(OsuNetworkingHandler),
-                MatchTools = new MatchTools(OsuNetworkingHandler),
+                matchTools = new MatchTools(OsuNetworkingHandler),
                 new Chat(OsuNetworkingHandler)
             };
 
@@ -120,11 +120,11 @@ namespace osu.Mods.Online.Multi.Screens
 
         protected virtual void Load(MatchInfo match)
         {
-            if (MatchTools.SelectedBeatmap != null && !Beatmap.Disabled)
-                Beatmap.Value = MatchTools.Beatmaps.GetWorkingBeatmap(MatchTools.SelectedBeatmap, Beatmap);
+            if (matchTools.SelectedBeatmap != null && !Beatmap.Disabled)
+                Beatmap.Value = matchTools.Beatmaps.GetWorkingBeatmap(matchTools.SelectedBeatmap, Beatmap);
 
-            if (MatchTools.SelectedRuleset != null && !ruleset.Disabled)
-                ruleset.Value = MatchTools.SelectedRuleset;
+            if (matchTools.SelectedRuleset != null && !ruleset.Disabled)
+                ruleset.Value = matchTools.SelectedRuleset;
 
             Push(new MultiPlayer(OsuNetworkingHandler, match));
         }
