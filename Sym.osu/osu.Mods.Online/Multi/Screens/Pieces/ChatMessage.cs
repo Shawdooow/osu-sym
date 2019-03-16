@@ -3,6 +3,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Mods.Online.Multi.Packets.Match;
+using osuTK;
 using Sym.Base.Graphics.Containers;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
@@ -11,11 +12,14 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
     {
         public ChatMessage(ChatPacket packet)
         {
+            Alpha = 0;
+
             Anchor = Anchor.TopLeft;
             Origin = Anchor.TopLeft;
 
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
+            Masking = true;
 
             Children = new Drawable[]
             {
@@ -29,7 +33,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                 },
                 new OsuTextFlowContainer(t => { t.TextSize = 24; })
                 {
-                    Position = new osuTK.Vector2(140, 0),
+                    Position = new Vector2(140, 0),
                     Anchor = Anchor.TopLeft,
                     Origin = Anchor.TopLeft,
                     RelativeSizeAxes = Axes.X,
@@ -37,6 +41,8 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     Text = packet.Message
                 }
             };
+
+            this.FadeInFromZero(150);
         }
     }
 }

@@ -43,6 +43,8 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         private readonly Container<MultiplayerOption> matchSettings;
 
+        private Container<MultiplayerOption> rulesetSettings = new Container<MultiplayerOption>();
+
         public BeatmapInfo SelectedBeatmap { get; private set; }
 
         public RulesetInfo SelectedRuleset { get; private set; }
@@ -141,8 +143,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                         SelectedContent.Child = matchSettings;
                         break;
                     case MatchScreenMode.RulesetSettings:
-                        if (SelectedRuleset.CreateInstance() is IRulesetMulti multiRuleset)
-                            SelectedContent.Child = multiRuleset.RulesetSettings(OsuNetworkingHandler);
+                        SelectedContent.Child = rulesetSettings;
                         break;
                     case MatchScreenMode.SoundBoard:
                         SelectedContent.Child = new Container
@@ -186,6 +187,10 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     //Tell the user we are searching!
                     MapChange(mapPacket.Map.OnlineBeatmapSetID, mapPacket.Map.RulesetShortname);
 
+                    RulesetInfo rulesetInfo = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
+                    if (rulesetInfo.CreateInstance() is IRulesetMulti multiRuleset)
+                        rulesetSettings = multiRuleset.RulesetSettings(OsuNetworkingHandler);
+
                     bool found = false;
 
                     foreach (BeatmapSetInfo beatmapSet in Beatmaps.GetAllUsableBeatmapSets())
@@ -194,7 +199,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                             foreach (BeatmapInfo b in beatmapSet.Beatmaps)
                                 if (b.OnlineBeatmapID == mapPacket.Map.OnlineBeatmapID)
                                 {
-                                    ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
+                                    ruleset.Value = rulesetInfo;
                                     beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
                                     beatmap.Value.Track.Start();
 
@@ -212,7 +217,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                             foreach (BeatmapInfo b in beatmapSet.Beatmaps)
                                 if (mapPacket.Map.BeatmapDifficulty == b.Version)
                                 {
-                                    ruleset.Value = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
+                                    ruleset.Value = rulesetInfo;
                                     beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
                                     beatmap.Value.Track.Start();
 
