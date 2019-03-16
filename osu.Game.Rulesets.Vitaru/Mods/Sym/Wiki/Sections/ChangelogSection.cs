@@ -83,11 +83,17 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
 
         private readonly string[] features =
         {
-            "[Experimental] Patterns V2",
+            "[WIP] Patterns V2",
             "[Experimental] New bullet visuals",
             "[Experimental] Touhou sounds",
-            "[Windows] Score Submission (Leaderboards don't work but scores are uploaded and saved when connected)",
-            "OSX Support",
+            "[Desktop] Score Submission (Leaderboards don't work but scores are uploaded and saved when connected)",
+            "[WIP] Multiplayer Support (using the Online mod)",
+            "[WIP] [Multi] Live Spectator Support",
+            "[Multi] Head to Head Support",
+            "[WIP] [Multi] CO-OP Support",
+            "[WIP] [Multi] TAG Support",
+            "[WIP] [Multi] PVP Support",
+            "OSX Support (Really this was the modloader's fault...)",
             "iOS Support",
             "Touch screen controls (they are a toggle in settings for now)",
             //"Linux Support",
@@ -97,6 +103,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
 
         private readonly string[] tweaksAndChanges =
         {
+            "Brought back some old wiki sections on mapping and multiplayer (wonder what those could be for...)",
             "Get Time.Current less (Bullets + Enemies hurt fps less now)",
         };
 
