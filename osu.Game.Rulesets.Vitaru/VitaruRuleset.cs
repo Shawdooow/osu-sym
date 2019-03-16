@@ -48,8 +48,8 @@ namespace osu.Game.Rulesets.Vitaru
 
         public Container<MultiplayerOption> RulesetSettings(OsuNetworkingHandler networking)
         {
-            VitaruOnlineGamemodeSelection g = new VitaruOnlineGamemodeSelection(networking, 4);
-            VitaruOnlineCharacterSelection c = new VitaruOnlineCharacterSelection(networking, 3, g.Gamemode);
+            VitaruOnlineGamemodeSelection g = new VitaruOnlineGamemodeSelection(networking, 2);
+            VitaruOnlineCharacterSelection c = new VitaruOnlineCharacterSelection(networking, 1, g.Gamemode);
 
             return new Container<MultiplayerOption>
             {
