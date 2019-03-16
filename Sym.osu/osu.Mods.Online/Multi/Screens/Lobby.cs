@@ -1,7 +1,9 @@
 ﻿using osu.Framework.Allocation;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
+using osu.Game.Beatmaps;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets;
 using osu.Mods.Online.Base;
@@ -17,7 +19,9 @@ namespace osu.Mods.Online.Multi.Screens
     {
         public override string Title => "Lobby";
 
-        private RulesetStore rulesets;
+        private readonly Bindable<RulesetInfo> ruleset = new Bindable<RulesetInfo>();
+
+        private readonly Bindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
 
         private readonly FillFlowContainer rooms;
 
@@ -48,32 +52,7 @@ namespace osu.Mods.Online.Multi.Screens
                     RelativeSizeAxes = Axes.X,
                     Width = 0.4f,
                     Text = "Create Game",
-                    Action = () =>
-                    {
-                        SendPacket(new CreateMatchPacket
-                        {
-                            MatchInfo = new MatchInfo
-                            {
-                                Host = new Host
-                                {
-                                    Username = @"Shawdooow",
-                                    UserID = 7726082,
-                                    UserCountry = "US",
-                                },
-                                Map = new Map
-                                {
-                                    BeatmapTitle = "Lost Emotion",
-                                    BeatmapArtist = "Masayoshi Minoshima feat.nomico",
-                                    BeatmapMapper = "Shawdooow",
-                                    BeatmapDifficulty = "Last Dance Heaven",
-                                    OnlineBeatmapSetID = 734008,
-                                    OnlineBeatmapID = 1548917,
-                                    BeatmapStars = 4.85d,
-                                    RulesetShortname = "osu",
-                                },
-                            }
-                        });
-                    }
+                    Action = createMatch,
                 },
                 new SettingsButton
                 {
@@ -118,9 +97,56 @@ namespace osu.Mods.Online.Multi.Screens
         }
 
         [BackgroundDependencyLoader]
-        private void load(RulesetStore rulesets)
+        private void load(Bindable<RulesetInfo> ruleset, Bindable<WorkingBeatmap> beatmap)
         {
-            this.rulesets = rulesets;
+            this.ruleset.BindTo(ruleset);
+            this.beatmap.BindTo(beatmap);
+        }
+
+        private void createMatch()
+        {
+            Map map;
+
+            try
+            {
+                map = new Map
+                {
+                    BeatmapTitle = beatmap.Value.Metadata.Title,
+                    BeatmapArtist = beatmap.Value.Metadata.Artist,
+                    BeatmapMapper = beatmap.Value.Metadata.Author.Username,
+                    BeatmapDifficulty = beatmap.Value.BeatmapInfo.Version,
+                    OnlineBeatmapSetID = (int)beatmap.Value.BeatmapSetInfo.OnlineBeatmapSetID,
+                    OnlineBeatmapID = (int)beatmap.Value.BeatmapInfo.OnlineBeatmapID,
+                    BeatmapStars = beatmap.Value.BeatmapInfo.StarDifficulty,
+                    RulesetShortname = ruleset.Value.ShortName,
+                };
+            }
+            catch
+            {
+                map = new Map
+                {
+                    BeatmapTitle = beatmap.Value.Metadata.Title,
+                    BeatmapArtist = beatmap.Value.Metadata.Artist,
+                    BeatmapMapper = beatmap.Value.Metadata.Author.Username,
+                    BeatmapDifficulty = beatmap.Value.BeatmapInfo.Version,
+                    BeatmapStars = beatmap.Value.BeatmapInfo.StarDifficulty,
+                    RulesetShortname = ruleset.Value.ShortName,
+                };
+            }
+
+            SendPacket(new CreateMatchPacket
+            {
+                MatchInfo = new MatchInfo
+                {
+                    Host = new Host
+                    {
+                        Username = OsuNetworkingHandler.OsuUserInfo.Username,
+                        UserID = OsuNetworkingHandler.OsuUserInfo.ID,
+                        UserCountry = OsuNetworkingHandler.OsuUserInfo.Country,
+                    },
+                    Map = map,
+                }
+            });
         }
     }
 }

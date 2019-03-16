@@ -7,7 +7,7 @@ namespace osu.Mods.Online.Multi.Packets
     {
         public string Username = @"Guest";
 
-        public int UserID = 7726082;
+        public long UserID = -1;
 
         public string UserCountry = "US";
     }

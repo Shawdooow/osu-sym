@@ -151,6 +151,7 @@ namespace osu.Mods.Online.Multi.Screens
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
+                        BeatmapStars = map.BeatmapInfo.StarDifficulty,
                         RulesetShortname = ruleset.Value.ShortName,
                     }));
                 }
@@ -163,6 +164,7 @@ namespace osu.Mods.Online.Multi.Screens
                         BeatmapArtist = map.Metadata.Artist,
                         BeatmapMapper = map.Metadata.Author.Username,
                         BeatmapDifficulty = map.BeatmapInfo.Version,
+                        BeatmapStars = map.BeatmapInfo.StarDifficulty,
                         RulesetShortname = ruleset.Value.ShortName,
                     }));
                 }
