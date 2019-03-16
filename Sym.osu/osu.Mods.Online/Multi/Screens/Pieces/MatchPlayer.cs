@@ -1,5 +1,7 @@
 ﻿using osu.Framework.Allocation;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
@@ -31,26 +33,30 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
             get => playerStatues;
             set
             {
-                if (playerStatues != value)
-                {
-                    playerStatues = value;
+                if (playerStatues == value) return;
 
-                    switch (value)
-                    {
-                        case PlayerStatues.Missing:
-                            statues.Colour = Color4.Black;
-                            break;
-                        case PlayerStatues.Searching:
-                            statues.Colour = Color4.Red;
-                            break;
-                        case PlayerStatues.Found:
-                            statues.Colour = Color4.Yellow;
-                            break;
-                        case PlayerStatues.Ready:
-                            statues.Colour = Color4.Green;
-                            break;
-                    }
+                playerStatues = value;
+
+                switch (value)
+                {
+                    case PlayerStatues.Loading:
+                        statues.SetColor(Color4.SkyBlue);
+                        break;
+                    case PlayerStatues.Missing:
+                        statues.SetColor(Color4.Red);
+                        break;
+                    case PlayerStatues.Searching:
+                        statues.SetColor(Color4.Blue);
+                        break;
+                    case PlayerStatues.Found:
+                        statues.SetColor(Color4.Yellow);
+                        break;
+                    case PlayerStatues.Ready:
+                        statues.SetColor(Color4.Green);
+                        break;
                 }
+
+                statues.TooltipText = value.ToString();
             }
         }
 
@@ -144,15 +150,13 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         protected override bool OnHover(HoverEvent e)
         {
             dim.FadeTo(0.6f, 200);
-
             return base.OnHover(e);
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
-            base.OnHoverLost(e);
-
             dim.FadeTo(0.8f, 200);
+            base.OnHoverLost(e);
         }
 
         public MenuItem[] ContextMenuItems => new MenuItem[]
@@ -163,13 +167,25 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
             new OsuMenuItem("Ban", MenuItemType.Destructive, () => { }),
         };
 
-        private class StatuesIcon : SymcolCircularContainer, IHasTooltip
+        private class StatuesIcon : SymcolContainer, IHasTooltip
         {
-            public string TooltipText => "";
+            public string TooltipText { get; set; }
+
+            public void SetColor(Color4 color)
+            {
+                this.FadeColour(color, 150);
+                TweenEdgeEffectTo(new EdgeEffectParameters
+                {
+                    Radius = 10,
+                    Colour = color.Opacity(0.25f),
+                    Type = EdgeEffectType.Shadow,
+                }, 150);
+            }
 
             public StatuesIcon()
             {
-                Size = new Vector2(8);
+                Size = new Vector2(40f, 20f);
+                CornerRadius = 10f;
                 Masking = true;
 
                 Anchor = Anchor.CentreRight;
@@ -187,6 +203,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
     public enum PlayerStatues
     {
+        Loading,
         Missing,
         Searching,
         Found,

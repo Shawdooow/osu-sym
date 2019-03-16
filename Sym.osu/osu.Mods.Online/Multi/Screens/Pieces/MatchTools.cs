@@ -57,7 +57,13 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         public BeatmapManager Beatmaps { get; private set; }
 
-        private bool searching;
+        public bool Searching { get; private set; }
+
+        public event Action OnMapSearching; 
+
+        public event Action OnMapFound;
+
+        public event Action OnMapMissing;
 
         public MatchTools(OsuNetworkingHandler osuNetworkingHandler) : base(osuNetworkingHandler)
         {
@@ -122,7 +128,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     case MatchScreenMode.MapDetails:
                         SelectedContent.Child = mapDetails;
 
-                        if (searching)
+                        if (Searching)
                             mapDetails.SetMap(true, selectedBeatmapSetID);
                         else if (SelectedBeatmap != null)
                             mapDetails.SetMap(Beatmaps.GetWorkingBeatmap(SelectedBeatmap));
@@ -172,7 +178,8 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
             void search(SetMapPacket mapPacket)
             {
-                searching = true;
+                Searching = true;
+                OnMapSearching?.Invoke();
 
                 try
                 {
@@ -193,6 +200,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
                                     MapChange(b);
                                     found = true;
+                                    OnMapFound?.Invoke();
                                     break;
                                 }
 
@@ -210,6 +218,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
                                     MapChange(b);
                                     found = true;
+                                    OnMapFound?.Invoke();
                                     break;
                                 }
 
@@ -217,14 +226,18 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                         }
 
                     //Tell the user they are missing this / we couldn't find it
-                   if (!found) mapDetails.SetMap(selectedBeatmapSetID);
+                   if (!found)
+                   {
+                       mapDetails.SetMap(selectedBeatmapSetID);
+                       OnMapMissing?.Invoke();
+                   }
                 }
                 catch (Exception e)
                 {
                     Logger.Error(e, "Exception while trying to set map!", LoggingTarget.Network);
                 }
 
-                searching = false;
+                Searching = false;
             }
         }
 

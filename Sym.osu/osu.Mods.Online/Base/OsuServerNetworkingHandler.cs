@@ -179,6 +179,15 @@ namespace osu.Mods.Online.Base
 
                         end:
                         break;
+                    case StatuesChangePacket statuesChange:
+                        match = FindMatch(statuesChange.User);
+
+                        //Set their statues
+                        FindClient(statuesChange.User).User.Statues = statuesChange.User.Statues;
+
+                        //Tell everyone they changed their statues
+                        ShareWithMatchClients(match, statuesChange);
+                        break;
                     case ChatPacket chat:
                         //Nothing we need to do on our end currently, just fire it right back out
                         ShareWithMatchClients(FindMatch(chat.User), chat);

@@ -105,6 +105,14 @@ namespace osu.Mods.Online.Multi.Screens
 
             foreach (OsuUserInfo user in joinedPacket.MatchInfo.Users)
                 playerList.Add(user);
+
+            matchTools.OnMapSearching += () =>
+            {
+                setStatues(PlayerStatues.Searching);
+                unready();
+            };
+            matchTools.OnMapFound += () => setStatues(PlayerStatues.Found);
+            matchTools.OnMapMissing += () => setStatues(PlayerStatues.Missing);
         }
 
         [BackgroundDependencyLoader]
@@ -169,22 +177,40 @@ namespace osu.Mods.Online.Multi.Screens
 
         private void toggleReady()
         {
+            if (matchTools.Searching) return;
+
             if (ready.Value)
-            {
-                ready.Value = false;
-                readyButton.Text = "Ready Up";
-
-                readyButton.ResizeWidthTo(1f, 200, Easing.OutCubic);
-                startButton.FadeOutFromOne(100);
-            }
+                unready();
             else
-            {
-                ready.Value = true;
-                readyButton.Text = "UnReady";
+                readyup();
+        }
 
-                readyButton.ResizeWidthTo(0.5f, 200, Easing.OutCubic);
-                startButton.Delay(100).FadeInFromZero(100);
-            }
+        private void unready()
+        {
+            ready.Value = false;
+            readyButton.Text = "Ready Up";
+
+            if (!matchTools.Searching) setStatues(PlayerStatues.Found);
+
+            readyButton.ResizeWidthTo(1f, 200, Easing.OutCubic);
+            startButton.FadeOutFromOne(100);
+        }
+
+        private void readyup()
+        {
+            ready.Value = true;
+            readyButton.Text = "UnReady";
+
+            setStatues(PlayerStatues.Ready);
+
+            readyButton.ResizeWidthTo(0.5f, 200, Easing.OutCubic);
+            startButton.Delay(100).FadeInFromZero(100);
+        }
+
+        private void setStatues(PlayerStatues statues)
+        {
+            OsuNetworkingHandler.OsuUserInfo.Statues = statues;
+            OsuNetworkingHandler.SendToServer(new StatuesChangePacket());
         }
 
         protected override void Dispose(bool isDisposing)

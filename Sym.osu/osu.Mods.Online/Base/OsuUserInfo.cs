@@ -25,5 +25,7 @@ namespace osu.Mods.Online.Base
         public string CountryFlagName;
 
         public List<Setting> UserSettings = new List<Setting>();
+
+        public PlayerStatues Statues;
     }
 }

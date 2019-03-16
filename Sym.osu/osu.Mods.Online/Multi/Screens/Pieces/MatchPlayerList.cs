@@ -69,6 +69,14 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     else
                         Logger.Log($"{playerJoined.User.Username} - {playerJoined.User.ID} is joining this match twice!?", LoggingTarget.Network, LogLevel.Error);
                     break;
+                case StatuesChangePacket statuesChange:
+                    foreach (MatchPlayer matchPlayer in MatchPlayers)
+                        if (statuesChange.User.ID == matchPlayer.OsuUserInfo.ID)
+                        {
+                            matchPlayer.PlayerStatues = statuesChange.User.Statues;
+                            break;
+                        }
+                    break;
                 case PlayerDisconnectedPacket playerDisconnected:
                     foreach (MatchPlayer matchPlayer in MatchPlayers)
                         if (playerDisconnected.User.ID == matchPlayer.OsuUserInfo.ID)
