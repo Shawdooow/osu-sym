@@ -103,6 +103,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
 
         private readonly string[] tweaksAndChanges =
         {
+            "Made shooting more responsive",
             "Brought back some old wiki sections on mapping and multiplayer (wonder what those could be for...)",
             "Get Time.Current less (Bullets + Enemies hurt fps less now)",
         };
