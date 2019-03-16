@@ -13,17 +13,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug
     {
         public string Text
         {
-            get
-            {
-                return text.Text;
-            }
-            set
-            {
-                if (value != text.Text)
-                {
-                    text.Text = value;
-                }
-            }
+            get =>  text.Text;
+            set => text.Text = value;
         }
 
         private readonly bool adminRequired;

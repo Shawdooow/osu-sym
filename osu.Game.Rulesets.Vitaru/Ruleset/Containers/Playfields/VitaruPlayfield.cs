@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
+using osu.Game.Rulesets.Vitaru.Mods.Sym.Multi.Packets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
@@ -93,9 +94,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         public VitaruPlayfield(VitaruInputManager vitaruInput, OsuNetworkingHandler osuNetworkingHandler = null, MatchInfo match = null)
         {
-            //VitaruRuleset.InitThread();
             VitaruInputManager = vitaruInput;
 
+            //Reset crap
             CHARGED = false;
             ACCEL = false;
             ACCELMULTIPLIER = 1;
@@ -182,7 +183,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 DrawableBoss.Team = enemyTeam;
             }
 
-            DebugToolkit.GeneralDebugItems.Add(new DebugAction { Text = "Exclusive Testing Hax", Action = () => { BulletPiece.ExclusiveTestingHax = !BulletPiece.ExclusiveTestingHax; } });
+            DebugToolkit.GeneralDebugItems.Add(new DebugAction { Text = "Exclusive Testing Hax", Action = () =>
+            {
+                BulletPiece.ExclusiveTestingHax = !BulletPiece.ExclusiveTestingHax;
+                osuNetworkingHandler?.SendToServer(new HaxPacket { Hax = BulletPiece.ExclusiveTestingHax });
+            } });
         }
 
         [BackgroundDependencyLoader]

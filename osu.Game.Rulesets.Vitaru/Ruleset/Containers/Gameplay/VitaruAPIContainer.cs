@@ -6,13 +6,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
 {
     public class VitaruAPIContainer : Container, IOnlineComponent
     {
-        public static int PlayerID;
-
         public static bool Admin => Shawdooow;
 
         public static bool Shawdooow;
-        public static bool Arrcival;
-        public static bool Jorolf;
 
         [BackgroundDependencyLoader]
         private void load(APIAccess api)
@@ -24,14 +20,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
         {
             switch (state)
             {
-                default:
-                    PlayerID = -1;
-                    break;
                 case APIState.Online:
-                    PlayerID = (int)api.LocalUser.Value.Id;
                     Shawdooow = api.LocalUser.Value.Username == "Shawdooow";
-                    Arrcival = api.LocalUser.Value.Username == "Arrcival";
-                    Jorolf = api.LocalUser.Value.Username == "Jorolf";
                     break;
             }
         }

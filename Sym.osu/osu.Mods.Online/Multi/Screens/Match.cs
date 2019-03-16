@@ -20,6 +20,11 @@ namespace osu.Mods.Online.Multi.Screens
 
         private Bindable<RulesetInfo> ruleset;
 
+        private readonly Bindable<bool> ready = new Bindable<bool> { Default = false };
+
+        private readonly SettingsButton startButton;
+        private readonly SettingsButton readyButton;
+
         public Match(OsuNetworkingHandler osuNetworkingHandler, JoinedMatchPacket joinedPacket)
             : base(osuNetworkingHandler)
         {
@@ -42,19 +47,19 @@ namespace osu.Mods.Online.Multi.Screens
                     {
                         new SettingsButton
                         {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.CentreRight,
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreLeft,
                             RelativeSizeAxes = Axes.X,
-                            Width = 0.46f,
+                            Width = 0.5f,
                             Text = "Leave",
                             Action = this.Exit
                         },
                         new SettingsButton
                         {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.CentreLeft,
+                            Anchor = Anchor.CentreRight,
+                            Origin = Anchor.CentreRight,
                             RelativeSizeAxes = Axes.X,
-                            Width = 0.46f,
+                            Width = 0.5f,
                             Text = "Open Song Select",
                             Action = openSongSelect
                         },
@@ -72,28 +77,25 @@ namespace osu.Mods.Online.Multi.Screens
 
                     Children = new Drawable[]
                     {
-                        new SettingsButton
+                        startButton = new SettingsButton
                         {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
+                            Alpha = 0,
+                            Anchor = Anchor.CentreRight,
+                            Origin = Anchor.CentreRight,
                             RelativeSizeAxes = Axes.X,
-                            Width = 0.92f,
+                            Width = 0.5f,
                             Text = "Start Match",
                             Action = () => SendPacket(new LoadPlayerPacket())
                         },
-                        //TODO: Ready Up!
-                        /*
-                        new SettingsButton
+                        readyButton = new SettingsButton
                         {
-                            Alpha = 0,
-                            Anchor = Anchor.Centre,
+                            Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
                             RelativeSizeAxes = Axes.X,
-                            Width = 0.46f,
+                            Width = 1f,
                             Text = "Ready Up",
                             Action = toggleReady
                         },
-                        */
                     }
                 },
                 playerList = new MatchPlayerList(OsuNetworkingHandler),
@@ -127,12 +129,6 @@ namespace osu.Mods.Online.Multi.Screens
                 ruleset.Value = matchTools.SelectedRuleset;
 
             Push(new MultiPlayer(OsuNetworkingHandler, match));
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            SendPacket(new LeavePacket());
-            base.Dispose(isDisposing);
         }
 
         private void openSongSelect()
@@ -169,6 +165,32 @@ namespace osu.Mods.Online.Multi.Screens
                     }));
                 }
             };
+        }
+
+        private void toggleReady()
+        {
+            if (ready.Value)
+            {
+                ready.Value = false;
+                readyButton.Text = "Ready Up";
+
+                readyButton.ResizeWidthTo(1f, 200, Easing.OutCubic);
+                startButton.FadeOutFromOne(100);
+            }
+            else
+            {
+                ready.Value = true;
+                readyButton.Text = "UnReady";
+
+                readyButton.ResizeWidthTo(0.5f, 200, Easing.OutCubic);
+                startButton.Delay(100).FadeInFromZero(100);
+            }
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            SendPacket(new LeavePacket());
+            base.Dispose(isDisposing);
         }
     }
 }
