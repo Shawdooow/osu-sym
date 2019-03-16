@@ -1,4 +1,5 @@
-﻿using osu.Framework.Logging;
+﻿using osu.Framework.Configuration;
+using osu.Framework.Logging;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
@@ -12,10 +13,10 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
     {
         private readonly CharacterSelection characterSelection;
 
-        public VitaruOnlineCharacterSelection(OsuNetworkingHandler networking, int quadrant)
+        public VitaruOnlineCharacterSelection(OsuNetworkingHandler networking, int quadrant, Bindable<string> gamemode)
             : base(networking, "Character", quadrant, Sync.Client)
         {
-            OptionContainer.Child = characterSelection = new CharacterSelection();
+            OptionContainer.Child = characterSelection = new CharacterSelection(gamemode);
 
             foreach (SettingsDropdown<string> dropdown in characterSelection.CharacterDropdowns)
                 dropdown.LabelText = string.Empty;

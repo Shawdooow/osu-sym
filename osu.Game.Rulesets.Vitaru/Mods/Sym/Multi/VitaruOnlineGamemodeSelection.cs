@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
 {
     public sealed class VitaruOnlineGamemodeSelection : MultiplayerOption
     {
-        private readonly Bindable<string> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
+        public readonly Bindable<string> Gamemode = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode).GetUnboundCopy();
 
         public VitaruOnlineGamemodeSelection(OsuNetworkingHandler networking, int quadrant)
             : base(networking, "Gamemode", quadrant)
@@ -28,10 +28,10 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
                 Origin = Anchor.TopLeft,
                 RelativeSizeAxes = Axes.X,
                 Items = gamemodeItems,
-                Bindable = gamemode,
+                Bindable = Gamemode,
             };
 
-            gamemode.ValueChanged += value => SendPacket(new SettingsPacket(new Setting<string>
+            Gamemode.ValueChanged += value => SendPacket(new SettingsPacket(new Setting<string>
             {
                 Name = Title.Text,
                 Value = value,
@@ -39,13 +39,13 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
             }));
         }
 
-        protected override void TriggerBindableChange() => gamemode.TriggerChange();
+        protected override void TriggerBindableChange() => Gamemode.TriggerChange();
 
         protected override void SetValue(SettingsPacket settings)
         {
             foreach (Setting s in settings.Settings)
                 if (s is Setting<string> setting && setting.Name == Title.Text)
-                    gamemode.Value = setting.Value;
+                    Gamemode.Value = setting.Value;
         }
     }
 }

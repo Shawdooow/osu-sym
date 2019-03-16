@@ -99,7 +99,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     Origin = Anchor.BottomCentre,
                     RelativeSizeAxes = Axes.Both,
                     Height = 0.92f
-                }
+                },
             };
             TabControl.Current.Value = MatchScreenMode.MapDetails;
 
@@ -188,7 +188,12 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
                     RulesetInfo rulesetInfo = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
                     if (rulesetInfo.CreateInstance() is IRulesetMulti multiRuleset)
+                    {
                         rulesetSettings = multiRuleset.RulesetSettings(OsuNetworkingHandler);
+
+                        foreach (MultiplayerOption option in rulesetSettings)
+                            option.Set();
+                    }
 
                     bool found = false;
 
@@ -273,10 +278,6 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         public void MapChange(int? onlineBeatmapSetID, string rulesetShortname)
         {
             SelectedRuleset = rulesets.GetRuleset(rulesetShortname);
-
-            if (SelectedRuleset.CreateInstance() is IRulesetMulti multiRuleset)
-                foreach (MultiplayerOption option in multiRuleset.RulesetSettings(OsuNetworkingHandler))
-                    option.Set();
 
             SelectedBeatmap = null;
             selectedBeatmapSetID = onlineBeatmapSetID;

@@ -17,12 +17,17 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
     {
         public readonly List<SettingsDropdown<string>> CharacterDropdowns = new List<SettingsDropdown<string>>();
 
-        public readonly Bindable<string> SelectedCharacter = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+        public readonly Bindable<string> SelectedCharacter;
+        private readonly Bindable<string> gamemode;
 
-        private readonly Bindable<string> gamemode = VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
-
-        public CharacterSelection()
+        public CharacterSelection(Bindable<string> mode = null)
         {
+            SelectedCharacter = mode != null ?
+                VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character).GetUnboundCopy() :
+                VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
+
+            gamemode = mode ?? VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
+
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
             AutoSizeDuration = 0;
@@ -33,10 +38,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                 foreach (VitaruPlayer player in g.Players)
                     items.Add(player.Name);
 
-                FillFlowContainer character;
+                FillFlowContainer characterFlow;
                 SettingsDropdown<string> characterDropdown;
 
-                Add(character = new FillFlowContainer
+                Add(characterFlow = new FillFlowContainer
                 {
                     Direction = FillDirection.Vertical,
                     RelativeSizeAxes = Axes.X,
@@ -52,21 +57,35 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                 });
 
                 //TODO: get default from gamemode?
-                characterDropdown.Bindable = g.SelectedCharacter;
+                characterDropdown.Bindable = mode != null ? g.SelectedCharacter.GetUnboundCopy() : g.SelectedCharacter;
 
                 bool enabled = false;
 
-                SelectedCharacter.ValueChanged += value =>
-                {
-                    if (enabled)
-                        g.SelectedCharacter.Value = items.Contains(SelectedCharacter.Value) ? SelectedCharacter.Value : g.SelectedCharacter.Default;
-                };
+                if (mode == null)
+                    SelectedCharacter.ValueChanged += value =>
+                    {
+                        if (enabled)
+                            g.SelectedCharacter.Value = items.Contains(SelectedCharacter.Value) ? SelectedCharacter.Value : g.SelectedCharacter.Default;
+                    };
+                else
+                    SelectedCharacter.ValueChanged += value =>
+                    {
+                        if (enabled)
+                            characterDropdown.Bindable.Value = items.Contains(SelectedCharacter.Value) ? SelectedCharacter.Value : characterDropdown.Bindable.Default;
+                    };
 
-                g.SelectedCharacter.ValueChanged += value =>
-                {
-                    if (enabled)
-                        SelectedCharacter.Value = value;
-                };
+                if (mode == null)
+                    g.SelectedCharacter.ValueChanged += value =>
+                    {
+                        if (enabled)
+                            SelectedCharacter.Value = value;
+                    };
+                else
+                    characterDropdown.Bindable.ValueChanged += value =>
+                    {
+                        if (enabled)
+                            SelectedCharacter.Value = value;
+                    };
 
                 CharacterDropdowns.Add(characterDropdown);
 
@@ -75,19 +94,23 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                     if (ChapterStore.GetGamemode(value).Name == g.Gamemode.Name)
                     {
                         enabled = true;
-                        character.ClearTransforms();
-                        character.AutoSizeAxes = Axes.Y;
+                        characterFlow.ClearTransforms();
+                        characterFlow.AutoSizeAxes = Axes.Y;
                     }
                     else
                     {
                         enabled = false;
-                        character.ClearTransforms();
-                        character.AutoSizeAxes = Axes.None;
-                        character.ResizeHeightTo(0, 0, Easing.OutQuint);
+                        characterFlow.ClearTransforms();
+                        characterFlow.AutoSizeAxes = Axes.None;
+                        characterFlow.ResizeHeightTo(0, 0, Easing.OutQuint);
                     }
 
                     SelectedCharacter.TriggerChange();
-                    g.SelectedCharacter.TriggerChange();
+
+                    if (gamemode == null)
+                        g.SelectedCharacter.TriggerChange();
+                    else
+                        characterDropdown.Bindable.TriggerChange();
                 };
             }
 

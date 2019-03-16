@@ -46,16 +46,22 @@ namespace osu.Game.Rulesets.Vitaru
 
         public RulesetContainer CreateRulesetContainerMulti(WorkingBeatmap beatmap, OsuNetworkingHandler networking, MatchInfo match) => new VitaruRulesetContainer(this, beatmap, networking, match);
 
-        public Container<MultiplayerOption> RulesetSettings(OsuNetworkingHandler networking) => new Container<MultiplayerOption>
+        public Container<MultiplayerOption> RulesetSettings(OsuNetworkingHandler networking)
         {
-            RelativeSizeAxes = Axes.Both,
+            VitaruOnlineGamemodeSelection g = new VitaruOnlineGamemodeSelection(networking, 4);
+            VitaruOnlineCharacterSelection c = new VitaruOnlineCharacterSelection(networking, 3, g.Gamemode);
 
-            Children = new MultiplayerOption[]
+            return new Container<MultiplayerOption>
             {
-                new VitaruOnlineGamemodeSelection(networking, 4),
-                new VitaruOnlineCharacterSelection(networking, 3), 
-            }
-        };
+                RelativeSizeAxes = Axes.Both,
+
+                Children = new MultiplayerOption[]
+                {
+                    g,
+                    c,
+                }
+            };
+        }
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0)
         {
