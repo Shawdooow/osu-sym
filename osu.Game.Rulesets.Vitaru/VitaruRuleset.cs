@@ -39,8 +39,7 @@ namespace osu.Game.Rulesets.Vitaru
         {
             get
             {
-                for (int i = 0; i <= 5; i++)
-                    yield return (int)ControlScheme.Vitaru + i;
+                yield return (int)ControlScheme.Ryukoy;
             }
         }
 
@@ -170,8 +169,8 @@ namespace osu.Game.Rulesets.Vitaru
                     {
                         new VitaruModEasy(),
                         new VitaruModNoFail(),
-                        new VitaruModCharged(), 
-                        new MultiMod(new VitaruModHalfTime(), new VitaruModTrueHalfTime(), new VitaruModDaycore(), new VitaruModTrueDaycore())
+                        new MultiMod(new VitaruModHalfTime(), new VitaruModTrueHalfTime(), new VitaruModDaycore(), new VitaruModTrueDaycore()),
+                        new VitaruModCharged(),
                     };
                 case ModType.DifficultyIncrease:
                     return new Mod[]
@@ -236,6 +235,6 @@ namespace osu.Game.Rulesets.Vitaru
 
         Touhosu,
         Sakuya,
-        Ryukoy
+        Ryukoy,
     }
 }

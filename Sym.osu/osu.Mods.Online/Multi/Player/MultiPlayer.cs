@@ -95,12 +95,18 @@ namespace osu.Mods.Online.Multi.Player
 
         protected DeadContainer<MultiCursorContainer> CursorContainer;
 
+        protected bool LiveSpectator;
+
         public MultiPlayer(OsuNetworkingHandler osuNetworkingHandler, MatchInfo match)
         {
             Name = "MultiPlayer";
             OsuNetworkingHandler = osuNetworkingHandler;
             Match = match;
             OsuNetworkingHandler.OnPacketReceive += handlePackets;
+
+            foreach (Setting setting in Match.Settings)
+                if (setting.Name == "Live Spectator" && setting is Setting<bool> value)
+                    LiveSpectator = value.Value;
         }
 
         private void handlePackets(PacketInfo info)
@@ -256,26 +262,25 @@ namespace osu.Mods.Online.Multi.Player
                 }
             };
 
-            foreach (Setting setting in Match.Settings)
-                if (setting.Name == "Live Spectator" && setting is Setting<bool> value && value.Value)
-                    foreach (OsuUserInfo user in Match.Users)
-                        if (user.ID != OsuNetworkingHandler.OsuUserInfo.ID)
+            if (LiveSpectator)
+                foreach (OsuUserInfo user in Match.Users)
+                    if (user.ID != OsuNetworkingHandler.OsuUserInfo.ID)
+                    {
+                        try
                         {
-                            try
-                            {
-                                MultiCursorContainer c = new MultiCursorContainer();
+                            MultiCursorContainer c = new MultiCursorContainer();
 
-                                if (RulesetContainer.Cursor != null && RulesetContainer.Cursor is MultiCursorContainer m && m.CreateMultiCursor() != null)
-                                    c = m.CreateMultiCursor();
+                            if (RulesetContainer.Cursor != null && RulesetContainer.Cursor is MultiCursorContainer m && m.CreateMultiCursor() != null)
+                                c = m.CreateMultiCursor();
 
-                                c.Colour = OsuColour.FromHex(user.Colour);
-                                c.Name = user.ID.ToString();
-                                c.Slave = true;
-                                c.Alpha = 0.5f;
-                                CursorContainer.Add(c);
-                            }
-                            catch { }
+                            c.Colour = OsuColour.FromHex(user.Colour);
+                            c.Name = user.ID.ToString();
+                            c.Slave = true;
+                            c.Alpha = 0.5f;
+                            CursorContainer.Add(c);
                         }
+                        catch { }
+                    }
 
             if (!ScoreProcessor.Mode.Disabled)
                 config.BindWith(OsuSetting.ScoreDisplayMode, ScoreProcessor.Mode);
@@ -467,7 +472,7 @@ namespace osu.Mods.Online.Multi.Player
                 //30 packets per second test
                 boo = Time.Current + 1000f / 30f;
 
-                if (RulesetContainer.Cursor != null)
+                if (LiveSpectator && RulesetContainer.Cursor != null)
                     OsuNetworkingHandler.SendToServer(new CursorPositionPacket
                     {
                         ID = OsuNetworkingHandler.OsuUserInfo.ID,

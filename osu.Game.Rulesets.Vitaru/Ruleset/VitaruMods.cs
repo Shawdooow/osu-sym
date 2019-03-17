@@ -24,6 +24,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
     {
         public override string Name => "Charged";
         public override string Acronym => "CD";
+        //public override FontAwesome Icon => ree;
+        public override ModType Type => ModType.DifficultyReduction;
         public override string Description => "Full energy, all the time.";
         public override double ScoreMultiplier => 0.2f;
         public override bool Ranked => true;
