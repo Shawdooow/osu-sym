@@ -11,7 +11,4 @@
     <ProjectReference Include="..\..\..\osu-framework-sym\Sym.Networking\Sym.Networking.csproj" />
     <ProjectReference Include="..\osu.Mods.Rulesets.Core\osu.Mods.Rulesets.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Chat\" />
-  </ItemGroup>
 </Project>
