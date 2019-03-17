@@ -24,6 +24,7 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings.Options;
+using Sym.Base.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru
 {
@@ -156,10 +157,7 @@ namespace osu.Game.Rulesets.Vitaru
             }
         }
 
-        private ControlScheme getControlType(int variant)
-        {
-            return (ControlScheme)Enum.GetValues(typeof(ControlScheme)).Cast<int>().OrderByDescending(i => i).First(v => variant >= v);
-        }
+        private ControlScheme getControlType(int variant) => (ControlScheme)Enum.GetValues(typeof(ControlScheme)).Cast<int>().OrderByDescending(i => i).First(v => variant >= v);
 
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {
@@ -203,7 +201,15 @@ namespace osu.Game.Rulesets.Vitaru
 
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new VitaruBeatmapProcessor(beatmap);
 
-        public override Drawable CreateIcon() => new Sprite { Texture = VitaruTextures.Get("icon") };
+        public override Drawable CreateIcon()
+        {
+            Sprite icon = new Sprite { Texture = VitaruTextures.Get("icon") };
+            Icons.Add(icon);
+            return icon;
+        }
+
+        //TODO: Custom Touhosu Icon
+        internal static readonly List<Sprite> Icons = new List<Sprite>();
 
         public static ResourceStore<byte[]> VitaruResources { get; private set; }
         public static TextureStore VitaruTextures { get; private set; }
