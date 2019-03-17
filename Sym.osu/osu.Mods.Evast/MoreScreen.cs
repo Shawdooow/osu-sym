@@ -12,7 +12,6 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Screens;
 using osu.Mods.Evast.CursorTracers;
 using osu.Mods.Evast.Easings;
 using osu.Mods.Evast.Galaga;

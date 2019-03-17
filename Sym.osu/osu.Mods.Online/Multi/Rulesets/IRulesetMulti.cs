@@ -2,7 +2,6 @@
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.UI;
 using osu.Mods.Online.Base;
-using osu.Mods.Online.Multi.Settings;
 using osu.Mods.Online.Multi.Settings.Options;
 
 namespace osu.Mods.Online.Multi.Rulesets

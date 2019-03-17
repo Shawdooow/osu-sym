@@ -23,7 +23,6 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Rulesets;
-using osu.Mods.Online.Multi.Settings;
 using osu.Mods.Online.Multi.Settings.Options;
 
 namespace osu.Game.Rulesets.Vitaru

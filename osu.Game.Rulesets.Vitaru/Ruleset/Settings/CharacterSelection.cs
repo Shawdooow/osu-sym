@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                 });
 
                 //TODO: get default from gamemode?
-                characterDropdown.Bindable = mode != null ? g.SelectedCharacter.GetUnboundCopy() : g.SelectedCharacter;
+                characterDropdown.Bindable = mode == null ? g.SelectedCharacter : g.SelectedCharacter.GetUnboundCopy();
 
                 bool enabled = false;
 
