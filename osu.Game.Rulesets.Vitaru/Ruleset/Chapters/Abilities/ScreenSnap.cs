@@ -42,16 +42,17 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
         {
             this.host = host;
 
-            snap(storage, config.GetBindable<ScreenshotFormat>(OsuSetting.ScreenshotFormat));
+            //snap(storage, config.GetBindable<ScreenshotFormat>(OsuSetting.ScreenshotFormat));
         }
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
 
-            Texture = img_textures?.Get("snapshot" + imgCount + ".png") ?? img_textures?.Get("snapshot" + imgCount + ".jpeg");
+            //Texture = img_textures?.Get("snapshot" + imgCount + ".png") ?? img_textures?.Get("snapshot" + imgCount + ".jpeg");
         }
 
+        /*
         private async Task snap(Storage storage, Bindable<ScreenshotFormat> screenshotFormat) => await Task.Run(async () =>
         {
             Rectangle rect = new Rectangle(new Point(0, 0), new Size((int)area.ScreenSpaceDrawQuad.Width, (int)area.ScreenSpaceDrawQuad.Height));
@@ -110,6 +111,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
 
             return bitmap;
         }
+        */
     }
 }
 #pragma warning restore 4014
