@@ -1,4 +1,5 @@
-﻿using osu.Framework.Allocation;
+﻿using osu.Core.Containers.Shawdooow;
+using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -11,6 +12,7 @@ using osu.Mods.Online.Multi.Lobby.Packets;
 using osu.Mods.Online.Multi.Lobby.Pieces;
 using osu.Mods.Online.Multi.Match;
 using osuTK;
+using osuTK.Graphics;
 using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Lobby
@@ -63,6 +65,17 @@ namespace osu.Mods.Online.Multi.Lobby
                     Width = 0.4f,
                     Text = "Refresh",
                     Action = () => { SendPacket(new GetMatchListPacket()); }
+                },
+                new SymcolButton
+                {
+                    ButtonText = "Back",
+                    Origin = Anchor.BottomCentre,
+                    Anchor = Anchor.BottomCentre,
+                    ButtonColorTop = Color4.DarkRed,
+                    ButtonColorBottom = Color4.Red,
+                    Size = 50,
+                    Action = this.Exit,
+                    Position = new Vector2(0 , -10),
                 },
             };
         }

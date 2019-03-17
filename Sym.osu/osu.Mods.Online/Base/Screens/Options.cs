@@ -1,6 +1,7 @@
 ﻿using System;
 using osu.Core;
 using osu.Core.Config;
+using osu.Core.Containers.Shawdooow;
 using osu.Core.Screens.Evast;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
@@ -59,6 +60,17 @@ namespace osu.Mods.Online.Base.Screens
                     Width = 0.3f,
                     Text = "Connect To Server",
                     Action = JoinServer
+                },
+                new SymcolButton
+                {
+                    ButtonText = "Back",
+                    Origin = Anchor.BottomCentre,
+                    Anchor = Anchor.BottomCentre,
+                    ButtonColorTop = Color4.DarkRed,
+                    ButtonColorBottom = Color4.Red,
+                    Size = 50,
+                    Action = this.Exit,
+                    Position = new Vector2(0 , -10),
                 },
                 NewServer = new Container
                 {

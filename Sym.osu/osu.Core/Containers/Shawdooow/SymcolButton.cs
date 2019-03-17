@@ -144,7 +144,6 @@ namespace osu.Core.Containers.Shawdooow
 
         private const double early_activation = 60;
 
-
         protected override void OnNewBeat(int beatIndex, TimingControlPoint timingPoint, EffectControlPoint effectPoint, TrackAmplitudes amplitudes)
         {
             base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);

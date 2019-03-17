@@ -108,7 +108,7 @@ namespace osu.Mods.MapMixer
                     Anchor = Anchor.BottomRight,
                     ButtonColorTop = Color4.DarkBlue,
                     ButtonColorBottom = Color4.Blue,
-                    Size = 40,
+                    Size = 50,
                     Action = () =>
                     {
                         Push(new Player());
@@ -120,12 +120,23 @@ namespace osu.Mods.MapMixer
                 {
                     ButtonText = "BG",
                     Depth = -2,
-                    Origin = Anchor.BottomLeft,
-                    Anchor = Anchor.BottomLeft,
+                    Origin = Anchor.BottomRight,
+                    Anchor = Anchor.BottomRight,
                     ButtonColorTop = Color4.DarkBlue,
                     ButtonColorBottom = Color4.Blue,
-                    Size = 40,
+                    Size = 50,
                     Action = () => Push(new Visualizer()),
+                    Position = new Vector2(-60 , -175),
+                },
+                new SymcolButton
+                {
+                    ButtonText = "Back",
+                    Origin = Anchor.BottomLeft,
+                    Anchor = Anchor.BottomLeft,
+                    ButtonColorTop = Color4.DarkRed,
+                    ButtonColorBottom = Color4.Red,
+                    Size = 80,
+                    Action = this.Exit,
                     Position = new Vector2(60 , -100),
                 },
 
@@ -154,7 +165,7 @@ namespace osu.Mods.MapMixer
                     Anchor = Anchor.Centre,
                     ButtonColorTop = Color4.DarkGoldenrod,
                     ButtonColorBottom = Color4.Goldenrod,
-                    Size = 50,
+                    Size = 60,
                     Action = () => changeClockSpeeds(1f),
                     Position = new Vector2(0 , 250),
                     Bind = Key.N
@@ -167,7 +178,7 @@ namespace osu.Mods.MapMixer
                     Anchor = Anchor.Centre,
                     ButtonColorTop = Color4.DarkGoldenrod,
                     ButtonColorBottom = Color4.Goldenrod,
-                    Size = 50,
+                    Size = 60,
                     Action = () => changeClockSpeeds(1.5f),
                     Position = new Vector2(200 , 250),
                     Bind = Key.M
@@ -180,7 +191,7 @@ namespace osu.Mods.MapMixer
                     Anchor = Anchor.Centre,
                     ButtonColorTop = Color4.DarkGoldenrod,
                     ButtonColorBottom = Color4.Goldenrod,
-                    Size = 50,
+                    Size = 60,
                     Action = () => changeClockSpeeds(0.75f),
                     Position = new Vector2(-200, 250),
                     Bind = Key.B
