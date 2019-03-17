@@ -18,7 +18,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
         public readonly List<SettingsDropdown<string>> CharacterDropdowns = new List<SettingsDropdown<string>>();
 
         public readonly Bindable<string> SelectedCharacter;
-        private readonly Bindable<string> gamemode;
 
         public CharacterSelection(Bindable<string> mode = null)
         {
@@ -26,7 +25,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                 VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character).GetUnboundCopy() :
                 VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
-            gamemode = mode ?? VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
+            Bindable<string> gamemode = mode ?? VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
 
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
@@ -107,7 +106,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
                     SelectedCharacter.TriggerChange();
 
-                    if (gamemode == null)
+                    if (mode == null)
                         g.SelectedCharacter.TriggerChange();
                     else
                         characterDropdown.Bindable.TriggerChange();

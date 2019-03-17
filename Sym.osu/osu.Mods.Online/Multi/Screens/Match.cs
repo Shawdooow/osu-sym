@@ -108,11 +108,12 @@ namespace osu.Mods.Online.Multi.Screens
 
             matchTools.OnMapSearching += () =>
             {
-                setStatues(PlayerStatues.Searching);
+                setStatues(PlayerStatues.SearchingForMap);
                 unready();
             };
-            matchTools.OnMapFound += () => setStatues(PlayerStatues.Found);
-            matchTools.OnMapMissing += () => setStatues(PlayerStatues.Missing);
+            matchTools.OnMapFound += () => setStatues(PlayerStatues.FoundMap);
+            matchTools.OnMapMissing += () => setStatues(PlayerStatues.MissingMap);
+            matchTools.OnRulesetMissing += () => setStatues(PlayerStatues.MissingRuleset);
         }
 
         [BackgroundDependencyLoader]
@@ -190,7 +191,7 @@ namespace osu.Mods.Online.Multi.Screens
             ready.Value = false;
             readyButton.Text = "Ready Up";
 
-            if (!matchTools.Searching) setStatues(PlayerStatues.Found);
+            if (!matchTools.Searching) setStatues(PlayerStatues.FoundMap);
 
             readyButton.ResizeWidthTo(1f, 200, Easing.OutCubic);
             startButton.FadeOutFromOne(100);

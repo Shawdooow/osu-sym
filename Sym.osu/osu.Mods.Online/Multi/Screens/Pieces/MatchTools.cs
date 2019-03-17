@@ -66,6 +66,8 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         public event Action OnMapMissing;
 
+        public event Action OnRulesetMissing;
+
         public MatchTools(OsuNetworkingHandler osuNetworkingHandler) : base(osuNetworkingHandler)
         {
             Masking = true;
@@ -173,6 +175,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
         protected override void OnPacketRecieve(PacketInfo info)
         {
+            //Start this on a new thread so the game doesn't lock up while looking for the map
             if (info.Packet is SetMapPacket packet)
                 Task.Factory.StartNew(() => search(packet), TaskCreationOptions.LongRunning);
 
@@ -187,12 +190,23 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     MapChange(mapPacket.Map.OnlineBeatmapSetID, mapPacket.Map.RulesetShortname);
 
                     RulesetInfo rulesetInfo = rulesets.GetRuleset(mapPacket.Map.RulesetShortname);
-                    if (rulesetInfo.CreateInstance() is IRulesetMulti multiRuleset)
+                    if (rulesetInfo != null)
                     {
-                        rulesetSettings = multiRuleset.RulesetSettings(OsuNetworkingHandler);
+                        if (rulesetInfo.CreateInstance() is IRulesetMulti multiRuleset)
+                        {
+                            rulesetSettings = multiRuleset.RulesetSettings(OsuNetworkingHandler);
 
-                        foreach (MultiplayerOption option in rulesetSettings)
-                            option.Set();
+                            //TODO: This is a shitty way of doing this and needs to be addressed at some point
+                            //Send defaults to the server
+                            foreach (MultiplayerOption option in rulesetSettings)
+                                option.Set();
+                        }
+                    }
+                    else
+                    {
+                        //Just set it to osu! to avoid crashing
+                        rulesetInfo = rulesets.GetRuleset(0);
+                        OnRulesetMissing?.Invoke();
                     }
 
                     bool found = false;
@@ -203,6 +217,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                             foreach (BeatmapInfo b in beatmapSet.Beatmaps)
                                 if (b.OnlineBeatmapID == mapPacket.Map.OnlineBeatmapID)
                                 {
+                                    //Found it!
                                     ruleset.Value = rulesetInfo;
                                     beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
                                     beatmap.Value.Track.Start();
@@ -221,6 +236,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                             foreach (BeatmapInfo b in beatmapSet.Beatmaps)
                                 if (mapPacket.Map.BeatmapDifficulty == b.Version)
                                 {
+                                    //Found it!
                                     ruleset.Value = rulesetInfo;
                                     beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
                                     beatmap.Value.Track.Start();
@@ -234,7 +250,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                             break;
                         }
 
-                    //Tell the user they are missing this / we couldn't find it
+                   //Tell the user they are missing this / we couldn't find it
                    if (!found)
                    {
                        mapDetails.SetMap(selectedBeatmapSetID);
@@ -254,6 +270,7 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
         {
             if (info == null)
             {
+                //Rather than crash lets just play it cool...
                 MapChange(-1, "osu");
                 return;
             }

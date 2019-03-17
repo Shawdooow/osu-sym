@@ -1,4 +1,5 @@
-﻿using osu.Framework.Allocation;
+﻿using System.ComponentModel;
+using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -13,6 +14,7 @@ using osu.Game.Users;
 using osu.Mods.Online.Base;
 using osuTK;
 using osuTK.Graphics;
+using Sym.Base.Extentions;
 using Sym.Base.Graphics.Containers;
 
 namespace osu.Mods.Online.Multi.Screens.Pieces
@@ -39,24 +41,33 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
 
                 switch (value)
                 {
-                    case PlayerStatues.Loading:
+                    case PlayerStatues.JoiningMatch:
                         statues.SetColor(Color4.SkyBlue);
                         break;
-                    case PlayerStatues.Missing:
+                    case PlayerStatues.MissingRuleset:
+                        statues.SetColor(Color4.Black);
+                        break;
+                    case PlayerStatues.MissingMap:
                         statues.SetColor(Color4.Red);
                         break;
-                    case PlayerStatues.Searching:
-                        statues.SetColor(Color4.Blue);
+                    case PlayerStatues.SearchingForMap:
+                        statues.SetColor(Color4.Orange);
                         break;
-                    case PlayerStatues.Found:
+                    case PlayerStatues.FoundMap:
                         statues.SetColor(Color4.Yellow);
                         break;
                     case PlayerStatues.Ready:
                         statues.SetColor(Color4.Green);
                         break;
+                    case PlayerStatues.Loading:
+                        statues.SetColor(Color4.Cyan);
+                        break;
+                    case PlayerStatues.Playing:
+                        statues.SetColor(Color4.Blue);
+                        break;
                 }
 
-                statues.TooltipText = value.ToString();
+                statues.TooltipText = value.GetDescription();
             }
         }
 
@@ -197,16 +208,29 @@ namespace osu.Mods.Online.Multi.Screens.Pieces
                     RelativeSizeAxes = Axes.Both,
                     Colour = Color4.White,
                 };
+
+                SetColor(Color4.SkyBlue);
             }
         }
     }
 
     public enum PlayerStatues
     {
-        Loading,
-        Missing,
-        Searching,
-        Found,
+        [Description("Joining...")]
+        JoiningMatch,
+        [Description("Missing Ruleset")]
+        MissingRuleset,
+        [Description("Missing Map")]
+        MissingMap,
+        [Description("Searching For Map...")]
+        SearchingForMap,
+        [Description("Not Ready")]
+        FoundMap,
+        [Description("Ready")]
         Ready,
+        [Description("Loading...")]
+        Loading,
+        [Description("Playing")]
+        Playing,
     }
 }
