@@ -19,7 +19,7 @@ namespace osu.Mods.Online
     {
         public static OsuNetworkingHandler OsuNetworkingHandler;
 
-        private readonly Bindable<int> auto = SymcolOsuModSet.SymcolConfigManager.GetBindable<int>(SymcolSetting.Auto);
+        private readonly Bindable<AutoJoin> auto = SymcolOsuModSet.SymcolConfigManager.GetBindable<AutoJoin>(SymcolSetting.Auto);
         private readonly Bindable<string> ipBindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.SavedIP);
         private readonly Bindable<int> portBindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<int>(SymcolSetting.SavedPort);
 
@@ -44,7 +44,7 @@ namespace osu.Mods.Online
 
             switch (auto.Value)
             {
-                case 1:
+                case AutoJoin.Join:
                     OsuNetworkingHandler = new OsuNetworkingHandler
                     {
                         Address = ipBindable.Value + ":" + portBindable.Value
@@ -54,7 +54,7 @@ namespace osu.Mods.Online
                     OsuNetworkingHandler.OnConnectedToHost += host => Logger.Log("Connected to server", LoggingTarget.Network, LogLevel.Debug);
                     OsuNetworkingHandler.Connect();
                     break;
-                case 2:
+                case AutoJoin.Host:
                     OsuNetworkingHandler = new OsuNetworkingHandler
                     {
                         Address = ipBindable.Value + ":" + portBindable.Value

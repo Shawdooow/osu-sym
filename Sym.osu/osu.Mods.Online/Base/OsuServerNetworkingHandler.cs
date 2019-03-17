@@ -52,7 +52,7 @@ namespace osu.Mods.Online.Base
             if (!HandlePacket(info.Packet))
                 return;
 
-            OsuMatch match = null;
+            OsuMatch match;
 
             switch (info.Packet)
             {

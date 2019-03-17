@@ -1,4 +1,5 @@
-﻿using osu.Framework.Configuration;
+﻿using System.ComponentModel;
+using osu.Framework.Configuration;
 using osu.Framework.Platform;
 
 namespace osu.Core.Config
@@ -19,7 +20,7 @@ namespace osu.Core.Config
             Set(SymcolSetting.SavedPort, 25570);
             Set(SymcolSetting.SavedName, "Guest");
             Set(SymcolSetting.SavedUserID, -1L);
-            Set(SymcolSetting.Auto, 0);
+            Set(SymcolSetting.Auto, AutoJoin.None);
         }
     }
 
@@ -35,5 +36,14 @@ namespace osu.Core.Config
         SavedName,
         SavedUserID,
         Auto
+    }
+
+    public enum AutoJoin
+    {
+        None,
+        [Description("Join Server")]
+        Join,
+        [Description("Host Server")]
+        Host,
     }
 }

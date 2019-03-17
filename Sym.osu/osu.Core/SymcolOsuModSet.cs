@@ -2,6 +2,7 @@
 using osu.Core.Containers.SymcolToolbar;
 using osu.Core.OsuMods;
 using osu.Core.Screens;
+using osu.Core.Settings;
 using osu.Core.Wiki;
 using osu.Framework.Audio;
 using osu.Framework.Graphics.Textures;
@@ -9,6 +10,7 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game;
 using osu.Game.ModLoader;
+using osu.Game.Overlays.Settings;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Screens;
 
@@ -21,6 +23,8 @@ namespace osu.Core
         public override OsuScreen GetMenuScreen() => new SymcolMenu();
 
         public override Toolbar GetToolbar() => new SymcolModdedToolbar();
+
+        public override SettingsSection GetSettings() => new SymSection();
 
         public static ResourceStore<byte[]> LazerResources;
         public static TextureStore LazerTextures;
