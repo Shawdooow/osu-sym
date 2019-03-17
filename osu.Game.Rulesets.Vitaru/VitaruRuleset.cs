@@ -39,7 +39,8 @@ namespace osu.Game.Rulesets.Vitaru
         {
             get
             {
-                yield return (int)ControlScheme.Ryukoy;
+                for (int i = 0; i <= (int)ControlScheme.Ryukoy; i++)
+                    yield return (int)ControlScheme.Vitaru + i;
             }
         }
 
