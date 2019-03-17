@@ -31,7 +31,7 @@
 	<key>UIRequiresFullScreen</key>
 	<true/>
 	<key>CFBundleIdentifier</key>
-	<string>sh.ppy.osulazer</string>
+	<string>symcol.osu-sym</string>
 	<key>CFBundleName</key>
 	<string>osu!sym</string>
 	<key>CFBundleShortVersionString</key>
