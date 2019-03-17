@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
+using osu.Framework.Logging;
 using osu.Framework.MathUtils;
 using osu.Game.Audio;
 using osu.Game.Beatmaps;
@@ -289,7 +290,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
             switch (info.Bank)
             {
                 default:
-                    throw new NotImplementedException("getPatternID(); => bad SampleInfo: " + info.Bank + " - " + info.Name);
+                    Logger.Log($"getPatternID(); => bad SampleInfo: {info.Bank} - {info.Name}", LoggingTarget.Database, LogLevel.Error);
+                    return 1;
                 case "normal" when info.Name == "hitnormal":
                     return 1;
                 case "normal" when info.Name == "hitwhistle":

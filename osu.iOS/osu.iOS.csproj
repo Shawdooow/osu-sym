@@ -53,6 +53,14 @@
     <LinkDescription Include="Linker.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\osu-framework-sym\osu-framework\osu.Framework.iOS\osu.Framework.iOS.csproj">
+      <Project>{bbc0d18f-8595-43a6-ae61-5bf36a072cce}</Project>
+      <Name>osu.Framework.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\osu-framework-sym\osu-framework\osu.Framework\osu.Framework.csproj">
+      <Project>{c76bf5b3-985e-4d39-95fe-97c9c879b83a}</Project>
+      <Name>osu.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj">
       <Project>{6c9223c5-d801-48e4-b2ae-11d0668af899}</Project>
       <Name>osu.Game.Rulesets.Vitaru</Name>
