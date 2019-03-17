@@ -5,9 +5,9 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
-using osu.Mods.Online.Multi.Packets.Match;
-using osu.Mods.Online.Multi.Screens.Pieces;
+using osu.Mods.Online.Multi.Match.Packets;
 using osu.Mods.Online.Multi.Settings;
+using osu.Mods.Online.Multi.Settings.Options;
 
 namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
 {

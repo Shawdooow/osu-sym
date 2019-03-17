@@ -3,7 +3,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Mods.Online.Base;
-using osu.Mods.Online.Multi.Packets;
+using osu.Mods.Online.Multi;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Edit
 {

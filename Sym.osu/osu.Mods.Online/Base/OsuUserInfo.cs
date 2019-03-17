@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using osu.Mods.Online.Multi.Screens.Pieces;
+using osu.Mods.Online.Multi.Match.Pieces;
+using osu.Mods.Online.Multi.Settings;
 
 namespace osu.Mods.Online.Base
 {

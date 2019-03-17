@@ -21,9 +21,10 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Edit;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
-using osu.Mods.Online.Multi.Packets;
+using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings;
+using osu.Mods.Online.Multi.Settings.Options;
 
 namespace osu.Game.Rulesets.Vitaru
 {

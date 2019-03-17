@@ -1,5 +1,5 @@
 ﻿using System;
-using osu.Mods.Online.Multi.Packets;
+using osu.Mods.Online.Multi;
 
 namespace osu.Mods.Online.Score
 {

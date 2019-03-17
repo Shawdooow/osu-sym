@@ -3,7 +3,7 @@ using osu.Core.Screens.Evast;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Mods.Online.Base.Screens;
-using osu.Mods.Online.Multi.Screens;
+using osu.Mods.Online.Multi.Lobby;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Networking.NetworkingHandlers;
@@ -28,7 +28,7 @@ namespace osu.Mods.Online
                     Action = () =>
                     {
                         if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.ConnectionStatues >= ConnectionStatues.Connected)
-                            Push(new Lobby(OnlineModset.OsuNetworkingHandler));
+                            Push(new LobbyScreen(OnlineModset.OsuNetworkingHandler));
                         else
                             Logger.Log("Connect to a server first!", LoggingTarget.Network, LogLevel.Error);
                     }

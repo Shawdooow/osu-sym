@@ -4,7 +4,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Game.Online.API;
 using osu.Mods.Online.Base.Packets;
-using osu.Mods.Online.Multi.Packets.Lobby;
+using osu.Mods.Online.Multi.Lobby.Packets;
 using Sym.Networking.NetworkingHandlers;
 using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;

@@ -24,7 +24,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
-using osu.Mods.Online.Multi.Packets;
+using osu.Mods.Online.Multi;
 using osu.Mods.Rulesets.Core.Rulesets;
 using osuTK;
 using osuTK.Graphics;

@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
-using osu.Mods.Online.Multi.Packets;
+using osu.Mods.Online.Multi;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 {
