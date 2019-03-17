@@ -49,7 +49,7 @@ namespace osu.Mods.Online.Multi.Player.Pieces
         {
             if (info.Packet is ScorePacket scorePacket)
                 foreach (ScoreboardItem item in ScoreboardItems)
-                    if (scorePacket.UserID == item.User.ID && scorePacket.UserID != OsuNetworkingHandler.OsuUserInfo.ID)
+                    if (scorePacket.ID == item.User.ID && scorePacket.ID != OsuNetworkingHandler.OsuUserInfo.ID)
                         item.Score = scorePacket.Score;
         }
 
@@ -67,7 +67,7 @@ namespace osu.Mods.Online.Multi.Player.Pieces
 
                 SendPacket(new ScorePacket
                 {
-                    UserID = OsuNetworkingHandler.OsuUserInfo.ID,
+                    ID = OsuNetworkingHandler.OsuUserInfo.ID,
                     Score = (int)scoreProcessor.TotalScore.Value
                 });
             }

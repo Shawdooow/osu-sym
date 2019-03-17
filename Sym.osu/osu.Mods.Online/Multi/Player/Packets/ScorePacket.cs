@@ -6,7 +6,7 @@ namespace osu.Mods.Online.Multi.Player.Packets
     [Serializable]
     public class ScorePacket : Packet
     {
-        public long UserID;
+        public long ID;
 
         public int Score;
     }

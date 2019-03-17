@@ -24,6 +24,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi;
 using osu.Mods.Rulesets.Core.Rulesets;
 using osuTK;
@@ -120,7 +121,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 {
                     Name = "Gamefield",
                     Margin = 1
-                }
+                },
             });
 
             DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judgement Count" });

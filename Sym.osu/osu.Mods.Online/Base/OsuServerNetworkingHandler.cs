@@ -3,10 +3,12 @@ using System.Net;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
+using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Lobby.Packets;
 using osu.Mods.Online.Multi.Match.Packets;
 using osu.Mods.Online.Multi.Player.Packets;
+using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings.Options;
 using osu.Mods.Online.Score;
 using osu.Mods.Online.Score.Packets;
@@ -224,49 +226,39 @@ namespace osu.Mods.Online.Base
                     #region MultiPlayer
 
                     case PlayerLoadedPacket loaded:
-                        //This is slow as fuck as is the meatball who wrote it
-                        foreach (OsuMatch m in OsuMatches)
-                            foreach (OsuClient p in m.Clients)
-                                if (p.User.ID == loaded.User.ID)
-                                {
-                                    m.Clients.Remove(p);
-                                    m.LoadedClients.Add(p);
+                        OsuClient p = FindClient(loaded.User);
+                        match = FindMatch(loaded.User);
 
-                                    if (m.Clients.Count == 0)
-                                        ShareWithMatchClients(m.MatchInfo, new MatchStartingPacket());
+                        match.Clients.Remove(p);
+                        match.LoadedClients.Add(p);
 
-                                    return;
-                                }
-
-                        Logger.Log("A Player we can't find told us they have loaded!", LoggingTarget.Network, LogLevel.Error);
+                        if (match.Clients.Count == 0)
+                            ShareWithMatchClients(match.MatchInfo, new MatchStartingPacket());
                         break;
                     case ScorePacket score:
-                        foreach (OsuMatch m in OsuMatches)
-                            foreach (OsuClient p in m.LoadedClients)
-                                if (p.User.ID == score.UserID)
-                                    ShareWithMatchClients(m.MatchInfo, score);
+                        match = FindMatch(FindClient(score.ID).User);
+                        ShareWithMatchClients(match.MatchInfo, score);
                         break;
                     case CursorPositionPacket cursor:
-                        foreach (OsuMatch m in OsuMatches)
-                            foreach (OsuClient p in m.LoadedClients)
-                                if (p.User.ID == cursor.ID)
-                                    ShareWithMatchClients(m.MatchInfo, cursor);
+                        match = FindMatch(FindClient(cursor.ID).User);
+                        ShareWithMatchClients(match.MatchInfo, cursor);
+                        break;
+                    case Vector2Packet vect:
+                        match = FindMatch(FindClient(vect.ID).User);
+                        ShareWithMatchClients(match.MatchInfo, vect);
                         break;
                     case MatchExitPacket exit:
-                        foreach (OsuMatch m in OsuMatches)
-                            foreach (OsuClient p in m.LoadedClients)
-                                if (p.User.ID == exit.User.ID)
-                                {
-                                    restart:
-                                    foreach (OsuClient r in m.LoadedClients)
-                                    {
-                                        m.LoadedClients.Remove(r);
-                                        m.Clients.Add(r);
-                                        goto restart;
-                                    }
-                                    ShareWithMatchClients(m.MatchInfo, exit);
-                                    return;
-                                }
+                        match = FindMatch(exit.User);
+
+                        restart:
+                        foreach (OsuClient r in match.LoadedClients)
+                        {
+                            match.LoadedClients.Remove(r);
+                            match.Clients.Add(r);
+                            goto restart;
+                        }
+                        ShareWithMatchClients(match.MatchInfo, exit);
+
                         break;
 
                     #endregion
@@ -331,12 +323,14 @@ namespace osu.Mods.Online.Base
         /// Exists since OsuClient isn't serializable
         /// </summary>
         /// <returns></returns>
-        protected OsuClient FindClient(OsuUserInfo user)
+        protected OsuClient FindClient(OsuUserInfo user) => FindClient(user.ID);
+
+        protected OsuClient FindClient(long id)
         {
             foreach (Client c in Clients)
             {
                 OsuClient osu = (OsuClient)c;
-                if (osu.User.ID == user.ID)
+                if (osu.User.ID == id)
                     return osu;
             }
             return null;
