@@ -169,10 +169,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                                     case "Character" when set is Setting<string> ch:
                                         VitaruPlayer v = ChapterStore.GetPlayer(ch.Value);
 
+                                        DrawableVitaruPlayer dp;
+
                                         if (gamemode is TouhosuGamemode)
-                                            playerList.Add(ChapterStore.GetDrawablePlayer(this, (TouhosuPlayer)v));
+                                            playerList.Add(dp = ChapterStore.GetDrawablePlayer(this, (TouhosuPlayer)v));
                                         else
-                                            playerList.Add(ChapterStore.GetDrawablePlayer(this, v));
+                                            playerList.Add(dp = ChapterStore.GetDrawablePlayer(this, v));
+
+                                        dp.ControlType = ControlType.Net;
                                         break;
                                 }
                 }
