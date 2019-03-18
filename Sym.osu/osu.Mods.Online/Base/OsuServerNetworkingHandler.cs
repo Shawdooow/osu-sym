@@ -239,10 +239,6 @@ namespace osu.Mods.Online.Base
                         match = FindMatch(FindClient(score.ID).User);
                         ShareWithMatchClients(match.MatchInfo, score);
                         break;
-                    case CursorPositionPacket cursor:
-                        match = FindMatch(FindClient(cursor.ID).User);
-                        ShareWithMatchClients(match.MatchInfo, cursor);
-                        break;
                     case Vector2Packet vect:
                         match = FindMatch(FindClient(vect.ID).User);
                         ShareWithMatchClients(match.MatchInfo, vect);

@@ -32,6 +32,7 @@ using osu.Game.Screens.Play;
 using osu.Game.Skinning;
 using osu.Game.Storyboards.Drawables;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi.Player.Packets;
 using osu.Mods.Online.Multi.Player.Pieces;
 using osu.Mods.Online.Multi.Rulesets;
@@ -119,10 +120,11 @@ namespace osu.Mods.Online.Multi.Player
                 case MatchExitPacket exit:
                     this.Exit();
                     break;
-                case CursorPositionPacket position:
-                    foreach (MultiCursorContainer c in CursorContainer)
-                        if (position.ID.ToString() == c.Name)
-                            c.ActiveCursor.MoveTo(new Vector2(position.X + osu.DrawSize.X / 2, position.Y + osu.DrawSize.Y / 2), 1000f / 30f);
+                case Vector2Packet position:
+                    if (position.Name == "cursor")
+                        foreach (MultiCursorContainer c in CursorContainer)
+                            if (position.ID.ToString() == c.Name)
+                                c.ActiveCursor.MoveTo(new Vector2(position.X + osu.DrawSize.X / 2, position.Y + osu.DrawSize.Y / 2), 1000f / 30f);
                     break;
             }
         }
@@ -473,11 +475,11 @@ namespace osu.Mods.Online.Multi.Player
                 boo = Time.Current + 1000f / 30f;
 
                 if (LiveSpectator && RulesetContainer.Cursor != null)
-                    OsuNetworkingHandler.SendToServer(new CursorPositionPacket
+                    OsuNetworkingHandler.SendToServer(new Vector2Packet
                     {
+                        Name = "cursor",
                         ID = OsuNetworkingHandler.OsuUserInfo.ID,
-                        X = RulesetContainer.Cursor.ActiveCursor.Position.X - osu.DrawSize.X / 2,
-                        Y = RulesetContainer.Cursor.ActiveCursor.Position.Y - osu.DrawSize.Y / 2,
+                        Vector2 = RulesetContainer.Cursor.ActiveCursor.Position - osu.DrawSize / 2,
                     });
             }
         }

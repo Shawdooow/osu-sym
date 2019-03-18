@@ -26,6 +26,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi;
+using osu.Mods.Online.Multi.Settings;
 using osu.Mods.Rulesets.Core.Rulesets;
 using osuTK;
 using osuTK.Graphics;
@@ -149,11 +150,32 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             if (!Editor)
             {
                 VitaruPlayer vitaruPlayer = ChapterStore.GetPlayer(character);
-                
+
+                //Bit of a hack to get the DrawablePlayer
                 if (gamemode is TouhosuGamemode)
                     playerList.Add(Player = ChapterStore.GetDrawablePlayer(this, (TouhosuPlayer)vitaruPlayer));
                 else
                     playerList.Add(Player = ChapterStore.GetDrawablePlayer(this, vitaruPlayer));
+
+                //Multiplayer stuff
+                if (match != null && osuNetworkingHandler != null)
+                {
+                    foreach (OsuUserInfo user in match.Users)
+                        if (user.ID != osuNetworkingHandler.OsuUserInfo.ID)
+                            foreach (Setting set in user.UserSettings)
+                                switch (set.Name)
+                                {
+                                    //TODO: check if we LiveSpectator
+                                    case "Character" when set is Setting<string> ch:
+                                        VitaruPlayer v = ChapterStore.GetPlayer(ch.Value);
+
+                                        if (gamemode is TouhosuGamemode)
+                                            playerList.Add(ChapterStore.GetDrawablePlayer(this, (TouhosuPlayer)v));
+                                        else
+                                            playerList.Add(ChapterStore.GetDrawablePlayer(this, v));
+                                        break;
+                                }
+                }
 
                 DebugToolkit.GeneralDebugItems.Add(new DebugAction
                 {

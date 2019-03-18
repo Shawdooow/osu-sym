@@ -8,6 +8,9 @@ namespace osu.Mods.Online.Base.Packets
     [Serializable]
     public class Vector2Packet : Packet, ISerializable
     {
+        public float X => Vector2.X;
+        public float Y => Vector2.Y;
+
         public virtual Vector2 Vector2 { get; set; } = Vector2.Zero;
 
         public virtual string Name { get; set; }
