@@ -1,5 +1,19 @@
 ﻿namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections.Changelog
 {
+    internal class _0_0_1 : ChangelogVersion
+    {
+        public override string VersionTitle => "Learning Curb";
+
+        public override string VersionNumber => "0.0.1";
+
+        public override string GetChangelog()
+        {
+            return TAB + "On February 2, 2017 the first iteration of vitaru was born. "
+                       + "While it was nothing more than a Reimu sprite that moved around the screen it was something that I could start to play with, "
+                       + "something to use and learn how to program on the osu.framework.";
+        }
+    }
+
     internal class _0_0_0 : ChangelogVersion
     {
         public override string VersionTitle => "The Beginning";
