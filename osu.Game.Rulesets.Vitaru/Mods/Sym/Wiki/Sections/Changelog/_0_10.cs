@@ -8,9 +8,9 @@
 
         protected override string[] Versions => new[]
         {
-            "1414",
-            "1303",
-            "1227",
+            "2019.214.0",
+            "2019.103.0",
+            "2018.1227.0",
         };
 
         protected override string[] Features => new[]
@@ -41,14 +41,10 @@
             "Get Time.Current less (Bullets + Enemies hurt fps less now)",
         };
 
-        protected override string[] Balances => null;
-
         protected override string[] Fixes => new[]
         {
             "Fix ComboColors not working basically at all",
             //"Fix storymode making Ryukoy crash the game",
         };
-
-        protected override string[] DevNotes => null;
     }
 }

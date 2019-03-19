@@ -9,9 +9,29 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
     {
         public override string Title => "Changelog";
 
-        private readonly ChangelogVersion[] versions = new ChangelogVersion[]
+        private readonly ChangelogVersion[] versions =
         {
             new _0_10_0(),
+
+            new _0_9_0(),
+
+            new _0_8_6(),
+            new _0_8_5(),
+            new _0_8_4(),
+            new _0_8_3(),
+            new _0_8_2(),
+            new _0_8_1(),
+            new _0_8_0(),
+
+            new _0_7_7(),
+            new _0_7_6(),
+            new _0_7_0(),
+
+            new _0_6_2(),
+            new _0_6_1(),
+            new _0_6_0(),
+
+            new _0_0_0(), 
         };
 
         public ChangelogSection()

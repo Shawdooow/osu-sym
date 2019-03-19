@@ -9,31 +9,52 @@
         protected override string[] Versions => new[]
         {
             "",
+            "",
         };
 
         protected override string[] Features => new[]
         {
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "",
         };
 
         protected override string[] TweaksAndChanges => new[]
         {
             "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
         };
 
         protected override string[] Balances => new[]
         {
+            "",
+            "",
             "",
         };
 
         protected override string[] Fixes => new[]
         {
             "",
-        };
-
-        protected override string[] DevNotes => new[]
-        {
+            "",
+            "",
             "",
         };
+
+        protected override string DevNotes => "";
     }
 }

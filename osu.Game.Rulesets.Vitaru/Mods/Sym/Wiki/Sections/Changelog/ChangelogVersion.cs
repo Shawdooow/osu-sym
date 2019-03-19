@@ -6,10 +6,12 @@
 
         public virtual string VersionTitle => null;
 
+        protected const string TAB = "    ";
+
         public virtual string GetChangelog()
         {
             string change = "";
-            const string tab = "    -";
+            const string tab = TAB + "-";
 
             if (Versions != null)
             {
@@ -53,7 +55,7 @@
             if (DevNotes != null)
             {
                 add("Dev Notes:\n");
-                change = change + "     " + DevNotes;
+                change = change + TAB + DevNotes;
             }
 
             return change;
@@ -74,6 +76,6 @@
 
         protected virtual string[] Fixes => null;
 
-        protected virtual string[] DevNotes => null;
+        protected virtual string DevNotes => null;
     }
 }
