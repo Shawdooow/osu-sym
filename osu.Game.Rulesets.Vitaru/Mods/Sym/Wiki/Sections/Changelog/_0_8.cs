@@ -144,9 +144,6 @@
         protected override string[] Fixes => new[]
         {
             "Fix Combo fire never reseting back to 0 on miss",
-            "",
-            "",
-            "",
         };
 
         protected override string DevNotes => "Around this time I: \"Started work on Auto under the hood (both hardcoded ai and neural networking)\" "
