@@ -1,4 +1,5 @@
 ﻿using osu.Core.OsuMods;
+using osu.Core.Settings;
 using osu.Core.Wiki;
 using osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki;
 
@@ -15,6 +16,11 @@ namespace osu.Game.Rulesets.Vitaru
             VitaruRuleset.VitaruAudio.Volume.BindTo(game.Audio.Volume);
             VitaruRuleset.VitaruAudio.VolumeSample.BindTo(game.Audio.VolumeSample);
             VitaruRuleset.VitaruAudio.VolumeTrack.BindTo(game.Audio.VolumeTrack);
+
+            SymSection.OnPurge += () =>
+            {
+                
+            };
         }
     }
 }

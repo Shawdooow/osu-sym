@@ -1,4 +1,5 @@
-﻿using osu.Core.Config;
+﻿using System;
+using osu.Core.Config;
 using osu.Core.OsuMods;
 using osu.Framework.Graphics;
 using osu.Game.Graphics;
@@ -10,6 +11,8 @@ namespace osu.Core.Settings
     {
         public override string Header => "Modloader";
         public override FontAwesome Icon => FontAwesome.fa_bathtub;
+
+        public static Action OnPurge;
 
         public SymSection()
         {
@@ -40,6 +43,11 @@ namespace osu.Core.Settings
                         LabelText = "Player Color (HEX)",
                         Bindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.PlayerColor)
                     },
+                    new SettingsButton
+                    {
+                        Text = "Purge",
+                        Action = () => OnPurge?.Invoke()
+                    }
                 };
             }
         }
