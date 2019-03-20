@@ -2,6 +2,7 @@
 using osu.Core.Config;
 using osu.Core.OsuMods;
 using osu.Framework.Graphics;
+using osu.Framework.Logging;
 using osu.Game.Graphics;
 using osu.Game.Overlays.Settings;
 
@@ -16,6 +17,8 @@ namespace osu.Core.Settings
 
         public SymSection()
         {
+            OnPurge += () => { Logger.Log("Purged old or unused files", LoggingTarget.Database, LogLevel.Error); };
+
             Child = new SymSubSection();
 
             foreach (OsuModSet mod in OsuModStore.LoadedModSets)
