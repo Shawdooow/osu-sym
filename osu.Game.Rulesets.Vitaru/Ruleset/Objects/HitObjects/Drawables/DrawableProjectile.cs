@@ -1,5 +1,6 @@
 ﻿using System;
 using osu.Framework.Graphics;
+using osu.Framework.Logging;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
@@ -109,10 +110,15 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             Dispose();
         }
 
-        protected override void Dispose(bool isDisposing)
+        protected override void Dispose(bool isDisposing) => VitaruPlayfield.VitaruInputManager.ScheduleDispose(() =>
         {
-            CurrentPlayfield.Remove(this);
+            if (IsDisposed) return;
+
+            bool b = CurrentPlayfield.Remove(this);
+            if (!b) throw new Exception("REEEEEE COLA!");
+
             base.Dispose(isDisposing);
-        }
+        });
+
     }
 }

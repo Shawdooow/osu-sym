@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
+using osu.Game.Online.API.Requests;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
@@ -62,6 +64,20 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
             if (touch)
                 LoadCompleteChildren.Add(TouchControls);
+        }
+
+        private List<Action> schedules = new List<Action>();
+
+        public void ScheduleDispose(Action action) => schedules.Add(action);
+
+        protected override void Update()
+        {
+            for (int i = 0; i < schedules.Count; i++)
+                schedules[i].Invoke();
+
+            if (schedules.Count > 0) schedules = new List<Action>();
+
+            base.Update();
         }
 
         private class VitaruKeyBindingContainer : RulesetKeyBindingContainer

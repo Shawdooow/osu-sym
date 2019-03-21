@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Graphics;
 using osu.Game.Audio;
 using osu.Game.Rulesets.Objects;
@@ -266,10 +267,17 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             return (float)Math.Atan2(VitaruPlayfield.PlayerPosition.Y - Position.Y, VitaruPlayfield.PlayerPosition.X - Position.X);
         }
 
-        public override bool UpdateSubTree() => !IsDisposed && base.UpdateSubTree();
-
-        protected override void Dispose(bool isDisposing)
+        public override bool UpdateSubTree()
         {
+            if (!IsDisposed)
+                base.UpdateSubTree();
+            return false;
+        }
+
+        protected override void Dispose(bool isDisposing) => VitaruPlayfield.VitaruInputManager.ScheduleDispose(() =>
+        {
+            if (IsDisposed) return;
+
             starPiece?.Dispose();
             starPiece = null;
 
@@ -277,7 +285,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             enemy = null;
 
             VitaruPlayfield.Remove(this);
+
             base.Dispose(isDisposing);
-        }
+        });
     }
 }
