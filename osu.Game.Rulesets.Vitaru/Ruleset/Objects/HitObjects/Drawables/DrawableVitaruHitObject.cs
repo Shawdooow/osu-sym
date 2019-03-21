@@ -133,6 +133,18 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             ClearTransformsAfter(transformTime, true);
         }
 
+        public override bool UpdateSubTree()
+        {
+            try
+            {
+                return base.UpdateSubTree();
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         protected override void Update()
         {
             //base.Update();
