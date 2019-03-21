@@ -1,14 +1,14 @@
 ﻿using osu.Framework.Configuration;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osuTK.Graphics;
-using Sym.Base.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug
 {
-    public class DebugStat<T> : SymcolContainer
+    public class DebugStat<T> : Container
         where T : struct
     {
         public readonly Bindable<T> Bindable;

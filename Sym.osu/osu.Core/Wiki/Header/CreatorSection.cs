@@ -7,7 +7,6 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Users;
 using osuTK;
 using osuTK.Graphics;
-using Sym.Base.Graphics.Containers;
 
 namespace osu.Core.Wiki.Header
 {
@@ -49,7 +48,7 @@ namespace osu.Core.Wiki.Header
         //private readonly DrawableFlag country;
         private readonly Container cover;
 
-        private readonly SymcolClickableContainer avatarContainer;
+        private readonly ClickableContainer avatarContainer;
         private readonly UpdateableAvatar avatar;
 
         private readonly OsuTextFlowContainer quote;
@@ -98,7 +97,7 @@ namespace osu.Core.Wiki.Header
                             Colour = Color4.Black,
                             Alpha = 0.5f,
                         },
-                        avatarContainer = new SymcolClickableContainer
+                        avatarContainer = new ClickableContainer
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,

@@ -8,7 +8,6 @@ using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Lobby.Packets;
 using osu.Mods.Online.Multi.Match.Packets;
 using osu.Mods.Online.Multi.Player.Packets;
-using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings.Options;
 using osu.Mods.Online.Score;
 using osu.Mods.Online.Score.Packets;

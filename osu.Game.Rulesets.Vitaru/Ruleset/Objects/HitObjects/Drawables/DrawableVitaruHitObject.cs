@@ -1,5 +1,4 @@
-﻿using System;
-using osu.Framework.Configuration;
+﻿using osu.Framework.Configuration;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;
@@ -67,9 +66,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         public bool Preempted { get; private set; }
 
-        public bool Started { get; private set; }
-
-        public Action<bool> OnDispose;
+        public bool Started { get; private set; }        
 
         protected override JudgementResult CreateResult(Judgement judgement) => new VitaruJudgementResult(judgement);
 
@@ -158,12 +155,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         protected virtual void End() => Started = false;
 
         protected virtual void UnPreempt() => Preempted = false;
-
-        protected override void Dispose(bool isDisposing)
-        {
-            OnDispose?.Invoke(isDisposing);
-            base.Dispose(isDisposing);
-        }
     }
 
 }

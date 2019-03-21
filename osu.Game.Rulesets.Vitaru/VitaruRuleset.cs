@@ -24,7 +24,6 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings.Options;
-using Sym.Base.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru
 {

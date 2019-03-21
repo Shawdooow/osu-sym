@@ -15,11 +15,11 @@ using osu.Mods.Online.Base;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Base.Extentions;
-using Sym.Base.Graphics.Containers;
+using Container = osu.Framework.Graphics.Containers.Container;
 
 namespace osu.Mods.Online.Multi.Match.Pieces
 {
-    public class MatchPlayer : SymcolClickableContainer, IHasContextMenu
+    public class MatchPlayer : ClickableContainer, IHasContextMenu
     {
         public readonly OsuUserInfo OsuUserInfo;
 
@@ -178,7 +178,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
             new OsuMenuItem("Ban", MenuItemType.Destructive, () => { }),
         };
 
-        private class StatuesIcon : SymcolContainer, IHasTooltip
+        private class StatuesIcon : Container, IHasTooltip
         {
             public string TooltipText { get; set; }
 

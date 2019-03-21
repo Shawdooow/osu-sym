@@ -1,16 +1,16 @@
 ﻿using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osuTK;
 using osuTK.Graphics;
-using Sym.Base.Graphics.Containers;
 
 // ReSharper disable InconsistentNaming
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
 {
-    public class Camera : SymcolContainer
+    public class Camera : Container
     {
         public Box CameraBox;
         public VitaruHitbox Hitbox;
@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
             ySize.Text = "h: " + (int)CameraBox.ScreenSpaceDrawQuad.Height;
         }
 
-        private class Corner : SymcolContainer
+        private class Corner : Container
         {
             internal const int height = 5;
             internal const int width = 16;

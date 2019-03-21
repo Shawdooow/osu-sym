@@ -370,20 +370,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
         protected virtual void Death()
         {
             Dead = true;
-            Delete();
-        }
-
-        public virtual void Delete()
-        {
-            Clear();
-            ClearTransforms();
-            CurrentPlayfield.Remove(this);
-            Expire();
+            Dispose();
         }
 
         protected override void Dispose(bool isDisposing)
         {
             OnDispose?.Invoke(isDisposing);
+            CurrentPlayfield.Remove(this);
             base.Dispose(isDisposing);
         }
 

@@ -17,7 +17,6 @@ using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings.Options;
 using osuTK;
 using osuTK.Graphics;
-using Sym.Base.Graphics.Containers;
 using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Match.Pieces
@@ -36,7 +35,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
 
         public readonly OsuTabControl<MatchScreenMode> TabControl;
 
-        public readonly SymcolContainer SelectedContent;
+        public readonly Container SelectedContent;
 
         private readonly MapDetails mapDetails = new MapDetails();
 
@@ -95,7 +94,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
                     Height = 0.08f,
                     Width = 0.8f
                 },
-                SelectedContent = new SymcolContainer
+                SelectedContent = new Container
                 {
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomCentre,

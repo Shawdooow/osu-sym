@@ -1,12 +1,12 @@
 ﻿using System;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
-using Sym.Base.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
 {
-    public class VitaruInputContainer : SymcolContainer, IKeyBindingHandler<VitaruAction>
+    public class VitaruInputContainer : Container, IKeyBindingHandler<VitaruAction>
     {
         private readonly bool touch = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Touch);
 

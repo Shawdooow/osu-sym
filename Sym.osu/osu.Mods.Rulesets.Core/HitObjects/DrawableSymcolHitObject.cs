@@ -39,17 +39,17 @@ namespace osu.Mods.Rulesets.Core.HitObjects
             return new SymcolSkinnableSound(HitObject.GetAdjustedSample(info, control)) { RulesetAudio = RulesetAudio };
         }
 
-        public event Action OnDelete;
+        public event Action<bool> OnDispose;
 
-        public virtual void Delete()
+        protected override void Dispose(bool isDisposing)
         {
-            OnDelete?.Invoke();
+            OnDispose?.Invoke(isDisposing);
             ClearInternal();
             ClearTransforms();
-            Expire();
+            base.Dispose(isDisposing);
         }
 
-        // Not a todo for symcol rulesets!
+        // Not a todo for symsets!
 
         // Todo: At some point we need to move these to DrawableHitObject after ensuring that all other Rulesets apply
         // transforms in the same way and don't rely on them not being cleared

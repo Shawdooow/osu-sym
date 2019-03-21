@@ -1,14 +1,14 @@
 ﻿using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Lobby.Packets;
 using osuTK.Graphics;
-using Sym.Base.Graphics.Containers;
 
 namespace osu.Mods.Online.Multi.Lobby.Pieces
 {
-    public class MatchTile : SymcolClickableContainer
+    public class MatchTile : ClickableContainer
     {
         public MatchTile(OsuNetworkingHandler osuNetworkingHandler, MatchInfo match)
         {

@@ -217,7 +217,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         protected override void UnPreempt()
         {
             base.UnPreempt();
-            Delete();
+            Dispose();
         }
 
         public void Death(Enemy enemy)
@@ -265,14 +265,19 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             return (float)Math.Atan2(VitaruPlayfield.PlayerPosition.Y - Position.Y, VitaruPlayfield.PlayerPosition.X - Position.X);
         }
 
-        public override void Delete()
+        protected override void Dispose(bool isDisposing)
         {
-            starPiece.Delete();
+            starPiece.Dispose();
+            starPiece = null;
+
             if (!(Gamemode is DodgeGamemode))
-                enemy.Delete();
+            {
+                enemy.Dispose();
+                enemy = null;
+            }
 
             VitaruPlayfield.Remove(this);
-            base.Delete();
+            base.Dispose(isDisposing);
         }
     }
 }

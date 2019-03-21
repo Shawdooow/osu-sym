@@ -1,14 +1,14 @@
 ﻿using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Mods.Online.Multi.Match.Packets;
 using osuTK;
-using Sym.Base.Graphics.Containers;
 
 namespace osu.Mods.Online.Multi.Match.Pieces
 {
-    public class ChatMessage : SymcolContainer
+    public class ChatMessage : Container
     {
         public ChatMessage(ChatPacket packet)
         {

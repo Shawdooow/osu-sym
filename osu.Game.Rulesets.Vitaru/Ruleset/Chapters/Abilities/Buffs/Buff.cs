@@ -10,11 +10,10 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
-using Sym.Base.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities.Buffs
 {
-    public class Buff : SymcolContainer, ITuneable
+    public class Buff : Container, ITuneable
     {
         public AspectLockedPlayfield CurrentPlayfield { get; set; }
 
@@ -83,7 +82,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities.Buffs
             {
                 killed = true;
                 this.FadeOut(100)
-                    .OnComplete(b => Delete());
+                    .OnComplete(b => Dispose());
             }
             else if (!killed)
             {
@@ -103,10 +102,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities.Buffs
             return Math.Max(alpha_min + (distance - range) * scale, alpha_min);
         }
 
-        public override void Delete()
+        protected override void Dispose(bool isDisposing)
         {
             CurrentPlayfield.Remove(this);
-            base.Delete();
+            base.Dispose(isDisposing);
         }
     }
 }

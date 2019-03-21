@@ -15,12 +15,11 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using osuTK;
 using osuTK.Graphics;
-using Sym.Base.Graphics.Containers;
 using Sym.Base.Graphics.Sprites;
 
 namespace osu.Mods.Online.Multi.Match.Pieces
 {
-    public class MapDetails : SymcolClickableContainer
+    public class MapDetails : ClickableContainer
     {
         // ReSharper disable once InconsistentNaming
         private readonly SymcolSprite beatmapBG;

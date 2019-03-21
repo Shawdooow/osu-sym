@@ -6,14 +6,13 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
-using Sym.Base.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 {
     /// <summary>
     /// This class is a hack. Make no attempt to use it!
     /// </summary>
-    public class CharacterSelection : SymcolContainer
+    public class CharacterSelection : Container
     {
         public readonly List<SettingsDropdown<string>> CharacterDropdowns = new List<SettingsDropdown<string>>();
 

@@ -106,13 +106,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         protected override void UnPreempt()
         {
             base.UnPreempt();
-            Delete();
+            Dispose();
         }
 
-        public override void Delete()
+        protected override void Dispose(bool isDisposing)
         {
             CurrentPlayfield.Remove(this);
-            base.Delete();
+            base.Dispose(isDisposing);
         }
     }
 }

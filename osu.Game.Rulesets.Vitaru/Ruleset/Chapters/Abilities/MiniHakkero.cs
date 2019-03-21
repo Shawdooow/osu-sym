@@ -1,19 +1,19 @@
 ﻿using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Rational.Characters.Drawables;
 using osuTK.Graphics;
 using Sym.Base.Game;
-using Sym.Base.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
 {
-    public class MiniHakkero : SymcolContainer
+    public class MiniHakkero : Container
     {
         public readonly Hitbox Hitbox;
 
-        private readonly SymcolContainer red;
-        private readonly SymcolContainer green;
-        private readonly SymcolContainer blue;
+        private readonly Container red;
+        private readonly Container green;
+        private readonly Container blue;
 
         public MiniHakkero(DrawableMarisa drawableMarisa)
         {
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
                 {
                     HitDetection = false
                 },
-                red = new SymcolContainer
+                red = new Container
                 {
                     RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.BottomCentre,
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
                         RelativeSizeAxes = Axes.Both
                     }
                 },
-                green = new SymcolContainer
+                green = new Container
                 {
                     RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.BottomCentre,
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
                         RelativeSizeAxes = Axes.Both
                     }
                 },
-                blue = new SymcolContainer
+                blue = new Container
                 {
                     RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.BottomCentre,

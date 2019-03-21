@@ -1,13 +1,13 @@
 ﻿using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
 using osuTK;
-using Sym.Base.Graphics.Containers;
 using Sym.Base.Touch;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
 {
-    public class TouchControls : SymcolContainer
+    public class TouchControls : Container
     {
         /// <summary>
         /// Get this fucker from the player else its over!

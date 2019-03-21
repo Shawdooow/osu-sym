@@ -10,11 +10,10 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osuTK;
 using osuTK.Graphics;
-using Sym.Base.Graphics.Containers;
 
 namespace osu.Core.Wiki.Header
 {
-    public class WikiIndex : SymcolContainer
+    public class WikiIndex : Container
     {
         public readonly Bindable<WikiSet> CurrentWikiSet = new Bindable<WikiSet>();
 

@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
 using osu.Game.Screens;
-using Sym.Base.Graphics.Containers;
 
 namespace osu.Core.Screens
 {
     public class SymOsuScreen : OsuScreen
     {
-        protected virtual SymcolContainer Content => content;
+        protected virtual Container Content => content;
 
-        private readonly SymcolContainer content;
+        private readonly Container content;
 
         public IReadOnlyList<Drawable> Children
         {
@@ -48,7 +48,7 @@ namespace osu.Core.Screens
 
         public SymOsuScreen()
         {
-            InternalChild = content = new SymcolContainer
+            InternalChild = content = new Container
             {
                 RelativeSizeAxes = Axes.Both
             };

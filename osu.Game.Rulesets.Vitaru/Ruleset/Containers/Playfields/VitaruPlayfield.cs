@@ -24,7 +24,6 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
-using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Settings;
 using osu.Mods.Rulesets.Core.Rulesets;
@@ -181,18 +180,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                                 }
                 }
 
-                DebugToolkit.GeneralDebugItems.Add(new DebugAction
-                {
-                    Text = "Add New Player",
-                    Action = () =>
-                    {
-                        if (gamemode is TouhosuGamemode)
-                            AddDrawable(ChapterStore.GetDrawablePlayer(this, (TouhosuPlayer)vitaruPlayer));
-                        else
-                            AddDrawable(ChapterStore.GetDrawablePlayer(this, vitaruPlayer));
-                    }
-                });
-
                 foreach (DrawableVitaruPlayer player in playerList)
                     Gamefield.Add(player);
 
@@ -280,7 +267,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 t.Charge(999);
 
             if (ACCEL)
-                applyToClock(workingBeatmap.Value.Track, (getSpeed(Current) < 0.75f ? 0.75f : getSpeed(Current)) * ACCELMULTIPLIER);
+                applyToClock(workingBeatmap.Value.Track, (getAccelSpeed(Current) < 0.75f ? 0.75f : getAccelSpeed(Current)) * ACCELMULTIPLIER);
 
             restart:
             foreach (Cluster p in unloadedClusters)
@@ -290,7 +277,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                     unloadedClusters.Remove(p);
                     loadedClusters.Add(p);
                     DrawableBoss?.DrawableClusters.Add(d);
-                    d.OnDelete += () => clean(d);
+                    d.OnDispose += value => clean(d);
 
                     goto restart;
 
@@ -298,12 +285,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                     {
                         loadedClusters.Remove(p);
                         unloadedClusters.Add(p);
-                        c.OnDelete -= () => clean(d);
+                        c.OnDispose -= value => clean(d);
                     }
                 }
         }
 
-        private double getSpeed(double value)
+        private double getAccelSpeed(double value)
         {
             double scale = (1.5 - 0.75) / (endTime - startTime);
             return 0.75 + (value - startTime) * scale;
@@ -321,7 +308,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
             if (!Editor)
             {
-                OnResult.Invoke(vitaruResult);
+                OnResult?.Invoke(vitaruResult);
 
                 if (!vitaruResult.VitaruJudgement.BonusScore)
                     returnedJudgementCount.Bindable.Value++;
