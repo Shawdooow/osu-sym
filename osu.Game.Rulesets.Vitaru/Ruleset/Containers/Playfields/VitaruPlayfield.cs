@@ -269,25 +269,25 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             if (ACCEL)
                 applyToClock(workingBeatmap.Value.Track, (getAccelSpeed(Current) < 0.75f ? 0.75f : getAccelSpeed(Current)) * ACCELMULTIPLIER);
 
-            restart:
-            foreach (Cluster p in unloadedClusters)
+            for (int i = 0; i < unloadedClusters.Count; i++)
+            {
+                Cluster p = unloadedClusters[i];
                 if (Current >= p.StartTime - p.TimePreempt && Current < p.EndTime + p.TimeUnPreempt)
                 {
                     DrawableCluster d = add(p);
+
                     unloadedClusters.Remove(p);
                     loadedClusters.Add(p);
+
                     DrawableBoss?.DrawableClusters.Add(d);
-                    d.OnDispose += value => clean(d);
 
-                    goto restart;
-
-                    void clean(DrawableCluster c)
+                    d.OnDispose += value =>
                     {
                         loadedClusters.Remove(p);
                         unloadedClusters.Add(p);
-                        c.OnDispose -= value => clean(d);
-                    }
+                    };
                 }
+            }
         }
 
         private double getAccelSpeed(double value)
