@@ -45,10 +45,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
                 else if (hitbox1.Shape == Shape.Complex || hitbox2.Shape == Shape.Complex)
                     foreach (Drawable drawable in hitbox1.Children)
                     {
-                        var child1 = (Container)drawable;
+                        Container child1 = (Container)drawable;
                         foreach (Drawable drawable1 in hitbox2.Children)
                         {
-                            var child2 = (Container)drawable1;
+                            Container child2 = (Container)drawable1;
                             if (child1.ScreenSpaceDrawQuad.AABB.IntersectsWith(child2.ScreenSpaceDrawQuad.AABB))
                                 return true;
                         }

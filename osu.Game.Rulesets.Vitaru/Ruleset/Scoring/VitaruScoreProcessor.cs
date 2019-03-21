@@ -60,15 +60,15 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
             DebugToolkit.GeneralDebugItems.Add(new DebugStat<double>(pp) { Text = "PP" });
             DebugToolkit.GeneralDebugItems.Add(expectedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Expected Judgement Count" });
 
-            foreach (var obj in beatmap.HitObjects)
+            foreach (VitaruHitObject obj in beatmap.HitObjects)
                 if (obj is Cluster cluster)
                     foreach (Projectile unused in cluster.GetProjectiles())
                         addJudge(unused);
 
             void addJudge(VitaruHitObject hit)
             {
-                var judgement = hit.CreateJudgement();
-                var result = CreateResult(judgement);
+                Judgement judgement = hit.CreateJudgement();
+                JudgementResult result = CreateResult(judgement);
                 result.Type = judgement.MaxResult;
 
                 AddResult(result);

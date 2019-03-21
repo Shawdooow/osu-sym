@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
             int bullets = 0;
             int lasers = 0;
 
-            foreach (var obj in HitObjects)
+            foreach (VitaruHitObject obj in HitObjects)
             {
                 if (obj is Cluster pattern)
                 {

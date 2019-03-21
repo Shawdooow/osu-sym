@@ -323,7 +323,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
         public float PlayerRelativePositionAngle(Vector2 playerPos, Vector2 enemyPos)
         {
             //Returns a Radian
-            var playerAngle = (float)Math.Atan2(playerPos.Y - enemyPos.Y, playerPos.X - enemyPos.X);
+            float playerAngle = (float)Math.Atan2(playerPos.Y - enemyPos.Y, playerPos.X - enemyPos.X);
             return playerAngle;
         }
         #endregion

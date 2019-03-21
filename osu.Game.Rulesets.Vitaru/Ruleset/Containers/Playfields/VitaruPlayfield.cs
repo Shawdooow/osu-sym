@@ -304,7 +304,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         private void onResult(DrawableHitObject judgedObject, JudgementResult result)
         {
-            var vitaruResult = (VitaruJudgementResult)result;
+            VitaruJudgementResult vitaruResult = (VitaruJudgementResult)result;
 
             if (!Editor)
             {

@@ -24,9 +24,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
         {
             VitaruGamemode gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
-            var endTimeData = original as IHasEndTime;
-            var positionData = original as IHasPosition;
-            var comboData = original as IHasCombo;
+            IHasEndTime endTimeData = original as IHasEndTime;
+            IHasPosition positionData = original as IHasPosition;
+            IHasCombo comboData = original as IHasCombo;
 
             float complexity = 1;
 

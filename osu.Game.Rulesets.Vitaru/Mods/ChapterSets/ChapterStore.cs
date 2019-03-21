@@ -29,13 +29,13 @@ namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
 
             foreach (string file in Directory.GetFiles(Environment.CurrentDirectory, $"Vitaru.ChapterSets.*.dll"))
             {
-                var filename = Path.GetFileNameWithoutExtension(file);
+                string filename = Path.GetFileNameWithoutExtension(file);
 
                 if (loadedAssemblies.Values.Any(t => t.Namespace == filename)) return;
 
                 try
                 {
-                    var assembly = Assembly.LoadFrom(file);
+                    Assembly assembly = Assembly.LoadFrom(file);
                     loadedAssemblies[assembly] = assembly.GetTypes().First(t => t.IsPublic && t.IsSubclassOf(typeof(Chapterset)));
                 }
                 catch (Exception)

@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
         public override double ScoreMultiplier => 0.2;
         public override void ApplyToClock(IAdjustableClock clock)
         {
-            var pitchAdjust = clock as IHasPitchAdjust;
+            IHasPitchAdjust pitchAdjust = clock as IHasPitchAdjust;
             if (pitchAdjust != null)
                 pitchAdjust.PitchAdjust = 0.5;
             else
@@ -191,7 +191,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
         public override double ScoreMultiplier => 1.48;
         public override void ApplyToClock(IAdjustableClock clock)
         {
-            var pitchAdjust = clock as IHasPitchAdjust;
+            IHasPitchAdjust pitchAdjust = clock as IHasPitchAdjust;
             if (pitchAdjust != null)
                 pitchAdjust.PitchAdjust = 2;
             else

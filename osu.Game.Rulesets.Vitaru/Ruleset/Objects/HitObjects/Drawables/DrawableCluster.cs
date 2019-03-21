@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Game.Audio;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
@@ -117,7 +118,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         {
             base.Preempt();
 
-            foreach (var o in HitObject.NestedHitObjects)
+            foreach (HitObject o in HitObject.NestedHitObjects)
             {
                 if (o is Bullet b)
                 {
@@ -265,16 +266,15 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             return (float)Math.Atan2(VitaruPlayfield.PlayerPosition.Y - Position.Y, VitaruPlayfield.PlayerPosition.X - Position.X);
         }
 
+        public override bool UpdateSubTree() => !IsDisposed && base.UpdateSubTree();
+
         protected override void Dispose(bool isDisposing)
         {
-            starPiece.Dispose();
+            starPiece?.Dispose();
             starPiece = null;
 
-            if (!(Gamemode is DodgeGamemode))
-            {
-                enemy.Dispose();
-                enemy = null;
-            }
+            enemy?.Dispose();
+            enemy = null;
 
             VitaruPlayfield.Remove(this);
             base.Dispose(isDisposing);

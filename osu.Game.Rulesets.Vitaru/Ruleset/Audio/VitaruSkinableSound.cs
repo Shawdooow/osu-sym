@@ -14,9 +14,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Audio
 
         protected override SampleChannel LoadChannel(SampleInfo info, Func<string, SampleChannel> getSampleFunction)
         {
-            foreach (var lookup in info.LookupNames)
+            foreach (string lookup in info.LookupNames)
             {
-                var ch = getSampleFunction($"Gameplay/{lookup}");
+                SampleChannel ch = getSampleFunction($"Gameplay/{lookup}");
                 if (ch == null)
                     ch = getSampleFunction($"touhou/{lookup}");
                 if (ch == null)
