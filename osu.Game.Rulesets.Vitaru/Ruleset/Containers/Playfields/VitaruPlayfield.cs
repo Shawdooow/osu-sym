@@ -137,7 +137,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                     RelativeSizeAxes = Axes.Both,
                     Masking = true,
                     BorderColour = Color4.White,
-                    BorderThickness = Editor ? 6 : 3,
+                    BorderThickness = Editor ? 8 : 4,
                     Child = new Box
                     {
                         RelativeSizeAxes = Axes.Both,

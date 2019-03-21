@@ -66,20 +66,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
                 LoadCompleteChildren.Add(TouchControls);
         }
 
-        private List<Action> schedules = new List<Action>();
-
-        public void ScheduleDispose(Action action) => schedules.Add(action);
-
-        protected override void Update()
-        {
-            for (int i = 0; i < schedules.Count; i++)
-                schedules[i].Invoke();
-
-            if (schedules.Count > 0) schedules = new List<Action>();
-
-            base.Update();
-        }
-
         private class VitaruKeyBindingContainer : RulesetKeyBindingContainer
         {
             public VitaruKeyBindingContainer (RulesetInfo ruleset, int variant, SimultaneousBindingMode unique)

@@ -110,15 +110,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             Dispose();
         }
 
-        protected override void Dispose(bool isDisposing) => VitaruPlayfield.VitaruInputManager.ScheduleDispose(() =>
+        protected override void Dispose(bool isDisposing)
         {
-            if (IsDisposed) return;
-
-            bool b = CurrentPlayfield.Remove(this);
-            if (!b) throw new Exception("REEEEEE COLA!");
+            CurrentPlayfield.Remove(this);
 
             base.Dispose(isDisposing);
-        });
+        }
 
     }
 }

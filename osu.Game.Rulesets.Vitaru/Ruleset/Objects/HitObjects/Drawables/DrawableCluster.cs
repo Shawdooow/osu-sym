@@ -274,10 +274,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             return false;
         }
 
-        protected override void Dispose(bool isDisposing) => VitaruPlayfield.VitaruInputManager.ScheduleDispose(() =>
+        protected override void Dispose(bool isDisposing)
         {
-            if (IsDisposed) return;
-
+            CurrentPlayfield.Remove(starPiece);
             starPiece?.Dispose();
             starPiece = null;
 
@@ -287,6 +286,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             VitaruPlayfield.Remove(this);
 
             base.Dispose(isDisposing);
-        });
+        }
     }
 }
