@@ -171,7 +171,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
             public override void Tap()
             {
                 base.Tap();
-                Wheel.Position = SymcolCursor.VitaruCursor.CenterCircle.ToSpaceOfOtherDrawable(Vector2.Zero, this) - new Vector2(340, 380);
+                Wheel.Position = SymcolCursor.VitaruCursor.CenterCircle?.ToSpaceOfOtherDrawable(Vector2.Zero, this) - new Vector2(340, 380) ?? Vector2.Zero;
             }
 
             internal class VitaruTouch : TouchWheelContainer.TouchWheelButton
