@@ -126,10 +126,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 },
             });
 
-            DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judgement Count" });
-            DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(HITOBJECT_COUNT) { Text = "Drawable Hitobject Count" });
-            DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(DrawableCluster.CLUSTER_COUNT) { Text = "Drawable Cluster Count" });
-            DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(DrawableBullet.BULLET_COUNT) { Text = "Drawable Bullet Count" });
+            DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judge Count" });
+            DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(HITOBJECT_COUNT) { Text = "Hitobject Count" });
+            DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(DrawableCluster.CLUSTER_COUNT) { Text = "Cluster Count" });
+            DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(DrawableBullet.BULLET_COUNT) { Text = "Bullet Count" });
 
             if (playfieldBorder)
                 AddDrawable(new Container
