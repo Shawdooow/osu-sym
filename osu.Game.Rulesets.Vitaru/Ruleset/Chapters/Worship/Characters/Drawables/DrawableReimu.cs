@@ -77,7 +77,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters.Drawables
 
                     if (distance <= 32)
                     {
-                        buff.Dispose();
+                        if (!Experimental)
+                            buff.Dispose();
+                        else
+                            buff.Expire();
                         Heal(10);
                         Charge(10);
                     }
@@ -93,7 +96,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters.Drawables
             drawableBullet.HitObject.ColorOverride = Ghost ? Color4.Cyan : color;
 
             projectiles.Add(drawableBullet);
-            drawableBullet.OnDispose += final => projectiles.Remove(drawableBullet);
+            if (!Experimental)
+                drawableBullet.OnDispose += final => projectiles.Remove(drawableBullet);
             return drawableBullet;
         }
 

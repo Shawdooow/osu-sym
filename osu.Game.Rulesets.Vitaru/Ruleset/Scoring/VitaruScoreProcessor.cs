@@ -9,7 +9,6 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
-using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Game.Scoring;
 using osu.Mods.Online.Score.Rulesets;
 
@@ -17,8 +16,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
 {
     internal class VitaruScoreProcessor : OnlineScoreProcessor<VitaruHitObject>
     {
-        private readonly bool experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
-
         private readonly VitaruRulesetContainer vitaruRulesetContainer;
 
         public static int ComboCount;
@@ -92,7 +89,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
             double missWeight = 1d + misses / miss_weight;
             scoreMiss.Value = Math.Round(missWeight, 2);
 
-            double comboWeight = 1d + Math.Max(0d, HighestCombo / (experimental ? 2 : 6) - 1) / 25d;
+            double comboWeight = 1d + Math.Max(0d, HighestCombo / 2 - 1) / 25d;
             scoreCombo.Value = Math.Round(comboWeight, 2);
 
             return bonusScore + baseScore / missWeight * comboWeight;
@@ -120,7 +117,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
                         misses++;
                         break;
                     default:
-                        if (experimental && vitaruJudgement.Weight >= 1 || !experimental)
+                        if (vitaruJudgement.Weight >= 1)
                             Combo.Value++;
                         break;
                 }
@@ -164,7 +161,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
             double missWeight = 1d + misses / miss_weight;
             scoreMiss.Value = Math.Round(missWeight, 2);
 
-            double comboWeight = 1d + Math.Max(0d, HighestCombo / (experimental ? 2 : 6) - 1) / 25d;
+            double comboWeight = 1d + Math.Max(0d, HighestCombo / 2 - 1) / 25d;
             scoreCombo.Value = Math.Round(comboWeight, 2);
 
             TotalScore.Value = bonusScore + baseScore / missWeight * comboWeight;

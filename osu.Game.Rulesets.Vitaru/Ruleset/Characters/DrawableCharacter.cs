@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
+using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
 
@@ -24,6 +25,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
     public abstract class DrawableCharacter : BeatSyncedContainer, ITuneable, IHasTeam
     {
         #region Fields
+        protected readonly bool Experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
+
         protected static bool HITDETECTION;
 
         public int Team { get; set; }
@@ -370,7 +373,20 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
         protected virtual void Death()
         {
             Dead = true;
-            Dispose();
+            Delete();
+        }
+
+        protected virtual void Revive()
+        {
+            Dead = false;
+        }
+
+        public virtual void Delete()
+        {
+            if (!Experimental)
+                Dispose();
+            else
+                Expire();
         }
 
         protected override void Dispose(bool isDisposing)
@@ -378,11 +394,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
             OnDispose?.Invoke(isDisposing);
             CurrentPlayfield.Remove(this);
             base.Dispose(isDisposing);
-        }
-
-        protected virtual void Revive()
-        {
-            Dead = false;
         }
     }
 }

@@ -21,6 +21,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 {
     public class DrawableVitaruHitObject : DrawableSymcolHitObject<VitaruHitObject>, ITuneable
     {
+        protected readonly bool Experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
+
         protected readonly VitaruGamemode Gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
         protected readonly Bindable<SoundsOptions> Sounds = VitaruSettings.VitaruConfigManager.GetBindable<SoundsOptions>(VitaruSetting.Sounds);
@@ -135,14 +137,17 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         public override bool UpdateSubTree()
         {
-            try
-            {
-                return base.UpdateSubTree();
-            }
-            catch
-            {
-                return false;
-            }
+            if (!Experimental)
+                try
+                {
+                    return base.UpdateSubTree();
+                }
+                catch
+                {
+                    return false;
+                }
+
+            return base.UpdateSubTree();
         }
 
         protected override void Update()
@@ -167,6 +172,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         protected virtual void End() => Started = false;
 
         protected virtual void UnPreempt() => Preempted = false;
-    }
 
+
+        public virtual void Delete()
+        {
+            if (!Experimental)
+                Dispose();
+            else
+                Expire();
+        }
+    }
 }

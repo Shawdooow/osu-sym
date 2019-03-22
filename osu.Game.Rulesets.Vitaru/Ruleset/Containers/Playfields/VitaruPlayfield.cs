@@ -57,18 +57,20 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         private readonly string character = VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Character);
 
+        private readonly bool experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
+
         public readonly VitaruInputManager VitaruInputManager;
 
-        public readonly AspectLockedPlayfield Gamefield;
+        public AspectLockedPlayfield Gamefield { get; private set; }
 
         private readonly Container judgementLayer;
         private readonly List<DrawableVitaruPlayer> playerList = new List<DrawableVitaruPlayer>();
 
         public Vector2 PlayerPosition => Player?.Position ?? gamemode.PlayerStartingPosition;
 
-        public DrawableVitaruPlayer Player;
+        public DrawableVitaruPlayer Player { get; internal set; }
 
-        public DrawableBoss DrawableBoss;
+        public DrawableBoss DrawableBoss { get; private set; }
 
         public virtual bool Editor => false;
 
@@ -322,6 +324,23 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
                 judgementLayer.Add(explosion);
             }
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            if (!experimental)
+            {
+                Player?.Dispose();
+                Player = null;
+
+                DrawableBoss?.Dispose();
+                DrawableBoss = null;
+
+                Gamefield.Dispose();
+                Gamefield = null;
+            }
+
+            base.Dispose(isDisposing);
         }
     }
 }

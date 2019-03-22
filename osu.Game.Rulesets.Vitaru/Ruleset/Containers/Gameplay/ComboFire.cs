@@ -4,7 +4,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.MathUtils;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring;
-using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
 
@@ -12,12 +11,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
 {
     public class ComboFire : Container
     {
-        private readonly bool experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
-
         /// <summary>
         /// Burns with passion!
         /// </summary>
-        public virtual int MaxCombo => experimental ? 1000 : 2000;
+        public virtual int MaxCombo => 1000;
 
         public virtual Color4 PassionColorDark => Color4.Blue;
 
@@ -26,7 +23,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
         /// <summary>
         /// Starts to burn
         /// </summary>
-        public virtual int MinCombo => experimental ? 100 : 200;
+        public virtual int MinCombo => 100;
 
         public virtual Color4 ColorDark => Color4.Red;
 

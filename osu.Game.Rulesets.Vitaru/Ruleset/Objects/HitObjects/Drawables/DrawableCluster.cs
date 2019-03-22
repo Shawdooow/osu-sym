@@ -18,6 +18,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
     public class DrawableCluster : DrawableVitaruHitObject
     {
         public new readonly Cluster HitObject;
+
         private StarPiece starPiece;
 
         private bool done;
@@ -218,7 +219,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         protected override void UnPreempt()
         {
             base.UnPreempt();
-            Dispose();
+            Delete();
         }
 
         public void Death(Enemy enemy)
@@ -275,14 +276,17 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         protected override void Dispose(bool isDisposing)
         {
-            CurrentPlayfield.Remove(starPiece);
-            starPiece?.Dispose();
-            starPiece = null;
+            if (!Experimental)
+            {
+                CurrentPlayfield.Remove(starPiece);
+                starPiece?.Dispose();
+                starPiece = null;
 
-            enemy?.Dispose();
-            enemy = null;
+                enemy?.Dispose();
+                enemy = null;
 
-            VitaruPlayfield.Remove(this);
+                VitaruPlayfield.Remove(this);
+            }
 
             base.Dispose(isDisposing);
         }

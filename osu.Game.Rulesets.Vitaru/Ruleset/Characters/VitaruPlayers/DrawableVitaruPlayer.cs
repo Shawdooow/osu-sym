@@ -693,7 +693,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
         protected override void Dispose(bool isDisposing)
         {
-            VitaruPlayfield.Gamefield.Remove(Cursor);
+            if (!Experimental)
+                VitaruPlayfield.Gamefield.Remove(Cursor);
             base.Dispose(isDisposing);
         }
 

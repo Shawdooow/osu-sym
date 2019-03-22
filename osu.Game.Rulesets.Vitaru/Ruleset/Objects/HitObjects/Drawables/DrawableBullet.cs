@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             BULLET_COUNT.Value++;
             HitObject = bullet;
 
-            Size = new Vector2((float)HitObject.Diameter);
+            Size = new Vector2(HitObject.Diameter);
         }
 
         protected override double Weight(double distance)
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         {
             base.Update();
 
-            float current = (float)VitaruPlayfield.Current;
+            float current = VitaruPlayfield.Current;
 
             if (current >= HitObject.StartTime && current <= HitObject.EndTime)
             {
@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             else
             {
                 Alpha = 1;
-                bulletPiece.Rotation = (float)MathHelper.RadiansToDegrees(HitObject.Angle) + 90;
+                bulletPiece.Rotation = MathHelper.RadiansToDegrees(HitObject.Angle) + 90;
                 bulletPiece.Scale = new Vector2(1.5f);
                 bulletPiece.FadeInFromZero(100, Easing.OutSine)
                            .ScaleTo(Vector2.One, 100, Easing.InSine);
@@ -162,6 +162,16 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         protected override void Dispose(bool isDisposing)
         {
             BULLET_COUNT.Value--;
+
+            if (!Experimental)
+            {
+                RemoveInternal(bulletPiece);
+                bulletPiece.Dispose();
+
+                RemoveInternal(Hitbox);
+                Hitbox.Dispose();
+            }
+
             base.Dispose(isDisposing);
         }
     }

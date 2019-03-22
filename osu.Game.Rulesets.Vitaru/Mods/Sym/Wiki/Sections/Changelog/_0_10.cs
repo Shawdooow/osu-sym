@@ -15,7 +15,8 @@
 
         protected override string[] Features => new[]
         {
-            "[WIP] Patterns V2",
+            "[WIP] Patterns V3",
+            "Scoring V3",
             "[Experimental] New bullet visuals",
             "[Experimental] Touhou sounds",
             "[Desktop] Score Submission (Leaderboards don't work but scores are uploaded and saved when connected)",

@@ -1,6 +1,5 @@
 ﻿using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Scoring;
-using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements
@@ -8,8 +7,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements
     public class VitaruJudgement : Judgement
     {
         public override HitResult MaxResult => HitResult.Great;
-
-        private readonly bool experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
 
         /// <summary>
         /// The positional hit offset.
@@ -24,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements
 
         protected override int NumericResultFor(HitResult result)
         {
-            if (experimental && !BonusScore) return (int)Weight;
+            if (!BonusScore) return (int)Weight;
 
             switch (result)
             {

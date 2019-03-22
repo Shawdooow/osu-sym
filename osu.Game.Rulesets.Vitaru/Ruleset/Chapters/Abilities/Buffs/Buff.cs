@@ -19,6 +19,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities.Buffs
 
         private readonly VitaruGamemode gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
+        protected readonly bool experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
+
         public virtual bool Untuned
         {
             get => untuned;
@@ -82,7 +84,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities.Buffs
             {
                 killed = true;
                 this.FadeOut(100)
-                    .OnComplete(b => Dispose());
+                    .OnComplete(b =>
+                    {
+                        if (!experimental)
+                            Dispose();
+                        else
+                            Expire();
+                    });
             }
             else if (!killed)
             {
@@ -104,7 +112,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities.Buffs
 
         protected override void Dispose(bool isDisposing)
         {
-            CurrentPlayfield.Remove(this);
+            if (!experimental)
+                CurrentPlayfield.Remove(this);
             base.Dispose(isDisposing);
         }
     }

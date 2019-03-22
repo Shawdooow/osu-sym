@@ -1,6 +1,5 @@
 ﻿using System;
 using osu.Framework.Graphics;
-using osu.Framework.Logging;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
@@ -107,12 +106,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         protected override void UnPreempt()
         {
             base.UnPreempt();
-            Dispose();
+            Delete();
         }
 
         protected override void Dispose(bool isDisposing)
         {
-            CurrentPlayfield.Remove(this);
+            if (!Experimental)
+                CurrentPlayfield.Remove(this);
 
             base.Dispose(isDisposing);
         }
