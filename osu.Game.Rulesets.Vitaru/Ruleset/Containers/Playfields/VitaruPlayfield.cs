@@ -356,7 +356,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             protected override string GetText(double value)
             {
                 if (value < 1000)
-                    return $"{Text} = {value.ToString()}B";
+                    return $"{Text} = {Math.Round(value, 1).ToString()}B";
                 if (value < 1000000)
                     return $"{Text} = {Math.Round(value / 1000, 1).ToString()}KB";
                 if (value < 1000000000)
