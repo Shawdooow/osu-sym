@@ -51,6 +51,7 @@ namespace osu.Mods.Rulesets.Core.HitObjects
         protected override void Dispose(bool isDisposing)
         {
             OnDispose?.Invoke(isDisposing);
+            OnDispose = null;
             ClearInternal();
             ClearTransforms();
             base.Dispose(isDisposing);

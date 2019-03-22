@@ -138,5 +138,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
                     .MoveToY(Position.Y + 1000, 8000, Easing.InSine);
             }
         }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            souls.UnbindAll();
+            base.Dispose(isDisposing);
+        }
     }
 }

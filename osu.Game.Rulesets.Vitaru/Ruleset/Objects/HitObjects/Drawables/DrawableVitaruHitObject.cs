@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using osu.Framework.Configuration;
+﻿using osu.Framework.Configuration;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;
@@ -191,6 +190,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
                 Dispose();
             else
                 Expire();
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            Sounds.UnbindAll();
+            base.Dispose(isDisposing);
         }
     }
 }

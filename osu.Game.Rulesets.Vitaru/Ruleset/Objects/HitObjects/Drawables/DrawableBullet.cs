@@ -27,8 +27,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         private BulletPiece bulletPiece;
 
-        //this + bulletPiece
-        protected override double object_size => 1.23d + 1.08d;
+        //bullet + this
+        protected override double object_size => 269.34d + 1193.92d;
 
         public DrawableBullet(Bullet bullet, VitaruPlayfield playfield) : base(bullet, playfield)
         {

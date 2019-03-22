@@ -269,5 +269,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters.Drawables
 
             SpeedMultiplier = 1 / speed;
         }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            workingBeatmap.UnbindAll();
+            base.Dispose(isDisposing);
+        }
     }
 }

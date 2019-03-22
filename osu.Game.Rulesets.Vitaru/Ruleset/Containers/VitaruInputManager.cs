@@ -64,6 +64,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
                 LoadCompleteChildren.Add(TouchControls);
         }
 
+        protected override void Dispose(bool isDisposing)
+        {
+            debug.UnbindAll();
+            base.Dispose(isDisposing);
+        }
+
         private class VitaruKeyBindingContainer : RulesetKeyBindingContainer
         {
             public VitaruKeyBindingContainer (RulesetInfo ruleset, int variant, SimultaneousBindingMode unique)
