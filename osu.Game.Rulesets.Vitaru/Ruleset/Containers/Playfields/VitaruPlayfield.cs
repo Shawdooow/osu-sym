@@ -47,6 +47,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         public static Action<JudgementResult> OnResult;
 
+        public static Bindable<int> HITOBJECT_COUNT = new Bindable<int>();
+
         public bool Cheated { get; internal set; }
 
         private readonly VitaruGamemode gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
@@ -84,8 +86,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         private double endTime = double.MaxValue;
 
         private readonly DebugStat<int> returnedJudgementCount;
-        private readonly DebugStat<int> drawableHitobjectCount;
-        private readonly DebugStat<int> drawablePatternCount;
 
         private const int enemyTeam = 0;
         private const int playerTeam = 1;
@@ -127,10 +127,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             });
 
             DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judgement Count" });
-            DebugToolkit.GeneralDebugItems.Add(drawableHitobjectCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Hitobject Count" });
-            DebugToolkit.GeneralDebugItems.Add(drawablePatternCount = new DebugStat<int>(new Bindable<int>()) { Text = "Drawable Pattern Count" });
+            DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(HITOBJECT_COUNT) { Text = "Drawable Hitobject Count" });
+            DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(DrawableCluster.CLUSTER_COUNT) { Text = "Drawable Cluster Count" });
             DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(DrawableBullet.BULLET_COUNT) { Text = "Drawable Bullet Count" });
-            DrawableBullet.BULLET_COUNT.Value = 0;
 
             if (playfieldBorder)
                 AddDrawable(new Container
@@ -227,11 +226,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
             drawable.Editor = Editor;
 
-            drawableHitobjectCount.Bindable.Value++;
-            drawable.OnDispose += isDisposing => { drawableHitobjectCount.Bindable.Value--; };
+            HITOBJECT_COUNT.Value++;
+            drawable.OnFinalize += () => { HITOBJECT_COUNT.Value--; };
 
-            drawablePatternCount.Bindable.Value++;
-            drawable.OnDispose += isDisposing => { drawablePatternCount.Bindable.Value--; };
+            DrawableCluster.CLUSTER_COUNT.Value++;
+            drawable.OnFinalize += () => { DrawableCluster.CLUSTER_COUNT.Value--; };
             
             drawable.OnNewResult += onResult;
 

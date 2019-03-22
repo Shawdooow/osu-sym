@@ -31,8 +31,9 @@
             "Touch screen controls (they are a toggle in settings for now)",
             //"Linux Support",
             //"Added classic enemy visuals",
-            "Remove Storymode",
             "Upgraded Changelog again (and will start backfilling old versions back to pre 0.1.0)",
+            "New Experimental code trying to fix performance issues",
+            "Removed Storymode",
         };
 
         protected override string[] TweaksAndChanges => new[]

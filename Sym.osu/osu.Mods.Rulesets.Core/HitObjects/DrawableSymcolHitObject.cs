@@ -21,6 +21,13 @@ namespace osu.Mods.Rulesets.Core.HitObjects
     : base(hitObject)
         { }
 
+        public event Action OnFinalize; 
+
+        ~DrawableSymcolHitObject()
+        {
+            OnFinalize?.Invoke();
+        }
+
         public List<SymcolSkinnableSound> SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
 
         protected virtual void PlayBetterSamples()

@@ -24,6 +24,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         public DrawableLaser(Laser laser, VitaruPlayfield playfield) : base(laser, playfield)
         {
             LASER_COUNT.Value++;
+            OnFinalize += () => LASER_COUNT.Value--;
+
             HitObject = laser;
 
             Size = HitObject.Size;
@@ -123,7 +125,15 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         protected override void Dispose(bool isDisposing)
         {
-            LASER_COUNT.Value--;
+            if (!Experimental)
+            {
+                RemoveInternal(laserPiece);
+                laserPiece.Dispose();
+
+                RemoveInternal(Hitbox);
+                Hitbox.Dispose();
+            }
+
             base.Dispose(isDisposing);
         }
     }

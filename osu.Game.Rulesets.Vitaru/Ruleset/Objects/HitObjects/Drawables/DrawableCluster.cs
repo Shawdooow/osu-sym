@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Audio;
 using osu.Game.Rulesets.Objects;
@@ -17,6 +18,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 {
     public class DrawableCluster : DrawableVitaruHitObject
     {
+        public static Bindable<int> CLUSTER_COUNT = new Bindable<int>();
+
         public new readonly Cluster HitObject;
 
         private StarPiece starPiece;

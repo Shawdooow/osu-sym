@@ -30,6 +30,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         public DrawableBullet(Bullet bullet, VitaruPlayfield playfield) : base(bullet, playfield)
         {
             BULLET_COUNT.Value++;
+
+            OnFinalize += () => BULLET_COUNT.Value--;
+
             HitObject = bullet;
 
             Size = new Vector2(HitObject.Diameter);
@@ -161,8 +164,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         protected override void Dispose(bool isDisposing)
         {
-            BULLET_COUNT.Value--;
-
             if (!Experimental)
             {
                 RemoveInternal(bulletPiece);
