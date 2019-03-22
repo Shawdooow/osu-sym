@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Configuration;
@@ -126,10 +127,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 },
             });
 
-            DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judge Count" });
+            DebugToolkit.GeneralDebugItems.Add(new MemoryDebugStat());
             DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(HITOBJECT_COUNT) { Text = "Hitobject Count" });
             DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(DrawableCluster.CLUSTER_COUNT) { Text = "Cluster Count" });
             DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(DrawableBullet.BULLET_COUNT) { Text = "Bullet Count" });
+            DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judge Count" });
 
             if (playfieldBorder)
                 AddDrawable(new Container
@@ -230,7 +232,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             drawable.OnFinalize += () => { HITOBJECT_COUNT.Value--; };
 
             DrawableCluster.CLUSTER_COUNT.Value++;
-            drawable.OnFinalize += () => { DrawableCluster.CLUSTER_COUNT.Value--; };
+            drawable.OnFinalize += () => DrawableCluster.CLUSTER_COUNT.Value--;
             
             drawable.OnNewResult += onResult;
 
@@ -340,6 +342,28 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             }
 
             base.Dispose(isDisposing);
+        }
+
+        private class MemoryDebugStat : DebugStat<double>
+        {
+            public MemoryDebugStat()
+                : base(VitaruRuleset.MEMORY_LEAKED)
+            {
+                Text = "Memory wasted";
+                RoundTo = 1;
+            }
+
+            protected override string GetText(double value)
+            {
+                if (value < 1000)
+                    return $"{Text} = {value.ToString()}B";
+                if (value < 1000000)
+                    return $"{Text} = {Math.Round(value / 1000, 1).ToString()}KB";
+                if (value < 1000000000)
+                    return $"{Text} = {Math.Round(value / 1000000, 1).ToString()}MB";
+                else
+                    return $"{Text} = {Math.Round(value / 1000000000, 1).ToString()}GB";
+            }
         }
     }
 }

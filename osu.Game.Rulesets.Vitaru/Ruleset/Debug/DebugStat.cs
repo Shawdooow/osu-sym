@@ -1,4 +1,5 @@
-﻿using osu.Framework.Configuration;
+﻿using System;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -15,10 +16,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug
 
         public string Text
         {
-            get
-            {
-                return valueName;
-            }
+            get => valueName;
             set
             {
                 if (value != valueName)
@@ -30,6 +28,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug
                 }
             }
         }
+
+        public int RoundTo = 0;
 
         public readonly SpriteText SpriteText;
 
@@ -65,11 +65,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug
             };
 
             if (Bindable != null)
-                Bindable.ValueChanged += value =>
-                {
-                    SpriteText.Text = valueName + " = " + value.ToString();
-                };
+                Bindable.ValueChanged += value => SpriteText.Text = GetText(value);
         }
+
+        protected virtual string GetText(T value) => Text + " = " + value;
 
         protected override void LoadComplete()
         {

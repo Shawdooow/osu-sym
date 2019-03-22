@@ -1,4 +1,5 @@
-﻿using osu.Framework.Configuration;
+﻿using System.Runtime.InteropServices;
+using osu.Framework.Configuration;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;
@@ -30,6 +31,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         protected readonly VitaruPlayfield VitaruPlayfield;
 
         public AspectLockedPlayfield CurrentPlayfield { get; set; }
+
+        protected virtual double object_size => 0;
 
         public bool Untuned
         {
@@ -105,6 +108,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             preemt = (float)hitObject.TimePreempt;
             start = (float)hitObject.StartTime;
             end = (float)hitObject.EndTime;
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            VitaruRuleset.MEMORY_LEAKED.Value += object_size;
+            OnFinalize += () => VitaruRuleset.MEMORY_LEAKED.Value -= object_size;
         }
 
         protected override SymcolSkinnableSound GetSkinnableSound(SampleInfo info, SampleControlPoint point = null)

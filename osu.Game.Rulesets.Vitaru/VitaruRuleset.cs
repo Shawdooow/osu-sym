@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Audio;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -29,6 +30,8 @@ namespace osu.Game.Rulesets.Vitaru
 {
     public sealed class VitaruRuleset : Rulesets.Ruleset, IRulesetMulti
     {
+        public static Bindable<double> MEMORY_LEAKED = new Bindable<double>();
+
         public override int? LegacyID => 4; 
 
         public override string Description => "vitaru!";
