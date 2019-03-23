@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         protected readonly Bindable<SoundsOptions> Sounds = VitaruSettings.VitaruConfigManager.GetBindable<SoundsOptions>(VitaruSetting.Sounds);
 
-        protected readonly VitaruPlayfield VitaruPlayfield;
+        protected VitaruPlayfield VitaruPlayfield { get; private set; }
 
         public AspectLockedPlayfield CurrentPlayfield { get; set; }
 
@@ -109,14 +109,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             preemt = (float)hitObject.TimePreempt;
             start = (float)hitObject.StartTime;
             end = (float)hitObject.EndTime;
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
 
             VitaruRuleset.MEMORY_LEAKED.Value += object_size;
-            OnDispose += () => VitaruRuleset.MEMORY_LEAKED.Value -= object_size;
+            //OnDispose += () => VitaruRuleset.MEMORY_LEAKED.Value -= object_size;
         }
 
         protected override SymcolSkinnableSound GetSkinnableSound(SampleInfo info, SampleControlPoint point = null)
@@ -188,6 +183,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         /// </summary>
         public void Die() => die = true;
 
-        protected abstract void Delete();
+        protected virtual void Delete()
+        {
+            Sounds.UnbindAll();
+            VitaruPlayfield = null;
+            ClearInternal();
+            Dispose();
+        }
     }
 }

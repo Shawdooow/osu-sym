@@ -114,6 +114,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             ClearInternal();
             CurrentPlayfield.Remove(this);
             Dispose();
+            base.Delete();
         }
     }
 }

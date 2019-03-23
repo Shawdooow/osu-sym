@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
 
         private readonly Color4 characterColor;
 
-        private readonly DrawableCluster drawablePattern;
+        private DrawableCluster drawablePattern;
 
         public Enemy(VitaruPlayfield playfield, DrawableCluster drawablePattern) : base(playfield)
         {
@@ -139,10 +139,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
             }
         }
 
-        protected override void Dispose(bool isDisposing)
+        protected override void Delete()
         {
             souls.UnbindAll();
-            base.Dispose(isDisposing);
+            drawablePattern = null;
+            base.Delete();
         }
     }
 }

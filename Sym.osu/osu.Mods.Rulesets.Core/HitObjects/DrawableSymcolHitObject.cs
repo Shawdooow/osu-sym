@@ -46,6 +46,12 @@ namespace osu.Mods.Rulesets.Core.HitObjects
         protected override void Dispose(bool isDisposing)
         {
             OnDispose?.Invoke();
+
+            foreach (SymcolSkinnableSound sound in SymcolSkinnableSounds)
+                sound.Dispose();
+
+            SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
+
             base.Dispose(isDisposing);
         }
 

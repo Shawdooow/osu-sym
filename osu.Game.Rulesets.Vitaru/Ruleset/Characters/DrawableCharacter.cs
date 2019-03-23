@@ -87,13 +87,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
 
         public bool Dead { get; protected set; }
 
-        protected readonly VitaruPlayfield VitaruPlayfield;
-
-        public Action<bool> OnDispose;
+        protected VitaruPlayfield VitaruPlayfield { get; private set; }
 
         protected CircularContainer VisibleHitbox;
         public VitaruHitbox Hitbox;
+
         protected float LastX;
+        private bool die;
         #endregion
 
         protected DrawableCharacter(VitaruPlayfield vitaruPlayfield)
@@ -277,6 +277,19 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
             LastX = Position.X;
         }
 
+        public override bool UpdateSubTree()
+        {
+            bool r = base.UpdateSubTree();
+
+            if (die)
+            {
+                Delete();
+                die = false;
+            }
+
+            return r;
+        }
+
         protected override void Update()
         {
             base.Update();
@@ -379,6 +392,27 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
         protected virtual void Revive()
         {
             Dead = false;
+        }
+
+        public event Action OnDispose;
+
+        protected override void Dispose(bool isDisposing)
+        {
+            OnDispose?.Invoke();
+            base.Dispose(isDisposing);
+        }
+
+        /// <summary>
+        /// Tells this to die ASAP
+        /// </summary>
+        public void Die() => die = true;
+
+        protected virtual void Delete()
+        {
+            VitaruPlayfield = null;
+            CurrentPlayfield = null;
+            Clear();
+            Dispose();
         }
     }
 }

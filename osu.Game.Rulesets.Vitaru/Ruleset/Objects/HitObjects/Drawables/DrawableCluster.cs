@@ -235,14 +235,15 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             enemy.Clear();
             CurrentPlayfield.Remove(enemy);
             enemy?.Dispose();
+            enemy = null;
 
             starPiece.Clear();
             CurrentPlayfield.Remove(starPiece);
             starPiece?.Dispose();
+            starPiece = null;
 
-            ClearInternal();
             VitaruPlayfield.Remove(this);
-            Dispose();
+            base.Delete();
         }
 
         public void Death(Enemy enemy)
