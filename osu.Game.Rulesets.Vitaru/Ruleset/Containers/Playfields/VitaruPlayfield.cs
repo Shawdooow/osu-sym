@@ -236,6 +236,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             
             drawable.OnNewResult += onResult;
 
+            drawable.OnDispose += () => drawable.OnNewResult -= onResult;
+
             base.Add(drawable);
 
             return drawable;

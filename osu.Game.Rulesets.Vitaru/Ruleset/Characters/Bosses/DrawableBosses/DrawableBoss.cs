@@ -207,5 +207,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
             Hitbox.HitDetection = false;
             throw new NotImplementedException("Don't kill the boss or it will kill your game!");
         }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            DrawableClusters = new List<DrawableCluster>();
+            base.Dispose(isDisposing);
+        }
     }
 }
