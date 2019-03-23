@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using System;
 using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
@@ -49,6 +50,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
             foreach (Drawable draw in VitaruPlayfield.VitaruInputManager.LoadCompleteChildren)
                 VitaruPlayfield.VitaruInputManager.Add(draw);
+
+            VitaruPlayfield.VitaruInputManager.LoadCompleteChildren = null;
 
             if (!rankedFilter)
             {
@@ -126,13 +129,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         public override DrawableHitObject<VitaruHitObject> GetVisualRepresentation(VitaruHitObject h)
         {
-            if (h is Bullet bullet)
-                return new DrawableBullet(bullet, VitaruPlayfield);
-            if (h is Laser laser)
-                return new DrawableLaser(laser, VitaruPlayfield);
-            if (h is Cluster pattern)
-                return new DrawableCluster(pattern, VitaruPlayfield);
-            return null;
+            if (h is Cluster cluster)
+                return new DrawableCluster(cluster);
+            throw new InvalidOperationException("Only clusters allowed!");
         }
     }
 }

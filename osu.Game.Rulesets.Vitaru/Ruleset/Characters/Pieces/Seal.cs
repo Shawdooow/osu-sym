@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces
         private CircularProgress health;
         private CircularProgress energy;
 
-        private readonly DrawableCharacter character;
+        private DrawableCharacter character;
 
         private Sprite gear1;
         private Sprite gear2;
@@ -292,6 +292,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces
                         break;
                 }
             }
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            character = null;
+            base.Dispose(isDisposing);
         }
     }
 }

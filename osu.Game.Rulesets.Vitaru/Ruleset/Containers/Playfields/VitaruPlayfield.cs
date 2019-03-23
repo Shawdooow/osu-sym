@@ -260,6 +260,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 startTime = h.HitObject.StartTime;
 
             endTime = c.EndTime;
+            h.Dispose();
         }
 
         protected override void Update()
