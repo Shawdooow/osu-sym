@@ -21,13 +21,6 @@ namespace osu.Mods.Rulesets.Core.HitObjects
     : base(hitObject)
         { }
 
-        public event Action OnFinalize; 
-
-        ~DrawableSymcolHitObject()
-        {
-            OnFinalize?.Invoke();
-        }
-
         public List<SymcolSkinnableSound> SymcolSkinnableSounds = new List<SymcolSkinnableSound>();
 
         protected virtual void PlayBetterSamples()
@@ -46,14 +39,13 @@ namespace osu.Mods.Rulesets.Core.HitObjects
             return new SymcolSkinnableSound(HitObject.GetAdjustedSample(info, control)) { RulesetAudio = RulesetAudio };
         }
 
-        public event Action<bool> OnDispose;
+        public new bool IsDisposed => base.IsDisposed;
+
+        public event Action OnDispose; 
 
         protected override void Dispose(bool isDisposing)
         {
-            OnDispose?.Invoke(isDisposing);
-            OnDispose = null;
-            ClearInternal();
-            ClearTransforms();
+            OnDispose?.Invoke();
             base.Dispose(isDisposing);
         }
 

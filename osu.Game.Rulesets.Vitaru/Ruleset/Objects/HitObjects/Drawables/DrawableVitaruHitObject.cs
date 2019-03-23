@@ -19,7 +19,7 @@ using osu.Mods.Rulesets.Core.Skinning;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 {
-    public class DrawableVitaruHitObject : DrawableSymcolHitObject<VitaruHitObject>, ITuneable
+    public abstract class DrawableVitaruHitObject : DrawableSymcolHitObject<VitaruHitObject>, ITuneable
     {
         protected readonly bool Experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
 
@@ -79,7 +79,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         private readonly float start;
         private readonly float end;
 
-        public DrawableVitaruHitObject(VitaruHitObject hitObject, VitaruPlayfield playfield) : base(hitObject)
+        private bool die;
+
+        protected DrawableVitaruHitObject(VitaruHitObject hitObject, VitaruPlayfield playfield) : base(hitObject)
         {
             VitaruPlayfield = playfield;
             CurrentPlayfield = playfield.Gamefield;
@@ -114,7 +116,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             base.LoadComplete();
 
             VitaruRuleset.MEMORY_LEAKED.Value += object_size;
-            OnFinalize += () => VitaruRuleset.MEMORY_LEAKED.Value -= object_size;
+            OnDispose += () => VitaruRuleset.MEMORY_LEAKED.Value -= object_size;
         }
 
         protected override SymcolSkinnableSound GetSkinnableSound(SampleInfo info, SampleControlPoint point = null)
@@ -147,17 +149,15 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         public override bool UpdateSubTree()
         {
-            if (!Experimental)
-                try
-                {
-                    return base.UpdateSubTree();
-                }
-                catch
-                {
-                    return false;
-                }
+            bool r = base.UpdateSubTree();
 
-            return base.UpdateSubTree();
+            if (die)
+            {
+                Delete();
+                die = false;
+            }
+
+            return r;
         }
 
         protected override void Update()
@@ -183,19 +183,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         protected virtual void UnPreempt() => Preempted = false;
 
+        /// <summary>
+        /// Tells this to die ASAP
+        /// </summary>
+        public void Die() => die = true;
 
-        public virtual void Delete()
-        {
-            if (!Experimental)
-                Dispose();
-            else
-                Expire();
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            Sounds.UnbindAll();
-            base.Dispose(isDisposing);
-        }
+        protected abstract void Delete();
     }
 }

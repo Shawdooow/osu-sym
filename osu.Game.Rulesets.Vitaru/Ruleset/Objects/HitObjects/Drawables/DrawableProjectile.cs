@@ -10,7 +10,7 @@ using Sym.Base.Extentions;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 {
-    public class DrawableProjectile : DrawableVitaruHitObject
+    public abstract class DrawableProjectile : DrawableVitaruHitObject
     {
         public new readonly Projectile HitObject;
 
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         public Action OnHit;
 
-        public DrawableProjectile(Projectile projectile, VitaruPlayfield playfield)
+        protected DrawableProjectile(Projectile projectile, VitaruPlayfield playfield)
             : base(projectile, playfield)
         {
             HitObject = projectile;
@@ -106,16 +106,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         protected override void UnPreempt()
         {
             base.UnPreempt();
-            Delete();
+            Die();
         }
 
-        protected override void Dispose(bool isDisposing)
+        protected override void Delete()
         {
-            if (!Experimental)
-                CurrentPlayfield.Remove(this);
-
-            base.Dispose(isDisposing);
+            ClearInternal();
+            CurrentPlayfield.Remove(this);
+            Dispose();
         }
-
     }
 }

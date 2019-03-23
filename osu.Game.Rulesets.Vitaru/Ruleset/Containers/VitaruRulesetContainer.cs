@@ -25,9 +25,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
     {
         private readonly DebugStat<int> ranked;
 
-        private readonly Bindable<bool> rankedFilter = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.RankedFilter);
-
-        private readonly bool experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
+        private readonly bool rankedFilter = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.RankedFilter);
 
         public VitaruRulesetContainer(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap, OsuNetworkingHandler osuNetworkingHandler = null, MatchInfo match = null)
             : base(ruleset, beatmap)
@@ -37,12 +35,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
                 DebugToolkit.GeneralDebugItems = new List<Container>();
 
             DebugToolkit.GeneralDebugItems.Add(ranked = new DebugStat<int>(new Bindable<int>()) { Text = "Ranked" });
-
-            if (!experimental)
-            {
-                VitaruPlayfield?.Dispose();
-                VitaruPlayfield = null;
-            }
 
             VitaruPlayfield = CreateVitaruPlayfield((VitaruInputManager)KeyBindingInputManager, osuNetworkingHandler, match);
         }
@@ -137,17 +129,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
             if (h is Cluster pattern)
                 return new DrawableCluster(pattern, VitaruPlayfield);
             return null;
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            if (!experimental)
-            {
-                VitaruPlayfield?.Dispose();
-                VitaruPlayfield = null;
-            }
-
-            base.Dispose(isDisposing);
         }
     }
 }

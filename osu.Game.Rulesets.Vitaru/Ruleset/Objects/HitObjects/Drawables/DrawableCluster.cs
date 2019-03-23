@@ -42,6 +42,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             Size = new Vector2(30);
             Position = HitObject.Position;
             Alpha = 0;
+
             HitObject.PositionChanged += _ =>
             {
                 Position = HitObject.Position;
@@ -125,6 +126,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         {
             base.Preempt();
 
+            if (!Experimental)
             foreach (HitObject o in HitObject.NestedHitObjects)
             {
                 if (o is Bullet b)
@@ -215,17 +217,32 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
                     .ScaleTo(new Vector2(0.5f), HitObject.TimeUnPreempt, Easing.InQuad)
                     .FadeOut(HitObject.TimeUnPreempt, Easing.InQuad);
 
-            this.FadeOut(HitObject.TimePreempt / 2)
-                .MoveTo(getClusterStartPosition(), HitObject.TimePreempt * 2, Easing.InQuad);
+            this.FadeOut(HitObject.TimeUnPreempt / 2)
+                .MoveTo(getClusterStartPosition(), HitObject.TimeUnPreempt * 2, Easing.InQuad);
 
-            starPiece.FadeOut(HitObject.TimePreempt / 2)
-                .ScaleTo(new Vector2(0.1f), HitObject.TimePreempt / 2);
+            starPiece.FadeOut(HitObject.TimeUnPreempt / 2)
+                .ScaleTo(new Vector2(0.1f), HitObject.TimeUnPreempt / 2);
         }
 
         protected override void UnPreempt()
         {
             base.UnPreempt();
-            Delete();
+            Die();
+        }
+
+        protected override void Delete()
+        {
+            enemy.Clear();
+            CurrentPlayfield.Remove(enemy);
+            enemy?.Dispose();
+
+            starPiece.Clear();
+            CurrentPlayfield.Remove(starPiece);
+            starPiece?.Dispose();
+
+            ClearInternal();
+            VitaruPlayfield.Remove(this);
+            Dispose();
         }
 
         public void Death(Enemy enemy)
@@ -271,30 +288,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             if (VitaruPlayfield.Player == null)
                 return 0;
             return (float)Math.Atan2(VitaruPlayfield.PlayerPosition.Y - Position.Y, VitaruPlayfield.PlayerPosition.X - Position.X);
-        }
-
-        public override bool UpdateSubTree()
-        {
-            if (!IsDisposed)
-                base.UpdateSubTree();
-            return false;
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            if (!Experimental)
-            {
-                CurrentPlayfield.Remove(starPiece);
-                starPiece?.Dispose();
-                starPiece = null;
-
-                enemy?.Dispose();
-                enemy = null;
-
-                VitaruPlayfield.Remove(this);
-            }
-
-            base.Dispose(isDisposing);
         }
     }
 }

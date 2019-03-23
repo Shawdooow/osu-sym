@@ -691,13 +691,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         }
         #endregion
 
-        protected override void Dispose(bool isDisposing)
-        {
-            if (!Experimental)
-                VitaruPlayfield.Gamefield.Remove(Cursor);
-            base.Dispose(isDisposing);
-        }
-
         private class IndexedBullet
         {
             public readonly DrawableBullet DrawableBullet;

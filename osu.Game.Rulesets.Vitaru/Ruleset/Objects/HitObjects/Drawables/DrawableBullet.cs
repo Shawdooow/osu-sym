@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         {
             BULLET_COUNT.Value++;
 
-            OnFinalize += () => BULLET_COUNT.Value--;
+            OnDispose += () => BULLET_COUNT.Value--;
 
             HitObject = bullet;
 
@@ -163,20 +163,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
                            .OnComplete(b => { UnPreempt(); });
                 bulletPiece.Box.FadeOut(100, Easing.InSine);
             }
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            if (!Experimental)
-            {
-                RemoveInternal(bulletPiece);
-                bulletPiece.Dispose();
-
-                RemoveInternal(Hitbox);
-                Hitbox.Dispose();
-            }
-
-            base.Dispose(isDisposing);
         }
     }
 }

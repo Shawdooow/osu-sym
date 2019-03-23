@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Configuration;
@@ -208,10 +208,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         }
 
         [BackgroundDependencyLoader]
-        private void load(Bindable<WorkingBeatmap> beatmap)
-        {
-            workingBeatmap.BindTo(beatmap);
-        }
+        private void load(Bindable<WorkingBeatmap> beatmap) => workingBeatmap.BindTo(beatmap);
 
         private readonly List<Cluster> unloadedClusters = new List<Cluster>();
         private readonly List<Cluster> loadedClusters = new List<Cluster>();
@@ -229,10 +226,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             drawable.Editor = Editor;
 
             HITOBJECT_COUNT.Value++;
-            drawable.OnFinalize += () => { HITOBJECT_COUNT.Value--; };
+            drawable.OnDispose += () => { HITOBJECT_COUNT.Value--; };
 
             DrawableCluster.CLUSTER_COUNT.Value++;
-            drawable.OnFinalize += () => DrawableCluster.CLUSTER_COUNT.Value--;
+            drawable.OnDispose += () => DrawableCluster.CLUSTER_COUNT.Value--;
             
             drawable.OnNewResult += onResult;
 
@@ -284,7 +281,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
                     DrawableBoss?.DrawableClusters.Add(d);
 
-                    d.OnDispose += value =>
+                    d.OnDispose += () =>
                     {
                         loadedClusters.Remove(p);
                         unloadedClusters.Add(p);
@@ -327,30 +324,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             }
         }
 
-        protected override void Dispose(bool isDisposing)
-        {
-            if (!experimental)
-            {
-                Player?.Dispose();
-                Player = null;
-
-                DrawableBoss?.Dispose();
-                DrawableBoss = null;
-
-                Gamefield.Dispose();
-                Gamefield = null;
-            }
-
-            base.Dispose(isDisposing);
-        }
-
         private class MemoryDebugStat : DebugStat<double>
         {
             public MemoryDebugStat()
                 : base(VitaruRuleset.MEMORY_LEAKED)
             {
-                Text = "Memory wasted";
-                RoundTo = 1;
+                Text = "Memory lost";
             }
 
             protected override string GetText(double value)

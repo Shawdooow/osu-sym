@@ -120,13 +120,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters.Drawables
                 //TODO: Animation for this
                 Dead = true;
                 puppets.First().TakeOver(this);
-                Delete();
+                Expire();
             }
             else if (ControlType == ControlType.Puppet)
             {
                 masterFlandre.puppets.Remove(this);
                 Dead = true;
-                Delete();
+                Expire();
             }
         }
     }

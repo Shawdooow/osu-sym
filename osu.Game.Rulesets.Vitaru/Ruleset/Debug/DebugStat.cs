@@ -29,8 +29,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug
             }
         }
 
-        public int RoundTo = 0;
-
         public readonly SpriteText SpriteText;
 
         private string valueName;
