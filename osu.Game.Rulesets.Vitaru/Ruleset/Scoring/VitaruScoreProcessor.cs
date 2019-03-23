@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
 
         protected override bool Ranked => !vitaruRulesetContainer.VitaruPlayfield.Cheated;
 
-        public VitaruScoreProcessor(VitaruRulesetContainer vitaruRulesetContainer) : base(vitaruRulesetContainer)
+        public VitaruScoreProcessor(VitaruRulesetContainer vitaruRulesetContainer, VitaruPlayfield playfield) : base(vitaruRulesetContainer)
         {
             this.vitaruRulesetContainer = vitaruRulesetContainer;
 
@@ -39,7 +39,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
             Mode.Value = ScoringMode.Classic;
             Mode.Disabled = true;
 
-            VitaruPlayfield.OnResult = AddResult;
+            playfield.OnResult += AddResult;
+            playfield.OnDispose += () => playfield.OnResult -= AddResult;
         }
 
         protected override void Reset(bool storeResults)

@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         protected override CursorContainer CreateCursor() => new SymcolCursor();
 
-        public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor(this);
+        public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor(this, VitaruPlayfield);
 
         protected override Playfield CreatePlayfield() => VitaruPlayfield;
 

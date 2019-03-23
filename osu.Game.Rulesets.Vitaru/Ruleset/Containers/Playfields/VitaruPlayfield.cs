@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         public static bool TRUEHIDDEN;
         public static bool FLASHLIGHT;
 
-        public static Action<JudgementResult> OnResult;
+        public Action<JudgementResult> OnResult;
 
         public static Bindable<int> HITOBJECT_COUNT = new Bindable<int>();
 

@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -97,6 +98,15 @@ namespace osu.Mods.Rulesets.Core.Rulesets
             base.UpdateAfterChildren();
 
             Scale = new Vector2(Parent.DrawSize.Y * AspectRatio.X / AspectRatio.Y / Size.X, Parent.DrawSize.Y / Size.Y) * Margin;
+        }
+
+        public event Action OnDispose;
+
+        protected override void Dispose(bool isDisposing)
+        {
+            OnDispose?.Invoke();
+            OnDispose = null;
+            base.Dispose(isDisposing);
         }
     }
 }
