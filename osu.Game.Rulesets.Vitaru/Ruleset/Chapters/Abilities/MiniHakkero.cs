@@ -1,9 +1,13 @@
-﻿using osu.Framework.Graphics;
+﻿#region usings
+
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Rational.Characters.Drawables;
 using osuTK.Graphics;
 using Sym.Base.Game;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
 {

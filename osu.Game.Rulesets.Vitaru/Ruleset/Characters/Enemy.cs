@@ -1,4 +1,6 @@
-﻿using osu.Framework.Audio.Track;
+﻿#region usings
+
+using osu.Framework.Audio.Track;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Textures;
@@ -12,6 +14,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
 {

@@ -1,8 +1,12 @@
-﻿using osu.Framework.Extensions.Color4Extensions;
+﻿#region usings
+
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
 {

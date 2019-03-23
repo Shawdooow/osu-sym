@@ -1,10 +1,15 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
 using osuTK;
+
+#endregion
+
 // ReSharper disable SpecifyACultureInStringConversionExplicitly
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables

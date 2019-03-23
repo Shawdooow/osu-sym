@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;
@@ -7,6 +9,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
 using osu.Mods.Rulesets.Core.HitObjects;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
 {

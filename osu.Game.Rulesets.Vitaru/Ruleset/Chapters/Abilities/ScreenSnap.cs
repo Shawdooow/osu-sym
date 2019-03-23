@@ -1,10 +1,14 @@
-﻿using osu.Framework.Allocation;
+﻿#region usings
+
+using osu.Framework.Allocation;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Configuration;
 using Sym.Base.Graphics.Sprites;
+
+#endregion
 
 // ReSharper disable InconsistentNaming
 #pragma warning disable 4014

@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Scoring;
@@ -7,6 +9,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 {

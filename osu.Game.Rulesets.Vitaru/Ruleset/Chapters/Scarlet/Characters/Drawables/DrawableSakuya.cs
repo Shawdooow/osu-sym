@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Configuration;
@@ -14,6 +16,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK.Graphics;
 using Sym.Base.Graphics.Sprites;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters.Drawables
 {

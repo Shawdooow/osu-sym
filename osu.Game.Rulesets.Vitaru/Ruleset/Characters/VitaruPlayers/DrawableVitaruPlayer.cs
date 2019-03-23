@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Audio.Track;
@@ -23,6 +25,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Base.Extentions;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 {
@@ -240,7 +244,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
                 foreach (HealingProjectile healingBullet in HealingProjectiles)
                 {
-                    Heal((GetBulletHealingMultiplier(healingBullet.EdgeDistance) * fallOff) * HealingMultiplier);
+                    Heal(GetBulletHealingMultiplier(healingBullet.EdgeDistance) * fallOff * HealingMultiplier);
                 }
                 HealingProjectiles = new List<HealingProjectile>();
                 HealingMultiplier = 1;
@@ -419,7 +423,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                             relativePos += new Vector2(bullet.Hitbox.Width / 8 + Hitbox.Width / 8);
                             double distance = Math.Sqrt(Math.Pow(relativePos.X, 2) + Math.Pow(relativePos.Y, 2));
                             double edgeDistance = distance - (bullet.Hitbox.Width / 2 + Hitbox.Width / 2);
-                            double angleToBullet = MathHelper.RadiansToDegrees(Math.Atan2((bullet.Position.Y - Position.Y), (bullet.Position.X - Position.X))) + 90 + Rotation;
+                            double angleToBullet = MathHelper.RadiansToDegrees(Math.Atan2(bullet.Position.Y - Position.Y, bullet.Position.X - Position.X)) + 90 + Rotation;
 
                             if (closestBulletAngle < 360 - field_of_view | closestBulletAngle < -field_of_view && closestBulletAngle > field_of_view | closestBulletAngle > 360 + field_of_view)
                                 if (closestBullet.Position.X > Position.X && bullet.Position.X < Position.X || closestBullet.Position.X < Position.X && bullet.Position.X > Position.X)
@@ -604,7 +608,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
             if (Actions[VitaruAction.Slow])
             {
-                cursorAngle = MathHelper.RadiansToDegrees((float)Math.Atan2((Cursor.Position.Y - Position.Y), (Cursor.Position.X - Position.X))) + 90 + Rotation;
+                cursorAngle = MathHelper.RadiansToDegrees((float)Math.Atan2(Cursor.Position.Y - Position.Y, Cursor.Position.X - Position.X)) + 90 + Rotation;
                 directionModifier = -0.1f;
             }
 
@@ -716,7 +720,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                 RelativePosition += new Vector2(bullet.Hitbox.Width / 8 + player.Hitbox.Width / 8);
                 Distance = Math.Sqrt(Math.Pow(RelativePosition.X, 2) + Math.Pow(RelativePosition.Y, 2));
                 EdgeDistance = Distance - (bullet.Hitbox.Width / 2 + player.Hitbox.Width / 2);
-                AngleRadian = (float)Math.Atan2(bullet.Position.Y - player.Position.Y, (bullet.Position.X - player.Position.X)) + Math.PI / 2 + MathHelper.DegreesToRadians(player.Rotation);
+                AngleRadian = (float)Math.Atan2(bullet.Position.Y - player.Position.Y, bullet.Position.X - player.Position.X) + Math.PI / 2 + MathHelper.DegreesToRadians(player.Rotation);
                 AngleDegree = MathHelper.RadiansToDegrees(AngleRadian);
             }
         }

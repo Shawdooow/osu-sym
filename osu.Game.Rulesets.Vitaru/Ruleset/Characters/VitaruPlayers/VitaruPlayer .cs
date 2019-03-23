@@ -1,4 +1,8 @@
-﻿using osuTK.Graphics;
+﻿#region usings
+
+using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 {

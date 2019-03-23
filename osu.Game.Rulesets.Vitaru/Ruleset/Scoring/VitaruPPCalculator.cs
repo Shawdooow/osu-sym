@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Difficulty;
 using osu.Game.Scoring;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
 {

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -12,6 +14,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Input;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 {

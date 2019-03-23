@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects;
@@ -8,6 +10,8 @@ using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
 {

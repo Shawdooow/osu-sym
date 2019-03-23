@@ -1,7 +1,11 @@
-﻿using osu.Framework.Configuration;
+﻿#region usings
+
+using osu.Framework.Configuration;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 {

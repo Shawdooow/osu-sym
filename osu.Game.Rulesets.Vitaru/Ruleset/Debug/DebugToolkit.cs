@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -9,6 +11,9 @@ using osu.Game.Graphics.Backgrounds;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
+
 // ReSharper disable InconsistentNaming
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug

@@ -1,8 +1,12 @@
-﻿using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
+﻿#region usings
+
+using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Rational;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship;
 using osuTK;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Mods.Gamemodes
 {

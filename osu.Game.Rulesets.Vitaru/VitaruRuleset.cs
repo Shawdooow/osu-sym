@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Audio;
@@ -25,6 +27,8 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings.Options;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru
 {

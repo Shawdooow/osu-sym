@@ -1,6 +1,10 @@
-﻿using osu.Framework.Allocation;
+﻿#region usings
+
+using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Online.API;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
 {

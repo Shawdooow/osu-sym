@@ -1,9 +1,13 @@
+#region usings
+
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Edit
 {

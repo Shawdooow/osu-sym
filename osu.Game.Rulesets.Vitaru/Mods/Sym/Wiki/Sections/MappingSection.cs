@@ -1,7 +1,11 @@
-﻿using osu.Core.Wiki.Sections;
+﻿#region usings
+
+using osu.Core.Wiki.Sections;
 using osu.Core.Wiki.Sections.SectionPieces;
 using osu.Core.Wiki.Sections.Subsection;
 using osu.Framework.Allocation;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
 {

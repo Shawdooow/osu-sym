@@ -1,9 +1,13 @@
-﻿using osu.Framework.Graphics;
+﻿#region usings
+
+using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using Sym.Base.Graphics.Containers;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 {

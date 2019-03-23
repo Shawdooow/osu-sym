@@ -1,4 +1,8 @@
-﻿using osuTK;
+﻿#region usings
+
+using osuTK;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
 {

@@ -1,4 +1,8 @@
-﻿using osu.Game.Beatmaps;
+﻿#region usings
+
+using osu.Game.Beatmaps;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
 {

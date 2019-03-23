@@ -1,6 +1,7 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Configuration;
@@ -30,6 +31,8 @@ using osu.Mods.Online.Multi.Settings;
 using osu.Mods.Rulesets.Core.Rulesets;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable InconsistentNaming

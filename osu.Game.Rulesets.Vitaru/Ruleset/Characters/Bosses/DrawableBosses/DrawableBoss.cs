@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
@@ -13,6 +15,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Base.Graphics.Sprites;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
 {

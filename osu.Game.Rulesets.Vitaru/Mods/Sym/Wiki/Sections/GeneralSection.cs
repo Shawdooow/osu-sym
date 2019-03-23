@@ -1,4 +1,6 @@
-﻿using osu.Core.Wiki.Sections;
+﻿#region usings
+
+using osu.Core.Wiki.Sections;
 using osu.Core.Wiki.Sections.OptionExplanations;
 using osu.Core.Wiki.Sections.SectionPieces;
 using osu.Core.Wiki.Sections.Subsection;
@@ -13,6 +15,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
 {

@@ -1,8 +1,12 @@
-﻿using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
+﻿#region usings
+
+using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Rational.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Rational.Characters.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Rational
 {

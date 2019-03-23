@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Audio.Sample;
 using osu.Game.Audio;
 using osu.Mods.Rulesets.Core.Skinning;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Audio
 {

@@ -1,6 +1,10 @@
+#region usings
+
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Edit
 {

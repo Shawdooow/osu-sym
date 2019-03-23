@@ -1,4 +1,6 @@
-﻿using osu.Framework.Allocation;
+﻿#region usings
+
+using osu.Framework.Allocation;
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps.ControlPoints;
@@ -11,6 +13,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers
 {

@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
 {

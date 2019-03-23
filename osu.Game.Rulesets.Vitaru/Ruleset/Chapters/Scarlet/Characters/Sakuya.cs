@@ -1,6 +1,10 @@
-﻿using osu.Game.Graphics;
+﻿#region usings
+
+using osu.Game.Graphics;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters
 {

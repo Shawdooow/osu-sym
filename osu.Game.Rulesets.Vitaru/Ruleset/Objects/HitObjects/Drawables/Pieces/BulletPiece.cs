@@ -1,4 +1,6 @@
-﻿using osu.Framework.Audio.Track;
+﻿#region usings
+
+using osu.Framework.Audio.Track;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
@@ -12,6 +14,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Base.Graphics.Sprites;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
 {

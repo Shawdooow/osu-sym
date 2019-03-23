@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Overlays.Settings;
@@ -8,6 +10,8 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Match.Packets;
 using osu.Mods.Online.Multi.Settings;
 using osu.Mods.Online.Multi.Settings.Options;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
 {

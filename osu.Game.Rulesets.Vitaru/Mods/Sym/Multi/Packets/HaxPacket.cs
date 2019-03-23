@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi.Packets
 {

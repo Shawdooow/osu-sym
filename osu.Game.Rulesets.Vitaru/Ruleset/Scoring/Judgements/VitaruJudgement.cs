@@ -1,6 +1,10 @@
-﻿using osu.Game.Rulesets.Judgements;
+﻿#region usings
+
+using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Scoring;
 using osuTK;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements
 {

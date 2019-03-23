@@ -1,6 +1,10 @@
-﻿using osu.Game.Beatmaps;
+﻿#region usings
+
+using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Mods;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
 {

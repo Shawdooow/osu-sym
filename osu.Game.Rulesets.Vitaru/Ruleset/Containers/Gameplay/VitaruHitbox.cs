@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;
 using Sym.Base.Game;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
 {

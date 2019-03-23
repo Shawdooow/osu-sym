@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
 using osuTK;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 {
@@ -78,7 +82,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         public double EnemyRelativePositionAngle()
         {
             //Returns a Radian
-            double enemyAngle = Math.Atan2((NearestEnemy.Position.Y - Position.Y), (NearestEnemy.Position.X - Position.X));
+            double enemyAngle = Math.Atan2(NearestEnemy.Position.Y - Position.Y, NearestEnemy.Position.X - Position.X);
             return enemyAngle;
         }
 

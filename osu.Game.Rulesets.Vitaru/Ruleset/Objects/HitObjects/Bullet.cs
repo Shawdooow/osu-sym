@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Framework.MathUtils;
@@ -8,6 +10,8 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using osuTK;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
 {
@@ -78,7 +82,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
                         Path = new SliderPath(PathType.PerfectCurve, new[]
                         {
                             Position,
-                            new Vector2((float)Math.Cos((Angle + offset) - 0.4f) * 600 + Position.X, (float)Math.Sin((Angle + offset) - 0.4f) * 600 + Position.Y),
+                            new Vector2((float)Math.Cos(Angle + offset - 0.4f) * 600 + Position.X, (float)Math.Sin(Angle + offset - 0.4f) * 600 + Position.Y),
                             new Vector2((float)Math.Cos(Angle + offset) * (float)(1200 / Curviness) + Position.X, (float)Math.Sin(Angle + offset) * (float)(1200 / Curviness) + Position.Y),
                         }, 1200);
                         break;
@@ -86,7 +90,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
                         Path = new SliderPath(PathType.PerfectCurve, new[]
                         {
                             Position,
-                            new Vector2((float)Math.Cos((Angle - offset) + 0.4f) * 600 + Position.X, (float)Math.Sin((Angle - offset) + 0.4f) * 600 + Position.Y),
+                            new Vector2((float)Math.Cos(Angle - offset + 0.4f) * 600 + Position.X, (float)Math.Sin(Angle - offset + 0.4f) * 600 + Position.Y),
                             new Vector2((float)Math.Cos(Angle - offset) * (float)(1200 / Curviness) + Position.X, (float)Math.Sin(Angle - offset) * (float)(1200 / Curviness) + Position.Y),
                         }, 1200);
                         break;

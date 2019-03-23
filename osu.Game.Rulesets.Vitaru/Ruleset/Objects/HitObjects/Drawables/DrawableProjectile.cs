@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
 using Sym.Base.Extentions;
+
+#endregion
 
 // ReSharper disable InconsistentNaming
 

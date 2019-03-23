@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
@@ -9,6 +11,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters.Drawables
 {
@@ -58,7 +62,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters.Drawables
                 LeftTotem.Alpha = Alpha;
                 RightTotem.Alpha = Alpha;
                 foreach (DrawableProjectile projectile in projectiles)
-                    projectile.Alpha = ryukoy.Untuned ? (projectile.Alpha > Alpha ? Alpha : 0) : 0;
+                    projectile.Alpha = ryukoy.Untuned ? projectile.Alpha > Alpha ? Alpha : 0 : 0;
             }
         }
 

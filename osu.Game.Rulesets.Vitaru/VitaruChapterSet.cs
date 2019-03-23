@@ -1,5 +1,9 @@
-﻿using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
+﻿#region usings
+
+using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru
 {

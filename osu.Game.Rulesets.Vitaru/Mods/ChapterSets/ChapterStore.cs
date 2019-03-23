@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +11,8 @@ using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
 {

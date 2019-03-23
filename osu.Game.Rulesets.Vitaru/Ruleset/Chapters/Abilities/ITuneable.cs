@@ -1,4 +1,8 @@
-﻿using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
+﻿#region usings
+
+using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities
 {

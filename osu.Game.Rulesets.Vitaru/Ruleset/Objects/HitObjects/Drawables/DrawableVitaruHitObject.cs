@@ -1,4 +1,6 @@
-﻿using osu.Framework.Configuration;
+﻿#region usings
+
+using osu.Framework.Configuration;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;
@@ -12,10 +14,12 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Game.Skinning;
-using osu.Mods.Rulesets.Core.HitObjects;
-using osuTK.Graphics;
 using osu.Mods.MapMixer;
+using osu.Mods.Rulesets.Core.HitObjects;
 using osu.Mods.Rulesets.Core.Skinning;
+using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 {

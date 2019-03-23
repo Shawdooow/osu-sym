@@ -1,9 +1,13 @@
-﻿using osu.Framework.Graphics;
+﻿#region usings
+
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
 using osuTK;
 using Sym.Base.Touch;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
 {
@@ -174,7 +178,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
                 Wheel.Position = SymcolCursor.VitaruCursor.CenterCircle?.ToSpaceOfOtherDrawable(Vector2.Zero, this) - new Vector2(340, 380) ?? Vector2.Zero;
             }
 
-            internal class VitaruTouch : TouchWheelContainer.TouchWheelButton
+            internal class VitaruTouch : TouchWheelButton
             {
                 internal VitaruTouch(Anchor anchor)
                     : base(anchor)
@@ -182,7 +186,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
                 }
             }
 
-            internal class VitaruToggle : TouchWheelContainer.TouchWheelToggle
+            internal class VitaruToggle : TouchWheelToggle
             {
                 internal VitaruToggle(Anchor anchor)
                     : base(anchor)

@@ -1,3 +1,5 @@
+#region usings
+
 using System.Collections.Generic;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
@@ -7,6 +9,8 @@ using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Vitaru.Ruleset.Edit.Blueprints.ClusterBlueprints;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Edit
 {

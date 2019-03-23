@@ -1,5 +1,9 @@
-﻿using System.ComponentModel;
+﻿#region usings
+
+using System.ComponentModel;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers
 {

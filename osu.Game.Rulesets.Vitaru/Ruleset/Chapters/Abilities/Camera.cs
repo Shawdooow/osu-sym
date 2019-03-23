@@ -1,10 +1,14 @@
-﻿using osu.Framework.Graphics;
+﻿#region usings
+
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 // ReSharper disable InconsistentNaming
 

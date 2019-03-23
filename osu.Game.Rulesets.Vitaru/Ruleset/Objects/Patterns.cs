@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
 using osuTK;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
 {

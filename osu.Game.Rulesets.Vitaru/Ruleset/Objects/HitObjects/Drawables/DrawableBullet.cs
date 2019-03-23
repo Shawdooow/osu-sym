@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Scoring;
@@ -9,6 +11,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Base.Extentions;
+
+#endregion
 
 // ReSharper disable InconsistentNaming
 

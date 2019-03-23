@@ -1,5 +1,9 @@
-﻿using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
+﻿#region usings
+
+using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters
 {

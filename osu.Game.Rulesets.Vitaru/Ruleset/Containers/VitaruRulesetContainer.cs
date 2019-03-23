@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -18,6 +20,8 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Scoring;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 {
