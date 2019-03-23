@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         private readonly bool experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
 
-        public readonly VitaruInputManager VitaruInputManager;
+        public VitaruInputManager VitaruInputManager { get; private set; }
 
         public AspectLockedPlayfield Gamefield { get; private set; }
 
@@ -291,6 +291,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                     };
                 }
             }
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            VitaruInputManager = null;
+            base.Dispose(isDisposing);
         }
 
         private double getAccelSpeed(double value)

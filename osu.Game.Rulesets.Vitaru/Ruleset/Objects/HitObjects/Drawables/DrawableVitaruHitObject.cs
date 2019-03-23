@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         protected readonly VitaruGamemode Gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
-        protected readonly Bindable<SoundsOptions> Sounds = VitaruSettings.VitaruConfigManager.GetBindable<SoundsOptions>(VitaruSetting.Sounds);
+        protected Bindable<SoundsOptions> Sounds { get; private set; } = VitaruSettings.VitaruConfigManager.GetBindable<SoundsOptions>(VitaruSetting.Sounds);
 
         protected VitaruPlayfield VitaruPlayfield { get; private set; }
 
@@ -90,7 +90,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             VitaruPlayfield = playfield;
             CurrentPlayfield = playfield.Gamefield;
 
-            Sounds.ValueChanged += value =>
+            Sounds.ValueChanged += swap;
+            OnDispose += () => Sounds.ValueChanged -= swap;
+
+            void swap(SoundsOptions value)
             {
                 switch(value)
                 {
@@ -104,7 +107,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
                         RulesetAudio = VitaruRuleset.VitaruAudio;
                         break;
                 }
-            };
+            }
+
             Sounds.TriggerChange();
 
             AlwaysPresent = true;
@@ -152,7 +156,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
             if (die)
             {
-                Delete();
+                Dispose();
                 die = false;
             }
 
@@ -187,12 +191,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         /// </summary>
         public void Die() => die = true;
 
-        protected virtual void Delete()
+        protected override void Dispose(bool isDisposing)
         {
             Sounds.UnbindAll();
             VitaruPlayfield = null;
             ClearInternal();
-            Dispose();
+            base.Dispose(isDisposing);
+            Sounds = null;
         }
     }
 }

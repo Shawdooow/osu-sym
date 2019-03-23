@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
 {
     public class Enemy : DrawableCharacter
     {
-        private readonly Bindable<int> souls = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.Souls);
+        private Bindable<int> souls = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.Souls);
 
         public override double MaxHealth => 60;
 
@@ -143,11 +143,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
             }
         }
 
-        protected override void Delete()
+        protected override void Dispose(bool isDisposing)
         {
             souls.UnbindAll();
+            souls = null;
             drawablePattern = null;
-            base.Delete();
+            base.Dispose(isDisposing);
         }
     }
 }

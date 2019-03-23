@@ -287,7 +287,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
 
             if (die)
             {
-                Delete();
+                Dispose();
                 die = false;
             }
 
@@ -403,6 +403,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
         protected override void Dispose(bool isDisposing)
         {
             OnDispose?.Invoke();
+            OnDispose = null;
+
+            VitaruPlayfield = null;
+            CurrentPlayfield = null;
+            Clear();
+
             base.Dispose(isDisposing);
         }
 
@@ -410,13 +416,5 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
         /// Tells this to die ASAP
         /// </summary>
         public void Die() => die = true;
-
-        protected virtual void Delete()
-        {
-            VitaruPlayfield = null;
-            CurrentPlayfield = null;
-            Clear();
-            Dispose();
-        }
     }
 }

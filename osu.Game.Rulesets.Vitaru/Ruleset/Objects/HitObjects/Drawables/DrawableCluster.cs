@@ -234,7 +234,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             Die();
         }
 
-        protected override void Delete()
+        protected override void Dispose(bool isDisposing)
         {
             enemy.Clear();
             CurrentPlayfield.Remove(enemy);
@@ -247,7 +247,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
             starPiece = null;
 
             VitaruPlayfield.Remove(this);
-            base.Delete();
+            base.Dispose(isDisposing);
         }
 
         public void Death(Enemy enemy)
