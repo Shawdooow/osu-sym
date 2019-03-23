@@ -195,6 +195,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         {
             Sounds.UnbindAll();
             VitaruPlayfield = null;
+            CurrentPlayfield = null;
             ClearInternal();
             base.Dispose(isDisposing);
             Sounds = null;
