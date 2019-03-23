@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         public readonly DebugToolkit DebugToolkit;
 
-        public readonly TouchControls TouchControls;
+        public TouchControls TouchControls = new TouchControls();
 
         public VitaruInputManager(RulesetInfo ruleset, int variant) : base(ruleset, variant, SimultaneousBindingMode.Unique)
         {
@@ -65,13 +65,18 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
                 LoadCompleteChildren.Add(new ComboFire());
 
             if (touch)
-                LoadCompleteChildren.Add(TouchControls = new TouchControls());
+                LoadCompleteChildren.Add(TouchControls);
         }
 
         protected override void Dispose(bool isDisposing)
         {
             debug.UnbindAll();
             debug = null;
+
+            Remove(TouchControls);
+            TouchControls.Dispose();
+            TouchControls = null;
+
             base.Dispose(isDisposing);
         }
 
