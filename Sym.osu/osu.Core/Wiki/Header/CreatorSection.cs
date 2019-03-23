@@ -1,4 +1,6 @@
-﻿using osu.Framework.Allocation;
+﻿#region usings
+
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -7,6 +9,8 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Users;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Core.Wiki.Header
 {

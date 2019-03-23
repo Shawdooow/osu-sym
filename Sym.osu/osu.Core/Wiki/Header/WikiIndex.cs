@@ -1,4 +1,6 @@
-﻿using osu.Core.Wiki.OverlayPieces;
+﻿#region usings
+
+using osu.Core.Wiki.OverlayPieces;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -10,6 +12,8 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Core.Wiki.Header
 {

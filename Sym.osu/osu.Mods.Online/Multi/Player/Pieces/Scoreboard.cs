@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
@@ -8,6 +10,8 @@ using osu.Mods.Online.Multi.Player.Packets;
 using osuTK;
 using osuTK.Input;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Player.Pieces
 {

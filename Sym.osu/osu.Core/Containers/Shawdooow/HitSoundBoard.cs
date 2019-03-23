@@ -1,4 +1,6 @@
-﻿using osu.Framework.Allocation;
+﻿#region usings
+
+using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Configuration;
@@ -7,6 +9,8 @@ using osu.Framework.Graphics.Containers;
 using osuTK;
 using osuTK.Graphics;
 using osuTK.Input;
+
+#endregion
 
 namespace osu.Core.Containers.Shawdooow
 {

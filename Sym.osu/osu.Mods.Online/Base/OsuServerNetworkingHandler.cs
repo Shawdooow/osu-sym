@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using System.Net;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
@@ -14,6 +16,8 @@ using osu.Mods.Online.Score.Packets;
 using Sym.Networking.NetworkingHandlers;
 using Sym.Networking.NetworkingHandlers.Server;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Base
 {

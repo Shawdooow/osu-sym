@@ -1,5 +1,9 @@
-﻿using osu.Game.Graphics;
+﻿#region usings
+
+using osu.Game.Graphics;
 using osu.Game.Overlays.Toolbar;
+
+#endregion
 
 namespace osu.Core.Containers.SymcolToolbar
 {

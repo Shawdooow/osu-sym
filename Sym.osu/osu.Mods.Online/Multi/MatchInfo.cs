@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Settings;
+
+#endregion
 
 namespace osu.Mods.Online.Multi
 {

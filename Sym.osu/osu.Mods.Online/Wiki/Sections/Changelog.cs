@@ -1,5 +1,9 @@
-﻿using osu.Core.Wiki.Included.Symcol.Sections;
+﻿#region usings
+
+using osu.Core.Wiki.Included.Symcol.Sections;
 using osu.Core.Wiki.Sections;
+
+#endregion
 
 namespace osu.Mods.Online.Wiki.Sections
 {

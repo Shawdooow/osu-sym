@@ -1,4 +1,6 @@
-﻿using osu.Core.Wiki.Sections.SectionPieces;
+﻿#region usings
+
+using osu.Core.Wiki.Sections.SectionPieces;
 using osu.Core.Wiki.Sections.Subsection;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -6,6 +8,8 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osuTK;
+
+#endregion
 
 namespace osu.Core.Wiki.Sections
 {

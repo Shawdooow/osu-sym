@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi.Settings;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Match.Packets
 {

@@ -1,6 +1,10 @@
-﻿using System.ComponentModel;
+﻿#region usings
+
+using System.ComponentModel;
 using osu.Framework.Configuration;
 using osu.Framework.Platform;
+
+#endregion
 
 namespace osu.Core.Config
 {

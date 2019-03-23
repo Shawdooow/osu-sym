@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using osu.Core;
@@ -41,6 +43,8 @@ using osuTK;
 using osuTK.Input;
 using Sym.Base.Graphics.Containers;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Player
 {
@@ -193,10 +197,10 @@ namespace osu.Mods.Online.Multi.Player
 
             // Lazer's audio timings in general doesn't match stable. This is the result of user testing, albeit limited.
             // This only seems to be required on windows. We need to eventually figure out why, with a bit of luck.
-            var platformOffsetClock = new FramedOffsetClock(adjustableClock) { Offset = RuntimeInfo.OS == RuntimeInfo.Platform.Windows ? 22 : 0 };
+            FramedOffsetClock platformOffsetClock = new FramedOffsetClock(adjustableClock) { Offset = RuntimeInfo.OS == RuntimeInfo.Platform.Windows ? 22 : 0 };
 
             // the final usable gameplay clock with user-set offsets applied.
-            var offsetClock = new FramedOffsetClock(platformOffsetClock);
+            FramedOffsetClock offsetClock = new FramedOffsetClock(platformOffsetClock);
 
             userAudioOffset.ValueChanged += v => offsetClock.Offset = v;
             userAudioOffset.TriggerChange();
@@ -297,7 +301,7 @@ namespace osu.Mods.Online.Multi.Player
             ScoreProcessor.AllJudged += onCompletion;
             ScoreProcessor.Failed += onFail;
 
-            foreach (var mod in Beatmap.Value.Mods.Value.OfType<IApplicableToScoreProcessor>())
+            foreach (IApplicableToScoreProcessor mod in Beatmap.Value.Mods.Value.OfType<IApplicableToScoreProcessor>())
                 mod.ApplyToScoreProcessor(ScoreProcessor);
         }
 
@@ -306,13 +310,13 @@ namespace osu.Mods.Online.Multi.Player
             if (sourceClock == null) return;
 
             sourceClock.Rate = 1;
-            foreach (var mod in Beatmap.Value.Mods.Value.OfType<IApplicableToClock>())
+            foreach (IApplicableToClock mod in Beatmap.Value.Mods.Value.OfType<IApplicableToClock>())
                 mod.ApplyToClock(sourceClock);
         }
 
         protected virtual ScoreInfo CreateScore()
         {
-            var score = new ScoreInfo
+            ScoreInfo score = new ScoreInfo
             {
                 Beatmap = Beatmap.Value.BeatmapInfo,
                 Ruleset = ruleset,
@@ -340,7 +344,7 @@ namespace osu.Mods.Online.Multi.Player
             {
                 onCompletionEvent = Schedule(delegate
                 {
-                    var score = CreateScore();
+                    ScoreInfo score = CreateScore();
                     //if (RulesetContainer.Replay == null)
                         //scoreManager.Import(score, true);
                     //Push(new Results(score));
@@ -364,7 +368,7 @@ namespace osu.Mods.Online.Multi.Player
             if (!LoadedBeatmapSuccessfully)
                 return;
 
-            this.Alpha = 0;
+            Alpha = 0;
             this
                 .ScaleTo(0.7f)
                 .ScaleTo(1, 750, Easing.OutQuint)
@@ -435,7 +439,7 @@ namespace osu.Mods.Online.Multi.Player
             if (storyboardContainer == null)
                 return;
 
-            var beatmap = Beatmap.Value;
+            WorkingBeatmap beatmap = Beatmap.Value;
 
             storyboard = beatmap.Storyboard.CreateDrawable();
             storyboard.Masking = true;
@@ -453,8 +457,8 @@ namespace osu.Mods.Online.Multi.Player
             if (ShowStoryboard && storyboard == null)
                 initializeStoryboard(true);
 
-            var beatmap = Beatmap.Value;
-            var storyboardVisible = ShowStoryboard && beatmap.Storyboard.HasDrawable;
+            WorkingBeatmap beatmap = Beatmap.Value;
+            bool storyboardVisible = ShowStoryboard && beatmap.Storyboard.HasDrawable;
 
             storyboardContainer?
                 .FadeColour(OsuColour.Gray(BackgroundOpacity), BACKGROUND_FADE_DURATION, Easing.OutQuint)

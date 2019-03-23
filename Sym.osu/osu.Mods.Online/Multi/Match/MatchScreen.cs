@@ -1,4 +1,6 @@
-﻿using osu.Framework.Allocation;
+﻿#region usings
+
+using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -11,6 +13,8 @@ using osu.Mods.Online.Multi.Match.Packets;
 using osu.Mods.Online.Multi.Match.Pieces;
 using osu.Mods.Online.Multi.Player;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Match
 {

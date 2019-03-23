@@ -1,4 +1,6 @@
-﻿using osu.Core.Containers.Shawdooow;
+﻿#region usings
+
+using osu.Core.Containers.Shawdooow;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
@@ -14,6 +16,8 @@ using osu.Mods.Online.Multi.Match;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Lobby
 {

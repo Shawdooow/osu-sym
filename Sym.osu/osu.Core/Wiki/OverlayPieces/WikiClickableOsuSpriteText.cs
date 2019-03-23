@@ -1,5 +1,9 @@
-﻿using osu.Core.Containers.Text;
+﻿#region usings
+
+using osu.Core.Containers.Text;
 using osu.Game.Graphics;
+
+#endregion
 
 namespace osu.Core.Wiki.OverlayPieces
 {

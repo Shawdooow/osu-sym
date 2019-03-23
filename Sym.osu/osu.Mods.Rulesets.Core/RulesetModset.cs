@@ -1,4 +1,8 @@
-﻿using osu.Core.OsuMods;
+﻿#region usings
+
+using osu.Core.OsuMods;
+
+#endregion
 
 namespace osu.Mods.Rulesets.Core
 {

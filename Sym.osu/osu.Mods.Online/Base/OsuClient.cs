@@ -1,4 +1,8 @@
-﻿using Sym.Networking.NetworkingHandlers.Server;
+﻿#region usings
+
+using Sym.Networking.NetworkingHandlers.Server;
+
+#endregion
 
 namespace osu.Mods.Online.Base
 {

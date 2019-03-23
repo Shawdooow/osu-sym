@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.UI;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Score.Packets;
 using osu.Mods.Rulesets.Core.Rulesets;
 using Sym.Networking.NetworkingHandlers;
+
+#endregion
 
 namespace osu.Mods.Online.Score.Rulesets
 {

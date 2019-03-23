@@ -1,4 +1,8 @@
-﻿using osu.Game.Users;
+﻿#region usings
+
+using osu.Game.Users;
+
+#endregion
 
 namespace osu.Core.Wiki
 {

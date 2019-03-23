@@ -1,4 +1,6 @@
-﻿using osu.Core.Containers.Shawdooow;
+﻿#region usings
+
+using osu.Core.Containers.Shawdooow;
 using osu.Core.OsuMods;
 using osu.Framework.Audio;
 using osu.Framework.Graphics;
@@ -7,6 +9,8 @@ using osu.Game;
 using osu.Game.Screens;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Mods.MapMixer
 {
@@ -41,11 +45,11 @@ namespace osu.Mods.MapMixer
                 ClassicResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Mods.MapMixer.dll"), "Assets"));
                 ClassicResources.AddStore(new DllResourceStore("osu.Mods.MapMixer.dll"));
 
-                var tracks = new ResourceStore<byte[]>(ClassicResources);
+                ResourceStore<byte[]> tracks = new ResourceStore<byte[]>(ClassicResources);
                 tracks.AddStore(new NamespacedResourceStore<byte[]>(ClassicResources, @"Tracks"));
                 tracks.AddStore(new OnlineStore());
 
-                var samples = new ResourceStore<byte[]>(ClassicResources);
+                ResourceStore<byte[]> samples = new ResourceStore<byte[]>(ClassicResources);
                 samples.AddStore(new NamespacedResourceStore<byte[]>(ClassicResources, @"Samples"));
                 samples.AddStore(new OnlineStore());
 

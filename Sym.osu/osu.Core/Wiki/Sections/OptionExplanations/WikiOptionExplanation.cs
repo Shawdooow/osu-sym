@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -7,6 +9,8 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osuTK;
+
+#endregion
 
 namespace osu.Core.Wiki.Sections.OptionExplanations
 {

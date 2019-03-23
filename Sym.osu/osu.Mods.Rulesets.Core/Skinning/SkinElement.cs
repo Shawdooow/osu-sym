@@ -1,7 +1,11 @@
-﻿using osu.Framework.Configuration;
+﻿#region usings
+
+using osu.Framework.Configuration;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
+
+#endregion
 
 namespace osu.Mods.Rulesets.Core.Skinning
 {

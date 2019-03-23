@@ -1,4 +1,8 @@
-﻿using System.Diagnostics;
+﻿#region usings
+
+using System.Diagnostics;
+
+#endregion
 
 namespace osu.Core.Containers.Text
 {

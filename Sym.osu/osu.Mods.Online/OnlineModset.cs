@@ -1,4 +1,6 @@
-﻿using osu.Core;
+﻿#region usings
+
+using osu.Core;
 using osu.Core.Config;
 using osu.Core.Containers.Shawdooow;
 using osu.Core.OsuMods;
@@ -12,6 +14,8 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Wiki;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Mods.Online
 {

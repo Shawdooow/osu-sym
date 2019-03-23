@@ -1,5 +1,9 @@
-﻿using osu.Framework.Graphics.Cursor;
+﻿#region usings
+
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input.Events;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Rulesets
 {

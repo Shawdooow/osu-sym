@@ -1,8 +1,12 @@
-﻿using osu.Framework.Graphics;
+﻿#region usings
+
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.MathUtils;
 using osu.Game.Graphics.Containers;
 using osuTK;
+
+#endregion
 
 namespace osu.Core.Containers.Shawdooow
 {
@@ -18,7 +22,7 @@ namespace osu.Core.Containers.Shawdooow
         {
             base.Update();
 
-            float randomPositionXValue = ((float)RNG.NextDouble(0, (int)ScreenSpaceDrawQuad.TopRight.X));
+            float randomPositionXValue = (float)RNG.NextDouble(0, (int)ScreenSpaceDrawQuad.TopRight.X);
             
             float spawn = (float)RNG.NextDouble(1, 5000 * ((float)Clock.ElapsedFrameTime / 1000));
 
@@ -51,9 +55,9 @@ namespace osu.Core.Containers.Shawdooow
 
             this.screenSize = screenSize;
 
-            randomMovementYValue = ((float)RNG.NextDouble(10, 40) * 2);
-            randomMovementXValue = ((float)RNG.NextDouble(-10, 10) * 2);
-            randomRotationValue = ((float)RNG.NextDouble(10, 16)) / 10;
+            randomMovementYValue = (float)RNG.NextDouble(10, 40) * 2;
+            randomMovementXValue = (float)RNG.NextDouble(-10, 10) * 2;
+            randomRotationValue = (float)RNG.NextDouble(10, 16) / 10;
             randomRotateDirection = RNG.NextBool();
         }
 
@@ -61,7 +65,7 @@ namespace osu.Core.Containers.Shawdooow
         {
             base.LoadComplete();
 
-            float randomScaleValue = ((float)RNG.NextDouble(50, 100) / 500);
+            float randomScaleValue = (float)RNG.NextDouble(50, 100) / 500;
             Scale = new Vector2(randomScaleValue);
         }
 
@@ -70,9 +74,9 @@ namespace osu.Core.Containers.Shawdooow
             base.Update();
 
             if (randomRotateDirection)
-                this.RotateTo((float)((Clock.CurrentTime / 1000) * 90) * randomRotationValue);
+                this.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * randomRotationValue);
             else
-                this.RotateTo(((float)((Clock.CurrentTime / 1000) * 90) * -1) * randomRotationValue);
+                this.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * -1 * randomRotationValue);
 
             this.MoveToOffset(new Vector2(randomMovementXValue * ((float)Clock.ElapsedFrameTime / 1000), randomMovementYValue * ((float)Clock.ElapsedFrameTime / 1000)));
 

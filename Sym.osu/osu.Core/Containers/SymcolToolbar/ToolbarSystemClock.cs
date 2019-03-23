@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Core.Containers.SymcolToolbar
 {

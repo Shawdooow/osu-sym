@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
@@ -6,6 +8,8 @@ using osu.Framework.Audio.Sample;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Audio;
 using osu.Game.Skinning;
+
+#endregion
 
 namespace osu.Mods.Rulesets.Core.Skinning
 {
@@ -39,7 +43,7 @@ namespace osu.Mods.Rulesets.Core.Skinning
         {
             channels = samples.Select(s =>
             {
-                var ch = LoadChannel(s, skin.GetSample);
+                SampleChannel ch = LoadChannel(s, skin.GetSample);
                 if (ch == null && allowFallback && RulesetAudio != null)
                     ch = LoadChannel(s, RulesetAudio.Sample.Get);
                 if (ch == null && allowFallback)
@@ -50,9 +54,9 @@ namespace osu.Mods.Rulesets.Core.Skinning
 
         protected virtual SampleChannel LoadChannel(SampleInfo info, Func<string, SampleChannel> getSampleFunction)
         {
-            foreach (var lookup in info.LookupNames)
+            foreach (string lookup in info.LookupNames)
             {
-                var ch = getSampleFunction($"Gameplay/{lookup}");
+                SampleChannel ch = getSampleFunction($"Gameplay/{lookup}");
                 if (ch == null)
                     continue;
 

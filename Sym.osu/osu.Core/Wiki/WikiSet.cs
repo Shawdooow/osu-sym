@@ -1,6 +1,10 @@
-﻿using osu.Core.Wiki.Sections;
+﻿#region usings
+
+using osu.Core.Wiki.Sections;
 using osu.Framework.Graphics.Textures;
 using osuTK;
+
+#endregion
 
 namespace osu.Core.Wiki
 {

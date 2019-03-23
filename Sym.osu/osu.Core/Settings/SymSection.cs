@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Core.Config;
 using osu.Core.OsuMods;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Game.Graphics;
 using osu.Game.Overlays.Settings;
+
+#endregion
 
 namespace osu.Core.Settings
 {

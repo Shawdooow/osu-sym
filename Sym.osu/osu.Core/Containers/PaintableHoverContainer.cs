@@ -1,5 +1,9 @@
-﻿using osu.Game.Graphics.Containers;
+﻿#region usings
+
+using osu.Game.Graphics.Containers;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Core.Containers
 {

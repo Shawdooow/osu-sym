@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Core;
 using osu.Core.Config;
 using osu.Core.Containers.Shawdooow;
@@ -16,6 +18,8 @@ using osu.Game;
 using osu.Game.Overlays.Settings;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Mods.Online.Base.Screens
 {

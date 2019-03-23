@@ -1,7 +1,11 @@
-﻿using System.IO;
+﻿#region usings
+
+using System.IO;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Mods.Online.Score.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Score
 {

@@ -1,8 +1,12 @@
-﻿using osu.Core.Containers.Shawdooow;
+﻿#region usings
+
+using osu.Core.Containers.Shawdooow;
 using osu.Core.Settings;
 using osu.Core.Wiki;
 using osu.Game;
 using osu.Game.Screens;
+
+#endregion
 
 namespace osu.Core.OsuMods
 {

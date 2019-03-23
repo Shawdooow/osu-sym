@@ -1,4 +1,8 @@
-﻿using osu.Game.Overlays.Settings;
+﻿#region usings
+
+using osu.Game.Overlays.Settings;
+
+#endregion
 
 namespace osu.Core.Settings
 {

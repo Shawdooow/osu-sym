@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.UI;
 using osuTK;
+
+#endregion
 
 namespace osu.Mods.Rulesets.Core.Rulesets
 {

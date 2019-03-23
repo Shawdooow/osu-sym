@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Threading.Tasks;
 using osu.Core.Containers.Shawdooow;
 using osu.Framework.Allocation;
@@ -18,6 +20,8 @@ using osu.Mods.Online.Multi.Settings.Options;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Match.Pieces
 {

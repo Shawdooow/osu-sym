@@ -1,6 +1,10 @@
-﻿using osu.Core.Containers.Text;
+﻿#region usings
+
+using osu.Core.Containers.Text;
 using osu.Framework.Graphics;
 using osu.Game.Graphics;
+
+#endregion
 
 namespace osu.Core.Wiki.Sections.Subsection
 {

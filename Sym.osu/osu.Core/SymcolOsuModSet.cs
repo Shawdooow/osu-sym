@@ -1,4 +1,6 @@
-﻿using osu.Core.Config;
+﻿#region usings
+
+using osu.Core.Config;
 using osu.Core.Containers.SymcolToolbar;
 using osu.Core.OsuMods;
 using osu.Core.Screens;
@@ -13,6 +15,8 @@ using osu.Game.ModLoader;
 using osu.Game.Overlays.Settings;
 using osu.Game.Overlays.Toolbar;
 using osu.Game.Screens;
+
+#endregion
 
 namespace osu.Core
 {
@@ -46,11 +50,11 @@ namespace osu.Core
                 SymcolTextures = new TextureStore(new TextureLoaderStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Textures")));
                 SymcolTextures.AddStore(new TextureLoaderStore(new OnlineStore()));
 
-                var tracks = new ResourceStore<byte[]>(SymcolResources);
+                ResourceStore<byte[]> tracks = new ResourceStore<byte[]>(SymcolResources);
                 tracks.AddStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Tracks"));
                 tracks.AddStore(new OnlineStore());
 
-                var samples = new ResourceStore<byte[]>(SymcolResources);
+                ResourceStore<byte[]> samples = new ResourceStore<byte[]>(SymcolResources);
                 samples.AddStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Samples"));
                 samples.AddStore(new OnlineStore());
 

@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
+
+#endregion
 
 namespace osu.Mods.Rulesets.Core.HitObjects
 {

@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Mods.Online.Multi.Settings.Options;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Settings
 {

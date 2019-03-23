@@ -1,4 +1,6 @@
-﻿using osu.Core.Wiki.Included.Home;
+﻿#region usings
+
+using osu.Core.Wiki.Included.Home;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -10,7 +12,8 @@ using osu.Game.Screens.Menu;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Base.Graphics.Containers;
-using Container = osu.Framework.Graphics.Containers.Container;
+
+#endregion
 
 namespace osu.Core.Wiki.Header
 {

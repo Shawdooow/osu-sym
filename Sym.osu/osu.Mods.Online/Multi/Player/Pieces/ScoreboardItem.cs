@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -6,6 +8,8 @@ using osu.Framework.Graphics.Sprites;
 using osu.Mods.Online.Base;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Player.Pieces
 {

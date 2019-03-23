@@ -1,9 +1,13 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using osu.Framework.Logging;
+
+#endregion
 
 namespace osu.Core.OsuMods
 {
@@ -21,13 +25,13 @@ namespace osu.Core.OsuMods
 
             foreach (string file in Directory.GetFiles(Environment.CurrentDirectory, $"osu.Mods.*.dll"))
             {
-                var filename = Path.GetFileNameWithoutExtension(file);
+                string filename = Path.GetFileNameWithoutExtension(file);
 
                 if (loadedAssemblies.Values.Any(t => t.Namespace == filename)) return;
 
                 try
                 {
-                    var assembly = Assembly.LoadFrom(file);
+                    Assembly assembly = Assembly.LoadFrom(file);
                     loadedAssemblies[assembly] = assembly.GetTypes().First(t => t.IsPublic && t.IsSubclassOf(typeof(OsuModSet)));
                 }
                 catch (Exception)
@@ -38,13 +42,13 @@ namespace osu.Core.OsuMods
 
             foreach (string file in Directory.GetFiles(Environment.CurrentDirectory, $"osu.Game.Rulesets.*.dll"))
             {
-                var filename = Path.GetFileNameWithoutExtension(file);
+                string filename = Path.GetFileNameWithoutExtension(file);
 
                 if (loadedAssemblies.Values.Any(t => t.Namespace == filename)) return;
 
                 try
                 {
-                    var assembly = Assembly.LoadFrom(file);
+                    Assembly assembly = Assembly.LoadFrom(file);
                     loadedAssemblies[assembly] = assembly.GetTypes().First(t => t.IsPublic && t.IsSubclassOf(typeof(OsuModSet)));
                 }
                 catch (Exception)
@@ -53,7 +57,7 @@ namespace osu.Core.OsuMods
                 }
             }
 
-            var instances = loadedAssemblies.Values.Select(g => (OsuModSet)Activator.CreateInstance(g)).ToList();
+            List<OsuModSet> instances = loadedAssemblies.Values.Select(g => (OsuModSet)Activator.CreateInstance(g)).ToList();
 
             //add any other mods
             foreach (OsuModSet s in instances)

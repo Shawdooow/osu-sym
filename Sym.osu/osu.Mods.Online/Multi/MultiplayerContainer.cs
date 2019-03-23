@@ -1,5 +1,9 @@
-﻿using osu.Mods.Online.Base;
+﻿#region usings
+
+using osu.Mods.Online.Base;
 using Sym.Networking.Containers;
+
+#endregion
 
 namespace osu.Mods.Online.Multi
 {

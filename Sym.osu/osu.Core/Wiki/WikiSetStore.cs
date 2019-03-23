@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿#region usings
+
+using System.Collections.Generic;
 using osu.Core.OsuMods;
 using osu.Core.Wiki.Included.Lazer;
 using osu.Core.Wiki.Included.Symcol;
+
+#endregion
 
 namespace osu.Core.Wiki
 {

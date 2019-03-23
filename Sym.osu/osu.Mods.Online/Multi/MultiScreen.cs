@@ -1,7 +1,11 @@
-﻿using osu.Core.Screens.Evast;
+﻿#region usings
+
+using osu.Core.Screens.Evast;
 using osu.Framework.Screens;
 using osu.Mods.Online.Base;
 using Sym.Networking.Packets;
+
+#endregion
 
 // ReSharper disable DelegateSubtraction
 

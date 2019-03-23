@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -6,6 +8,8 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Match.Packets;
 using osuTK;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Settings.Options
 {
@@ -41,7 +45,7 @@ namespace osu.Mods.Online.Multi.Settings.Options
 
                 Anchor = Anchor.TopLeft;
                 Origin = Anchor.TopLeft;
-                Position = new Vector2(16, 4 + (64 * quadrant));
+                Position = new Vector2(16, 4 + 64 * quadrant);
             }
             else if (quadrant == 2 | quadrant == 4 | quadrant == 6 | quadrant == 8)
             {
@@ -63,7 +67,7 @@ namespace osu.Mods.Online.Multi.Settings.Options
 
                 Anchor = Anchor.TopCentre;
                 Origin = Anchor.TopLeft;
-                Position = new Vector2(22, 4 + (64 * quadrant));
+                Position = new Vector2(22, 4 + 64 * quadrant);
             }
             else
                 throw new Exception("Globglogabgalab");

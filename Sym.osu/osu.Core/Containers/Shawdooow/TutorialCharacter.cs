@@ -1,10 +1,14 @@
-﻿using osu.Framework.Graphics;
+﻿#region usings
+
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Containers;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Core.Containers.Shawdooow
 {

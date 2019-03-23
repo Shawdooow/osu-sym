@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
@@ -16,6 +18,8 @@ using osu.Game.Rulesets.Objects.Types;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Base.Graphics.Sprites;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Match.Pieces
 {
@@ -189,7 +193,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
             if (beatmap == null)
                 throw new ArgumentNullException(nameof(beatmap));
 
-            var rating = beatmap.StarDifficulty;
+            double rating = beatmap.StarDifficulty;
 
             if (rating < 1.5) return DifficultyRating.Easy;
             if (rating < 2.25) return DifficultyRating.Normal;

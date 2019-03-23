@@ -1,5 +1,9 @@
-﻿using osu.Core.Wiki;
+﻿#region usings
+
+using osu.Core.Wiki;
 using osu.Core.Wiki.Sections;
+
+#endregion
 
 namespace osu.Mods.MapMixer
 {

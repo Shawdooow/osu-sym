@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
 using osu.Game.Screens;
+
+#endregion
 
 namespace osu.Core.Screens
 {
@@ -99,7 +103,7 @@ namespace osu.Core.Screens
 
             for (int i = 0; i < InternalChildren.Count; i++)
             {
-                var tChild = (Drawable)InternalChildren[i];
+                Drawable tChild = (Drawable)InternalChildren[i];
 
                 if (pred.Invoke(tChild))
                 {

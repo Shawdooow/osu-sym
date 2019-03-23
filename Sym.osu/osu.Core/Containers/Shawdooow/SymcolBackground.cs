@@ -1,9 +1,13 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Graphics.Containers;
 using osuTK;
+
+#endregion
 
 namespace osu.Core.Containers.Shawdooow
 {

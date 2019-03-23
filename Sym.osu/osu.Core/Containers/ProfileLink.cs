@@ -1,5 +1,9 @@
-﻿using osu.Core.Containers.Text;
+﻿#region usings
+
+using osu.Core.Containers.Text;
 using osu.Game.Users;
+
+#endregion
 
 namespace osu.Core.Containers
 {

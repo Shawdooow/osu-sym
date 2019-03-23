@@ -1,4 +1,6 @@
-﻿using osu.Core.Containers.Shawdooow;
+﻿#region usings
+
+using osu.Core.Containers.Shawdooow;
 using osu.Core.Screens.Evast;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
@@ -18,6 +20,8 @@ using osu.Mods.Evast.Visualizers;
 using osuTK;
 using osuTK.Graphics;
 using osuTK.Input;
+
+#endregion
 
 namespace osu.Mods.MapMixer
 {

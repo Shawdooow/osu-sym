@@ -1,6 +1,10 @@
-﻿using osu.Core.Wiki;
+﻿#region usings
+
+using osu.Core.Wiki;
 using osu.Core.Wiki.Sections;
 using osu.Mods.Online.Wiki.Sections;
+
+#endregion
 
 namespace osu.Mods.Online.Wiki
 {

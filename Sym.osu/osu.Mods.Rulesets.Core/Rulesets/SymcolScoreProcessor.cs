@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using osu.Framework.Extensions;
 using osu.Framework.Extensions.TypeExtensions;
@@ -7,6 +9,8 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
+
+#endregion
 
 namespace osu.Mods.Rulesets.Core.Rulesets
 {
@@ -68,19 +72,19 @@ namespace osu.Mods.Rulesets.Core.Rulesets
         /// <param name="beatmap">The <see cref="Beatmap{TObject}"/> to simulate.</param>
         protected virtual void SimulateAutoplay(Beatmap<TObject> beatmap)
         {
-            foreach (var obj in beatmap.HitObjects)
+            foreach (TObject obj in beatmap.HitObjects)
                 simulate(obj);
 
             void simulate(HitObject obj)
             {
-                foreach (var nested in obj.NestedHitObjects)
+                foreach (HitObject nested in obj.NestedHitObjects)
                     simulate(nested);
 
-                var judgement = obj.CreateJudgement();
+                Judgement judgement = obj.CreateJudgement();
                 if (judgement == null)
                     return;
 
-                var result = CreateResult(judgement);
+                JudgementResult result = CreateResult(judgement);
                 if (result == null)
                     throw new InvalidOperationException($"{GetType().ReadableName()} must provide a {nameof(JudgementResult)} through {nameof(CreateResult)}.");
 

@@ -1,4 +1,6 @@
-﻿using osu.Core.Containers.Shawdooow;
+﻿#region usings
+
+using osu.Core.Containers.Shawdooow;
 using osu.Core.Screens.Evast;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
@@ -8,6 +10,8 @@ using osu.Mods.Online.Multi.Lobby;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Networking.NetworkingHandlers;
+
+#endregion
 
 namespace osu.Mods.Online
 {

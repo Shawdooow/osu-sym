@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -6,6 +8,8 @@ using osu.Framework.Graphics.Cursor;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Core.Containers.Text
 {

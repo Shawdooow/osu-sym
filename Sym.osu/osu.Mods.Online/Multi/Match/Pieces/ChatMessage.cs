@@ -1,10 +1,14 @@
-﻿using osu.Framework.Graphics;
+﻿#region usings
+
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Mods.Online.Multi.Match.Packets;
 using osuTK;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Match.Pieces
 {

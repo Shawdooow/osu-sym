@@ -1,10 +1,14 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using System.Collections.Generic;
 using osu.Framework.Audio;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Mods.Rulesets.Core.Skinning;
+
+#endregion
 
 namespace osu.Mods.Rulesets.Core.HitObjects
 {

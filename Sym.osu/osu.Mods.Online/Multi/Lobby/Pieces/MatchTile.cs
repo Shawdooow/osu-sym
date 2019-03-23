@@ -1,10 +1,14 @@
-﻿using osu.Framework.Graphics;
+﻿#region usings
+
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Lobby.Packets;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Lobby.Pieces
 {

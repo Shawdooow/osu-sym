@@ -1,4 +1,6 @@
-﻿using osu.Core.Containers.Shawdooow;
+﻿#region usings
+
+using osu.Core.Containers.Shawdooow;
 using osu.Core.OsuMods;
 using osu.Core.Screens.Evast;
 using osu.Framework.Graphics;
@@ -8,6 +10,8 @@ using osu.Game.Screens;
 using osu.Game.Screens.Menu;
 using osuTK;
 using osuTK.Graphics;
+
+#endregion
 
 namespace osu.Core.Screens
 {
@@ -86,7 +90,7 @@ namespace osu.Core.Screens
                 {
                     SymcolButton s = set.GetMenuButton();
                     buttonsContainer.Add(s);
-                    s.Action = () => this.Push(set.GetScreen());
+                    s.Action = () => Push(set.GetScreen());
                 }
         }
 
@@ -95,7 +99,7 @@ namespace osu.Core.Screens
             logo.Action = () => close(container);
             container.ScaleTo(new Vector2(0.5f), animation_duration, Easing.InOutBack);
 
-            foreach(var button in buttonsContainer)
+            foreach(SymcolButton button in buttonsContainer)
                 button.MoveTo(button.StartingPosition, animation_duration, Easing.InOutBack);
             return true;
         }
@@ -105,7 +109,7 @@ namespace osu.Core.Screens
             logo.Action = () => open(container);
             container.ScaleTo(new Vector2(1.25f), animation_duration, Easing.InOutBack);
 
-            foreach (var button in buttonsContainer)
+            foreach (SymcolButton button in buttonsContainer)
                 button.MoveTo(Vector2.Zero, animation_duration, Easing.InOutBack);
             return true;
         }

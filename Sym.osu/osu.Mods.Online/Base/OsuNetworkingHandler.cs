@@ -1,4 +1,6 @@
-﻿using osu.Core;
+﻿#region usings
+
+using osu.Core;
 using osu.Core.Config;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
@@ -8,6 +10,8 @@ using osu.Mods.Online.Multi.Lobby.Packets;
 using Sym.Networking.NetworkingHandlers;
 using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Base
 {

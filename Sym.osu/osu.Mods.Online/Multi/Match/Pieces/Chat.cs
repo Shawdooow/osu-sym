@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿#region usings
+
+using System.Linq;
 using osu.Core;
 using osu.Core.Config;
 using osu.Framework.Graphics;
@@ -12,6 +14,8 @@ using osu.Mods.Online.Multi.Match.Packets;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Match.Pieces
 {

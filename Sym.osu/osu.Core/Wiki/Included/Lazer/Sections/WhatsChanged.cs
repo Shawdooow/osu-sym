@@ -1,6 +1,10 @@
-﻿using osu.Core.Wiki.Included.Lazer.Sections.SubSections;
+﻿#region usings
+
+using osu.Core.Wiki.Included.Lazer.Sections.SubSections;
 using osu.Core.Wiki.Sections;
 using osu.Core.Wiki.Sections.Subsection;
+
+#endregion
 
 namespace osu.Core.Wiki.Included.Lazer.Sections
 {

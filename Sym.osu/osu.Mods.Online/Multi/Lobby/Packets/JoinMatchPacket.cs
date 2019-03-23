@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Mods.Online.Base;
 using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Multi.Lobby.Packets
 {

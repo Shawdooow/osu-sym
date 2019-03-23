@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Audio.Track;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
@@ -14,6 +16,8 @@ using osu.Game.Graphics.Containers;
 using osuTK;
 using osuTK.Graphics;
 using osuTK.Input;
+
+#endregion
 
 namespace osu.Core.Containers.Shawdooow
 {
@@ -148,7 +152,7 @@ namespace osu.Core.Containers.Shawdooow
         {
             base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
 
-            var beatLength = timingPoint.BeatLength;
+            double beatLength = timingPoint.BeatLength;
 
             float amplitudeAdjust = Math.Min(1, 0.4f + amplitudes.Maximum);
 

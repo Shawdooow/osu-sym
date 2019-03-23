@@ -1,6 +1,10 @@
-﻿using osu.Core.Wiki.Included.Symcol.Sections;
+﻿#region usings
+
+using osu.Core.Wiki.Included.Symcol.Sections;
 using osu.Core.Wiki.Sections;
 using osu.Framework.Graphics.Textures;
+
+#endregion
 
 namespace osu.Core.Wiki.Included.Symcol
 {

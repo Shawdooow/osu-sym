@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region usings
+
+using System;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Screens;
+
+#endregion
 
 namespace osu.Mods.Online.Multi
 {

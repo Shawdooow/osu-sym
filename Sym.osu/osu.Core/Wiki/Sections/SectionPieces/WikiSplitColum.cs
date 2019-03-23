@@ -1,8 +1,12 @@
-﻿using osu.Framework.Graphics;
+﻿#region usings
+
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osuTK;
+
+#endregion
 
 namespace osu.Core.Wiki.Sections.SectionPieces
 {

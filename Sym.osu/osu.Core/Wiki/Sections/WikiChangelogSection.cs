@@ -1,9 +1,13 @@
-﻿using System.IO;
+﻿#region usings
+
+using System.IO;
 using osu.Core.Wiki.Sections.SectionPieces;
 using osu.Core.Wiki.Sections.Subsection;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
+
+#endregion
 
 namespace osu.Core.Wiki.Sections
 {
