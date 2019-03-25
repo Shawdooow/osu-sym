@@ -12,14 +12,14 @@ using Sym.Networking.NetworkingHandlers;
 
 namespace osu.Mods.Online.Score.Rulesets
 {
-    public abstract class OnlineScoreProcessor<TObject> : SymcolScoreProcessor<TObject>
+    public abstract class OnlineScoreProcessor<TObject> : SymcolScoreProcessor<TObject>, IDisposable
         where TObject : HitObject
     {
         protected virtual bool Ranked => false;
 
         protected Action<OnlineScore> OnCompletion;
 
-        protected readonly RulesetContainer<TObject> RulesetContainer;
+        protected RulesetContainer<TObject> RulesetContainer { get; private set; }
 
         protected virtual OnlineScore GetOnlineScore() => new OnlineScore
         {
@@ -65,9 +65,16 @@ namespace osu.Mods.Online.Score.Rulesets
             RulesetContainer = rulesetContainer;
             OnCompletion += score =>
             {
+                //Whoever wrote this is a fucking moron!
                 if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.ConnectionStatues >= ConnectionStatues.Connected)
                     OnlineModset.OsuNetworkingHandler.SendToServer(GetScoreSubmissionPacket(score));
             };
+        }
+
+        public virtual void Dispose()
+        {
+            RulesetContainer = null;
+            OnCompletion = null;
         }
     }
 }

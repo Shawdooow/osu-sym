@@ -42,12 +42,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
             DebugToolkit.GeneralDebugItems.Add(ranked = new DebugStat<int>(new Bindable<int>()) { Text = "Ranked" });
 
             VitaruPlayfield = CreateVitaruPlayfield((VitaruInputManager)KeyBindingInputManager, osuNetworkingHandler, match);
+            VitaruScoreprocessor = new VitaruScoreProcessor(this, VitaruPlayfield);
         }
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
 
+            //This is a hack, please ignore it
             foreach (Drawable draw in VitaruPlayfield.VitaruInputManager.LoadCompleteChildren)
                 VitaruPlayfield.VitaruInputManager.Add(draw);
 
@@ -68,6 +70,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
         {
             base.Update();
 
+            //Ranked test, kinda sucks and needs to be re-done
             if (Clock.ElapsedFrameTime > 1000)
                 ranked.Bindable.Value += 1000;
             else if (Clock.ElapsedFrameTime > 1000 / 10d)
@@ -90,7 +93,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         protected override CursorContainer CreateCursor() => new SymcolCursor();
 
-        public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor(this, VitaruPlayfield);
+        internal VitaruScoreProcessor VitaruScoreprocessor { get; private set; }
+
+        public override ScoreProcessor CreateScoreProcessor() => VitaruScoreprocessor;
 
         protected override Playfield CreatePlayfield() => VitaruPlayfield;
 
@@ -132,6 +137,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
             if (h is Cluster cluster)
                 return new DrawableCluster(cluster);
             throw new InvalidOperationException("Only clusters allowed!");
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            VitaruScoreprocessor.Dispose();
+            base.Dispose(isDisposing);
         }
     }
 }
