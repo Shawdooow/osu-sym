@@ -8,7 +8,7 @@
 
         public override string GetChangelog()
         {
-            return TAB + "";
+            return TAB + "0.1.1 was bug fixes and all around improvements to some of the problems vitaru had.";
         }
     }
 

@@ -8,7 +8,7 @@
 
         public override string GetChangelog()
         {
-            return TAB + "";
+            return TAB + "0.4.0 Featured dodge's first iteration";
         }
     }
 }

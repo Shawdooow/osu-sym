@@ -35,16 +35,15 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
             new _0_6_1(),
             new _0_6_0(),
 
-            //new _0_5_6(),
-            //new _0_5_0(),
+            new _0_5_0(),
 
-            //new _0_4_0(),
+            new _0_4_0(),
 
             new _0_3_0(),
 
             new _0_2_0(),
 
-            //new _0_1_1(),
+            new _0_1_1(),
             new _0_1_0(),
 
             new _0_0_4(),
