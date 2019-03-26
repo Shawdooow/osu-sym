@@ -144,11 +144,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             });
         }
 
-        protected internal virtual void SetSlave(OsuNetworkingHandler osuNetworkingHandler, OsuUserInfo user)
+        protected internal virtual void SetNetworking(OsuNetworkingHandler osuNetworkingHandler, OsuUserInfo user)
         {
-            ControlType = ControlType.Net;
-
             OsuNetworkingHandler = osuNetworkingHandler;
+            User = user;
+
             osuNetworkingHandler.OnPacketReceive += OnPacketReceive;
             OnDispose += () => osuNetworkingHandler.OnPacketReceive -= OnPacketReceive;
         }

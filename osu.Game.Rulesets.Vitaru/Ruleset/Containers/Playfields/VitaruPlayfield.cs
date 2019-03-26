@@ -156,10 +156,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             {
                 VitaruPlayer vitaruPlayer = ChapterStore.GetPlayer(character);
                 playerList.Add(Player = ChapterStore.GetDrawablePlayer(this, vitaruPlayer));
-
+                
                 //Multiplayer stuff
                 if (match != null && osuNetworkingHandler != null)
                 {
+                    Player.SetNetworking(osuNetworkingHandler, osuNetworkingHandler.OsuUserInfo);
+
                     foreach (OsuUserInfo user in match.Users)
                         if (user.ID != osuNetworkingHandler.OsuUserInfo.ID)
                             foreach (Setting set in user.UserSettings)
@@ -172,7 +174,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                                         DrawableVitaruPlayer dp;
                                         playerList.Add(dp = ChapterStore.GetDrawablePlayer(this, v));
 
-                                        dp.SetSlave(osuNetworkingHandler, user);
+                                        dp.SetNetworking(osuNetworkingHandler, user);
+                                        dp.ControlType = ControlType.Net;
                                         break;
                                 }
                 }
