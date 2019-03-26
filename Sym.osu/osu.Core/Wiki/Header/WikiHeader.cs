@@ -29,7 +29,7 @@ namespace osu.Core.Wiki.Header
         private readonly Sprite background;
         private readonly Sprite icon;
         private readonly DeadContainer logo;
-        private readonly CreatorSection creator;
+        //private readonly CreatorSection creator;
 
         private readonly BreadcrumbControl<BreadCrumbState> breadcrumbs;
         private readonly WikiIndex index;
@@ -97,7 +97,7 @@ namespace osu.Core.Wiki.Header
                     Width = 0.5f
                 },
                 index = new WikiIndex(),
-                creator = new CreatorSection(),
+                //creator = new CreatorSection(),
             };
 
             breadcrumbs.Current.ValueChanged += value =>
@@ -115,7 +115,7 @@ namespace osu.Core.Wiki.Header
             CurrentWikiSet.ValueChanged += value =>
             {
                 name.Text = value.Name;
-                creator.Creator = value.Creator;
+                //creator.Creator = value.Creator;
 
                 if (value.HeaderBackground != null)
                     background.Texture = value.HeaderBackground;

@@ -147,7 +147,7 @@ namespace osu.Core.Wiki
                         tabs.AddItem(s);
                     }
                 else
-                    Logger.Log("\"" + value.Name + "\"" + " wiki sections are null, please report to the mod/ruleset creator!", LoggingTarget.Runtime, LogLevel.Error);
+                    Logger.Log($"\"{value.Name}\" wiki sections are null, please report to the mod/ruleset creator!", LoggingTarget.Runtime, LogLevel.Error);
             };
 
             currentWikiSet.Value = header.Home;

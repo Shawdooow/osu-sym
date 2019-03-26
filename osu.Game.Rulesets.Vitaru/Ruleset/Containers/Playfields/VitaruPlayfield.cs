@@ -170,10 +170,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                                         VitaruPlayer v = ChapterStore.GetPlayer(ch.Value);
 
                                         DrawableVitaruPlayer dp;
-
                                         playerList.Add(dp = ChapterStore.GetDrawablePlayer(this, v));
 
-                                        dp.ControlType = ControlType.Net;
+                                        dp.SetSlave(osuNetworkingHandler, user);
                                         break;
                                 }
                 }

@@ -23,9 +23,12 @@ using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Input;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
+using osu.Mods.Online.Base;
+using osu.Mods.Online.Base.Packets;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Base.Extentions;
+using Sym.Networking.Packets;
 
 #endregion
 
@@ -68,6 +71,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         /// How will we be controled?
         /// </summary>
         public ControlType ControlType { get; set; }
+
+        protected OsuUserInfo User { get; private set; }
+
+        protected OsuNetworkingHandler OsuNetworkingHandler { get; private set; }
 
         protected bool HealthHacks { get; private set; }
 
@@ -134,6 +141,56 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                 {
                     RelativeSizeAxes = Axes.Both
                 }
+            });
+        }
+
+        protected internal virtual void SetSlave(OsuNetworkingHandler osuNetworkingHandler, OsuUserInfo user)
+        {
+            ControlType = ControlType.Net;
+
+            osuNetworkingHandler.OnPacketReceive += OnPacketReceive;
+            OnDispose += () => osuNetworkingHandler.OnPacketReceive -= OnPacketReceive;
+        }
+
+        protected virtual void OnPacketReceive(PacketInfo info)
+        {
+            switch (info.Packet)
+            {
+                case Vector2Packet vec2:
+                    if (vec2.ID == User.ID)
+                    {
+                        switch (vec2.Name)
+                        {
+                            case "ppos":
+                                Position = vec2.Vector2;
+                                break;
+                            case "cpos":
+                                Cursor.Position = vec2.Vector2;
+                                break;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        private double last_update = double.MinValue;
+        private const double update_rate = 60;
+        protected virtual void UpdateOnline()
+        {
+            if (Time.Current < last_update + 1000 / update_rate) return;
+            last_update = Time.Current;
+
+            OsuNetworkingHandler.SendToServer(new Vector2Packet
+            {
+                Vector2 = Position,
+                ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                Name = "ppos"
+            });
+            OsuNetworkingHandler.SendToServer(new Vector2Packet
+            {
+                Vector2 = Cursor.Position,
+                ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                Name = "cpos"
             });
         }
 
@@ -303,6 +360,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
             if ((VitaruPlayfield.Current >= nextShoot || VitaruPlayfield.Current <= nextShoot - BeatLength) && Actions[VitaruAction.Shoot])
                 PatternWave();
+
+            if (ControlType == ControlType.Player)
+                UpdateOnline();
         }
 
         protected override void ParseProjectile(DrawableProjectile projectile)
