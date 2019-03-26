@@ -13,6 +13,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.ChapterSets;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
@@ -23,6 +24,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
+using osu.Game.Rulesets.Vitaru.Sym.Multi.Packets;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Settings;
@@ -112,7 +114,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             BulletPiece.ExclusiveTestingHax = false;
             DrawableBullet.BoundryHacks = false;
 
-            Size = gamemode.PlayfieldSize;
+            Size = chapterSet.PlayfieldSize;
 
             AddRange(new Drawable[]
             {
@@ -155,7 +157,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 VitaruPlayer vitaruPlayer = ChapterStore.GetPlayer(character);
 
                 //Bit of a hack to get the DrawablePlayer
-                if (gamemode is TouhosuGamemode)
+                if (chapterSet is TouhosuChapterSet)
                     playerList.Add(Player = ChapterStore.GetDrawablePlayer(this, (TouhosuPlayer)vitaruPlayer));
                 else
                     playerList.Add(Player = ChapterStore.GetDrawablePlayer(this, vitaruPlayer));
@@ -174,7 +176,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
                                         DrawableVitaruPlayer dp;
 
-                                        if (gamemode is TouhosuGamemode)
+                                        if (chapterSet is TouhosuChapterSet)
                                             playerList.Add(dp = ChapterStore.GetDrawablePlayer(this, (TouhosuPlayer)v));
                                         else
                                             playerList.Add(dp = ChapterStore.GetDrawablePlayer(this, v));
@@ -187,7 +189,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 foreach (DrawableVitaruPlayer player in playerList)
                     Gamefield.Add(player);
 
-                Player.Position = gamemode.PlayerStartingPosition;
+                Player.Position = chapterSet.PlayerStartingPosition;
                 Player.Team = playerTeam;
 
                 VitaruInputManager.TouchControls.VitaruInputContainer = Player.VitaruInputContainer;
@@ -195,7 +197,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             else
                 Player = null;
 
-            if (gamemode is TouhosuGamemode && KiaiBoss)
+            if (chapterSet is TouhosuChapterSet && KiaiBoss)
             {
                 Gamefield.Add(DrawableBoss = new DrawableBoss(this, new Kokoro()));
                 DrawableBoss.Team = enemyTeam;
@@ -220,7 +222,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             p.TrueHidden = TRUEHIDDEN;
             p.Flashlight = FLASHLIGHT;
 
-            DrawableCluster drawable = gamemode.GetDrawableCluster(p, this);
+            DrawableCluster drawable = chapterSet.GetDrawableCluster(p, this);
 
             drawable.Depth = (float)drawable.HitObject.StartTime;
 

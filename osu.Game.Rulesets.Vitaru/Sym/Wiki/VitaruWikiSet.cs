@@ -3,11 +3,11 @@
 using osu.Core.Wiki;
 using osu.Core.Wiki.Sections;
 using osu.Framework.Graphics.Textures;
-using osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections;
+using osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki
+namespace osu.Game.Rulesets.Vitaru.Sym.Wiki
 {
     public sealed class VitaruWikiSet : WikiSet
     {

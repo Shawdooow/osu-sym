@@ -6,7 +6,7 @@ using osu.Core.Wiki.Sections.Subsection;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
+namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
 {
     public class CreditsSection : WikiSection
     {

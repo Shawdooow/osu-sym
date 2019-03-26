@@ -7,8 +7,8 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
-using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
@@ -16,7 +16,7 @@ using osuTK;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
+namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
 {
     public class CharactersSection : WikiSection
     {
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
 
                 string stats = vitaruPlayer.Background;
 
-                if (ChapterStore.GetGamemode(gamemode) is TouhosuGamemode && vitaruPlayer is TouhosuPlayer touhosuPlayer)
+                if (ChapterStore.GetChapterSet(gamemode) is TouhosuChapterSet && vitaruPlayer is TouhosuPlayer touhosuPlayer)
                 {
                     stats = "";
 

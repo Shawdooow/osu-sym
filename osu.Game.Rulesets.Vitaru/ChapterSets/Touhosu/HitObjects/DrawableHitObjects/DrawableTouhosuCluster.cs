@@ -1,6 +1,10 @@
-﻿using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
+﻿#region usings
+
+using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.HitObjects.DrawableHitObjects
 {

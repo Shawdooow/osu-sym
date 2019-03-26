@@ -5,6 +5,7 @@ using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
@@ -86,13 +87,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers
         {
             base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
 
-            if (effectPoint.KiaiMode && Gamemode is TouhosuGamemode && boss && LeftTotem.Alpha == 0)
+            if (effectPoint.KiaiMode && ChapterSet is TouhosuChapterSet && boss && LeftTotem.Alpha == 0)
             {
                 LeftTotem.FadeIn(timingPoint.BeatLength);
                 RightTotem.FadeIn(timingPoint.BeatLength);
             }
 
-            if (!effectPoint.KiaiMode && Gamemode is TouhosuGamemode && boss && LeftTotem.Alpha > 0)
+            if (!effectPoint.KiaiMode && ChapterSet is TouhosuChapterSet && boss && LeftTotem.Alpha > 0)
             {
                 LeftTotem.FadeOut(timingPoint.BeatLength);
                 RightTotem.FadeOut(timingPoint.BeatLength);

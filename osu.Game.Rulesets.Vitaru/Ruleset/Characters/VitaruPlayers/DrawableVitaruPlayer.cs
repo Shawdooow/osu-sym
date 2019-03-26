@@ -11,6 +11,9 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Dodge;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
@@ -31,7 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
     public class DrawableVitaruPlayer : DrawableCharacter
     {
         #region Fields
-        protected readonly VitaruGamemode Gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
+        protected readonly ChapterSet ChapterSet = ChapterStore.GetChapterSet(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
         protected readonly GraphicsOptions PlayerVisuals = VitaruSettings.VitaruConfigManager.Get<GraphicsOptions>(VitaruSetting.PlayerVisuals);
 
@@ -192,7 +195,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
             const double beat_in_time = 60;
 
-            if (effectPoint.KiaiMode && !(Gamemode is TouhosuGamemode))
+            if (effectPoint.KiaiMode && !(ChapterSet is TouhosuChapterSet))
             {
                 Seal.Sign.FadeTo(0.25f * amplitudeAdjust, beat_in_time, Easing.Out);
                 using (Seal.Sign.BeginDelayedSequence(beat_in_time))
@@ -207,7 +210,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                     SoulContainer.FadeOutFromOne(timingPoint.BeatLength / 4);
                 }
 
-                if (!(Gamemode is TouhosuGamemode))
+                if (!(ChapterSet is TouhosuChapterSet))
                     Seal.Sign.FadeTo(0.15f, timingPoint.BeatLength / 4);
             }
             if (!effectPoint.KiaiMode && KiaiContainer.Alpha == 1 && PlayerVisuals == GraphicsOptions.Old)
@@ -218,7 +221,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                     KiaiContainer.FadeOutFromOne(timingPoint.BeatLength);
                 }
 
-                if (!(Gamemode is TouhosuGamemode))
+                if (!(ChapterSet is TouhosuChapterSet))
                     Seal.Sign.FadeTo(0f, timingPoint.BeatLength);
             }
         }
@@ -247,7 +250,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                 HealingProjectiles = new List<HealingProjectile>();
                 HealingMultiplier = 1;
 
-                if (!(Gamemode is TouhosuGamemode))
+                if (!(ChapterSet is TouhosuChapterSet))
                 {
                     Seal.Sign.Alpha = 0.2f;
                     Seal.Sign.FadeOut(BeatLength / 4);
@@ -328,7 +331,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                     HealingProjectiles.Add(new HealingProjectile(projectile, edgeDistance));
             }
 
-            if (Gamemode is DodgeGamemode)
+            if (ChapterSet is DodgeChapterSet)
                 edgeDistance *= 1.5f;
 
             if (edgeDistance < projectile.MinDistance)
@@ -388,8 +391,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
             if (!BoundryHacks)
             {
-                playerPosition = Vector2.ComponentMin(playerPosition, Gamemode.PlayfieldBounds.Zw);
-                playerPosition = Vector2.ComponentMax(playerPosition, Gamemode.PlayfieldBounds.Xy);
+                playerPosition = Vector2.ComponentMin(playerPosition, ChapterSet.PlayfieldBounds.Zw);
+                playerPosition = Vector2.ComponentMax(playerPosition, ChapterSet.PlayfieldBounds.Xy);
             }
 
             return playerPosition;

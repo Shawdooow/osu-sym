@@ -6,7 +6,7 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 
 #endregion
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
             AutoSizeAxes = Axes.Y;
             AutoSizeDuration = 0;
 
-            foreach (ChapterStore.LoadedGamemode g in ChapterStore.LoadedGamemodes)
+            foreach (ChapterStore.LoadedChapterSet g in ChapterStore.LoadedChapterSets)
             {
                 List<string> items = new List<string>();
                 foreach (VitaruPlayer player in g.Players)
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
                     Child = characterDropdown = new SettingsDropdown<string>
                     {
-                        LabelText = $"Selected {g.Gamemode.Name} Character",
+                        LabelText = $"Selected {g.ChapterSet.Name} Character",
                         Items = items.Distinct().ToList()
                     },
                 });
@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
                 gamemode.ValueChanged += value =>
                 {
-                    if (ChapterStore.GetGamemode(value).Name == g.Gamemode.Name)
+                    if (ChapterStore.GetChapterSet(value).Name == g.ChapterSet.Name)
                     {
                         enabled = true;
                         characterFlow.ClearTransforms();

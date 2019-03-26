@@ -18,7 +18,7 @@ using osuTK.Graphics;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
+namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
 {
     public class GeneralSection : WikiSection
     {

@@ -3,7 +3,7 @@
 using osu.Core.OsuMods;
 using osu.Core.Settings;
 using osu.Core.Wiki;
-using osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki;
+using osu.Game.Rulesets.Vitaru.Sym.Wiki;
 
 #endregion
 

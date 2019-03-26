@@ -1,4 +1,8 @@
-﻿using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
+﻿#region usings
+
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects
 {

@@ -8,6 +8,7 @@ using osu.Game.Audio;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Scoring;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Dodge;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
@@ -96,7 +97,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                 if (Started && !done)
                 {
                     starPiece.Position = HitObject.PositionAt(completionProgress);
-                    if (!(ChapterSet is DodgeGamemode))
+                    if (!(ChapterSet is DodgeChapterSet))
                         enemy.Position = HitObject.PositionAt(completionProgress);
                 }
 
@@ -140,7 +141,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
             {
                 if (o is Bullet b)
                 {
-                    if (DrawableBullet.BoundryHacks || ChapterSet is DodgeGamemode)
+                    if (DrawableBullet.BoundryHacks || ChapterSet is DodgeChapterSet)
                     {
                         b.Angle += getPlayerAngle() - (float)Math.PI / 2;
                         b.SliderType = b.SliderType;
@@ -155,7 +156,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                 }
                 else if (o is Laser l)
                 {
-                    if (DrawableBullet.BoundryHacks || ChapterSet is DodgeGamemode)
+                    if (DrawableBullet.BoundryHacks || ChapterSet is DodgeChapterSet)
                         l.Angle += getPlayerAngle() - (float)Math.PI / 2;
 
                     DrawableLaser drawableLaser = ChapterSet.GetDrawableLaser(l, VitaruPlayfield);
@@ -174,7 +175,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                 Colour = AccentColour
             });
 
-            if (!(ChapterSet is DodgeGamemode))
+            if (!(ChapterSet is DodgeChapterSet))
             {
                 CurrentPlayfield.Add(enemy = new Enemy(VitaruPlayfield, this)
                 {
@@ -221,7 +222,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
             if (HitObject.IsSpinner)
                 PlayBetterSamples();
 
-            if (!(ChapterSet is DodgeGamemode))
+            if (!(ChapterSet is DodgeChapterSet))
                 enemy.MoveTo(getClusterStartPosition(), HitObject.TimeUnPreempt * 2, Easing.InQuad)
                     .ScaleTo(new Vector2(0.5f), HitObject.TimeUnPreempt, Easing.InQuad)
                     .FadeOut(HitObject.TimeUnPreempt, Easing.InQuad);

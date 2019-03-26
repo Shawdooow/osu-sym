@@ -3,11 +3,11 @@
 using osu.Core.Wiki.Sections;
 using osu.Core.Wiki.Sections.SectionPieces;
 using osu.Core.Wiki.Sections.Subsection;
-using osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections.Changelog;
+using osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections.Changelog;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
+namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
 {
     public class ChangelogSection : WikiSection
     {

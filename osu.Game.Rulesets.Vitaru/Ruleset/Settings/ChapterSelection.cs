@@ -6,8 +6,8 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
 
 #endregion
 
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
             AutoSizeAxes = Axes.Y;
             AutoSizeDuration = 0;
 
-            foreach (ChapterStore.LoadedGamemode g in ChapterStore.LoadedGamemodes)
+            foreach (ChapterStore.LoadedChapterSet g in ChapterStore.LoadedChapterSets)
             {
                 List<string> items = new List<string>();
                 foreach (VitaruChapter chapter in g.Chapters)
@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
                 gamemode.ValueChanged += value =>
                 {
-                    if (ChapterStore.GetGamemode(value).Name == g.Gamemode.Name)
+                    if (ChapterStore.GetChapterSet(value).Name == g.ChapterSet.Name)
                     {
                         character.ClearTransforms();
                         character.AutoSizeAxes = Axes.Y;

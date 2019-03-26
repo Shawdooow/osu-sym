@@ -8,7 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Platform;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
@@ -51,8 +51,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
             ChapterStore.ReloadChapterSets();
 
             List<string> gamemodeItems = new List<string>();
-            foreach (ChapterStore.LoadedGamemode g in ChapterStore.LoadedGamemodes)
-                gamemodeItems.Add(g.Gamemode.Name);
+            foreach (ChapterStore.LoadedChapterSet g in ChapterStore.LoadedChapterSets)
+                gamemodeItems.Add(g.ChapterSet.Name);
             gamemodeBindable.ValueChanged += g => { VitaruConfigManager.Set(VitaruSetting.Gamemode, g); };
 
             SettingsDropdown<string> gamemodeDropdown;

@@ -11,7 +11,7 @@ using osu.Mods.Online.Multi.Settings.Options;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
+namespace osu.Game.Rulesets.Vitaru.Sym.Multi
 {
     public sealed class VitaruOnlineCharacterSelection : MultiplayerOption
     {

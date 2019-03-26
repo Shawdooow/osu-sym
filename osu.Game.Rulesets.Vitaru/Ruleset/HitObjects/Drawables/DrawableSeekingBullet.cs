@@ -2,6 +2,7 @@
 
 using System;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Dodge;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
@@ -43,7 +44,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 
             SeekingBullet = seekingBullet;
 
-            if (ChapterSet is DodgeGamemode)
+            if (ChapterSet is DodgeChapterSet)
                 BulletBounds = new Vector4(-10, -10, 522, 394);
 
             InternalChildren = new Drawable[]

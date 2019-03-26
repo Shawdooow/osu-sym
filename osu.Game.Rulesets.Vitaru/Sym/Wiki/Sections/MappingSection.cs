@@ -7,7 +7,7 @@ using osu.Framework.Allocation;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections
+namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
 {
     public class MappingSection : WikiSection
     {

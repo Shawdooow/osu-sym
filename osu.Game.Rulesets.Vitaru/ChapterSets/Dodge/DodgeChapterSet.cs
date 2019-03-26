@@ -1,8 +1,12 @@
-﻿using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
+﻿#region usings
+
+using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
+
+#endregion
 
 namespace osu.Game.Rulesets.Vitaru.ChapterSets.Dodge
 {

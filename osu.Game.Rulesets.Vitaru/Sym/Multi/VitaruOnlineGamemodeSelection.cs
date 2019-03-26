@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Match.Packets;
@@ -13,7 +13,7 @@ using osu.Mods.Online.Multi.Settings.Options;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
+namespace osu.Game.Rulesets.Vitaru.Sym.Multi
 {
     public sealed class VitaruOnlineGamemodeSelection : MultiplayerOption
     {
@@ -23,8 +23,8 @@ namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Multi
             : base(networking, "Gamemode", quadrant)
         {
             List<string> gamemodeItems = new List<string>();
-            foreach (ChapterStore.LoadedGamemode g in ChapterStore.LoadedGamemodes)
-                gamemodeItems.Add(g.Gamemode.Name);
+            foreach (ChapterStore.LoadedChapterSet g in ChapterStore.LoadedChapterSets)
+                gamemodeItems.Add(g.ChapterSet.Name);
 
             OptionContainer.Child = new SettingsDropdown<string>
             {
