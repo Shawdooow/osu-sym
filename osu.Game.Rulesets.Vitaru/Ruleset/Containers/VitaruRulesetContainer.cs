@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using System;
 using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
@@ -41,14 +42,18 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
             DebugToolkit.GeneralDebugItems.Add(ranked = new DebugStat<int>(new Bindable<int>()) { Text = "Ranked" });
 
             VitaruPlayfield = CreateVitaruPlayfield((VitaruInputManager)KeyBindingInputManager, osuNetworkingHandler, match);
+            VitaruScoreprocessor = new VitaruScoreProcessor(this, VitaruPlayfield);
         }
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
 
+            //This is a hack, please ignore it
             foreach (Drawable draw in VitaruPlayfield.VitaruInputManager.LoadCompleteChildren)
                 VitaruPlayfield.VitaruInputManager.Add(draw);
+
+            VitaruPlayfield.VitaruInputManager.LoadCompleteChildren = null;
 
             if (!rankedFilter)
             {
@@ -65,6 +70,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
         {
             base.Update();
 
+            //Ranked test, kinda sucks and needs to be re-done
             if (Clock.ElapsedFrameTime > 1000)
                 ranked.Bindable.Value += 1000;
             else if (Clock.ElapsedFrameTime > 1000 / 10d)
@@ -76,10 +82,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
             else if (Clock.ElapsedFrameTime > 1000 / 60d)
                 ranked.Bindable.Value++;
 
-            if (ranked.Bindable.Value >= 1000 && VitaruPlayfield.OnResult != null && rankedFilter)
+            if (ranked.Bindable.Value >= 1000 && rankedFilter)
             {
                 OsuColour osu = new OsuColour();
-                VitaruPlayfield.OnResult = null;
                 ranked.SpriteText.Colour = osu.Red;
                 ranked.Text = "Unranked (Bad PC)";
             }
@@ -87,7 +92,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         protected override CursorContainer CreateCursor() => new SymcolCursor();
 
-        public override ScoreProcessor CreateScoreProcessor() => new VitaruScoreProcessor(this);
+        internal VitaruScoreProcessor VitaruScoreprocessor { get; private set; }
+
+        public override ScoreProcessor CreateScoreProcessor() => VitaruScoreprocessor;
 
         protected override Playfield CreatePlayfield() => VitaruPlayfield;
 
@@ -106,8 +113,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
                 return ControlScheme.Vitaru;
             else if (gamemode == "Dodge")
                 return ControlScheme.Dodge;
-            else if (gamemode == "Sirtavu")
-                return ControlScheme.Sirtavu;
             else
             {
                 switch (character.Value)
@@ -126,13 +131,15 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         public override DrawableHitObject<VitaruHitObject> GetVisualRepresentation(VitaruHitObject h)
         {
-            if (h is Bullet bullet)
-                return new DrawableBullet(bullet, VitaruPlayfield);
-            if (h is Laser laser)
-                return new DrawableLaser(laser, VitaruPlayfield);
-            if (h is Cluster pattern)
-                return new DrawableCluster(pattern, VitaruPlayfield);
-            return null;
+            if (h is Cluster cluster)
+                return new DrawableCluster(cluster);
+            throw new InvalidOperationException("Only clusters allowed!");
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            VitaruScoreprocessor.Dispose();
+            base.Dispose(isDisposing);
         }
     }
 }
