@@ -145,8 +145,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             OsuNetworkingHandler = osuNetworkingHandler;
             User = user;
 
-            osuNetworkingHandler.OnPacketReceive += OnPacketReceive;
-            OnDispose += () => osuNetworkingHandler.OnPacketReceive -= OnPacketReceive;
+            OsuNetworkingHandler.OnPacketReceive += OnPacketReceive;
         }
 
         protected virtual void OnPacketReceive(PacketInfo info)
@@ -795,6 +794,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         protected override void Dispose(bool isDisposing)
         {
             VitaruInputContainer = null;
+            if (OsuNetworkingHandler != null) OsuNetworkingHandler.OnPacketReceive -= OnPacketReceive;
             OsuNetworkingHandler = null;
             base.Dispose(isDisposing);
         }
