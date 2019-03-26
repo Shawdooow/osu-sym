@@ -5,11 +5,13 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.ChapterSets.Chapters
+namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters
 {
     public class VitaruChapter
     {
         public virtual string Title { get; } = "Vitaru";
+
+        public virtual string Description => null;
 
         public virtual VitaruPlayer[] GetPlayers() => new VitaruPlayer[]
         {
@@ -26,7 +28,5 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Chapters
                     return new DrawableVitaruPlayer(playfield, player);
             }
         }
-
-        public virtual string Description => "";
     }
 }

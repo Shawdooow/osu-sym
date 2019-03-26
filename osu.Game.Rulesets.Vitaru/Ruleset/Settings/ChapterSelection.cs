@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters;
 
 #endregion
 

@@ -17,7 +17,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
 {
-    public class Cluster : VitaruHitObject, IHasCurve, IHasTeam
+    public abstract class Cluster : VitaruHitObject, IHasCurve, IHasTeam
     {
         /// <summary>
         /// All Cluster specific stuff
@@ -166,7 +166,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
 
                 for (double i = StartTime + SpanDuration; i <= EndTime; i += SpanDuration)
                 {
-                    if (i > 9000) break;
+                    if (i > 1000000)
+                    {
+                        Logger.Log("We got a chunky Cluster...");
+                        break;
+                    }
                     SampleControlPoint point = controlPointInfo.SamplePointAt(i);
                     SampleControlPoints.Add(point);
                 }
@@ -187,11 +191,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
         /// All Bullet loading stuff
         /// </summary>
         #region Bullet Loading
+        //TODO: Remove this
         public float EnemyHealth { get; set; } = 40;
 
         public void AddNested(Projectile projectile) => base.AddNested(projectile);
 
-        public List<Projectile> GetProjectiles()
+        public virtual List<Projectile> GetProjectiles()
         {
             if (Convert)
             {
@@ -199,7 +204,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
 
                 if (!IsSlider)
                     foreach (SampleInfo info in GetAdjustedSamples())
-                        foreach (Projectile p in getCluster(Position, getPatternID(info)))
+                        foreach (Projectile p in GetConvertCluster(Position, GetConvertPatternID(info)))
                         {
                             p.Ar = Ar;
 
@@ -219,7 +224,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
                 if (IsSlider)
                 {
                     foreach (SampleInfo info in GetAdjustedSamples(0))
-                        foreach (Projectile p in getCluster(Position, getPatternID(info)))
+                        foreach (Projectile p in GetConvertCluster(Position, GetConvertPatternID(info)))
                         {
                             p.Ar = Ar;
 
@@ -238,7 +243,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
 
                     for (int repeatIndex = 0, repeat = 1; repeatIndex < RepeatCount + 1; repeatIndex++, repeat++)
                         foreach (SampleInfo info in GetAdjustedSamples(repeat))
-                            foreach (Projectile p in getCluster(Position + Path.PositionAt(repeat % 2), getPatternID(info)))
+                            foreach (Projectile p in GetConvertCluster(Position + Path.PositionAt(repeat % 2), GetConvertPatternID(info)))
                             {
                                 p.Ar = Ar;
 
@@ -264,7 +269,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
             throw new NotImplementedException("Native vitaru! mapping doesn't exist yet!");
         }
 
-        private List<Projectile> getCluster(Vector2 pos, int id)
+        protected virtual List<Projectile> GetConvertCluster(Vector2 pos, int id)
         {
             switch (id)
             {
@@ -287,7 +292,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
             }
         }
 
-        private int getPatternID(SampleInfo info)
+        protected virtual int GetConvertPatternID(SampleInfo info)
         {
             if (IsSpinner) return 6;
 

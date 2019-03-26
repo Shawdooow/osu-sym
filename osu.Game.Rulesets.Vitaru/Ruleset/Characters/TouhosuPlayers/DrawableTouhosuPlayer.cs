@@ -87,13 +87,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers
         {
             base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
 
-            if (effectPoint.KiaiMode && ChapterSet is TouhosuChapterSet && boss && LeftTotem.Alpha == 0)
+            if (effectPoint.KiaiMode && boss && LeftTotem.Alpha == 0)
             {
                 LeftTotem.FadeIn(timingPoint.BeatLength);
                 RightTotem.FadeIn(timingPoint.BeatLength);
             }
 
-            if (!effectPoint.KiaiMode && ChapterSet is TouhosuChapterSet && boss && LeftTotem.Alpha > 0)
+            if (!effectPoint.KiaiMode && boss && LeftTotem.Alpha > 0)
             {
                 LeftTotem.FadeOut(timingPoint.BeatLength);
                 RightTotem.FadeOut(timingPoint.BeatLength);

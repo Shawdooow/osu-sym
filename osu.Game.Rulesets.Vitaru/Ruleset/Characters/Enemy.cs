@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects.DrawableHitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities.Buffs;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship.Characters.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
@@ -33,15 +34,15 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
 
         private readonly Color4 characterColor;
 
-        private DrawableCluster drawablePattern;
+        private DrawableVitaruCluster drawableCluster;
 
-        public Enemy(VitaruPlayfield playfield, DrawableCluster drawablePattern) : base(playfield)
+        public Enemy(VitaruPlayfield playfield, DrawableVitaruCluster drawableCluster) : base(playfield)
         {
-            this.drawablePattern = drawablePattern;
+            this.drawableCluster = drawableCluster;
 
             AlwaysPresent = true;
 
-            characterColor = drawablePattern.AccentColour;
+            characterColor = drawableCluster.AccentColour;
         }
 
         protected override void MovementAnimations()
@@ -124,7 +125,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
         {
             Dead = true;
             Hitbox.HitDetection = false;
-            drawablePattern.Death(this);
+            drawableCluster.Death(this);
 
             if (souls < 100 && Untuned)
                 souls.Value++;
@@ -147,7 +148,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
         {
             souls.UnbindAll();
             souls = null;
-            drawablePattern = null;
+            drawableCluster = null;
             base.Dispose(isDisposing);
         }
     }

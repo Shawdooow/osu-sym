@@ -12,6 +12,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
@@ -132,7 +133,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
         public override DrawableHitObject<VitaruHitObject> GetVisualRepresentation(VitaruHitObject h)
         {
             if (h is Cluster cluster)
-                return new DrawableCluster(cluster, null);
+                return ChapterStore.GetChapterSet(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode)).GetDrawableCluster(cluster, null);
             throw new InvalidOperationException("Only clusters allowed!");
         }
 

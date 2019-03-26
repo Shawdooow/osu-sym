@@ -27,8 +27,6 @@
   <ItemGroup>
     <Folder Include="Assets\Tracks\" />
     <Folder Include="ChapterSets\Vitaru\Characters\" />
-    <Folder Include="ChapterSets\Vitaru\Chapters\" />
-    <Folder Include="ChapterSets\Vitaru\HitObjects\DrawableHitObjects\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sym.osu\osu.Mods.MapMixer\osu.Mods.MapMixer.csproj" />

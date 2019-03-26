@@ -182,8 +182,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         #region Beat Handling
         protected override void OnNewBeat(int beatIndex, TimingControlPoint timingPoint, EffectControlPoint effectPoint, TrackAmplitudes amplitudes)
         {
-            base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
-
             float amplitudeAdjust = Math.Min(1, 0.4f + amplitudes.Maximum);
 
             BeatLength = timingPoint.BeatLength;

@@ -1,6 +1,9 @@
 ﻿#region usings
 
 using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects.DrawableHitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
@@ -22,9 +25,9 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru
             new VitaruChapter(),
         };
 
-        public override Cluster GetCluster() => new Cluster();
+        public override Cluster GetCluster() => new VitaruCluster();
 
-        public override DrawableCluster GetDrawableCluster(Cluster cluster, VitaruPlayfield playfield) => new DrawableCluster(cluster, playfield);
+        public override DrawableCluster GetDrawableCluster(Cluster cluster, VitaruPlayfield playfield) => new DrawableVitaruCluster((VitaruCluster)cluster, playfield);
 
         public override Bullet GetBullet() => new Bullet();
 
@@ -34,6 +37,6 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru
 
         public override DrawableLaser GetDrawableLaser(Laser laser, VitaruPlayfield playfield) => new DrawableLaser(laser, playfield);
 
-        public override Enemy GetEnemy(VitaruPlayfield playfield, DrawableCluster drawablePattern) => new Enemy(playfield, drawablePattern);
+        public override Enemy GetEnemy(VitaruPlayfield playfield, DrawableCluster drawableCluster) => new Enemy(playfield, (DrawableVitaruCluster)drawableCluster);
     }
 }

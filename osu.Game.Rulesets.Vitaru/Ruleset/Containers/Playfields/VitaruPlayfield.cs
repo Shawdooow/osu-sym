@@ -155,12 +155,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             if (!Editor)
             {
                 VitaruPlayer vitaruPlayer = ChapterStore.GetPlayer(character);
-
-                //Bit of a hack to get the DrawablePlayer
-                if (chapterSet is TouhosuChapterSet)
-                    playerList.Add(Player = ChapterStore.GetDrawablePlayer(this, (TouhosuPlayer)vitaruPlayer));
-                else
-                    playerList.Add(Player = ChapterStore.GetDrawablePlayer(this, vitaruPlayer));
+                playerList.Add(Player = ChapterStore.GetDrawablePlayer(this, vitaruPlayer));
 
                 //Multiplayer stuff
                 if (match != null && osuNetworkingHandler != null)
@@ -176,10 +171,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
                                         DrawableVitaruPlayer dp;
 
-                                        if (chapterSet is TouhosuChapterSet)
-                                            playerList.Add(dp = ChapterStore.GetDrawablePlayer(this, (TouhosuPlayer)v));
-                                        else
-                                            playerList.Add(dp = ChapterStore.GetDrawablePlayer(this, v));
+                                        playerList.Add(dp = ChapterStore.GetDrawablePlayer(this, v));
 
                                         dp.ControlType = ControlType.Net;
                                         break;

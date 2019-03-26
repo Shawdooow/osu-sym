@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Dodge;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 
