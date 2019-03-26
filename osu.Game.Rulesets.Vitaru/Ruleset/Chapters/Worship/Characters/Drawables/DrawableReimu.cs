@@ -7,7 +7,7 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities.Buffs;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;

@@ -17,7 +17,7 @@ using Sym.Base.Graphics.Sprites;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
+namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces
 {
     public class BulletPiece : BeatSyncedContainer
     {

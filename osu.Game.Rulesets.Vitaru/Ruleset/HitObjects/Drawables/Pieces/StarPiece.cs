@@ -7,7 +7,7 @@ using osuTK;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces
+namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces
 {
     public class StarPiece : Container
     {

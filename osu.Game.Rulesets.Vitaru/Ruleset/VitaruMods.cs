@@ -8,7 +8,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
 
 #endregion
 

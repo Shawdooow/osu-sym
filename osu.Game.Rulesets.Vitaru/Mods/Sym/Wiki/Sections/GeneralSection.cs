@@ -11,8 +11,8 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
 using osuTK;
 using osuTK.Graphics;
 

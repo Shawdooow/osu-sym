@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
 using osu.Game.Scoring;
 using osu.Mods.Online.Score.Rulesets;

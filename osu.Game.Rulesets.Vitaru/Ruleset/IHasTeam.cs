@@ -1,4 +1,4 @@
-﻿namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
+﻿namespace osu.Game.Rulesets.Vitaru.Ruleset
 {
     public interface IHasTeam
     {

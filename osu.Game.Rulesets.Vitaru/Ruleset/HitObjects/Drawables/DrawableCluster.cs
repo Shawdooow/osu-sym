@@ -11,14 +11,14 @@ using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
 using osu.Mods.Rulesets.Core.Skinning;
 using osuTK;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 {
     public class DrawableCluster : DrawableVitaruHitObject
     {

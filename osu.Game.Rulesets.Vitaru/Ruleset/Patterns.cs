@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
 using osuTK;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects
+namespace osu.Game.Rulesets.Vitaru.Ruleset
 {
     public class Patterns
     {

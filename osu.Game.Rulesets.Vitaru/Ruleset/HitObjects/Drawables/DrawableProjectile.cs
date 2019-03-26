@@ -12,7 +12,7 @@ using Sym.Base.Extentions;
 
 // ReSharper disable InconsistentNaming
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 {
     public abstract class DrawableProjectile : DrawableVitaruHitObject
     {

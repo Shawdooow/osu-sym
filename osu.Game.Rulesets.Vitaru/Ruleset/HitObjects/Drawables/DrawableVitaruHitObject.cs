@@ -21,7 +21,7 @@ using osuTK.Graphics;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 {
     public abstract class DrawableVitaruHitObject : DrawableSymcolHitObject<VitaruHitObject>, ITuneable
     {

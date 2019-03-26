@@ -5,12 +5,12 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
 using osuTK;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 {
     public class DrawableSeekingBullet : DrawableProjectile
     {

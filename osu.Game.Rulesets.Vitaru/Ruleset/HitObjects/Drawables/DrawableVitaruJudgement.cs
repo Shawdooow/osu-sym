@@ -12,7 +12,7 @@ using osuTK;
 
 // ReSharper disable SpecifyACultureInStringConversionExplicitly
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
+namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 {
     public class DrawableVitaruJudgement : DrawableJudgement
     {

@@ -13,7 +13,7 @@ using osuTK;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
+namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
 {
     public class Bullet : Projectile, IHasCurve
     {

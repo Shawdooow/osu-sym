@@ -7,8 +7,8 @@ using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Vitaru.Ruleset.Edit.Blueprints.ClusterBlueprints;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
 
 #endregion
 

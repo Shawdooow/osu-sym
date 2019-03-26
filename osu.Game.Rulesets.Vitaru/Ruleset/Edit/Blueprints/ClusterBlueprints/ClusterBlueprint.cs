@@ -4,8 +4,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables;
-using osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables.Pieces;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
 using osuTK;
 
 #endregion

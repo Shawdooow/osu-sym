@@ -12,7 +12,7 @@ using osuTK.Graphics;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
+namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
 {
     public abstract class VitaruHitObject : SymcolHitObject, IHasComboInformation, IHasPosition
     {
