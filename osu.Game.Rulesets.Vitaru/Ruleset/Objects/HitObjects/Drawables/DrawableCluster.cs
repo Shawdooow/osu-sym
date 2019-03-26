@@ -37,6 +37,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         //cluster + this + enemy
         protected override double object_size => 216d + 1166.6d + 1188.32d;
 
+        public DrawableCluster(Cluster cluster) : base(cluster) { }
+
         public DrawableCluster(Cluster cluster, VitaruPlayfield playfield) : base(cluster, playfield)
         {
             AlwaysPresent = true;
