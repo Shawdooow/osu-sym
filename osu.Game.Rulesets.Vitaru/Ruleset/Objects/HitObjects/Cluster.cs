@@ -269,21 +269,21 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects
             switch (id)
             {
                 default:
-                    return Patterns.Wave(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
+                    return Patterns.Wave(ClusterSpeed * (float)Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
                 case 1:
-                    return Patterns.Wave(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
+                    return Patterns.Wave(ClusterSpeed * (float)Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
                 case 2:
-                    return Patterns.Line(ClusterSpeed * Velocity * 2 * 0.75f, ClusterSpeed * Velocity * 2 * 1.5f, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
+                    return Patterns.Line(ClusterSpeed * (float)Velocity * 2 * 0.75f, ClusterSpeed * (float)Velocity * 2 * 1.5f, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
                 case 3:
-                    return Patterns.Triangle(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
+                    return Patterns.Triangle(ClusterSpeed * (float)Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
                 case 4:
-                    return Patterns.Wedge(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
+                    return Patterns.Wedge(ClusterSpeed * (float)Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
                 case 5:
-                    return Patterns.Circle(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity);
+                    return Patterns.Circle(ClusterSpeed * (float)Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity);
                 case 6:
-                    return Patterns.Flower(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Duration, Team, beatLength, ClusterDensity);
+                    return Patterns.Flower(ClusterSpeed * (float)Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Duration, Team, beatLength, ClusterDensity);
                 case 7:
-                    return Patterns.Cross(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, StartTime, Team, ClusterDensity);
+                    return Patterns.Cross(ClusterSpeed * (float)Velocity * 2, ClusterDiameter, ClusterDamage, StartTime, Team, ClusterDensity);
             }
         }
 

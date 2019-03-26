@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
             Origin = Anchor.BottomCentre;
             Position = HitObject.Position;
-            Rotation =HitObject.Angle;
+            Rotation =(float)HitObject.Angle;
 
             Alpha = 1;
 
