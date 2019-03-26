@@ -211,7 +211,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
         protected virtual void SendActionPacket(VitaruAction action)
         {
-            if (ControlType == ControlType.Net) return;
+            if (ControlType == ControlType.Net || OsuNetworkingHandler == null) return;
 
             bool[] array = new bool[(int)VitaruAction.Pull + 1];
 
