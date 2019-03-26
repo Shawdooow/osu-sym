@@ -148,6 +148,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         {
             ControlType = ControlType.Net;
 
+            OsuNetworkingHandler = osuNetworkingHandler;
             osuNetworkingHandler.OnPacketReceive += OnPacketReceive;
             OnDispose += () => osuNetworkingHandler.OnPacketReceive -= OnPacketReceive;
         }
@@ -361,7 +362,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             if ((VitaruPlayfield.Current >= nextShoot || VitaruPlayfield.Current <= nextShoot - BeatLength) && Actions[VitaruAction.Shoot])
                 PatternWave();
 
-            if (ControlType == ControlType.Player)
+            if (ControlType == ControlType.Player && OsuNetworkingHandler != null)
                 UpdateOnline();
         }
 
@@ -757,10 +758,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         protected override void Dispose(bool isDisposing)
         {
             VitaruInputContainer = null;
+            OsuNetworkingHandler = null;
             base.Dispose(isDisposing);
         }
 
-        private class IndexedBullet
+        //TODO: have the playfield do this once for everyone?
+        protected class IndexedBullet
         {
             public readonly DrawableBullet DrawableBullet;
 
