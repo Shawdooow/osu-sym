@@ -7,6 +7,8 @@ namespace osu.Mods.Online.Base.Packets
     public class ValueArrayPacket<T, Y> : SharePacket
         where T : struct
     {
+        public override uint PacketSize => 8192;
+
         public virtual T Value { get; set; }
 
         public virtual Y[] Array { get; set; }

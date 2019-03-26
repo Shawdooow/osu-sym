@@ -7,6 +7,8 @@ namespace osu.Mods.Online.Base.Packets
     [Serializable]
     public class SharePacket : Packet, ISerializable
     {
+        public override uint PacketSize => 1024;
+
         public virtual string Name { get; set; }
 
         public virtual long ID { get; set; }
@@ -18,13 +20,13 @@ namespace osu.Mods.Online.Base.Packets
         public SharePacket(SerializationInfo info, StreamingContext context)
         {
             ID = (long)info.GetValue("i", typeof(long));
-            Name = (string)info.GetValue("n", typeof(string));
+            Name = info.GetString("n");
         }
 
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("i", ID, typeof(long));
-            info.AddValue("n", Name, typeof(string));
+            info.AddValue("i", ID);
+            info.AddValue("n", Name);
         }
     }
 }

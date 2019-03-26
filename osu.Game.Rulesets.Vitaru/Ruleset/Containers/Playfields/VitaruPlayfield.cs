@@ -31,6 +31,7 @@ using osu.Mods.Online.Multi.Settings;
 using osu.Mods.Rulesets.Core.Rulesets;
 using osuTK;
 using osuTK.Graphics;
+using Sym.Networking.Packets;
 
 #endregion
 
@@ -94,6 +95,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         private const int enemyTeam = 0;
         private const int playerTeam = 1;
 
+        protected OsuNetworkingHandler OsuNetworkingHandler { get; private set; }
+
         /// <summary>
         /// VitaruPlayfield.Current
         /// </summary>
@@ -102,6 +105,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         public VitaruPlayfield(VitaruInputManager vitaruInput, OsuNetworkingHandler osuNetworkingHandler = null, MatchInfo match = null)
         {
             VitaruInputManager = vitaruInput;
+            OsuNetworkingHandler = osuNetworkingHandler;
 
             //Reset crap
             CHARGED = false;
@@ -162,6 +166,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 {
                     Player.SetNetworking(osuNetworkingHandler, osuNetworkingHandler.OsuUserInfo);
 
+                    osuNetworkingHandler.OnPacketReceive += OnPacketReceive;
+
                     foreach (OsuUserInfo user in match.Users)
                         if (user.ID != osuNetworkingHandler.OsuUserInfo.ID)
                             foreach (Setting set in user.UserSettings)
@@ -200,8 +206,21 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             DebugToolkit.GeneralDebugItems.Add(new DebugAction { Text = "Exclusive Testing Hax", Action = () =>
             {
                 BulletPiece.ExclusiveTestingHax = !BulletPiece.ExclusiveTestingHax;
-                osuNetworkingHandler?.SendToServer(new HaxPacket { Hax = BulletPiece.ExclusiveTestingHax });
+                osuNetworkingHandler?.SendToServer(new HaxPacket
+                {
+                    Hax = BulletPiece.ExclusiveTestingHax
+                });
             } });
+        }
+
+        protected virtual void OnPacketReceive(PacketInfo info)
+        {
+            switch (info.Packet)
+            {
+                case HaxPacket hax:
+                    BulletPiece.ExclusiveTestingHax = hax.Hax;
+                    break;
+            }
         }
 
         [BackgroundDependencyLoader]
@@ -293,6 +312,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         protected override void Dispose(bool isDisposing)
         {
             VitaruInputManager = null;
+            if (OsuNetworkingHandler != null) OsuNetworkingHandler.OnPacketReceive -= OnPacketReceive;
+            OsuNetworkingHandler = null;
             base.Dispose(isDisposing);
         }
 
