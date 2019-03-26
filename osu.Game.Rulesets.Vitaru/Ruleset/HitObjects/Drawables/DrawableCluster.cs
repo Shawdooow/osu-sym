@@ -253,10 +253,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                     enemy = null;
                 }
 
-                starPiece.Clear();
-                CurrentPlayfield.Remove(starPiece);
-                starPiece.Dispose();
-                starPiece = null;
+                if (!starPiece.IsDisposed)
+                {
+                    starPiece.Clear();
+                    CurrentPlayfield.Remove(starPiece);
+                    starPiece.Dispose();
+                    starPiece = null;
+                }
 
                 VitaruPlayfield.Remove(this);
             }

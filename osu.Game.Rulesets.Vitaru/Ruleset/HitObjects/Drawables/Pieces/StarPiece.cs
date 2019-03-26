@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces
 {
     public class StarPiece : Container
     {
+        public new bool IsDisposed => base.IsDisposed;
+
         public StarPiece()
         {
             Size = new Vector2(64);
