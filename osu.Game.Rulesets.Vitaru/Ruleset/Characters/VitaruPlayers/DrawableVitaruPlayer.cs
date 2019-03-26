@@ -185,16 +185,39 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                         }
                     }
                     break;
+                case ValuePacket<double> value:
+                    if (value.ID == User.ID && ControlType == ControlType.Net)
+                        switch (value.Name)
+                        {
+                            case "hp":
+                                Health = value.Value;
+                                break;
+                        }
+                    break;
             }
         }
 
-        private double last_update = double.MinValue;
-        private const double update_rate = 60;
+        private double last_fast_update = double.MinValue;
+        private const double fast_update_rate = 60;
+
+        private double last_slow_update = double.MinValue;
+        private const double slow_update_rate = 5;
+
         protected virtual void UpdateOnline()
         {
-            if (Time.Current < last_update + 1000 / update_rate) return;
-            last_update = Time.Current;
+            if (Time.Current < last_fast_update + 1000 / fast_update_rate) return;
+            last_fast_update = Time.Current;
 
+            OnFastUpdate();
+
+            if (Time.Current < last_slow_update + 1000 / slow_update_rate) return;
+            last_slow_update = Time.Current;
+
+            OnSlowUpdate();
+        }
+
+        protected virtual void OnFastUpdate()
+        {
             OsuNetworkingHandler.SendToServer(new Vector2Packet
             {
                 Vector2 = Position,
@@ -206,6 +229,16 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                 Vector2 = Cursor.Position,
                 ID = OsuNetworkingHandler.OsuUserInfo.ID,
                 Name = "cpos"
+            });
+        }
+
+        protected virtual void OnSlowUpdate()
+        {
+            OsuNetworkingHandler.SendToServer(new ValuePacket<double>
+            {
+                Value = Health,
+                ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                Name = "hp"
             });
         }
 

@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
 
         public abstract double MaxHealth { get; }
 
-        public double Health { get; private set; }
+        public double Health { get; protected set; }
 
         protected abstract string CharacterName { get; }
 

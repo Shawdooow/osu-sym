@@ -11,7 +11,9 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
+using osu.Mods.Online.Base.Packets;
 using osuTK;
+using Sym.Networking.Packets;
 
 #endregion
 
@@ -59,6 +61,35 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers
                     StartAngle = 25,
                 }
             });
+        }
+
+        protected override void OnSlowUpdate()
+        {
+            base.OnSlowUpdate();
+            OsuNetworkingHandler.SendToServer(new ValuePacket<double>
+            {
+                Value = Energy,
+                ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                Name = "en"
+            });
+        }
+
+        protected override void OnPacketReceive(PacketInfo info)
+        {
+            base.OnPacketReceive(info);
+
+            switch (info.Packet)
+            {
+                case ValuePacket<double> value:
+                    if (value.ID == User.ID && ControlType == ControlType.Net)
+                        switch (value.Name)
+                        {
+                            case "en":
+                                Energy = value.Value;
+                                break;
+                        }
+                    break;
+            }
         }
 
         protected override void Update()
