@@ -214,7 +214,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         {
             if (ControlType == ControlType.Net) return;
 
-            bool[] array = new bool[(int)VitaruAction.Pull];
+            bool[] array = new bool[(int)VitaruAction.Pull + 1];
 
             foreach (KeyValuePair<VitaruAction, bool> pair in Actions)
                 array[(int)pair.Key] = pair.Value;
