@@ -3,7 +3,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Abilities;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;

@@ -1,12 +1,12 @@
 ﻿#region usings
 
 using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Rational;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Scarlet;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Worship;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.HitObjects;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.HitObjects.DrawableHitObjects;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters;
-using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Rational;
-using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet;
-using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Worship;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;

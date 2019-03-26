@@ -13,16 +13,16 @@
   <ItemGroup>
     <Compile Remove="Edit\**" />
     <Compile Remove="Sym\Wiki\Sections\SubSections\**" />
-    <Compile Remove="Ruleset\Chapters\Touhosu\**" />
-    <Compile Remove="Ruleset\Chapters\Vitaru\**" />
+    <Compile Remove="ChapterSets\Touhosu\Chapters\Touhosu\**" />
+    <Compile Remove="ChapterSets\Touhosu\Chapters\Vitaru\**" />
     <EmbeddedResource Remove="Edit\**" />
     <EmbeddedResource Remove="Sym\Wiki\Sections\SubSections\**" />
-    <EmbeddedResource Remove="Ruleset\Chapters\Touhosu\**" />
-    <EmbeddedResource Remove="Ruleset\Chapters\Vitaru\**" />
+    <EmbeddedResource Remove="ChapterSets\Touhosu\Chapters\Touhosu\**" />
+    <EmbeddedResource Remove="ChapterSets\Touhosu\Chapters\Vitaru\**" />
     <None Remove="Edit\**" />
     <None Remove="Sym\Wiki\Sections\SubSections\**" />
-    <None Remove="Ruleset\Chapters\Touhosu\**" />
-    <None Remove="Ruleset\Chapters\Vitaru\**" />
+    <None Remove="ChapterSets\Touhosu\Chapters\Touhosu\**" />
+    <None Remove="ChapterSets\Touhosu\Chapters\Vitaru\**" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Tracks\" />
