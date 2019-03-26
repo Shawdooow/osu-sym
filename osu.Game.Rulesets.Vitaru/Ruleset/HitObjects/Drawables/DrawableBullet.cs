@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
         // ReSharper disable once InconsistentNaming
         public static Bindable<int> BULLET_COUNT = new Bindable<int>();
 
-        private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
+        private readonly GraphicsOptions graphics = VitaruSettings.BulletGraphics.Value;
 
         public static bool BoundryHacks;
 

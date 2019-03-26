@@ -34,6 +34,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
         private const int transition_duration = 400;
 
+        public static Bindable<GraphicsOptions> BulletGraphics { get; private set; }
+
         [BackgroundDependencyLoader]
         private void load(GameHost host, Storage storage)
         {
@@ -54,6 +56,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
             gamemodeBindable.ValueChanged += g => { VitaruConfigManager.Set(VitaruSetting.Gamemode, g); };
 
             SettingsDropdown<string> gamemodeDropdown;
+
+            BulletGraphics = VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
 
             Children = new Drawable[]
             {
