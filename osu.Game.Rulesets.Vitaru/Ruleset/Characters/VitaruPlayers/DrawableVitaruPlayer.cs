@@ -158,7 +158,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             switch (info.Packet)
             {
                 case Vector2Packet vec2:
-                    if (vec2.ID == User.ID)
+                    if (vec2.ID == User.ID && ControlType == ControlType.Net)
                     {
                         switch (vec2.Name)
                         {
