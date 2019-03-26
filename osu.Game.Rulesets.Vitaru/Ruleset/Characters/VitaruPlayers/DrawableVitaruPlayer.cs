@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
         private readonly Bindable<double> directionBindable = new Bindable<double>();
 
-        protected internal VitaruInputContainer VitaruInputContainer { get; private set; }
+        protected internal readonly VitaruInputContainer VitaruInputContainer;
 
         public readonly VitaruPlayer Player;
 
@@ -694,12 +694,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             return true;
         }
         #endregion
-
-        protected override void Dispose(bool isDisposing)
-        {
-            VitaruInputContainer = null;
-            base.Dispose(isDisposing);
-        }
 
         private class IndexedBullet
         {
