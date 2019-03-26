@@ -236,6 +236,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         protected override void Dispose(bool isDisposing)
         {
+            if (IsDisposed) return;
             if (VitaruPlayfield != null)
             {
                 if (enemy != null)
