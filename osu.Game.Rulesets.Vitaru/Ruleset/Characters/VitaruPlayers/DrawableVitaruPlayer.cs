@@ -214,6 +214,24 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             });
         }
 
+        protected virtual void SendActionPacket(VitaruAction action)
+        {
+            if (ControlType == ControlType.Net) return;
+
+            bool[] array = new bool[(int)VitaruAction.Pull];
+
+            foreach (KeyValuePair<VitaruAction, bool> pair in Actions)
+                array[(int)pair.Key] = pair.Value;
+
+            OsuNetworkingHandler.SendToServer(new ValueArrayPacket<VitaruAction, bool>
+            {
+                Value = action,
+                Array = array,
+                ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                Name = "act",
+            });
+        }
+
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -747,6 +765,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                 PatternWave();
             }
 
+            SendActionPacket(action);
+
             return true;
         }
 
@@ -769,6 +789,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             //Mouse Stuff
             if (action == VitaruAction.Shoot)
                 Actions[VitaruAction.Shoot] = false;
+
+            SendActionPacket(action);
 
             return true;
         }
