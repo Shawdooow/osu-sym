@@ -2,8 +2,6 @@
 
 using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects.DrawableHitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
-using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
-using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
 
 #endregion
 

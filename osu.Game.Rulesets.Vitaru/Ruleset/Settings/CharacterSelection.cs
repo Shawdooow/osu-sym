@@ -22,13 +22,17 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
         public readonly Bindable<string> SelectedCharacter;
 
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
+        //Can't be local, GC kills it leading to bad behaviour
+        private readonly Bindable<string> gamemode;
+
         public CharacterSelection(Bindable<string> mode = null)
         {
             SelectedCharacter = mode != null ?
                 VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character).GetUnboundCopy() :
                 VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Character);
 
-            Bindable<string> gamemode = mode ?? VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
+            gamemode = mode ?? VitaruSettings.VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
 
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;

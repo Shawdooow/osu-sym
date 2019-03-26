@@ -7,11 +7,9 @@ using System.Linq;
 using System.Reflection;
 using osu.Framework.Configuration;
 using osu.Framework.Logging;
-using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Dodge;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru;
-using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 
@@ -79,10 +77,10 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets
         /// </summary>
         /// <param name="title"></param>
         /// <returns></returns>
-        public static VitaruChapter GetChapter(string title)
+        public static Chapter GetChapter(string title)
         {
             foreach (LoadedChapterSet set in LoadedChapterSets)
-                foreach (VitaruChapter chapter in set.Chapters)
+                foreach (Chapter chapter in set.Chapters)
                     if (chapter.Title == title)
                         return chapter;
             return null;
@@ -111,7 +109,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets
         public static DrawableVitaruPlayer GetDrawablePlayer(VitaruPlayfield playfield, VitaruPlayer player)
         {
             foreach (LoadedChapterSet set in LoadedChapterSets)
-                foreach (VitaruChapter chapter in set.Chapters)
+                foreach (Chapter chapter in set.Chapters)
                     if (chapter.GetDrawablePlayer(playfield, player) != null)
                         return chapter.GetDrawablePlayer(playfield, player);
             return null;
@@ -123,7 +121,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets
 
             public readonly Bindable<string> SelectedCharacter = new Bindable<string>();
 
-            public readonly List<VitaruChapter> Chapters = new List<VitaruChapter>();
+            public readonly List<Chapter> Chapters = new List<Chapter>();
 
             public readonly List<VitaruPlayer> Players = new List<VitaruPlayer>();
 
@@ -131,10 +129,10 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets
             {
                 ChapterSet = set;
 
-                foreach (VitaruChapter v in set.GetChapters())
+                foreach (Chapter v in set.GetChapters())
                     Chapters.Add(v);
 
-                foreach (VitaruChapter c in Chapters)
+                foreach (Chapter c in Chapters)
                     foreach (VitaruPlayer v in c.GetPlayers())
                     {
                         bool add = true;

@@ -1,6 +1,5 @@
 ﻿#region usings
 
-using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects.DrawableHitObjects;
@@ -20,9 +19,9 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru
         public override string Description => "The default gamemode in this ruleset which is based on the touhou series danmaku games. " +
                                               "Allows you to kill enemies while dodging bullets to the beat!";
 
-        public override VitaruChapter[] GetChapters() => new[]
+        public override Chapter[] GetChapters() => new[]
         {
-            new VitaruChapter(),
+            new RejectChapter(), 
         };
 
         public override Cluster GetCluster() => new VitaruCluster();

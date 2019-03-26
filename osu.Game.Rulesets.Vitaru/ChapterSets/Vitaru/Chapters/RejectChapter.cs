@@ -7,18 +7,18 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 
 namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters
 {
-    public class VitaruChapter
+    public class RejectChapter : Chapter
     {
-        public virtual string Title { get; } = "Vitaru";
+        public override string Title => "The Rejected Chapter";
 
-        public virtual string Description => null;
+        public override string Description => null;
 
-        public virtual VitaruPlayer[] GetPlayers() => new VitaruPlayer[]
+        public override VitaruPlayer[] GetPlayers() => new VitaruPlayer[]
         {
             new Alex(),
         };
 
-        public virtual DrawableVitaruPlayer GetDrawablePlayer(VitaruPlayfield playfield, VitaruPlayer player)
+        public override DrawableVitaruPlayer GetDrawablePlayer(VitaruPlayfield playfield, VitaruPlayer player)
         {
             switch (player.Name)
             {

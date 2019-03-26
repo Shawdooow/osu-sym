@@ -7,8 +7,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Vitaru.ChapterSets;
-using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
-using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters;
 
 #endregion
 
@@ -31,7 +29,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
             foreach (ChapterStore.LoadedChapterSet g in ChapterStore.LoadedChapterSets)
             {
                 List<string> items = new List<string>();
-                foreach (VitaruChapter chapter in g.Chapters)
+                foreach (Chapter chapter in g.Chapters)
                     items.Add(chapter.Title);
 
                 FillFlowContainer character;

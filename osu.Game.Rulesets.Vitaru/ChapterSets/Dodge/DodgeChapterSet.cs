@@ -1,6 +1,5 @@
 ﻿#region usings
 
-using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
@@ -15,9 +14,9 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Dodge
     {
         public override string Name => "Dodge";
 
-        public override VitaruChapter[] GetChapters() => new VitaruChapter[]
+        public override Chapter[] GetChapters() => new Chapter[]
         {
-            new VitaruChapter(),
+            new RejectChapter(),
         };
 
         public override Cluster GetCluster()

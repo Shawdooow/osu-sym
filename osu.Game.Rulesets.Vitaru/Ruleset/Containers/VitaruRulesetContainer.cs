@@ -17,7 +17,6 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
-using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base;

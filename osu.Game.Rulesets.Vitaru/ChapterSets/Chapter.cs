@@ -1,10 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 
 namespace osu.Game.Rulesets.Vitaru.ChapterSets
 {
-    class Chapter
+    public abstract class Chapter
     {
+        public abstract string Title { get; }
+
+        public virtual string Description => null;
+
+        public abstract VitaruPlayer[] GetPlayers();
+
+        public abstract DrawableVitaruPlayer GetDrawablePlayer(VitaruPlayfield playfield, VitaruPlayer player);
     }
 }

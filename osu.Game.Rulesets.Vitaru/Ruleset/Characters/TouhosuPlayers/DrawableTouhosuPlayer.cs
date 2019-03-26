@@ -5,7 +5,6 @@ using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;

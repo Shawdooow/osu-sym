@@ -1,7 +1,5 @@
 ﻿#region usings
 
-using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
-using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
@@ -18,7 +16,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets
 
         public virtual string Description => $"The {Name} ChapterSet.";
 
-        public abstract VitaruChapter[] GetChapters();
+        public abstract Chapter[] GetChapters();
 
         public virtual float PlayfieldMargin => 0.8f;
 
