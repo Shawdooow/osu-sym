@@ -171,6 +171,25 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                         }
                     }
                     break;
+                case ValueArrayPacket<VitaruAction, bool> act:
+                    if (act.ID == User.ID && ControlType == ControlType.Net)
+                    {
+                        switch (act.Name)
+                        {
+                            case "act":
+                                if (Actions[act.Value])
+                                    Released(act.Value);
+                                else
+                                    Pressed(act.Value);
+
+                                //TODO: so much could be done here to improve this...
+                                foreach (VitaruAction action in (VitaruAction[])Enum.GetValues(typeof(VitaruAction)))
+                                    Actions[action] = act.Array[(int)action];
+
+                                break;
+                        }
+                    }
+                    break;
             }
         }
 
