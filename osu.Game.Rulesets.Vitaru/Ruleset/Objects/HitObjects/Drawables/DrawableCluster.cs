@@ -37,6 +37,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         //cluster + this + enemy
         protected override double object_size => 216d + 1166.6d + 1188.32d;
 
+        public DrawableCluster(Cluster cluster) : base(cluster) { }
+
         public DrawableCluster(Cluster cluster, VitaruPlayfield playfield) : base(cluster, playfield)
         {
             AlwaysPresent = true;
@@ -236,17 +238,23 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         protected override void Dispose(bool isDisposing)
         {
-            enemy.Clear();
-            CurrentPlayfield.Remove(enemy);
-            enemy?.Dispose();
-            enemy = null;
+            if (VitaruPlayfield != null)
+            {
+                if (enemy != null)
+                {
+                    enemy.Clear();
+                    CurrentPlayfield.Remove(enemy);
+                    enemy.Dispose();
+                    enemy = null;
+                }
 
-            starPiece.Clear();
-            CurrentPlayfield.Remove(starPiece);
-            starPiece?.Dispose();
-            starPiece = null;
+                starPiece.Clear();
+                CurrentPlayfield.Remove(starPiece);
+                starPiece?.Dispose();
+                starPiece = null;
 
-            VitaruPlayfield.Remove(this);
+                VitaruPlayfield.Remove(this);
+            }
             base.Dispose(isDisposing);
         }
 

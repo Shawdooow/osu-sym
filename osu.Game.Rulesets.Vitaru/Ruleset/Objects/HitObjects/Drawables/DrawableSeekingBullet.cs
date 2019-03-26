@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         private Vector2 getBulletVelocity(double angle)
         {
-            Vector2 velocity = new Vector2((float)SeekingBullet.Speed * (float)Math.Cos(angle), (float)SeekingBullet.Speed * (float)Math.Sin(angle));
+            Vector2 velocity = new Vector2(SeekingBullet.Speed * (float)Math.Cos(angle), SeekingBullet.Speed * (float)Math.Sin(angle));
             return velocity;
         }
 
