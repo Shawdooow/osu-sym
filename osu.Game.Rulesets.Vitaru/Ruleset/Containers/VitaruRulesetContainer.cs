@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using System;
 using System.Collections.Generic;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
@@ -106,8 +107,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
                 return ControlScheme.Vitaru;
             else if (gamemode == "Dodge")
                 return ControlScheme.Dodge;
-            else if (gamemode == "Sirtavu")
-                return ControlScheme.Sirtavu;
             else
             {
                 switch (character.Value)
@@ -129,7 +128,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
             if (h is Cluster cluster)
                 return new DrawableCluster(cluster);
             throw new InvalidOperationException("Only clusters allowed!");
-        }
         }
     }
 }
