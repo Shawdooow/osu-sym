@@ -159,6 +159,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                         },
                         new SettingsCheckbox
                         {
+                            LabelText = "Disable Projectiles",
+                            Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DisableBullets)
+                        },
+                        new SettingsCheckbox
+                        {
                             LabelText = "Experimental Mode",
                             Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.Experimental)
                         },

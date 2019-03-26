@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
 using osu.Game.Rulesets.Vitaru.Ruleset.Scoring.Judgements;
+using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Rulesets.Core.Skinning;
 using osuTK;
 
@@ -23,6 +24,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
     public class DrawableCluster : DrawableVitaruHitObject
     {
         public static Bindable<int> CLUSTER_COUNT = new Bindable<int>();
+
+        protected readonly bool disable_bullets = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.DisableBullets);
 
         public new readonly Cluster HitObject;
 
@@ -133,7 +136,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
         {
             base.Preempt();
 
-            if (!Experimental)
+            if (!disable_bullets)
             foreach (HitObject o in HitObject.NestedHitObjects)
             {
                 if (o is Bullet b)
@@ -246,14 +249,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                 if (enemy != null)
                 {
                     enemy.Clear();
-                    CurrentPlayfield.Remove(enemy);
                     enemy.Dispose();
                     enemy = null;
                 }
 
                 starPiece.Clear();
                 CurrentPlayfield.Remove(starPiece);
-                starPiece?.Dispose();
+                starPiece.Dispose();
                 starPiece = null;
 
                 VitaruPlayfield.Remove(this);

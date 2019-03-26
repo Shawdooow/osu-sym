@@ -36,6 +36,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
             Set(VitaruSetting.DebugMode, false);
             Set(VitaruSetting.EditorBoss, false);
+            Set(VitaruSetting.DisableBullets, false);
             Set(VitaruSetting.RankedFilter, false);
             Set(VitaruSetting.Experimental, false);
             Set(VitaruSetting.DebugConfiguration, DebugConfiguration.General);
@@ -68,6 +69,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
         DebugMode,
         EditorBoss,
+        DisableBullets,
         RankedFilter,
         Experimental,
         DebugConfiguration,
