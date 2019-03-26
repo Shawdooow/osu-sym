@@ -1,8 +1,7 @@
 ﻿#region usings
 
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
-using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using Sym.Base.Graphics.Containers;
@@ -13,15 +12,15 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 {
     public class AspectLockedPlayfield : AspectLockedContainer
     {
-        private readonly VitaruGamemode gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
+        private readonly ChapterSet chapterSet = ChapterStore.GetChapterSet(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
-        public override Vector2 Size => gamemode.PlayfieldSize;
+        public override Vector2 Size => chapterSet.PlayfieldSize;
 
-        public override Vector2 AspectRatio => gamemode.PlayfieldAspectRatio;
+        public override Vector2 AspectRatio => chapterSet.PlayfieldAspectRatio;
 
         public AspectLockedPlayfield()
         {
-            Margin = gamemode.PlayfieldMargin;
+            Margin = chapterSet.PlayfieldMargin;
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
         }

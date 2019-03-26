@@ -8,7 +8,6 @@ using osu.Game.Audio;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Scoring;
-using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
@@ -97,7 +96,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                 if (Started && !done)
                 {
                     starPiece.Position = HitObject.PositionAt(completionProgress);
-                    if (!(Gamemode is DodgeGamemode))
+                    if (!(ChapterSet is DodgeGamemode))
                         enemy.Position = HitObject.PositionAt(completionProgress);
                 }
 
@@ -141,7 +140,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
             {
                 if (o is Bullet b)
                 {
-                    if (DrawableBullet.BoundryHacks || Gamemode is DodgeGamemode)
+                    if (DrawableBullet.BoundryHacks || ChapterSet is DodgeGamemode)
                     {
                         b.Angle += getPlayerAngle() - (float)Math.PI / 2;
                         b.SliderType = b.SliderType;
@@ -150,16 +149,16 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                     if (b.ShootPlayer)
                         b.Position = VitaruPlayfield.PlayerPosition;
 
-                    DrawableBullet drawableBullet = Gamemode.GetDrawableBullet(b, VitaruPlayfield);
+                    DrawableBullet drawableBullet = ChapterSet.GetDrawableBullet(b, VitaruPlayfield);
                     CurrentPlayfield.Add(drawableBullet);
                     AddNested(drawableBullet);
                 }
                 else if (o is Laser l)
                 {
-                    if (DrawableBullet.BoundryHacks || Gamemode is DodgeGamemode)
+                    if (DrawableBullet.BoundryHacks || ChapterSet is DodgeGamemode)
                         l.Angle += getPlayerAngle() - (float)Math.PI / 2;
 
-                    DrawableLaser drawableLaser = Gamemode.GetDrawableLaser(l, VitaruPlayfield);
+                    DrawableLaser drawableLaser = ChapterSet.GetDrawableLaser(l, VitaruPlayfield);
                     CurrentPlayfield.Add(drawableLaser);
                     AddNested(drawableLaser);
                 }
@@ -175,7 +174,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                 Colour = AccentColour
             });
 
-            if (!(Gamemode is DodgeGamemode))
+            if (!(ChapterSet is DodgeGamemode))
             {
                 CurrentPlayfield.Add(enemy = new Enemy(VitaruPlayfield, this)
                 {
@@ -222,7 +221,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
             if (HitObject.IsSpinner)
                 PlayBetterSamples();
 
-            if (!(Gamemode is DodgeGamemode))
+            if (!(ChapterSet is DodgeGamemode))
                 enemy.MoveTo(getClusterStartPosition(), HitObject.TimeUnPreempt * 2, Easing.InQuad)
                     .ScaleTo(new Vector2(0.5f), HitObject.TimeUnPreempt, Easing.InQuad)
                     .FadeOut(HitObject.TimeUnPreempt, Easing.InQuad);

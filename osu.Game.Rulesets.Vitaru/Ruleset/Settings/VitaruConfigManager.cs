@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
         protected override void InitialiseDefaults()
         {
-            Set(VitaruSetting.Gamemode, "Dodge");
+            Set(VitaruSetting.Gamemode, "Vitaru");
             Set(VitaruSetting.Chapter, "Vitaru");
             Set(VitaruSetting.Character, "Alex");
 

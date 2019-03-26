@@ -6,8 +6,7 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Objects.Types;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
-using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Audio;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
@@ -27,7 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
     {
         protected readonly bool Experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
 
-        protected readonly VitaruGamemode Gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
+        protected readonly ChapterSet ChapterSet = ChapterStore.GetChapterSet(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
         protected Bindable<SoundsOptions> Sounds { get; private set; } = VitaruSettings.VitaruConfigManager.GetBindable<SoundsOptions>(VitaruSetting.Sounds);
 
@@ -121,7 +120,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
             end = (float)hitObject.EndTime;
 
             VitaruRuleset.MEMORY_LEAKED.Value += object_size;
-            //OnDispose += () => VitaruRuleset.MEMORY_LEAKED.Value -= object_size;
+            OnDispose += () => VitaruRuleset.MEMORY_LEAKED.Value -= object_size;
         }
 
         protected override SymcolSkinnableSound GetSkinnableSound(SampleInfo info, SampleControlPoint point = null)

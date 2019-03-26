@@ -12,23 +12,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Edit\**" />
-    <Compile Remove="Mods\Multi\**" />
-    <Compile Remove="Mods\Sym\Wiki\Sections\SubSections\**" />
+    <Compile Remove="Sym\Wiki\Sections\SubSections\**" />
     <Compile Remove="Ruleset\Chapters\Touhosu\**" />
     <Compile Remove="Ruleset\Chapters\Vitaru\**" />
     <EmbeddedResource Remove="Edit\**" />
-    <EmbeddedResource Remove="Mods\Multi\**" />
-    <EmbeddedResource Remove="Mods\Sym\Wiki\Sections\SubSections\**" />
+    <EmbeddedResource Remove="Sym\Wiki\Sections\SubSections\**" />
     <EmbeddedResource Remove="Ruleset\Chapters\Touhosu\**" />
     <EmbeddedResource Remove="Ruleset\Chapters\Vitaru\**" />
     <None Remove="Edit\**" />
-    <None Remove="Mods\Multi\**" />
-    <None Remove="Mods\Sym\Wiki\Sections\SubSections\**" />
+    <None Remove="Sym\Wiki\Sections\SubSections\**" />
     <None Remove="Ruleset\Chapters\Touhosu\**" />
     <None Remove="Ruleset\Chapters\Vitaru\**" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Tracks\" />
+    <Folder Include="ChapterSets\Vitaru\Characters\" />
+    <Folder Include="ChapterSets\Vitaru\Chapters\" />
+    <Folder Include="ChapterSets\Vitaru\HitObjects\DrawableHitObjects\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sym.osu\osu.Mods.MapMixer\osu.Mods.MapMixer.csproj" />

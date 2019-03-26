@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                     Alpha = (float)GetFLAlpha(distance);
                 }
 
-                if (HitObject.ObeyBoundries && (Position.Y <= Gamemode.PlayfieldBounds.Y - 10 || Position.X <= Gamemode.PlayfieldBounds.X - 10 || Position.Y >= Gamemode.PlayfieldBounds.W + 10 || Position.X >= Gamemode.PlayfieldBounds.Z + 10) && !BoundryHacks)
+                if (HitObject.ObeyBoundries && (Position.Y <= ChapterSet.PlayfieldBounds.Y - 10 || Position.X <= ChapterSet.PlayfieldBounds.X - 10 || Position.Y >= ChapterSet.PlayfieldBounds.W + 10 || Position.X >= ChapterSet.PlayfieldBounds.Z + 10) && !BoundryHacks)
                     End();
             }
         }

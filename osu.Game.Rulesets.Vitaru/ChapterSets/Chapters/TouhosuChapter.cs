@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters
+namespace osu.Game.Rulesets.Vitaru.ChapterSets.Chapters
 {
     public class TouhosuChapter : VitaruChapter
     {

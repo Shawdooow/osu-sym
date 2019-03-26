@@ -5,8 +5,7 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
-using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
@@ -21,7 +20,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities.Buffs
     {
         public AspectLockedPlayfield CurrentPlayfield { get; set; }
 
-        private readonly VitaruGamemode gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
+        private readonly ChapterSet chapterSet = ChapterStore.GetChapterSet(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
         public virtual bool Untuned
         {
@@ -82,7 +81,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Abilities.Buffs
         {
             base.Update();
 
-            if (Position.Y >= gamemode.PlayfieldBounds.W + 10 && !killed)
+            if (Position.Y >= chapterSet.PlayfieldBounds.W + 10 && !killed)
             {
                 killed = true;
                 this.FadeOut(100)

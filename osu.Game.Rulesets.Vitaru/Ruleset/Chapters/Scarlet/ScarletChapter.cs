@@ -1,6 +1,6 @@
 ﻿#region usings
 
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Chapters.Scarlet.Characters.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;

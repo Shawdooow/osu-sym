@@ -1,4 +1,6 @@
-﻿namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections.Changelog
+﻿using osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections.Changelog;
+
+namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections.Changelog
 {
     internal class Blank : ChangelogVersion
     {

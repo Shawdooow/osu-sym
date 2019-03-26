@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
-using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Dodge;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
 
         protected override IEnumerable<VitaruHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
         {
-            VitaruGamemode gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
+            ChapterSet chapterSet = ChapterStore.GetChapterSet(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
             IHasEndTime endTimeData = original as IHasEndTime;
             IHasPosition positionData = original as IHasPosition;
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
             float cs = 28 + (beatmap.BeatmapInfo.BaseDifficulty.CircleSize - 4);
             float speed = 0.25f;
 
-            if (gamemode is DodgeGamemode)
+            if (chapterSet is DodgeChapterSet)
             {
                 complexity *= 0.66f;
                 cs *= 0.5f;
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
                 speed *= 0.5f;
             }
 
-            Cluster c = gamemode.GetCluster();
+            Cluster c = chapterSet.GetCluster();
 
             c.Convert = true;
 
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
             c.NewCombo = comboData?.NewCombo ?? false;
             c.ComboOffset = comboData?.ComboOffset ?? 0;
 
-            c.Position += gamemode.ClusterOffset;
+            c.Position += chapterSet.ClusterOffset;
 
             if (original is IHasCurve curveData)
             {

@@ -1,4 +1,4 @@
-﻿namespace osu.Game.Rulesets.Vitaru.Mods.Sym.Wiki.Sections.Changelog
+﻿namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections.Changelog
 {
     internal class _0_10_0 : ChangelogVersion
     {
@@ -36,7 +36,6 @@
             "Touch screen controls (they are a toggle in settings for now)\n",
             
             "Upgraded Changelog again (and will start backfilling old versions back to pre 0.1.0)",
-            "New Experimental code trying to fix performance issues",
             "Removed Storymode",
         };
 
@@ -49,6 +48,7 @@
 
         protected override string[] Fixes => new[]
         {
+            "Fix the really bad memory leak (where pretty much nothing was getting claimed by the GC, this should help in low RAM situations greatly)",
             "Fix ComboColors not working basically at all",
             //"Fix storymode making Ryukoy crash the game",
         };

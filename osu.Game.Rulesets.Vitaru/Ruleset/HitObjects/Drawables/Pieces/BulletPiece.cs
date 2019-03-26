@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces
 {
     public class BulletPiece : BeatSyncedContainer
     {
-        private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
+        private readonly GraphicsOptions graphics = VitaruSettings.BulletGraphics.Value;
 
         private readonly Sprite bulletKiai;
         private SymcolSprite dean;

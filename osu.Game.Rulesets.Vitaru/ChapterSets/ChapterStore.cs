@@ -7,26 +7,28 @@ using System.Linq;
 using System.Reflection;
 using osu.Framework.Configuration;
 using osu.Framework.Logging;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets.Chapters;
-using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Dodge;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 
 #endregion
 
-namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
+namespace osu.Game.Rulesets.Vitaru.ChapterSets
 {
     public static class ChapterStore
     {
-        public static List<Chapterset> LoadedChapterSets { get; private set; } = new List<Chapterset>();
-
-        public static List<LoadedGamemode> LoadedGamemodes { get; private set; } = new List<LoadedGamemode>();
+        public static List<LoadedChapterSet> LoadedChapterSets { get; private set; } = new List<LoadedChapterSet>();
 
         public static void ReloadChapterSets()
         {
-            LoadedChapterSets = new List<Chapterset>
+            List<ChapterSet> loadedSets = new List<ChapterSet>
             {
                 new VitaruChapterSet(),
+                new TouhosuChapterSet(),
+                new DodgeChapterSet(),
             };
 
             Dictionary<Assembly, Type> loadedAssemblies = new Dictionary<Assembly, Type>();
@@ -40,45 +42,18 @@ namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
                 try
                 {
                     Assembly assembly = Assembly.LoadFrom(file);
-                    loadedAssemblies[assembly] = assembly.GetTypes().First(t => t.IsPublic && t.IsSubclassOf(typeof(Chapterset)));
+                    loadedAssemblies[assembly] = assembly.GetTypes().First(t => t.IsPublic && t.IsSubclassOf(typeof(ChapterSet)));
                 }
                 catch (Exception)
                 {
-                    Logger.Log("Error loading a chapterset from a chapter file! [filename = " + filename + "]", LoggingTarget.Runtime, LogLevel.Error);
+                    Logger.Log($"Error loading a chapterset from a chapter file! [filename = {filename}]", LoggingTarget.Runtime, LogLevel.Error);
                 }
             }
 
-            List<Chapterset> instances = loadedAssemblies.Values.Select(g => (Chapterset)Activator.CreateInstance(g)).ToList();
+            List<ChapterSet> instances = loadedAssemblies.Values.Select(g => (ChapterSet)Activator.CreateInstance(g)).ToList();
 
-            foreach (Chapterset s in instances)
-                LoadedChapterSets.Add(s);
-
-            ReloadGamemodes();
-        }
-
-        public static void ReloadGamemodes()
-        {
-            LoadedGamemodes = new List<LoadedGamemode>();
-
-            foreach (Chapterset chapter in LoadedChapterSets)
-            foreach (VitaruGamemode g in chapter.GetGamemodes())
-            {
-                bool add = true;
-                foreach (LoadedGamemode m in LoadedGamemodes)
-                    if (m.Gamemode.Name == g.Name)
-                    {
-                        add = false;
-
-                        foreach (VitaruChapter ch in m.Chapters)
-                            m.Chapters.Add(ch);
-                        foreach (VitaruPlayer pl in m.Players)
-                            m.Players.Add(pl);
-
-                        break;
-                    }
-                if (add)
-                    LoadedGamemodes.Add(new LoadedGamemode(g));
-            }
+            foreach (ChapterSet s in instances)
+                LoadedChapterSets.Add(new LoadedChapterSet(s));
         }
         
         /// <summary>
@@ -86,13 +61,13 @@ namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static VitaruGamemode GetGamemode(string name)
+        public static ChapterSet GetChapterSet(string name)
         {
-            foreach (LoadedGamemode gamemode in LoadedGamemodes)
-                if (gamemode.Gamemode.Name == name)
-                    return gamemode.Gamemode;
+            foreach (LoadedChapterSet set in LoadedChapterSets)
+                if (set.ChapterSet.Name == name)
+                    return set.ChapterSet;
 
-            return new VitaruGamemode();
+            return null;
         }
 
         /// <summary>
@@ -102,11 +77,11 @@ namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
         /// <returns></returns>
         public static VitaruChapter GetChapter(string title)
         {
-            foreach (LoadedGamemode gamemode in LoadedGamemodes)
-                foreach (VitaruChapter chapter in gamemode.Chapters)
+            foreach (LoadedChapterSet set in LoadedChapterSets)
+                foreach (VitaruChapter chapter in set.Chapters)
                     if (chapter.Title == title)
                         return chapter;
-            return new VitaruChapter();
+            return null;
         }
 
         /// <summary>
@@ -116,11 +91,11 @@ namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
         /// <returns></returns>
         public static VitaruPlayer GetPlayer(string name)
         {
-            foreach (LoadedGamemode gamemode in LoadedGamemodes)
-                foreach (VitaruPlayer p in gamemode.Players)
+            foreach (LoadedChapterSet set in LoadedChapterSets)
+                foreach (VitaruPlayer p in set.Players)
                     if (p.Name == name)
                         return p;
-            return new VitaruPlayer();
+            return null;
         }
 
         /// <summary>
@@ -131,16 +106,16 @@ namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
         /// <returns></returns>
         public static DrawableVitaruPlayer GetDrawablePlayer(VitaruPlayfield playfield, VitaruPlayer player)
         {
-            foreach (LoadedGamemode gamemode in LoadedGamemodes)
-                foreach (VitaruChapter chapter in gamemode.Chapters)
+            foreach (LoadedChapterSet set in LoadedChapterSets)
+                foreach (VitaruChapter chapter in set.Chapters)
                     if (chapter.GetDrawablePlayer(playfield, player) != null)
                         return chapter.GetDrawablePlayer(playfield, player);
-            return new DrawableVitaruPlayer(playfield, player);
+            return null;
         }
 
-        public class LoadedGamemode
+        public class LoadedChapterSet
         {
-            public readonly VitaruGamemode Gamemode;
+            public readonly ChapterSet ChapterSet;
 
             public readonly Bindable<string> SelectedCharacter = new Bindable<string>();
 
@@ -148,11 +123,11 @@ namespace osu.Game.Rulesets.Vitaru.Mods.ChapterSets
 
             public readonly List<VitaruPlayer> Players = new List<VitaruPlayer>();
 
-            public LoadedGamemode(VitaruGamemode gamemode)
+            public LoadedChapterSet(ChapterSet set)
             {
-                Gamemode = gamemode;
+                ChapterSet = set;
 
-                foreach (VitaruChapter v in gamemode.GetChapters())
+                foreach (VitaruChapter v in set.GetChapters())
                     Chapters.Add(v);
 
                 foreach (VitaruChapter c in Chapters)

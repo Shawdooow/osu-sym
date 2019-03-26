@@ -12,9 +12,7 @@ using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Vitaru.Mods.ChapterSets;
-using osu.Game.Rulesets.Vitaru.Mods.Gamemodes;
-using osu.Game.Rulesets.Vitaru.Mods.Sym.Multi.Packets;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
@@ -55,7 +53,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         public bool Cheated { get; internal set; }
 
-        private readonly VitaruGamemode gamemode = ChapterStore.GetGamemode(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
+        private readonly ChapterSet chapterSet = ChapterStore.GetChapterSet(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
         private readonly bool playfieldBorder = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.PlayfieldBorder);
 
@@ -72,7 +70,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         private readonly Container judgementLayer;
         private readonly List<DrawableVitaruPlayer> playerList = new List<DrawableVitaruPlayer>();
 
-        public Vector2 PlayerPosition => Player?.Position ?? gamemode.PlayerStartingPosition;
+        public Vector2 PlayerPosition => Player?.Position ?? chapterSet.PlayerStartingPosition;
 
         public DrawableVitaruPlayer Player { get; internal set; }
 
@@ -80,9 +78,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         public virtual bool Editor => false;
 
-        public override float Margin => gamemode.PlayfieldMargin;
+        public override float Margin => chapterSet.PlayfieldMargin;
 
-        protected override Vector2 AspectRatio => gamemode.PlayfieldAspectRatio;
+        protected override Vector2 AspectRatio => chapterSet.PlayfieldAspectRatio;
 
         private readonly Bindable<WorkingBeatmap> workingBeatmap = new Bindable<WorkingBeatmap>();
 
