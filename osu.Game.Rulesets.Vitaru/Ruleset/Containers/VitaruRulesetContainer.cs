@@ -106,8 +106,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
                 return ControlScheme.Vitaru;
             else if (gamemode == "Dodge")
                 return ControlScheme.Dodge;
-            else if (gamemode == "Sirtavu")
-                return ControlScheme.Sirtavu;
             else
             {
                 switch (character.Value)
