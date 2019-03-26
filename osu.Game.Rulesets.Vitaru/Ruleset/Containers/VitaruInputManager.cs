@@ -91,10 +91,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
     public enum VitaruAction
     {
-        None = -1,
+        None,
 
         //Movement
-        Left = 0,
+        Left,
         Right,
         Up,
         Down,
