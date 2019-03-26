@@ -187,13 +187,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor
                     }
                 };
             }
-
-            protected override void Dispose(bool isDisposing)
-            {
-                CenterCircle?.Dispose();
-                CenterCircle = null;
-                base.Dispose(isDisposing);
-            }
         }
     }
 }

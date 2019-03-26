@@ -97,7 +97,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug
 
             GeneralDebugItems = new List<Container>();
             AIDebugItems = new List<Container>();
-            ScoreDebugItems = new List<Container>();
         }
     }
 
