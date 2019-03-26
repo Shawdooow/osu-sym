@@ -738,27 +738,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
         protected virtual bool Pressed(VitaruAction action)
         {
-            //Keyboard Stuff
-            if (action == VitaruAction.Up)
-                Actions[VitaruAction.Up] = true;
-            if (action == VitaruAction.Down)
-                Actions[VitaruAction.Down] = true;
-            if (action == VitaruAction.Left)
-                Actions[VitaruAction.Left] = true;
-            if (action == VitaruAction.Right)
-                Actions[VitaruAction.Right] = true;
             if (action == VitaruAction.Slow)
-            {
-                Actions[VitaruAction.Slow] = true;
-                VisibleHitbox.Alpha = 1;
-            }
+                VisibleHitbox.FadeInFromZero(200);
 
             //Mouse Stuff
             if (action == VitaruAction.Shoot)
-            {
-                Actions[VitaruAction.Shoot] = true;
                 PatternWave();
-            }
+
+            Actions[action] = true;
 
             SendActionPacket(action);
 
@@ -767,23 +754,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
         protected virtual bool Released(VitaruAction action)
         {
-            //Keyboard Stuff
-            if (action == VitaruAction.Up)
-                Actions[VitaruAction.Up] = false;
-            if (action == VitaruAction.Down)
-                Actions[VitaruAction.Down] = false;
-            if (action == VitaruAction.Left)
-                Actions[VitaruAction.Left] = false;
-            if (action == VitaruAction.Right)
-                Actions[VitaruAction.Right] = false;
             if (action == VitaruAction.Slow)
-            {
-                Actions[VitaruAction.Slow] = false;
-                VisibleHitbox.Alpha = 0;
-            }
-            //Mouse Stuff
-            if (action == VitaruAction.Shoot)
-                Actions[VitaruAction.Shoot] = false;
+                VisibleHitbox.FadeOutFromOne(200);
+
+            Actions[action] = false;
 
             SendActionPacket(action);
 
