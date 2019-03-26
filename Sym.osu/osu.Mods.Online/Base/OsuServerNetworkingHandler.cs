@@ -242,9 +242,9 @@ namespace osu.Mods.Online.Base
                         match = FindMatch(FindClient(score.ID).User);
                         ShareWithMatchClients(match.MatchInfo, score);
                         break;
-                    case Vector2Packet vect:
-                        match = FindMatch(FindClient(vect.ID).User);
-                        ShareWithMatchClients(match.MatchInfo, vect);
+                    case SharePacket share:
+                        match = FindMatch(FindClient(share.ID).User);
+                        ShareWithMatchClients(match.MatchInfo, share);
                         break;
                     case MatchExitPacket exit:
                         match = FindMatch(exit.User);
