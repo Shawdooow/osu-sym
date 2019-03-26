@@ -23,10 +23,10 @@
             "[Experimental] Touhou sounds\n",
 
             "Score Submission (Leaderboards don't work but scores are uploaded and saved when connected)",
-            "[WIP] Multiplayer Support (using the Online mod)",
-            "[WIP] [Multi] Live Spectator Support",
+            "Multiplayer Support (using the Online mod)",
+            "[Multi] Live Spectator Support",
             "[Multi] Head to Head Support",
-            "[WIP] [Multi] CO-OP Support",
+            "[Multi] CO-OP Support",
             "[WIP] [Multi] TAG Support",
             "[WIP] [Multi] PVP Support\n",
 
@@ -36,7 +36,7 @@
             //"Android Support",
             "Touch screen controls (they are a toggle in settings for now)\n",
             
-            "Upgraded Changelog again (and will start backfilling old versions back to pre 0.1.0)",
+            "Upgraded changelog again and backfill all the way to 0.0.1",
             "Removed Storymode",
         };
 
