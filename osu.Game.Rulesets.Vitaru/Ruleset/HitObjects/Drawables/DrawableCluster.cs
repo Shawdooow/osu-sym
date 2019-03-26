@@ -37,6 +37,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
         //cluster + this + enemy
         protected override double object_size => 216d + 1166.6d + 1188.32d;
 
+        //TODO: using this one causes everything to be fucked
         public DrawableCluster(Cluster cluster) : base(cluster) { }
 
         public DrawableCluster(Cluster cluster, VitaruPlayfield playfield) : base(cluster, playfield)
@@ -238,6 +239,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 
         protected override void Dispose(bool isDisposing)
         {
+            if (IsDisposed) return;
+
             if (VitaruPlayfield != null)
             {
                 if (enemy != null)
@@ -255,6 +258,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 
                 VitaruPlayfield.Remove(this);
             }
+
             base.Dispose(isDisposing);
         }
 
