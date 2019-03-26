@@ -406,6 +406,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
             OnDispose = null;
 
             VitaruPlayfield = null;
+            CurrentPlayfield.Remove(this);
             CurrentPlayfield = null;
             Clear();
 
