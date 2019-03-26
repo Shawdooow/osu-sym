@@ -120,12 +120,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                 return Released(action);
             };
 
-            Actions[VitaruAction.Up] = false;
-            Actions[VitaruAction.Down] = false;
-            Actions[VitaruAction.Left] = false;
-            Actions[VitaruAction.Right] = false;
-            Actions[VitaruAction.Slow] = false;
-            Actions[VitaruAction.Shoot] = false;
+            foreach (VitaruAction action in (VitaruAction[])Enum.GetValues(typeof(VitaruAction)))
+                Actions[action] = false;
 
             VitaruPlayfield.Gamefield.Add(Cursor = new Container
             {
