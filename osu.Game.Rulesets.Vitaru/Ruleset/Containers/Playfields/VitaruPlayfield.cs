@@ -236,6 +236,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             
             drawable.OnNewResult += onResult;
 
+            drawable.OnDispose += () => drawable.OnNewResult -= onResult;
+
             base.Add(drawable);
 
             return drawable;
@@ -258,6 +260,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 startTime = h.HitObject.StartTime;
 
             endTime = c.EndTime;
+            h.Dispose();
         }
 
         protected override void Update()

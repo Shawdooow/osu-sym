@@ -238,19 +238,19 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
 
         protected override void Dispose(bool isDisposing)
         {
-            if (IsDisposed) return;
             if (VitaruPlayfield != null)
             {
                 if (enemy != null)
                 {
                     enemy.Clear();
+                    CurrentPlayfield.Remove(enemy);
                     enemy.Dispose();
                     enemy = null;
                 }
 
                 starPiece.Clear();
                 CurrentPlayfield.Remove(starPiece);
-                starPiece.Dispose();
+                starPiece?.Dispose();
                 starPiece = null;
 
                 VitaruPlayfield.Remove(this);

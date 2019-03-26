@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
         protected override RulesetKeyBindingContainer CreateKeyBindingContainer(RulesetInfo ruleset, int variant, SimultaneousBindingMode unique)
             => new VitaruKeyBindingContainer(ruleset, variant, unique);
 
-        private readonly Bindable<bool> debug = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
+        private Bindable<bool> debug = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
         private readonly bool touch = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Touch);
         private readonly bool comboFire = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.ComboFire);
         private readonly bool shade = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.PitchShade);
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         public readonly DebugToolkit DebugToolkit;
 
-        public readonly TouchControls TouchControls = new TouchControls();
+        public TouchControls TouchControls = new TouchControls();
 
         public VitaruInputManager(RulesetInfo ruleset, int variant) : base(ruleset, variant, SimultaneousBindingMode.Unique)
         {
@@ -71,6 +71,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
         protected override void Dispose(bool isDisposing)
         {
             debug.UnbindAll();
+            debug = null;
+
+            Remove(TouchControls);
+            TouchControls.Dispose();
+            TouchControls = null;
+
             base.Dispose(isDisposing);
         }
 

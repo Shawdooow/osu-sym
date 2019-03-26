@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Objects.HitObjects.Drawables
         protected DrawableVitaruHitObject(VitaruHitObject hitObject, VitaruPlayfield playfield) : base(hitObject)
         {
             VitaruPlayfield = playfield;
-            CurrentPlayfield = playfield.Gamefield;
+            CurrentPlayfield = playfield?.Gamefield;
 
             Sounds.ValueChanged += swap;
             OnDispose += () => Sounds.ValueChanged -= swap;
