@@ -39,8 +39,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
             Mode.Value = ScoringMode.Classic;
             Mode.Disabled = true;
 
-            playfield.OnResult += AddResult;
-            playfield.OnDispose += () => playfield.OnResult -= AddResult;
+            VitaruPlayfield.OnResult += AddResult;
+            //playfield.OnDispose += () => playfield.OnResult -= AddResult;
         }
 
         protected override void Reset(bool storeResults)
@@ -173,6 +173,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
 
             PP = Math.Round(TotalScore.Value * VitaruPPCalculator.PP_MULTIPLIER, 2);
             pp.Value = PP;
+        }
+
+        public override void Dispose()
+        {
+            VitaruPlayfield.OnResult -= AddResult;
+            base.Dispose();
         }
     }
 }

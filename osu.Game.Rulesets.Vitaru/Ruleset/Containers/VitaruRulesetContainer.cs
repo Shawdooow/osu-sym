@@ -82,10 +82,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
             else if (Clock.ElapsedFrameTime > 1000 / 60d)
                 ranked.Bindable.Value++;
 
-            if (ranked.Bindable.Value >= 1000 && VitaruPlayfield.OnResult != null && rankedFilter)
+            if (ranked.Bindable.Value >= 1000 && rankedFilter)
             {
                 OsuColour osu = new OsuColour();
-                VitaruPlayfield.OnResult = null;
                 ranked.SpriteText.Colour = osu.Red;
                 ranked.Text = "Unranked (Bad PC)";
             }
@@ -114,8 +113,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
                 return ControlScheme.Vitaru;
             else if (gamemode == "Dodge")
                 return ControlScheme.Dodge;
-            else if (gamemode == "Sirtavu")
-                return ControlScheme.Sirtavu;
             else
             {
                 switch (character.Value)

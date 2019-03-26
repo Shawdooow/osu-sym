@@ -93,14 +93,6 @@ namespace osu.Game.Rulesets.Vitaru
                         new KeyBinding(InputKey.D, VitaruAction.Right),
                         new KeyBinding(InputKey.Shift, VitaruAction.Slow),
                     };
-                case ControlScheme.Sirtavu:
-                    return new[]
-                    {
-                        new KeyBinding(InputKey.W, VitaruAction.Up),
-                        new KeyBinding(InputKey.S, VitaruAction.Down),
-                        new KeyBinding(InputKey.A, VitaruAction.Left),
-                        new KeyBinding(InputKey.D, VitaruAction.Right),
-                    };
                 case ControlScheme.Touhosu:
                     return new[]
                     {
@@ -152,8 +144,6 @@ namespace osu.Game.Rulesets.Vitaru
                     return "Vitaru";
                 case ControlScheme.Dodge:
                     return "Dodge";
-                case ControlScheme.Sirtavu:
-                    return "Sirtavu";
                 case ControlScheme.Touhosu:
                     return "Touhosu";
                 case ControlScheme.Sakuya:
@@ -244,7 +234,6 @@ namespace osu.Game.Rulesets.Vitaru
     {
         Vitaru,
         Dodge,
-        Sirtavu,
 
         Touhosu,
         Sakuya,
