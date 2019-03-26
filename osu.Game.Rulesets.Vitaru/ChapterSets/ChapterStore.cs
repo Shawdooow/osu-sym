@@ -53,6 +53,9 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets
             List<ChapterSet> instances = loadedAssemblies.Values.Select(g => (ChapterSet)Activator.CreateInstance(g)).ToList();
 
             foreach (ChapterSet s in instances)
+                loadedSets.Add(s);
+
+            foreach (ChapterSet s in loadedSets)
                 LoadedChapterSets.Add(new LoadedChapterSet(s));
         }
         

@@ -55,17 +55,17 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                 gamemodeItems.Add(g.ChapterSet.Name);
             gamemodeBindable.ValueChanged += g => { VitaruConfigManager.Set(VitaruSetting.Gamemode, g); };
 
-            SettingsDropdown<string> gamemodeDropdown;
+            SettingsDropdown<string> gamemodeDropdown = new SettingsDropdown<string>
+            {
+                LabelText = "Gamemode",
+                Items = gamemodeItems.Distinct().ToList(),
+            };
 
             BulletGraphics = VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
 
             Children = new Drawable[]
             {
-                gamemodeDropdown = new SettingsDropdown<string>
-                {
-                    LabelText = "Gamemode",
-                    Items = gamemodeItems.Distinct().ToList(),
-                },
+                gamemodeDropdown,
                 new CharacterSelection(),
                 new SettingsEnumDropdown<ThemesPresets>
                 {

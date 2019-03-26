@@ -12,12 +12,12 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Dodge
 {
     public class DodgeChapterSet : ChapterSet
     {
-        public override string Name { get; }
+        public override string Name => "Dodge";
 
-        public override VitaruChapter[] GetChapters()
+        public override VitaruChapter[] GetChapters() => new VitaruChapter[]
         {
-            throw new System.NotImplementedException();
-        }
+            new VitaruChapter(),
+        };
 
         public override Cluster GetCluster()
         {

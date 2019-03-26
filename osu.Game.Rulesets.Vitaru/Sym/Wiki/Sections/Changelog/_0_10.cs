@@ -15,7 +15,8 @@
 
         protected override string[] Features => new[]
         {
-            "[WIP] Patterns V3",
+            "[WIP] ChapterSets Reborn",
+            "[WIP] Brought back base vitaru to be given a whole new set of patterns focused on movement (or rather keeping the player moving to the beat)",
             "Scoring V3",
             "[Experimental] New bullet visuals",
             //"Added classic enemy visuals",
