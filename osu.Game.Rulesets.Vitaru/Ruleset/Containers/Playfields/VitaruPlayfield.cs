@@ -208,7 +208,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 BulletPiece.ExclusiveTestingHax = !BulletPiece.ExclusiveTestingHax;
                 osuNetworkingHandler?.SendToServer(new HaxPacket
                 {
-                    Hax = BulletPiece.ExclusiveTestingHax
+                    Hax = BulletPiece.ExclusiveTestingHax,
+                    ID = OsuNetworkingHandler.OsuUserInfo.ID,
                 });
             } });
         }
