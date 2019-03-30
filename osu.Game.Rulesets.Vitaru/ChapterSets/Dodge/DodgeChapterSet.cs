@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Dodge
 {
     public class DodgeChapterSet : ChapterSet
     {
-        public override string Name => "Dodge";
+        public override string Name => $"Don't hit start, it might crash...";
 
         public override Chapter[] GetChapters() => new Chapter[]
         {

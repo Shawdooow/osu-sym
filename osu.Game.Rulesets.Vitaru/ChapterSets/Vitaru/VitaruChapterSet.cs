@@ -16,10 +16,9 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru
     {
         public override string Name => "Vitaru";
 
-        public override string Description => "The default gamemode in this ruleset which is based on the touhou series danmaku games. " +
-                                              "Allows you to kill enemies while dodging bullets to the beat!";
+        public override string Description => $"The movement gamemode, Vitaru is all about moving out of the way to the beat.";
 
-        public override Chapter[] GetChapters() => new[]
+        public override Chapter[] GetChapters() => new Chapter[]
         {
             new RejectChapter(), 
         };

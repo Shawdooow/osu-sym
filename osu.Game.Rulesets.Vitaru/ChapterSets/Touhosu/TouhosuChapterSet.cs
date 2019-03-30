@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu
     {
         public override string Name => "Touhosu";
 
-        public override string Description => "The original bullet dodging experiance.";
+        public override string Description => "The original bullet dodging experiance, bullets are sent your way to the beat.";
 
         public override Chapter[] GetChapters() => new TouhosuChapter[]
         {
