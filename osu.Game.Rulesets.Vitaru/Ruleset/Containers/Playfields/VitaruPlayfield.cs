@@ -8,8 +8,6 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
-using osu.Framework.Logging;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
@@ -310,13 +308,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                     };
                 }
             }
-        }
-
-        public Vector2 MousePos { get; private set; }
-        protected override bool OnMouseMove(MouseMoveEvent e)
-        {
-            MousePos = e.ScreenSpaceMousePosition;
-            return base.OnMouseMove(e);
         }
 
         protected override void Dispose(bool isDisposing)

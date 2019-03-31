@@ -8,16 +8,15 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Configuration;
 using osu.Game.Graphics;
-using osu.Mods.Online.Multi.Rulesets;
 using osuTK;
 
 #endregion
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor
 {
-    public class SymcolCursor : MultiCursorContainer
+    public class SymcolCursor : CursorContainer
     {
-        public override MultiCursorContainer CreateMultiCursor() => new SymcolCursor();
+        //public override MultiCursorContainer CreateMultiCursor() => new SymcolCursor();
 
         protected override Drawable CreateCursor() => new VitaruCursor();
 
@@ -28,6 +27,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor
 
         public class VitaruCursor : Container
         {
+            public static CircularContainer CenterCircle;
+
             public VitaruCursor()
             {
                 Origin = Anchor.Centre;
@@ -47,7 +48,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor
                         Size = new Vector2(Size.X + Size.X / 3.5f),
                         Texture = VitaruRuleset.VitaruTextures.Get("ring")
                     },
-                    new CircularContainer
+                    CenterCircle = new CircularContainer
                     {
                         Masking = true,
                         Anchor = Anchor.Centre,
@@ -185,6 +186,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor
                         }
                     }
                 };
+            }
+
+            protected override void Dispose(bool isDisposing)
+            {
+                CenterCircle?.Dispose();
+                CenterCircle = null;
+                base.Dispose(isDisposing);
             }
         }
     }
