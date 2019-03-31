@@ -18,6 +18,8 @@ namespace osu.Core.Containers.Shawdooow
     {
         public int ButtonSize = 100;
 
+        public virtual bool Flip { get; set; }
+
         public Bindable<bool> AlternateBindable = new Bindable<bool> { Default = false, Value = false };
         public AudioManager AlternateAudioManager;
 
@@ -84,186 +86,41 @@ namespace osu.Core.Containers.Shawdooow
             Children = new Drawable[]
             {
                 //Noramal
-                new SymcolButton
-                {
-                    ButtonText = "Normal",
-                    ButtonLabel = "N",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkRed,
-                    ButtonColorBottom = Color4.Red,
-                    Size = ButtonSize,
-                    Action = () => playSample(nNormal),
-                    Position = new Vector2(-ButtonSize - ButtonSize / 2, -ButtonSize),
-                    Bind = Key.Number1
-                },
-                new SymcolButton
-                {
-                    ButtonText = "Normal",
-                    ButtonLabel = "S",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkBlue,
-                    ButtonColorBottom = Color4.Blue,
-                    Size = ButtonSize,
-                    Action = () => playSample(sNormal),
-                    Position = new Vector2(-ButtonSize - ButtonSize / 2, ButtonSize),
-                    Bind = Key.A
-                },
-                new SymcolButton
-                {
-                    ButtonText = "Normal",
-                    ButtonLabel = "D",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkGreen,
-                    ButtonColorBottom = Color4.Green,
-                    Size = ButtonSize,
-                    Action = () => playSample(dNormal),
-                    Position = new Vector2(-ButtonSize - ButtonSize / 2, 0),
-                    Bind = Key.Q
-                },
+                GetButton("Normal", "N", Color4.DarkRed, Color4.Red, nNormal, new Vector2(-ButtonSize - ButtonSize / 2, -ButtonSize), Flip ? Key.Number4 : Key.Number7),
+                GetButton("Normal", "S", Color4.DarkBlue, Color4.Blue, sNormal, new Vector2(-ButtonSize - ButtonSize / 2, ButtonSize), Flip ? Key.F : Key.J),
+                GetButton("Normal", "D", Color4.DarkGreen, Color4.Green, dNormal, new Vector2(-ButtonSize - ButtonSize / 2, 0), Flip ? Key.R : Key.U),
 
                 //Whistle
-                new SymcolButton
-                {
-                    ButtonText = "Whistle",
-                    ButtonLabel = "N",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkRed,
-                    ButtonColorBottom = Color4.Red,
-                    Size = ButtonSize,
-                    Action = () => playSample(nWhistle),
-                    Position = new Vector2(-ButtonSize / 2f, -ButtonSize),
-                    Bind = Key.Number2
-                },
-                new SymcolButton
-                {
-                    ButtonText = "Whistle",
-                    ButtonLabel = "S",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkBlue,
-                    ButtonColorBottom = Color4.Blue,
-                    Size = ButtonSize,
-                    Action = () => playSample(sWhistle),
-                    Position = new Vector2(-ButtonSize / 2f, ButtonSize),
-                    Bind = Key.S
-                },
-                new SymcolButton
-                {
-                    ButtonText = "Whistle",
-                    ButtonLabel = "D",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkGreen,
-                    ButtonColorBottom = Color4.Green,
-                    Size = ButtonSize,
-                    Action = () => playSample(dWhistle),
-                    Position = new Vector2(-ButtonSize / 2f, 0),
-                    Bind = Key.W
-                },
+                GetButton("Whistle", "N", Color4.DarkRed, Color4.Red, nWhistle, new Vector2(-ButtonSize / 2f, -ButtonSize), Flip ? Key.Number3 : Key.Number8),
+                GetButton("Whistle", "S", Color4.DarkBlue, Color4.Blue, sWhistle, new Vector2(-ButtonSize / 2f, ButtonSize), Flip ? Key.D : Key.K),
+                GetButton("Whistle", "D", Color4.DarkGreen, Color4.Green, dWhistle, new Vector2(-ButtonSize / 2f, 0), Flip ? Key.E : Key.I),
 
                 //Finish
-                new SymcolButton
-                {
-                    ButtonText = "Finish",
-                    ButtonLabel = "N",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkRed,
-                    ButtonColorBottom = Color4.Red,
-                    Size = ButtonSize,
-                    Action = () => playSample(nFinish),
-                    Position = new Vector2(ButtonSize / 2f, -ButtonSize),
-                    Bind = Key.Number3
-                },
-                new SymcolButton
-                {
-                    ButtonText = "Finish",
-                    ButtonLabel = "S",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkBlue,
-                    ButtonColorBottom = Color4.Blue,
-                    Size = ButtonSize,
-                    Action = () => playSample(sFinish),
-                    Position = new Vector2(ButtonSize * 0.5f, ButtonSize),
-                    Bind = Key.D
-                },
-                new SymcolButton
-                {
-                    ButtonText = "Finish",
-                    ButtonLabel = "D",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkGreen,
-                    ButtonColorBottom = Color4.Green,
-                    Size = ButtonSize,
-                    Action = () => playSample(dFinish),
-                    Position = new Vector2(ButtonSize * 0.5f, 0),
-                    Bind = Key.E
-                },
+                GetButton("Finish", "N", Color4.DarkRed, Color4.Red, nFinish, new Vector2(ButtonSize / 2f, -ButtonSize), Flip ? Key.Number2 : Key.Number9),
+                GetButton("Finish", "S", Color4.DarkBlue, Color4.Blue, sFinish, new Vector2(ButtonSize * 0.5f, ButtonSize), Flip ? Key.S : Key.L),
+                GetButton("Finish", "D", Color4.DarkGreen, Color4.Green, dFinish, new Vector2(ButtonSize * 0.5f, 0), Flip ? Key.W : Key.O),
 
                 //Clap
-                new SymcolButton
-                {
-                    ButtonText = "Clap",
-                    ButtonLabel = "N",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkRed,
-                    ButtonColorBottom = Color4.Red,
-                    Size = ButtonSize,
-                    Action = () => playSample(nClap),
-                    Position = new Vector2(ButtonSize * 1.5f , -ButtonSize),
-                    Bind = Key.Number4
-                },
-                new SymcolButton
-                {
-                    ButtonText = "Clap",
-                    ButtonLabel = "S",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkBlue,
-                    ButtonColorBottom = Color4.Blue,
-                    Size = ButtonSize,
-                    Action = () => playSample(sClap),
-                    Position = new Vector2(ButtonSize * 1.5f , ButtonSize),
-                    Bind = Key.F
-                },
-                new SymcolButton
-                {
-                    ButtonText = "Clap",
-                    ButtonLabel = "D",
-                    Depth = -2,
-                    Origin = Anchor.Centre,
-                    Anchor = Anchor.Centre,
-                    ButtonColorTop = Color4.DarkGreen,
-                    ButtonColorBottom = Color4.Green,
-                    Size = ButtonSize,
-                    Action = () => playSample(dClap),
-                    Position = new Vector2(ButtonSize * 1.5f, 0),
-                    Bind = Key.R
-                },
+                GetButton("Clap", "N", Color4.DarkRed, Color4.Red, nClap, new Vector2(ButtonSize * 1.5f , -ButtonSize), Flip ? Key.Number1 : Key.Number0),
+                GetButton("Clap", "S", Color4.DarkBlue, Color4.Blue, sClap, new Vector2(ButtonSize * 1.5f , ButtonSize), Flip ? Key.A : Key.Semicolon),
+                GetButton("Clap", "D", Color4.DarkGreen, Color4.Green, dClap, new Vector2(ButtonSize * 1.5f, 0), Flip ? Key.Q : Key.P),
             };
         }
 
-        private void playSample(SampleChannel sample)
+        protected virtual SymcolButton GetButton(string name, string label, Color4 top, Color4 bottom, SampleChannel sample, Vector2 pos, Key bind) => new SymcolButton
         {
-            sample.Play();
-        }
+            ButtonText = name,
+            ButtonLabel = label,
+            Origin = Anchor.Centre,
+            Anchor = Anchor.Centre,
+            ButtonColorTop = top,
+            ButtonColorBottom = bottom,
+            Size = ButtonSize,
+            Action = () => playSample(sample),
+            Position = Flip ? new Vector2(-pos.X, pos.Y) : pos,
+            Bind = bind,
+        };
+
+        private void playSample(SampleChannel sample) => sample.Play();
     }
 }

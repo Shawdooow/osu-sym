@@ -154,7 +154,17 @@ namespace osu.Mods.MapMixer
                 },
                 new HitSoundBoard
                 {
-                    Origin = Anchor.Centre,
+                    Position = new Vector2(220, 0),
+                    Origin = Anchor.CentreLeft,
+                    Anchor = Anchor.Centre,
+                    AlternateBindable = classic_sounds,
+                    AlternateAudioManager = MapMixerModSet.ClassicAudio
+                },
+                new HitSoundBoard
+                {
+                    Position = new Vector2(-220, 0),
+                    Flip = true,
+                    Origin = Anchor.CentreRight,
                     Anchor = Anchor.Centre,
                     AlternateBindable = classic_sounds,
                     AlternateAudioManager = MapMixerModSet.ClassicAudio

@@ -52,6 +52,7 @@
             "Fix the really bad memory leak when not in editor (where pretty much nothing was getting claimed by the GC, this should help in low RAM situations greatly)",
             "Fix ComboColors not working basically at all",
             //"Fix storymode making Ryukoy crash the game",
+            "Fix a number of smaller bugs resulting from the ChapterSets changes and optimizations to memory usage",
         };
     }
 }
