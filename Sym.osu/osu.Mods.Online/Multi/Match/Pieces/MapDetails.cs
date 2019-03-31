@@ -26,7 +26,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
     public class MapDetails : ClickableContainer
     {
         // ReSharper disable once InconsistentNaming
-        private readonly SymcolSprite beatmapBG;
+        private readonly Sprite beatmapBG;
         private readonly SpriteText name;
         private readonly SpriteText artist;
         private readonly SpriteText difficulty;
@@ -58,7 +58,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
 
             Children = new Drawable[]
             {
-                beatmapBG = new SymcolSprite
+                beatmapBG = new Sprite
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,

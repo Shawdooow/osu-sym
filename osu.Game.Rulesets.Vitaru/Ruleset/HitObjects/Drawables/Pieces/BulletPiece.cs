@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces
         private readonly GraphicsOptions graphics = VitaruSettings.BulletGraphics;
 
         private readonly Sprite bulletKiai;
-        private SymcolSprite dean;
+        private Sprite dean;
         private readonly CircularContainer circle;
         public readonly Box Box;
 
@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces
             if (ExclusiveTestingHax && circle.Alpha == 1)
             {
                 circle.Alpha = 0;
-                Add(dean = new SymcolSprite
+                Add(dean = new Sprite
                 {
                     RelativeSizeAxes = Axes.Both,
                     Origin = Anchor.Centre,
@@ -151,7 +151,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces
             {
                 circle.Alpha = 1;
                 Remove(dean);
-                dean.Delete();
+                dean.Dispose();
             }
 
             if (ExclusiveTestingHax)

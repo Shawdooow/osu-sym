@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps.ControlPoints;
@@ -39,7 +40,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
 
         protected override float HitboxWidth => 64;
 
-        private SymcolSprite dean;
+        private Sprite dean;
 
         public DrawableBoss(VitaruPlayfield playfield, Boss boss) : base(playfield)
         {
@@ -104,7 +105,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
             if (BulletPiece.ExclusiveTestingHax && KiaiStillSprite.Alpha == 1)
             {
                 KiaiStillSprite.Alpha = 0;
-                Add(dean = new SymcolSprite
+                Add(dean = new Sprite
                 {
                     RelativeSizeAxes = Axes.Both,
                     Origin = Anchor.Centre,
@@ -116,7 +117,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
             {
                 KiaiStillSprite.Alpha = 1;
                 Remove(dean);
-                dean.Delete();
+                dean.Dispose();
             }
 
             if (BulletPiece.ExclusiveTestingHax)

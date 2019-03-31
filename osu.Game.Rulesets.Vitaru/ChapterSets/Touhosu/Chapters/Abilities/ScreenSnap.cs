@@ -2,6 +2,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
@@ -15,7 +16,7 @@ using Sym.Base.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Abilities
 {
-    public class ScreenSnap : SymcolSprite
+    public class ScreenSnap : Sprite
     {
         private GameHost host;
 
