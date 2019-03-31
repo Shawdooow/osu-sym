@@ -16,12 +16,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 
         public new readonly Cluster HitObject;
 
-        public DrawableCluster(Cluster cluster)
+        protected DrawableCluster(Cluster cluster)
             : base(cluster)
         {
         }
 
-        public DrawableCluster(Cluster cluster, VitaruPlayfield playfield)
+        protected DrawableCluster(Cluster cluster, VitaruPlayfield playfield)
             : base(cluster, playfield)
         {
             AlwaysPresent = true;

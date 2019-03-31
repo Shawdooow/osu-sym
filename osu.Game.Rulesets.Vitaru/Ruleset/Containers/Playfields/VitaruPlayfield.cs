@@ -250,9 +250,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             DrawableCluster.CLUSTER_COUNT.Value++;
             drawable.OnDispose += () => DrawableCluster.CLUSTER_COUNT.Value--;
             
-            drawable.OnNewResult += onResult;
-
-            drawable.OnDispose += () => drawable.OnNewResult -= onResult;
+            drawable.OnNewResult += OnNewResult;
+            drawable.OnDispose += () => drawable.OnNewResult -= OnNewResult;
 
             base.Add(drawable);
 
@@ -332,7 +331,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 pitchAdjust.PitchAdjust = speed;
         }
 
-        private void onResult(DrawableHitObject judgedObject, JudgementResult result)
+        public void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
         {
             VitaruJudgementResult vitaruResult = (VitaruJudgementResult)result;
 

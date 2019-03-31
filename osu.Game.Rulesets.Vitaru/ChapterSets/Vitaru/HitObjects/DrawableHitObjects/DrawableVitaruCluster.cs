@@ -142,7 +142,6 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects.DrawableHitObje
 
                         DrawableBullet drawableBullet = ChapterSet.GetDrawableBullet(b, VitaruPlayfield);
                         CurrentPlayfield.Add(drawableBullet);
-                        AddNested(drawableBullet);
                     }
                     else if (o is Laser l)
                     {
@@ -151,7 +150,6 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects.DrawableHitObje
 
                         DrawableLaser drawableLaser = ChapterSet.GetDrawableLaser(l, VitaruPlayfield);
                         CurrentPlayfield.Add(drawableLaser);
-                        AddNested(drawableLaser);
                     }
                 }
 
