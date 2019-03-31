@@ -102,9 +102,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                     case SoundsOptions.Classic:
                         RulesetAudio = MapMixerModSet.ClassicAudio;
                         break;
-                    case SoundsOptions.Touhou:
-                        RulesetAudio = VitaruRuleset.VitaruAudio;
-                        break;
                 }
             }
 
