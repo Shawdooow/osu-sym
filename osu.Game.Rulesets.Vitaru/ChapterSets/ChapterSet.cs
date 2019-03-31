@@ -30,6 +30,8 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets
 
         public virtual Vector2 ClusterOffset => new Vector2(256, 0);
 
+        //TODO: Move below to an object converter?
+
         public abstract Cluster GetCluster();
 
         public abstract DrawableCluster GetDrawableCluster(Cluster cluster, VitaruPlayfield playfield);
