@@ -11,21 +11,6 @@
     <EmbeddedResource Include="Assets\**\*" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Edit\**" />
-    <Compile Remove="Sym\Wiki\Sections\SubSections\**" />
-    <Compile Remove="ChapterSets\Touhosu\Chapters\Touhosu\**" />
-    <Compile Remove="ChapterSets\Touhosu\Chapters\Vitaru\**" />
-    <EmbeddedResource Remove="Edit\**" />
-    <EmbeddedResource Remove="Sym\Wiki\Sections\SubSections\**" />
-    <EmbeddedResource Remove="ChapterSets\Touhosu\Chapters\Touhosu\**" />
-    <EmbeddedResource Remove="ChapterSets\Touhosu\Chapters\Vitaru\**" />
-    <None Remove="Edit\**" />
-    <None Remove="Sym\Wiki\Sections\SubSections\**" />
-    <None Remove="ChapterSets\Touhosu\Chapters\Touhosu\**" />
-    <None Remove="ChapterSets\Touhosu\Chapters\Vitaru\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Tracks\" />
     <Folder Include="ChapterSets\Vitaru\Characters\" />
   </ItemGroup>
   <ItemGroup>

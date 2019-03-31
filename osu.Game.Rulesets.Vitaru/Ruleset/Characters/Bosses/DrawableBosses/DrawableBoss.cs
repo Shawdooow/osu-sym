@@ -21,6 +21,7 @@ using Sym.Base.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
 {
+    //TODO: Seal
     public class DrawableBoss : DrawableCharacter
     {
         public readonly Boss Boss;
@@ -30,7 +31,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
         protected override string CharacterName => Boss.Name;
 
         //TODO: make this depend on amout of kiai time (if there even is any)
-        public override double MaxHealth => 20000;
+        public override double MaxHealth => 5000;
 
         public override Color4 PrimaryColor => Boss.PrimaryColor;
 
@@ -181,8 +182,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
 
             void complete(DrawableBoss b)
             {
-                if (BulletPiece.ExclusiveTestingHax && Alpha > 0)
-                    VitaruRuleset.VitaruAudio.Sample.Get($"meme/skeletron").Play();
+                //TODO: Get a new sound that IS Dean...
+                //if (BulletPiece.ExclusiveTestingHax && Alpha > 0)
+                    //VitaruRuleset.VitaruAudio.Sample.Get($"meme/deanery").Play();
                 if (!cluster.IsSlider)
                     currentDrawableCluster = null;
             }

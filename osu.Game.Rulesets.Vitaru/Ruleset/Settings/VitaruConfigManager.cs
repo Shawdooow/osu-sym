@@ -83,7 +83,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
     {
         Standard,
         Classic,
-        Touhou,
         HighPerformance,
         Experimental,
         Old,
@@ -94,7 +93,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
     {
         Standard,
         Classic,
-        Touhou,
         HighPerformance,
         Experimental,
         Old,
@@ -104,7 +102,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
     {
         Lazer,
         Classic,
-        Touhou,
         Experimental,
     }
 }

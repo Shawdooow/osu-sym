@@ -231,18 +231,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                         VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, false);
                         VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, false);
                         break;
-                    case ThemesPresets.Touhou:
-                        VitaruConfigManager.Set(VitaruSetting.Sounds, SoundsOptions.Touhou);
-                        VitaruConfigManager.Set(VitaruSetting.PlayerVisuals, GraphicsOptions.Touhou);
-                        VitaruConfigManager.Set(VitaruSetting.EnemyVisuals, GraphicsOptions.Touhou);
-                        VitaruConfigManager.Set(VitaruSetting.BulletVisuals, GraphicsOptions.Touhou);
-                        VitaruConfigManager.Set(VitaruSetting.LaserVisuals, GraphicsOptions.Touhou);
-
-                        VitaruConfigManager.Set<bool>(VitaruSetting.PitchShade, true);
-                        VitaruConfigManager.Set<bool>(VitaruSetting.KiaiBoss, true);
-                        VitaruConfigManager.Set<bool>(VitaruSetting.PlayfieldBorder, true);
-                        VitaruConfigManager.Set<bool>(VitaruSetting.ComboFire, false);
-                        break;
                     case ThemesPresets.HighPerformance:
                         VitaruConfigManager.Set(VitaruSetting.Sounds, SoundsOptions.Lazer);
                         VitaruConfigManager.Set(VitaruSetting.PlayerVisuals, GraphicsOptions.HighPerformance);
