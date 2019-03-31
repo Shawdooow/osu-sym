@@ -60,7 +60,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
                 switch (value)
                 {
                     case SliderType.Straight:
-
                         Path = new SliderPath(PathType.Linear, new[]
                         {
                             Position,
@@ -68,7 +67,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
                         }, 1000);
                         break;
                     case SliderType.Target:
-
                         Path = new SliderPath(PathType.Linear, new[]
                         {
                             new Vector2((float)Math.Cos(Angle) * -200 + Position.X, (float)Math.Sin(Angle) * -200 + Position.Y),
@@ -76,7 +74,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
                         }, 400);
                         break;
                     case SliderType.CurveLeft:
-
                         Path = new SliderPath(PathType.PerfectCurve, new[]
                         {
                             Position,

@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
         public float ClusterAngle { get; set; } = (float)Math.PI / 2;
         public float ClusterDiameter { get; set; } = 20;
         public float ClusterDamage { get; set; } = 20;
-        private double beatLength;
+        protected double BeatLength { get; private set; }
 
         public List<SampleInfo> BetterSamples = new List<SampleInfo>();
 
@@ -157,7 +157,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
 
             Velocity = (float)(scoringDistance / timingPoint.BeatLength);
 
-            beatLength = timingPoint.BeatLength;
+            BeatLength = timingPoint.BeatLength;
 
             if (IsSlider)
             {
@@ -203,70 +203,51 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
                 List<Projectile> projectiles = new List<Projectile>();
 
                 if (!IsSlider)
+                {
                     foreach (SampleInfo info in GetAdjustedSamples())
                         foreach (Projectile p in GetConvertCluster(Position, GetConvertPatternID(info)))
-                        {
-                            p.Ar = Ar;
-
-                            p.Hidden = Hidden;
-                            p.TrueHidden = TrueHidden;
-                            p.Flashlight = Flashlight;
-
-                            p.NewCombo = NewCombo;
-                            p.ComboOffset = ComboOffset;
-                            p.IndexInCurrentCombo = IndexInCurrentCombo;
-                            p.ComboIndex = ComboIndex;
-                            p.LastInCombo = LastInCombo;
-
                             projectiles.Add(p);
-                        }
-
-                if (IsSlider)
+                }
+                else
                 {
                     foreach (SampleInfo info in GetAdjustedSamples(0))
                         foreach (Projectile p in GetConvertCluster(Position, GetConvertPatternID(info)))
-                        {
-                            p.Ar = Ar;
-
-                            p.Hidden = Hidden;
-                            p.TrueHidden = TrueHidden;
-                            p.Flashlight = Flashlight;
-
-                            p.NewCombo = NewCombo;
-                            p.ComboOffset = ComboOffset;
-                            p.IndexInCurrentCombo = IndexInCurrentCombo;
-                            p.ComboIndex = ComboIndex;
-                            p.LastInCombo = LastInCombo;
-
                             projectiles.Add(p);
-                        }
 
                     for (int repeatIndex = 0, repeat = 1; repeatIndex < RepeatCount + 1; repeatIndex++, repeat++)
                         foreach (SampleInfo info in GetAdjustedSamples(repeat))
                             foreach (Projectile p in GetConvertCluster(Position + Path.PositionAt(repeat % 2), GetConvertPatternID(info)))
                             {
-                                p.Ar = Ar;
-
-                                p.Hidden = Hidden;
-                                p.TrueHidden = TrueHidden;
-                                p.Flashlight = Flashlight;
-
-                                p.NewCombo = NewCombo;
-                                p.ComboOffset = ComboOffset;
-                                p.IndexInCurrentCombo = IndexInCurrentCombo;
-                                p.ComboIndex = ComboIndex;
-                                p.LastInCombo = LastInCombo;
-
                                 p.StartTime = StartTime + repeat * SpanDuration;
                                 p.Position = Position + Path.PositionAt(repeat % 2);
                                 projectiles.Add(p);
                             }
                 }
 
-                return projectiles;
+                return ProcessProjectiles(projectiles);
             }
 
             throw new NotImplementedException("Native vitaru! mapping doesn't exist yet!");
+        }
+
+        protected virtual List<Projectile> ProcessProjectiles(List<Projectile> projectiles)
+        {
+            foreach (Projectile p in projectiles)
+            {
+                p.Ar = Ar;
+
+                p.Hidden = Hidden;
+                p.TrueHidden = TrueHidden;
+                p.Flashlight = Flashlight;
+
+                p.NewCombo = NewCombo;
+                p.ComboOffset = ComboOffset;
+                p.IndexInCurrentCombo = IndexInCurrentCombo;
+                p.ComboIndex = ComboIndex;
+                p.LastInCombo = LastInCombo;
+            }
+
+            return projectiles;
         }
 
         protected virtual List<Projectile> GetConvertCluster(Vector2 pos, int id)
@@ -286,7 +267,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
                 case 5:
                     return Patterns.Circle(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity);
                 case 6:
-                    return Patterns.Flower(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Duration, Team, beatLength, ClusterDensity);
+                    return Patterns.Flower(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Duration, Team, BeatLength, ClusterDensity);
                 case 7:
                     return Patterns.Cross(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, StartTime, Team, ClusterDensity);
             }
@@ -299,7 +280,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
             switch (info.Bank)
             {
                 default:
-                    Logger.Log($"getPatternID(); => bad SampleInfo: {info.Bank} - {info.Name}", LoggingTarget.Database, LogLevel.Error);
+                    Logger.Log($"Bad SampleInfo: {info.Bank} - {info.Name}", LoggingTarget.Database, LogLevel.Error);
                     return 1;
                 case "normal" when info.Name == "hitnormal":
                     return 1;
@@ -326,14 +307,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
                 case "soft" when info.Name == "hitclap":
                     return 5;
             }
-        }
-
-        //Finds what direction the player is
-        public float PlayerRelativePositionAngle(Vector2 playerPos, Vector2 enemyPos)
-        {
-            //Returns a Radian
-            float playerAngle = (float)Math.Atan2(playerPos.Y - enemyPos.Y, playerPos.X - enemyPos.X);
-            return playerAngle;
         }
         #endregion
     }
