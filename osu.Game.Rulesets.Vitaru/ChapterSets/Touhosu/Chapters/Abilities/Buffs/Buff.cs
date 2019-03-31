@@ -91,8 +91,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Abilities.Buffs
             }
             else if (!killed)
             {
-                Vector2 cursorPos = SymcolCursor.VitaruCursor.CenterCircle.ToSpaceOfOtherDrawable(Vector2.Zero, this);
-                double distance = Math.Sqrt(Math.Pow(cursorPos.X, 2) + Math.Pow(cursorPos.Y, 2));
+                double distance = Math.Sqrt(Math.Pow(playfield.MousePos.X, 2) + Math.Pow(playfield.MousePos.Y, 2));
                 Alpha = (float)GetAlpha(distance);
             }
         }

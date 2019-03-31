@@ -8,6 +8,8 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input;
+using osu.Framework.Input.Events;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
@@ -40,8 +42,10 @@ using Sym.Networking.Packets;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 {
-    public class VitaruPlayfield : SymcolPlayfield
+    public class VitaruPlayfield : SymcolPlayfield, IRequireHighFrequencyMousePosition
     {
+        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => true;
+
         public static bool CHARGED;
         public static bool ACCEL;
         //For Sakuya only pretty much
@@ -350,6 +354,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
                 judgementLayer.Add(explosion);
             }
+        }
+
+        public Vector2 MousePos = Vector2.Zero;
+        protected override bool OnMouseMove(MouseMoveEvent e)
+        {
+            MousePos = e.MousePosition * new Vector2(1.33f) - new Vector2(402, 106);
+            return base.OnMouseMove(e);
         }
 
         private class MemoryDebugStat : DebugStat<double>

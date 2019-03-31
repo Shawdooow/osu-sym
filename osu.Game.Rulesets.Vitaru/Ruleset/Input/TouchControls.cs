@@ -2,6 +2,8 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Input;
+using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
 using osuTK;
@@ -58,6 +60,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
                 },
                 rightHalf = new VitaruTouchWheelContainer
                 {
+                    Right = true,
                     Anchor = Anchor.CentreRight,
                     Origin = Anchor.CentreRight,
                 },
@@ -170,12 +173,22 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
             decrease.OnRelease += () => VitaruInputContainer.Released?.Invoke(VitaruAction.Decrease);
         }
 
-        internal class VitaruTouchWheelContainer : TouchWheelContainer
+        internal class VitaruTouchWheelContainer : TouchWheelContainer//TODO: is this neccesary? , IRequireHighFrequencyMousePosition
         {
+            public bool Right { get; set; }
+
             public override void Tap()
             {
                 base.Tap();
-                Wheel.Position = SymcolCursor.VitaruCursor.CenterCircle?.ToSpaceOfOtherDrawable(Vector2.Zero, this) - new Vector2(340, 380) ?? Vector2.Zero;
+                Wheel.Position = mousePos - new Vector2(340, 380);
+                if (Right) Wheel.Position -= new Vector2(690, 0);
+            }
+
+            private Vector2 mousePos = Vector2.Zero;
+            protected override bool OnMouseMove(MouseMoveEvent e)
+            {
+                mousePos = e.MousePosition;
+                return base.OnMouseMove(e);
             }
 
             internal class VitaruTouch : TouchWheelButton

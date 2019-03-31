@@ -416,7 +416,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                     Cursor.Position = closestCharacter.Position;
             }
             else if (ControlType == ControlType.Player && Parent != null)
-                Cursor.Position = SymcolCursor.VitaruCursor.CenterCircle.ToSpaceOfOtherDrawable(Vector2.Zero, Parent) + new Vector2(6);
+                Cursor.Position = VitaruPlayfield.MousePos + new Vector2(6);
 
             if (nextHalfBeat <= VitaruPlayfield.Current && nextHalfBeat != -1)
                 OnHalfBeat();
