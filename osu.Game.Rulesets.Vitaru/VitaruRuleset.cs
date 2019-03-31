@@ -191,7 +191,7 @@ namespace osu.Game.Rulesets.Vitaru
 
         public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new VitaruDifficultyCalculator(this, beatmap);
 
-        public override HitObjectComposer CreateHitObjectComposer() => new VitaruHitObjectComposer(this);
+        public override HitObjectComposer CreateHitObjectComposer() => VitaruSettings.Experimental ? new VitaruHitObjectComposer(this) : null;
 
         public override RulesetSettingsSubsection CreateSettings() => new VitaruSettings(this);
 

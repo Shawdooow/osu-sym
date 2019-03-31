@@ -28,8 +28,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
     public abstract class DrawableCharacter : BeatSyncedContainer, ITuneable, IHasTeam
     {
         #region Fields
-        protected readonly bool Experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
-
         protected static bool HITDETECTION;
 
         public int Team { get; set; }

@@ -34,7 +34,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
         private const int transition_duration = 400;
 
-        public static Bindable<GraphicsOptions> BulletGraphics { get; private set; }
+        public static bool Experimental => experimental.Value;
+        public static GraphicsOptions BulletGraphics => bulletGraphics.Value;
+
+        private static Bindable<bool> experimental;
+        private static Bindable<GraphicsOptions> bulletGraphics;
 
         [BackgroundDependencyLoader]
         private void load(GameHost host, Storage storage)
@@ -61,7 +65,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                 Items = gamemodeItems.Distinct().ToList(),
             };
 
-            BulletGraphics = VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
+            experimental = VitaruConfigManager.GetBindable<bool>(VitaruSetting.Experimental);
+            bulletGraphics = VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
 
             Children = new Drawable[]
             {

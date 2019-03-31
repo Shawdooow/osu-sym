@@ -68,8 +68,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         private readonly string character = VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Character);
 
-        private readonly bool experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
-
         public VitaruInputManager VitaruInputManager { get; private set; }
 
         public AspectLockedPlayfield Gamefield { get; private set; }

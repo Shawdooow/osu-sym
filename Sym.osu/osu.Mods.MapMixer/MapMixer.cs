@@ -68,13 +68,15 @@ namespace osu.Mods.MapMixer
                             Bindable = sync_pitch,
                             LabelText = "Sync Pitch"
                         },
+                        /*
                         new SettingsCheckbox
                         {
                             Origin = Anchor.TopCentre,
                             Anchor = Anchor.TopCentre,
                             Bindable = classic_sounds,
                             LabelText = "Classic"
-                        }
+                        },
+                        */
                     }
                 },
                 new Container
@@ -209,6 +211,40 @@ namespace osu.Mods.MapMixer
                     Action = () => changeClockSpeeds(0.75f),
                     Position = new Vector2(-200, 250),
                     Bind = Key.B
+                },
+                new SymcolButton
+                {
+                    ButtonText = "+",
+                    Depth = -2,
+                    Origin = Anchor.Centre,
+                    Anchor = Anchor.Centre,
+                    ButtonColorTop = Color4.DarkViolet,
+                    ButtonColorBottom = Color4.Violet,
+                    Size = 50,
+                    Action = () =>
+                    {
+                        ClockPitch.Value += 0.05f;
+                        if (!sync_pitch) ClockSpeed.Value += 0.05f;
+                    },
+                    Position = new Vector2(100 , 250),
+                    Bind = Key.N
+                },
+                new SymcolButton
+                {
+                    ButtonText = "-",
+                    Depth = -2,
+                    Origin = Anchor.Centre,
+                    Anchor = Anchor.Centre,
+                    ButtonColorTop = Color4.DarkViolet,
+                    ButtonColorBottom = Color4.Violet,
+                    Size = 50,
+                    Action = () =>
+                    {
+                        ClockPitch.Value -= 0.05f;
+                        if (!sync_pitch) ClockSpeed.Value -= 0.05f;
+                    },
+                    Position = new Vector2(-100 , 250),
+                    Bind = Key.N
                 },
             };
 

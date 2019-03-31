@@ -24,8 +24,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 {
     public abstract class DrawableVitaruHitObject : DrawableSymcolHitObject<VitaruHitObject>, ITuneable
     {
-        protected readonly bool Experimental = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.Experimental);
-
         protected readonly ChapterSet ChapterSet = ChapterStore.GetChapterSet(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
         protected Bindable<SoundsOptions> Sounds { get; private set; } = VitaruSettings.VitaruConfigManager.GetBindable<SoundsOptions>(VitaruSetting.Sounds);

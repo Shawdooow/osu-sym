@@ -45,6 +45,7 @@
             "Made shooting more responsive (now it will always fire when you click, and if you hold it will auto fire on half beats)",
             "Brought back some old wiki sections on mapping and multiplayer (wonder what those could be for...)",
             "Get Time.Current less (Bullets + Enemies hurt fps less now)",
+            "Editor is now locked behind \"Experimental\" mode (its buggy, crashy and useless. if you really want to poke it I won't stop you)",
         };
 
         protected override string[] Fixes => new[]
