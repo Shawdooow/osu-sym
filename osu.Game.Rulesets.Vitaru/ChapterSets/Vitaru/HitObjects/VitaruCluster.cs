@@ -21,8 +21,8 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects
         protected override List<Projectile> ProcessProjectiles(List<Projectile> projectiles)
         {
             foreach (Projectile p in projectiles)
-                if (p.StartTime + p.TimePreempt < StartTime - Preemt)
-                    Preemt = p.StartTime + p.TimePreempt;
+                if (p.StartTime < StartTime - Preemt)
+                    Preemt = StartTime - p.StartTime;
 
             return base.ProcessProjectiles(projectiles);
         }
