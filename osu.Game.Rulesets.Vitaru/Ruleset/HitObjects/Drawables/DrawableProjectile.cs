@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
             Anchor = Anchor.TopLeft;
             Origin = Anchor.Centre;
 
-            OnNewResult += VitaruPlayfield.OnNewResult;
+            if (!projectile.Dummy) OnNewResult += VitaruPlayfield.OnNewResult;
         }
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 
         protected override void Dispose(bool isDisposing)
         {
-            OnNewResult -= VitaruPlayfield.OnNewResult;
+            if (!HitObject.Dummy) OnNewResult -= VitaruPlayfield.OnNewResult;
             ClearInternal();
             CurrentPlayfield.Remove(this);
             base.Dispose(isDisposing);

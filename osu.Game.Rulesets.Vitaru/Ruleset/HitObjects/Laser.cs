@@ -8,11 +8,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
 {
     public class Laser : Projectile
     {
-        /// <summary>
-        /// Basically just bypasses all hitobject functionality (useful for player bullets)
-        /// </summary>
-        public bool DummyMode { get; set; }
-
         public float Width => Size.X;
 
         public float Height => Size.Y;

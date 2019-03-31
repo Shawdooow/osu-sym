@@ -140,6 +140,19 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(HITOBJECT_COUNT) { Text = "Hitobject Count" });
             DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(DrawableCluster.CLUSTER_COUNT) { Text = "Cluster Count" });
             DebugToolkit.GeneralDebugItems.Add(new DebugStat<int>(DrawableBullet.BULLET_COUNT) { Text = "Bullet Count" });
+            DebugToolkit.GeneralDebugItems.Add(new DebugAction
+            {
+                Text = "Exclusive Testing Hax",
+                Action = () =>
+                {
+                    BulletPiece.ExclusiveTestingHax = !BulletPiece.ExclusiveTestingHax;
+                    osuNetworkingHandler?.SendToServer(new HaxPacket
+                    {
+                        Hax = BulletPiece.ExclusiveTestingHax,
+                        ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                    });
+                }
+            });
             DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judge Count" });
 
             if (playfieldBorder)
@@ -204,16 +217,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 Gamefield.Add(DrawableBoss = new DrawableBoss(this, new Kokoro()));
                 DrawableBoss.Team = enemyTeam;
             }
-
-            DebugToolkit.GeneralDebugItems.Add(new DebugAction { Text = "Exclusive Testing Hax", Action = () =>
-            {
-                BulletPiece.ExclusiveTestingHax = !BulletPiece.ExclusiveTestingHax;
-                osuNetworkingHandler?.SendToServer(new HaxPacket
-                {
-                    Hax = BulletPiece.ExclusiveTestingHax,
-                    ID = OsuNetworkingHandler.OsuUserInfo.ID,
-                });
-            } });
         }
 
         protected virtual void OnPacketReceive(PacketInfo info)

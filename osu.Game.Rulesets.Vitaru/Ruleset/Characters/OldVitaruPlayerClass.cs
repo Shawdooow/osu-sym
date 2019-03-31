@@ -1173,7 +1173,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
                 Team = Team,
                 SliderType = type,
                 Curviness = 0.25f,
-                DummyMode = true,
+                Dummy = true,
                 Ghost = CurrentCharacter == Characters.YuyukoSaigyouji | CurrentCharacter == Characters.AliceMuyart
             }, VitaruPlayfield));
 

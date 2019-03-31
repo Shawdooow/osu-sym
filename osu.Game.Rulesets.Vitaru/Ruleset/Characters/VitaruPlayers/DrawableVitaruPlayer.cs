@@ -715,7 +715,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                 Damage = damage,
                 ColorOverride = color,
                 Team = Team,
-                DummyMode = true,
+                Dummy = true,
                 SliderType = SliderType.Straight,
                 
             }, VitaruPlayfield){ Position = Position });

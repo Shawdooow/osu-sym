@@ -19,8 +19,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
     {
         public override double TimePreempt => 100;
 
-        public bool DummyMode { get; set; }
-
         public float Speed { get; set; } = 1f;
         public float Diameter { get; set; } = 28f;
         public bool ShootPlayer { get; set; }

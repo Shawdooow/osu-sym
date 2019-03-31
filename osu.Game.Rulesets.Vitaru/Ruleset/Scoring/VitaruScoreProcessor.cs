@@ -59,8 +59,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
             DebugToolkit.ScoreDebugItems.Add(new DebugStat<double>(pp) { Text = "PP" });
             DebugToolkit.ScoreDebugItems.Add(new DebugStat<double>(scoreCombo) { Text = "%Combo%" });
             DebugToolkit.ScoreDebugItems.Add(new DebugStat<double>(scoreMiss) { Text = "%Miss%" });
+            DebugToolkit.GeneralDebugItems.Add(expectedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Expected Judge Count" });
             DebugToolkit.GeneralDebugItems.Add(new DebugStat<double>(pp) { Text = "PP" });
-            DebugToolkit.GeneralDebugItems.Add(expectedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Expected Judgement Count" });
 
             foreach (VitaruHitObject obj in beatmap.HitObjects)
                 if (obj is Cluster cluster)

@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Scarlet.Characte
                 Damage = damage,
                 ColorOverride = color,
                 Team = Team,
-                DummyMode = true,
+                Dummy = true,
                 SliderType = SliderType.Straight,
                 SpeedEasing = Easing.OutCubic,
                 Shape = Shape.Triangle,

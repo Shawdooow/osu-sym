@@ -7,5 +7,7 @@
         public float Damage { get; set; } = 10;
 
         public float Angle { get; set; }
+
+        public bool Dummy { get; set; }
     }
 }
