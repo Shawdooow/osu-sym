@@ -5,6 +5,7 @@ using osu.Framework.Logging;
 using osu.Game.Audio;
 using osu.Game.Rulesets.Vitaru.Ruleset;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
+using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 
 #endregion
@@ -29,22 +30,14 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects
 
         protected override List<Projectile> GetConvertCluster(Vector2 pos, int id)
         {
+            if (!VitaruSettings.Experimental) return base.GetConvertCluster(pos, id);
+
             switch (id)
             {
                 default:
-                    return Patterns.Wave(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
+                    return new List<Projectile>();
                 case 1:
-                    return Patterns.Wave(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
-                case 2:
-                    return Patterns.Line(ClusterSpeed * Velocity * 2 * 0.75f, ClusterSpeed * Velocity * 2 * 1.5f, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
-                case 3:
-                    return Patterns.Triangle(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
-                case 4:
-                    return Patterns.Wedge(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity, ClusterAngle);
-                case 5:
-                    return Patterns.Circle(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Team, ClusterDensity);
-                case 6:
-                    return Patterns.Flower(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, pos, StartTime, Duration, Team, BeatLength, ClusterDensity);
+                    return Patterns.Follow(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, StartTime, Team, ClusterDensity);
                 case 7:
                     return Patterns.Cross(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, StartTime, Team, ClusterDensity);
             }
@@ -52,6 +45,8 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects
 
         protected override int GetConvertPatternID(SampleInfo info)
         {
+            if (!VitaruSettings.Experimental) return base.GetConvertPatternID(info);
+
             if (IsSpinner) return 6;
 
             switch (info.Bank)

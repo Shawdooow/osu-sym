@@ -28,6 +28,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
                     Position = position,
                     Speed = speed,
                     Angle = direction,
+                    Distance = 1000,
                     SliderType = SliderType.Straight,
                     //SpeedEasing = Easing.OutSine,
                     Diameter = i % 2 == 1 ? diameter : diameter * 1.5f,
@@ -56,6 +57,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
                     Position = position,
                     Speed = speed,
                     Angle = angle,
+                    Distance = 1000,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutQuad,
                     Diameter = diameter,
@@ -90,6 +92,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
                     Position = position,
                     Speed = speed,
                     Angle = direction,
+                    Distance = 1000,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutQuad,
                     Diameter = diameter,
@@ -135,6 +138,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
                     Position = position,
                     Speed = speed,
                     Angle = i % 2 == 0 ? angle - direction : angle + direction,
+                    Distance = 1000,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutSine,
                     Diameter = diameter,
@@ -168,6 +172,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
                     Position = position,
                     Speed = speed,
                     Angle = direction,
+                    Distance = 1000,
                     SliderType = SliderType.Straight,
                     SpeedEasing = Easing.OutCubic,
                     Diameter = i % 2 == 1 ? diameter : diameter * 1.5f,
@@ -180,17 +185,18 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
             return projectiles;
         }
 
-        public static List<Projectile> Cross(float speed, float diameter, float damage, double startTime, int team, float complexity = 1)
+        public static List<Projectile> Follow(float speed, float diameter, float damage, double startTime, int team, float complexity = 1)
         {
             List<Projectile> projectiles = new List<Projectile>();
 
+            const float dist = 800;
             int bulletCount = (int)(complexity * 4);
-            float directionModifier = (float)Math.PI * 2 / bulletCount;
-            float direction = (float)Math.PI / 4;
+            float directionModifier = (float)Math.PI / bulletCount;
+            float direction = (float)Math.PI / 8f;
 
             for (int i = 1; i <= bulletCount; i++)
             {
-                Vector2 offset = new Vector2((float)Math.Cos(direction) * -200, (float)Math.Sin(direction) * -200);
+                Vector2 offset = new Vector2((float)Math.Cos(direction) * (-dist / 2), (float)Math.Sin(direction) * (-dist / 2));
 
                 projectiles.Add(new Bullet
                 {
@@ -201,8 +207,44 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
                     Position = offset,
                     Speed = speed,
                     Angle = direction,
+                    Distance = dist,
                     SliderType = SliderType.Target,
-                    SpeedEasing = Easing.InOutExpo,
+                    SpeedEasing = Easing.InOutQuint,
+                    Diameter = diameter,
+                    Damage = damage,
+                    Team = team,
+                });
+                direction += directionModifier;
+            }
+
+            return projectiles;
+        }
+
+        public static List<Projectile> Cross(float speed, float diameter, float damage, double startTime, int team, float complexity = 1)
+        {
+            List<Projectile> projectiles = new List<Projectile>();
+
+            const float dist = 600;
+            int bulletCount = (int)(complexity * 4);
+            float directionModifier = (float)Math.PI * 2 / bulletCount;
+            float direction = (float)Math.PI / 4;
+
+            for (int i = 1; i <= bulletCount; i++)
+            {
+                Vector2 offset = new Vector2((float)Math.Cos(direction) * (-dist / 2), (float)Math.Sin(direction) * (-dist / 2));
+
+                projectiles.Add(new Bullet
+                {
+                    ObeyBoundries = false,
+                    ShootPlayer = true,
+                    Shape = Shape.Triangle,
+                    PatternStartTime = startTime,
+                    Position = offset,
+                    Speed = speed,
+                    Angle = direction,
+                    Distance = dist,
+                    SliderType = SliderType.Target,
+                    SpeedEasing = Easing.InOutQuint,
                     Diameter = diameter,
                     Damage = damage,
                     Team = team,
@@ -247,6 +289,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
                         Angle = direction,
                         Diameter = diameter,
                         Damage = damage,
+                        Distance = 600,
                         SpeedEasing = Easing.OutCubic,
                         SliderType = type,
                         Curviness = 2,
