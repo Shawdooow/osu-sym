@@ -170,6 +170,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Input
             decrease.OnRelease += () => VitaruInputContainer.Released?.Invoke(VitaruAction.Decrease);
         }
 
+        protected override void Dispose(bool isDisposing)
+        {
+            VitaruInputContainer = null;
+            base.Dispose(isDisposing);
+        }
+
         internal class VitaruTouchWheelContainer : TouchWheelContainer
         {
             public override void Tap()
