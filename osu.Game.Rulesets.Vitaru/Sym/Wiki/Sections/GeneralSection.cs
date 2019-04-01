@@ -53,7 +53,6 @@ namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
                         "A = Left\n" +
                         "D = Right\n" +
                         "Shift = Slow the player to half speed and show the hitbox.\n" +
-                        //"Space = Speed up to twice as fast (vitaru gamemode only)\n" +
                         "Left Mouse = Shoot"));
 
             Content.Add(new WikiSubSectionHeader("Anatomy"));

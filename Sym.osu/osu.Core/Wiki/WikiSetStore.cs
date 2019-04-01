@@ -18,7 +18,7 @@ namespace osu.Core.Wiki
             //We want to add a default one for "Home"
             LoadedWikiSets = new List<WikiSet>
             {
-                new LazerWikiSet(),
+                //new LazerWikiSet(),
                 new SymcolWikiSet()
             };
 

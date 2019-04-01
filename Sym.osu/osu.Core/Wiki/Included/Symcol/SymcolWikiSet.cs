@@ -10,9 +10,9 @@ namespace osu.Core.Wiki.Included.Symcol
 {
     public class SymcolWikiSet : WikiSet
     {
-        public override string Name => "symcol";
+        public override string Name => "Sym";
 
-        public override string IndexTooltip => "symcol mod loader wiki";
+        public override string IndexTooltip => "Sym modloader wiki";
 
         public override Texture Icon => SymcolOsuModSet.SymcolTextures.Get("Symcol@2x");
 
