@@ -185,7 +185,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
             return projectiles;
         }
 
-        public static List<Projectile> Follow(float speed, float diameter, float damage, double startTime, int team, float complexity = 1)
+        public static List<Projectile> Swipe(float speed, float diameter, float damage, double startTime, int team, float complexity = 1)
         {
             List<Projectile> projectiles = new List<Projectile>();
 

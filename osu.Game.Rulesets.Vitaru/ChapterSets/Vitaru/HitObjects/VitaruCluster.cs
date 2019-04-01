@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects
                 default:
                     return new List<Projectile>();
                 case 1:
-                    return Patterns.Follow(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, StartTime, Team, ClusterDensity);
+                    return Patterns.Swipe(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, StartTime, Team, ClusterDensity);
                 case 7:
                     return Patterns.Cross(ClusterSpeed * Velocity * 2, ClusterDiameter, ClusterDamage, StartTime, Team, ClusterDensity);
             }
