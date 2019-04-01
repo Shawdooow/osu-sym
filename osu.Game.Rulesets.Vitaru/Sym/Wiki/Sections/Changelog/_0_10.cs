@@ -16,35 +16,37 @@
         protected override string[] Features => new[]
         {
             "[WIP] ChapterSets Reborn",
-            "[WIP] Brought back base vitaru to be given a whole new set of patterns focused on movement (or rather keeping the player moving to the beat)",
+            "[WIP] Brought back base vitaru to be given a whole new set of patterns focused on movement "
+            + "(or rather keeping the player moving to the beat, new patterns can be tested in Touhosu when \"Experimental\" mode is on). "
+            + "Touhosu will not use the new patterns and instead keep the old ones once the vitaru gamemode is up and running "
+            + "(Dodge also might get killed since vitaru will be a straight upgrade in most ways).",
             "Scoring V3",
-            "[Experimental] New bullet visuals",
+            "[Experimental] New bullet visuals (TO BE REMOVED!)",
             //"Added classic enemy visuals",
-            "[Experimental] Touhou sounds\n",
 
-            "Score Submission (Leaderboards don't work but scores are uploaded and saved when connected)",
-            "Multiplayer Support (using the Online mod)",
-            "[Multi] Live Spectator Support",
-            "[Multi] Head to Head Support",
-            "[Multi] CO-OP Support",
-            "[WIP] [Multi] TAG Support",
-            "[WIP] [Multi] PVP Support\n",
+            "Score submission testing (Leaderboards don't work but scores are uploaded and saved when connected)",
+            "Multiplayer support (using the Online mod)",
+            "[Multi] Live Spectator support",
+            "[Multi] Head to Head support",
+            "[Multi] CO-OP support",
+            "[WIP] [Multi] TAG support",
+            "[WIP] [Multi] PVP support\n",
 
             "OSX Support (Really this was the modloader's fault...)",
-            "iOS Support",
+            "iOS Support (Also the modloaders's fault mostly, Aya also deserves some blame...)",
             //"Linux Support",
             //"Android Support",
             "Touch screen controls (they are a toggle in settings for now)\n",
             
-            "Upgraded changelog again and backfill all the way to 0.0.1",
+            "Upgraded changelog again and backfilled all the way to 0.0.1",
             "Removed Storymode",
         };
 
         protected override string[] TweaksAndChanges => new[]
         {
             "Made shooting more responsive (now it will always fire when you click, and if you hold it will auto fire on half beats)",
-            "Brought back some old wiki sections on mapping and multiplayer (wonder what those could be for...)",
-            "Get Time.Current less (Bullets + Enemies hurt fps less now)",
+            "Brought back some old wiki sections on mapping and multiplayer",
+            "Small optimizations to bullets and enemies",
             "Editor is now locked behind \"Experimental\" mode (its buggy, crashy and useless. if you really want to poke it I won't stop you)",
         };
 
@@ -52,7 +54,6 @@
         {
             "Fix the really bad memory leak when not in editor (where pretty much nothing was getting claimed by the GC, this should help in low RAM situations greatly)",
             "Fix ComboColors not working basically at all",
-            //"Fix storymode making Ryukoy crash the game",
             "Fix a number of smaller bugs resulting from the ChapterSets changes and optimizations to memory usage",
         };
     }
