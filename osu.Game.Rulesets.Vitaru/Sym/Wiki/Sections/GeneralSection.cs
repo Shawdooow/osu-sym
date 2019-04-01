@@ -1,5 +1,7 @@
 ﻿#region usings
 
+using System;
+using System.Collections.Generic;
 using osu.Core.Wiki.Sections;
 using osu.Core.Wiki.Sections.OptionExplanations;
 using osu.Core.Wiki.Sections.SectionPieces;
@@ -11,7 +13,11 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Timing;
+using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
+using osu.Game.Rulesets.Vitaru.Ruleset.Edit;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
+using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
 using osuTK;
 using osuTK.Graphics;
@@ -23,6 +29,56 @@ namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
     public class GeneralSection : WikiSection
     {
         public override string Title => "General";
+
+        private readonly Bindable<Patterns> pattern = new Bindable<Patterns>();
+
+        private readonly DecoupleableInterpolatingFramedClock patternClock;
+
+        private readonly VitaruEditPlayfield playfield;
+
+        private readonly WikiParagraph patternDescription;
+
+        public GeneralSection()
+        {
+            patternClock = new DecoupleableInterpolatingFramedClock
+            {
+                IsCoupled = false,
+            };
+
+            playfield = new VitaruEditPlayfield(null)
+            {
+                AlwaysPresent = true,
+                Clock = patternClock,
+            };
+
+            patternDescription = new WikiParagraph("Spoopy Bug.txt");
+
+            pattern.ValueChanged += value =>
+            {
+                List<Projectile> projectiles;
+
+                switch (value)
+                {
+                    default:
+                        projectiles = Ruleset.Patterns.Wave(1, 8, 0, new Vector2(20, 200), 0, 0);
+                        patternDescription.Text = "The Wave pattern.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+                        break;
+                }
+
+                patternClock.Reset();
+                playfield.Gamefield.Children = new Drawable[] { };
+
+                foreach (Projectile p in projectiles)
+                {
+                    if (p is Bullet b)
+                        playfield.Gamefield.Add(new DrawableBullet(b, playfield));
+                    //if (p is Laser l)
+                    //playfield.Gamefield.Add(new DrawableLaser(l));
+                }
+
+                patternClock.Seek(1000);
+            };
+        }
 
         [BackgroundDependencyLoader]
         private void load()
@@ -39,12 +95,8 @@ namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
                         "Object positions are mapped to the top half of the playfield (or whole playfield for dodge) in the same orientation as standard."));
 
             Content.Add(new WikiSubSectionHeader("Patterns"));
-            Content.Add(new WikiOptionEnumSplitExplanation<Patterns>(new Bindable<Patterns>(),
-                new Container
-                {
-
-                },
-                new WikiParagraph("Check back later!")));
+            Content.Add(new WikiOptionEnumSplitExplanation<Patterns>(pattern, playfield, patternDescription));
+            pattern.TriggerChange();
 
             Content.Add(new WikiSubSectionHeader("Controls"));
             Content.Add(new WikiParagraph("Controls by default will probably be the most confortable and fitting for all of the gamemodes in this ruleset (if they aren't / weren't they will be changed before release).\n\n" +

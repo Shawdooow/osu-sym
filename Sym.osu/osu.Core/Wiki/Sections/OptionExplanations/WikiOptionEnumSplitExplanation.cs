@@ -15,7 +15,7 @@ namespace osu.Core.Wiki.Sections.OptionExplanations
     public class WikiOptionEnumSplitExplanation<T> : FillFlowContainer
         where T : struct
     {
-        public WikiOptionEnumSplitExplanation(Bindable<T> bindable, Container leftSide, Container rightSide)
+        public WikiOptionEnumSplitExplanation(Bindable<T> bindable, Drawable leftSide, Drawable rightSide)
         {
             OsuColour osu = new OsuColour();
             Anchor = Anchor.TopCentre;

@@ -11,9 +11,9 @@ namespace osu.Game.Rulesets.Vitaru.Sym.Wiki
 {
     public sealed class VitaruWikiSet : WikiSet
     {
-        public override string Name => "vitaru!";
+        public override string Name => "vitaru";
 
-        public override string IndexTooltip => "official vitaru wiki!";
+        public override string IndexTooltip => "Official vitaru wiki!";
 
         public override Texture Icon => VitaruRuleset.VitaruTextures.Get("icon@2x");
 

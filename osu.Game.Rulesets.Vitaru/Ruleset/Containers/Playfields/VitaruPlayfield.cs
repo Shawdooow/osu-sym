@@ -207,7 +207,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 Player.Position = chapterSet.PlayerStartingPosition;
                 Player.Team = playerTeam;
 
-                VitaruInputManager.TouchControls.VitaruInputContainer = Player.VitaruInputContainer;
+                if (VitaruInputManager != null)
+                    VitaruInputManager.TouchControls.VitaruInputContainer = Player.VitaruInputContainer;
             }
             else
                 Player = null;
