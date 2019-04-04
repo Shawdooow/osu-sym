@@ -101,6 +101,7 @@ namespace osu.Mods.Online.Base.Screens
             int count = OnlineModset.OsuNetworkingHandler.TcpNetworkStream.Read(data, 0, data.Length);
             piecesSize += count;
             pieces.Add(data, count);
+            Logger.Log($"Data fetched for importing from stable ({piecesSize})", LoggingTarget.Network);
         }
 
         private void import()
@@ -127,6 +128,8 @@ namespace osu.Mods.Online.Base.Screens
             {
                 try
                 {
+                    Logger.Log($"Beginning Import of ({set.MapName})...", LoggingTarget.Network);
+
                     writer.Close();
 
                     using (FileStream fs = new FileStream(temp.GetFullPath($"{set.MapName}.zip"), FileMode.Create, FileAccess.Write))
@@ -138,10 +141,12 @@ namespace osu.Mods.Online.Base.Screens
                     reader.Close();
 
                     ZipFile.ExtractToDirectory(temp.GetFullPath($"{set.MapName}.zip"), temp.GetFullPath($"{set.MapName}"), Encoding.UTF8);
+                    Logger.Log($"Zip extraction while receiving ({set.MapName}) sucessful, cleaning up...", LoggingTarget.Network);
 
                     temp.Delete($"{set.MapName}.zip");
                     pieces = new Dictionary<byte[], int>();
                     piecesSize = 0;
+                    Logger.Log($"Clean up complete, beginning import...", LoggingTarget.Network);
                 }
                 catch (Exception e) { Logger.Error(e, "Failed to receive map!", LoggingTarget.Network); }
             }, TaskCreationOptions.LongRunning).ContinueWith(result =>

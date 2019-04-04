@@ -107,6 +107,7 @@ namespace osu.Mods.Online.Base
                     {
                         try
                         {
+                            Logger.Log($"Client has requested to import from stable (map = {name})", LoggingTarget.Network);
                             //TODO: move this to sever\\temp
                             if (!storage.Exists($"temp\\{name}.zip"))
                                 ZipFile.CreateFromDirectory(full, $"{storage.GetFullPath("temp")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
