@@ -95,9 +95,12 @@ namespace osu.Mods.Online.Base
                     {
                         "Alstroemeria Records - Flight of the Bamboo Cutter",
                         "601916 LazyTown - We Are Number One TLT Remix",
+                        "masayoshi_minoshima_necro_fantasia_alr_rewind_remix",
+                        "383395 Panda Eyes & Teminite - Immortal Flame (feat Anna Yvette)",
+                        "47754 Masayoshi Minoshima - Flight of the Bamboo Cutter",
                     };
 
-                    string name = names[1];
+                    string name = names[4];
 
                     string full = storage.GetFullPath(name);
 
