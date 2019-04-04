@@ -57,8 +57,14 @@ namespace osu.Mods.Online
                     ButtonColorTop = Color4.Red,
                     ButtonColorBottom = Color4.Orange,
                     Size = 100,
-                    Position = new Vector2(80, 180),
-                    Action = () => Push(new Import())
+                    Position = new Vector2(80, -180),
+                    Action = () =>
+                    {
+                        if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.ConnectionStatues >= ConnectionStatues.Connected)
+                            Push(new Import());
+                        else
+                            Logger.Log("Connect to a server first!", LoggingTarget.Network, LogLevel.Error);
+                    }
                 },
                 new SymcolButton
                 {
