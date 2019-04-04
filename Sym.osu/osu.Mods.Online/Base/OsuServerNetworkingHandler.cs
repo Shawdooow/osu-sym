@@ -36,6 +36,8 @@ namespace osu.Mods.Online.Base
 
         protected OsuGame OsuGame { get; private set; }
 
+        protected Storage Storage { get; private set; }
+
         protected ScoreStore OnlineScoreStore { get; private set; }
 
         protected uint MatchID;
@@ -60,7 +62,11 @@ namespace osu.Mods.Online.Base
         private void load(Storage storage, OsuGame osu)
         {
             OnlineScoreStore = new ScoreStore(storage);
+            Storage = storage;
             OsuGame = osu;
+
+            Stable = OsuGame.GetStorageForStableInstall();
+            Songs = Stable.GetStorageForDirectory($"Songs");
         }
 
         protected override void HandlePackets(PacketInfo info)
@@ -88,65 +94,29 @@ namespace osu.Mods.Online.Base
 
                 case ImportPacket import:
                     Client c = GetLastClient();
-                    Storage stable = OsuGame.GetStorageForStableInstall();
-                    Storage storage = stable.GetStorageForDirectory($"Songs");
 
-                    string[] names =
+                    if (Maps == null)
                     {
-                        "Alstroemeria Records - Flight of the Bamboo Cutter",
-                        "601916 LazyTown - We Are Number One TLT Remix",
-                        "masayoshi_minoshima_necro_fantasia_alr_rewind_remix",
-                        "383395 Panda Eyes & Teminite - Immortal Flame (feat Anna Yvette)",
-                        "47754 Masayoshi Minoshima - Flight of the Bamboo Cutter",
-                    };
+                        List<string> paths = new List<string>();
+                        foreach (string path in Stable.GetDirectories($"Songs"))
+                            paths.Add(path);
+                        Maps = paths.ToArray();
+                    }
 
-                    string name = names[4];
-
-                    string full = storage.GetFullPath(name);
-
-                    Task.Factory.StartNew(() =>
-                    {
-                        try
-                        {
-                            Logger.Log($"Client has requested to import from stable (map = {name})", LoggingTarget.Network);
-
-                            //TODO: move this to sever\\temp
-                            //Zip up the mapset for shipping!
-                            if (!storage.Exists($"temp\\{name}.zip"))
-                                ZipFile.CreateFromDirectory(full, $"{storage.GetFullPath("temp")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
-
-                            long fileSize;
-                            using (FileStream fs = new FileStream($"{storage.GetFullPath("temp")}\\{name}.zip", FileMode.Open, FileAccess.Read))
-                            {
-                                fileSize = fs.Length;
-                                long sum = 0;
-                                byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 16];
-
-                                //Lets send the file piece by piece so we don't destroy mobile devices
-                                while (sum < fileSize)
-                                {
-                                    int count = fs.Read(data, 0, data.Length);
-                                    TcpNetworkStream.Write(data, 0, count);
-                                    sum += count;
-                                    Logger.Log($"Progress = {sum}/{fileSize}", LoggingTarget.Network);
-                                }
-                                TcpNetworkStream.Flush();
-                            }
-
-                            //Tell them its all sent
-                            UdpNetworkingClient.SendPacket(new MapSetPacket(name, fileSize), c.EndPoint);
-                        }
-                        catch(Exception e) { Logger.Error(e, "Failed to send map!", LoggingTarget.Network); }
-                    }, TaskCreationOptions.LongRunning);
-
+                    QueImport(c);
+                    break;
+                case ImportCompletePacket complete:
+                    c = GetLastClient();
+                    ImportingClients[c]++;
+                    SendClientImportMap(Maps[ImportingClients[c]], c);
                     break;
                 #endregion
 
                 #region Multi
 
-                #region Lobby
+                    #region Lobby
 
-                case GetMatchListPacket getMatch:
+                    case GetMatchListPacket getMatch:
                         //Send them a list of matches
                         MatchListPacket matchList = new MatchListPacket
                         {
@@ -404,6 +374,75 @@ namespace osu.Mods.Online.Base
                     return osu;
             }
             return null;
+        }
+
+        protected Storage Stable { get; private set; }
+
+        protected Storage Songs { get; private set; }
+
+        protected string[] Maps;
+
+        protected readonly Dictionary<Client, int> ImportingClients = new Dictionary<Client, int>();
+
+        protected virtual void QueImport(Client client)
+        {
+            if (ImportingClients.ContainsKey(client))
+            {
+                ImportingClients.Remove(client);
+                client.OnDisconnected -= () => remove(client);
+            }
+            else
+            {
+                ImportingClients.Add(client, 0);
+                client.OnDisconnected += () => remove(client);
+
+                SendClientImportMap(Maps[0], client);
+            }
+
+            void remove(Client c)
+            {
+                ImportingClients.Remove(client);
+            }
+        }
+
+        protected virtual void SendClientImportMap(string name, Client client)
+        {
+            string full = Songs.GetFullPath(name);
+
+            Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    Logger.Log($"Client has requested to import from stable (map = {name})", LoggingTarget.Network);
+
+                    //TODO: move this to sever\\temp
+                    //Zip up the mapset for shipping!
+                    if (!Songs.Exists($"temp\\{name}.zip"))
+                        ZipFile.CreateFromDirectory(full, $"{Songs.GetFullPath("temp")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
+
+                    long fileSize;
+                    using (FileStream fs = new FileStream($"{Songs.GetFullPath("temp")}\\{name}.zip", FileMode.Open, FileAccess.Read))
+                    {
+                        fileSize = fs.Length;
+                        long sum = 0;
+                        byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 16];
+
+                        //Lets send the file piece by piece so we don't destroy mobile devices
+                        while (sum < fileSize)
+                        {
+                            int count = fs.Read(data, 0, data.Length);
+                            TcpNetworkStream.Write(data, 0, count);
+                            sum += count;
+                            Logger.Log($"Progress = {sum}/{fileSize}", LoggingTarget.Network);
+                        }
+                        TcpNetworkStream.Flush();
+                    }
+
+                    //Tell them its all sent
+                    UdpNetworkingClient.SendPacket(new MapSetPacket(name, fileSize), client.EndPoint);
+                }
+                catch (Exception e) { Logger.Error(e, "Failed to send map!", LoggingTarget.Network); }
+            }, TaskCreationOptions.LongRunning);
         }
 
         protected class OsuMatch
