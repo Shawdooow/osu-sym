@@ -3,8 +3,10 @@
 using System;
 using osu.Core.Config;
 using osu.Core.OsuMods;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
+using osu.Framework.Platform;
 using osu.Game.Graphics;
 using osu.Game.Overlays.Settings;
 
@@ -12,16 +14,16 @@ using osu.Game.Overlays.Settings;
 
 namespace osu.Core.Settings
 {
-    public class SymSection : SettingsSection
+    public sealed class SymSection : SettingsSection
     {
         public override string Header => "Modloader";
         public override FontAwesome Icon => FontAwesome.fa_bathtub;
 
-        public static Action OnPurge;
+        public static Action<Storage> OnPurge;
 
         public SymSection()
         {
-            OnPurge += () => { Logger.Log("Purged old or unused files", LoggingTarget.Database, LogLevel.Error); };
+            OnPurge += storage => { Logger.Log("Purged old or unused files", LoggingTarget.Database, LogLevel.Error); };
 
             Child = new SymSubSection();
 
@@ -32,7 +34,7 @@ namespace osu.Core.Settings
             }
         }
 
-        private class SymSubSection : ModSubSection
+        private sealed class SymSubSection : ModSubSection
         {
             protected override string Header => "Sym";
 
@@ -50,12 +52,22 @@ namespace osu.Core.Settings
                         LabelText = "Player Color (HEX)",
                         Bindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.PlayerColor)
                     },
-                    new SettingsButton
-                    {
-                        Text = "Purge",
-                        Action = () => OnPurge?.Invoke()
-                    }
                 };
+
+                OnPurge += storage =>
+                {
+                    if (storage.ExistsDirectory("symcol")) storage.DeleteDirectory("symcol");
+                };
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(Storage storage)
+            {
+                Add(new SettingsButton
+                {
+                    Text = "Purge",
+                    Action = () => OnPurge?.Invoke(storage)
+                });
             }
         }
     }

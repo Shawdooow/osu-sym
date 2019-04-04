@@ -4,6 +4,7 @@ using osu.Core;
 using osu.Core.Config;
 using osu.Core.Containers.Shawdooow;
 using osu.Core.OsuMods;
+using osu.Core.Settings;
 using osu.Core.Wiki;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
@@ -11,6 +12,7 @@ using osu.Framework.Logging;
 using osu.Game;
 using osu.Game.Screens;
 using osu.Mods.Online.Base;
+using osu.Mods.Online.Settings;
 using osu.Mods.Online.Wiki;
 using osuTK;
 using osuTK.Graphics;
@@ -37,6 +39,8 @@ namespace osu.Mods.Online
             Size = 90,
             Position = new Vector2(220, 20),
         };
+
+        //public override ModSubSection GetSettings() => new OnlineSettingsSubsection();
 
         public override WikiSet GetWikiSet() => new OnlineWiki();
 
@@ -74,6 +78,12 @@ namespace osu.Mods.Online
                     OsuNetworkingHandler.Connect();
                     break;
             }
+
+            SymSection.OnPurge += storage =>
+            {
+                if (storage.ExistsDirectory("server")) storage.DeleteDirectory("server");
+                if (storage.ExistsDirectory("online")) storage.DeleteDirectory("online");
+            };
         }
     }
 }

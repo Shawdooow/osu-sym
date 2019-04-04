@@ -21,9 +21,9 @@ namespace osu.Game.Rulesets.Vitaru
             VitaruRuleset.VitaruAudio.VolumeSample.BindTo(game.Audio.VolumeSample);
             VitaruRuleset.VitaruAudio.VolumeTrack.BindTo(game.Audio.VolumeTrack);
 
-            SymSection.OnPurge += () =>
+            SymSection.OnPurge += storage =>
             {
-                
+                if (storage.ExistsDirectory("vitaru")) storage.DeleteDirectory("vitaru");
             };
         }
     }

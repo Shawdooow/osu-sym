@@ -136,7 +136,7 @@ namespace osu.Mods.Online.Base.Screens
         {
             ipBindable.Value = IpBox.Text;
 
-            try { portBindable.Value = Int32.Parse(PortBox.Text); }
+            try { portBindable.Value = int.Parse(PortBox.Text); }
             catch { portBindable.Value = 25590; }
 
             if (OnlineModset.OsuNetworkingHandler != null)
@@ -166,7 +166,7 @@ namespace osu.Mods.Online.Base.Screens
         {
             ipBindable.Value = IpBox.Text;
 
-            try { portBindable.Value = Int32.Parse(PortBox.Text); }
+            try { portBindable.Value = int.Parse(PortBox.Text); }
             catch { portBindable.Value = 25590; }
 
             if (OnlineModset.OsuNetworkingHandler != null)
@@ -201,7 +201,7 @@ namespace osu.Mods.Online.Base.Screens
         {
             ipBindable.Value = IpBox.Text;
 
-            try { portBindable.Value = Int32.Parse(PortBox.Text); }
+            try { portBindable.Value = int.Parse(PortBox.Text); }
             catch { portBindable.Value = 25590; }
 
             return base.OnExiting(next);
