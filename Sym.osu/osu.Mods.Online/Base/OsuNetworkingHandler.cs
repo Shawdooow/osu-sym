@@ -60,9 +60,9 @@ namespace osu.Mods.Online.Base
         {
             api.Register(this);
 
-            OsuUserInfo.Colour = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.PlayerColor);
-            OsuUserInfo.Username = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
-            OsuUserInfo.ID = SymcolOsuModSet.SymcolConfigManager.Get<long>(SymcolSetting.SavedUserID);
+            OsuUserInfo.Colour = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.PlayerColor);
+            OsuUserInfo.Username = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.SavedName);
+            OsuUserInfo.ID = SymcolOsuModSet.SymConfigManager.Get<long>(SymSetting.SavedUserID);
         }
 
         protected override Packet SignPacket(Packet packet)
@@ -82,17 +82,17 @@ namespace osu.Mods.Online.Base
         public void APIStateChanged(APIAccess api, APIState state)
         {
             apiState = state;
-            OsuUserInfo.Colour = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.PlayerColor);
+            OsuUserInfo.Colour = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.PlayerColor);
 
             switch (state)
             {
                 default:
-                    OsuUserInfo.Username = SymcolOsuModSet.SymcolConfigManager.Get<string>(SymcolSetting.SavedName);
-                    OsuUserInfo.ID = SymcolOsuModSet.SymcolConfigManager.Get<long>(SymcolSetting.SavedUserID);
+                    OsuUserInfo.Username = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.SavedName);
+                    OsuUserInfo.ID = SymcolOsuModSet.SymConfigManager.Get<long>(SymSetting.SavedUserID);
                     break;
                 case APIState.Online:
-                    SymcolOsuModSet.SymcolConfigManager.Set(SymcolSetting.SavedName, api.LocalUser.Value.Username);
-                    SymcolOsuModSet.SymcolConfigManager.Set(SymcolSetting.SavedUserID, api.LocalUser.Value.Id);
+                    SymcolOsuModSet.SymConfigManager.Set(SymSetting.SavedName, api.LocalUser.Value.Username);
+                    SymcolOsuModSet.SymConfigManager.Set(SymSetting.SavedUserID, api.LocalUser.Value.Id);
 
                     OsuUserInfo.Username = api.LocalUser.Value.Username;
                     OsuUserInfo.ID = api.LocalUser.Value.Id;

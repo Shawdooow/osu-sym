@@ -51,6 +51,17 @@ namespace osu.Mods.Online
                 },
                 new SymcolButton
                 {
+                    ButtonText = "Import",
+                    Origin = Anchor.Centre,
+                    Anchor = Anchor.Centre,
+                    ButtonColorTop = Color4.Red,
+                    ButtonColorBottom = Color4.Orange,
+                    Size = 100,
+                    Position = new Vector2(80, 180),
+                    Action = () => Push(new Import())
+                },
+                new SymcolButton
+                {
                     ButtonText = "Back",
                     Origin = Anchor.Centre,
                     Anchor = Anchor.Centre,

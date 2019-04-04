@@ -36,7 +36,7 @@ namespace osu.Core
         public static ResourceStore<byte[]> SymcolResources;
         public static TextureStore SymcolTextures;
         public static AudioManager SymcolAudio;
-        public static SymcolConfigManager SymcolConfigManager;
+        public static SymConfigManager SymConfigManager;
 
         public override void LoadComplete(OsuGame game, GameHost host)
         {
@@ -65,8 +65,8 @@ namespace osu.Core
                 LazerTextures = new TextureStore(new TextureLoaderStore(new NamespacedResourceStore<byte[]>(LazerResources, @"Textures")));
             }
 
-            if (SymcolConfigManager == null)
-                SymcolConfigManager = new SymcolConfigManager(host.Storage);
+            if (SymConfigManager == null)
+                SymConfigManager = new SymConfigManager(host.Storage);
 
             OsuModStore.ReloadModSets();
 
@@ -79,7 +79,7 @@ namespace osu.Core
 
         public override void Dispose()
         {
-            SymcolConfigManager.Save();
+            SymConfigManager.Save();
             base.Dispose();
         }
     }

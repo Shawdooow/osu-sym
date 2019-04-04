@@ -45,12 +45,12 @@ namespace osu.Core.Settings
                     new SettingsEnumDropdown<AutoJoin>
                     {
                         LabelText = "Connect on launch?",
-                        Bindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<AutoJoin>(SymcolSetting.Auto)
+                        Bindable = SymcolOsuModSet.SymConfigManager.GetBindable<AutoJoin>(SymSetting.Auto)
                     },
                     new SettingsTextBox
                     {
                         LabelText = "Player Color (HEX)",
-                        Bindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.PlayerColor)
+                        Bindable = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.PlayerColor)
                     },
                 };
 

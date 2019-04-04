@@ -21,8 +21,8 @@ namespace osu.Mods.Rulesets.Core.Rulesets
         [BackgroundDependencyLoader]
         private void load(Storage storage)
         {
-            if (SymcolOsuModSet.SymcolConfigManager == null)
-                SymcolOsuModSet.SymcolConfigManager = new SymcolConfigManager(storage);
+            if (SymcolOsuModSet.SymConfigManager == null)
+                SymcolOsuModSet.SymConfigManager = new SymConfigManager(storage);
         }
     }
 }

@@ -25,9 +25,9 @@ namespace osu.Mods.Online
     {
         public static OsuNetworkingHandler OsuNetworkingHandler;
 
-        private readonly Bindable<AutoJoin> auto = SymcolOsuModSet.SymcolConfigManager.GetBindable<AutoJoin>(SymcolSetting.Auto);
-        private readonly Bindable<string> ipBindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.SavedIP);
-        private readonly Bindable<int> portBindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<int>(SymcolSetting.SavedPort);
+        private readonly Bindable<AutoJoin> auto = SymcolOsuModSet.SymConfigManager.GetBindable<AutoJoin>(SymSetting.Auto);
+        private readonly Bindable<string> ipBindable = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.SavedIP);
+        private readonly Bindable<int> portBindable = SymcolOsuModSet.SymConfigManager.GetBindable<int>(SymSetting.SavedPort);
 
         public override SymcolButton GetMenuButton() => new SymcolButton
         {

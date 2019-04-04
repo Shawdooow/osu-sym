@@ -209,7 +209,7 @@ namespace osu.Mods.Online.Multi.Player
 
             try
             {
-                RulesetContainer.Cursor.ActiveCursor.Colour = OsuColour.FromHex(SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.PlayerColor));
+                RulesetContainer.Cursor.ActiveCursor.Colour = OsuColour.FromHex(SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.PlayerColor));
             }
             catch (Exception e)
             {

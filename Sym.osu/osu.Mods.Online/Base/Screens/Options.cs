@@ -33,8 +33,8 @@ namespace osu.Mods.Online.Base.Screens
         protected readonly TextBox PortBox;
         protected readonly TextBox IpBox;
 
-        private readonly Bindable<string> ipBindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.SavedIP);
-        private readonly Bindable<int> portBindable = SymcolOsuModSet.SymcolConfigManager.GetBindable<int>(SymcolSetting.SavedPort);
+        private readonly Bindable<string> ipBindable = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.SavedIP);
+        private readonly Bindable<int> portBindable = SymcolOsuModSet.SymConfigManager.GetBindable<int>(SymSetting.SavedPort);
 
         private OsuGame game;
 

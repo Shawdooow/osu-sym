@@ -21,7 +21,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
 {
     public class Chat : MultiplayerContainer
     {
-        private string playerColorHex = SymcolOsuModSet.SymcolConfigManager.GetBindable<string>(SymcolSetting.PlayerColor);
+        private string playerColorHex = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.PlayerColor);
 
         private readonly FillFlowContainer<ChatMessage> messageFlow;
 
