@@ -111,18 +111,25 @@ namespace osu.Mods.Online.Base
                             if (!storage.Exists($"temp\\{name}.zip"))
                                 ZipFile.CreateFromDirectory(full, $"{storage.GetFullPath("temp")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
 
-                            //StreamReader reader = new StreamReader(storage.GetStream($"temp\\{name}.zip"));
-                            StreamWriter writer = new StreamWriter(TcpNetworkStream);
-                            byte[] data = File.ReadAllBytes($"{storage.GetFullPath($"temp\\{name}.zip")}");
+                            long fileSize;
+                            using (FileStream fs = new FileStream($"{storage.GetFullPath("temp")}\\{name}.zip", FileMode.Open, FileAccess.Read))
+                            {
+                                fileSize = fs.Length;
+                                long sum = 0;
+                                byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 16];
+                                while (sum < fileSize)
+                                {
+                                    int count = fs.Read(data, 0, data.Length);
+                                    TcpNetworkStream.Write(data, 0, count);
+                                    sum += count;
+                                    Logger.Log($"Progress = {sum}/{fileSize}", LoggingTarget.Network);
+                                }
+                                TcpNetworkStream.Flush();
+                            }
 
-                            //File.WriteAllBytes(storage.GetFullPath($"temp\\meme.zip"), Convert.FromBase64String(Convert.ToBase64String(data)));
-                            writer.Write(Convert.ToBase64String(data));
-                            UdpNetworkingClient.SendPacket(new MapSetPacket(name), c.EndPoint);
-
-                            //reader.Close();
-                            writer.Close();
+                            UdpNetworkingClient.SendPacket(new MapSetPacket(name, fileSize), c.EndPoint);
                         }
-                        catch(Exception e) { Logger.Error(e, "Failed to send map!", LoggingTarget.Network);}
+                        catch(Exception e) { Logger.Error(e, "Failed to send map!", LoggingTarget.Network); }
                     }, TaskCreationOptions.LongRunning);
 
                     /*

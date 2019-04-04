@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using osu.Core.Containers.Shawdooow;
@@ -15,6 +17,7 @@ using osu.Game.Overlays.Settings;
 using osu.Mods.Online.Base.Packets;
 using osuTK;
 using osuTK.Graphics;
+using Sym.Networking.NetworkingClients;
 using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Base.Screens
@@ -73,6 +76,33 @@ namespace osu.Mods.Online.Base.Screens
             temp = this.storage.GetStorageForDirectory("online\\temp");
         }
 
+        private MapSetPacket quedSetPacket;
+
+        private int piecesSize = 0;
+        private Dictionary<byte[], int> pieces = new Dictionary<byte[], int>();
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (OnlineModset.OsuNetworkingHandler.Tcp && OnlineModset.OsuNetworkingHandler.TcpNetworkingClient.Available > 0)
+                fetch();
+
+            if (quedSetPacket != null && piecesSize == quedSetPacket.Size)
+            {
+                import(quedSetPacket);
+                quedSetPacket = null;
+            }
+        }
+
+        private void fetch()
+        {
+            byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 8];
+            int count = OnlineModset.OsuNetworkingHandler.TcpNetworkStream.Read(data, 0, data.Length);
+            piecesSize += count;
+            pieces.Add(data, count);
+        }
+
         private void import()
         {
             OnlineModset.OsuNetworkingHandler.SendToServer(new ImportPacket());
@@ -83,7 +113,7 @@ namespace osu.Mods.Online.Base.Screens
             switch (info.Packet)
             {
                 case MapSetPacket mapSetPacket:
-                    import(mapSetPacket);
+                    quedSetPacket = mapSetPacket;
                     break;
             }
         }
@@ -97,15 +127,21 @@ namespace osu.Mods.Online.Base.Screens
             {
                 try
                 {
-                    //writer.Write(Encoding.UTF8.GetBytes(reader.ReadToEnd()));
                     writer.Close();
 
-                    File.WriteAllBytes(temp.GetFullPath($"{set.MapName}.zip"), Convert.FromBase64String(reader.ReadToEnd()));
+                    using (FileStream fs = new FileStream(temp.GetFullPath($"{set.MapName}.zip"), FileMode.Create, FileAccess.Write))
+                    {
+                        foreach (KeyValuePair<byte[], int> pair in pieces)
+                            fs.Write(pair.Key, 0, pair.Value);
+                    }
 
                     reader.Close();
 
                     ZipFile.ExtractToDirectory(temp.GetFullPath($"{set.MapName}.zip"), temp.GetFullPath($"{set.MapName}"), Encoding.UTF8);
+
                     temp.Delete($"{set.MapName}.zip");
+                    pieces = new Dictionary<byte[], int>();
+                    piecesSize = 0;
                 }
                 catch (Exception e) { Logger.Error(e, "Failed to receive map!", LoggingTarget.Network); }
             }, TaskCreationOptions.LongRunning).ContinueWith(result =>
