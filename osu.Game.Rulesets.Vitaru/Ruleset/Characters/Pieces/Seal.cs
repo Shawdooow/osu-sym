@@ -36,12 +36,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces
 
         private DrawableCharacter character;
 
-        private Sprite gear1;
-        private Sprite gear2;
-        private Sprite gear3;
-        private Sprite gear4;
-        private Sprite gear5;
-
         public Seal(DrawableCharacter character)
         {
             this.character = character;
@@ -178,55 +172,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces
                         }),
                     },
                 };
-
-                switch (v.Player.Name)
-                {
-                    case "Sakuya Izayoi":
-                        characterSigil.Children = new Drawable[]
-                        {
-                            gear1 = new Sprite
-                            {
-                                Colour = lightColor,
-                                Anchor = Anchor.Centre,
-                                Origin = Anchor.Centre,
-                                Texture = VitaruSkinElement.LoadSkinElement("gearSmall", storage),
-                                Position = new Vector2(-41, 10),
-                            },
-                            gear2 = new Sprite
-                            {
-                                Colour = v.PrimaryColor,
-                                Anchor = Anchor.Centre,
-                                Origin = Anchor.Centre,
-                                Texture = VitaruSkinElement.LoadSkinElement("gearMedium", storage),
-                                Position = new Vector2(-4, 16),
-                            },
-                            gear3 = new Sprite
-                            {
-                                Colour = darkColor,
-                                Anchor = Anchor.Centre,
-                                Origin = Anchor.Centre,
-                                Texture = VitaruSkinElement.LoadSkinElement("gearLarge", storage),
-                                Position = new Vector2(-16, -34),
-                            },
-                            gear4 = new Sprite
-                            {
-                                Colour = v.PrimaryColor,
-                                Anchor = Anchor.Centre,
-                                Origin = Anchor.Centre,
-                                Texture = VitaruSkinElement.LoadSkinElement("gearMedium", storage),
-                                Position = new Vector2(35, -40),
-                            },
-                            gear5 = new Sprite
-                            {
-                                Colour = lightColor,
-                                Anchor = Anchor.Centre,
-                                Origin = Anchor.Centre,
-                                Texture = VitaruSkinElement.LoadSkinElement("gearSmall", storage),
-                                Position = new Vector2(33, 8),
-                            },
-                        };
-                        break;
-                }
             }
             else
             {
@@ -278,15 +223,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Pieces
 
                 switch (v.Player.Name)
                 {
-                    default:
-                        break;
                     case "Sakuya Izayoi":
-                        float speed = 0.25f;
-                        gear1.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
-                        gear2.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);
-                        gear3.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * speed);
-                        gear4.RotateTo((float)(-Clock.CurrentTime / 1000 * 90) * 1.1f * speed);
-                        gear5.RotateTo((float)(Clock.CurrentTime / 1000 * 90) * 1.25f * speed);
                         DrawableSakuya s = v as DrawableSakuya;
                         leftValue.Text = s.SetRate.ToString();
                         break;
