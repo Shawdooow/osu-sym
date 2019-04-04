@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.IO.Compression;
+using System.Text;
 using System.Threading.Tasks;
 using osu.Core.Containers.Shawdooow;
 using osu.Core.Screens.Evast;
@@ -94,18 +96,23 @@ namespace osu.Mods.Online.Base.Screens
             Task.Factory.StartNew(() =>
             {
                 try
-                { 
-                    writer.Write(reader.ReadToEnd());
-
+                {
+                    //writer.Write(Encoding.UTF8.GetBytes(reader.ReadToEnd()));
                     writer.Close();
+
+                    File.WriteAllBytes(temp.GetFullPath($"{set.MapName}.zip"), Convert.FromBase64String(reader.ReadToEnd()));
+
                     reader.Close();
+
+                    ZipFile.ExtractToDirectory(temp.GetFullPath($"{set.MapName}.zip"), temp.GetFullPath($"{set.MapName}"), Encoding.UTF8);
+                    temp.Delete($"{set.MapName}.zip");
                 }
                 catch (Exception e) { Logger.Error(e, "Failed to receive map!", LoggingTarget.Network); }
-        }, TaskCreationOptions.LongRunning).ContinueWith(result =>
+            }, TaskCreationOptions.LongRunning).ContinueWith(result =>
             {
                 manager.Import(new[]
                 {
-                    temp.GetFullPath($"{set.MapName}.zip")
+                    temp.GetFullPath($"{set.MapName}")
                 });
             });
         }

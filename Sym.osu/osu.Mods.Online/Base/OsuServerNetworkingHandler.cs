@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
@@ -96,21 +97,23 @@ namespace osu.Mods.Online.Base
 
                     string full = storage.GetFullPath(name);
 
-                    //TODO: move this to sever\\temp
-                    if (!storage.Exists($"temp\\{name}.zip"))
-                        ZipFile.CreateFromDirectory(full, $"{storage.GetFullPath("temp")}\\{name}.zip");
-
-                    StreamReader reader = new StreamReader(storage.GetStream($"temp\\{name}.zip"));
-                    StreamWriter writer = new StreamWriter(TcpNetworkStream);
-
                     Task.Factory.StartNew(() =>
                     {
                         try
                         {
-                            writer.Write(reader.ReadToEnd());
+                            //TODO: move this to sever\\temp
+                            if (!storage.Exists($"temp\\{name}.zip"))
+                                ZipFile.CreateFromDirectory(full, $"{storage.GetFullPath("temp")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
+
+                            //StreamReader reader = new StreamReader(storage.GetStream($"temp\\{name}.zip"));
+                            StreamWriter writer = new StreamWriter(TcpNetworkStream);
+                            byte[] data = File.ReadAllBytes($"{storage.GetFullPath($"temp\\{name}.zip")}");
+
+                            //File.WriteAllBytes(storage.GetFullPath($"temp\\meme.zip"), Convert.FromBase64String(Convert.ToBase64String(data)));
+                            writer.Write(Convert.ToBase64String(data));
                             UdpNetworkingClient.SendPacket(new MapSetPacket(name), c.EndPoint);
 
-                            reader.Close();
+                            //reader.Close();
                             writer.Close();
                         }
                         catch(Exception e) { Logger.Error(e, "Failed to send map!", LoggingTarget.Network);}
