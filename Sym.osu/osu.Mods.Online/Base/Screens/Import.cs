@@ -120,6 +120,7 @@ namespace osu.Mods.Online.Base.Screens
         public override bool OnExiting(IScreen next)
         {
             OnlineModset.OsuNetworkingHandler.OnPacketReceive -= packetReceived;
+            OnlineModset.OsuNetworkingHandler.Tcp = false;
             if (storage.ExistsDirectory("online/temp")) storage.DeleteDirectory("online/temp");
             return base.OnExiting(next);
         }

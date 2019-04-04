@@ -87,13 +87,19 @@ namespace osu.Mods.Online.Base
                 #endregion
 
                 #region Import
+
                 case ImportPacket import:
                     Client c = GetLastClient();
                     Storage stable = OsuGame.GetStorageForStableInstall();
                     Storage storage = stable.GetStorageForDirectory($"Songs");
 
-                    // ReSharper disable once ConvertToConstant.Local
-                    string name = "Alstroemeria Records - Flight of the Bamboo Cutter";
+                    string[] names =
+                    {
+                        "Alstroemeria Records - Flight of the Bamboo Cutter",
+                        "601916 LazyTown - We Are Number One TLT Remix",
+                    };
+
+                    string name = names[0];
 
                     string full = storage.GetFullPath(name);
 
