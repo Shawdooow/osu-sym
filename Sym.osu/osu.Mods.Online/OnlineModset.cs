@@ -56,7 +56,7 @@ namespace osu.Mods.Online
                     OsuNetworkingHandler = new OsuNetworkingHandler
                     {
                         Address = ipBindable.Value + ":" + portBindable.Value,
-                        Tcp = true,
+                        //Tcp = true,
                     };
 
                     game.Add(OsuNetworkingHandler);
@@ -67,13 +67,13 @@ namespace osu.Mods.Online
                     OsuNetworkingHandler = new OsuNetworkingHandler
                     {
                         Address = ipBindable.Value + ":" + portBindable.Value,
-                        Tcp = true,
+                        //Tcp = true,
                     };
 
                     OsuNetworkingHandler.Add(new OsuServerNetworkingHandler
                     {
                         Address = ipBindable.Value + ":" + portBindable.Value,
-                        Tcp = true,
+                        //Tcp = true,
                     });
 
                     game.Add(OsuNetworkingHandler);
