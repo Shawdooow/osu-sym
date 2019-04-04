@@ -169,6 +169,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
             Cluster cluster = drawableCluster.HitObject;
 
             double moveTime = Math.Max(cluster.StartTime - VitaruPlayfield.Current, 0);
+            this.FadeColour(drawableCluster.AccentColour, moveTime);
 
             if (cluster.Position != Position)
                 this.MoveTo(cluster.Position, moveTime, Easing.OutSine)
