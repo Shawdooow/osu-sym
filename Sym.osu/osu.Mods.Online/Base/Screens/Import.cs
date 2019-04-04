@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
+using System.Threading.Tasks;
+using osu.Core.Containers.Shawdooow;
 using osu.Core.Screens.Evast;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -10,6 +11,8 @@ using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Overlays.Settings;
 using osu.Mods.Online.Base.Packets;
+using osuTK;
+using osuTK.Graphics;
 using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Base.Screens
@@ -24,14 +27,37 @@ namespace osu.Mods.Online.Base.Screens
 
         public Import()
         {
-            Child = new SettingsButton
+            Children = new Drawable[]
             {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                RelativeSizeAxes = Axes.X,
-                Width = 0.3f,
-                Text = "Import from Host's Stable Install",
-                Action = import
+                new SettingsButton
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.X,
+                    Width = 0.3f,
+                    Text = "Import from Host's Stable Install",
+                    Action = import
+                },
+                new SymcolButton
+                {
+                    ButtonText = "Back",
+                    Origin = Anchor.BottomCentre,
+                    Anchor = Anchor.BottomCentre,
+                    ButtonColorTop = Color4.DarkRed,
+                    ButtonColorBottom = Color4.Red,
+                    Size = 50,
+                    Action = this.Exit,
+                    Position = new Vector2(0 , -10),
+                },
+                new SettingsButton
+                {
+                    Anchor = Anchor.BottomRight,
+                    Origin = Anchor.BottomRight,
+                    RelativeSizeAxes = Axes.X,
+                    Width = 0.3f,
+                    Text = "Toggle TCP",
+                    Action = () => { OnlineModset.OsuNetworkingHandler.Tcp = !OnlineModset.OsuNetworkingHandler.Tcp; }
+                },
             };
 
             OnlineModset.OsuNetworkingHandler.OnPacketReceive += packetReceived;
@@ -50,8 +76,6 @@ namespace osu.Mods.Online.Base.Screens
             OnlineModset.OsuNetworkingHandler.SendToServer(new ImportPacket());
         }
 
-        private readonly List<MapSetPiecePacket> pieces = new List<MapSetPiecePacket>();
-
         private void packetReceived(PacketInfo info)
         {
             switch (info.Packet)
@@ -59,40 +83,30 @@ namespace osu.Mods.Online.Base.Screens
                 case MapSetPacket mapSetPacket:
                     import(mapSetPacket);
                     break;
-                case MapSetPiecePacket mapSetPiecePacket:
-                    pieces.Add(mapSetPiecePacket);
-                    break;
             }
         }
 
         private void import(MapSetPacket set)
         {
             StreamWriter writer = new StreamWriter(temp.GetStream($"{set.MapName}.zip", FileAccess.ReadWrite, FileMode.Create));
+            StreamReader reader = new StreamReader(OnlineModset.OsuNetworkingHandler.TcpNetworkStream);
 
-            List<MapSetPiecePacket> ps = new List<MapSetPiecePacket>();
+            Task.Factory.StartNew(() =>
+            {
+                try
+                { 
+                    writer.Write(reader.ReadToEnd());
 
-            for (int i = 0; i < pieces.Count; i++)
-                if (pieces[i].MapName == set.MapName && pieces[i].Piece > ps.Last().Piece)
-                {
-                    ps.Add(pieces[i]);
-                    pieces.Remove(pieces[i]);
-                    i = -1;
+                    writer.Close();
+                    reader.Close();
                 }
-
-            if (ps.Count != set.Pieces)
+                catch (Exception e) { Logger.Error(e, "Failed to receive map!", LoggingTarget.Network); }
+        }, TaskCreationOptions.LongRunning).ContinueWith(result =>
             {
-                Logger.Log($"Pieces of {set.MapName} missing!", LoggingTarget.Network, LogLevel.Error);
-                return;
-            }
-
-            foreach (MapSetPiecePacket p in ps)
-                writer.Write(p.ZipSerial);
-
-            writer.Close();
-
-            manager.Import(new[]
-            {
-                temp.GetFullPath($"{set.MapName}.zip")
+                manager.Import(new[]
+                {
+                    temp.GetFullPath($"{set.MapName}.zip")
+                });
             });
         }
 

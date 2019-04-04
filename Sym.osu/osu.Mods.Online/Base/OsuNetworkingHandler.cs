@@ -26,17 +26,6 @@ namespace osu.Mods.Online.Base
         private bool connectReady;
         private double forceTime = double.MinValue;
 
-        public OsuNetworkingHandler()
-        {
-            OnConnectedToHost += host =>
-            {
-                if (Tcp && TcpNetworkingClient?.TcpClient != null && TcpNetworkingClient.TcpClient.Connected)
-                    Logger.Log("Tcp connected", LoggingTarget.Network);
-                else if (Tcp)
-                    Logger.Log("Tcp failed to connect!", LoggingTarget.Network, LogLevel.Error);
-            };
-        }
-
         public override void Connect()
         {
             if (apiState != APIState.Online)

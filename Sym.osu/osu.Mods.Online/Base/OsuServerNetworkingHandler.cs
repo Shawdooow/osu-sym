@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
@@ -86,41 +87,34 @@ namespace osu.Mods.Online.Base
 
                 #region Import
                 case ImportPacket import:
+                    Client c = GetLastClient();
                     Storage stable = OsuGame.GetStorageForStableInstall();
                     Storage storage = stable.GetStorageForDirectory($"Songs");
 
+                    // ReSharper disable once ConvertToConstant.Local
                     string name = "Alstroemeria Records - Flight of the Bamboo Cutter";
 
                     string full = storage.GetFullPath(name);
 
+                    //TODO: move this to sever\\temp
                     if (!storage.Exists($"temp\\{name}.zip"))
                         ZipFile.CreateFromDirectory(full, $"{storage.GetFullPath("temp")}\\{name}.zip");
 
                     StreamReader reader = new StreamReader(storage.GetStream($"temp\\{name}.zip"));
-                    string s = reader.ReadToEnd();
-                    int pieces = 0;
+                    StreamWriter writer = new StreamWriter(TcpNetworkStream);
 
-                    const int chunk = 8192;
-
-                    for(int i = 0; i < s.Length; i += chunk)
+                    Task.Factory.StartNew(() =>
                     {
-                        pieces++;
-                        List<char> chars = new List<char>();
-                        for (int w = 0; w < chunk; w++)
+                        try
                         {
-                            try
-                            {
-                                chars.Add(s[w * i / chunk]);
-                            }
-                            catch (Exception e)
-                            {
-                                if (e is IndexOutOfRangeException) break;
-                            }
-                        }
-                        ReturnToClient(new MapSetPiecePacket(chars.ToArray().ToString(), name, i / chunk));
-                    }
+                            writer.Write(reader.ReadToEnd());
+                            UdpNetworkingClient.SendPacket(new MapSetPacket(name), c.EndPoint);
 
-                    ReturnToClient(new MapSetPacket(name, pieces));
+                            reader.Close();
+                            writer.Close();
+                        }
+                        catch(Exception e) { Logger.Error(e, "Failed to send map!", LoggingTarget.Network);}
+                    }, TaskCreationOptions.LongRunning);
 
                     /*
                     foreach (string map in stable.GetDirectories("Songs"))
