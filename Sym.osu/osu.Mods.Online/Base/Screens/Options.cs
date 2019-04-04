@@ -149,7 +149,8 @@ namespace osu.Mods.Online.Base.Screens
             {
                 OnlineModset.OsuNetworkingHandler = new OsuNetworkingHandler
                 {
-                    Address = ipBindable.Value + ":" + portBindable.Value
+                    Address = ipBindable.Value + ":" + portBindable.Value,
+                    Tcp = true,
                 };
 
                 game.Add(OnlineModset.OsuNetworkingHandler);
@@ -179,12 +180,14 @@ namespace osu.Mods.Online.Base.Screens
             {
                 OnlineModset.OsuNetworkingHandler = new OsuNetworkingHandler
                 {
-                    Address = ipBindable.Value + ":" + portBindable.Value
+                    Address = ipBindable.Value + ":" + portBindable.Value,
+                    Tcp = true,
                 };
 
                 OnlineModset.OsuNetworkingHandler.Add(new OsuServerNetworkingHandler
                 {
-                    Address = ipBindable.Value + ":" + portBindable.Value
+                    Address = ipBindable.Value + ":" + portBindable.Value,
+                    Tcp = true,
                 });
 
                 game.Add(OnlineModset.OsuNetworkingHandler);

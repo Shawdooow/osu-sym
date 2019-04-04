@@ -46,7 +46,7 @@ namespace osu.Mods.Online.Base
 
             OsuClient c = new OsuClient
             {
-                EndPoint = new IPEndPoint(IPAddress.Parse(NetworkingClient.EndPoint.Address.ToString()), NetworkingClient.EndPoint.Port),
+                EndPoint = new IPEndPoint(IPAddress.Parse(UdpNetworkingClient.EndPoint.Address.ToString()), UdpNetworkingClient.EndPoint.Port),
                 LastConnectionTime = Time.Current,
                 Statues = ConnectionStatues.Connecting,
                 User = osuConnectPacket.User,
@@ -65,7 +65,7 @@ namespace osu.Mods.Online.Base
 
         protected override void HandlePackets(PacketInfo info)
         {
-            Logger.Log($"Recieved a Packet from {NetworkingClient.EndPoint}", LoggingTarget.Network, LogLevel.Debug);
+            Logger.Log($"Recieved a Packet from {UdpNetworkingClient.EndPoint}", LoggingTarget.Network, LogLevel.Debug);
 
             if (!HandlePacket(info.Packet))
                 return;
@@ -201,7 +201,7 @@ namespace osu.Mods.Online.Base
                         match = FindMatch(getMap.User);
 
                         //Tell them what map the Match is set to
-                        NetworkingClient.SendPacket(SignPacket(new SetMapPacket(match.MatchInfo.Map)), GetLastClient().EndPoint);
+                        UdpNetworkingClient.SendPacket(SignPacket(new SetMapPacket(match.MatchInfo.Map)), GetLastClient().EndPoint);
                         break;
                     case SetMapPacket map:
                         match = FindMatch(map.User);
@@ -276,7 +276,7 @@ namespace osu.Mods.Online.Base
                             list = (MatchListPacket)SignPacket(list);
                             list.MatchInfoList = GetMatches();
 
-                            NetworkingClient.SendPacket(list, GetLastClient().EndPoint);
+                            UdpNetworkingClient.SendPacket(list, GetLastClient().EndPoint);
                         }
 
                         break;
@@ -356,7 +356,7 @@ namespace osu.Mods.Online.Base
         protected void ShareWithMatchClients(MatchInfo match, Packet packet)
         {
             foreach (OsuUserInfo user in match.Users)
-                NetworkingClient.SendPacket(packet, FindClient(user).EndPoint);
+                UdpNetworkingClient.SendPacket(packet, FindClient(user).EndPoint);
         }
 
         /// <summary>

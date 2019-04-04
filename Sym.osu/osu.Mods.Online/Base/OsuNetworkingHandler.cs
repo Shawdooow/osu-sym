@@ -26,6 +26,17 @@ namespace osu.Mods.Online.Base
         private bool connectReady;
         private double forceTime = double.MinValue;
 
+        public OsuNetworkingHandler()
+        {
+            OnConnectedToHost += host =>
+            {
+                if (Tcp && TcpNetworkingClient?.TcpClient != null && TcpNetworkingClient.TcpClient.Connected)
+                    Logger.Log("Tcp connected", LoggingTarget.Network);
+                else if (Tcp)
+                    Logger.Log("Tcp failed to connect!", LoggingTarget.Network, LogLevel.Error);
+            };
+        }
+
         public override void Connect()
         {
             if (apiState != APIState.Online)
@@ -39,7 +50,7 @@ namespace osu.Mods.Online.Base
 
         private void connect()
         {
-            Logger.Log($"Attempting to connect to {NetworkingClient.Address}", LoggingTarget.Network);
+            Logger.Log($"Attempting to connect to {UdpNetworkingClient.Address}", LoggingTarget.Network);
             SendToServer(new OsuConnectPacket());
             ConnectionStatues = ConnectionStatues.Connecting;
         }
@@ -104,7 +115,7 @@ namespace osu.Mods.Online.Base
                     if (connectReady)
                         connect();
                     else
-                        Logger.Log("We are now online, you should reconnect to the Symcol Server at your earliest convenience!", LoggingTarget.Network, LogLevel.Important);
+                        Logger.Log("We are now online, you should reconnect to the Sym Server at your earliest convenience!", LoggingTarget.Network, LogLevel.Important);
                     break;
             }
         }

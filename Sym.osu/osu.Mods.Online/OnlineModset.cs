@@ -55,7 +55,8 @@ namespace osu.Mods.Online
                 case AutoJoin.Join:
                     OsuNetworkingHandler = new OsuNetworkingHandler
                     {
-                        Address = ipBindable.Value + ":" + portBindable.Value
+                        Address = ipBindable.Value + ":" + portBindable.Value,
+                        Tcp = true,
                     };
 
                     game.Add(OsuNetworkingHandler);
@@ -65,12 +66,14 @@ namespace osu.Mods.Online
                 case AutoJoin.Host:
                     OsuNetworkingHandler = new OsuNetworkingHandler
                     {
-                        Address = ipBindable.Value + ":" + portBindable.Value
+                        Address = ipBindable.Value + ":" + portBindable.Value,
+                        Tcp = true,
                     };
 
                     OsuNetworkingHandler.Add(new OsuServerNetworkingHandler
                     {
-                        Address = ipBindable.Value + ":" + portBindable.Value
+                        Address = ipBindable.Value + ":" + portBindable.Value,
+                        Tcp = true,
                     });
 
                     game.Add(OsuNetworkingHandler);
