@@ -1,10 +1,16 @@
 ﻿#region usings
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
+using osu.Game;
+using osu.Game.Beatmaps;
 using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Lobby.Packets;
@@ -13,6 +19,7 @@ using osu.Mods.Online.Multi.Player.Packets;
 using osu.Mods.Online.Multi.Settings.Options;
 using osu.Mods.Online.Score;
 using osu.Mods.Online.Score.Packets;
+using Sym.Networking.NetworkingClients;
 using Sym.Networking.NetworkingHandlers;
 using Sym.Networking.NetworkingHandlers.Server;
 using Sym.Networking.Packets;
@@ -26,6 +33,8 @@ namespace osu.Mods.Online.Base
         protected override string Gamekey => "osu";
 
         protected readonly List<OsuMatch> OsuMatches = new List<OsuMatch>();
+
+        protected OsuGame OsuGame { get; private set; }
 
         protected ScoreStore OnlineScoreStore { get; private set; }
 
@@ -48,7 +57,11 @@ namespace osu.Mods.Online.Base
         }
 
         [BackgroundDependencyLoader]
-        private void load(Storage storage) => OnlineScoreStore = new ScoreStore(storage);
+        private void load(Storage storage, OsuGame osu)
+        {
+            OnlineScoreStore = new ScoreStore(storage);
+            OsuGame = osu;
+        }
 
         protected override void HandlePackets(PacketInfo info)
         {
@@ -71,11 +84,62 @@ namespace osu.Mods.Online.Base
                     break;
                 #endregion
 
+                #region Import
+                case ImportPacket import:
+                    Storage stable = OsuGame.GetStorageForStableInstall();
+                    Storage storage = stable.GetStorageForDirectory($"Songs");
+
+                    string name = "Alstroemeria Records - Flight of the Bamboo Cutter";
+
+                    string full = storage.GetFullPath(name);
+
+                    if (!storage.Exists($"temp\\{name}.zip"))
+                        ZipFile.CreateFromDirectory(full, $"{storage.GetFullPath("temp")}\\{name}.zip");
+
+                    StreamReader reader = new StreamReader(storage.GetStream($"temp\\{name}.zip"));
+                    string s = reader.ReadToEnd();
+                    int pieces = 0;
+
+                    const int chunk = 8192;
+
+                    for(int i = 0; i < s.Length; i += chunk)
+                    {
+                        pieces++;
+                        List<char> chars = new List<char>();
+                        for (int w = 0; w < chunk; w++)
+                        {
+                            try
+                            {
+                                chars.Add(s[w * i / chunk]);
+                            }
+                            catch (Exception e)
+                            {
+                                if (e is IndexOutOfRangeException) break;
+                            }
+                        }
+                        ReturnToClient(new MapSetPiecePacket(chars.ToArray().ToString(), name, i / chunk));
+                    }
+
+                    ReturnToClient(new MapSetPacket(name, pieces));
+
+                    /*
+                    foreach (string map in stable.GetDirectories("Songs"))
+                    {
+                        //Alstroemeria Records - Flight of the Bamboo Cutter
+                        //last.SendPacket(new MapSetPacket(stable.GetStorageForDirectory($"Songs/{map}")));
+                        last.SendPacket(new MapSetPacket(stable.GetStorageForDirectory($"Songs/Alstroemeria Records - Flight of the Bamboo Cutter")));
+                        break;
+                    }
+                    */
+
+                    break;
+                #endregion
+
                 #region Multi
 
-                    #region Lobby
+                #region Lobby
 
-                    case GetMatchListPacket getMatch:
+                case GetMatchListPacket getMatch:
                         //Send them a list of matches
                         MatchListPacket matchList = new MatchListPacket
                         {
