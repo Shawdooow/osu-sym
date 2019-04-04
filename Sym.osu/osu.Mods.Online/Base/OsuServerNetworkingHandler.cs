@@ -99,7 +99,7 @@ namespace osu.Mods.Online.Base
                         "601916 LazyTown - We Are Number One TLT Remix",
                     };
 
-                    string name = names[0];
+                    string name = names[1];
 
                     string full = storage.GetFullPath(name);
 
