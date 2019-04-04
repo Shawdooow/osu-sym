@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +11,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Game;
-using osu.Game.Beatmaps;
 using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Lobby.Packets;
@@ -108,7 +106,9 @@ namespace osu.Mods.Online.Base
                         try
                         {
                             Logger.Log($"Client has requested to import from stable (map = {name})", LoggingTarget.Network);
+
                             //TODO: move this to sever\\temp
+                            //Zip up the mapset for shipping!
                             if (!storage.Exists($"temp\\{name}.zip"))
                                 ZipFile.CreateFromDirectory(full, $"{storage.GetFullPath("temp")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
 
@@ -118,6 +118,8 @@ namespace osu.Mods.Online.Base
                                 fileSize = fs.Length;
                                 long sum = 0;
                                 byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 16];
+
+                                //Lets send the file piece by piece so we don't destroy mobile devices
                                 while (sum < fileSize)
                                 {
                                     int count = fs.Read(data, 0, data.Length);
@@ -128,20 +130,11 @@ namespace osu.Mods.Online.Base
                                 TcpNetworkStream.Flush();
                             }
 
+                            //Tell them its all sent
                             UdpNetworkingClient.SendPacket(new MapSetPacket(name, fileSize), c.EndPoint);
                         }
                         catch(Exception e) { Logger.Error(e, "Failed to send map!", LoggingTarget.Network); }
                     }, TaskCreationOptions.LongRunning);
-
-                    /*
-                    foreach (string map in stable.GetDirectories("Songs"))
-                    {
-                        //Alstroemeria Records - Flight of the Bamboo Cutter
-                        //last.SendPacket(new MapSetPacket(stable.GetStorageForDirectory($"Songs/{map}")));
-                        last.SendPacket(new MapSetPacket(stable.GetStorageForDirectory($"Songs/Alstroemeria Records - Flight of the Bamboo Cutter")));
-                        break;
-                    }
-                    */
 
                     break;
                 #endregion
