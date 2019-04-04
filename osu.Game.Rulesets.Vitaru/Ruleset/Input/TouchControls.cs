@@ -2,10 +2,8 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Input;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
-using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Cursor;
 using osuTK;
 using Sym.Base.Touch;
 

@@ -17,7 +17,6 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using osuTK;
 using osuTK.Graphics;
-using Sym.Base.Graphics.Sprites;
 
 #endregion
 

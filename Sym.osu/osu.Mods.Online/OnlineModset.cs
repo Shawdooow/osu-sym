@@ -12,7 +12,6 @@ using osu.Framework.Logging;
 using osu.Game;
 using osu.Game.Screens;
 using osu.Mods.Online.Base;
-using osu.Mods.Online.Settings;
 using osu.Mods.Online.Wiki;
 using osuTK;
 using osuTK.Graphics;

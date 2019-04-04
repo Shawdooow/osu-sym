@@ -3,7 +3,6 @@
 using System;
 using System.Runtime.Serialization;
 using osu.Mods.Online.Base.Packets;
-using Sym.Networking.Packets;
 
 #endregion
 

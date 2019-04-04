@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using osu.Core.OsuMods;
-using osu.Core.Wiki.Included.Lazer;
 using osu.Core.Wiki.Included.Symcol;
 
 #endregion

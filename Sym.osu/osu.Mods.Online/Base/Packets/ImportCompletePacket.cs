@@ -1,4 +1,8 @@
-﻿using Sym.Networking.Packets;
+﻿#region usings
+
+using Sym.Networking.Packets;
+
+#endregion
 
 namespace osu.Mods.Online.Base.Packets
 {
