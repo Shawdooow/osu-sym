@@ -1,8 +1,4 @@
-﻿#region usings
-
-using osu.Core.Settings;
-
-#endregion
+﻿using osu.Core.Settings;
 
 namespace osu.Mods.Online.Settings
 {

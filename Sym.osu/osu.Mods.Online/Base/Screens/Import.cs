@@ -1,6 +1,4 @@
-﻿#region usings
-
-using System;
+﻿using System;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
@@ -18,8 +16,6 @@ using osu.Mods.Online.Base.Packets;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Networking.Packets;
-
-#endregion
 
 namespace osu.Mods.Online.Base.Screens
 {
@@ -95,6 +91,7 @@ namespace osu.Mods.Online.Base.Screens
         private void import(MapSetPacket set)
         {
             StreamWriter writer = new StreamWriter(temp.GetStream($"{set.MapName}.zip", FileAccess.ReadWrite, FileMode.Create));
+            StreamReader reader = new StreamReader(OnlineModset.OsuNetworkingHandler.TcpNetworkStream);
 
             Task.Factory.StartNew(() =>
             {
@@ -103,15 +100,12 @@ namespace osu.Mods.Online.Base.Screens
                     //writer.Write(Encoding.UTF8.GetBytes(reader.ReadToEnd()));
                     writer.Close();
 
-                    string serial = String.Empty;
+                    File.WriteAllBytes(temp.GetFullPath($"{set.MapName}.zip"), Convert.FromBase64String(reader.ReadToEnd()));
 
-                    foreach (byte[] ba in OnlineModset.OsuNetworkingHandler.Pieces)
-                        serial = serial + Convert.ToBase64String(ba);
-
-                    File.WriteAllBytes(temp.GetFullPath($"{set.MapName}.zip"), Convert.FromBase64String(serial));
+                    reader.Close();
 
                     ZipFile.ExtractToDirectory(temp.GetFullPath($"{set.MapName}.zip"), temp.GetFullPath($"{set.MapName}"), Encoding.UTF8);
-                    //temp.Delete($"{set.MapName}.zip");
+                    temp.Delete($"{set.MapName}.zip");
                 }
                 catch (Exception e) { Logger.Error(e, "Failed to receive map!", LoggingTarget.Network); }
             }, TaskCreationOptions.LongRunning).ContinueWith(result =>

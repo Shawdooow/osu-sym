@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Configuration;
+using Sym.Base.Graphics.Sprites;
 
 #endregion
 

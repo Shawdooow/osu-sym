@@ -3,6 +3,7 @@
 using System;
 using System.Runtime.Serialization;
 using osuTK;
+using Sym.Networking.Packets;
 
 #endregion
 

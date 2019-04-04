@@ -1,10 +1,6 @@
-﻿#region usings
-
-using System;
+﻿using System;
 using System.Runtime.Serialization;
 using Sym.Networking.Packets;
-
-#endregion
 
 namespace osu.Mods.Online.Base.Packets
 {

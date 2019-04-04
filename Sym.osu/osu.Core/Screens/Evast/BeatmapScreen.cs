@@ -1,16 +1,12 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-#region usings
-
 using osu.Framework.Graphics;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Screens;
 using osu.Game.Screens.Backgrounds;
 using osuTK;
-
-#endregion
 
 namespace osu.Core.Screens.Evast
 {
@@ -54,7 +50,7 @@ namespace osu.Core.Screens.Evast
 
         protected virtual void OnBeatmapChange(WorkingBeatmap beatmap)
         {
-            BackgroundScreenBeatmap backgroundModeBeatmap = Background as BackgroundScreenBeatmap;
+            var backgroundModeBeatmap = Background as BackgroundScreenBeatmap;
             if (backgroundModeBeatmap != null)
             {
                 backgroundModeBeatmap.Beatmap = beatmap;

@@ -1,8 +1,4 @@
-﻿#region usings
-
-using osu.Framework.Graphics;
-
-#endregion
+﻿using osu.Framework.Graphics;
 
 namespace osu.Mods.Online.Base.Pieces
 {

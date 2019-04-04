@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Game;
+using osu.Game.Beatmaps;
 using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Lobby.Packets;
@@ -19,6 +21,7 @@ using osu.Mods.Online.Multi.Player.Packets;
 using osu.Mods.Online.Multi.Settings.Options;
 using osu.Mods.Online.Score;
 using osu.Mods.Online.Score.Packets;
+using Sym.Networking.NetworkingClients;
 using Sym.Networking.NetworkingHandlers;
 using Sym.Networking.NetworkingHandlers.Server;
 using Sym.Networking.Packets;
@@ -113,8 +116,7 @@ namespace osu.Mods.Online.Base
                             byte[] data = File.ReadAllBytes($"{storage.GetFullPath($"temp\\{name}.zip")}");
 
                             //File.WriteAllBytes(storage.GetFullPath($"temp\\meme.zip"), Convert.FromBase64String(Convert.ToBase64String(data)));
-                            for(int i = 0; i < Sym.Networking.NetworkingClients.TcpNetworkingClient.BUFFER_SIZE; i += Sym.Networking.NetworkingClients.TcpNetworkingClient.BUFFER_SIZE)
-                            TcpNetworkStream.Write(data, 0 , data.Length);
+                            writer.Write(Convert.ToBase64String(data));
                             UdpNetworkingClient.SendPacket(new MapSetPacket(name), c.EndPoint);
 
                             //reader.Close();

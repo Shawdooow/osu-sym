@@ -13,6 +13,7 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osuTK;
 using osuTK.Graphics;
+using Sym.Base.Graphics.Sprites;
 
 #endregion
 
