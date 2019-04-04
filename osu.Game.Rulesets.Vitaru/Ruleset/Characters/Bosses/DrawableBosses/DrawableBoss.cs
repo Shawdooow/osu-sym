@@ -15,7 +15,6 @@ using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces;
 using osuTK;
 using osuTK.Graphics;
-using Sym.Base.Graphics.Sprites;
 
 #endregion
 
