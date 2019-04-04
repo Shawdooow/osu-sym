@@ -421,16 +421,16 @@ namespace osu.Mods.Online.Base
                     Logger.Log($"Client has requested to import from stable (map = {name})", LoggingTarget.Network);
 
                     //Basically just create the temp folder then delete the writer, bit of a hack but works for now
-                    StreamWriter writer = new StreamWriter(Storage.GetStream($"online\\server\\temp\\{name}.zip", FileAccess.ReadWrite, FileMode.Create));
+                    StreamWriter writer = new StreamWriter(Storage.GetStream($"online\\temp\\server\\{name}.zip", FileAccess.ReadWrite, FileMode.Create));
                     writer.Close();
 
-                    if (Storage.Exists($"online\\server\\temp\\{name}.zip")) Storage.Delete($"online\\server\\temp\\{name}.zip");
+                    if (Storage.Exists($"online\\temp\\server\\{name}.zip")) Storage.Delete($"online\\temp\\server\\{name}.zip");
 
                     //Zip up the mapset for shipping!
-                    ZipFile.CreateFromDirectory(full, $"{Storage.GetFullPath("online\\server\\temp")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
+                    ZipFile.CreateFromDirectory(full, $"{Storage.GetFullPath("online\\temp\\server")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
 
                     long fileSize;
-                    using (FileStream fs = new FileStream($"{Storage.GetFullPath("online\\server\\temp")}\\{name}.zip", FileMode.Open, FileAccess.Read))
+                    using (FileStream fs = new FileStream($"{Storage.GetFullPath("online\\temp\\server")}\\{name}.zip", FileMode.Open, FileAccess.Read))
                     {
                         fileSize = fs.Length;
                         long sum = 0;
@@ -454,7 +454,7 @@ namespace osu.Mods.Online.Base
                     UdpNetworkingClient.SendPacket(new SentMapPacket(name, fileSize), client.EndPoint);
 
                     //cleanup
-                    Storage.Delete($"online\\server\\temp\\{name}.zip");
+                    Storage.Delete($"online\\temp\\server\\{name}.zip");
                 }
                 catch (Exception e) { Logger.Error(e, "Failed to send map!", LoggingTarget.Network); }
             }, TaskCreationOptions.LongRunning);
