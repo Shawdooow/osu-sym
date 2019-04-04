@@ -9,7 +9,7 @@ using Sym.Networking.Packets;
 namespace osu.Mods.Online.Base.Packets
 {
     [Serializable]
-    public sealed class MapSetPacket : Packet, ISerializable
+    public sealed class SentMapPacket : Packet, ISerializable
     {
         public override uint PacketSize => 8192;
 
@@ -17,13 +17,13 @@ namespace osu.Mods.Online.Base.Packets
 
         public long Size { get; private set; }
 
-        public MapSetPacket(string map, long size)
+        public SentMapPacket(string map, long size)
         {
             MapName = map;
             Size = size;
         }
 
-        public MapSetPacket(SerializationInfo info, StreamingContext context)
+        public SentMapPacket(SerializationInfo info, StreamingContext context)
         {
             MapName = info.GetString("f");
             Size = info.GetInt64("s");

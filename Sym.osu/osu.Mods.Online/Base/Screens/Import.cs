@@ -14,6 +14,8 @@ using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
+using osu.Game.Overlays;
+using osu.Game.Overlays.Notifications;
 using osu.Game.Overlays.Settings;
 using osu.Mods.Online.Base.Packets;
 using osuTK;
@@ -32,6 +34,10 @@ namespace osu.Mods.Online.Base.Screens
         private Storage storage;
 
         private Storage temp;
+
+        private NotificationOverlay notifications;
+
+        private ProgressNotification progress;
 
         public Import()
         {
@@ -72,14 +78,16 @@ namespace osu.Mods.Online.Base.Screens
         }
 
         [BackgroundDependencyLoader]
-        private void load(BeatmapManager manager, Storage storage)
+        private void load(BeatmapManager manager, Storage storage, NotificationOverlay notifications)
         {
             this.manager = manager;
             this.storage = storage;
+            this.notifications = notifications;
             temp = this.storage.GetStorageForDirectory("online\\temp");
         }
 
-        private MapSetPacket quedSetPacket;
+        private SendingMapPacket receivingMap;
+        private SentMapPacket quedSetPacket;
 
         private int piecesSize;
         private Dictionary<byte[], int> pieces = new Dictionary<byte[], int>();
@@ -89,12 +97,13 @@ namespace osu.Mods.Online.Base.Screens
             base.Update();
 
             //this could be for looped but lets not threadlock for now instead
-            if (OnlineModset.OsuNetworkingHandler.Tcp && OnlineModset.OsuNetworkingHandler.TcpNetworkingClient.Available > 0)
+            if (OnlineModset.OsuNetworkingHandler.Tcp && OnlineModset.OsuNetworkingHandler.TcpNetworkingClient.Available > 0 && receivingMap != null)
                 fetch();
 
             //We got the whole map yet?
             if (quedSetPacket != null && piecesSize == quedSetPacket.Size)
             {
+                receivingMap = null;
                 //lets do this!
                 import(quedSetPacket);
                 //reset for next map
@@ -112,9 +121,12 @@ namespace osu.Mods.Online.Base.Screens
         {
             byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 8];
             int count = OnlineModset.OsuNetworkingHandler.TcpNetworkStream.Read(data, 0, data.Length);
+
             piecesSize += count;
             pieces.Add(data, count);
-            Logger.Log($"Data fetched for importing from stable ({piecesSize})", LoggingTarget.Network);
+
+            progress.Progress = piecesSize / (float)receivingMap.PacketSize;
+            Logger.Log($"Data fetched for importing from stable ({piecesSize}/{receivingMap.PacketSize})", LoggingTarget.Network);
         }
 
         /// <summary>
@@ -122,6 +134,16 @@ namespace osu.Mods.Online.Base.Screens
         /// </summary>
         private void import()
         {
+            if (progress != null)
+                progress.State = ProgressNotificationState.Cancelled;
+
+            notifications.Post(progress = new ProgressNotification
+            {
+                Text = "Getting Ready...",
+                Progress = 0,
+                State = ProgressNotificationState.Active,
+            });
+
             OnlineModset.OsuNetworkingHandler.SendToServer(new ImportPacket());
         }
 
@@ -129,19 +151,26 @@ namespace osu.Mods.Online.Base.Screens
         {
             switch (info.Packet)
             {
-                case MapSetPacket mapSetPacket:
+                case SendingMapPacket sendingMapPacket:
+                    receivingMap = sendingMapPacket;
+                    progress.Text = $"Receiving {sendingMapPacket.MapName}...";
+                    break;
+                case SentMapPacket sentMapPacket:
                     //que it since we might not have the whole mapset.zip yet
-                    quedSetPacket = mapSetPacket;
+                    quedSetPacket = sentMapPacket;
                     break;
             }
         }
 
-        private void import(MapSetPacket set)
+        private void import(SentMapPacket set)
         {
             Task.Factory.StartNew(() =>
             {
                 try
                 {
+                    progress.Text = $"Importing {set.MapName}";
+                    progress.Progress = 1;
+
                     Logger.Log($"Beginning Import of ({set.MapName})...", LoggingTarget.Network);
 
                     //Basically just create the temp folder then delete the writer, bit of a hack but works for now
@@ -173,6 +202,8 @@ namespace osu.Mods.Online.Base.Screens
                 {
                     temp.GetFullPath($"{set.MapName}")
                 });
+                progress.Text = "Import Complete!";
+                progress.State = ProgressNotificationState.Completed;
             });
         }
 
@@ -181,7 +212,12 @@ namespace osu.Mods.Online.Base.Screens
             //bit of cleanup when we exit
             OnlineModset.OsuNetworkingHandler.OnPacketReceive -= packetReceived;
             OnlineModset.OsuNetworkingHandler.Tcp = false;
+
             if (storage.ExistsDirectory("online/temp")) storage.DeleteDirectory("online/temp");
+
+            if (progress != null)
+                progress.State = ProgressNotificationState.Cancelled;
+
             return base.OnExiting(next);
         }
     }

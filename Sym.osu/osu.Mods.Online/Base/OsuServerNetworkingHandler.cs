@@ -99,7 +99,12 @@ namespace osu.Mods.Online.Base
                     {
                         List<string> paths = new List<string>();
                         foreach (string path in Stable.GetDirectories($"Songs"))
-                            paths.Add(path);
+                        {
+                            string modified = "";
+                            for (int i = 6; i < path.Length; i++)
+                                modified = modified + path[i];
+                            paths.Add(modified);
+                        }
                         Maps = paths.ToArray();
                     }
 
@@ -415,17 +420,24 @@ namespace osu.Mods.Online.Base
                 {
                     Logger.Log($"Client has requested to import from stable (map = {name})", LoggingTarget.Network);
 
-                    //TODO: move this to sever\\temp
+                    //Basically just create the temp folder then delete the writer, bit of a hack but works for now
+                    StreamWriter writer = new StreamWriter(Storage.GetStream($"online\\server\\temp\\{name}.zip", FileAccess.ReadWrite, FileMode.Create));
+                    writer.Close();
+
+                    if (Storage.Exists($"online\\server\\temp\\{name}.zip")) Storage.Delete($"online\\server\\temp\\{name}.zip");
+
                     //Zip up the mapset for shipping!
-                    if (!Songs.Exists($"temp\\{name}.zip"))
-                        ZipFile.CreateFromDirectory(full, $"{Songs.GetFullPath("temp")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
+                    ZipFile.CreateFromDirectory(full, $"{Storage.GetFullPath("online\\server\\temp")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
 
                     long fileSize;
-                    using (FileStream fs = new FileStream($"{Songs.GetFullPath("temp")}\\{name}.zip", FileMode.Open, FileAccess.Read))
+                    using (FileStream fs = new FileStream($"{Storage.GetFullPath("online\\server\\temp")}\\{name}.zip", FileMode.Open, FileAccess.Read))
                     {
                         fileSize = fs.Length;
                         long sum = 0;
                         byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 16];
+
+                        //Tell them its on its way
+                        UdpNetworkingClient.SendPacket(new SendingMapPacket(name, fileSize), client.EndPoint);
 
                         //Lets send the file piece by piece so we don't destroy mobile devices
                         while (sum < fileSize)
@@ -439,7 +451,10 @@ namespace osu.Mods.Online.Base
                     }
 
                     //Tell them its all sent
-                    UdpNetworkingClient.SendPacket(new MapSetPacket(name, fileSize), client.EndPoint);
+                    UdpNetworkingClient.SendPacket(new SentMapPacket(name, fileSize), client.EndPoint);
+
+                    //cleanup
+                    Storage.Delete($"online\\server\\temp\\{name}.zip");
                 }
                 catch (Exception e) { Logger.Error(e, "Failed to send map!", LoggingTarget.Network); }
             }, TaskCreationOptions.LongRunning);
