@@ -84,6 +84,11 @@ namespace osu.Mods.Online.Base.Screens
             this.storage = storage;
             this.notifications = notifications;
             temp = this.storage.GetStorageForDirectory("online\\temp");
+
+            //Basically just create the temp folder then delete the writer, bit of a hack but works for now
+            StreamWriter writer = new StreamWriter(temp.GetStream($"mem.zip", FileAccess.ReadWrite, FileMode.Create));
+            writer.Close();
+            temp.Delete($"mem.zip");
         }
 
         private SendingMapPacket receivingMap;
@@ -101,16 +106,11 @@ namespace osu.Mods.Online.Base.Screens
                 fetch();
 
             //We got the whole map yet?
-            if (quedSetPacket != null && piecesSize == quedSetPacket.Size)
+            if (quedSetPacket != null && piecesSize == quedSetPacket.Size && receivingMap != null)
             {
                 receivingMap = null;
                 //lets do this!
                 import(quedSetPacket);
-                //reset for next map
-                quedSetPacket = null;
-
-                //Tell the host we are ready for the next one
-                OnlineModset.OsuNetworkingHandler.SendToServer(new ImportCompletePacket());
             }
         }
 
@@ -125,8 +125,8 @@ namespace osu.Mods.Online.Base.Screens
             piecesSize += count;
             pieces.Add(data, count);
 
-            progress.Progress = piecesSize / (float)receivingMap.PacketSize;
-            Logger.Log($"Data fetched for importing from stable ({piecesSize}/{receivingMap.PacketSize})", LoggingTarget.Network);
+            progress.Progress = piecesSize / (float)receivingMap.Size;
+            Logger.Log($"Data fetched for importing from stable ({piecesSize}/{receivingMap.Size})", LoggingTarget.Network);
         }
 
         /// <summary>
@@ -134,15 +134,12 @@ namespace osu.Mods.Online.Base.Screens
         /// </summary>
         private void import()
         {
-            if (progress != null)
-                progress.State = ProgressNotificationState.Cancelled;
+            if (progress == null)
+                notifications.Post(progress = new ProgressNotification());
 
-            notifications.Post(progress = new ProgressNotification
-            {
-                Text = "Getting Ready...",
-                Progress = 0,
-                State = ProgressNotificationState.Active,
-            });
+            progress.Text = "Getting Ready...";
+            progress.Progress = 0;
+            progress.State = ProgressNotificationState.Active;
 
             OnlineModset.OsuNetworkingHandler.SendToServer(new ImportPacket());
         }
@@ -173,10 +170,6 @@ namespace osu.Mods.Online.Base.Screens
 
                     Logger.Log($"Beginning Import of ({set.MapName})...", LoggingTarget.Network);
 
-                    //Basically just create the temp folder then delete the writer, bit of a hack but works for now
-                    StreamWriter writer = new StreamWriter(temp.GetStream($"{set.MapName}.zip", FileAccess.ReadWrite, FileMode.Create));
-                    writer.Close();
-
                     using (FileStream fs = new FileStream(temp.GetFullPath($"{set.MapName}.zip"), FileMode.Create, FileAccess.Write))
                     {
                         //Save all the pieces until we have all of them
@@ -186,24 +179,32 @@ namespace osu.Mods.Online.Base.Screens
 
                     //Extract it to be imported via the vanilla importer
                     ZipFile.ExtractToDirectory(temp.GetFullPath($"{set.MapName}.zip"), temp.GetFullPath($"{set.MapName}"), Encoding.UTF8);
-                    Logger.Log($"Zip extraction while receiving ({set.MapName}) sucessful, cleaning up...", LoggingTarget.Network);
+                    Logger.Log($"Zip extraction while receiving ({set.MapName}) sucessful!", LoggingTarget.Network);
 
-                    //Cleanup our mess for mobile device's sake!
-                    temp.Delete($"{set.MapName}.zip");
-                    pieces = new Dictionary<byte[], int>();
-                    piecesSize = 0;
-                    Logger.Log($"Clean up complete, beginning import...", LoggingTarget.Network);
+                    //Actually import the map now from the extracted folder
+                    manager.Import(new[]
+                    {
+                        temp.GetFullPath($"{set.MapName}")
+                    });
+                    progress.CompletionText = $"{set.MapName} Imported!";
                 }
-                catch (Exception e) { Logger.Error(e, "Failed to receive map!", LoggingTarget.Network); }
+                catch (Exception e)
+                {
+                    Logger.Error(e, "Failed to receive map!", LoggingTarget.Network);
+                    progress.Text = "Import Failed!";
+                }
             }, TaskCreationOptions.LongRunning).ContinueWith(result =>
             {
-                //Actually import the map now from the extracted folder, they should delete it when they are done for us!
-                manager.Import(new[]
-                {
-                    temp.GetFullPath($"{set.MapName}")
-                });
-                progress.Text = "Import Complete!";
-                progress.State = ProgressNotificationState.Completed;
+                //Cleanup our mess for mobile device's sake!
+                if (temp.ExistsDirectory($"{set.MapName}")) temp.DeleteDirectory($"{set.MapName}");
+                temp.Delete($"{set.MapName}.zip");
+                pieces = new Dictionary<byte[], int>();
+                piecesSize = 0;
+
+                //reset for next map
+                quedSetPacket = null;
+
+                OnlineModset.OsuNetworkingHandler.SendToServer(new ImportCompletePacket());
             });
         }
 
