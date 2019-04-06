@@ -80,7 +80,12 @@ namespace osu.Mods.Online.Base
             {
                 //lets do this!
                 import(receivingMap);
+
                 receivingMap = null;
+                fileSize = 0;
+
+                //We can start downloading the next one now
+                OnlineModset.OsuNetworkingHandler.SendToServer(new SendMapPacket());
             }
         }
 
@@ -235,9 +240,6 @@ namespace osu.Mods.Online.Base
                 //Cleanup our mess for mobile device's sake!
                 if (temp.ExistsDirectory($"{set.MapName}")) temp.DeleteDirectory($"{set.MapName}");
                 temp.Delete($"{set.MapName}.zip");
-                fileSize = 0;
-
-                OnlineModset.OsuNetworkingHandler.SendToServer(new ImportCompletePacket());
             });
         }
 

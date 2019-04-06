@@ -110,7 +110,7 @@ namespace osu.Mods.Online.Base
 
                     QueImport(c);
                     break;
-                case ImportCompletePacket complete:
+                case SendMapPacket send:
                     c = GetLastClient();
                     if (ImportingClients.ContainsKey(c))
                     {

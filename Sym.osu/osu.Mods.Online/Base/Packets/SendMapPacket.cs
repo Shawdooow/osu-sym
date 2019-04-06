@@ -8,7 +8,7 @@ using Sym.Networking.Packets;
 namespace osu.Mods.Online.Base.Packets
 {
     [Serializable]
-    public sealed class ImportCompletePacket : Packet
+    public sealed class SendMapPacket : Packet
     {
     }
 }
