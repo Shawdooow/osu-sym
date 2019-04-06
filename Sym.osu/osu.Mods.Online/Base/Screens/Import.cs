@@ -94,8 +94,8 @@ namespace osu.Mods.Online.Base.Screens
         private SendingMapPacket receivingMap;
         private SentMapPacket quedSetPacket;
 
-        private int piecesSize;
-        private Dictionary<byte[], int> pieces = new Dictionary<byte[], int>();
+        private int fileSize;
+        private FileStream file;
 
         protected override void Update()
         {
@@ -106,7 +106,7 @@ namespace osu.Mods.Online.Base.Screens
                 fetch();
 
             //We got the whole map yet?
-            if (quedSetPacket != null && piecesSize == quedSetPacket.Size && receivingMap != null)
+            if (quedSetPacket != null && fileSize == quedSetPacket.Size && receivingMap != null)
             {
                 receivingMap = null;
                 //lets do this!
@@ -122,11 +122,11 @@ namespace osu.Mods.Online.Base.Screens
             byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 8];
             int count = OnlineModset.OsuNetworkingHandler.TcpNetworkStream.Read(data, 0, data.Length);
 
-            piecesSize += count;
-            pieces.Add(data, count);
+            fileSize += count;
+            file.Write(data, 0, count);
 
-            progress.Progress = piecesSize / (float)receivingMap.Size;
-            Logger.Log($"Data fetched for importing from stable ({piecesSize}/{receivingMap.Size})", LoggingTarget.Network);
+            progress.Progress = fileSize / (float)receivingMap.Size;
+            Logger.Log($"Data fetched for importing from stable ({fileSize}/{receivingMap.Size})", LoggingTarget.Network);
         }
 
         /// <summary>
@@ -151,6 +151,7 @@ namespace osu.Mods.Online.Base.Screens
                 case SendingMapPacket sendingMapPacket:
                     receivingMap = sendingMapPacket;
                     progress.Text = $"Receiving {sendingMapPacket.MapName}...";
+                    file = new FileStream(temp.GetFullPath($"{sendingMapPacket.MapName}.zip"), FileMode.Create, FileAccess.Write);
                     break;
                 case SentMapPacket sentMapPacket:
                     //que it since we might not have the whole mapset.zip yet
@@ -170,15 +171,8 @@ namespace osu.Mods.Online.Base.Screens
 
                     Logger.Log($"Beginning Import of ({set.MapName})...", LoggingTarget.Network);
 
-                    using (FileStream fs = new FileStream(temp.GetFullPath($"{set.MapName}.zip"), FileMode.Create, FileAccess.Write))
-                    {
-                        //Save all the pieces until we have all of them
-                        foreach (KeyValuePair<byte[], int> pair in pieces)
-                            fs.Write(pair.Key, 0, pair.Value);
-
-                        fs.Close();
-                        fs.Dispose();
-                    }
+                    file.Close();
+                    file.Dispose();
 
                     //Extract it to be imported via the vanilla importer
                     ZipFile.ExtractToDirectory(temp.GetFullPath($"{set.MapName}.zip"), temp.GetFullPath($"{set.MapName}"), Encoding.UTF8);
@@ -201,8 +195,7 @@ namespace osu.Mods.Online.Base.Screens
                 //Cleanup our mess for mobile device's sake!
                 if (temp.ExistsDirectory($"{set.MapName}")) temp.DeleteDirectory($"{set.MapName}");
                 temp.Delete($"{set.MapName}.zip");
-                pieces = new Dictionary<byte[], int>();
-                piecesSize = 0;
+                fileSize = 0;
 
                 //reset for next map
                 quedSetPacket = null;
