@@ -175,6 +175,9 @@ namespace osu.Mods.Online.Base.Screens
                         //Save all the pieces until we have all of them
                         foreach (KeyValuePair<byte[], int> pair in pieces)
                             fs.Write(pair.Key, 0, pair.Value);
+
+                        fs.Close();
+                        fs.Dispose();
                     }
 
                     //Extract it to be imported via the vanilla importer

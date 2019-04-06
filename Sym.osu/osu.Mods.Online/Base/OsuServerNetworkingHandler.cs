@@ -450,7 +450,9 @@ namespace osu.Mods.Online.Base
                             sum += count;
                             Logger.Log($"Progress = {sum}/{fileSize}", LoggingTarget.Network);
                         }
-                        TcpNetworkStream.Flush();
+
+                        fs.Close();
+                        fs.Dispose();
                     }
 
                     //Tell them its all sent
