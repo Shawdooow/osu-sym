@@ -112,8 +112,11 @@ namespace osu.Mods.Online.Base
                     break;
                 case ImportCompletePacket complete:
                     c = GetLastClient();
-                    ImportingClients[c]++;
-                    SendClientImportMap(Maps[ImportingClients[c]], c);
+                    if (ImportingClients.ContainsKey(c))
+                    {
+                        ImportingClients[c]++;
+                        SendClientImportMap(Maps[ImportingClients[c]], c);
+                    }
                     break;
                 #endregion
 
