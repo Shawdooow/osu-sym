@@ -458,7 +458,13 @@ namespace osu.Mods.Online.Base
                     //cleanup
                     Storage.Delete($"online\\temp\\server\\{name}.zip");
                 }
-                catch (Exception e) { Logger.Error(e, "Failed to send map!", LoggingTarget.Network); }
+                catch (Exception e)
+                {
+                    Logger.Error(e, "Failed to send map!", LoggingTarget.Network);
+
+                    ImportingClients[client]++;
+                    SendClientImportMap(Maps[ImportingClients[client]], client);
+                }
             }, TaskCreationOptions.LongRunning);
         }
 

@@ -116,6 +116,13 @@ namespace osu.Mods.Online.Base
                     base.HandlePackets(info);
                     break;
                 case SendingMapPacket sendingMapPacket:
+                    if (receivingMap != null)
+                    {
+                        byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 8];
+                        while (TcpNetworkingClient.Available > 0)
+                            TcpNetworkStream.Read(data, 0, data.Length);
+                    }
+
                     receivingMap = sendingMapPacket;
                     progress.Text = $"Receiving {sendingMapPacket.MapName}...";
                     file = new FileStream(temp.GetFullPath($"{sendingMapPacket.MapName}.zip"), FileMode.Create, FileAccess.Write);
@@ -198,7 +205,7 @@ namespace osu.Mods.Online.Base
         private void fetch()
         {
             byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 8];
-            int count = OnlineModset.OsuNetworkingHandler.TcpNetworkStream.Read(data, 0, data.Length);
+            int count = TcpNetworkStream.Read(data, 0, data.Length);
 
             fileSize += count;
             file.Write(data, 0, count);
