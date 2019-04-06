@@ -76,11 +76,11 @@ namespace osu.Mods.Online.Base
                 fetch();
 
             //We got the whole map yet?
-            if (quedSetPacket != null && fileSize == quedSetPacket.Size && receivingMap != null)
+            if (receivingMap != null && fileSize == receivingMap.Size)
             {
-                receivingMap = null;
                 //lets do this!
-                import(quedSetPacket);
+                import(receivingMap);
+                receivingMap = null;
             }
         }
 
@@ -115,10 +115,6 @@ namespace osu.Mods.Online.Base
                     receivingMap = sendingMapPacket;
                     progress.Text = $"Receiving {sendingMapPacket.MapName}...";
                     file = new FileStream(temp.GetFullPath($"{sendingMapPacket.MapName}.zip"), FileMode.Create, FileAccess.Write);
-                    break;
-                case SentMapPacket sentMapPacket:
-                    //que it since we might not have the whole mapset.zip yet
-                    quedSetPacket = sentMapPacket;
                     break;
             }
         }
@@ -170,7 +166,6 @@ namespace osu.Mods.Online.Base
         #region Import
 
         private SendingMapPacket receivingMap;
-        private SentMapPacket quedSetPacket;
 
         private int fileSize;
         private FileStream file;
@@ -208,7 +203,7 @@ namespace osu.Mods.Online.Base
             Logger.Log($"Data fetched for importing from stable ({fileSize}/{receivingMap.Size})", LoggingTarget.Network);
         }
 
-        private void import(SentMapPacket set)
+        private void import(SendingMapPacket set)
         {
             Task.Factory.StartNew(() =>
             {
@@ -241,9 +236,6 @@ namespace osu.Mods.Online.Base
                 if (temp.ExistsDirectory($"{set.MapName}")) temp.DeleteDirectory($"{set.MapName}");
                 temp.Delete($"{set.MapName}.zip");
                 fileSize = 0;
-
-                //reset for next map
-                quedSetPacket = null;
 
                 OnlineModset.OsuNetworkingHandler.SendToServer(new ImportCompletePacket());
             });

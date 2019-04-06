@@ -455,9 +455,6 @@ namespace osu.Mods.Online.Base
                         fs.Dispose();
                     }
 
-                    //Tell them its all sent
-                    UdpNetworkingClient.SendPacket(new SentMapPacket(name, fileSize), client.EndPoint);
-
                     //cleanup
                     Storage.Delete($"online\\temp\\server\\{name}.zip");
                 }
