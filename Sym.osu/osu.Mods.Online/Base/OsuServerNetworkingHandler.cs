@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -111,6 +112,7 @@ namespace osu.Mods.Online.Base
                     QueImport(c);
                     break;
                 case SendMapPacket send:
+                    if (sending) break;
                     c = GetLastClient();
                     if (ImportingClients.ContainsKey(c))
                     {
@@ -315,9 +317,17 @@ namespace osu.Mods.Online.Base
             }
         }
 
+        private readonly List<ServerPacketInfo> que = new List<ServerPacketInfo>();
+
         protected override void Update()
         {
             base.Update();
+
+            if (que.Count > 0)
+            {
+                UdpNetworkingClient.SendPacket(que.First().Packet, que.First().Client.EndPoint);
+                que.Remove(que.First());
+            }
 
             restart:
             foreach (OsuMatch match in OsuMatches)
@@ -413,12 +423,15 @@ namespace osu.Mods.Online.Base
             }
         }
 
+        private bool sending;
+
         protected virtual void SendClientImportMap(string name, Client client)
         {
             string full = Songs.GetFullPath(name);
 
             Task.Factory.StartNew(() =>
             {
+                sending = true;
                 try
                 {
                     Logger.Log($"Client has requested to import from stable (map = {name})", LoggingTarget.Network);
@@ -441,6 +454,8 @@ namespace osu.Mods.Online.Base
 
                         //Tell them its on its way
                         UdpNetworkingClient.SendPacket(new SendingMapPacket(name, fileSize), client.EndPoint);
+                        que.Add(new ServerPacketInfo { Client = client, Packet = new SendingMapPacket(name, fileSize) });
+                        que.Add(new ServerPacketInfo { Client = client, Packet = new SendingMapPacket(name, fileSize) });
 
                         //Lets send the file piece by piece so we don't destroy mobile devices
                         while (sum < fileSize)
@@ -457,9 +472,11 @@ namespace osu.Mods.Online.Base
 
                     //cleanup
                     Storage.Delete($"online\\temp\\server\\{name}.zip");
+                    sending = false;
                 }
                 catch (Exception e)
                 {
+                    sending = false;
                     Logger.Error(e, "Failed to send map!", LoggingTarget.Network);
 
                     ImportingClients[client]++;

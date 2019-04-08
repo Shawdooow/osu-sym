@@ -1,8 +1,10 @@
 ﻿#region usings
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using osu.Core;
@@ -60,9 +62,17 @@ namespace osu.Mods.Online.Base
             ConnectionStatues = ConnectionStatues.Connecting;
         }
 
+        private readonly List<Packet> que = new List<Packet>();
+
         protected override void Update()
         {
             base.Update();
+
+            if (que.Count > 0)
+            {
+                SendToServer(que.First());
+                que.Remove(que.First());
+            }
 
             if (forceTime <= Time.Current && ConnectionStatues <= ConnectionStatues.Disconnected)
             {
@@ -71,7 +81,7 @@ namespace osu.Mods.Online.Base
             }
 
             //this could be for looped but lets not threadlock for now instead
-            if (OnlineModset.OsuNetworkingHandler.Tcp && OnlineModset.OsuNetworkingHandler.TcpNetworkingClient.Available > 0 && receivingMap != null)
+            if (Tcp && TcpNetworkingClient.Available > 0 && receivingMap != null)
                 fetch();
 
             //We got the whole map yet?
@@ -84,7 +94,9 @@ namespace osu.Mods.Online.Base
                 fileSize = 0;
 
                 //We can start downloading the next one now
-                OnlineModset.OsuNetworkingHandler.SendToServer(new SendMapPacket());
+                SendToServer(new SendMapPacket());
+                que.Add(new SendMapPacket());
+                que.Add(new SendMapPacket());
             }
         }
 
@@ -118,6 +130,8 @@ namespace osu.Mods.Online.Base
                 case SendingMapPacket sendingMapPacket:
                     if (receivingMap != null)
                     {
+                        if (receivingMap.MapName == sendingMapPacket.MapName) break;
+
                         byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 8];
                         while (TcpNetworkingClient.Available > 0)
                             TcpNetworkStream.Read(data, 0, data.Length);
@@ -230,6 +244,8 @@ namespace osu.Mods.Online.Base
 
                     //Extract it to be imported via the vanilla importer
                     ZipFile.ExtractToDirectory(temp.GetFullPath($"{set.MapName}.zip"), temp.GetFullPath($"{set.MapName}"), Encoding.UTF8);
+                    temp.Delete($"{set.MapName}.zip");
+
                     Logger.Log($"Zip extraction while receiving ({set.MapName}) sucessful!", LoggingTarget.Network);
 
                     //Actually import the map now from the extracted folder
@@ -245,7 +261,6 @@ namespace osu.Mods.Online.Base
             {
                 //Cleanup our mess for mobile device's sake!
                 if (temp.ExistsDirectory($"{set.MapName}")) temp.DeleteDirectory($"{set.MapName}");
-                temp.Delete($"{set.MapName}.zip");
             });
         }
 
