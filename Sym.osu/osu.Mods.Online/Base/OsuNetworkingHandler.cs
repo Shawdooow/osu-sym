@@ -20,6 +20,7 @@ using Sym.Networking.NetworkingClients;
 using Sym.Networking.NetworkingHandlers;
 using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
+using Sym.Networking.Packets.FileTransfer;
 
 #endregion
 
@@ -69,19 +70,6 @@ namespace osu.Mods.Online.Base
                 connect();
                 Logger.Log($"Joining server (without logging in) as ({OsuUser.Username} + {OsuUser.ID})", LoggingTarget.Network, LogLevel.Error);
             }
-
-            //We got the whole map yet?
-            if (receivingMap != null && fileSize == receivingMap.Size)
-            {
-                //lets do this!
-                import(receivingMap);
-
-                receivingMap = null;
-                fileSize = 0;
-
-                //We can start downloading the next one now
-                SendToServer(new SendMapPacket());
-            }
         }
 
         [BackgroundDependencyLoader]
@@ -111,19 +99,29 @@ namespace osu.Mods.Online.Base
                 default:
                     base.PacketReceived(info);
                     break;
-                case SendingMapPacket sendingMapPacket:
-                    if (receivingMap != null)
+                case StartFileTransferPacket startFileTransfer:
+                    receivingFile = startFileTransfer;
+                    progress.Text = $"Receiving {startFileTransfer.Name}...";
+                    file = new FileStream(temp.GetFullPath($"{startFileTransfer.Name}.zip"), FileMode.Create, FileAccess.Write);
+                    break;
+                case FileTransferPacket fileTransfer:
+                    fileSize += fileTransfer.Data.Length;
+                    file.Write(fileTransfer.Data, 0, fileTransfer.Data.Length);
+
+                    progress.Progress = fileSize / (float)receivingFile.Size;
+                    Logger.Log($"Data fetched for importing from stable ({fileSize}/{receivingFile.Size})", LoggingTarget.Network);
+
+                    if (fileSize >= receivingFile.Size)
                     {
-                        if (receivingMap.MapName == sendingMapPacket.MapName) break;
+                        //lets do this!
+                        import(receivingFile);
 
-                        byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 8];
-                        //while (TcpNetworkingClient.Available > 0)
-                            //TcpNetworkStream.Read(data, 0, data.Length);
+                        receivingFile = null;
+                        fileSize = 0;
+
+                        //We can start downloading the next one now
+                        SendToServer(new SendMapPacket());
                     }
-
-                    receivingMap = sendingMapPacket;
-                    progress.Text = $"Receiving {sendingMapPacket.MapName}...";
-                    file = new FileStream(temp.GetFullPath($"{sendingMapPacket.MapName}.zip"), FileMode.Create, FileAccess.Write);
                     break;
             }
         }
@@ -174,7 +172,7 @@ namespace osu.Mods.Online.Base
 
         #region Import
 
-        private SendingMapPacket receivingMap;
+        private StartFileTransferPacket receivingFile;
 
         private int fileSize;
         private FileStream file;
@@ -197,29 +195,29 @@ namespace osu.Mods.Online.Base
             SendToServer(new ImportPacket());
         }
 
-        private void import(SendingMapPacket set)
+        private void import(StartFileTransferPacket set)
         {
             Task.Factory.StartNew(() =>
             {
                 try
                 {
-                    progress.Text = $"Importing {set.MapName}";
+                    progress.Text = $"Importing {set.Name}";
                     progress.Progress = 1;
 
-                    Logger.Log($"Beginning Import of ({set.MapName})...", LoggingTarget.Network);
+                    Logger.Log($"Beginning Import of ({set.Name})...", LoggingTarget.Network);
 
                     file.Close();
                     file.Dispose();
 
                     //Extract it to be imported via the vanilla importer
-                    ZipFile.ExtractToDirectory(temp.GetFullPath($"{set.MapName}.zip"), temp.GetFullPath($"{set.MapName}"), Encoding.UTF8);
-                    temp.Delete($"{set.MapName}.zip");
+                    ZipFile.ExtractToDirectory(temp.GetFullPath($"{set.Name}.zip"), temp.GetFullPath($"{set.Name}"), Encoding.UTF8);
+                    temp.Delete($"{set.Name}.zip");
 
-                    Logger.Log($"Zip extraction while receiving ({set.MapName}) sucessful!", LoggingTarget.Network);
+                    Logger.Log($"Zip extraction while receiving ({set.Name}) sucessful!", LoggingTarget.Network);
 
                     //Actually import the map now from the extracted folder
-                    manager.Import(temp.GetFullPath($"{set.MapName}"));
-                    progress.CompletionText = $"{set.MapName} Imported!";
+                    manager.Import(temp.GetFullPath($"{set.Name}"));
+                    progress.CompletionText = $"{set.Name} Imported!";
                 }
                 catch (Exception e)
                 {
@@ -229,7 +227,7 @@ namespace osu.Mods.Online.Base
             }, TaskCreationOptions.LongRunning).ContinueWith(result =>
             {
                 //Cleanup our mess for mobile device's sake!
-                if (temp.ExistsDirectory($"{set.MapName}")) temp.DeleteDirectory($"{set.MapName}");
+                if (temp.ExistsDirectory($"{set.Name}")) temp.DeleteDirectory($"{set.Name}");
             });
         }
 

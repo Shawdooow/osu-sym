@@ -2,7 +2,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
@@ -18,6 +22,7 @@ using osu.Mods.Online.Score.Packets;
 using Sym.Networking.NetworkingHandlers;
 using Sym.Networking.NetworkingHandlers.Server;
 using Sym.Networking.Packets;
+using Sym.Networking.Packets.FileTransfer;
 
 #endregion
 
@@ -56,8 +61,8 @@ namespace osu.Mods.Online.Base
             Storage = storage;
             OsuGame = osu;
 
-            //Stable = OsuGame.GetStorageForStableInstall();
-            //Songs = Stable.GetStorageForDirectory($"Songs");
+            Stable = OsuGame.GetStorageForStableInstall();
+            Songs = Stable.GetStorageForDirectory($"Songs");
         }
 
         protected override void PacketReceived(PacketInfo<OsuPeer> info)
@@ -83,10 +88,7 @@ namespace osu.Mods.Online.Base
 
                 #region Import
 
-                /*
                 case ImportPacket import:
-                    Client c = GetLastClient();
-
                     if (Maps == null)
                     {
                         List<string> paths = new List<string>();
@@ -100,18 +102,16 @@ namespace osu.Mods.Online.Base
                         Maps = paths.ToArray();
                     }
 
-                    QueImport(c);
+                    QueImport(info.Client);
                     break;
                 case SendMapPacket send:
                     if (sending) break;
-                    c = GetLastClient();
-                    if (ImportingClients.ContainsKey(c))
+                    if (ImportingClients.ContainsKey(info.Client))
                     {
-                        ImportingClients[c]++;
-                        SendClientImportMap(Maps[ImportingClients[c]], c);
+                        ImportingClients[info.Client]++;
+                        SendClientImportMap(Maps[ImportingClients[info.Client]], info.Client);
                     }
                     break;
-                    */
 
                 #endregion
 
@@ -376,8 +376,6 @@ namespace osu.Mods.Online.Base
             return null;
         }
 
-        /*
-
         protected Storage Stable { get; private set; }
 
         protected Storage Songs { get; private set; }
@@ -386,30 +384,30 @@ namespace osu.Mods.Online.Base
 
         protected readonly Dictionary<Client, int> ImportingClients = new Dictionary<Client, int>();
 
-        protected virtual void QueImport(Client client)
+        protected virtual void QueImport(OsuPeer peer)
         {
-            if (ImportingClients.ContainsKey(client))
+            if (ImportingClients.ContainsKey(peer))
             {
-                ImportingClients.Remove(client);
-                client.OnDisconnected -= () => remove(client);
+                ImportingClients.Remove(peer);
+                peer.OnDisconnected -= () => remove(peer);
             }
             else
             {
-                ImportingClients.Add(client, 0);
-                client.OnDisconnected += () => remove(client);
+                ImportingClients.Add(peer, 0);
+                peer.OnDisconnected += () => remove(peer);
 
-                SendClientImportMap(Maps[0], client);
+                SendClientImportMap(Maps[0], peer);
             }
 
             void remove(Client c)
             {
-                ImportingClients.Remove(client);
+                ImportingClients.Remove(peer);
             }
         }
 
         private bool sending;
 
-        protected virtual void SendClientImportMap(string name, Client client)
+        protected virtual void SendClientImportMap(string name, OsuPeer peer)
         {
             string full = Songs.GetFullPath(name);
 
@@ -429,21 +427,20 @@ namespace osu.Mods.Online.Base
                     //Zip up the mapset for shipping!
                     ZipFile.CreateFromDirectory(full, $"{Storage.GetFullPath("online\\temp\\server")}\\{name}.zip", CompressionLevel.Optimal, false, Encoding.UTF8);
 
-                    long fileSize;
                     using (FileStream fs = new FileStream($"{Storage.GetFullPath("online\\temp\\server")}\\{name}.zip", FileMode.Open, FileAccess.Read))
                     {
-                        fileSize = fs.Length;
+                        long fileSize = fs.Length;
                         long sum = 0;
-                        byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 16];
+                        byte[] data = new byte[Sym.Networking.NetworkingClients.TcpNetworkingClient.PACKET_SIZE - Sym.Networking.NetworkingClients.TcpNetworkingClient.PACKET_SIZE / 8];
 
                         //Tell them its on its way
-                        UdpNetworkingClient.SendPacket(new SendingMapPacket(name, fileSize), client.EndPoint);
+                        SendToPeer(new StartFileTransferPacket(name, fileSize), peer);
 
                         //Lets send the file piece by piece so we don't destroy mobile devices
                         while (sum < fileSize)
                         {
                             int count = fs.Read(data, 0, data.Length);
-                            TcpNetworkStream.Write(data, 0, count);
+                            SendToPeer(new FileTransferPacket(name, data), peer);
                             sum += count;
                             Logger.Log($"Progress = {sum}/{fileSize}", LoggingTarget.Network);
                         }
@@ -461,13 +458,11 @@ namespace osu.Mods.Online.Base
                     sending = false;
                     Logger.Error(e, "Failed to send map!", LoggingTarget.Network);
 
-                    ImportingClients[client]++;
-                    SendClientImportMap(Maps[ImportingClients[client]], client);
+                    ImportingClients[peer]++;
+                    SendClientImportMap(Maps[ImportingClients[peer]], peer);
                 }
             }, TaskCreationOptions.LongRunning);
         }
-
-        */
 
         protected class OsuMatch
         {
