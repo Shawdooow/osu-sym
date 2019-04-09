@@ -3,6 +3,7 @@
 using osu.Core.Screens.Evast;
 using osu.Framework.Screens;
 using osu.Mods.Online.Base;
+using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
 
 #endregion
@@ -22,7 +23,7 @@ namespace osu.Mods.Online.Multi
 
         protected virtual void SendPacket(Packet packet) => OsuNetworkingHandler.SendToServer(packet);
 
-        protected virtual void OnPacketRecieve(PacketInfo info)
+        protected virtual void OnPacketRecieve(PacketInfo<Host> info)
         {
 
         }

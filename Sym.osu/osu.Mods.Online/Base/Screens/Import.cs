@@ -44,8 +44,8 @@ namespace osu.Mods.Online.Base.Screens
                     Origin = Anchor.BottomRight,
                     RelativeSizeAxes = Axes.X,
                     Width = 0.3f,
-                    Text = "Toggle TCP",
-                    Action = () => { OnlineModset.OsuNetworkingHandler.Tcp = !OnlineModset.OsuNetworkingHandler.Tcp; }
+                    Text = "Toggle UDP",
+                    Action = () => { OnlineModset.OsuNetworkingHandler.Udp = !OnlineModset.OsuNetworkingHandler.Udp; }
                 },
             };
         }

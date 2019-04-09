@@ -13,6 +13,6 @@ namespace osu.Mods.Online.Multi.Lobby.Packets
     {
         public override uint PacketSize => 1024;
 
-        public OsuUserInfo User;
+        public OsuUser User;
     }
 }

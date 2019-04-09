@@ -16,11 +16,11 @@ namespace osu.Mods.Online.Multi
 
         public uint MatchID;
 
-        public List<OsuUserInfo> Users = new List<OsuUserInfo>();
+        public List<OsuUser> Users = new List<OsuUser>();
 
         public List<Setting> Settings = new List<Setting>();
 
-        public Host Host;
+        public OsuUser Host;
 
         public Map Map;
     }

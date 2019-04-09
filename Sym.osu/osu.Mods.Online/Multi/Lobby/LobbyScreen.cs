@@ -15,6 +15,7 @@ using osu.Mods.Online.Multi.Lobby.Pieces;
 using osu.Mods.Online.Multi.Match;
 using osuTK;
 using osuTK.Graphics;
+using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
 
 #endregion
@@ -90,7 +91,7 @@ namespace osu.Mods.Online.Multi.Lobby
             SendPacket(new GetMatchListPacket());
         }
 
-        protected override void OnPacketRecieve(PacketInfo info)
+        protected override void OnPacketRecieve(PacketInfo<Host> info)
         {
             switch (info.Packet)
             {
@@ -104,7 +105,7 @@ namespace osu.Mods.Online.Multi.Lobby
                     SendPacket(new JoinMatchPacket
                     {
                         Match = matchCreated.MatchInfo,
-                        User = OsuNetworkingHandler.OsuUserInfo
+                        User = OsuNetworkingHandler.OsuUser
                     });
                     break;
                 case JoinedMatchPacket joinedMatch:
@@ -155,12 +156,7 @@ namespace osu.Mods.Online.Multi.Lobby
             {
                 MatchInfo = new MatchInfo
                 {
-                    Host = new Host
-                    {
-                        Username = OsuNetworkingHandler.OsuUserInfo.Username,
-                        UserID = OsuNetworkingHandler.OsuUserInfo.ID,
-                        UserCountry = OsuNetworkingHandler.OsuUserInfo.Country,
-                    },
+                    Host = OsuNetworkingHandler.OsuUser,
                     Map = map,
                 }
             });

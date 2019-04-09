@@ -114,7 +114,7 @@ namespace osu.Mods.Online.Multi.Player
                     LiveSpectator = value.Value;
         }
 
-        private void handlePackets(PacketInfo info)
+        private void handlePackets(PacketInfo<Sym.Networking.NetworkingHandlers.Peer.Host> info)
         {
             switch (info.Packet)
             {
@@ -269,8 +269,8 @@ namespace osu.Mods.Online.Multi.Player
             };
 
             if (LiveSpectator)
-                foreach (OsuUserInfo user in Match.Users)
-                    if (user.ID != OsuNetworkingHandler.OsuUserInfo.ID)
+                foreach (OsuUser user in Match.Users)
+                    if (user.ID != OsuNetworkingHandler.OsuUser.ID)
                     {
                         try
                         {
@@ -482,7 +482,7 @@ namespace osu.Mods.Online.Multi.Player
                     OsuNetworkingHandler.SendToServer(new Vector2Packet
                     {
                         Name = "cursor",
-                        ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                        ID = OsuNetworkingHandler.OsuUser.ID,
                         Vector2 = RulesetContainer.Cursor.ActiveCursor.Position - osu.DrawSize / 2,
                     });
             }

@@ -66,7 +66,7 @@ namespace osu.Mods.Online.Score.Rulesets
             OnCompletion += score =>
             {
                 //Whoever wrote this is a fucking moron!
-                if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.ConnectionStatues >= ConnectionStatues.Connected)
+                if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.Host.Statues >= ConnectionStatues.Connected)
                     OnlineModset.OsuNetworkingHandler.SendToServer(GetScoreSubmissionPacket(score));
             };
         }

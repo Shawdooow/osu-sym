@@ -19,6 +19,7 @@ using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings.Options;
 using osuTK;
 using osuTK.Graphics;
+using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
 
 #endregion
@@ -176,7 +177,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
             Beatmaps = beatmaps;
         }
 
-        protected override void OnPacketRecieve(PacketInfo info)
+        protected override void OnPacketRecieve(PacketInfo<Host> info)
         {
             //Start this on a new thread so the game doesn't lock up while looking for the map
             if (info.Packet is SetMapPacket packet)

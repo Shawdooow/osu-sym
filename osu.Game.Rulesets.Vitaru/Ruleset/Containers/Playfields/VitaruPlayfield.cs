@@ -33,6 +33,7 @@ using osu.Mods.Online.Multi.Settings;
 using osu.Mods.Rulesets.Core.Rulesets;
 using osuTK;
 using osuTK.Graphics;
+using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
 
 #endregion
@@ -149,7 +150,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                     osuNetworkingHandler?.SendToServer(new HaxPacket
                     {
                         Hax = BulletPiece.ExclusiveTestingHax,
-                        ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                        ID = OsuNetworkingHandler.OsuUser.ID,
                     });
                 }
             });
@@ -179,12 +180,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
                 //Multiplayer stuff
                 if (match != null && osuNetworkingHandler != null)
                 {
-                    Player.SetNetworking(osuNetworkingHandler, osuNetworkingHandler.OsuUserInfo);
+                    Player.SetNetworking(osuNetworkingHandler, osuNetworkingHandler.OsuUser);
 
                     osuNetworkingHandler.OnPacketReceive += OnPacketReceive;
 
-                    foreach (OsuUserInfo user in match.Users)
-                        if (user.ID != osuNetworkingHandler.OsuUserInfo.ID)
+                    foreach (OsuUser user in match.Users)
+                        if (user.ID != osuNetworkingHandler.OsuUser.ID)
                             foreach (Setting set in user.UserSettings)
                                 switch (set.Name)
                                 {
@@ -220,7 +221,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             }
         }
 
-        protected virtual void OnPacketReceive(PacketInfo info)
+        protected virtual void OnPacketReceive(PacketInfo<Host> info)
         {
             switch (info.Packet)
             {

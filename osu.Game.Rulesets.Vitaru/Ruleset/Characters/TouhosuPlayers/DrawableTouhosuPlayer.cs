@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Mods.Online.Base.Packets;
 using osuTK;
+using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
 
 #endregion
@@ -69,12 +70,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers
             OsuNetworkingHandler.SendToServer(new ValuePacket<double>
             {
                 Value = Energy,
-                ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                ID = OsuNetworkingHandler.OsuUser.ID,
                 Name = "en"
             });
         }
 
-        protected override void OnPacketReceive(PacketInfo info)
+        protected override void OnPacketReceive(PacketInfo<Host> info)
         {
             base.OnPacketReceive(info);
 

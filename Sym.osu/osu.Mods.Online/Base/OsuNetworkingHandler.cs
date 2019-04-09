@@ -1,10 +1,8 @@
 ﻿#region usings
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using osu.Core;
@@ -31,7 +29,7 @@ namespace osu.Mods.Online.Base
     {
         protected override string Gamekey => "osu";
 
-        public OsuUserInfo OsuUserInfo = new OsuUserInfo();
+        public OsuUser OsuUser = new OsuUser();
 
         private APIState apiState = APIState.Offline;
 
@@ -57,32 +55,20 @@ namespace osu.Mods.Online.Base
 
         private void connect()
         {
-            Logger.Log($"Attempting to connect to {UdpNetworkingClient.Address}", LoggingTarget.Network);
+            Logger.Log($"Attempting to connect to {TcpNetworkingClient.Address}", LoggingTarget.Network);
             SendToServer(new OsuConnectPacket());
-            ConnectionStatues = ConnectionStatues.Connecting;
+            Host.Statues = ConnectionStatues.Connecting;
         }
-
-        private readonly List<Packet> que = new List<Packet>();
 
         protected override void Update()
         {
             base.Update();
 
-            if (que.Count > 0)
-            {
-                SendToServer(que.First());
-                que.Remove(que.First());
-            }
-
-            if (forceTime <= Time.Current && ConnectionStatues <= ConnectionStatues.Disconnected)
+            if (forceTime <= Time.Current && Host.Statues <= ConnectionStatues.Disconnected)
             {
                 connect();
-                Logger.Log($"Joining server (without logging in) as ({OsuUserInfo.Username} + {OsuUserInfo.ID})", LoggingTarget.Network, LogLevel.Error);
+                Logger.Log($"Joining server (without logging in) as ({OsuUser.Username} + {OsuUser.ID})", LoggingTarget.Network, LogLevel.Error);
             }
-
-            //this could be for looped but lets not threadlock for now instead
-            if (Tcp && TcpNetworkingClient.Available > 0 && receivingMap != null)
-                fetch();
 
             //We got the whole map yet?
             if (receivingMap != null && fileSize == receivingMap.Size)
@@ -95,8 +81,6 @@ namespace osu.Mods.Online.Base
 
                 //We can start downloading the next one now
                 SendToServer(new SendMapPacket());
-                que.Add(new SendMapPacket());
-                que.Add(new SendMapPacket());
             }
         }
 
@@ -105,9 +89,9 @@ namespace osu.Mods.Online.Base
         {
             api.Register(this);
 
-            OsuUserInfo.Colour = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.PlayerColor);
-            OsuUserInfo.Username = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.SavedName);
-            OsuUserInfo.ID = SymcolOsuModSet.SymConfigManager.Get<long>(SymSetting.SavedUserID);
+            OsuUser.Colour = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.PlayerColor);
+            OsuUser.Username = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.SavedName);
+            OsuUser.ID = SymcolOsuModSet.SymConfigManager.Get<long>(SymSetting.SavedUserID);
 
             this.manager = manager;
             this.storage = storage;
@@ -120,12 +104,12 @@ namespace osu.Mods.Online.Base
             temp.Delete($"mem.zip");
         }
 
-        protected override void HandlePackets(PacketInfo info)
+        protected override void PacketReceived(PacketInfo<Host> info)
         {
             switch (info.Packet)
             {
                 default:
-                    base.HandlePackets(info);
+                    base.PacketReceived(info);
                     break;
                 case SendingMapPacket sendingMapPacket:
                     if (receivingMap != null)
@@ -133,8 +117,8 @@ namespace osu.Mods.Online.Base
                         if (receivingMap.MapName == sendingMapPacket.MapName) break;
 
                         byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 8];
-                        while (TcpNetworkingClient.Available > 0)
-                            TcpNetworkStream.Read(data, 0, data.Length);
+                        //while (TcpNetworkingClient.Available > 0)
+                            //TcpNetworkStream.Read(data, 0, data.Length);
                     }
 
                     receivingMap = sendingMapPacket;
@@ -149,10 +133,10 @@ namespace osu.Mods.Online.Base
             switch (packet)
             {
                 case OsuConnectPacket connectPacket:
-                    connectPacket.User = OsuUserInfo;
+                    connectPacket.User = OsuUser;
                     break;
                 case OnlinePacket onlinePacket:
-                    onlinePacket.User = OsuUserInfo;
+                    onlinePacket.User = OsuUser;
                     break;
             }
             return base.SignPacket(packet);
@@ -161,24 +145,24 @@ namespace osu.Mods.Online.Base
         public void APIStateChanged(APIAccess api, APIState state)
         {
             apiState = state;
-            OsuUserInfo.Colour = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.PlayerColor);
+            OsuUser.Colour = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.PlayerColor);
 
             switch (state)
             {
                 default:
-                    OsuUserInfo.Username = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.SavedName);
-                    OsuUserInfo.ID = SymcolOsuModSet.SymConfigManager.Get<long>(SymSetting.SavedUserID);
+                    OsuUser.Username = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.SavedName);
+                    OsuUser.ID = SymcolOsuModSet.SymConfigManager.Get<long>(SymSetting.SavedUserID);
                     break;
                 case APIState.Online:
                     SymcolOsuModSet.SymConfigManager.Set(SymSetting.SavedName, api.LocalUser.Value.Username);
                     SymcolOsuModSet.SymConfigManager.Set(SymSetting.SavedUserID, api.LocalUser.Value.Id);
 
-                    OsuUserInfo.Username = api.LocalUser.Value.Username;
-                    OsuUserInfo.ID = api.LocalUser.Value.Id;
-                    OsuUserInfo.Country = api.LocalUser.Value.Country.FullName;
-                    OsuUserInfo.CountryFlagName = api.LocalUser.Value.Country.FlagName;
-                    OsuUserInfo.Pic = api.LocalUser.Value.AvatarUrl;
-                    OsuUserInfo.Background = api.LocalUser.Value.CoverUrl;
+                    OsuUser.Username = api.LocalUser.Value.Username;
+                    OsuUser.ID = api.LocalUser.Value.Id;
+                    OsuUser.Country = api.LocalUser.Value.Country.FullName;
+                    OsuUser.CountryFlagName = api.LocalUser.Value.Country.FlagName;
+                    OsuUser.Pic = api.LocalUser.Value.AvatarUrl;
+                    OsuUser.Background = api.LocalUser.Value.CoverUrl;
 
                     if (connectReady)
                         connect();
@@ -211,21 +195,6 @@ namespace osu.Mods.Online.Base
                 progress.State = ProgressNotificationState.Cancelled;
 
             SendToServer(new ImportPacket());
-        }
-
-        /// <summary>
-        /// Fetch TCP data if we are importing
-        /// </summary>
-        private void fetch()
-        {
-            byte[] data = new byte[TcpNetworkingClient.BUFFER_SIZE / 8];
-            int count = TcpNetworkStream.Read(data, 0, data.Length);
-
-            fileSize += count;
-            file.Write(data, 0, count);
-
-            progress.Progress = fileSize / (float)receivingMap.Size;
-            Logger.Log($"Data fetched for importing from stable ({fileSize}/{receivingMap.Size})", LoggingTarget.Network);
         }
 
         private void import(SendingMapPacket set)

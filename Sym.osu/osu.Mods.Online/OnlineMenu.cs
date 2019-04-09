@@ -32,7 +32,7 @@ namespace osu.Mods.Online
                     Position = new Vector2(-80, -20),
                     Action = () =>
                     {
-                        if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.ConnectionStatues >= ConnectionStatues.Connected)
+                        if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.Host.Statues >= ConnectionStatues.Connected)
                             Push(new LobbyScreen(OnlineModset.OsuNetworkingHandler));
                         else
                             Logger.Log("Connect to a server first!", LoggingTarget.Network, LogLevel.Error);
@@ -60,7 +60,7 @@ namespace osu.Mods.Online
                     Position = new Vector2(80, -180),
                     Action = () =>
                     {
-                        if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.ConnectionStatues >= ConnectionStatues.Connected)
+                        if (OnlineModset.OsuNetworkingHandler != null && OnlineModset.OsuNetworkingHandler.Host.Statues >= ConnectionStatues.Connected)
                             Push(new Import());
                         else
                             Logger.Log("Connect to a server first!", LoggingTarget.Network, LogLevel.Error);

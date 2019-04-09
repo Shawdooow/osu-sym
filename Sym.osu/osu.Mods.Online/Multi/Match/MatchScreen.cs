@@ -12,6 +12,7 @@ using osu.Mods.Online.Multi.Lobby.Packets;
 using osu.Mods.Online.Multi.Match.Packets;
 using osu.Mods.Online.Multi.Match.Pieces;
 using osu.Mods.Online.Multi.Player;
+using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
 
 #endregion
@@ -107,7 +108,7 @@ namespace osu.Mods.Online.Multi.Match
                 new Chat(OsuNetworkingHandler)
             };
 
-            foreach (OsuUserInfo user in joinedPacket.MatchInfo.Users)
+            foreach (OsuUser user in joinedPacket.MatchInfo.Users)
                 playerList.Add(user);
 
             matchTools.OnMapSearching += () =>
@@ -127,7 +128,7 @@ namespace osu.Mods.Online.Multi.Match
             SendPacket(new GetMapPacket());
         }
 
-        protected override void OnPacketRecieve(PacketInfo info)
+        protected override void OnPacketRecieve(PacketInfo<Host> info)
         {
             if (info.Packet is PlayerLoadingPacket loading)
                 Load(loading.Match);
@@ -214,7 +215,7 @@ namespace osu.Mods.Online.Multi.Match
 
         private void setStatues(PlayerStatues statues)
         {
-            OsuNetworkingHandler.OsuUserInfo.Statues = statues;
+            OsuNetworkingHandler.OsuUser.Statues = statues;
             OsuNetworkingHandler.SendToServer(new StatuesChangePacket());
         }
 

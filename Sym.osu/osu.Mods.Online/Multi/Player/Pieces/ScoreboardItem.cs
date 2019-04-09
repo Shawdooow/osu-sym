@@ -56,13 +56,13 @@ namespace osu.Mods.Online.Multi.Player.Pieces
 
         private const int height = 60;
 
-        public readonly OsuUserInfo User;
+        public readonly OsuUser User;
 
         private readonly SpriteText scoreText;
 
         private static readonly List<ScoreboardItem> item_list = new List<ScoreboardItem>();
 
-        public ScoreboardItem(OsuUserInfo user, int place)
+        public ScoreboardItem(OsuUser user, int place)
         {
             User = user;
             this.place = place;

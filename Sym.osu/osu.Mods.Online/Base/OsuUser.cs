@@ -10,10 +10,11 @@ using osu.Mods.Online.Multi.Settings;
 namespace osu.Mods.Online.Base
 {
     /// <summary>
-    /// Includes osu User information
+    /// osu User information
+    /// DOES NOT INCLUDE PASSWORD!!!
     /// </summary>
     [Serializable]
-    public class OsuUserInfo
+    public class OsuUser
     {
         public string Username = "";
 

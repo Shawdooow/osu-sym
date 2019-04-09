@@ -14,6 +14,6 @@ namespace osu.Mods.Online.Multi.Match.Packets
     {
         public override uint PacketSize => Convert.ToUInt32(Players.Count > 0 ? Players.Count * 1024 + 1024 : 1024);
 
-        public List<OsuUserInfo> Players = new List<OsuUserInfo>();
+        public List<OsuUser> Players = new List<OsuUser>();
     }
 }

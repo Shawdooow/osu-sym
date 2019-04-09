@@ -27,6 +27,7 @@ using osu.Mods.Online.Base.Packets;
 using osuTK;
 using osuTK.Graphics;
 using Sym.Base.Extentions;
+using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
 
 #endregion
@@ -71,7 +72,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
         /// </summary>
         public ControlType ControlType { get; set; }
 
-        protected OsuUserInfo User { get; private set; }
+        protected OsuUser User { get; private set; }
 
         protected OsuNetworkingHandler OsuNetworkingHandler { get; private set; }
 
@@ -139,7 +140,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             });
         }
 
-        protected internal virtual void SetNetworking(OsuNetworkingHandler osuNetworkingHandler, OsuUserInfo user)
+        protected internal virtual void SetNetworking(OsuNetworkingHandler osuNetworkingHandler, OsuUser user)
         {
             OsuNetworkingHandler = osuNetworkingHandler;
             User = user;
@@ -147,7 +148,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             OsuNetworkingHandler.OnPacketReceive += OnPacketReceive;
         }
 
-        protected virtual void OnPacketReceive(PacketInfo info)
+        protected virtual void OnPacketReceive(PacketInfo<Host> info)
         {
             switch (info.Packet)
             {
@@ -220,13 +221,13 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             OsuNetworkingHandler.SendToServer(new Vector2Packet
             {
                 Vector2 = Position,
-                ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                ID = OsuNetworkingHandler.OsuUser.ID,
                 Name = "ppos"
             });
             OsuNetworkingHandler.SendToServer(new Vector2Packet
             {
                 Vector2 = Cursor.Position,
-                ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                ID = OsuNetworkingHandler.OsuUser.ID,
                 Name = "cpos"
             });
         }
@@ -236,7 +237,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             OsuNetworkingHandler.SendToServer(new ValuePacket<double>
             {
                 Value = Health,
-                ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                ID = OsuNetworkingHandler.OsuUser.ID,
                 Name = "hp"
             });
         }
@@ -254,7 +255,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             {
                 Value = action,
                 Array = array,
-                ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                ID = OsuNetworkingHandler.OsuUser.ID,
                 Name = "act",
             });
         }

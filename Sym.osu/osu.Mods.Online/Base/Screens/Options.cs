@@ -185,7 +185,7 @@ namespace osu.Mods.Online.Base.Screens
                 OnlineModset.OsuNetworkingHandler.Add(new OsuServerNetworkingHandler
                 {
                     Address = ipBindable.Value + ":" + portBindable.Value,
-                    Tcp = true,
+                    //Udp = true,
                 });
 
                 game.Add(OnlineModset.OsuNetworkingHandler);

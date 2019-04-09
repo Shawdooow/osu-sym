@@ -13,6 +13,7 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Match.Packets;
 using osuTK;
 using osuTK.Graphics;
+using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
 
 #endregion
@@ -82,7 +83,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
             };
         }
 
-        protected override void OnPacketRecieve(PacketInfo info)
+        protected override void OnPacketRecieve(PacketInfo<Host> info)
         {
             if (info.Packet is ChatPacket chatPacket)
                 Add(chatPacket);

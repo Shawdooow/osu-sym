@@ -25,7 +25,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
 {
     public class MatchPlayer : ClickableContainer, IHasContextMenu
     {
-        public readonly OsuUserInfo OsuUserInfo;
+        public readonly OsuUser OsuUserInfo;
 
         private readonly Box dim;
 
@@ -77,7 +77,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
 
         private PlayerStatues playerStatues;
 
-        public MatchPlayer(OsuUserInfo userInfo)
+        public MatchPlayer(OsuUser userInfo)
         {
             OsuUserInfo = userInfo;
 

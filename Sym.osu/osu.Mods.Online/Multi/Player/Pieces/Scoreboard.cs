@@ -9,6 +9,7 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Player.Packets;
 using osuTK;
 using osuTK.Input;
+using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
 
 #endregion
@@ -23,7 +24,7 @@ namespace osu.Mods.Online.Multi.Player.Pieces
 
         private double updateScoreTime = double.MinValue;
 
-        public Scoreboard(OsuNetworkingHandler osuNetworkingHandler, List<OsuUserInfo> users, ScoreProcessor scoreProcessor) : base (osuNetworkingHandler)
+        public Scoreboard(OsuNetworkingHandler osuNetworkingHandler, List<OsuUser> users, ScoreProcessor scoreProcessor) : base (osuNetworkingHandler)
         {
             this.scoreProcessor = scoreProcessor;
 
@@ -42,18 +43,18 @@ namespace osu.Mods.Online.Multi.Player.Pieces
             };
 
             int i = 1;
-            foreach (OsuUserInfo user in users)
+            foreach (OsuUser user in users)
             {
                 ScoreboardItems.Add(new ScoreboardItem(user, i));
                 i++;
             }
         }
 
-        protected override void OnPacketRecieve(PacketInfo info)
+        protected override void OnPacketRecieve(PacketInfo<Host> info)
         {
             if (info.Packet is ScorePacket scorePacket)
                 foreach (ScoreboardItem item in ScoreboardItems)
-                    if (scorePacket.ID == item.User.ID && scorePacket.ID != OsuNetworkingHandler.OsuUserInfo.ID)
+                    if (scorePacket.ID == item.User.ID && scorePacket.ID != OsuNetworkingHandler.OsuUser.ID)
                         item.Score = scorePacket.Score;
         }
 
@@ -66,12 +67,12 @@ namespace osu.Mods.Online.Multi.Player.Pieces
                 updateScoreTime = Time.Current + 250;
 
                 foreach (ScoreboardItem item in ScoreboardItems)
-                    if (OsuNetworkingHandler.OsuUserInfo.ID == item.User.ID)
+                    if (OsuNetworkingHandler.OsuUser.ID == item.User.ID)
                         item.Score = (int)scoreProcessor.TotalScore.Value;
 
                 SendPacket(new ScorePacket
                 {
-                    ID = OsuNetworkingHandler.OsuUserInfo.ID,
+                    ID = OsuNetworkingHandler.OsuUser.ID,
                     Score = (int)scoreProcessor.TotalScore.Value
                 });
             }

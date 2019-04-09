@@ -62,16 +62,18 @@ namespace osu.Mods.Online
                     OsuNetworkingHandler.Connect();
                     break;
                 case AutoJoin.Host:
+                    OsuServerNetworkingHandler server = new OsuServerNetworkingHandler
+                    {
+                        Address = ipBindable.Value + ":" + portBindable.Value,
+                        //Udp = true,
+                    };
+
                     OsuNetworkingHandler = new OsuNetworkingHandler
                     {
                         Address = ipBindable.Value + ":" + portBindable.Value,
                     };
 
-                    OsuNetworkingHandler.Add(new OsuServerNetworkingHandler
-                    {
-                        Address = ipBindable.Value + ":" + portBindable.Value,
-                        Tcp = true,
-                    });
+                    OsuNetworkingHandler.Add(server);
 
                     game.Add(OsuNetworkingHandler);
                     OsuNetworkingHandler.OnConnectedToHost += host => Logger.Log("Connected to local server", LoggingTarget.Network, LogLevel.Debug);

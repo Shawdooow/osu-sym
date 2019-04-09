@@ -2,12 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
@@ -20,7 +15,6 @@ using osu.Mods.Online.Multi.Player.Packets;
 using osu.Mods.Online.Multi.Settings.Options;
 using osu.Mods.Online.Score;
 using osu.Mods.Online.Score.Packets;
-using Sym.Networking.NetworkingClients;
 using Sym.Networking.NetworkingHandlers;
 using Sym.Networking.NetworkingHandlers.Server;
 using Sym.Networking.Packets;
@@ -29,9 +23,10 @@ using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Base
 {
-    public class OsuServerNetworkingHandler : ServerNetworkingHandler
+    public class OsuServerNetworkingHandler : ServerNetworkingHandler<OsuPeer>
     {
         protected override string Gamekey => "osu";
+
 
         protected readonly List<OsuMatch> OsuMatches = new List<OsuMatch>();
 
@@ -43,18 +38,14 @@ namespace osu.Mods.Online.Base
 
         protected uint MatchID;
 
-        protected override Client CreateConnectingClient(ConnectPacket connectPacket)
+        protected override OsuPeer GetClient(IPEndPoint end)
         {
-            OsuConnectPacket osuConnectPacket = (OsuConnectPacket)connectPacket;
-
-            OsuClient c = new OsuClient
-            {
-                EndPoint = new IPEndPoint(IPAddress.Parse(UdpNetworkingClient.EndPoint.Address.ToString()), UdpNetworkingClient.EndPoint.Port),
+            OsuPeer c = new OsuPeer(end)
+            { 
                 LastConnectionTime = Time.Current,
                 Statues = ConnectionStatues.Connecting,
-                User = osuConnectPacket.User,
             };
-            c.OnDisconnected += () => Clients.Remove(c);
+            c.OnDisconnected += () => Peers.Remove(c);
 
             return c;
         }
@@ -66,23 +57,23 @@ namespace osu.Mods.Online.Base
             Storage = storage;
             OsuGame = osu;
 
-            Stable = OsuGame.GetStorageForStableInstall();
-            Songs = Stable.GetStorageForDirectory($"Songs");
+            //Stable = OsuGame.GetStorageForStableInstall();
+            //Songs = Stable.GetStorageForDirectory($"Songs");
         }
 
-        protected override void HandlePackets(PacketInfo info)
+        protected override void PacketReceived(PacketInfo<OsuPeer> info)
         {
-            Logger.Log($"Recieved a Packet from {UdpNetworkingClient.EndPoint}", LoggingTarget.Network, LogLevel.Debug);
-
-            if (!HandlePacket(info.Packet))
-                return;
-
             OsuMatch match;
 
             switch (info.Packet)
             {
                 default:
-                    base.HandlePackets(info);
+                    base.PacketReceived(info);
+                    break;
+
+                case OsuConnectPacket connectPacket:
+                    base.PacketReceived(info);
+                    info.Client.User = connectPacket.User;
                     break;
 
                 #region Score
@@ -93,6 +84,7 @@ namespace osu.Mods.Online.Base
 
                 #region Import
 
+                /*
                 case ImportPacket import:
                     Client c = GetLastClient();
 
@@ -120,6 +112,8 @@ namespace osu.Mods.Online.Base
                         SendClientImportMap(Maps[ImportingClients[c]], c);
                     }
                     break;
+                    */
+
                 #endregion
 
                 #region Multi
@@ -132,7 +126,7 @@ namespace osu.Mods.Online.Base
                         {
                             MatchInfoList = GetMatches()
                         };
-                        ReturnToClient(matchList);
+                        SendToPeer(matchList, info.Client);
                         break;
                     case CreateMatchPacket createMatch:
 
@@ -146,12 +140,12 @@ namespace osu.Mods.Online.Base
                             MatchInfo = createMatch.MatchInfo,
                             MatchLastUpdateTime = Time.Current
                         });
-                        ReturnToClient(new MatchCreatedPacket
+                        SendToPeer(new MatchCreatedPacket
                         {
                             MatchInfo = createMatch.MatchInfo,
                             //Make them join this match since they made it!
                             Join = true,
-                        });
+                        }, info.Client);
                         break;
                     case JoinMatchPacket joinPacket:
                         foreach (OsuMatch m in OsuMatches)
@@ -160,7 +154,7 @@ namespace osu.Mods.Online.Base
                                 match = m;
 
                                 //Add them
-                                OsuClient osu = FindClient(joinPacket.User);
+                                OsuPeer osu = FindClient(joinPacket.User);
                                 osu.User = joinPacket.User;
                                 if (!match.Add(osu)) break;
 
@@ -173,7 +167,7 @@ namespace osu.Mods.Online.Base
                                 });
 
                                 //Tell them they have joined
-                                ReturnToClient(new JoinedMatchPacket { MatchInfo = match.MatchInfo });
+                                SendToPeer(new JoinedMatchPacket { MatchInfo = match.MatchInfo }, info.Client);
                                 break;
                             }
 
@@ -188,7 +182,7 @@ namespace osu.Mods.Online.Base
                         match = FindMatch(getMap.User);
 
                         //Tell them what map the Match is set to
-                        UdpNetworkingClient.SendPacket(SignPacket(new SetMapPacket(match.MatchInfo.Map)), GetLastClient().EndPoint);
+                        TcpNetworkingClient.SendPacket(SignPacket(new SetMapPacket(match.MatchInfo.Map)), TcpNetworkingClient.EndPoint);
                         break;
                     case SetMapPacket map:
                         match = FindMatch(map.User);
@@ -221,7 +215,7 @@ namespace osu.Mods.Online.Base
                         }
                         else if (setting.Settings[0].Sync == Sync.Client)
                         {
-                            OsuUserInfo user = FindClient(setting.User).User;
+                            OsuUser user = FindClient(setting.User).User;
                             for (int i = 0; i < user.UserSettings.Count; i++)
                                 if (user.UserSettings[i].Name == setting.Settings[0].Name)
                                 {
@@ -263,7 +257,7 @@ namespace osu.Mods.Online.Base
                             list = (MatchListPacket)SignPacket(list);
                             list.MatchInfoList = GetMatches();
 
-                            UdpNetworkingClient.SendPacket(list, GetLastClient().EndPoint);
+                            TcpNetworkingClient.SendPacket(list, TcpNetworkingClient.EndPoint);
                         }
 
                         break;
@@ -280,7 +274,7 @@ namespace osu.Mods.Online.Base
                     #region MultiPlayer
 
                     case PlayerLoadedPacket loaded:
-                        OsuClient p = FindClient(loaded.User);
+                        OsuPeer p = FindClient(loaded.User);
                         match = FindMatch(loaded.User);
 
                         match.Clients.Remove(p);
@@ -301,7 +295,7 @@ namespace osu.Mods.Online.Base
                         match = FindMatch(exit.User);
 
                         restart:
-                        foreach (OsuClient r in match.LoadedClients)
+                        foreach (OsuPeer r in match.LoadedClients)
                         {
                             match.LoadedClients.Remove(r);
                             match.Clients.Add(r);
@@ -317,17 +311,9 @@ namespace osu.Mods.Online.Base
             }
         }
 
-        private readonly List<ServerPacketInfo> que = new List<ServerPacketInfo>();
-
         protected override void Update()
         {
             base.Update();
-
-            if (que.Count > 0)
-            {
-                UdpNetworkingClient.SendPacket(que.First().Packet, que.First().Client.EndPoint);
-                que.Remove(que.First());
-            }
 
             restart:
             foreach (OsuMatch match in OsuMatches)
@@ -350,8 +336,8 @@ namespace osu.Mods.Online.Base
 
         protected void ShareWithMatchClients(MatchInfo match, Packet packet)
         {
-            foreach (OsuUserInfo user in match.Users)
-                UdpNetworkingClient.SendPacket(packet, FindClient(user).EndPoint);
+            foreach (OsuUser user in match.Users)
+                TcpNetworkingClient.SendPacket(packet, FindClient(user).EndPoint);
         }
 
         /// <summary>
@@ -368,10 +354,10 @@ namespace osu.Mods.Online.Base
             return matches;
         }
 
-        protected OsuMatch FindMatch(OsuUserInfo player)
+        protected OsuMatch FindMatch(OsuUser player)
         {
             foreach (OsuMatch m in OsuMatches)
-                foreach (OsuUserInfo p in m.MatchInfo.Users)
+                foreach (OsuUser p in m.MatchInfo.Users)
                     if (p.ID == player.ID)
                         return m;
             return null;
@@ -381,18 +367,17 @@ namespace osu.Mods.Online.Base
         /// Exists since OsuClient isn't serializable
         /// </summary>
         /// <returns></returns>
-        protected OsuClient FindClient(OsuUserInfo user) => FindClient(user.ID);
+        protected OsuPeer FindClient(OsuUser user) => FindClient(user.ID);
 
-        protected OsuClient FindClient(long id)
+        protected OsuPeer FindClient(long id)
         {
-            foreach (Client c in Clients)
-            {
-                OsuClient osu = (OsuClient)c;
-                if (osu.User.ID == id)
-                    return osu;
-            }
+            foreach (OsuPeer p in Peers)
+                if (p.User.ID == id)
+                    return p;
             return null;
         }
+
+        /*
 
         protected Storage Stable { get; private set; }
 
@@ -454,8 +439,6 @@ namespace osu.Mods.Online.Base
 
                         //Tell them its on its way
                         UdpNetworkingClient.SendPacket(new SendingMapPacket(name, fileSize), client.EndPoint);
-                        que.Add(new ServerPacketInfo { Client = client, Packet = new SendingMapPacket(name, fileSize) });
-                        que.Add(new ServerPacketInfo { Client = client, Packet = new SendingMapPacket(name, fileSize) });
 
                         //Lets send the file piece by piece so we don't destroy mobile devices
                         while (sum < fileSize)
@@ -485,17 +468,19 @@ namespace osu.Mods.Online.Base
             }, TaskCreationOptions.LongRunning);
         }
 
+        */
+
         protected class OsuMatch
         {
             public MatchInfo MatchInfo;
 
-            public List<OsuClient> Clients = new List<OsuClient>();
+            public List<OsuPeer> Clients = new List<OsuPeer>();
 
-            public List<OsuClient> LoadedClients = new List<OsuClient>();
+            public List<OsuPeer> LoadedClients = new List<OsuPeer>();
 
             public double MatchLastUpdateTime;
 
-            public bool Add(OsuClient client)
+            public bool Add(OsuPeer client)
             {
                 if (Clients.Contains(client) || LoadedClients.Contains(client) || MatchInfo.Users.Contains(client.User))
                 {
@@ -509,7 +494,7 @@ namespace osu.Mods.Online.Base
                 return true;
             }
 
-            public bool Remove(OsuClient client)
+            public bool Remove(OsuPeer client)
             {
                 if ((Clients.Contains(client) || LoadedClients.Contains(client)) && MatchInfo.Users.Contains(client.User))
                 {
@@ -523,7 +508,7 @@ namespace osu.Mods.Online.Base
                 return false;
             }
 
-            public bool Loaded(OsuClient client)
+            public bool Loaded(OsuPeer client)
             {
                 if(Clients.Contains(client) && !LoadedClients.Contains(client))
                 {
@@ -537,7 +522,7 @@ namespace osu.Mods.Online.Base
                 return false;
             }
 
-            public bool UnLoaded(OsuClient client)
+            public bool UnLoaded(OsuPeer client)
             {
                 if (!Clients.Contains(client) && LoadedClients.Contains(client))
                 {

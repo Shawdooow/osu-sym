@@ -12,6 +12,6 @@ namespace osu.Mods.Online.Base.Packets
     {
         public override uint PacketSize => 2048;
 
-        public OsuUserInfo User;
+        public OsuUser User;
     }
 }

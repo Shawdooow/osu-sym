@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi.Match.Packets;
 using osuTK;
+using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
 
 #endregion
@@ -95,7 +96,7 @@ namespace osu.Mods.Online.Multi.Settings.Options
             };
         }
 
-        protected override void OnPacketRecieve(PacketInfo info)
+        protected override void OnPacketRecieve(PacketInfo<Host> info)
         {
             base.OnPacketRecieve(info);
 

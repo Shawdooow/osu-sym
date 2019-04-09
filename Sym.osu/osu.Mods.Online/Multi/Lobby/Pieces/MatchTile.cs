@@ -42,7 +42,7 @@ namespace osu.Mods.Online.Multi.Lobby.Pieces
 
             Action = () => osuNetworkingHandler.SendToServer(new JoinMatchPacket
             {
-                User = osuNetworkingHandler.OsuUserInfo,
+                User = osuNetworkingHandler.OsuUser,
                 Match = match,
             });
         }
