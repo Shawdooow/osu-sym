@@ -42,11 +42,6 @@ namespace osu.Core.Settings
             {
                 Children = new Drawable[]
                 {
-                    new SettingsEnumDropdown<AutoJoin>
-                    {
-                        LabelText = "Connect on launch?",
-                        Bindable = SymcolOsuModSet.SymConfigManager.GetBindable<AutoJoin>(SymSetting.Auto)
-                    },
                     new SettingsTextBox
                     {
                         LabelText = "Player Color (HEX)",

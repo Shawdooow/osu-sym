@@ -21,7 +21,7 @@ namespace osu.Core.Config
 
             Set(SymSetting.PlayerColor, "#ffffff");
             Set(SymSetting.SavedIP, "IP Address");
-            Set(SymSetting.SavedPort, 25570);
+            Set(SymSetting.SavedPort, 25590);
             Set(SymSetting.SavedName, "Guest");
             Set(SymSetting.SavedUserID, -1L);
             Set(SymSetting.Auto, AutoJoin.None);
