@@ -16,7 +16,6 @@ using osu.Game.Overlays;
 using osu.Game.Overlays.Notifications;
 using osu.Mods.Online.Base.Packets;
 using osu.Mods.Online.Multi.Lobby.Packets;
-using Sym.Networking.NetworkingClients;
 using Sym.Networking.NetworkingHandlers;
 using Sym.Networking.NetworkingHandlers.Peer;
 using Sym.Networking.Packets;
