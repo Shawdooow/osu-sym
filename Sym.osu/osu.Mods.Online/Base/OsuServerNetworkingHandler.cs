@@ -182,7 +182,7 @@ namespace osu.Mods.Online.Base
                         match = FindMatch(getMap.User);
 
                         //Tell them what map the Match is set to
-                        TcpNetworkingClient.SendPacket(SignPacket(new SetMapPacket(match.MatchInfo.Map)), TcpNetworkingClient.EndPoint);
+                        SendToPeer(new SetMapPacket(match.MatchInfo.Map), info.Client);
                         break;
                     case SetMapPacket map:
                         match = FindMatch(map.User);
