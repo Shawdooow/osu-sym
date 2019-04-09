@@ -21,11 +21,13 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Abilities
 
         private readonly Box area;
 
+        /*
         private static int img_count;
         private int imgCount;
 
         private static ResourceStore<byte[]> img_resources;
         private static TextureStore img_textures;
+        */
 
         public ScreenSnap(Box area)
         {

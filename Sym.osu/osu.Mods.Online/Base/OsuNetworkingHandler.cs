@@ -57,7 +57,7 @@ namespace osu.Mods.Online.Base
         {
             Logger.Log($"Attempting to connect to {TcpNetworkingClient.Address}", LoggingTarget.Network);
             SendToServer(new OsuConnectPacket());
-            Host.Statues = ConnectionStatues.Connecting;
+            if (Host.Statues < ConnectionStatues.Connected) Host.Statues = ConnectionStatues.Connecting;
         }
 
         protected override void Update()
