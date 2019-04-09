@@ -62,7 +62,7 @@ namespace osu.Mods.Online.Settings
                 new SettingsButton
                 {
                     Text = "Import from Host's Stable Install",
-                    Action = OnlineModset.OsuNetworkingHandler.Import
+                    Action = () => OnlineModset.OsuNetworkingHandler.Import()
                 },
                 new SettingsButton
                 {

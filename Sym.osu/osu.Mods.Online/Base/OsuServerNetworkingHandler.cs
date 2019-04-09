@@ -27,7 +27,6 @@ namespace osu.Mods.Online.Base
     {
         protected override string Gamekey => "osu";
 
-
         protected readonly List<OsuMatch> OsuMatches = new List<OsuMatch>();
 
         protected OsuGame OsuGame { get; private set; }
