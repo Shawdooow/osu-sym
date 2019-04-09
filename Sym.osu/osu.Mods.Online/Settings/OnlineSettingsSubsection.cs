@@ -114,6 +114,12 @@ namespace osu.Mods.Online.Settings
 
         protected virtual void HostServer()
         {
+            if (OnlineModset.Server != null)
+            {
+                OnlineModset.OsuNetworkingHandler.Remove(OnlineModset.Server);
+                OnlineModset.Server.Dispose();
+            }
+
             if (OnlineModset.OsuNetworkingHandler != null)
             {
                 game.Remove(OnlineModset.OsuNetworkingHandler);
@@ -122,16 +128,18 @@ namespace osu.Mods.Online.Settings
 
             try
             {
+                OnlineModset.Server = new OsuServerNetworkingHandler
+                {
+                    Address = ipBindable.Value + ":" + portBindable.Value,
+                    //Udp = true,
+                };
+
                 OnlineModset.OsuNetworkingHandler = new OsuNetworkingHandler
                 {
                     Address = ipBindable.Value + ":" + portBindable.Value,
                 };
 
-                OnlineModset.OsuNetworkingHandler.Add(new OsuServerNetworkingHandler
-                {
-                    Address = ipBindable.Value + ":" + portBindable.Value,
-                    //Udp = true,
-                });
+                OnlineModset.OsuNetworkingHandler.Add(OnlineModset.Server);
 
                 game.Add(OnlineModset.OsuNetworkingHandler);
                 OnlineModset.OsuNetworkingHandler.OnConnectedToHost += host => Logger.Log("Connected to local server", LoggingTarget.Network, LogLevel.Debug);

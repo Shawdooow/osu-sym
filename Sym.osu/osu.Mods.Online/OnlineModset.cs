@@ -24,6 +24,7 @@ namespace osu.Mods.Online
     public class OnlineModset : OsuModSet
     {
         public static OsuNetworkingHandler OsuNetworkingHandler;
+        internal static OsuServerNetworkingHandler Server;
 
         private readonly Bindable<AutoJoin> auto = SymcolOsuModSet.SymConfigManager.GetBindable<AutoJoin>(SymSetting.Auto);
         private readonly Bindable<string> ipBindable = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.SavedIP);
@@ -63,7 +64,7 @@ namespace osu.Mods.Online
                     OsuNetworkingHandler.Connect();
                     break;
                 case AutoJoin.Host:
-                    OsuServerNetworkingHandler server = new OsuServerNetworkingHandler
+                    Server = new OsuServerNetworkingHandler
                     {
                         Address = ipBindable.Value + ":" + portBindable.Value,
                         //Udp = true,
@@ -74,7 +75,7 @@ namespace osu.Mods.Online
                         Address = ipBindable.Value + ":" + portBindable.Value,
                     };
 
-                    OsuNetworkingHandler.Add(server);
+                    OsuNetworkingHandler.Add(Server);
 
                     game.Add(OsuNetworkingHandler);
                     OsuNetworkingHandler.OnConnectedToHost += host => Logger.Log("Connected to local server", LoggingTarget.Network, LogLevel.Debug);
