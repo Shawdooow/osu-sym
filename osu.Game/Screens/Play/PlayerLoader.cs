@@ -8,7 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Events;
+using osu.Framework.Input;
 using osu.Framework.Localisation;
 using osu.Framework.Screens;
 using osu.Framework.Threading;
@@ -17,6 +17,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Screens.Menu;
+using osu.Game.Screens.Play.HUD;
 using osu.Game.Screens.Play.PlayerSettings;
 using osuTK;
 using osuTK.Graphics;
@@ -25,8 +26,9 @@ namespace osu.Game.Screens.Play
 {
     public class PlayerLoader : ScreenWithBeatmapBackground
     {
+        protected const float BACKGROUND_BLUR = 15;
+
         private readonly Func<Player> createPlayer;
-        private static readonly Vector2 background_blur = new Vector2(15);
 
         private Player player;
 
@@ -40,6 +42,8 @@ namespace osu.Game.Screens.Play
         public override bool DisallowExternalBeatmapRulesetChanges => true;
 
         private Task loadTask;
+
+        private InputManager inputManager;
 
         public PlayerLoader(Func<Player> createPlayer)
         {
@@ -78,7 +82,7 @@ namespace osu.Game.Screens.Play
                         Margin = new MarginPadding(25),
                         Children = new PlayerSettingsGroup[]
                         {
-                            visualSettings = new VisualSettings(),
+                            VisualSettings = new VisualSettings(),
                             new InputSettings()
                         }
                     }
@@ -132,6 +136,7 @@ namespace osu.Game.Screens.Play
             base.OnEntering(last);
 
             content.ScaleTo(0.7f);
+            Background?.FadeColour(Color4.White, 800, Easing.OutQuint);
 
             contentIn();
 
@@ -143,8 +148,6 @@ namespace osu.Game.Screens.Play
         {
             base.LogoArriving(logo, resuming);
 
-            logo.RelativePositionAxes = Axes.Both;
-
             logo.ScaleTo(new Vector2(0.15f), 300, Easing.In);
             logo.MoveTo(new Vector2(0.5f), 300, Easing.In);
             logo.FadeIn(350);
@@ -152,34 +155,19 @@ namespace osu.Game.Screens.Play
             logo.Delay(resuming ? 0 : 500).MoveToOffset(new Vector2(0, -0.24f), 500, Easing.InOutExpo);
         }
 
+        protected override void LoadComplete()
+        {
+            inputManager = GetContainingInputManager();
+            base.LoadComplete();
+        }
+
         private ScheduledDelegate pushDebounce;
-        private VisualSettings visualSettings;
+        protected VisualSettings VisualSettings;
+
+        // Hhere because IsHovered will not update unless we do so.
+        public override bool HandlePositionalInput => true;
 
         private bool readyForPush => player.LoadState == LoadState.Ready && IsHovered && GetContainingInputManager()?.DraggedDrawable == null;
-
-        protected override bool OnHover(HoverEvent e)
-        {
-            // restore our screen defaults
-            InitializeBackgroundElements();
-            return base.OnHover(e);
-        }
-
-        protected override void OnHoverLost(HoverLostEvent e)
-        {
-            if (GetContainingInputManager()?.HoveredDrawables.Contains(visualSettings) == true)
-            {
-                // show user setting preview
-                UpdateBackgroundElements();
-            }
-
-            base.OnHoverLost(e);
-        }
-
-        protected override void InitializeBackgroundElements()
-        {
-            Background?.FadeColour(Color4.White, BACKGROUND_FADE_DURATION, Easing.OutQuint);
-            Background?.BlurTo(background_blur, BACKGROUND_FADE_DURATION, Easing.OutQuint);
-        }
 
         private void pushWhenLoaded()
         {
@@ -243,6 +231,8 @@ namespace osu.Game.Screens.Play
             this.FadeOut(150);
             cancelLoad();
 
+            Background.EnableUserDim.Value = false;
+
             return base.OnExiting(next);
         }
 
@@ -254,6 +244,29 @@ namespace osu.Game.Screens.Play
             {
                 // if the player never got pushed, we should explicitly dispose it.
                 loadTask?.ContinueWith(_ => player.Dispose());
+            }
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (!this.IsCurrentScreen())
+                return;
+
+            // We need to perform this check here rather than in OnHover as any number of children of VisualSettings
+            // may also be handling the hover events.
+            if (inputManager.HoveredDrawables.Contains(VisualSettings))
+            {
+                // Preview user-defined background dim and blur when hovered on the visual settings panel.
+                Background.EnableUserDim.Value = true;
+                Background.BlurAmount.Value = 0;
+            }
+            else
+            {
+                // Returns background dim and blur to the values specified by PlayerLoader.
+                Background.EnableUserDim.Value = false;
+                Background.BlurAmount.Value = BACKGROUND_BLUR;
             }
         }
 
@@ -288,6 +301,7 @@ namespace osu.Game.Screens.Play
             private readonly WorkingBeatmap beatmap;
             private LoadingAnimation loading;
             private Sprite backgroundSprite;
+            private ModDisplay modDisplay;
 
             public bool Loading
             {
@@ -314,7 +328,7 @@ namespace osu.Game.Screens.Play
             [BackgroundDependencyLoader]
             private void load()
             {
-                var metadata = beatmap?.BeatmapInfo?.Metadata ?? new BeatmapMetadata();
+                var metadata = beatmap.BeatmapInfo?.Metadata ?? new BeatmapMetadata();
 
                 AutoSizeAxes = Axes.Both;
                 Children = new Drawable[]
@@ -330,16 +344,14 @@ namespace osu.Game.Screens.Play
                             new OsuSpriteText
                             {
                                 Text = new LocalisedString((metadata.TitleUnicode, metadata.Title)),
-                                TextSize = 36,
-                                Font = @"Exo2.0-MediumItalic",
+                                Font = OsuFont.GetFont(size: 36, italics: true),
                                 Origin = Anchor.TopCentre,
                                 Anchor = Anchor.TopCentre,
                             },
                             new OsuSpriteText
                             {
                                 Text = new LocalisedString((metadata.ArtistUnicode, metadata.Artist)),
-                                TextSize = 26,
-                                Font = @"Exo2.0-MediumItalic",
+                                Font = OsuFont.GetFont(size: 26, italics: true),
                                 Origin = Anchor.TopCentre,
                                 Anchor = Anchor.TopCentre,
                             },
@@ -367,8 +379,7 @@ namespace osu.Game.Screens.Play
                             new OsuSpriteText
                             {
                                 Text = beatmap?.BeatmapInfo?.Version,
-                                TextSize = 26,
-                                Font = @"Exo2.0-MediumItalic",
+                                Font = OsuFont.GetFont(size: 26, italics: true),
                                 Origin = Anchor.TopCentre,
                                 Anchor = Anchor.TopCentre,
                                 Margin = new MarginPadding
@@ -386,6 +397,14 @@ namespace osu.Game.Screens.Play
                                 Origin = Anchor.TopCentre,
                                 Anchor = Anchor.TopCentre,
                             },
+                            new ModDisplay
+                            {
+                                Anchor = Anchor.TopCentre,
+                                Origin = Anchor.TopCentre,
+                                AutoSizeAxes = Axes.Both,
+                                Margin = new MarginPadding { Top = 20 },
+                                Current = beatmap.Mods
+                            }
                         },
                     }
                 };

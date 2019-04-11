@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
-using osu.Framework.Configuration;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.IO.Stores;
@@ -75,9 +75,9 @@ namespace osu.Game
 
         private Bindable<bool> fpsDisplayVisible;
 
-        protected AssemblyName AssemblyName => Assembly.GetEntryAssembly()?.GetName() ?? new AssemblyName { Version = new Version() };
+        public virtual Version AssemblyVersion => Assembly.GetEntryAssembly()?.GetName().Version ?? new Version();
 
-        public bool IsDeployedBuild => AssemblyName.Version.Major > 0;
+        public bool IsDeployedBuild => AssemblyVersion.Major > 0;
 
         public string Version
         {
@@ -86,8 +86,8 @@ namespace osu.Game
                 if (!IsDeployedBuild)
                     return @"local " + (DebugUtils.IsDebug ? @"debug" : @"release");
 
-                var assembly = AssemblyName;
-                return $@"{assembly.Version.Major}.{assembly.Version.Minor}.{assembly.Version.Build}";
+                var version = AssemblyVersion;
+                return $@"{version.Major}.{version.Minor}.{version.Build}";
             }
         }
 
@@ -119,9 +119,6 @@ namespace osu.Game
             dependencies.CacheAs(this);
             dependencies.Cache(LocalConfig);
 
-            //this completely overrides the framework default. will need to change once we make a proper FontStore.
-            dependencies.Cache(Fonts = new FontStore(new GlyphStore(Resources, @"Fonts/FontAwesome")));
-
             Fonts.AddStore(new GlyphStore(Resources, @"Fonts/osuFont"));
             Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Exo2.0-Medium"));
             Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Exo2.0-MediumItalic"));
@@ -152,7 +149,6 @@ namespace osu.Game
 
             API = new APIAccess(LocalConfig);
 
-            dependencies.Cache(API);
             dependencies.CacheAs<IAPIProvider>(API);
 
             var defaultBeatmap = new DummyWorkingBeatmap(this);
@@ -209,7 +205,7 @@ namespace osu.Game
             // TODO: This is temporary until we reimplement the local FPS display.
             // It's just to allow end-users to access the framework FPS display without knowing the shortcut key.
             fpsDisplayVisible = LocalConfig.GetBindable<bool>(OsuSetting.ShowFpsDisplay);
-            fpsDisplayVisible.ValueChanged += val => { FrameStatisticsMode = val ? FrameStatisticsMode.Minimal : FrameStatisticsMode.None; };
+            fpsDisplayVisible.ValueChanged += visible => { FrameStatisticsMode = visible.NewValue ? FrameStatisticsMode.Minimal : FrameStatisticsMode.None; };
             fpsDisplayVisible.TriggerChange();
         }
 

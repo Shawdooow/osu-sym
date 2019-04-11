@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
-using osu.Framework.Configuration;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Screens;
@@ -65,12 +65,12 @@ namespace osu.Game.Screens
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
-            var deps = new OsuScreenDependencies(DisallowExternalBeatmapRulesetChanges, base.CreateChildDependencies(parent));
+            var screenDependencies = new OsuScreenDependencies(DisallowExternalBeatmapRulesetChanges, parent);
 
-            Beatmap = deps.Beatmap;
-            Ruleset = deps.Ruleset;
+            Beatmap = screenDependencies.Beatmap;
+            Ruleset = screenDependencies.Ruleset;
 
-            return deps;
+            return base.CreateChildDependencies(screenDependencies);
         }
 
         protected BackgroundScreen Background => backgroundStack?.CurrentScreen as BackgroundScreen;
@@ -174,7 +174,7 @@ namespace osu.Game.Screens
             logo.FadeOut(300, Easing.OutQuint);
             logo.Anchor = Anchor.TopLeft;
             logo.Origin = Anchor.Centre;
-            logo.RelativePositionAxes = Axes.None;
+            logo.RelativePositionAxes = Axes.Both;
             logo.BeatMatching = true;
             logo.Triangles = true;
             logo.Ripple = true;

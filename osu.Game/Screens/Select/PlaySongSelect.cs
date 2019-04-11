@@ -3,6 +3,7 @@
 
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Screens;
 using osu.Game.Graphics;
 using osu.Game.Screens.Play;
@@ -20,7 +21,7 @@ namespace osu.Game.Screens.Select
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            BeatmapOptions.AddButton(@"Edit", @"beatmap", FontAwesome.fa_pencil, colours.Yellow, () =>
+            BeatmapOptions.AddButton(@"Edit", @"beatmap", FontAwesome.Solid.PencilAlt, colours.Yellow, () =>
             {
                 ValidForResume = false;
                 Edit();
@@ -65,7 +66,7 @@ namespace osu.Game.Screens.Select
 
             LoadComponentAsync(player = new PlayerLoader(() => new Player()), l =>
             {
-                if (this.IsCurrentScreen())this.Push(player);
+                if (this.IsCurrentScreen()) this.Push(player);
             });
 
             return true;

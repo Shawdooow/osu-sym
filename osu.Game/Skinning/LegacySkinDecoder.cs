@@ -16,12 +16,10 @@ namespace osu.Game.Skinning
         {
             line = StripComments(line);
 
+            var pair = SplitKeyVal(line);
             switch (section)
             {
                 case Section.General:
-                {
-                    var pair = SplitKeyVal(line);
-
                     switch (pair.Key)
                     {
                         case @"Name":
@@ -36,20 +34,19 @@ namespace osu.Game.Skinning
                     }
 
                     break;
-                }
-                case Section.Fonts:
-                {
-                    var pair = SplitKeyVal(line);
 
+                case Section.Fonts:
                     switch (pair.Key)
                     {
                         case "HitCirclePrefix":
                             skin.HitCircleFont = pair.Value;
                             break;
+                        case "HitCircleOverlap":
+                            skin.HitCircleOverlap = int.Parse(pair.Value);
+                            break;
                     }
 
                     break;
-                }
             }
 
             base.ParseLine(skin, section, line);

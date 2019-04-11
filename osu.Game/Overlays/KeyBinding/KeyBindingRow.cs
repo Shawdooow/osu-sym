@@ -35,13 +35,15 @@ namespace osu.Game.Overlays.KeyBinding
 
         public bool MatchingFilter
         {
-            get { return matchingFilter; }
+            get => matchingFilter;
             set
             {
                 matchingFilter = value;
                 this.FadeTo(!matchingFilter ? 0 : 1);
             }
         }
+
+        public bool FilteringActive { get; set; }
 
         private OsuSpriteText text;
         private OsuTextFlowContainer pressAKey;
@@ -309,10 +311,11 @@ namespace osu.Game.Overlays.KeyBinding
 
             public bool IsBinding
             {
-                get { return isBinding; }
+                get => isBinding;
                 set
                 {
                     if (value == isBinding) return;
+
                     isBinding = value;
 
                     updateHoverState();
@@ -349,8 +352,7 @@ namespace osu.Game.Overlays.KeyBinding
                     },
                     Text = new OsuSpriteText
                     {
-                        Font = "Venera",
-                        TextSize = 10,
+                        Font = OsuFont.Numeric.With(size: 10),
                         Margin = new MarginPadding(5),
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,

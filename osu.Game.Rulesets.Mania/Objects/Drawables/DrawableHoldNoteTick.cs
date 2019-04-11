@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Mania.Objects.Drawables
             RelativeSizeAxes = Axes.X;
             Size = new Vector2(1);
 
-            InternalChildren = new[]
+            AddRangeInternal(new[]
             {
                 glowContainer = new CircularContainer
                 {
@@ -51,12 +51,12 @@ namespace osu.Game.Rulesets.Mania.Objects.Drawables
                         }
                     }
                 }
-            };
+            });
         }
 
         public override Color4 AccentColour
         {
-            get { return base.AccentColour; }
+            get => base.AccentColour;
             set
             {
                 base.AccentColour = value;

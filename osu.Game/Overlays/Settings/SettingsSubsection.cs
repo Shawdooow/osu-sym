@@ -8,6 +8,7 @@ using osu.Game.Graphics.Sprites;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Game.Graphics;
 
 namespace osu.Game.Overlays.Settings
 {
@@ -21,13 +22,13 @@ namespace osu.Game.Overlays.Settings
 
         public IEnumerable<IFilterable> FilterableChildren => Children.OfType<IFilterable>();
         public IEnumerable<string> FilterTerms => new[] { Header };
+
         public bool MatchingFilter
         {
-            set
-            {
-                this.FadeTo(value ? 1 : 0);
-            }
+            set => this.FadeTo(value ? 1 : 0);
         }
+
+        public bool FilteringActive { get; set; }
 
         protected SettingsSubsection()
         {
@@ -53,7 +54,7 @@ namespace osu.Game.Overlays.Settings
                 {
                     Text = Header.ToUpperInvariant(),
                     Margin = new MarginPadding { Bottom = 10, Left = SettingsOverlay.CONTENT_MARGINS, Right = SettingsOverlay.CONTENT_MARGINS },
-                    Font = @"Exo2.0-Black",
+                    Font = OsuFont.GetFont(weight: FontWeight.Black),
                 },
                 FlowContent
             });

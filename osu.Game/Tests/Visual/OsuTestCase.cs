@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
-using osu.Framework.Configuration;
+using osu.Framework.Bindables;
 using osu.Framework.Platform;
 using osu.Framework.Testing;
 using osu.Game.Beatmaps;
@@ -43,7 +43,7 @@ namespace osu.Game.Tests.Visual
 
         protected OsuTestCase()
         {
-            localStorage = new Lazy<Storage>(() => new DesktopStorage($"{GetType().Name}-{Guid.NewGuid()}", null));
+            localStorage = new Lazy<Storage>(() => new NativeStorage($"{GetType().Name}-{Guid.NewGuid()}"));
         }
 
         [BackgroundDependencyLoader]

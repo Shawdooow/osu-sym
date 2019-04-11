@@ -3,7 +3,7 @@
 
 using System;
 using osu.Framework.Allocation;
-using osu.Framework.Configuration;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -45,7 +45,7 @@ namespace osu.Game.Screens.Multi
         private readonly Bindable<Room> currentRoom = new Bindable<Room>();
 
         [Cached]
-        private readonly Bindable<FilterCriteria> currentFilter = new Bindable<FilterCriteria>();
+        private readonly Bindable<FilterCriteria> currentFilter = new Bindable<FilterCriteria>(new FilterCriteria());
 
         [Cached(Type = typeof(IRoomManager))]
         private RoomManager roomManager;
@@ -54,7 +54,7 @@ namespace osu.Game.Screens.Multi
         private OsuGameBase game { get; set; }
 
         [Resolved]
-        private APIAccess api { get; set; }
+        private IAPIProvider api { get; set; }
 
         [Resolved(CanBeNull = true)]
         private OsuLogo logo { get; set; }
@@ -95,7 +95,7 @@ namespace osu.Game.Screens.Multi
                     {
                         RelativeSizeAxes = Axes.Both,
                         Padding = new MarginPadding { Top = Header.HEIGHT },
-                        Child = screenStack = new ScreenStack(loungeSubScreen = new LoungeSubScreen()) { RelativeSizeAxes = Axes.Both }
+                        Child = screenStack = new OsuScreenStack(loungeSubScreen = new LoungeSubScreen()) { RelativeSizeAxes = Axes.Both }
                     },
                     new Header(screenStack),
                     createButton = new HeaderButton
@@ -135,7 +135,7 @@ namespace osu.Game.Screens.Multi
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            isIdle.BindValueChanged(updatePollingRate, true);
+            isIdle.BindValueChanged(idle => updatePollingRate(idle.NewValue), true);
         }
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
@@ -163,7 +163,7 @@ namespace osu.Game.Screens.Multi
             this.Push(new PlayerLoader(player));
         }
 
-        public void APIStateChanged(APIAccess api, APIState state)
+        public void APIStateChanged(IAPIProvider api, APIState state)
         {
             if (state != APIState.Online)
                 forcefullyExit();

@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
@@ -66,15 +67,14 @@ namespace osu.Game.Overlays
                                 Y = -15,
                                 Size = new Vector2(15),
                                 Shadow = true,
-                                Icon = FontAwesome.fa_chevron_left
+                                Icon = FontAwesome.Solid.ChevronLeft
                             },
                             new OsuSpriteText
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Y = 15,
-                                TextSize = 12,
-                                Font = @"Exo2.0-Bold",
+                                Font = OsuFont.GetFont(size: 12, weight: FontWeight.Bold),
                                 Text = @"back",
                             },
                         }

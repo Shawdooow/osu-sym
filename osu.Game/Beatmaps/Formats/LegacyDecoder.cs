@@ -72,6 +72,7 @@ namespace osu.Game.Beatmaps.Formats
             var index = line.AsSpan().IndexOf("//".AsSpan());
             if (index > 0)
                 return line.Substring(0, index);
+
             return line;
         }
 
@@ -115,6 +116,7 @@ namespace osu.Game.Beatmaps.Formats
             else
             {
                 if (!(output is IHasCustomColours tHasCustomColours)) return;
+
                 tHasCustomColours.CustomColours[pair.Key] = colour;
             }
         }
@@ -188,11 +190,7 @@ namespace osu.Game.Beatmaps.Formats
 
         internal class LegacySampleControlPoint : SampleControlPoint
         {
-            public int CustomSampleBank
-            {
-                get => SampleSuffix;
-                set => SampleSuffix = value;
-            }
+            public int CustomSampleBank;
 
             public override SampleInfo ApplyTo(SampleInfo sampleInfo)
             {

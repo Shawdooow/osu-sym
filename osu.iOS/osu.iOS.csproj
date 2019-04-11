@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" />
   <PropertyGroup>
@@ -48,23 +48,12 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="OsuGameIOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <LinkDescription Include="Linker.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\osu-framework-sym\osu-framework\osu.Framework.iOS\osu.Framework.iOS.csproj">
-      <Project>{bbc0d18f-8595-43a6-ae61-5bf36a072cce}</Project>
-      <Name>osu.Framework.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\osu-framework-sym\osu-framework\osu.Framework\osu.Framework.csproj">
-      <Project>{c76bf5b3-985e-4d39-95fe-97c9c879b83a}</Project>
-      <Name>osu.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\osu.Game.Rulesets.Vitaru\osu.Game.Rulesets.Vitaru.csproj">
-      <Project>{6c9223c5-d801-48e4-b2ae-11d0668af899}</Project>
-      <Name>osu.Game.Rulesets.Vitaru</Name>
-    </ProjectReference>
     <ProjectReference Include="..\osu.Game\osu.Game.csproj">
       <Project>{2A66DD92-ADB1-4994-89E2-C94E04ACDA0D}</Project>
       <Name>osu.Game</Name>
@@ -84,26 +73,6 @@
     <ProjectReference Include="..\osu.Game.Rulesets.Taiko\osu.Game.Rulesets.Taiko.csproj">
       <Project>{F167E17A-7DE6-4AF5-B920-A5112296C695}</Project>
       <Name>osu.Game.Rulesets.Taiko</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sym.osu\osu.Core\osu.Core.csproj">
-      <Project>{943b1ae1-78ea-4ed7-9b0a-0d94c425c208}</Project>
-      <Name>osu.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sym.osu\osu.Mods.Evast\osu.Mods.Evast.csproj">
-      <Project>{d07a53e6-d22b-42b1-b21e-bb3e07388829}</Project>
-      <Name>osu.Mods.Evast</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sym.osu\osu.Mods.MapMixer\osu.Mods.MapMixer.csproj">
-      <Project>{7683d911-933f-4ae8-8e24-b545fd8af944}</Project>
-      <Name>osu.Mods.MapMixer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sym.osu\osu.Mods.Online\osu.Mods.Online.csproj">
-      <Project>{87505540-1a3b-4483-b5ac-a95e0e920147}</Project>
-      <Name>osu.Mods.Online</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sym.osu\osu.Mods.Rulesets.Core\osu.Mods.Rulesets.Core.csproj">
-      <Project>{904d5f33-e036-448b-8b6b-d880a3c11b3b}</Project>
-      <Name>osu.Mods.Rulesets.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
