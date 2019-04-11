@@ -14,10 +14,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
 
         public static bool Shawdooow;
 
-        [BackgroundDependencyLoader]
+        [BackgroundDependencyLoader(true)]
         private void load(APIAccess api)
         {
-            api.Register(this);
+            api?.Register(this);
         }
 
         public void APIStateChanged(IAPIProvider api, APIState state)
