@@ -411,7 +411,16 @@ namespace osu.Game
             screenStack.ScreenPushed += screenPushed;
             screenStack.ScreenExited += screenExited;
 
-            loadComponentSingleFile(osuLogo, logo => { logoContainer.Add(logo); });
+            loadComponentSingleFile(osuLogo, logo =>
+            {
+                logoContainer.Add(logo);
+
+                // Loader has to be created after the logo has finished loading as Loader performs logo transformations on entering.
+                screenStack.Push(new Loader
+                {
+                    RelativeSizeAxes = Axes.Both
+                });
+            });
 
             Toolbar = ModStore.SymcolBaseSet == null
                 ? new Toolbar
