@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Framework.Configuration;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
@@ -40,7 +40,7 @@ namespace osu.Mods.Evast.LifeGame
             generalSettings.PauseButton.Action = playfield.Pause;
             generalSettings.RandomButton.Action = playfield.GenerateRandom;
 
-            speedSettings.SpeedBindable.ValueChanged += newValue => playfield.UpdateDelay = newValue;
+            speedSettings.SpeedBindable.ValueChanged += newValue => playfield.UpdateDelay = newValue.NewValue;
         }
 
         private class GeneralSettings : PlayerSettingsGroup

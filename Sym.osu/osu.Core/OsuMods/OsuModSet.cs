@@ -3,6 +3,7 @@
 using osu.Core.Containers.Shawdooow;
 using osu.Core.Settings;
 using osu.Core.Wiki;
+using osu.Framework.Platform;
 using osu.Game;
 using osu.Game.Screens;
 
@@ -20,6 +21,6 @@ namespace osu.Core.OsuMods
 
         public virtual WikiSet GetWikiSet() => null;
 
-        public virtual void LoadComplete(OsuGame game) { }
+        public virtual void LoadComplete(OsuGame game, GameHost host) { }
     }
 }

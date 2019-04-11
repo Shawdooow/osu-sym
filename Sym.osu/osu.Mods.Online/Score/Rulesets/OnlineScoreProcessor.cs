@@ -19,7 +19,7 @@ namespace osu.Mods.Online.Score.Rulesets
 
         protected Action<OnlineScore> OnCompletion;
 
-        protected RulesetContainer<TObject> RulesetContainer { get; private set; }
+        protected DrawableRuleset<TObject> RulesetContainer { get; private set; }
 
         protected virtual OnlineScore GetOnlineScore() => new OnlineScore
         {
@@ -60,7 +60,7 @@ namespace osu.Mods.Online.Score.Rulesets
         {
         }
 
-        protected OnlineScoreProcessor(RulesetContainer<TObject> rulesetContainer) : base(rulesetContainer)
+        protected OnlineScoreProcessor(DrawableRuleset<TObject> rulesetContainer) : base(rulesetContainer)
         {
             RulesetContainer = rulesetContainer;
             OnCompletion += score =>

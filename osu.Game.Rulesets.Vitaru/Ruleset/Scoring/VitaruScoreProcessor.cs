@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using System;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions;
 using osu.Game.Beatmaps;
@@ -94,7 +95,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
             double missWeight = 1d + misses / miss_weight;
             scoreMiss.Value = Math.Round(missWeight, 2);
 
-            double comboWeight = 1d + Math.Max(0d, HighestCombo / 2 - 1) / 25d;
+            double comboWeight = 1d + Math.Max(0d, HighestCombo.Value / 2 - 1) / 25d;
             scoreCombo.Value = Math.Round(comboWeight, 2);
 
             return bonusScore + baseScore / missWeight * comboWeight;
@@ -105,8 +106,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
             VitaruJudgementResult vitaruResult = (VitaruJudgementResult)result;
             VitaruJudgement vitaruJudgement = vitaruResult.VitaruJudgement;
 
-            vitaruResult.ComboAtJudgement = Combo;
-            vitaruResult.HighestComboAtJudgement = HighestCombo;
+            vitaruResult.ComboAtJudgement = Combo.Value;
+            vitaruResult.HighestComboAtJudgement = HighestCombo.Value;
 
             if (!vitaruJudgement.BonusScore)
                 JudgedHits++;
@@ -166,7 +167,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Scoring
             double missWeight = 1d + misses / miss_weight;
             scoreMiss.Value = Math.Round(missWeight, 2);
 
-            double comboWeight = 1d + Math.Max(0d, HighestCombo / 2 - 1) / 25d;
+            double comboWeight = 1d + Math.Max(0d, HighestCombo.Value / 2 - 1) / 25d;
             scoreCombo.Value = Math.Round(comboWeight, 2);
 
             TotalScore.Value = bonusScore + baseScore / missWeight * comboWeight;

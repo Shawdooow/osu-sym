@@ -2,7 +2,7 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Core.Screens.Evast;
-using osu.Framework.Configuration;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Screens.Play.PlayerSettings;
 
@@ -26,7 +26,7 @@ namespace osu.Mods.Evast.CursorTracers
                 }
             };
 
-            delaySettings.Bindable.ValueChanged += newDelay => tracer.Delay = newDelay;
+            delaySettings.Bindable.ValueChanged += newDelay => tracer.Delay = newDelay.NewValue;
         }
 
         private class DelaySettings : PlayerSettingsGroup

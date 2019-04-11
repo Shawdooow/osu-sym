@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
             api.Register(this);
         }
 
-        public void APIStateChanged(APIAccess api, APIState state)
+        public void APIStateChanged(IAPIProvider api, APIState state)
         {
             switch (state)
             {

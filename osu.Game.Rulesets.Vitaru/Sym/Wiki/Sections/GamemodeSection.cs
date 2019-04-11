@@ -5,6 +5,7 @@ using osu.Core.Wiki.Sections;
 using osu.Core.Wiki.Sections.OptionExplanations;
 using osu.Core.Wiki.Sections.SectionPieces;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;

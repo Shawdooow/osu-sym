@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using osu.Framework.Audio.Track;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Textures;
@@ -126,7 +127,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
             Hitbox.HitDetection = false;
             drawableCluster.Death(this);
 
-            if (souls < 100 && Untuned)
+            if (souls.Value < 100 && Untuned)
                 souls.Value++;
 
             if (VitaruPlayfield.Player is DrawableReimu)

@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using System;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Scoring;
@@ -16,7 +17,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 {
     public class DrawableLaser : DrawableProjectile
     {
-        private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.LaserVisuals);
+        private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.Get<GraphicsOptions>(VitaruSetting.LaserVisuals);
 
         // ReSharper disable once InconsistentNaming
         public static Bindable<int> LASER_COUNT = new Bindable<int>();

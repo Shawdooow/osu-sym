@@ -40,7 +40,7 @@ namespace osu.Mods.Evast.Snake
             generalSettings.PauseButton.Action = playfield.Pause;
             generalSettings.ContinueButton.Action = playfield.Continue;
 
-            speedSettings.SpeedBindable.ValueChanged += newValue => playfield.UpdateDelay = newValue;
+            speedSettings.SpeedBindable.ValueChanged += e => playfield.UpdateDelay = e.NewValue;
         }
 
         private class GeneralSettings : PlayerSettingsGroup

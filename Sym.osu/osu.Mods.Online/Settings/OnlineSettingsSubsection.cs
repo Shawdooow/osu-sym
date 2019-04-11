@@ -5,6 +5,7 @@ using osu.Core;
 using osu.Core.Config;
 using osu.Core.Settings;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
@@ -75,7 +76,7 @@ namespace osu.Mods.Online.Settings
             {
                 try
                 {
-                    portBindable.Value = int.Parse(value);
+                    portBindable.Value = int.Parse(value.NewValue);
                 }
                 catch
                 {

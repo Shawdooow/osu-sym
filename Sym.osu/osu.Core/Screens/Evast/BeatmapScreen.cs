@@ -3,6 +3,7 @@
 
 #region usings
 
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
@@ -16,7 +17,7 @@ namespace osu.Core.Screens.Evast
 {
     public class BeatmapScreen : SymOsuScreen
     {
-        protected override BackgroundScreen CreateBackground() => new BackgroundScreenBeatmap(Beatmap);
+        protected override BackgroundScreen CreateBackground() => new BackgroundScreenBeatmap(Beatmap.Value);
 
         protected virtual float BackgroundBlur => 20;
 
@@ -52,13 +53,12 @@ namespace osu.Core.Screens.Evast
             return base.OnExiting(next);
         }
 
-        protected virtual void OnBeatmapChange(WorkingBeatmap beatmap)
+        protected virtual void OnBeatmapChange(ValueChangedEvent<WorkingBeatmap> e)
         {
-            BackgroundScreenBeatmap backgroundModeBeatmap = Background as BackgroundScreenBeatmap;
-            if (backgroundModeBeatmap != null)
+            if (Background is BackgroundScreenBeatmap backgroundModeBeatmap)
             {
-                backgroundModeBeatmap.Beatmap = beatmap;
-                backgroundModeBeatmap.BlurTo(backgroundBlur, 1000);
+                backgroundModeBeatmap.Beatmap = e.NewValue;
+                //TODO: fix this backgroundModeBeatmap.BlurTo(backgroundBlur, 1000);
                 backgroundModeBeatmap.FadeTo(1, 250);
             }
         }

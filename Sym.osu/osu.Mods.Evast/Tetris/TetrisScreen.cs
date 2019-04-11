@@ -40,7 +40,7 @@ namespace osu.Mods.Evast.Tetris
             generalSettings.PauseButton.Action = playfield.Pause;
             generalSettings.ContinueButton.Action = playfield.Continue;
 
-            speedSettings.SpeedBindable.ValueChanged += newValue => playfield.UpdateDelay = newValue;
+            speedSettings.SpeedBindable.ValueChanged += newValue => playfield.UpdateDelay = newValue.NewValue;
         }
 
         private class GeneralSettings : PlayerSettingsGroup

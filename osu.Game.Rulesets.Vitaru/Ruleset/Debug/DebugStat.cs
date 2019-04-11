@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -66,7 +67,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug
             };
 
             if (Bindable != null)
-                Bindable.ValueChanged += value => SpriteText.Text = GetText(value);
+                Bindable.ValueChanged += value => SpriteText.Text = GetText(value.NewValue);
         }
 
         protected virtual string GetText(T value) => Text + " = " + value;

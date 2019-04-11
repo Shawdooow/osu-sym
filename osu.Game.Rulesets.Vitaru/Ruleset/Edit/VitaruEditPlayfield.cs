@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Edit
     {
         public override bool Editor => true;
 
-        protected override bool KiaiBoss => VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.EditorBoss) && base.KiaiBoss;
+        protected override bool KiaiBoss => VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.EditorBoss) && base.KiaiBoss;
 
         public VitaruEditPlayfield(VitaruInputManager vitaruInput) : base(vitaruInput)
         {

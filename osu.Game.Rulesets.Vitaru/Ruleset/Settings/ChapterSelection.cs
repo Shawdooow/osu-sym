@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -60,12 +61,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                 };
                 selectedChapter.TriggerChange();
 
-                chapterDropdown.Bindable.ValueChanged += value => selectedChapter.Value = value;
+                chapterDropdown.Bindable.ValueChanged += value => selectedChapter.Value = value.NewValue;
                 ChapterDropdowns.Add(chapterDropdown);
 
                 gamemode.ValueChanged += value =>
                 {
-                    if (ChapterStore.GetChapterSet(value).Name == g.ChapterSet.Name)
+                    if (ChapterStore.GetChapterSet(value.NewValue).Name == g.ChapterSet.Name)
                     {
                         character.ClearTransforms();
                         character.AutoSizeAxes = Axes.Y;

@@ -3,6 +3,7 @@
 using osu.Core.Wiki.Sections;
 using osu.Core.Wiki.Sections.SectionPieces;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -60,21 +61,22 @@ namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
 
             Bindable<int> souls = VitaruSettings.VitaruConfigManager.GetBindable<int>(VitaruSetting.Souls);
 
-            if (souls < 100)
+            if (souls.Value < 100)
                 souls.ValueChanged += value =>
                 {
-                    if (souls == 100)
+                    if (souls.Value == 100)
                         selectedCharacter.TriggerChange();
                 };
 
             //basically just an ingame wiki for the characters
-            selectedCharacter.ValueChanged += character =>
+            selectedCharacter.ValueChanged += e =>
             {
+                string character = e.NewValue;
                 VitaruPlayer vitaruPlayer = ChapterStore.GetPlayer(character);
 
                 string stats = vitaruPlayer.Background;
 
-                if (ChapterStore.GetChapterSet(gamemode) is TouhosuChapterSet && vitaruPlayer is TouhosuPlayer touhosuPlayer)
+                if (ChapterStore.GetChapterSet(gamemode.Value) is TouhosuChapterSet && vitaruPlayer is TouhosuPlayer touhosuPlayer)
                 {
                     stats = "";
 

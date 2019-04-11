@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -43,8 +44,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
         [BackgroundDependencyLoader]
         private void load(GameHost host, Storage storage)
         {
-            Add(new VitaruAPIContainer());
-
             VitaruConfigManager = new VitaruConfigManager(host.Storage);
 
             Bindable<string> gamemodeBindable = VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
@@ -192,10 +191,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
             gamemodeDropdown.Bindable = VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
 
-            themes.ValueChanged += value =>
+            themes.ValueChanged += e =>
             {
                 graphicsOptions.ClearTransforms();
-
+                ThemesPresets value = e.NewValue;
 
                 if (value == ThemesPresets.Custom)
                     graphicsOptions.AutoSizeAxes = Axes.Y;
@@ -274,9 +273,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
             showDebugUi.ValueChanged += isVisible =>
             {
                 debugUiSettings.ClearTransforms();
-                debugUiSettings.AutoSizeAxes = isVisible ? Axes.Y : Axes.None;
+                debugUiSettings.AutoSizeAxes = isVisible.NewValue ? Axes.Y : Axes.None;
 
-                if (!isVisible)
+                if (!isVisible.NewValue)
                     debugUiSettings.ResizeHeightTo(0, transition_duration, Easing.OutQuint);
             };
             showDebugUi.TriggerChange();

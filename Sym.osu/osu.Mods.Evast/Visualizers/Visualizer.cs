@@ -3,6 +3,7 @@
 
 using osu.Core.Screens.Evast;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -69,10 +70,10 @@ namespace osu.Mods.Evast.Visualizers
             };
         }
 
-        protected override void OnBeatmapChange(WorkingBeatmap beatmap)
+        protected override void OnBeatmapChange(ValueChangedEvent<WorkingBeatmap> e)
         {
-            base.OnBeatmapChange(beatmap);
-            beatmapSprite.UpdateTexture(beatmap);
+            base.OnBeatmapChange(e);
+            beatmapSprite.UpdateTexture(e.NewValue);
         }
 
         private class BeatmapSprite : Sprite

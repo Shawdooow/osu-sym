@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Logging;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Dodge;

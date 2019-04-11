@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using System.Collections.Generic;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -58,7 +59,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
             LoadCompleteChildren.Add(DebugToolkit = new DebugToolkit());
 
-            debug.ValueChanged += value => DebugToolkit.Alpha = value ? 1 : 0;
+            debug.ValueChanged += value => DebugToolkit.Alpha = value.NewValue ? 1 : 0;
             debug.TriggerChange();
 
             if (comboFire)

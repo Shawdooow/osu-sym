@@ -5,6 +5,7 @@ using osu.Core.OsuMods;
 using osu.Framework.Audio;
 using osu.Framework.Graphics;
 using osu.Framework.IO.Stores;
+using osu.Framework.Platform;
 using osu.Game;
 using osu.Game.Screens;
 using osuTK;
@@ -35,9 +36,9 @@ namespace osu.Mods.MapMixer
         public static ResourceStore<byte[]> ClassicResources;
         public static AudioManager ClassicAudio;
 
-        public override void LoadComplete(OsuGame game)
+        public override void LoadComplete(OsuGame game, GameHost host)
         {
-            base.LoadComplete(game);
+            base.LoadComplete(game, host);
 
             if (ClassicAudio == null)
             {
@@ -53,7 +54,7 @@ namespace osu.Mods.MapMixer
                 samples.AddStore(new NamespacedResourceStore<byte[]>(ClassicResources, @"Samples"));
                 samples.AddStore(new OnlineStore());
 
-                ClassicAudio = new AudioManager(tracks, samples);
+                ClassicAudio = new AudioManager(host.AudioThread, tracks, samples);
 
                 ClassicAudio.Volume.BindTo(game.Audio.Volume);
                 ClassicAudio.VolumeSample.BindTo(game.Audio.VolumeSample);

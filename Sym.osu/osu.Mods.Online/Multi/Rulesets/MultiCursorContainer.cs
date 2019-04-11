@@ -2,12 +2,13 @@
 
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input.Events;
+using osu.Game.Rulesets.UI;
 
 #endregion
 
 namespace osu.Mods.Online.Multi.Rulesets
 {
-    public class MultiCursorContainer : CursorContainer
+    public class MultiCursorContainer : GameplayCursorContainer
     {
         public bool Slave { get; set; }
 

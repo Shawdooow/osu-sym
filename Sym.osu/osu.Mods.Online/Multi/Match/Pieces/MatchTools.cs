@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using osu.Core.Containers.Shawdooow;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -130,7 +131,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
                 if (SelectedContent.Children.Count == 1)
                     SelectedContent.Remove(SelectedContent.Child);
 
-                switch (value)
+                switch (value.NewValue)
                 {
                     case MatchScreenMode.MapDetails:
                         SelectedContent.Child = mapDetails;
@@ -223,7 +224,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
                                 {
                                     //Found it!
                                     ruleset.Value = rulesetInfo;
-                                    beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
+                                    beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap.Value);
                                     beatmap.Value.Track.Start();
 
                                     MapChange(b);
@@ -242,7 +243,7 @@ namespace osu.Mods.Online.Multi.Match.Pieces
                                 {
                                     //Found it!
                                     ruleset.Value = rulesetInfo;
-                                    beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap);
+                                    beatmap.Value = Beatmaps.GetWorkingBeatmap(b, beatmap.Value);
                                     beatmap.Value.Track.Start();
 
                                     MapChange(b);

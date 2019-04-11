@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
@@ -92,9 +93,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
             Sounds.ValueChanged += swap;
             OnDispose += () => Sounds.ValueChanged -= swap;
 
-            void swap(SoundsOptions value)
+            void swap(ValueChangedEvent<SoundsOptions> e)
             {
-                switch(value)
+                switch(e.NewValue)
                 {
                     default:
                         RulesetAudio = null;

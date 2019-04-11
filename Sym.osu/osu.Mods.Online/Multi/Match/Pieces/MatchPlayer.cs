@@ -102,16 +102,19 @@ namespace osu.Mods.Online.Multi.Match.Pieces
                 CoverUrl = OsuUserInfo.Background,
             };
 
+            profileBackground = new UserCoverBackground(user)
+            {
+                RelativeSizeAxes = Axes.Both,
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                FillMode = FillMode.Fill,
+                
+            };
+            profileBackground.OnLoadComplete += d => d.FadeInFromZero(200);
+
             Children = new Drawable[]
             {
-                profileBackground = new UserCoverBackground(user)
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    FillMode = FillMode.Fill,
-                    OnLoadComplete = d => d.FadeInFromZero(200),
-                },
+                profileBackground,
                 dim = new Box
                 {
                     RelativeSizeAxes = Axes.Both,

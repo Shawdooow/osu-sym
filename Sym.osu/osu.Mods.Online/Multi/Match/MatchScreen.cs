@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -137,7 +138,7 @@ namespace osu.Mods.Online.Multi.Match
         protected virtual void Load(MatchInfo match)
         {
             if (matchTools.SelectedBeatmap != null && !Beatmap.Disabled)
-                Beatmap.Value = matchTools.Beatmaps.GetWorkingBeatmap(matchTools.SelectedBeatmap, Beatmap);
+                Beatmap.Value = matchTools.Beatmaps.GetWorkingBeatmap(matchTools.SelectedBeatmap, Beatmap.Value);
 
             if (matchTools.SelectedRuleset != null && !ruleset.Disabled)
                 ruleset.Value = matchTools.SelectedRuleset;

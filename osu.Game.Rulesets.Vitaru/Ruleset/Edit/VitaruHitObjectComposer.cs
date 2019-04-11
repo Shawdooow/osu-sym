@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Edit
         {
         }
 
-        protected override RulesetContainer<VitaruHitObject> CreateRulesetContainer(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap) => new VitaruEditRulesetContainer(ruleset, beatmap);
+        protected override DrawableRuleset<VitaruHitObject> CreateDrawableRuleset(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap) => new VitaruEditRulesetContainer(ruleset, beatmap);
 
         protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => new HitObjectCompositionTool[]
         {

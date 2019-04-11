@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -63,9 +64,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         private readonly ChapterSet chapterSet = ChapterStore.GetChapterSet(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode));
 
-        private readonly bool playfieldBorder = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.PlayfieldBorder);
+        private readonly bool playfieldBorder = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.PlayfieldBorder);
 
-        protected virtual bool KiaiBoss => VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.KiaiBoss);
+        protected virtual bool KiaiBoss => VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.KiaiBoss);
 
         private readonly string character = VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Character);
 

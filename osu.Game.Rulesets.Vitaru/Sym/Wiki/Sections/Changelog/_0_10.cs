@@ -8,6 +8,7 @@
 
         protected override string[] Versions => new[]
         {
+            "2019.410.0",
             "2019.214.0",
             "2019.103.0",
             "2018.1227.0",

@@ -86,9 +86,9 @@ namespace osu.Core.Wiki
 
             sectionsContainer.SelectedSection.ValueChanged += s =>
             {
-                if (lastSection != s)
+                if (lastSection != s.NewValue)
                 {
-                    lastSection = s;
+                    lastSection = s.NewValue;
                     tabs.Current.Value = lastSection;
                 }
             };
@@ -102,9 +102,9 @@ namespace osu.Core.Wiki
                         tabs.Current.Value = lastSection;
                     return;
                 }
-                if (lastSection != s)
+                if (lastSection != s.NewValue)
                 {
-                    lastSection = s;
+                    lastSection = s.NewValue;
                     sectionsContainer.ScrollTo(lastSection);
                 }
             };
@@ -133,22 +133,22 @@ namespace osu.Core.Wiki
                             tabs.Current.Value = lastSection;
                         return;
                     }
-                    if (lastSection != s)
+                    if (lastSection != s.NewValue)
                     {
-                        lastSection = s;
+                        lastSection = s.NewValue;
                         sectionsContainer.ScrollTo(lastSection);
                     }
                 };
 
-                if (value.GetSections() != null)
-                    foreach (WikiSection s in value.GetSections())
+                if (value.NewValue.GetSections() != null)
+                    foreach (WikiSection s in value.NewValue.GetSections())
                     {
                         sections.Add(s);
                         sectionsContainer.Add(s);
                         tabs.AddItem(s);
                     }
                 else
-                    Logger.Log($"\"{value.Name}\" wiki sections are null, please report to the mod/ruleset creator!", LoggingTarget.Runtime, LogLevel.Error);
+                    Logger.Log($"\"{value.NewValue.Name}\" wiki sections are null, please report to the mod/ruleset creator!", LoggingTarget.Runtime, LogLevel.Error);
             };
 
             currentWikiSet.Value = header.Home;

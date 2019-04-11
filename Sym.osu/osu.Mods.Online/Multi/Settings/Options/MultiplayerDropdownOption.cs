@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterface;
@@ -30,7 +31,7 @@ namespace osu.Mods.Online.Multi.Settings.Options
             Bindable.ValueChanged += value => SendPacket(new SettingsPacket(new Setting<T>
             {
                 Name = Title.Text,
-                Value = value,
+                Value = value.NewValue,
                 Sync = Sync,
             }));
         }

@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
@@ -36,19 +37,19 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps
                 {
                     Name = @"Cluster Count",
                     Content = patterns.ToString(),
-                    Icon = FontAwesome.fa_circle_o
+                    //Icon = FontAwesome.fa_circle_o
                 },
                 new BeatmapStatistic
                 {
                     Name = @"Bullet Count",
                     Content = bullets.ToString(),
-                    Icon = FontAwesome.fa_circle
+                    //Icon = FontAwesome.fa_circle
                 },
                 new BeatmapStatistic
                 {
                     Name = @"Laser Count",
                     Content = lasers.ToString(),
-                    Icon = FontAwesome.fa_circle
+                    //Icon = FontAwesome.fa_circle
                 },
             };
         }

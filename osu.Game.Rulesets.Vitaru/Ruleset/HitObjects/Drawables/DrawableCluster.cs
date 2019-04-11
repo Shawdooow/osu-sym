@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;

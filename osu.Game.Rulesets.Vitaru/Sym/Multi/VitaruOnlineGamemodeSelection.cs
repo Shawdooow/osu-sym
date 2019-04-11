@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using System.Collections.Generic;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Overlays.Settings;
@@ -38,7 +39,7 @@ namespace osu.Game.Rulesets.Vitaru.Sym.Multi
             Gamemode.ValueChanged += value => SendPacket(new SettingsPacket(new Setting<string>
             {
                 Name = Title.Text,
-                Value = value,
+                Value = value.NewValue,
                 Sync = Sync,
             }));
         }

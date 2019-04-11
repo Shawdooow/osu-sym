@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables.Pieces
 {
     public class LaserPiece : BeatSyncedContainer
     {
-        private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.LaserVisuals);
+        private readonly GraphicsOptions graphics = VitaruSettings.VitaruConfigManager.Get<GraphicsOptions>(VitaruSetting.LaserVisuals);
 
         public readonly Box Box;
 

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -26,11 +27,11 @@ using osu.Mods.Online.Multi;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 {
-    public class VitaruRulesetContainer : RulesetContainer<VitaruHitObject>
+    public class VitaruRulesetContainer : DrawableRuleset<VitaruHitObject>
     {
         private readonly DebugStat<int> ranked;
 
-        private readonly bool rankedFilter = VitaruSettings.VitaruConfigManager.GetBindable<bool>(VitaruSetting.RankedFilter);
+        private readonly bool rankedFilter = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.RankedFilter);
 
         public VitaruRulesetContainer(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap, OsuNetworkingHandler osuNetworkingHandler = null, MatchInfo match = null)
             : base(ruleset, beatmap)
@@ -90,7 +91,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
             }
         }
 
-        protected override CursorContainer CreateCursor() => new SymcolCursor();
+        public override GameplayCursorContainer Cursor => new SymcolCursor();
 
         internal VitaruScoreProcessor VitaruScoreprocessor { get; private set; }
 
@@ -109,9 +110,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         private ControlScheme variant()
         {
-            if (gamemode == "Vitaru")
+            if (gamemode.Value == "Vitaru")
                 return ControlScheme.Vitaru;
-            else if (gamemode == "Dodge")
+            else if (gamemode.Value == "Dodge")
                 return ControlScheme.Dodge;
             else
             {
@@ -127,9 +128,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
             }
         }
 
-        public override PassThroughInputManager CreateInputManager() => new VitaruInputManager(Ruleset.RulesetInfo, Variant);
+        protected override PassThroughInputManager CreateInputManager() => new VitaruInputManager(Ruleset.RulesetInfo, Variant);
 
-        public override DrawableHitObject<VitaruHitObject> GetVisualRepresentation(VitaruHitObject h)
+        public override DrawableHitObject<VitaruHitObject> CreateDrawableRepresentation(VitaruHitObject h)
         {
             if (h is Cluster cluster)
                 return ChapterStore.GetChapterSet(VitaruSettings.VitaruConfigManager.Get<string>(VitaruSetting.Gamemode)).GetDrawableCluster(cluster, null);

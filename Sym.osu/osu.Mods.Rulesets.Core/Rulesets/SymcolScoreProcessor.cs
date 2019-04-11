@@ -39,7 +39,7 @@ namespace osu.Mods.Rulesets.Core.Rulesets
         {
         }
 
-        protected SymcolScoreProcessor(RulesetContainer<TObject> rulesetContainer)
+        protected SymcolScoreProcessor(DrawableRuleset<TObject> rulesetContainer)
         {
             rulesetContainer.OnNewResult += AddResult;
             rulesetContainer.OnRevertResult += RemoveResult;
@@ -188,11 +188,11 @@ namespace osu.Mods.Rulesets.Core.Rulesets
             switch (Mode.Value)
             {
                 case ScoringMode.Standardised:
-                    TotalScore.Value = MaxScore * (BasePortion * BaseScore / MaxBaseScore + ComboPortion * HighestCombo / MaxHighestCombo) + BonusScore;
+                    TotalScore.Value = MaxScore * (BasePortion * BaseScore / MaxBaseScore + ComboPortion * HighestCombo.Value / MaxHighestCombo) + BonusScore;
                     break;
                 case ScoringMode.Classic:
                     // should emulate osu-stable's scoring as closely as we can (https://osu.ppy.sh/help/wiki/Score/ScoreV1)
-                    TotalScore.Value = BonusScore + BaseScore * (1 + Math.Max(0, HighestCombo - 1) / 25);
+                    TotalScore.Value = BonusScore + BaseScore * (1 + Math.Max(0, HighestCombo.Value - 1) / 25);
                     break;
             }
         }
@@ -204,7 +204,7 @@ namespace osu.Mods.Rulesets.Core.Rulesets
             if (storeResults)
             {
                 MaxHits = JudgedHits;
-                MaxHighestCombo = HighestCombo;
+                MaxHighestCombo = HighestCombo.Value;
                 MaxBaseScore = BaseScore;
             }
 

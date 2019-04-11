@@ -12,7 +12,7 @@ namespace osu.Mods.Online.Multi.Rulesets
 {
     public interface IRulesetMulti
     {
-        RulesetContainer CreateRulesetContainerMulti(WorkingBeatmap beatmap, OsuNetworkingHandler networking, MatchInfo match);
+        DrawableRuleset CreateRulesetContainerMulti(WorkingBeatmap beatmap, OsuNetworkingHandler networking, MatchInfo match);
 
         Container<MultiplayerOption> RulesetSettings(OsuNetworkingHandler networking);
     }

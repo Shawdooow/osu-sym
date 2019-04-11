@@ -1,10 +1,7 @@
 ﻿#region usings
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Audio;
-using osu.Framework.Configuration;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -27,6 +24,10 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings.Options;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 
 #endregion
 
@@ -51,7 +52,7 @@ namespace osu.Game.Rulesets.Vitaru
             }
         }
 
-        public RulesetContainer CreateRulesetContainerMulti(WorkingBeatmap beatmap, OsuNetworkingHandler networking, MatchInfo match) => new VitaruRulesetContainer(this, beatmap, networking, match);
+        public DrawableRuleset CreateRulesetContainerMulti(WorkingBeatmap beatmap, OsuNetworkingHandler networking, MatchInfo match) => new VitaruRulesetContainer(this, beatmap, networking, match);
 
         public Container<MultiplayerOption> RulesetSettings(OsuNetworkingHandler networking)
         {
@@ -185,7 +186,7 @@ namespace osu.Game.Rulesets.Vitaru
             }
         }
 
-        public override RulesetContainer CreateRulesetContainerWith(WorkingBeatmap beatmap) => new VitaruRulesetContainer(this, beatmap);
+        public override DrawableRuleset CreateDrawableRulesetWith(WorkingBeatmap beatmap) => new VitaruRulesetContainer(this, beatmap);
 
         public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new VitaruBeatmapConverter(beatmap);
 
@@ -197,11 +198,25 @@ namespace osu.Game.Rulesets.Vitaru
 
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new VitaruBeatmapProcessor(beatmap);
 
+        private static VitaruAPIContainer api;
+
         public override Drawable CreateIcon()
         {
             Sprite icon = new Sprite { Texture = VitaruTextures.Get("icon") };
             Icons.Add(icon);
-            return icon;
+
+            Container iconContainer = new Container
+            {
+                AutoSizeAxes = Axes.Both,
+                Child = icon,
+            };
+
+            if (api == null)
+            {
+                iconContainer.OnLoadComplete += d => ((Container)d).Add(api = new VitaruAPIContainer());
+            }
+
+            return iconContainer;
         }
 
         //TODO: Custom Touhosu Icon
@@ -209,7 +224,7 @@ namespace osu.Game.Rulesets.Vitaru
 
         public static ResourceStore<byte[]> VitaruResources { get; private set; }
         public static TextureStore VitaruTextures { get; private set; }
-        public static AudioManager VitaruAudio { get; private set; }
+        public static AudioManager VitaruAudio { get; internal set; }
 
         public VitaruRuleset(RulesetInfo rulesetInfo = null) : base(rulesetInfo)
         {
@@ -218,14 +233,6 @@ namespace osu.Game.Rulesets.Vitaru
                 VitaruResources = new ResourceStore<byte[]>();
                 VitaruResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Game.Rulesets.Vitaru.dll"), "Assets"));
                 VitaruTextures = new TextureStore(new TextureLoaderStore(new NamespacedResourceStore<byte[]>(VitaruResources, @"Textures")));
-
-                ResourceStore<byte[]> tracks = new ResourceStore<byte[]>(VitaruResources);
-                tracks.AddStore(new NamespacedResourceStore<byte[]>(VitaruResources, @"Tracks"));
-
-                ResourceStore<byte[]> samples = new ResourceStore<byte[]>(VitaruResources);
-                samples.AddStore(new NamespacedResourceStore<byte[]>(VitaruResources, @"Samples"));
-
-                VitaruAudio = new AudioManager(tracks, samples);
             }
         }
     }

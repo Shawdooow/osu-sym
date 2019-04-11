@@ -2,7 +2,7 @@
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Core.Screens.Evast;
-using osu.Framework.Configuration;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -90,7 +90,7 @@ namespace osu.Mods.Evast.Numbers
             resetButton.Action = playfield.Reset;
 
             score.BindTo(playfield.Score);
-            score.ValueChanged += onScoreChanged;
+            score.ValueChanged += e => onScoreChanged(e.NewValue);
         }
 
         private void onScoreChanged(int newScore) => scoreText.Text = newScore.ToString();

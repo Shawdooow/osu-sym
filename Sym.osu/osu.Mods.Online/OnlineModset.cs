@@ -6,9 +6,11 @@ using osu.Core.Containers.Shawdooow;
 using osu.Core.OsuMods;
 using osu.Core.Settings;
 using osu.Core.Wiki;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
+using osu.Framework.Platform;
 using osu.Game;
 using osu.Game.Screens;
 using osu.Mods.Online.Base;
@@ -47,9 +49,9 @@ namespace osu.Mods.Online
 
         public override OsuScreen GetScreen() => new OnlineMenu();
 
-        public override void LoadComplete(OsuGame game)
+        public override void LoadComplete(OsuGame game, GameHost host)
         {
-            base.LoadComplete(game);
+            base.LoadComplete(game, host);
 
             switch (auto.Value)
             {
@@ -60,7 +62,7 @@ namespace osu.Mods.Online
                     };
 
                     game.Add(OsuNetworkingHandler);
-                    OsuNetworkingHandler.OnConnectedToHost += host => Logger.Log("Connected to server", LoggingTarget.Network, LogLevel.Debug);
+                    OsuNetworkingHandler.OnConnectedToHost += h => Logger.Log("Connected to server", LoggingTarget.Network, LogLevel.Debug);
                     OsuNetworkingHandler.Connect();
                     break;
                 case AutoJoin.Host:
@@ -78,7 +80,7 @@ namespace osu.Mods.Online
                     OsuNetworkingHandler.Add(Server);
 
                     game.Add(OsuNetworkingHandler);
-                    OsuNetworkingHandler.OnConnectedToHost += host => Logger.Log("Connected to local server", LoggingTarget.Network, LogLevel.Debug);
+                    OsuNetworkingHandler.OnConnectedToHost += h => Logger.Log("Connected to local server", LoggingTarget.Network, LogLevel.Debug);
                     OsuNetworkingHandler.Connect();
                     break;
             }

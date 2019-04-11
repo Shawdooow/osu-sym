@@ -9,6 +9,7 @@ using osu.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -85,7 +86,7 @@ namespace osu.Mods.Online.Multi.Player
         private ScoreManager scoreManager { get; set; }
 
         protected ScoreProcessor ScoreProcessor;
-        protected RulesetContainer RulesetContainer;
+        protected DrawableRuleset RulesetContainer;
 
         private HUDOverlay hudOverlay;
 
@@ -171,7 +172,7 @@ namespace osu.Mods.Online.Multi.Player
                 }
 
                 if (RulesetContainer == null)
-                    RulesetContainer = rulesetInstance.CreateRulesetContainerWith(working);
+                    RulesetContainer = rulesetInstance.CreateDrawableRulesetWith(working);
 
                 if (!RulesetContainer.Objects.Any())
                 {
@@ -202,14 +203,14 @@ namespace osu.Mods.Online.Multi.Player
             // the final usable gameplay clock with user-set offsets applied.
             FramedOffsetClock offsetClock = new FramedOffsetClock(platformOffsetClock);
 
-            userAudioOffset.ValueChanged += v => offsetClock.Offset = v;
+            userAudioOffset.ValueChanged += v => offsetClock.Offset = v.NewValue;
             userAudioOffset.TriggerChange();
 
             ScoreProcessor = RulesetContainer.CreateScoreProcessor();
 
             try
             {
-                RulesetContainer.Cursor.ActiveCursor.Colour = OsuColour.FromHex(SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.PlayerColor));
+                RulesetContainer.Cursor.ActiveCursor.Colour = OsuColour.FromHex(SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.PlayerColor));
             }
             catch (Exception e)
             {
@@ -247,7 +248,7 @@ namespace osu.Mods.Online.Multi.Player
                         {
                             RelativeSizeAxes = Axes.Both
                         },
-                        hudOverlay = new HUDOverlay(ScoreProcessor, RulesetContainer, working, offsetClock, adjustableClock)
+                        hudOverlay = new HUDOverlay(ScoreProcessor, RulesetContainer, working)
                         {
                             Clock = Clock, // hud overlay doesn't want to use the audio clock directly
                             ProcessCustomClock = false,
@@ -294,8 +295,8 @@ namespace osu.Mods.Online.Multi.Player
             hudOverlay.HoldToQuit.Action = this.Exit;
             hudOverlay.KeyCounter.Visible.BindTo(RulesetContainer.HasReplayLoaded);
 
-            if (ShowStoryboard)
-                initializeStoryboard(false);
+            //if (ShowStoryboard)
+                //initializeStoryboard(false);
 
             // Bind ScoreProcessor to ourselves
             ScoreProcessor.AllJudged += onCompletion;
@@ -450,6 +451,7 @@ namespace osu.Mods.Online.Multi.Player
                 storyboardContainer.Add(storyboard);
         }
 
+        /*
         protected override void UpdateBackgroundElements()
         {
             base.UpdateBackgroundElements();
@@ -467,6 +469,7 @@ namespace osu.Mods.Online.Multi.Player
             if (storyboardVisible && beatmap.Storyboard.ReplacesBackground)
                 Background?.FadeTo(0, BACKGROUND_FADE_DURATION, Easing.OutQuint);
         }
+        */
 
         private double boo = double.MinValue;
         protected override void Update()

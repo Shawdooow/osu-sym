@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using System;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
@@ -75,13 +76,13 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Worship.Characte
 
         public DrawableRyukoy(VitaruPlayfield playfield) : base(playfield, new Ryukoy())
         {
-            if (souls >= 10 && VitaruAPIContainer.Shawdooow)
+            if (souls.Value >= 10 && VitaruAPIContainer.Shawdooow)
                 playfield.Gamefield.Add(new DrawableReimu(playfield, this) { Ghost = true, ControlType = ControlType.Auto, Position = Position });
 
-            if (souls < 100 && VitaruAPIContainer.Shawdooow)
+            if (souls.Value < 100 && VitaruAPIContainer.Shawdooow)
                 souls.ValueChanged += value =>
                 {
-                    switch (value)
+                    switch (value.NewValue)
                     {
                         case 1:
                             Speak("That felt. . . Strange. . .");

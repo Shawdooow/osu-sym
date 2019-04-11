@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -84,20 +85,20 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                     g.SelectedCharacter.ValueChanged += value =>
                     {
                         if (enabled)
-                            SelectedCharacter.Value = value;
+                            SelectedCharacter.Value = value.NewValue;
                     };
                 else
                     characterDropdown.Bindable.ValueChanged += value =>
                     {
                         if (enabled)
-                            SelectedCharacter.Value = value;
+                            SelectedCharacter.Value = value.NewValue;
                     };
 
                 CharacterDropdowns.Add(characterDropdown);
 
                 gamemode.ValueChanged += value =>
                 {
-                    if (ChapterStore.GetChapterSet(value).Name == g.ChapterSet.Name)
+                    if (ChapterStore.GetChapterSet(value.NewValue).Name == g.ChapterSet.Name)
                     {
                         enabled = true;
                         characterFlow.ClearTransforms();

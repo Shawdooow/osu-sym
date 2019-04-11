@@ -1,7 +1,7 @@
 ﻿// Copyright (c) 2007-2017 ppy Pty Ltd <contact@ppy.sh>.
 // Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Framework.Configuration;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Screens.Play.PlayerSettings;
@@ -43,13 +43,13 @@ namespace osu.Mods.Evast.MusicVisualizers
 
         protected override void Connect()
         {
-            settings.MultiplierBindable.ValueChanged += newValue => visualizer.ValueMultiplier = newValue;
-            settings.UpdateBindable.ValueChanged += newValue => visualizer.UpdateDelay = newValue;
-            settings.SmoothnessBindable.ValueChanged += newValue => visualizer.Smoothness = newValue;
-            settings.WidthBindable.ValueChanged += newValue => visualizer.BarWidth = newValue;
-            settings.ReverseBindable.ValueChanged += newValue => visualizer.IsReversed = newValue;
-            settings.SpacingBindable.ValueChanged += newValue => visualizer.Spacing = newValue;
-            settings.AmountBindable.ValueChanged += newValue => visualizer.BarsAmount = newValue;
+            settings.MultiplierBindable.ValueChanged += newValue => visualizer.ValueMultiplier = newValue.NewValue;
+            settings.UpdateBindable.ValueChanged += newValue => visualizer.UpdateDelay = newValue.NewValue;
+            settings.SmoothnessBindable.ValueChanged += newValue => visualizer.Smoothness = newValue.NewValue;
+            settings.WidthBindable.ValueChanged += newValue => visualizer.BarWidth = newValue.NewValue;
+            settings.ReverseBindable.ValueChanged += newValue => visualizer.IsReversed = newValue.NewValue;
+            settings.SpacingBindable.ValueChanged += newValue => visualizer.Spacing = newValue.NewValue;
+            settings.AmountBindable.ValueChanged += newValue => visualizer.BarsAmount = newValue.NewValue;
         }
 
         private class Settings : PlayerSettingsGroup

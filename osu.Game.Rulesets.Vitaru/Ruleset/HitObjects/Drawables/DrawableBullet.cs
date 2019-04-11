@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using System;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Scoring;

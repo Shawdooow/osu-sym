@@ -139,10 +139,10 @@ namespace osu.Mods.Online.Base
             return base.SignPacket(packet);
         }
 
-        public void APIStateChanged(APIAccess api, APIState state)
+        public void APIStateChanged(IAPIProvider api, APIState state)
         {
             apiState = state;
-            OsuUser.Colour = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.PlayerColor);
+            OsuUser.Colour = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.PlayerColor);
 
             switch (state)
             {

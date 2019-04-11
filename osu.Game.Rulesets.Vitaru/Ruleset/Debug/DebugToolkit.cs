@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Debug
 
         private readonly FillFlowContainer<Container> debugItems;
 
-        private readonly DebugConfiguration configuration = VitaruSettings.VitaruConfigManager.GetBindable<DebugConfiguration>(VitaruSetting.DebugConfiguration);
+        private readonly DebugConfiguration configuration = VitaruSettings.VitaruConfigManager.Get<DebugConfiguration>(VitaruSetting.DebugConfiguration);
 
         public DebugToolkit()
         {

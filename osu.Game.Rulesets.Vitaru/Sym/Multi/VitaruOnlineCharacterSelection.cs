@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Logging;
 using osu.Game.Overlays.Settings;
@@ -28,7 +29,7 @@ namespace osu.Game.Rulesets.Vitaru.Sym.Multi
             characterSelection.SelectedCharacter.ValueChanged += value => SendPacket(new SettingsPacket(new Setting<string>
             {
                 Name = Title.Text,
-                Value = value,
+                Value = value.NewValue,
                 Sync = Sync,
             }));
         }

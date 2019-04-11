@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Abilities.Buffs;
@@ -111,7 +112,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Worship.Characte
 
             const double scale = (alpha_max - alpha_min) / (min_dist - range);
 
-            return Math.Min(alpha_min + (souls - range) * scale, alpha_max);
+            return Math.Min(alpha_min + (souls.Value - range) * scale, alpha_max);
         }
     }
 }

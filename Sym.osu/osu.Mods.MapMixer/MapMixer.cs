@@ -5,6 +5,7 @@ using osu.Core.Screens.Evast;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Track;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -224,7 +225,7 @@ namespace osu.Mods.MapMixer
                     Action = () =>
                     {
                         ClockPitch.Value += 0.05f;
-                        if (!sync_pitch) ClockSpeed.Value += 0.05f;
+                        if (!sync_pitch.Value) ClockSpeed.Value += 0.05f;
                     },
                     Position = new Vector2(100 , 250),
                     Bind = Key.N
@@ -241,7 +242,7 @@ namespace osu.Mods.MapMixer
                     Action = () =>
                     {
                         ClockPitch.Value -= 0.05f;
-                        if (!sync_pitch) ClockSpeed.Value -= 0.05f;
+                        if (!sync_pitch.Value) ClockSpeed.Value -= 0.05f;
                     },
                     Position = new Vector2(-100 , 250),
                     Bind = Key.N
@@ -262,7 +263,7 @@ namespace osu.Mods.MapMixer
             };
             sync_pitch.ValueChanged += value =>
             {
-                if (value)
+                if (value.NewValue)
                     ClockPitch.Value = ClockSpeed.Value;
             };
 

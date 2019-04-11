@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osuTK.Graphics;
@@ -29,7 +30,7 @@ namespace osu.Core.Containers.Text
             set => osuSpriteText.TextSize = value;
         }
 
-        public string Font
+        public FontUsage Font
         {
             get => osuSpriteText.Font;
             set => osuSpriteText.Font = value;

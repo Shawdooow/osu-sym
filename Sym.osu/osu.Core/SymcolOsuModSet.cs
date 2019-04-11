@@ -58,7 +58,7 @@ namespace osu.Core
                 samples.AddStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Samples"));
                 samples.AddStore(new OnlineStore());
 
-                SymcolAudio = new AudioManager(tracks, samples);
+                SymcolAudio = new AudioManager(host.AudioThread, tracks, samples);
 
                 LazerResources = new ResourceStore<byte[]>();
                 LazerResources.AddStore(new DllResourceStore(@"osu.Game.Resources.dll"));
@@ -71,7 +71,7 @@ namespace osu.Core
             OsuModStore.ReloadModSets();
 
             foreach (OsuModSet mod in OsuModStore.LoadedModSets)
-                mod.LoadComplete(game);
+                mod.LoadComplete(game, host);
 
             if (WikiOverlay == null)
                 game.Add(WikiOverlay = new WikiOverlay());

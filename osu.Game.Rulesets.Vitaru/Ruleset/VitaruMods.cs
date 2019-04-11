@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Audio;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Timing;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Mods;
@@ -288,7 +289,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
     {
         public override string Name => "Flashlight";
         public override string Acronym => "FL";
-        public override FontAwesome Icon => FontAwesome.fa_osu_mod_flashlight;
+        //public override FontAwesome Icon => FontAwesome.Flashlight;
         public override ModType Type => ModType.DifficultyIncrease;
 
         public override Type[] IncompatibleMods => new[]
