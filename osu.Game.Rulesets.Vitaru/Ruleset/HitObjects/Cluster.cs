@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Bindables;
-using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Framework.MathUtils;

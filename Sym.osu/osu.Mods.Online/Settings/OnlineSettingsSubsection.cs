@@ -6,7 +6,6 @@ using osu.Core.Config;
 using osu.Core.Settings;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Game;

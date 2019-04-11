@@ -1,7 +1,6 @@
 ﻿#region usings
 
 using osu.Framework.Bindables;
-using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Overlays.Settings;
 using osu.Mods.Online.Base;

@@ -1,6 +1,5 @@
 ﻿#region usings
 
-using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.UI;
 

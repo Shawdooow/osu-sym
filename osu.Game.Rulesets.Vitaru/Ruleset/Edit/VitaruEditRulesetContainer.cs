@@ -1,6 +1,5 @@
 #region usings
 
-using osu.Framework.Graphics.Cursor;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;

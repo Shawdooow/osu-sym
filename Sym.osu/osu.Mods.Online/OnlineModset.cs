@@ -7,7 +7,6 @@ using osu.Core.OsuMods;
 using osu.Core.Settings;
 using osu.Core.Wiki;
 using osu.Framework.Bindables;
-using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Framework.Platform;

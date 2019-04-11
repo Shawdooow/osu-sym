@@ -1,7 +1,6 @@
 ﻿#region usings
 
 using osu.Framework.Bindables;
-using osu.Framework.Configuration;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;

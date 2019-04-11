@@ -1,5 +1,8 @@
 ﻿#region usings
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Audio;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -17,6 +20,7 @@ using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Vitaru.Ruleset;
 using osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
+using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Edit;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
 using osu.Game.Rulesets.Vitaru.Sym.Multi;
@@ -24,10 +28,6 @@ using osu.Mods.Online.Base;
 using osu.Mods.Online.Multi;
 using osu.Mods.Online.Multi.Rulesets;
 using osu.Mods.Online.Multi.Settings.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 
 #endregion
 

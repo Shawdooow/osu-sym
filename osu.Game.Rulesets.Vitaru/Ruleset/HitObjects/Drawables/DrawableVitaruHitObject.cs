@@ -1,7 +1,6 @@
 ﻿#region usings
 
 using osu.Framework.Bindables;
-using osu.Framework.Configuration;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;

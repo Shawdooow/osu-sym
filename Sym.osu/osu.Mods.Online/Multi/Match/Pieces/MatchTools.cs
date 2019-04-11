@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using osu.Core.Containers.Shawdooow;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
