@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Audio;
+using osu.Framework.Graphics;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects.Drawables;
@@ -41,6 +42,21 @@ namespace osu.Mods.Rulesets.Core.HitObjects
                 control = point;
 
             return new SymcolSkinnableSound(HitObject.GetAdjustedSample(info, control)) { RulesetAudio = RulesetAudio };
+        }
+
+        protected override void ClearInternal(bool disposeChildren = true)
+        {
+            //Not everyone wants shitty ruleset performance Dean!
+            //base.ClearInternal(disposeChildren);
+
+            for (int i = 0; i < InternalChildren.Count; i++)
+            {
+                Drawable d = InternalChildren[i];
+                RemoveInternal(d);
+                if (disposeChildren)
+                    d.Dispose();
+                i = -1;
+            }
         }
 
         public new bool IsDisposed => base.IsDisposed;
