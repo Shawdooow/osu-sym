@@ -5,6 +5,7 @@ using osu.Core.Config;
 using osu.Core.OsuMods;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Game.Graphics;
@@ -17,7 +18,7 @@ namespace osu.Core.Settings
     public sealed class SymSection : SettingsSection
     {
         public override string Header => "Modloader";
-        public override FontAwesome Icon => FontAwesome.fa_bathtub;
+        public override IconUsage Icon => FontAwesome.Solid.Bath;
 
         public static Action<Storage> OnPurge;
 

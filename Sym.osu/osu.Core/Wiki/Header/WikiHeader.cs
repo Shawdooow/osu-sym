@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using osu.Core.Wiki.Included.Home;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -100,8 +101,9 @@ namespace osu.Core.Wiki.Header
                 //creator = new CreatorSection(),
             };
 
-            breadcrumbs.Current.ValueChanged += value =>
+            breadcrumbs.Current.ValueChanged += valuechange =>
             {
+                BreadCrumbState value = valuechange.NewValue;
                 switch (value)
                 {
                     case BreadCrumbState.Home:
@@ -112,8 +114,9 @@ namespace osu.Core.Wiki.Header
 
             CurrentWikiSet.BindTo(index.CurrentWikiSet);
 
-            CurrentWikiSet.ValueChanged += value =>
+            CurrentWikiSet.ValueChanged += valuechange =>
             {
+                WikiSet value = valuechange.NewValue;
                 name.Text = value.Name;
                 //creator.Creator = value.Creator;
 

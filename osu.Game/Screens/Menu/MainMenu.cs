@@ -20,6 +20,7 @@ using osu.Game.Screens.Multi;
 using osu.Game.Screens.Select;
 using osu.Game.Screens.Tournament;
 using osu.Framework.Platform;
+using osu.Game.ModLoader;
 
 namespace osu.Game.Screens.Menu
 {

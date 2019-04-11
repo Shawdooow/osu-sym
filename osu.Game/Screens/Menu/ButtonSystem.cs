@@ -93,7 +93,6 @@ namespace osu.Game.Screens.Menu
             });
 
             buttonArea.Flow.CentreTarget = iconFacade;
-            buttonsPlay.Add(new Button(@"sym", @"button-generic-select", FontAwesome.fa_osu_gear, new Color4(70, 48, 146, 255), () => OnSym?.Invoke()));
         }
 
         [Resolved(CanBeNull = true)]
@@ -119,6 +118,7 @@ namespace osu.Game.Screens.Menu
             buttonsTopLevel.Add(new Button(@"play", @"button-play-select", OsuIcon.Logo, new Color4(102, 68, 204, 255), () => State = ButtonSystemState.Play, WEDGE_WIDTH, Key.P));
             buttonsTopLevel.Add(new Button(@"osu!editor", @"button-generic-select", OsuIcon.EditCircle, new Color4(238, 170, 0, 255), () => OnEdit?.Invoke(), 0, Key.E));
             buttonsTopLevel.Add(new Button(@"osu!direct", @"button-direct-select", OsuIcon.ChevronDownCircle, new Color4(165, 204, 0, 255), () => OnDirect?.Invoke(), 0, Key.D));
+            buttonsPlay.Add(new Button(@"sym", @"button-generic-select", FontAwesome.Solid.Cog, new Color4(70, 48, 146, 255), () => OnSym?.Invoke()));
 
             if (host.CanExit)
                 buttonsTopLevel.Add(new Button(@"exit", string.Empty, OsuIcon.CrossCircle, new Color4(238, 51, 153, 255), () => OnExit?.Invoke(), 0, Key.Q));

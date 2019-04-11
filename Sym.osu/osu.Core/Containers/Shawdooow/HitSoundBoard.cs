@@ -3,6 +3,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -42,8 +43,9 @@ namespace osu.Core.Containers.Shawdooow
         [BackgroundDependencyLoader]
         private void load(AudioManager audio)
         {
-            AlternateBindable.ValueChanged += value =>
+            AlternateBindable.ValueChanged += valuechange =>
             {
+                bool value = valuechange.NewValue;
                 if (!value)
                 {
                     nNormal = audio.Sample.Get($@"Gameplay/normal-hitnormal");

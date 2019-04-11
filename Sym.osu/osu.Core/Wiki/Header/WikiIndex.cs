@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using osu.Core.Wiki.OverlayPieces;
+using osu.Framework.Bindables;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -63,8 +64,9 @@ namespace osu.Core.Wiki.Header
             ReloadOptions();
 
             OsuColour osu = new OsuColour();
-            CurrentWikiSet.ValueChanged += value =>
+            CurrentWikiSet.ValueChanged += valuechange =>
             {
+                WikiSet value = valuechange.NewValue;
                 if (value.Name == "Home")
                     foreach (WikiClickableOsuSpriteText b in selectableWikis)
                     {

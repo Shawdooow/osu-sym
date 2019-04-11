@@ -10,7 +10,7 @@ namespace osu.Core.Containers.SymcolToolbar
 {
     public class SymcolModdedToolbar : Toolbar
     {
-        private ToolbarUserArea userArea;
+        private ToolbarUserButton userArea;
 
         protected override void LoadComplete()
         {
@@ -60,7 +60,7 @@ namespace osu.Core.Containers.SymcolToolbar
                         //{
                         //    Icon = FontAwesome.fa_search
                         //},
-                        userArea = new ToolbarUserArea(),
+                        userArea = new ToolbarUserButton(),
                         new ToolbarNotificationButton(),
                     }
                 }
@@ -69,8 +69,8 @@ namespace osu.Core.Containers.SymcolToolbar
 
         protected override void PopOut()
         {
+            userArea?.StateContainer.Hide();
             base.PopOut();
-            userArea?.LoginOverlay.Hide();
         }
     }
 }

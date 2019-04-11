@@ -411,9 +411,7 @@ namespace osu.Game
             screenStack.ScreenPushed += screenPushed;
             screenStack.ScreenExited += screenExited;
 
-            loadComponentSingleFile(osuLogo, logo =>
-            {
-                logoContainer.Add(logo);
+            loadComponentSingleFile(osuLogo, logo => { logoContainer.Add(logo); });
 
             Toolbar = ModStore.SymcolBaseSet == null
                 ?  new Toolbar
@@ -434,6 +432,8 @@ namespace osu.Game
                 {
                     CloseAllOverlays(false);
                     menuScreen?.MakeCurrent();
+                };
+            }
 
             loadComponentSingleFile(volume = new VolumeOverlay(), leftFloatingOverlayContent.Add);
             loadComponentSingleFile(onscreenDisplay = new OnScreenDisplay(), Add);
