@@ -416,7 +416,6 @@ namespace osu.Game
             Toolbar = ModStore.SymcolBaseSet == null
                 ?  new Toolbar
                 {
-                    Depth = -5,
                     OnHome = delegate
                     {
                         CloseAllOverlays(false);
@@ -427,13 +426,14 @@ namespace osu.Game
 
             if (ModStore.SymcolBaseSet != null)
             {
-                Toolbar.Depth = -5;
                 Toolbar.OnHome = delegate
                 {
                     CloseAllOverlays(false);
                     menuScreen?.MakeCurrent();
                 };
             }
+
+            loadComponentSingleFile(Toolbar, topMostOverlayContent.Add);
 
             loadComponentSingleFile(volume = new VolumeOverlay(), leftFloatingOverlayContent.Add);
             loadComponentSingleFile(onscreenDisplay = new OnScreenDisplay(), Add);
