@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
             if (currentDrawableCluster != null && (VitaruPlayfield.Current < currentDrawableCluster.HitObject.StartTime - currentDrawableCluster.HitObject.TimePreempt || VitaruPlayfield.Current >= currentDrawableCluster.HitObject.EndTime))
                 currentDrawableCluster = null;
 
-            DrawableCluster nextCluster = DrawableClusters.First();
+            DrawableCluster nextCluster = DrawableClusters.Count > 0 ? DrawableClusters.First() : null;
 
             restart:
             foreach (DrawableCluster drawableCluster in DrawableClusters)
