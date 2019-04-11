@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
                     nextCluster = drawableCluster;
             }
 
-            if (currentDrawableCluster == null)
+            if (currentDrawableCluster == null && nextCluster != null)
             {
                 Move(nextCluster);
                 DrawableClusters.Remove(nextCluster);
