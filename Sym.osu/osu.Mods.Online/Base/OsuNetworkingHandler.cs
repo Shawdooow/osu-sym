@@ -71,10 +71,10 @@ namespace osu.Mods.Online.Base
             }
         }
 
-        [BackgroundDependencyLoader]
+        [BackgroundDependencyLoader(true)]
         private void load(APIAccess api, BeatmapManager manager, Storage storage, NotificationOverlay notifications)
         {
-            api.Register(this);
+            api?.Register(this);
 
             OsuUser.Colour = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.PlayerColor);
             OsuUser.Username = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.SavedName);

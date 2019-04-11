@@ -556,6 +556,8 @@ namespace osu.Game
 
             settings.StateChanged += _ => updateScreenOffset();
             notifications.StateChanged += _ => updateScreenOffset();
+
+            ModStore.SymcolBaseSet?.LoadComplete(this, Host);
         }
 
         public class GameIdleTracker : IdleTracker

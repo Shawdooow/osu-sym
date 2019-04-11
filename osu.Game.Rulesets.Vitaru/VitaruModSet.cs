@@ -20,10 +20,6 @@ namespace osu.Game.Rulesets.Vitaru
         {
             base.LoadComplete(game, host);
 
-            VitaruRuleset.VitaruAudio.Volume.BindTo(game.Audio.Volume);
-            VitaruRuleset.VitaruAudio.VolumeSample.BindTo(game.Audio.VolumeSample);
-            VitaruRuleset.VitaruAudio.VolumeTrack.BindTo(game.Audio.VolumeTrack);
-
             SymSection.OnPurge += storage =>
             {
                 if (storage.ExistsDirectory("vitaru")) storage.DeleteDirectory("vitaru");
@@ -36,6 +32,10 @@ namespace osu.Game.Rulesets.Vitaru
             samples.AddStore(new NamespacedResourceStore<byte[]>(VitaruRuleset.VitaruResources, @"Samples"));
 
             VitaruRuleset.VitaruAudio = new AudioManager(host.AudioThread, tracks, samples);
+
+            VitaruRuleset.VitaruAudio.Volume.BindTo(game.Audio.Volume);
+            VitaruRuleset.VitaruAudio.VolumeSample.BindTo(game.Audio.VolumeSample);
+            VitaruRuleset.VitaruAudio.VolumeTrack.BindTo(game.Audio.VolumeTrack);
         }
     }
 }
