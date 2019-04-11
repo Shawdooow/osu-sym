@@ -34,6 +34,7 @@ using osu.Game.Overlays.Notifications;
 using osu.Game.Rulesets;
 using osu.Game.Screens.Play;
 using osu.Game.Input.Bindings;
+using osu.Game.ModLoader;
 using osu.Game.Online.Chat;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Skinning;
@@ -118,6 +119,7 @@ namespace osu.Game
         public OsuGame(string[] args = null)
         {
             this.args = args;
+            ModStore.LoadModSets();
 
             forwardLoggedErrorsToNotifications();
 
@@ -355,6 +357,7 @@ namespace osu.Game
 
         protected override void Dispose(bool isDisposing)
         {
+            ModStore.SymcolBaseSet?.Dispose();
             base.Dispose(isDisposing);
             RavenLogger.Dispose();
         }
@@ -412,21 +415,25 @@ namespace osu.Game
             {
                 logoContainer.Add(logo);
 
-                // Loader has to be created after the logo has finished loading as Loader performs logo transformations on entering.
-                screenStack.Push(new Loader
+            Toolbar = ModStore.SymcolBaseSet == null
+                ?  new Toolbar
                 {
-                    RelativeSizeAxes = Axes.Both
-                });
-            });
+                    Depth = -5,
+                    OnHome = delegate
+                    {
+                        CloseAllOverlays(false);
+                        menuScreen?.MakeCurrent();
+                    },
+                }
+                : ModStore.SymcolBaseSet.GetToolbar();
 
-            loadComponentSingleFile(Toolbar = new Toolbar
+            if (ModStore.SymcolBaseSet != null)
             {
-                OnHome = delegate
+                Toolbar.Depth = -5;
+                Toolbar.OnHome = delegate
                 {
                     CloseAllOverlays(false);
                     menuScreen?.MakeCurrent();
-                },
-            }, topMostOverlayContent.Add);
 
             loadComponentSingleFile(volume = new VolumeOverlay(), leftFloatingOverlayContent.Add);
             loadComponentSingleFile(onscreenDisplay = new OnScreenDisplay(), Add);

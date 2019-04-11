@@ -41,6 +41,7 @@ namespace osu.Game.Screens.Menu
         public Action OnSettings;
         public Action OnMulti;
         public Action OnChart;
+        public Action OnSym;
 
         public const float BUTTON_WIDTH = 140f;
         public const float WEDGE_WIDTH = 20;
@@ -92,6 +93,7 @@ namespace osu.Game.Screens.Menu
             });
 
             buttonArea.Flow.CentreTarget = iconFacade;
+            buttonsPlay.Add(new Button(@"sym", @"button-generic-select", FontAwesome.fa_osu_gear, new Color4(70, 48, 146, 255), () => OnSym?.Invoke()));
         }
 
         [Resolved(CanBeNull = true)]

@@ -64,6 +64,11 @@ namespace osu.Game.Screens.Menu
                             OnEdit = delegate { this.Push(new Editor()); },
                             OnSolo = onSolo,
                             OnMulti = delegate { this.Push(new Multiplayer()); },
+                            OnSym = delegate
+                            {
+                                if (ModStore.SymcolBaseSet != null)
+                                    this.Push(ModStore.SymcolBaseSet.GetMenuScreen());
+                            },
                             OnExit = this.Exit,
                         }
                     }

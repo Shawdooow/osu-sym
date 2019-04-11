@@ -190,7 +190,11 @@ namespace osu.Game.Beatmaps.Formats
 
         internal class LegacySampleControlPoint : SampleControlPoint
         {
-            public int CustomSampleBank;
+            public int CustomSampleBank
+            {
+                get => SampleSuffix;
+                set => SampleSuffix = value;
+            }
 
             public override SampleInfo ApplyTo(SampleInfo sampleInfo)
             {
