@@ -414,7 +414,7 @@ namespace osu.Game
             loadComponentSingleFile(osuLogo, logo => { logoContainer.Add(logo); });
 
             Toolbar = ModStore.SymcolBaseSet == null
-                ?  new Toolbar
+                ? new Toolbar
                 {
                     OnHome = delegate
                     {
