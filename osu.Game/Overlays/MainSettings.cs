@@ -8,6 +8,7 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Overlays.Settings.Sections;
 using osuTK.Graphics;
 using System.Collections.Generic;
+using osu.Game.ModLoader;
 
 namespace osu.Game.Overlays
 {
@@ -71,6 +72,12 @@ namespace osu.Game.Overlays
         private void load()
         {
             ContentContainer.Add(keyBindingOverlay);
+
+            if (ModStore.SymcolBaseSet != null)
+            {
+                SettingsSection s = ModStore.SymcolBaseSet.GetSettings();
+                if (s != null) AddSection(s);
+            }
         }
     }
 }
