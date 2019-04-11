@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -126,6 +127,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
             if (currentDrawableCluster != null && (VitaruPlayfield.Current < currentDrawableCluster.HitObject.StartTime - currentDrawableCluster.HitObject.TimePreempt || VitaruPlayfield.Current >= currentDrawableCluster.HitObject.EndTime))
                 currentDrawableCluster = null;
 
+            DrawableCluster nextCluster = DrawableClusters.First();
+
             restart:
             foreach (DrawableCluster drawableCluster in DrawableClusters)
             {
@@ -136,12 +139,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.Bosses.DrawableBosses
                     goto restart;
                 }
 
-                if (currentDrawableCluster == null)
-                {
-                    Move(drawableCluster);
-                    DrawableClusters.Remove(drawableCluster);
-                    break;
-                }
+                if (drawableCluster.HitObject.StartTime < nextCluster?.HitObject.StartTime)
+                    nextCluster = drawableCluster;
+            }
+
+            if (currentDrawableCluster == null)
+            {
+                Move(nextCluster);
+                DrawableClusters.Remove(nextCluster);
             }
 
             if (currentDrawableCluster != null)
