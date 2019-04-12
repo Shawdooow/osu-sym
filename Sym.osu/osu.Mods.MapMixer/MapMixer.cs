@@ -316,7 +316,7 @@ namespace osu.Mods.MapMixer
 
         private void applyToClock(IAdjustableClock clock)
         {
-            if (clock is IHasPitchAdjust pitchAdjust)
+            if (clock is IHasPitchAdjust pitchAdjust && clock is IHasTempoAdjust tempoAdjust)
             {
                 if (ClockPitch.Value > 1)
                 {
@@ -324,11 +324,11 @@ namespace osu.Mods.MapMixer
                     pitch = pitchAdjust.PitchAdjust;
 
                     if (clockSpeed.Bindable.Value > 1)
-                        clock.Rate = ClockSpeed.Value - (ClockPitch.Value - 1) / 2 - (ClockSpeed.Value - 1) / 2;
+                        tempoAdjust.TempoAdjust = ClockSpeed.Value - (ClockPitch.Value - 1) / 2 - (ClockSpeed.Value - 1) / 2;
                     else
-                        clock.Rate = ClockSpeed.Value - (ClockPitch.Value - 1) / 2 + (ClockSpeed.Value - 1) * 0.5f;
+                        tempoAdjust.TempoAdjust = ClockSpeed.Value - (ClockPitch.Value - 1) / 2 + (ClockSpeed.Value - 1) * 0.5f;
 
-                    speed = clock.Rate;
+                    speed = tempoAdjust.TempoAdjust;
                 }
                 else if (ClockPitch.Value < 1)
                 {
@@ -336,20 +336,20 @@ namespace osu.Mods.MapMixer
                     pitch = pitchAdjust.PitchAdjust;
 
                     if (clockSpeed.Bindable.Value < 1)
-                        clock.Rate = ClockSpeed.Value + (ClockPitch.Value - 1) * -2 + (ClockSpeed.Value - 1) * 0.5f;
+                        tempoAdjust.TempoAdjust = ClockSpeed.Value + (ClockPitch.Value - 1) * -2 + (ClockSpeed.Value - 1) * 0.5f;
                     else
-                        clock.Rate = ClockSpeed.Value + (ClockPitch.Value - 1) * -2 - (ClockSpeed.Value - 1) / 2;
+                        tempoAdjust.TempoAdjust = ClockSpeed.Value + (ClockPitch.Value - 1) * -2 - (ClockSpeed.Value - 1) / 2;
 
-                    speed = clock.Rate;
+                    speed = tempoAdjust.TempoAdjust;
                 }
                 else
                 {
                     pitchAdjust.PitchAdjust = ClockPitch.Value;
                     pitch = pitchAdjust.PitchAdjust;
 
-                    clock.Rate = ClockSpeed.Value;
+                    tempoAdjust.TempoAdjust = ClockSpeed.Value;
 
-                    speed = clock.Rate;
+                    speed = tempoAdjust.TempoAdjust;
                 }
             }
                 
