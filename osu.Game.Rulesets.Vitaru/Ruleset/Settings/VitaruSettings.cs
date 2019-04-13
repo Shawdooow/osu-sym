@@ -35,9 +35,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
         public static bool Experimental => experimental.Value;
         public static GraphicsOptions BulletGraphics => bulletGraphics.Value;
+        public static GraphicsOptions EnemyGraphics => enemyGraphics.Value;
 
         private static Bindable<bool> experimental;
         private static Bindable<GraphicsOptions> bulletGraphics;
+        private static Bindable<GraphicsOptions> enemyGraphics;
 
         [BackgroundDependencyLoader]
         private void load(GameHost host, Storage storage)
@@ -64,6 +66,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
             experimental = VitaruConfigManager.GetBindable<bool>(VitaruSetting.Experimental);
             bulletGraphics = VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
+            enemyGraphics = VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.EnemyVisuals);
 
             Children = new Drawable[]
             {

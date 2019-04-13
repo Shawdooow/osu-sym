@@ -12,8 +12,10 @@ using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects.DrawableHitObjects;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.Settings;
+using osu.Game.Screens.Play;
 using osuTK;
 using osuTK.Graphics;
+using Sym.Base.Graphics.Sprites;
 
 #endregion
 
@@ -44,8 +46,53 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
             characterColor = drawableCluster.AccentColour;
         }
 
+        protected override void LoadAnimationSprites(TextureStore textures, Storage storage)
+        {
+            if (VitaruSettings.EnemyGraphics != GraphicsOptions.Experimental)
+            {
+                base.LoadAnimationSprites(textures, storage);
+                RightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName, storage);
+                KiaiRightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Kiai", storage);
+            }
+            else
+            {
+                SoulContainer.Alpha = 0;
+                KiaiContainer.Alpha = 1;
+
+                KiaiLeftSprite.Alpha = 0;
+                KiaiRightSprite.Alpha = 0;
+                KiaiStillSprite.Alpha = 0;
+
+                KiaiContainer.AddRange(new Drawable[]
+                {
+                    new AnimatedSprite
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        UpdateRate = 1000 / 20f,
+                        Textures = new[]
+                        {
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 1", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 5", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 10", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 15", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 20", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 25", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 30", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 35", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 40", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 45", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 50", storage),
+                            VitaruSkinElement.LoadSkinElement("Fairy/Center 55", storage),
+                        }
+                    },
+                });
+            }
+        }
+
         protected override void MovementAnimations()
         {
+            if (VitaruSettings.EnemyGraphics == GraphicsOptions.Experimental) return;
+
             if (LeftSprite.Texture == null && RightSprite != null)
             {
                 LeftSprite.Texture = RightSprite.Texture;
@@ -87,13 +134,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters
                     KiaiStillSprite.Alpha = 0;
             }
             LastX = Position.X;
-        }
-
-        protected override void LoadAnimationSprites(TextureStore textures, Storage storage)
-        {
-            base.LoadAnimationSprites(textures, storage);
-            RightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName, storage);
-            KiaiRightSprite.Texture = VitaruSkinElement.LoadSkinElement(CharacterName + "Kiai", storage);
         }
 
         protected override void OnNewBeat(int beatIndex, TimingControlPoint timingPoint, EffectControlPoint effectPoint, TrackAmplitudes amplitudes)
