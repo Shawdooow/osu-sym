@@ -10,7 +10,7 @@ namespace osu.Mods.Online.Base.Packets
     [Serializable]
     public class OnlinePacket : Packet
     {
-        public override uint PacketSize => 2048;
+        public override int PacketSize => 2048;
 
         public OsuUser User;
     }

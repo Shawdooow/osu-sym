@@ -11,7 +11,7 @@ namespace osu.Mods.Online.Multi.Lobby.Packets
     [Serializable]
     public class OsuConnectPacket : ConnectPacket
     {
-        public override uint PacketSize => 1024;
+        public override int PacketSize => 1024;
 
         public OsuUser User;
     }

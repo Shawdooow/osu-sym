@@ -431,7 +431,7 @@ namespace osu.Mods.Online.Base
                     {
                         long fileSize = fs.Length;
                         long sum = 0;
-                        byte[] data = new byte[Sym.Networking.NetworkingClients.TcpNetworkingClient.PACKET_SIZE - Sym.Networking.NetworkingClients.TcpNetworkingClient.PACKET_SIZE / 8];
+                        byte[] data = new byte[Sym.Networking.NetworkingClients.TcpNetworkingClient.MAX_PACKET_SIZE - name.Length * 2 - 4096];
 
                         //Tell them its on its way
                         SendToPeer(new StartFileTransferPacket(name, fileSize), peer);

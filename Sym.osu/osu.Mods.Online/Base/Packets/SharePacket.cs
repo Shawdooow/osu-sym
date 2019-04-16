@@ -11,7 +11,7 @@ namespace osu.Mods.Online.Base.Packets
     [Serializable]
     public class SharePacket : Packet, ISerializable
     {
-        public override uint PacketSize => 1024;
+        public override int PacketSize => 1024;
 
         public virtual string Name { get; set; }
 

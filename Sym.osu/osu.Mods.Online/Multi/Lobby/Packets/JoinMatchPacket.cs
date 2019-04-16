@@ -11,7 +11,7 @@ namespace osu.Mods.Online.Multi.Lobby.Packets
     [Serializable]
     public class JoinMatchPacket : Packet
     {
-        public override uint PacketSize => 2048;
+        public override int PacketSize => 2048;
 
         public OsuUser User;
 
