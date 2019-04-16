@@ -10,6 +10,7 @@ using osu.Framework.Platform;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers;
+using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay;
 using osu.Game.Rulesets.Vitaru.Ruleset.Debug;
 using osu.Mods.Rulesets.Core.Rulesets;
 
@@ -42,9 +43,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
         private static Bindable<GraphicsOptions> enemyGraphics;
 
         [BackgroundDependencyLoader]
-        private void load(GameHost host, Storage storage)
+        private void load(GameHost host)
         {
             VitaruConfigManager = new VitaruConfigManager(host.Storage);
+
+            Add(new VitaruAPIContainer());
 
             Bindable<string> gamemodeBindable = VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
 

@@ -198,25 +198,11 @@ namespace osu.Game.Rulesets.Vitaru
 
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new VitaruBeatmapProcessor(beatmap);
 
-        private static VitaruAPIContainer api;
-
         public override Drawable CreateIcon()
         {
             Sprite icon = new Sprite { Texture = VitaruTextures.Get("icon") };
             Icons.Add(icon);
-
-            Container iconContainer = new Container
-            {
-                AutoSizeAxes = Axes.Both,
-                Child = icon,
-            };
-
-            if (api == null)
-            {
-                iconContainer.OnLoadComplete += d => ((Container)d).Add(api = new VitaruAPIContainer());
-            }
-
-            return iconContainer;
+            return icon;
         }
 
         //TODO: Custom Touhosu Icon

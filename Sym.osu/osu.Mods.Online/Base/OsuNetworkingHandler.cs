@@ -72,7 +72,7 @@ namespace osu.Mods.Online.Base
         }
 
         [BackgroundDependencyLoader(true)]
-        private void load(APIAccess api, BeatmapManager manager, Storage storage, NotificationOverlay notifications)
+        private void load(IAPIProvider api, BeatmapManager manager, Storage storage, NotificationOverlay notifications)
         {
             api?.Register(this);
 

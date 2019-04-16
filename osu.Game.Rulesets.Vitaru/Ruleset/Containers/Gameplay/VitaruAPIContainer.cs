@@ -14,8 +14,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Gameplay
 
         public static bool Shawdooow;
 
-        [BackgroundDependencyLoader(true)]
-        private void load(APIAccess api)
+        [BackgroundDependencyLoader]
+        private void load(IAPIProvider api)
         {
             api?.Register(this);
         }
