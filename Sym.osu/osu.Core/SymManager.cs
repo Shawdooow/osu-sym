@@ -1,34 +1,20 @@
-﻿#region usings
-
+﻿using System;
+using System.Threading;
 using osu.Core.Config;
-using osu.Core.Containers.SymcolToolbar;
 using osu.Core.OsuMods;
-using osu.Core.Screens;
-using osu.Core.Settings;
 using osu.Core.Wiki;
 using osu.Framework.Audio;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
+using osu.Framework.Threading;
 using osu.Game;
-using osu.Game.ModLoader;
-using osu.Game.Overlays.Settings;
-using osu.Game.Overlays.Toolbar;
-using osu.Game.Screens;
-
-#endregion
 
 namespace osu.Core
 {
-    public class SymcolOsuModSet : SymcolBaseSet
+    public static class SymManager
     {
         public static WikiOverlay WikiOverlay;
-
-        public override OsuScreen GetMenuScreen() => new SymcolMenu();
-
-        public override Toolbar GetToolbar() => new SymcolModdedToolbar();
-
-        public override SettingsSection GetSettings() => new SymSection();
 
         public static ResourceStore<byte[]> LazerResources;
         public static TextureStore LazerTextures;
@@ -38,9 +24,11 @@ namespace osu.Core
         public static AudioManager SymcolAudio;
         public static SymConfigManager SymConfigManager;
 
-        public override void LoadComplete(OsuGame game, GameHost host)
+        private static bool init;
+
+        public static void Init(OsuGame game, GameHost host)
         {
-            base.LoadComplete(game, host);
+            if (init) return;
 
             if (SymcolResources == null)
             {
@@ -74,13 +62,12 @@ namespace osu.Core
                 mod.LoadComplete(game, host);
 
             if (WikiOverlay == null)
-                game.Add(WikiOverlay = new WikiOverlay());
-        }
+            {
+                WikiOverlay = new WikiOverlay();
+                if (Thread.CurrentThread.Name == GameThread.PrefixedThreadNameFor("Update")) game.Add(WikiOverlay);
+            }
 
-        public override void Dispose()
-        {
-            SymConfigManager.Save();
-            base.Dispose();
+            init = true;
         }
     }
 }

@@ -14,9 +14,9 @@ namespace osu.Core.Wiki.Included.Symcol
 
         public override string IndexTooltip => "Sym modloader wiki";
 
-        public override Texture Icon => SymcolOsuModSet.SymcolTextures.Get("Symcol@2x");
+        public override Texture Icon => SymManager.SymcolTextures.Get("Symcol@2x");
 
-        public override Texture HeaderBackground => SymcolOsuModSet.SymcolTextures.Get("Symcoltober 1440 2018");
+        public override Texture HeaderBackground => SymManager.SymcolTextures.Get("Symcoltober 1440 2018");
 
         public override Creator Creator => Creator.Shawdooow;
 

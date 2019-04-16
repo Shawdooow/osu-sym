@@ -22,12 +22,12 @@ namespace osu.Mods.Online.Settings
 
         private OsuGame game;
 
-        private readonly Bindable<string> ipBindable = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.SavedIP);
-        private readonly Bindable<int> portBindable = SymcolOsuModSet.SymConfigManager.GetBindable<int>(SymSetting.SavedPort);
+        private readonly Bindable<string> ipBindable = SymManager.SymConfigManager.GetBindable<string>(SymSetting.SavedIP);
+        private readonly Bindable<int> portBindable = SymManager.SymConfigManager.GetBindable<int>(SymSetting.SavedPort);
         private readonly Bindable<string> portString = new Bindable<string>
         {
             Default = "25590",
-            Value = SymcolOsuModSet.SymConfigManager.Get<int>(SymSetting.SavedPort).ToString(),
+            Value = SymManager.SymConfigManager.Get<int>(SymSetting.SavedPort).ToString(),
         };
 
         public OnlineSettingsSubsection()
@@ -37,7 +37,7 @@ namespace osu.Mods.Online.Settings
                 new SettingsEnumDropdown<AutoJoin>
                 {
                     LabelText = "Connect on launch?",
-                    Bindable = SymcolOsuModSet.SymConfigManager.GetBindable<AutoJoin>(SymSetting.Auto)
+                    Bindable = SymManager.SymConfigManager.GetBindable<AutoJoin>(SymSetting.Auto)
                 },
                 new SettingsTextBox
                 {

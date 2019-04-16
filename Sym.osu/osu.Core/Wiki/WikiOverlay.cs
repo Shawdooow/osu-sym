@@ -165,10 +165,10 @@ namespace osu.Core.Wiki
         {
             base.LoadComplete();
 
-            if (SymcolOsuModSet.SymConfigManager.Get<bool>(SymSetting.FreshInstall))
+            if (SymManager.SymConfigManager.Get<bool>(SymSetting.FreshInstall))
             {
                 doit = Time.Current + 8000;
-                SymcolOsuModSet.SymConfigManager.Set<bool>(SymSetting.FreshInstall, false);
+                SymManager.SymConfigManager.Set<bool>(SymSetting.FreshInstall, false);
             }
         }
 

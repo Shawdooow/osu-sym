@@ -76,9 +76,9 @@ namespace osu.Mods.Online.Base
         {
             api?.Register(this);
 
-            OsuUser.Colour = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.PlayerColor);
-            OsuUser.Username = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.SavedName);
-            OsuUser.ID = SymcolOsuModSet.SymConfigManager.Get<long>(SymSetting.SavedUserID);
+            OsuUser.Colour = SymManager.SymConfigManager.Get<string>(SymSetting.PlayerColor);
+            OsuUser.Username = SymManager.SymConfigManager.Get<string>(SymSetting.SavedName);
+            OsuUser.ID = SymManager.SymConfigManager.Get<long>(SymSetting.SavedUserID);
 
             this.manager = manager;
             this.storage = storage;
@@ -142,17 +142,17 @@ namespace osu.Mods.Online.Base
         public void APIStateChanged(IAPIProvider api, APIState state)
         {
             apiState = state;
-            OsuUser.Colour = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.PlayerColor);
+            OsuUser.Colour = SymManager.SymConfigManager.Get<string>(SymSetting.PlayerColor);
 
             switch (state)
             {
                 default:
-                    OsuUser.Username = SymcolOsuModSet.SymConfigManager.Get<string>(SymSetting.SavedName);
-                    OsuUser.ID = SymcolOsuModSet.SymConfigManager.Get<long>(SymSetting.SavedUserID);
+                    OsuUser.Username = SymManager.SymConfigManager.Get<string>(SymSetting.SavedName);
+                    OsuUser.ID = SymManager.SymConfigManager.Get<long>(SymSetting.SavedUserID);
                     break;
                 case APIState.Online:
-                    SymcolOsuModSet.SymConfigManager.Set(SymSetting.SavedName, api.LocalUser.Value.Username);
-                    SymcolOsuModSet.SymConfigManager.Set(SymSetting.SavedUserID, api.LocalUser.Value.Id);
+                    SymManager.SymConfigManager.Set(SymSetting.SavedName, api.LocalUser.Value.Username);
+                    SymManager.SymConfigManager.Set(SymSetting.SavedUserID, api.LocalUser.Value.Id);
 
                     OsuUser.Username = api.LocalUser.Value.Username;
                     OsuUser.ID = api.LocalUser.Value.Id;

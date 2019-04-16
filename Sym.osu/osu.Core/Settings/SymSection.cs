@@ -45,7 +45,7 @@ namespace osu.Core.Settings
                     new SettingsTextBox
                     {
                         LabelText = "Player Color (HEX)",
-                        Bindable = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.PlayerColor)
+                        Bindable = SymManager.SymConfigManager.GetBindable<string>(SymSetting.PlayerColor)
                     },
                 };
 

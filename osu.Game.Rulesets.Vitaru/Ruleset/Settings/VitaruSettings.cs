@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using osu.Core;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -43,9 +44,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
         private static Bindable<GraphicsOptions> enemyGraphics;
 
         [BackgroundDependencyLoader]
-        private void load(Storage storage)
+        private void load(OsuGame osu, GameHost host)
         {
-            VitaruConfigManager = new VitaruConfigManager(storage);
+            SymManager.Init(osu, host);
+
+            VitaruConfigManager = new VitaruConfigManager(host.Storage);
 
             Add(new VitaruAPIContainer());
 

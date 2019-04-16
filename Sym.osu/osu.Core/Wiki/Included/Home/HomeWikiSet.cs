@@ -11,7 +11,7 @@ namespace osu.Core.Wiki.Included.Home
     {
         public override string Name => "Home";
 
-        public override Texture HeaderBackground => SymcolOsuModSet.LazerTextures.Get("Backgrounds/bg2");
+        public override Texture HeaderBackground => SymManager.LazerTextures.Get("Backgrounds/bg2");
 
         public override WikiSection[] GetSections() => new WikiSection[]
         {

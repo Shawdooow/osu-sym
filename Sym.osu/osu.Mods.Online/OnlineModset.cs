@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using System.Threading;
 using osu.Core;
 using osu.Core.Config;
 using osu.Core.Containers.Shawdooow;
@@ -10,6 +11,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
+using osu.Framework.Threading;
 using osu.Game;
 using osu.Game.Screens;
 using osu.Mods.Online.Base;
@@ -27,9 +29,9 @@ namespace osu.Mods.Online
         public static OsuNetworkingHandler OsuNetworkingHandler;
         internal static OsuServerNetworkingHandler Server;
 
-        private readonly Bindable<AutoJoin> auto = SymcolOsuModSet.SymConfigManager.GetBindable<AutoJoin>(SymSetting.Auto);
-        private readonly Bindable<string> ipBindable = SymcolOsuModSet.SymConfigManager.GetBindable<string>(SymSetting.SavedIP);
-        private readonly Bindable<int> portBindable = SymcolOsuModSet.SymConfigManager.GetBindable<int>(SymSetting.SavedPort);
+        private readonly Bindable<AutoJoin> auto = SymManager.SymConfigManager.GetBindable<AutoJoin>(SymSetting.Auto);
+        private readonly Bindable<string> ipBindable = SymManager.SymConfigManager.GetBindable<string>(SymSetting.SavedIP);
+        private readonly Bindable<int> portBindable = SymManager.SymConfigManager.GetBindable<int>(SymSetting.SavedPort);
 
         public override SymcolButton GetMenuButton() => new SymcolButton
         {
@@ -52,36 +54,39 @@ namespace osu.Mods.Online
         {
             base.LoadComplete(game, host);
 
-            switch (auto.Value)
+            if (Thread.CurrentThread.Name == GameThread.PrefixedThreadNameFor("Update"))
             {
-                case AutoJoin.Join:
-                    OsuNetworkingHandler = new OsuNetworkingHandler
-                    {
-                        Address = ipBindable.Value + ":" + portBindable.Value,
-                    };
+                switch (auto.Value)
+                {
+                    case AutoJoin.Join:
+                        OsuNetworkingHandler = new OsuNetworkingHandler
+                        {
+                            Address = ipBindable.Value + ":" + portBindable.Value,
+                        };
 
-                    game.Add(OsuNetworkingHandler);
-                    OsuNetworkingHandler.OnConnectedToHost += h => Logger.Log("Connected to server", LoggingTarget.Network, LogLevel.Debug);
-                    OsuNetworkingHandler.Connect();
-                    break;
-                case AutoJoin.Host:
-                    Server = new OsuServerNetworkingHandler
-                    {
-                        Address = ipBindable.Value + ":" + portBindable.Value,
-                        //Udp = true,
-                    };
+                        game.Add(OsuNetworkingHandler);
+                        OsuNetworkingHandler.OnConnectedToHost += h => Logger.Log("Connected to server", LoggingTarget.Network, LogLevel.Debug);
+                        OsuNetworkingHandler.Connect();
+                        break;
+                    case AutoJoin.Host:
+                        Server = new OsuServerNetworkingHandler
+                        {
+                            Address = ipBindable.Value + ":" + portBindable.Value,
+                            //Udp = true,
+                        };
 
-                    OsuNetworkingHandler = new OsuNetworkingHandler
-                    {
-                        Address = ipBindable.Value + ":" + portBindable.Value,
-                    };
+                        OsuNetworkingHandler = new OsuNetworkingHandler
+                        {
+                            Address = ipBindable.Value + ":" + portBindable.Value,
+                        };
 
-                    OsuNetworkingHandler.Add(Server);
+                        OsuNetworkingHandler.Add(Server);
 
-                    game.Add(OsuNetworkingHandler);
-                    OsuNetworkingHandler.OnConnectedToHost += h => Logger.Log("Connected to local server", LoggingTarget.Network, LogLevel.Debug);
-                    OsuNetworkingHandler.Connect();
-                    break;
+                        game.Add(OsuNetworkingHandler);
+                        OsuNetworkingHandler.OnConnectedToHost += h => Logger.Log("Connected to local server", LoggingTarget.Network, LogLevel.Debug);
+                        OsuNetworkingHandler.Connect();
+                        break;
+                }
             }
 
             SymSection.OnPurge += storage =>

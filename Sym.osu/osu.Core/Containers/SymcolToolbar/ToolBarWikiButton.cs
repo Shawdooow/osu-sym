@@ -12,7 +12,7 @@ namespace osu.Core.Containers.SymcolToolbar
         public ToolBarWikiButton()
         {
             SetIcon(FontAwesome.Solid.QuestionCircle);
-            StateContainer = SymcolOsuModSet.WikiOverlay;
+            StateContainer = SymManager.WikiOverlay;
             TooltipMain = "Wiki";
             TooltipSub = "Documenting the game, ya know?";
         }
