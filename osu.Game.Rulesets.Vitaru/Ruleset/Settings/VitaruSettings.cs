@@ -43,9 +43,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
         private static Bindable<GraphicsOptions> enemyGraphics;
 
         [BackgroundDependencyLoader]
-        private void load(GameHost host)
+        private void load(Storage storage)
         {
-            VitaruConfigManager = new VitaruConfigManager(host.Storage);
+            VitaruConfigManager = new VitaruConfigManager(storage);
 
             Add(new VitaruAPIContainer());
 
