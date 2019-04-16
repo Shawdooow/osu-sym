@@ -119,7 +119,7 @@ namespace osu.Game
         public OsuGame(string[] args = null)
         {
             this.args = args;
-            //ModStore.LoadModSets();
+            ModStore.LoadModSets();
 
             forwardLoggedErrorsToNotifications();
 
