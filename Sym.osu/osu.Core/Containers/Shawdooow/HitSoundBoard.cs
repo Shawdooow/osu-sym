@@ -21,7 +21,7 @@ namespace osu.Core.Containers.Shawdooow
         public virtual bool Flip { get; set; }
 
         public Bindable<bool> AlternateBindable = new Bindable<bool> { Default = false, Value = false };
-        public AudioManager AlternateAudioManager;
+        public SampleManager AlternateSampleManager;
 
         private SampleChannel nNormal;
         private SampleChannel sNormal;
@@ -65,21 +65,21 @@ namespace osu.Core.Containers.Shawdooow
                 }
                 else
                 {
-                    nNormal = AlternateAudioManager.Sample.Get($@"Gameplay/normal-hitnormal");
-                    sNormal = AlternateAudioManager.Sample.Get($@"Gameplay/soft-hitnormal");
-                    dNormal = AlternateAudioManager.Sample.Get($@"Gameplay/drum-hitnormal");
+                    nNormal = AlternateSampleManager.Get($@"Gameplay/normal-hitnormal");
+                    sNormal = AlternateSampleManager.Get($@"Gameplay/soft-hitnormal");
+                    dNormal = AlternateSampleManager.Get($@"Gameplay/drum-hitnormal");
 
-                    nWhistle = AlternateAudioManager.Sample.Get($@"Gameplay/normal-hitwhistle");
-                    sWhistle = AlternateAudioManager.Sample.Get($@"Gameplay/soft-hitwhistle");
-                    dWhistle = AlternateAudioManager.Sample.Get($@"Gameplay/drum-hitwhistle");
+                    nWhistle = AlternateSampleManager.Get($@"Gameplay/normal-hitwhistle");
+                    sWhistle = AlternateSampleManager.Get($@"Gameplay/soft-hitwhistle");
+                    dWhistle = AlternateSampleManager.Get($@"Gameplay/drum-hitwhistle");
 
-                    nFinish = AlternateAudioManager.Sample.Get($@"Gameplay/normal-hitfinish");
-                    sFinish = AlternateAudioManager.Sample.Get($@"Gameplay/soft-hitfinish");
-                    dFinish = AlternateAudioManager.Sample.Get($@"Gameplay/drum-hitfinish");
+                    nFinish = AlternateSampleManager.Get($@"Gameplay/normal-hitfinish");
+                    sFinish = AlternateSampleManager.Get($@"Gameplay/soft-hitfinish");
+                    dFinish = AlternateSampleManager.Get($@"Gameplay/drum-hitfinish");
 
-                    nClap = AlternateAudioManager.Sample.Get($@"Gameplay/normal-hitclap");
-                    sClap = AlternateAudioManager.Sample.Get($@"Gameplay/soft-hitclap");
-                    dClap = AlternateAudioManager.Sample.Get($@"Gameplay/drum-hitclap");
+                    nClap = AlternateSampleManager.Get($@"Gameplay/normal-hitclap");
+                    sClap = AlternateSampleManager.Get($@"Gameplay/soft-hitclap");
+                    dClap = AlternateSampleManager.Get($@"Gameplay/drum-hitclap");
                 }
             };
             AlternateBindable.TriggerChange();

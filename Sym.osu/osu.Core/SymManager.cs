@@ -4,10 +4,11 @@ using osu.Core.Config;
 using osu.Core.OsuMods;
 using osu.Core.Wiki;
 using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
+using osu.Framework.Audio.Track;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
-using osu.Framework.Threading;
 using osu.Game;
 
 namespace osu.Core
@@ -19,9 +20,12 @@ namespace osu.Core
         public static ResourceStore<byte[]> LazerResources;
         public static TextureStore LazerTextures;
 
-        public static ResourceStore<byte[]> SymcolResources;
-        public static TextureStore SymcolTextures;
-        public static AudioManager SymcolAudio;
+        public static ResourceStore<byte[]> SymResources;
+
+        public static TextureStore SymTextures;
+        public static TrackManager SymTracks;
+        public static SampleManager SymSamples;
+        
         public static SymConfigManager SymConfigManager;
 
         private static bool init;
@@ -30,23 +34,25 @@ namespace osu.Core
         {
             if (init) return;
 
-            if (SymcolResources == null)
+            if (SymResources == null)
             {
-                SymcolResources = new ResourceStore<byte[]>();
-                SymcolResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Core.dll"), "Assets"));
-                SymcolResources.AddStore(new DllResourceStore("osu.Core.dll"));
-                SymcolTextures = new TextureStore(new TextureLoaderStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Textures")));
-                SymcolTextures.AddStore(new TextureLoaderStore(new OnlineStore()));
+                SymResources = new ResourceStore<byte[]>();
+                SymResources.AddStore(new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Core.dll"), "Assets"));
+                SymResources.AddStore(new DllResourceStore("osu.Core.dll"));
+                SymTextures = new TextureStore(new TextureLoaderStore(new NamespacedResourceStore<byte[]>(SymResources, @"Textures")));
+                SymTextures.AddStore(new TextureLoaderStore(new OnlineStore()));
 
-                ResourceStore<byte[]> tracks = new ResourceStore<byte[]>(SymcolResources);
-                tracks.AddStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Tracks"));
+                ResourceStore<byte[]> tracks = new ResourceStore<byte[]>(SymResources);
+                tracks.AddStore(new NamespacedResourceStore<byte[]>(SymResources, @"Tracks"));
                 tracks.AddStore(new OnlineStore());
 
-                ResourceStore<byte[]> samples = new ResourceStore<byte[]>(SymcolResources);
-                samples.AddStore(new NamespacedResourceStore<byte[]>(SymcolResources, @"Samples"));
+                SymTracks = game.Audio.GetTrackManager(tracks);
+
+                ResourceStore<byte[]> samples = new ResourceStore<byte[]>(SymResources);
+                samples.AddStore(new NamespacedResourceStore<byte[]>(SymResources, @"Samples"));
                 samples.AddStore(new OnlineStore());
 
-                SymcolAudio = new AudioManager(host.AudioThread, tracks, samples);
+                SymSamples = game.Audio.GetSampleManager(samples);
 
                 LazerResources = new ResourceStore<byte[]>();
                 LazerResources.AddStore(new DllResourceStore(@"osu.Game.Resources.dll"));
@@ -59,15 +65,26 @@ namespace osu.Core
             OsuModStore.ReloadModSets();
 
             foreach (OsuModSet mod in OsuModStore.LoadedModSets)
-                mod.LoadComplete(game, host);
+                mod.Init(game, host);
 
             if (WikiOverlay == null)
-            {
                 WikiOverlay = new WikiOverlay();
-                if (Thread.CurrentThread.Name == GameThread.PrefixedThreadNameFor("Update")) game.Add(WikiOverlay);
-            }
 
             init = true;
+        }
+
+        private static bool complete;
+
+        public static void LoadComplete(OsuGame game, GameHost host)
+        {
+            if (complete) return;
+
+            foreach (OsuModSet mod in OsuModStore.LoadedModSets)
+                mod.LoadComplete(game, host);
+
+            game.Add(WikiOverlay);
+
+            complete = true;
         }
     }
 }

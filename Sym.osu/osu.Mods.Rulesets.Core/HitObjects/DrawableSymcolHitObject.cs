@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
 using osu.Framework.Graphics;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
@@ -20,7 +21,7 @@ namespace osu.Mods.Rulesets.Core.HitObjects
     public abstract class DrawableSymcolHitObject<TObject> : DrawableHitObject<TObject>
         where TObject : SymcolHitObject
     {
-        protected AudioManager RulesetAudio { get; set; }
+        protected SampleManager RulesetSamples { get; set; }
 
         protected DrawableSymcolHitObject(TObject hitObject)
     : base(hitObject)
@@ -41,7 +42,7 @@ namespace osu.Mods.Rulesets.Core.HitObjects
             if (point != null)
                 control = point;
 
-            return new SymcolSkinnableSound(HitObject.GetAdjustedSample(info, control)) { RulesetAudio = RulesetAudio };
+            return new SymcolSkinnableSound(HitObject.GetAdjustedSample(info, control)) { RulesetSamples = RulesetSamples };
         }
 
         protected override void ClearInternal(bool disposeChildren = true)

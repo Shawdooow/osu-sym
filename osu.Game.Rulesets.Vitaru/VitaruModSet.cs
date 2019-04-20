@@ -16,26 +16,25 @@ namespace osu.Game.Rulesets.Vitaru
     {
         public override WikiSet GetWikiSet() => new VitaruWikiSet();
 
-        public override void LoadComplete(OsuGame game, GameHost host)
+        public override void Init(OsuGame game, GameHost host)
         {
-            base.LoadComplete(game, host);
+            base.Init(game, host);
 
             SymSection.OnPurge += storage =>
             {
                 if (storage.ExistsDirectory("vitaru")) storage.DeleteDirectory("vitaru");
             };
 
-            ResourceStore<byte[]> tracks = new ResourceStore<byte[]>(VitaruRuleset.VitaruResources);
-            tracks.AddStore(new NamespacedResourceStore<byte[]>(VitaruRuleset.VitaruResources, @"Tracks"));
-
             ResourceStore<byte[]> samples = new ResourceStore<byte[]>(VitaruRuleset.VitaruResources);
             samples.AddStore(new NamespacedResourceStore<byte[]>(VitaruRuleset.VitaruResources, @"Samples"));
+            samples.AddStore(new OnlineStore());
 
-            VitaruRuleset.VitaruAudio = new AudioManager(host.AudioThread, tracks, samples);
+            VitaruRuleset.VitaruSamples = game.Audio.GetSampleManager(samples);
+        }
 
-            VitaruRuleset.VitaruAudio.Volume.BindTo(game.Audio.Volume);
-            VitaruRuleset.VitaruAudio.VolumeSample.BindTo(game.Audio.VolumeSample);
-            VitaruRuleset.VitaruAudio.VolumeTrack.BindTo(game.Audio.VolumeTrack);
+        public override void LoadComplete(OsuGame game, GameHost host)
+        {
+            base.LoadComplete(game, host);
         }
     }
 }

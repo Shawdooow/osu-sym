@@ -43,9 +43,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
         private static Bindable<GraphicsOptions> bulletGraphics;
         private static Bindable<GraphicsOptions> enemyGraphics;
 
+        internal static OsuGame Osu { get; private set; }
+        internal static GameHost Host { get; private set; }
+
         [BackgroundDependencyLoader]
         private void load(OsuGame osu, GameHost host)
         {
+            Osu = osu;
+            Host = host;
             SymManager.Init(osu, host);
 
             VitaruConfigManager = new VitaruConfigManager(host.Storage);

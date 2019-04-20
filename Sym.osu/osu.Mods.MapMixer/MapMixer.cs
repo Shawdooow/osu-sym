@@ -160,7 +160,7 @@ namespace osu.Mods.MapMixer
                     Origin = Anchor.CentreLeft,
                     Anchor = Anchor.Centre,
                     AlternateBindable = classic_sounds,
-                    AlternateAudioManager = MapMixerModSet.ClassicAudio
+                    AlternateSampleManager = MapMixerModSet.ClassicSamples
                 },
                 new HitSoundBoard
                 {
@@ -169,7 +169,7 @@ namespace osu.Mods.MapMixer
                     Origin = Anchor.CentreRight,
                     Anchor = Anchor.Centre,
                     AlternateBindable = classic_sounds,
-                    AlternateAudioManager = MapMixerModSet.ClassicAudio
+                    AlternateSampleManager = MapMixerModSet.ClassicSamples
                 },
 
                 //Pitch Settings

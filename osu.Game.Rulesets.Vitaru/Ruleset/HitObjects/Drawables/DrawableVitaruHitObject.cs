@@ -97,10 +97,10 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                 switch(e.NewValue)
                 {
                     default:
-                        RulesetAudio = null;
+                        RulesetSamples = null;
                         break;
                     case SoundsOptions.Classic:
-                        RulesetAudio = MapMixerModSet.ClassicAudio;
+                        RulesetSamples = MapMixerModSet.ClassicSamples;
                         break;
                 }
             }
@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
             if (point != null)
                 control = point;
 
-            return new VitaruSkinableSound(HitObject.GetAdjustedSample(info, control)) { RulesetAudio = RulesetAudio };
+            return new VitaruSkinableSound(HitObject.GetAdjustedSample(info, control)) { RulesetSamples = RulesetSamples };
         }
 
         protected override void SkinChanged(ISkinSource skin, bool allowFallback)

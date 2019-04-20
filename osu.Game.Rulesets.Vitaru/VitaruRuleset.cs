@@ -3,7 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Core;
 using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -201,16 +203,27 @@ namespace osu.Game.Rulesets.Vitaru
         public override Drawable CreateIcon()
         {
             Sprite icon = new Sprite { Texture = VitaruTextures.Get("icon") };
+            Container container = new Container
+            {
+                AutoSizeAxes = Axes.Both,
+                Child = icon,
+            };
             Icons.Add(icon);
-            return icon;
+
+            container.OnLoadComplete += d =>
+            {
+                SymManager.LoadComplete(VitaruSettings.Osu, VitaruSettings.Host);
+            };
+
+            return container;
         }
 
-        //TODO: Custom Touhosu Icon
+        //TODO: Custom Touhosu Icon?
         internal static readonly List<Sprite> Icons = new List<Sprite>();
 
         public static ResourceStore<byte[]> VitaruResources { get; private set; }
         public static TextureStore VitaruTextures { get; private set; }
-        public static AudioManager VitaruAudio { get; internal set; }
+        public static SampleManager VitaruSamples { get; internal set; }
 
         public VitaruRuleset(RulesetInfo rulesetInfo = null) : base(rulesetInfo)
         {

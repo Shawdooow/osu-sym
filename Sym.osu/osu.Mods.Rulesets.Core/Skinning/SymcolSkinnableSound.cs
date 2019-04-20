@@ -18,7 +18,7 @@ namespace osu.Mods.Rulesets.Core.Skinning
         public override bool HandlePositionalInput => false;
         public override bool HandleNonPositionalInput => false;
 
-        public AudioManager RulesetAudio;
+        public SampleManager RulesetSamples;
 
         private readonly SampleInfo[] samples;
         private SampleChannel[] channels;
@@ -44,8 +44,8 @@ namespace osu.Mods.Rulesets.Core.Skinning
             channels = samples.Select(s =>
             {
                 SampleChannel ch = LoadChannel(s, skin.GetSample);
-                if (ch == null && allowFallback && RulesetAudio != null)
-                    ch = LoadChannel(s, RulesetAudio.Sample.Get);
+                if (ch == null && allowFallback && RulesetSamples != null)
+                    ch = LoadChannel(s, RulesetSamples.Get);
                 if (ch == null && allowFallback)
                     ch = LoadChannel(s, audio.Sample.Get);
                 return ch;

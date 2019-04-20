@@ -21,6 +21,16 @@ namespace osu.Core.OsuMods
 
         public virtual WikiSet GetWikiSet() => null;
 
+        /// <summary>
+        /// Initialize the mod
+        /// </summary>
+        public virtual void Init(OsuGame game, GameHost host) { }
+
+        /// <summary>
+        /// Always called After Init and on the Update thread
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="host"></param>
         public virtual void LoadComplete(OsuGame game, GameHost host) { }
     }
 }

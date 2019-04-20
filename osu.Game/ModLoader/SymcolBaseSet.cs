@@ -14,6 +14,8 @@ namespace osu.Game.ModLoader
 
         public virtual SettingsSection GetSettings() => null;
 
+        public virtual void Init(OsuGame game, GameHost host) { }
+
         public virtual void LoadComplete(OsuGame game, GameHost host) { }
 
         public virtual void Dispose() { }

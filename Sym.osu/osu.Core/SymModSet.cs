@@ -28,12 +28,9 @@ namespace osu.Core
 
         public override SettingsSection GetSettings() => new SymSection();
 
-        public override void LoadComplete(OsuGame game, GameHost host)
-        {
-            base.LoadComplete(game, host);
+        public override void Init(OsuGame game, GameHost host) => SymManager.Init(game, host);
 
-            SymManager.Init(game, host);
-        }
+        public override void LoadComplete(OsuGame game, GameHost host) => SymManager.LoadComplete(game, host);
 
         public override void Dispose()
         {
