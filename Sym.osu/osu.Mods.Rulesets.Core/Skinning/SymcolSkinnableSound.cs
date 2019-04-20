@@ -23,7 +23,7 @@ namespace osu.Mods.Rulesets.Core.Skinning
         private readonly SampleInfo[] samples;
         private SampleChannel[] channels;
 
-        private AudioManager audio;
+        private SampleManager sample;
 
         public SymcolSkinnableSound(params SampleInfo[] samples) : base(new SampleInfo[]{})
         {
@@ -34,7 +34,7 @@ namespace osu.Mods.Rulesets.Core.Skinning
         [BackgroundDependencyLoader]
         private void load(AudioManager audio)
         {
-            this.audio = audio;
+            sample = audio.Sample;
         }
 
         public new void Play() => channels?.ForEach(c => c.Play());
@@ -47,7 +47,7 @@ namespace osu.Mods.Rulesets.Core.Skinning
                 if (ch == null && allowFallback && RulesetSamples != null)
                     ch = LoadChannel(s, RulesetSamples.Get);
                 if (ch == null && allowFallback)
-                    ch = LoadChannel(s, audio.Sample.Get);
+                    ch = LoadChannel(s, sample.Get);
                 return ch;
             }).Where(c => c != null).ToArray();
         }

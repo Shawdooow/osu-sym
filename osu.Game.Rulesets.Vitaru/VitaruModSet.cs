@@ -31,10 +31,5 @@ namespace osu.Game.Rulesets.Vitaru
 
             VitaruRuleset.VitaruSamples = game.Audio.GetSampleManager(samples);
         }
-
-        public override void LoadComplete(OsuGame game, GameHost host)
-        {
-            base.LoadComplete(game, host);
-        }
     }
 }
