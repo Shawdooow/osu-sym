@@ -20,7 +20,7 @@ namespace osu.Mods.Rulesets.Core.HitObjects
 
             info.Bank = info.Bank ?? control.SampleBank;
             info.Volume = info.Volume > 0 ? info.Volume : control.SampleVolume;
-            if (SymManager.ModLoaderActive) info.Suffix = int.Parse(info.Suffix ?? "0") != 0 ? info.Suffix : control.SampleSuffix.ToString();
+            //info.Suffix = int.Parse(info.Suffix ?? "0") != 0 ? info.Suffix : control.SampleSuffix.ToString();
 
             return info;
         }
