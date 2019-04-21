@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using osu.Core;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;
@@ -19,7 +20,7 @@ namespace osu.Mods.Rulesets.Core.HitObjects
 
             info.Bank = info.Bank ?? control.SampleBank;
             info.Volume = info.Volume > 0 ? info.Volume : control.SampleVolume;
-            info.Suffix = int.Parse(info.Suffix ?? "0") != 0 ? info.Suffix : control.SampleSuffix.ToString();
+            if (SymManager.ModLoaderActive) info.Suffix = int.Parse(info.Suffix ?? "0") != 0 ? info.Suffix : control.SampleSuffix.ToString();
 
             return info;
         }

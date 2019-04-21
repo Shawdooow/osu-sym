@@ -3,7 +3,6 @@ using System.Threading;
 using osu.Core.Config;
 using osu.Core.OsuMods;
 using osu.Core.Wiki;
-using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics.Textures;
@@ -16,6 +15,8 @@ namespace osu.Core
     public static class SymManager
     {
         public static WikiOverlay WikiOverlay;
+
+        public static bool ModLoaderActive = false;
 
         public static ResourceStore<byte[]> LazerResources;
         public static TextureStore LazerTextures;
