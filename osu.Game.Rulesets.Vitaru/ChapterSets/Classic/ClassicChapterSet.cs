@@ -1,6 +1,8 @@
 ﻿#region usings
 
 using osu.Framework.Graphics.Textures;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Classic.HitObjects;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Classic.HitObjects.DrawableHitObjects;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.Chapters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
@@ -24,9 +26,9 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Classic
             new RejectChapter(),
         };
 
-        public override Cluster GetCluster() => throw new System.NotImplementedException();
+        public override Cluster GetCluster() => new ClassicHitObject();
 
-        public override DrawableCluster GetDrawableCluster(Cluster cluster, VitaruPlayfield playfield) => throw new System.NotImplementedException();
+        public override DrawableCluster GetDrawableCluster(Cluster cluster, VitaruPlayfield playfield) => new DrawableClassicHitObject(cluster as ClassicHitObject, playfield);
 
         public override Bullet GetBullet() => throw new System.NotImplementedException();
 
