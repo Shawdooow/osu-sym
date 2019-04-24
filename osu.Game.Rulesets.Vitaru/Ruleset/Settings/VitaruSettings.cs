@@ -37,10 +37,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
         private const int transition_duration = 400;
 
+        public static string Gamemode => gamemodeBindable.Value;
         public static bool Experimental => experimental.Value;
         public static GraphicsOptions BulletGraphics => bulletGraphics.Value;
         public static GraphicsOptions EnemyGraphics => enemyGraphics.Value;
 
+        private static Bindable<string> gamemodeBindable;
         private static Bindable<bool> experimental;
         private static Bindable<GraphicsOptions> bulletGraphics;
         private static Bindable<GraphicsOptions> enemyGraphics;
@@ -59,7 +61,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
             Add(new VitaruAPIContainer());
 
-            Bindable<string> gamemodeBindable = VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
+            gamemodeBindable = VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
 
             showDebugUi = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
             themes = VitaruConfigManager.GetBindable<ThemesPresets>(VitaruSetting.ThemesPreset);
@@ -211,6 +213,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
             };
 
             gamemodeDropdown.Bindable = gamemodeBindable;
+            gamemodeBindable.TriggerChange();
 
             themes.ValueChanged += e =>
             {

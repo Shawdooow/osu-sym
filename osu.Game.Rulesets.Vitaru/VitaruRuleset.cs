@@ -18,6 +18,7 @@ using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
+using osu.Game.Rulesets.Vitaru.ChapterSets;
 using osu.Game.Rulesets.Vitaru.Ruleset;
 using osu.Game.Rulesets.Vitaru.Ruleset.Beatmaps;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
@@ -200,7 +201,18 @@ namespace osu.Game.Rulesets.Vitaru
 
         public override Drawable CreateIcon()
         {
-            Sprite icon = new Sprite { Texture = VitaruTextures.Get("icon") };
+            Texture t;
+
+            try
+            {
+                t = ChapterStore.GetChapterSet(VitaruSettings.Gamemode).Icon ?? VitaruTextures.Get("icon");
+            }
+            catch
+            {
+                t = VitaruTextures.Get("icon");
+            }
+
+            Sprite icon = new Sprite { Texture = t };
             Container container = new Container
             {
                 AutoSizeAxes = Axes.Both,
