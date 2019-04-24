@@ -1,6 +1,5 @@
 ﻿#region usings
 
-using osu.Core;
 using osu.Game.Audio;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Objects;

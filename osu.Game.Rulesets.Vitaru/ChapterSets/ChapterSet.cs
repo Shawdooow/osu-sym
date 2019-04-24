@@ -1,5 +1,6 @@
 ﻿#region usings
 
+using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
 using osu.Game.Rulesets.Vitaru.Ruleset.HitObjects;
@@ -15,6 +16,8 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets
         public abstract string Name { get; }
 
         public virtual string Description => $"The {Name} ChapterSet.";
+
+        public virtual Texture Icon => VitaruRuleset.VitaruTextures.Get("icon");
 
         public abstract Chapter[] GetChapters();
 

@@ -1,6 +1,5 @@
 ﻿#region usings
 
-using System.Threading;
 using osu.Core;
 using osu.Core.Config;
 using osu.Core.Containers.Shawdooow;
@@ -11,7 +10,6 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
-using osu.Framework.Threading;
 using osu.Game;
 using osu.Game.Screens;
 using osu.Mods.Online.Base;

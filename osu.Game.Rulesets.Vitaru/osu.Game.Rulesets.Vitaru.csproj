@@ -11,6 +11,7 @@
     <EmbeddedResource Include="Assets\**\*" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\Textures\Classic\" />
     <Folder Include="ChapterSets\Vitaru\Characters\" />
   </ItemGroup>
   <ItemGroup>

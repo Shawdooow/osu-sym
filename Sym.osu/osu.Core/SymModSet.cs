@@ -1,14 +1,8 @@
 ﻿#region usings
 
-using osu.Core.Config;
 using osu.Core.Containers.SymcolToolbar;
-using osu.Core.OsuMods;
 using osu.Core.Screens;
 using osu.Core.Settings;
-using osu.Core.Wiki;
-using osu.Framework.Audio;
-using osu.Framework.Graphics.Textures;
-using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game;
 using osu.Game.ModLoader;

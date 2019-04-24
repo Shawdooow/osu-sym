@@ -3,7 +3,6 @@
 using osu.Core.OsuMods;
 using osu.Core.Settings;
 using osu.Core.Wiki;
-using osu.Framework.Audio;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Vitaru.Sym.Wiki;

@@ -1,4 +1,6 @@
-﻿using osu.Core.Config;
+﻿#region usings
+
+using osu.Core.Config;
 using osu.Core.OsuMods;
 using osu.Core.Wiki;
 using osu.Framework.Audio.Sample;
@@ -7,6 +9,8 @@ using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game;
+
+#endregion
 
 namespace osu.Core
 {

@@ -7,6 +7,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Platform;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Vitaru.ChapterSets;
@@ -62,12 +64,19 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
             showDebugUi = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DebugMode);
             themes = VitaruConfigManager.GetBindable<ThemesPresets>(VitaruSetting.ThemesPreset);
 
-            ChapterStore.ReloadChapterSets();
+            ChapterStore.LoadChapterSets();
 
             List<string> gamemodeItems = new List<string>();
             foreach (ChapterStore.LoadedChapterSet g in ChapterStore.LoadedChapterSets)
                 gamemodeItems.Add(g.ChapterSet.Name);
-            gamemodeBindable.ValueChanged += g => { VitaruConfigManager.Set(VitaruSetting.Gamemode, g); };
+            gamemodeBindable.ValueChanged += g =>
+            {
+                Texture t = ChapterStore.GetChapterSet(g.NewValue).Icon;
+
+                if (t != null)
+                    foreach (Sprite icon in VitaruRuleset.Icons)
+                        icon.Texture = t;
+            };
 
             SettingsDropdown<string> gamemodeDropdown = new SettingsDropdown<string>
             {
@@ -201,7 +210,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                 },
             };
 
-            gamemodeDropdown.Bindable = VitaruConfigManager.GetBindable<string>(VitaruSetting.Gamemode);
+            gamemodeDropdown.Bindable = gamemodeBindable;
 
             themes.ValueChanged += e =>
             {

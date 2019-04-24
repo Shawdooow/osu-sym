@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using osu.Framework.Bindables;
 using osu.Framework.Logging;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Classic;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Dodge;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru;
@@ -21,13 +22,16 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets
     {
         public static List<LoadedChapterSet> LoadedChapterSets { get; private set; } = new List<LoadedChapterSet>();
 
-        public static void ReloadChapterSets()
+        public static void LoadChapterSets()
         {
+            if (LoadedChapterSets.Count > 0) return;
+
             List<ChapterSet> loadedSets = new List<ChapterSet>
             {
                 new VitaruChapterSet(),
                 new TouhosuChapterSet(),
                 new DodgeChapterSet(),
+                new ClassicChapterSet(),
             };
 
             Dictionary<Assembly, Type> loadedAssemblies = new Dictionary<Assembly, Type>();

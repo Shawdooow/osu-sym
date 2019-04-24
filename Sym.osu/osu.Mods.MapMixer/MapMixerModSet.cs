@@ -2,7 +2,6 @@
 
 using osu.Core.Containers.Shawdooow;
 using osu.Core.OsuMods;
-using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Graphics;
 using osu.Framework.IO.Stores;
