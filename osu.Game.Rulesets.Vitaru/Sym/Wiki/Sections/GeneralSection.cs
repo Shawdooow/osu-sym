@@ -33,6 +33,7 @@ namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
 
         private readonly DecoupleableInterpolatingFramedClock patternClock;
 
+        /*
         private readonly VitaruEditPlayfield playfield;
 
         private readonly WikiParagraph patternDescription;
@@ -78,6 +79,7 @@ namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
                 patternClock.Seek(1000);
             };
         }
+        */
 
         [BackgroundDependencyLoader]
         private void load()
@@ -93,9 +95,9 @@ namespace osu.Game.Rulesets.Vitaru.Sym.Wiki.Sections
                         "Hitsounds affect the pattern that will be thrown, see the \"Patterns\" subsection for more\n\n" +
                         "Object positions are mapped to the top half of the playfield (or whole playfield for dodge) in the same orientation as standard."));
 
-            Content.Add(new WikiSubSectionHeader("Patterns"));
-            Content.Add(new WikiOptionEnumSplitExplanation<Patterns>(pattern, playfield, patternDescription));
-            pattern.TriggerChange();
+            //Content.Add(new WikiSubSectionHeader("Patterns"));
+            //Content.Add(new WikiOptionEnumSplitExplanation<Patterns>(pattern, playfield, patternDescription));
+            //pattern.TriggerChange();
 
             Content.Add(new WikiSubSectionHeader("Controls"));
             Content.Add(new WikiParagraph("Controls by default will probably be the most confortable and fitting for all of the gamemodes in this ruleset (if they aren't / weren't they will be changed before release).\n\n" +
