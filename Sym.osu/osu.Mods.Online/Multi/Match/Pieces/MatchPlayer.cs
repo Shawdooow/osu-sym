@@ -6,6 +6,7 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
@@ -102,12 +103,13 @@ namespace osu.Mods.Online.Multi.Match.Pieces
                 CoverUrl = OsuUserInfo.Background,
             };
 
-            profileBackground = new UserCoverBackground(user)
+            profileBackground = new UserCoverBackground()
             {
                 RelativeSizeAxes = Axes.Both,
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 FillMode = FillMode.Fill,
+                User = user,
                 
             };
             profileBackground.OnLoadComplete += d => d.FadeInFromZero(200);

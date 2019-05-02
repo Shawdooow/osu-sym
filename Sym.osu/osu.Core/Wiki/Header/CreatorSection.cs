@@ -33,12 +33,13 @@ namespace osu.Core.Wiki.Header
 
                 //country.Country = value.Country;
 
-                cover.Child = new UserCoverBackground(value)
+                cover.Child = new UserCoverBackground()
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     RelativeSizeAxes = Axes.Both,
                     FillMode = FillMode.Fill,
+                    User = value,
                 };
 
                 avatar.User = value;
