@@ -187,7 +187,7 @@ namespace osu.Game.Rulesets.Vitaru
             }
         }
 
-        public override DrawableRuleset CreateDrawableRulesetWith(WorkingBeatmap beatmap) => new VitaruRulesetContainer(this, beatmap);
+        public override DrawableRuleset CreateDrawableRulesetWith(WorkingBeatmap beatmap, IReadOnlyList<Mod> mods) => new VitaruRulesetContainer(this, beatmap);
 
         public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new VitaruBeatmapConverter(beatmap);
 

@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
@@ -31,8 +32,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers
 
         private readonly bool rankedFilter = VitaruSettings.VitaruConfigManager.Get<bool>(VitaruSetting.RankedFilter);
 
-        public VitaruRulesetContainer(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap, OsuNetworkingHandler osuNetworkingHandler = null, MatchInfo match = null)
-            : base(ruleset, beatmap)
+        public VitaruRulesetContainer(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap, IReadOnlyList<Mod> mods, OsuNetworkingHandler osuNetworkingHandler = null, MatchInfo match = null)
+            : base(ruleset, beatmap, mods)
         {
             //TODO: make this a function if it works
             if (DebugToolkit.GeneralDebugItems.Count > 0)

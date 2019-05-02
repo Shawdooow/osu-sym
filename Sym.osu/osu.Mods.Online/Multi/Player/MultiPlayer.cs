@@ -1,6 +1,7 @@
 ﻿#region usings
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using osu.Core;
@@ -22,6 +23,7 @@ using osu.Game;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Cursor;
 using osu.Game.Online.API;
 using osu.Game.Overlays;
@@ -31,6 +33,7 @@ using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 using osu.Game.Scoring;
 using osu.Game.Screens.Play;
+using osu.Game.Screens.Ranking;
 using osu.Game.Skinning;
 using osu.Game.Storyboards.Drawables;
 using osu.Mods.Online.Base;
@@ -48,58 +51,43 @@ using Sym.Networking.Packets;
 
 namespace osu.Mods.Online.Multi.Player
 {
-    public class MultiPlayer : ScreenWithBeatmapBackground, IProvideCursor
+    public class MultiPlayer : ScreenWithBeatmapBackground
     {
+        protected override bool AllowBackButton => false; // handled by HoldForMenuButton
+
         public override float BackgroundParallaxAmount => 0.1f;
 
         public override bool HideOverlaysOnEnter => true;
 
         public override OverlayActivation InitialOverlayActivationMode => OverlayActivation.UserTriggered;
 
-        public bool AllowPause { get; set; } = true;
-        public bool AllowLeadIn { get; set; } = true;
-        public bool AllowResults { get; set; } = true;
-
         private Bindable<bool> mouseWheelDisabled;
-        private Bindable<double> userAudioOffset;
 
-        public CursorContainer Cursor => RulesetContainer.Cursor;
-        public bool ProvidingUserCursor => RulesetContainer?.Cursor != null && !RulesetContainer.HasReplayLoaded.Value;
-
-        private IAdjustableClock sourceClock;
-
-        /// <summary>
-        /// The decoupled clock used for gameplay. Should be used for seeks and clock control.
-        /// </summary>
-        private DecoupleableInterpolatingFramedClock adjustableClock;
-
-        private RulesetInfo ruleset;
-
-        private APIAccess api;
-
-        private OsuGame osu;
-
-        private SampleChannel sampleRestart;
+        private readonly Bindable<bool> storyboardReplacesBackground = new Bindable<bool>();
 
         [Resolved]
         private ScoreManager scoreManager { get; set; }
 
-        protected ScoreProcessor ScoreProcessor;
-        protected DrawableRuleset RulesetContainer;
+        private RulesetInfo ruleset;
 
-        private HUDOverlay hudOverlay;
+        protected ScoreProcessor ScoreProcessor { get; private set; }
+        protected DrawableRuleset DrawableRuleset { get; private set; }
 
-        private DrawableStoryboard storyboard;
-        private Container storyboardContainer;
+        protected HUDOverlay HUDOverlay { get; private set; }
 
-        public bool LoadedBeatmapSuccessfully => RulesetContainer?.Objects.Any() == true;
+        public bool LoadedBeatmapSuccessfully => DrawableRuleset?.Objects.Any() == true;
+
+        protected GameplayClockContainer GameplayClockContainer { get; private set; }
+
+        [Cached]
+        [Cached(Type = typeof(IBindable<IReadOnlyList<Mod>>))]
+        protected new readonly Bindable<IReadOnlyList<Mod>> Mods = new Bindable<IReadOnlyList<Mod>>(Array.Empty<Mod>());
+
+        private OsuGame osu;
 
         public readonly OsuNetworkingHandler OsuNetworkingHandler;
-
         protected readonly MatchInfo Match;
-
         protected DeadContainer<MultiCursorContainer> CursorContainer;
-
         protected bool LiveSpectator;
 
         public MultiPlayer(OsuNetworkingHandler osuNetworkingHandler, MatchInfo match)
@@ -119,7 +107,7 @@ namespace osu.Mods.Online.Multi.Player
             switch (info.Packet)
             {
                 case MatchStartingPacket start:
-                    adjustableClock.Start();
+                    //GameplayClockContainer.Start();
                     break;
                 case MatchExitPacket exit:
                     this.Exit();
@@ -134,138 +122,64 @@ namespace osu.Mods.Online.Multi.Player
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuGame osu, AudioManager audio, APIAccess api, OsuConfigManager config)
+        private void load(AudioManager audio, OsuConfigManager config, OsuGame osu)
         {
-            this.api = api;
             this.osu = osu;
 
-            WorkingBeatmap working = Beatmap.Value;
-            if (working is DummyWorkingBeatmap)
-                return;
+            Mods.Value = base.Mods.Value.Select(m => m.CreateCopy()).ToArray();
 
-            sampleRestart = audio.Sample.Get(@"Gameplay/restart");
+            WorkingBeatmap working = loadBeatmap();
+
+            if (working == null)
+                return;
 
             mouseWheelDisabled = config.GetBindable<bool>(OsuSetting.MouseDisableWheel);
-            userAudioOffset = config.GetBindable<double>(OsuSetting.AudioOffset);
+            showStoryboard = config.GetBindable<bool>(OsuSetting.ShowStoryboard);
 
-            IBeatmap beatmap;
+            ScoreProcessor = DrawableRuleset.CreateScoreProcessor();
+            ScoreProcessor.Mods.BindTo(Mods);
 
-            try
+            if (!ScoreProcessor.Mode.Disabled)
+                config.BindWith(OsuSetting.ScoreDisplayMode, ScoreProcessor.Mode);
+
+            InternalChild = GameplayClockContainer = new GameplayClockContainer(working, Mods.Value, DrawableRuleset.GameplayStartTime);
+
+            GameplayClockContainer.Children = new[]
             {
-                beatmap = working.Beatmap;
-
-                if (beatmap == null)
-                    throw new InvalidOperationException("Beatmap was not loaded");
-
-                ruleset = Ruleset.Value ?? beatmap.BeatmapInfo.Ruleset;
-                Ruleset rulesetInstance = ruleset.CreateInstance();
-
-                try
+                StoryboardContainer = CreateStoryboardContainer(),
+                new ScalingContainer(ScalingMode.Gameplay)
                 {
-                    if (rulesetInstance is IRulesetMulti multiInstance)
-                        RulesetContainer = multiInstance.CreateRulesetContainerMulti(working, OsuNetworkingHandler, Match);
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(e, "Failed to create multi RulesetContainer!");
-                }
-
-                if (RulesetContainer == null)
-                    RulesetContainer = rulesetInstance.CreateDrawableRulesetWith(working);
-
-                if (!RulesetContainer.Objects.Any())
-                {
-                    Logger.Error(new InvalidOperationException("Beatmap contains no hit objects!"), "Beatmap contains no hit objects!");
-                    return;
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e, "Could not load beatmap sucessfully!");
-                this.Exit();
-                return;
-            }
-
-            sourceClock = (IAdjustableClock)working.Track ?? new StopwatchClock();
-            adjustableClock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
-
-            adjustableClock.Seek(AllowLeadIn
-                ? Math.Min(0, RulesetContainer.GameplayStartTime - beatmap.BeatmapInfo.AudioLeadIn)
-                : RulesetContainer.GameplayStartTime);
-
-            adjustableClock.ProcessFrame();
-
-            // Lazer's audio timings in general doesn't match stable. This is the result of user testing, albeit limited.
-            // This only seems to be required on windows. We need to eventually figure out why, with a bit of luck.
-            FramedOffsetClock platformOffsetClock = new FramedOffsetClock(adjustableClock) { Offset = RuntimeInfo.OS == RuntimeInfo.Platform.Windows ? 22 : 0 };
-
-            // the final usable gameplay clock with user-set offsets applied.
-            FramedOffsetClock offsetClock = new FramedOffsetClock(platformOffsetClock);
-
-            userAudioOffset.ValueChanged += v => offsetClock.Offset = v.NewValue;
-            userAudioOffset.TriggerChange();
-
-            ScoreProcessor = RulesetContainer.CreateScoreProcessor();
-
-            try
-            {
-                RulesetContainer.Cursor.ActiveCursor.Colour = OsuColour.FromHex(SymManager.SymConfigManager.Get<string>(SymSetting.PlayerColor));
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e, "Failed to set Cursor color!");
-            }
-
-            InternalChildren = new[]
-            {
-                new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Clock = offsetClock,
-                    Children = new[]
+                    Child = new LocalSkinOverrideContainer(working.Skin)
                     {
-                        storyboardContainer = new Container
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Alpha = 0,
-                        },
-                        new LocalSkinOverrideContainer(working.Skin)
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Child = RulesetContainer
-                        },
-                        new Scoreboard(OsuNetworkingHandler, Match.Users, ScoreProcessor),
-                        new BreakOverlay(beatmap.BeatmapInfo.LetterboxInBreaks, ScoreProcessor)
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            ProcessCustomClock = false,
-                            Breaks = beatmap.Breaks
-                        },
-                        RulesetContainer.Cursor?.CreateProxy() ?? new Container(),
-                        CursorContainer = new DeadContainer<MultiCursorContainer>
-                        {
-                            RelativeSizeAxes = Axes.Both
-                        },
-                        hudOverlay = new HUDOverlay(ScoreProcessor, RulesetContainer, working)
-                        {
-                            Clock = Clock, // hud overlay doesn't want to use the audio clock directly
-                            ProcessCustomClock = false,
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre
-                        },
-                        //TODO: voting on this
-                        /*
-                        new SkipOverlay(RulesetContainer.GameplayStartTime)
-                        {
-                            Clock = Clock, // skip button doesn't want to use the audio clock directly
-                            ProcessCustomClock = false,
-                            AdjustableClock = adjustableClock,
-                            FramedClock = offsetClock,
-                        },
-                        */
+                        RelativeSizeAxes = Axes.Both,
+                        Child = DrawableRuleset
                     }
-                }
+                },
+                new BreakOverlay(working.Beatmap.BeatmapInfo.LetterboxInBreaks, ScoreProcessor)
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Breaks = working.Beatmap.Breaks
+                },
+                // display the cursor above some HUD elements.
+                DrawableRuleset.Cursor?.CreateProxy() ?? new Container(),
+                CursorContainer = new DeadContainer<MultiCursorContainer>
+                {
+                    RelativeSizeAxes = Axes.Both
+                },
+                HUDOverlay = new HUDOverlay(ScoreProcessor, DrawableRuleset, Mods.Value)
+                {
+                    HoldToQuit = { Action = () => OsuNetworkingHandler.SendToServer(new MatchExitPacket()) },
+                    PlayerSettingsOverlay = { PlaybackSettings = { UserPlaybackRate = { BindTarget = GameplayClockContainer.UserPlaybackRate } } },
+                    KeyCounter = { Visible = { BindTarget = DrawableRuleset.HasReplayLoaded } },
+                    RequestSeek = GameplayClockContainer.Seek,
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre
+                },
+                new SkipOverlay(DrawableRuleset.GameplayStartTime)
+                {
+                    RequestSeek = GameplayClockContainer.Seek
+                },
             };
 
             if (LiveSpectator)
@@ -276,7 +190,7 @@ namespace osu.Mods.Online.Multi.Player
                         {
                             MultiCursorContainer c = new MultiCursorContainer();
 
-                            if (RulesetContainer.Cursor != null && RulesetContainer.Cursor is MultiCursorContainer m && m.CreateMultiCursor() != null)
+                            if (DrawableRuleset.Cursor != null && DrawableRuleset.Cursor is MultiCursorContainer m && m.CreateMultiCursor() != null)
                                 c = m.CreateMultiCursor();
 
                             c.Colour = OsuColour.FromHex(user.Colour);
@@ -288,78 +202,123 @@ namespace osu.Mods.Online.Multi.Player
                         catch { }
                     }
 
-            if (!ScoreProcessor.Mode.Disabled)
-                config.BindWith(OsuSetting.ScoreDisplayMode, ScoreProcessor.Mode);
+            // bind clock into components that require it
+            DrawableRuleset.IsPaused.BindTo(GameplayClockContainer.IsPaused);
 
-            hudOverlay.HoldToQuit.Action = this.Exit;
-            hudOverlay.KeyCounter.Visible.BindTo(RulesetContainer.HasReplayLoaded);
-
-            //if (ShowStoryboard)
-                //initializeStoryboard(false);
+            // load storyboard as part of player's load if we can
+            initializeStoryboard(false);
 
             // Bind ScoreProcessor to ourselves
-            ScoreProcessor.AllJudged += onCompletion;
-            ScoreProcessor.Failed += onFail;
+            ScoreProcessor.AllJudged += this.Exit;
+            //ScoreProcessor.Failed += onFail;
 
-            foreach (IApplicableToScoreProcessor mod in Beatmap.Value.Mods.Value.OfType<IApplicableToScoreProcessor>())
+            foreach (var mod in Mods.Value.OfType<IApplicableToScoreProcessor>())
                 mod.ApplyToScoreProcessor(ScoreProcessor);
         }
 
-        private void applyRateFromMods()
+        private double boo = double.MinValue;
+        protected override void Update()
         {
-            if (sourceClock == null) return;
+            base.Update();
 
-            sourceClock.Rate = 1;
-            foreach (IApplicableToClock mod in Beatmap.Value.Mods.Value.OfType<IApplicableToClock>())
-                mod.ApplyToClock(sourceClock);
-        }
-
-        protected virtual ScoreInfo CreateScore()
-        {
-            ScoreInfo score = new ScoreInfo
+            if (boo <= Time.Current)
             {
-                Beatmap = Beatmap.Value.BeatmapInfo,
-                Ruleset = ruleset,
-                User = api.LocalUser.Value
-            };
+                //30 packets per second test
+                boo = Time.Current + 1000f / 30f;
 
-            ScoreProcessor.PopulateScore(score);
-
-            return score;
-        }
-
-        private ScheduledDelegate onCompletionEvent;
-
-        private void onCompletion()
-        {
-            // Only show the completion screen if the player hasn't failed
-            if (ScoreProcessor.HasFailed || onCompletionEvent != null)
-                return;
-
-            if (!AllowResults) return;
-
-            ValidForResume = false;
-
-            using (BeginDelayedSequence(1000))
-            {
-                onCompletionEvent = Schedule(delegate
-                {
-                    ScoreInfo score = CreateScore();
-                    //if (RulesetContainer.Replay == null)
-                        //scoreManager.Import(score, true);
-                    //Push(new Results(score));
-                    this.Exit();
-                });
+                if (LiveSpectator && DrawableRuleset.Cursor != null)
+                    OsuNetworkingHandler.SendToServer(new Vector2Packet
+                    {
+                        Name = "cursor",
+                        ID = OsuNetworkingHandler.OsuUser.ID,
+                        Vector2 = DrawableRuleset.Cursor.ActiveCursor.Position - osu.DrawSize / 2,
+                    });
             }
         }
 
-
-        private bool onFail()
+        private WorkingBeatmap loadBeatmap()
         {
-            if (Beatmap.Value.Mods.Value.OfType<IApplicableFailOverride>().Any(m => !m.AllowFail))
-                return false;
-            return true;
+            WorkingBeatmap working = Beatmap.Value;
+            if (working is DummyWorkingBeatmap)
+                return null;
+
+            try
+            {
+                var beatmap = working.Beatmap;
+
+                if (beatmap == null)
+                    throw new InvalidOperationException("Beatmap was not loaded");
+
+                ruleset = Ruleset.Value ?? beatmap.BeatmapInfo.Ruleset;
+                var rulesetInstance = ruleset.CreateInstance();
+
+                try
+                {
+                    DrawableRuleset = rulesetInstance.CreateDrawableRulesetWith(working, Mods.Value);
+                }
+                catch (BeatmapInvalidForRulesetException)
+                {
+                    // we may fail to create a DrawableRuleset if the beatmap cannot be loaded with the user's preferred ruleset
+                    // let's try again forcing the beatmap's ruleset.
+                    ruleset = beatmap.BeatmapInfo.Ruleset;
+                    rulesetInstance = ruleset.CreateInstance();
+                    DrawableRuleset = rulesetInstance.CreateDrawableRulesetWith(Beatmap.Value, Mods.Value);
+                }
+
+                if (!DrawableRuleset.Objects.Any())
+                {
+                    Logger.Log("Beatmap contains no hit objects!", level: LogLevel.Error);
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, "Could not load beatmap sucessfully!");
+                //couldn't load, hard abort!
+                return null;
+            }
+
+            return working;
         }
+
+        protected override bool OnScroll(ScrollEvent e) => mouseWheelDisabled.Value && !GameplayClockContainer.IsPaused.Value;
+
+        #region Storyboard
+
+        private DrawableStoryboard storyboard;
+        protected UserDimContainer StoryboardContainer { get; private set; }
+
+        protected virtual UserDimContainer CreateStoryboardContainer() => new UserDimContainer(true)
+        {
+            RelativeSizeAxes = Axes.Both,
+            Alpha = 1,
+            EnableUserDim = { Value = true }
+        };
+
+        private Bindable<bool> showStoryboard;
+
+        private void initializeStoryboard(bool asyncLoad)
+        {
+            if (StoryboardContainer == null || storyboard != null)
+                return;
+
+            if (!showStoryboard.Value)
+                return;
+
+            var beatmap = Beatmap.Value;
+
+            storyboard = beatmap.Storyboard.CreateDrawable();
+            storyboard.Masking = true;
+
+            if (asyncLoad)
+                LoadComponentAsync(storyboard, StoryboardContainer.Add);
+            else
+                StoryboardContainer.Add(storyboard);
+        }
+
+        #endregion
+
+        #region Screen Logic
 
         public override void OnEntering(IScreen last)
         {
@@ -375,22 +334,18 @@ namespace osu.Mods.Online.Multi.Player
                 .Delay(250)
                 .FadeIn(250);
 
-            Task.Run(() =>
-            {
-                sourceClock.Reset();
+            showStoryboard.ValueChanged += _ => initializeStoryboard(true);
 
-                Schedule(() =>
-                {
-                    adjustableClock.ChangeSource(sourceClock);
-                    applyRateFromMods();
+            Background.EnableUserDim.Value = true;
+            Background.BlurAmount.Value = 0;
 
-                    this.Delay(750).Schedule(() =>
-                    {
-                        Logger.Log("Client finnished loading", LoggingTarget.Network);
-                        OsuNetworkingHandler.SendToServer(new PlayerLoadedPacket());
-                    });
-                });
-            });
+            Background.StoryboardReplacesBackground.BindTo(storyboardReplacesBackground);
+            StoryboardContainer.StoryboardReplacesBackground.BindTo(storyboardReplacesBackground);
+
+            storyboardReplacesBackground.Value = Beatmap.Value.Storyboard.ReplacesBackground && Beatmap.Value.Storyboard.HasDrawable;
+
+            GameplayClockContainer.Restart();
+            GameplayClockContainer.FadeInFromZero(750, Easing.OutQuint);
         }
 
         public override void OnSuspending(IScreen next)
@@ -401,93 +356,25 @@ namespace osu.Mods.Online.Multi.Player
 
         public override bool OnExiting(IScreen next)
         {
-            OsuNetworkingHandler.OnPacketReceive -= handlePackets;
-            applyRateFromMods();
+            if (!GameplayClockContainer.IsPaused.Value)
+                // still want to block if we are within the cooldown period and not already paused.
+                return true;
+
+            GameplayClockContainer.ResetLocalAdjustments();
 
             fadeOut();
             return base.OnExiting(next);
         }
 
-        private void fadeOut()
+        private void fadeOut(bool instant = false)
         {
-            const float fade_out_duration = 250;
+            float fadeOutDuration = instant ? 0 : 250;
+            this.FadeOut(fadeOutDuration);
 
-            RulesetContainer?.FadeOut(fade_out_duration);
-            this.FadeOut(fade_out_duration);
-
-            hudOverlay?.ScaleTo(0.7f, fade_out_duration * 3, Easing.In);
-
-            Background?.FadeTo(1f, fade_out_duration);
+            Background.EnableUserDim.Value = false;
+            storyboardReplacesBackground.Value = false;
         }
 
-        protected override bool OnScroll(ScrollEvent e) => mouseWheelDisabled.Value;
-
-        protected override bool OnKeyDown(KeyDownEvent e)
-        {
-            if (e.Key == Key.Escape && !e.Repeat)
-            {
-                OsuNetworkingHandler.SendToServer(new MatchExitPacket());
-                this.Exit();
-                return true;
-            }
-
-            return base.OnKeyDown(e);
-        }
-
-        private void initializeStoryboard(bool asyncLoad)
-        {
-            if (storyboardContainer == null)
-                return;
-
-            WorkingBeatmap beatmap = Beatmap.Value;
-
-            storyboard = beatmap.Storyboard.CreateDrawable();
-            storyboard.Masking = true;
-
-            if (asyncLoad)
-                LoadComponentAsync(storyboard, storyboardContainer.Add);
-            else
-                storyboardContainer.Add(storyboard);
-        }
-
-        /*
-        protected override void UpdateBackgroundElements()
-        {
-            base.UpdateBackgroundElements();
-
-            if (ShowStoryboard && storyboard == null)
-                initializeStoryboard(true);
-
-            WorkingBeatmap beatmap = Beatmap.Value;
-            bool storyboardVisible = ShowStoryboard && beatmap.Storyboard.HasDrawable;
-
-            storyboardContainer?
-                .FadeColour(OsuColour.Gray(BackgroundOpacity), BACKGROUND_FADE_DURATION, Easing.OutQuint)
-                .FadeTo(storyboardVisible && BackgroundOpacity > 0 ? 1 : 0, BACKGROUND_FADE_DURATION, Easing.OutQuint);
-
-            if (storyboardVisible && beatmap.Storyboard.ReplacesBackground)
-                Background?.FadeTo(0, BACKGROUND_FADE_DURATION, Easing.OutQuint);
-        }
-        */
-
-        private double boo = double.MinValue;
-        protected override void Update()
-        {
-            base.Update();
-
-            if (boo <= Time.Current)
-            {
-                //30 packets per second test
-                boo = Time.Current + 1000f / 30f;
-
-                if (LiveSpectator && RulesetContainer.Cursor != null)
-                    OsuNetworkingHandler.SendToServer(new Vector2Packet
-                    {
-                        Name = "cursor",
-                        ID = OsuNetworkingHandler.OsuUser.ID,
-                        Vector2 = RulesetContainer.Cursor.ActiveCursor.Position - osu.DrawSize / 2,
-                    });
-            }
-        }
+        #endregion
     }
 }

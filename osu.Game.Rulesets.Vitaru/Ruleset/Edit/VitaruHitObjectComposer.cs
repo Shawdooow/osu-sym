@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Vitaru.Ruleset.Edit.Blueprints.ClusterBlueprints;
@@ -21,7 +22,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Edit
         {
         }
 
-        protected override DrawableRuleset<VitaruHitObject> CreateDrawableRuleset(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap) => new VitaruEditRulesetContainer(ruleset, beatmap);
+        protected override DrawableRuleset<VitaruHitObject> CreateDrawableRuleset(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap, IReadOnlyList<Mod> mods) => new VitaruEditRulesetContainer(ruleset, beatmap);
 
         protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => new HitObjectCompositionTool[]
         {
