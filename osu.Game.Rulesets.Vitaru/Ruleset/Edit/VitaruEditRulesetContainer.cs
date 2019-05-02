@@ -1,6 +1,8 @@
 #region usings
 
+using System.Collections.Generic;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers;
 using osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields;
@@ -13,8 +15,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Edit
 {
     public class VitaruEditRulesetContainer : VitaruRulesetContainer
     {
-        public VitaruEditRulesetContainer(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap)
-            : base(ruleset, beatmap)
+        public VitaruEditRulesetContainer(Rulesets.Ruleset ruleset, WorkingBeatmap beatmap, IReadOnlyList<Mod> mods)
+            : base(ruleset, beatmap, mods)
         {
         }
 

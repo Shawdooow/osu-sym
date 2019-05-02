@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Vitaru
             }
         }
 
-        public DrawableRuleset CreateRulesetContainerMulti(WorkingBeatmap beatmap, OsuNetworkingHandler networking, MatchInfo match) => new VitaruRulesetContainer(this, beatmap, networking, match);
+        public DrawableRuleset CreateRulesetContainerMulti(WorkingBeatmap beatmap, IReadOnlyList<Mod> mods, OsuNetworkingHandler networking, MatchInfo match) => new VitaruRulesetContainer(this, beatmap, mods, networking, match);
 
         public Container<MultiplayerOption> RulesetSettings(OsuNetworkingHandler networking)
         {
@@ -187,7 +187,7 @@ namespace osu.Game.Rulesets.Vitaru
             }
         }
 
-        public override DrawableRuleset CreateDrawableRulesetWith(WorkingBeatmap beatmap, IReadOnlyList<Mod> mods) => new VitaruRulesetContainer(this, beatmap);
+        public override DrawableRuleset CreateDrawableRulesetWith(WorkingBeatmap beatmap, IReadOnlyList<Mod> mods) => new VitaruRulesetContainer(this, beatmap, mods);
 
         public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new VitaruBeatmapConverter(beatmap);
 
