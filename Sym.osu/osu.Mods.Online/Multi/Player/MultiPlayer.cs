@@ -107,7 +107,7 @@ namespace osu.Mods.Online.Multi.Player
             switch (info.Packet)
             {
                 case MatchStartingPacket start:
-                    //GameplayClockContainer.Start();
+                    GameplayClockContainer.Start();
                     break;
                 case MatchExitPacket exit:
                     this.Exit();
@@ -174,7 +174,7 @@ namespace osu.Mods.Online.Multi.Player
                         Action = () =>
                         {
                             OsuNetworkingHandler.SendToServer(new MatchExitPacket());
-                            this.Exit();
+                            //this.Exit();
                         }
                     },
                     PlayerSettingsOverlay = { PlaybackSettings = { UserPlaybackRate = { BindTarget = GameplayClockContainer.UserPlaybackRate } } },
@@ -362,10 +362,6 @@ namespace osu.Mods.Online.Multi.Player
 
         public override bool OnExiting(IScreen next)
         {
-            if (!GameplayClockContainer.IsPaused.Value)
-                // still want to block if we are within the cooldown period and not already paused.
-                return true;
-
             GameplayClockContainer.ResetLocalAdjustments();
 
             fadeOut();
