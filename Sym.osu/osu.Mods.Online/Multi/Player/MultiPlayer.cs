@@ -169,16 +169,19 @@ namespace osu.Mods.Online.Multi.Player
                 },
                 HUDOverlay = new HUDOverlay(ScoreProcessor, DrawableRuleset, Mods.Value)
                 {
-                    HoldToQuit = { Action = () => OsuNetworkingHandler.SendToServer(new MatchExitPacket()) },
+                    HoldToQuit =
+                    {
+                        Action = () =>
+                        {
+                            OsuNetworkingHandler.SendToServer(new MatchExitPacket());
+                            this.Exit();
+                        }
+                    },
                     PlayerSettingsOverlay = { PlaybackSettings = { UserPlaybackRate = { BindTarget = GameplayClockContainer.UserPlaybackRate } } },
                     KeyCounter = { Visible = { BindTarget = DrawableRuleset.HasReplayLoaded } },
                     RequestSeek = GameplayClockContainer.Seek,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre
-                },
-                new SkipOverlay(DrawableRuleset.GameplayStartTime)
-                {
-                    RequestSeek = GameplayClockContainer.Seek
                 },
             };
 
@@ -214,6 +217,9 @@ namespace osu.Mods.Online.Multi.Player
 
             foreach (var mod in Mods.Value.OfType<IApplicableToScoreProcessor>())
                 mod.ApplyToScoreProcessor(ScoreProcessor);
+
+            GameplayClockContainer.Stop();
+            GameplayClockContainer.Restart();
         }
 
         private double boo = double.MinValue;
