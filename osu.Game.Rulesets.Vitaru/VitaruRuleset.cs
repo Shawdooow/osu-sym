@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Vitaru
     {
         public static Bindable<double> MEMORY_LEAKED = new Bindable<double>();
 
-        public override int? LegacyID => 4; 
+        public override int? LegacyID => 12; 
 
         public override string Description => "vitaru!";
 
