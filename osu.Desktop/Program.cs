@@ -24,7 +24,7 @@ namespace osu.Desktop
             // Back up the cwd before DesktopGameHost changes it
             var cwd = Environment.CurrentDirectory;
 
-            using (DesktopGameHost host = Host.GetSuitableHost(@"osu", true))
+            using (DesktopGameHost host = Host.GetSuitableHost(@"osu728", true))
             {
                 if (!host.IsPrimaryInstance)
                 {
