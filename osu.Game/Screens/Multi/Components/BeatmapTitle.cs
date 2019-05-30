@@ -1,86 +1,78 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Localisation;
-using osu.Game.Graphics;
-using osu.Game.Graphics.Containers;
+using osu.Game.Beatmaps;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Online.Chat;
 
 namespace osu.Game.Screens.Multi.Components
 {
-    public class BeatmapTitle : MultiplayerComposite
+    public class BeatmapTitle : FillFlowContainer<OsuSpriteText>
     {
-        private readonly LinkFlowContainer textFlow;
+        private readonly OsuSpriteText beatmapTitle, beatmapDash, beatmapArtist;
+
+        private LocalisationEngine localisation;
+
+        public float TextSize
+        {
+            set { beatmapTitle.TextSize = beatmapDash.TextSize = beatmapArtist.TextSize = value; }
+        }
+
+        private BeatmapInfo beatmap;
+
+        public BeatmapInfo Beatmap
+        {
+            set
+            {
+                if (value == beatmap) return;
+                beatmap = value;
+
+                if (IsLoaded)
+                    updateText();
+            }
+        }
 
         public BeatmapTitle()
         {
             AutoSizeAxes = Axes.Both;
+            Direction = FillDirection.Horizontal;
 
-            InternalChild = textFlow = new LinkFlowContainer { AutoSizeAxes = Axes.Both };
+            Children = new[]
+            {
+                beatmapTitle = new OsuSpriteText { Font = @"Exo2.0-BoldItalic", },
+                beatmapDash = new OsuSpriteText { Font = @"Exo2.0-BoldItalic", },
+                beatmapArtist = new OsuSpriteText { Font = @"Exo2.0-RegularItalic", },
+            };
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(LocalisationEngine localisation)
         {
-            CurrentItem.BindValueChanged(v => updateText(), true);
+            this.localisation = localisation;
         }
 
-        private float textSize = OsuSpriteText.FONT_SIZE;
-
-        public float TextSize
+        protected override void LoadComplete()
         {
-            get => textSize;
-            set
-            {
-                if (textSize == value)
-                    return;
-                textSize = value;
-
-                updateText();
-            }
+            base.LoadComplete();
+            updateText();
         }
-
-        [Resolved]
-        private OsuColour colours { get; set; }
 
         private void updateText()
         {
-            if (LoadState < LoadState.Loading)
-                return;
-
-            textFlow.Clear();
-
-            var beatmap = CurrentItem.Value?.Beatmap;
-
             if (beatmap == null)
-                textFlow.AddText("No beatmap selected", s =>
-                {
-                    s.TextSize = TextSize;
-                    s.Colour = colours.PinkLight;
-                });
+            {
+                beatmapTitle.Current = beatmapArtist.Current = null;
+                beatmapTitle.Text = "Changing map";
+                beatmapDash.Text = beatmapArtist.Text = string.Empty;
+            }
             else
             {
-                textFlow.AddLink(new[]
-                {
-                    new OsuSpriteText
-                    {
-                        Text = new LocalisedString((beatmap.Metadata.ArtistUnicode, beatmap.Metadata.Artist)),
-                        TextSize = TextSize,
-                    },
-                    new OsuSpriteText
-                    {
-                        Text = " - ",
-                        TextSize = TextSize,
-                    },
-                    new OsuSpriteText
-                    {
-                        Text = new LocalisedString((beatmap.Metadata.TitleUnicode, beatmap.Metadata.Title)),
-                        TextSize = TextSize,
-                    }
-                }, null, LinkAction.OpenBeatmap, beatmap.OnlineBeatmapID.ToString(), "Open beatmap");
+                beatmapTitle.Current = localisation.GetUnicodePreference(beatmap.Metadata.TitleUnicode, beatmap.Metadata.Title);
+                beatmapDash.Text = @" - ";
+                beatmapArtist.Current = localisation.GetUnicodePreference(beatmap.Metadata.ArtistUnicode, beatmap.Metadata.Artist);
             }
         }
     }

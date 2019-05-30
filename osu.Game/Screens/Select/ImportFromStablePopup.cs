@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using osu.Game.Graphics;
@@ -12,7 +12,7 @@ namespace osu.Game.Screens.Select
         public ImportFromStablePopup(Action importFromStable)
         {
             HeaderText = @"You have no beatmaps!";
-            BodyText = "An existing copy of osu! was found, though.\nWould you like to import your beatmaps (and skins)?";
+            BodyText = "An existing copy of osu! was found, though.\nWould you like to import your beatmaps?";
 
             Icon = FontAwesome.fa_plane;
 

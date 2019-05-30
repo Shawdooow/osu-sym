@@ -1,10 +1,9 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Graphics;
@@ -12,8 +11,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Game.Database;
-using osu.Game.Graphics.Sprites;
-using osuTK;
+using OpenTK;
 
 namespace osu.Game.Skinning
 {
@@ -38,7 +36,7 @@ namespace osu.Game.Skinning
                 Configuration = new SkinConfiguration();
 
             Samples = audioManager.GetSampleManager(storage);
-            Textures = new TextureStore(new TextureLoaderStore(storage));
+            Textures = new TextureStore(new RawTextureLoaderStore(storage));
         }
 
         public override Drawable GetDrawableComponent(string componentName)
@@ -57,38 +55,29 @@ namespace osu.Game.Skinning
                 case "Play/Great":
                     componentName = "hit300";
                     break;
-                case "Play/osu/number-text":
-                    return !hasFont(Configuration.HitCircleFont) ? null : new LegacySpriteText(Textures, Configuration.HitCircleFont) { Scale = new Vector2(0.96f) };
             }
 
-            var texture = GetTexture(componentName);
+            float ratio = 0.72f; // brings sizing roughly in-line with stable
 
-            if (texture == null)
-                return null;
-
-            return new Sprite { Texture = texture };
-        }
-
-        public override Texture GetTexture(string componentName)
-        {
-            float ratio = 2;
-
-            var texture = Textures.Get($"{componentName}@2x");
+            var texture = GetTexture($"{componentName}@2x");
             if (texture == null)
             {
-                ratio = 1;
-                texture = Textures.Get(componentName);
+                ratio *= 2;
+                texture = GetTexture(componentName);
             }
 
-            if (texture != null)
-                texture.ScaleAdjust = ratio / 0.72f; // brings sizing roughly in-line with stable
+            if (texture == null) return null;
 
-            return texture;
+            return new Sprite
+            {
+                Texture = texture,
+                Scale = new Vector2(ratio),
+            };
         }
 
-        public override SampleChannel GetSample(string sampleName) => Samples.Get(sampleName);
+        public override Texture GetTexture(string componentName) => Textures.Get(componentName);
 
-        private bool hasFont(string fontName) => GetTexture($"{fontName}-0") != null;
+        public override SampleChannel GetSample(string sampleName) => Samples.Get(sampleName);
 
         protected class LegacySkinResourceStore<T> : IResourceStore<byte[]>
             where T : INamedFileInfo
@@ -101,10 +90,9 @@ namespace osu.Game.Skinning
                 bool hasExtension = filename.Contains('.');
 
                 string lastPiece = filename.Split('/').Last();
-                var legacyName = filename.StartsWith("Gameplay/taiko/") ? "taiko-" + lastPiece : lastPiece;
 
-                var file = source.Files.Find(f =>
-                    string.Equals(hasExtension ? f.Filename : Path.ChangeExtension(f.Filename, null), legacyName, StringComparison.InvariantCultureIgnoreCase));
+                var file = source.Files.FirstOrDefault(f =>
+                    string.Equals(hasExtension ? f.Filename : Path.ChangeExtension(f.Filename, null), lastPiece, StringComparison.InvariantCultureIgnoreCase));
                 return file?.FileInfo.StoragePath;
             }
 
@@ -120,12 +108,10 @@ namespace osu.Game.Skinning
                 return path == null ? null : underlyingStore.GetStream(path);
             }
 
-            byte[] IResourceStore<byte[]>.Get(string name) => GetAsync(name).Result;
-
-            public Task<byte[]> GetAsync(string name)
+            byte[] IResourceStore<byte[]>.Get(string name)
             {
                 string path = getPathForFile(name);
-                return path == null ? Task.FromResult<byte[]>(null) : underlyingStore.GetAsync(path);
+                return path == null ? null : underlyingStore.Get(path);
             }
 
             #region IDisposable Support
@@ -152,41 +138,6 @@ namespace osu.Game.Skinning
             }
 
             #endregion
-        }
-
-        private class LegacySpriteText : OsuSpriteText
-        {
-            private readonly TextureStore textures;
-            private readonly string font;
-
-            public LegacySpriteText(TextureStore textures, string font)
-            {
-                this.textures = textures;
-                this.font = font;
-
-                Shadow = false;
-                UseFullGlyphHeight = false;
-            }
-
-            protected override Texture GetTextureForCharacter(char c)
-            {
-                string textureName = $"{font}-{c}";
-
-                // Approximate value that brings character sizing roughly in-line with stable
-                float ratio = 36;
-
-                var texture = textures.Get($"{textureName}@2x");
-                if (texture == null)
-                {
-                    ratio = 18;
-                    texture = textures.Get(textureName);
-                }
-
-                if (texture != null)
-                    texture.ScaleAdjust = ratio;
-
-                return texture;
-            }
         }
     }
 }

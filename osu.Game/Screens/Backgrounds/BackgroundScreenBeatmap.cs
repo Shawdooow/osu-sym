@@ -1,17 +1,22 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Textures;
+using osu.Framework.Graphics.Transforms;
+using OpenTK;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.Backgrounds;
 
 namespace osu.Game.Screens.Backgrounds
 {
-    public class BackgroundScreenBeatmap : BlurrableBackgroundScreen
+    public class BackgroundScreenBeatmap : BackgroundScreen
     {
+        private Background background;
+
         private WorkingBeatmap beatmap;
+        private Vector2 blurTarget;
 
         public WorkingBeatmap Beatmap
         {
@@ -25,21 +30,21 @@ namespace osu.Game.Screens.Backgrounds
 
                 Schedule(() =>
                 {
-                    LoadComponentAsync(new BeatmapBackground(beatmap), b => Schedule(() =>
+                    LoadComponentAsync(new BeatmapBackground(beatmap), b =>
                     {
                         float newDepth = 0;
-                        if (Background != null)
+                        if (background != null)
                         {
-                            newDepth = Background.Depth + 1;
-                            Background.FinishTransforms();
-                            Background.FadeOut(250);
-                            Background.Expire();
+                            newDepth = background.Depth + 1;
+                            background.FinishTransforms();
+                            background.FadeOut(250);
+                            background.Expire();
                         }
 
                         b.Depth = newDepth;
-                        AddInternal(Background = b);
-                        Background.BlurSigma = BlurTarget;
-                    }));
+                        Add(background = b);
+                        background.BlurSigma = blurTarget;
+                    });
                 });
             }
         }
@@ -48,6 +53,9 @@ namespace osu.Game.Screens.Backgrounds
         {
             Beatmap = beatmap;
         }
+
+        public TransformSequence<Background> BlurTo(Vector2 sigma, double duration, Easing easing = Easing.None)
+            => background?.BlurTo(blurTarget = sigma, duration, easing);
 
         public override bool Equals(BackgroundScreen other)
         {

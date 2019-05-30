@@ -1,10 +1,9 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.IO;
 using osu.Framework.Allocation;
 using osu.Framework.Audio.Sample;
-using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 
@@ -29,7 +28,7 @@ namespace osu.Game.Storyboards.Drawables
         }
 
         [BackgroundDependencyLoader]
-        private void load(IBindable<WorkingBeatmap> beatmap)
+        private void load(IBindableBeatmap beatmap)
         {
             // Try first with the full name, then attempt with no path
             channel = beatmap.Value.Skin.GetSample(sample.Path) ?? beatmap.Value.Skin.GetSample(Path.ChangeExtension(sample.Path, null));
@@ -42,7 +41,7 @@ namespace osu.Game.Storyboards.Drawables
         {
             base.Update();
 
-            // TODO: this logic will need to be consolidated with other game samples like hit sounds.
+            // TODO: this logic will need to be consolidated with other game samples like hitsounds.
             if (Time.Current < sample.Time)
             {
                 // We've rewound before the start time of the sample

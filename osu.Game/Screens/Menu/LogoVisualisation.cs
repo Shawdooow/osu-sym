@@ -1,8 +1,9 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.ES30;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Batches;
@@ -63,6 +64,9 @@ namespace osu.Game.Screens.Menu
 
         private readonly float[] frequencyAmplitudes = new float[256];
 
+        public override bool HandleKeyboardInput => false;
+        public override bool HandleMouseInput => false;
+
         private Shader shader;
         private readonly Texture texture;
 
@@ -74,7 +78,7 @@ namespace osu.Game.Screens.Menu
         }
 
         [BackgroundDependencyLoader]
-        private void load(ShaderManager shaders, IBindable<WorkingBeatmap> beatmap)
+        private void load(ShaderManager shaders, IBindableBeatmap beatmap)
         {
             this.beatmap.BindTo(beatmap);
             shader = shaders.Load(VertexShaderDescriptor.TEXTURE_2, FragmentShaderDescriptor.TEXTURE_ROUNDED);
@@ -149,7 +153,7 @@ namespace osu.Game.Screens.Menu
 
         private class VisualiserSharedData
         {
-            public readonly QuadBatch<TexturedVertex2D> VertexBatch = new QuadBatch<TexturedVertex2D>(100, 10);
+            public readonly LinearBatch<TexturedVertex2D> VertexBatch = new LinearBatch<TexturedVertex2D>(100 * 4, 10, PrimitiveType.Quads);
         }
 
         private class VisualisationDrawNode : DrawNode
@@ -172,7 +176,7 @@ namespace osu.Game.Screens.Menu
 
                 Vector2 inflation = DrawInfo.MatrixInverse.ExtractScale().Xy;
 
-                ColourInfo colourInfo = DrawColourInfo.Colour;
+                ColourInfo colourInfo = DrawInfo.Colour;
                 colourInfo.ApplyChild(Colour);
 
                 if (AudioData != null)

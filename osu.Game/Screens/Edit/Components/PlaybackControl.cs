@@ -1,19 +1,18 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Framework.Timing;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
-using osuTK.Input;
 
 namespace osu.Game.Screens.Edit.Components
 {
@@ -45,7 +44,7 @@ namespace osu.Game.Screens.Edit.Components
                 new OsuSpriteText
                 {
                     Origin = Anchor.BottomLeft,
-                    Text = "Playback speed",
+                    Text = "Playback Speed",
                     RelativePositionAxes = Axes.Y,
                     Y = 0.5f,
                     Padding = new MarginPadding { Left = 45 }
@@ -62,18 +61,6 @@ namespace osu.Game.Screens.Edit.Components
             };
 
             tabs.Current.ValueChanged += newValue => Beatmap.Value.Track.Tempo.Value = newValue;
-        }
-
-        protected override bool OnKeyDown(KeyDownEvent e)
-        {
-            switch (e.Key)
-            {
-                case Key.Space:
-                    togglePause();
-                    return true;
-            }
-
-            return base.OnKeyDown(e);
         }
 
         private void togglePause()
@@ -151,13 +138,13 @@ namespace osu.Game.Screens.Edit.Components
                     textBold.Colour = hoveredColour = colours.Yellow;
                 }
 
-                protected override bool OnHover(HoverEvent e)
+                protected override bool OnHover(InputState state)
                 {
                     updateState();
                     return true;
                 }
 
-                protected override void OnHoverLost(HoverLostEvent e) => updateState();
+                protected override void OnHoverLost(InputState state) => updateState();
                 protected override void OnActivated() => updateState();
                 protected override void OnDeactivated() => updateState();
 

@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using osu.Framework;
@@ -11,13 +11,14 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osuTK;
-using osuTK.Graphics;
-using osuTK.Input;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Input;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Graphics.Containers;
 using osu.Framework.Audio.Track;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Game.Beatmaps.ControlPoints;
 
 namespace osu.Game.Screens.Menu
@@ -46,7 +47,7 @@ namespace osu.Game.Screens.Menu
         private SampleChannel sampleClick;
         private SampleChannel sampleHover;
 
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => box.ReceivePositionalInputAt(screenSpacePos);
+        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => box.ReceiveMouseInputAt(screenSpacePos);
 
         public Button(string text, string sampleName, FontAwesome symbol, Color4 colour, Action clickAction = null, float extraWidth = 0, Key triggerKey = Key.Unknown)
         {
@@ -150,7 +151,7 @@ namespace osu.Game.Screens.Menu
             rightward = !rightward;
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             if (State != ButtonState.Expanded) return true;
 
@@ -166,7 +167,7 @@ namespace osu.Game.Screens.Menu
             return true;
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             icon.ClearTransforms();
             icon.RotateTo(0, 500, Easing.Out);
@@ -185,30 +186,30 @@ namespace osu.Game.Screens.Menu
                 sampleClick = audio.Sample.Get($@"Menu/{sampleName}");
         }
 
-        protected override bool OnMouseDown(MouseDownEvent e)
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
         {
             boxHoverLayer.FadeTo(0.1f, 1000, Easing.OutQuint);
-            return base.OnMouseDown(e);
+            return base.OnMouseDown(state, args);
         }
 
-        protected override bool OnMouseUp(MouseUpEvent e)
+        protected override bool OnMouseUp(InputState state, MouseUpEventArgs args)
         {
             boxHoverLayer.FadeTo(0, 1000, Easing.OutQuint);
-            return base.OnMouseUp(e);
+            return base.OnMouseUp(state, args);
         }
 
-        protected override bool OnClick(ClickEvent e)
+        protected override bool OnClick(InputState state)
         {
             trigger();
             return true;
         }
 
-        protected override bool OnKeyDown(KeyDownEvent e)
+        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (e.Repeat || e.ControlPressed || e.ShiftPressed || e.AltPressed)
+            if (args.Repeat || state.Keyboard.ControlPressed || state.Keyboard.ShiftPressed || state.Keyboard.AltPressed)
                 return false;
 
-            if (triggerKey == e.Key && triggerKey != Key.Unknown)
+            if (triggerKey == args.Key && triggerKey != Key.Unknown)
             {
                 trigger();
                 return true;
@@ -228,8 +229,8 @@ namespace osu.Game.Screens.Menu
             boxHoverLayer.FadeOut(800, Easing.OutExpo);
         }
 
-        public override bool HandleNonPositionalInput => state == ButtonState.Expanded;
-        public override bool HandlePositionalInput => state != ButtonState.Exploded && box.Scale.X >= 0.8f;
+        public override bool HandleKeyboardInput => state == ButtonState.Expanded;
+        public override bool HandleMouseInput => state != ButtonState.Exploded && box.Scale.X >= 0.8f;
 
         protected override void Update()
         {

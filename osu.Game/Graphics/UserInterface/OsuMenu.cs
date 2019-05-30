@@ -1,18 +1,18 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
-using osuTK.Graphics;
+using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Graphics.Sprites;
-using osuTK;
+using OpenTK;
 
 namespace osu.Game.Graphics.UserInterface
 {
@@ -97,25 +97,25 @@ namespace osu.Game.Graphics.UserInterface
                 }
             }
 
-            protected override bool OnHover(HoverEvent e)
+            protected override bool OnHover(InputState state)
             {
                 sampleHover.Play();
                 text.BoldText.FadeIn(transition_length, Easing.OutQuint);
                 text.NormalText.FadeOut(transition_length, Easing.OutQuint);
-                return base.OnHover(e);
+                return base.OnHover(state);
             }
 
-            protected override void OnHoverLost(HoverLostEvent e)
+            protected override void OnHoverLost(InputState state)
             {
                 text.BoldText.FadeOut(transition_length, Easing.OutQuint);
                 text.NormalText.FadeIn(transition_length, Easing.OutQuint);
-                base.OnHoverLost(e);
+                base.OnHoverLost(state);
             }
 
-            protected override bool OnClick(ClickEvent e)
+            protected override bool OnClick(InputState state)
             {
                 sampleClick.Play();
-                return base.OnClick(e);
+                return base.OnClick(state);
             }
 
             protected sealed override Drawable CreateContent() => text = CreateTextContainer();

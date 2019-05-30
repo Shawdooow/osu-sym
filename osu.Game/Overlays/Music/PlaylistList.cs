@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
@@ -8,10 +8,10 @@ using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.Containers;
-using osuTK;
+using OpenTK;
 
 namespace osu.Game.Overlays.Music
 {
@@ -73,9 +73,9 @@ namespace osu.Game.Overlays.Music
             }
 
             [BackgroundDependencyLoader]
-            private void load(BeatmapManager beatmaps, IBindable<WorkingBeatmap> beatmap)
+            private void load(BeatmapManager beatmaps, IBindableBeatmap beatmap)
             {
-                beatmaps.GetAllUsableBeatmapSets().ForEach(b => addBeatmapSet(b, false, false));
+                beatmaps.GetAllUsableBeatmapSets().ForEach(addBeatmapSet);
                 beatmaps.ItemAdded += addBeatmapSet;
                 beatmaps.ItemRemoved += removeBeatmapSet;
 
@@ -83,23 +83,20 @@ namespace osu.Game.Overlays.Music
                 beatmapBacking.ValueChanged += _ => updateSelectedSet();
             }
 
-            private void addBeatmapSet(BeatmapSetInfo obj, bool existing, bool silent) => Schedule(() =>
+            private void addBeatmapSet(BeatmapSetInfo obj)
             {
-                if (existing)
-                    return;
-
                 var newItem = new PlaylistItem(obj) { OnSelect = set => Selected?.Invoke(set) };
 
                 items.Add(newItem);
                 items.SetLayoutPosition(newItem, items.Count - 1);
-            });
+            }
 
-            private void removeBeatmapSet(BeatmapSetInfo obj) => Schedule(() =>
+            private void removeBeatmapSet(BeatmapSetInfo obj)
             {
                 var itemToRemove = items.FirstOrDefault(i => i.BeatmapSetInfo.ID == obj.ID);
                 if (itemToRemove != null)
                     items.Remove(itemToRemove);
-            });
+            }
 
             private void updateSelectedSet()
             {
@@ -118,25 +115,25 @@ namespace osu.Game.Overlays.Music
             private Vector2 nativeDragPosition;
             private PlaylistItem draggedItem;
 
-            protected override bool OnDragStart(DragStartEvent e)
+            protected override bool OnDragStart(InputState state)
             {
-                nativeDragPosition = e.ScreenSpaceMousePosition;
+                nativeDragPosition = state.Mouse.NativeState.Position;
                 draggedItem = items.FirstOrDefault(d => d.IsDraggable);
-                return draggedItem != null || base.OnDragStart(e);
+                return draggedItem != null || base.OnDragStart(state);
             }
 
-            protected override bool OnDrag(DragEvent e)
+            protected override bool OnDrag(InputState state)
             {
-                nativeDragPosition = e.ScreenSpaceMousePosition;
+                nativeDragPosition = state.Mouse.NativeState.Position;
                 if (draggedItem == null)
-                    return base.OnDrag(e);
+                    return base.OnDrag(state);
                 return true;
             }
 
-            protected override bool OnDragEnd(DragEndEvent e)
+            protected override bool OnDragEnd(InputState state)
             {
-                nativeDragPosition = e.ScreenSpaceMousePosition;
-                var handled = draggedItem != null || base.OnDragEnd(e);
+                nativeDragPosition = state.Mouse.NativeState.Position;
+                var handled = draggedItem != null || base.OnDragEnd(state);
                 draggedItem = null;
 
                 return handled;

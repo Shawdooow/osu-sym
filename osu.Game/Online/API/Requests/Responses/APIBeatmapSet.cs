@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
@@ -20,12 +20,9 @@ namespace osu.Game.Online.API.Requests.Responses
         [JsonProperty(@"id")]
         public int? OnlineBeatmapSetID
         {
-            get => onlineBeatmapSetID;
-            set => onlineBeatmapSetID = value > 0 ? value : null;
+            get { return onlineBeatmapSetID; }
+            set { onlineBeatmapSetID = value > 0 ? value : null; }
         }
-
-        [JsonProperty(@"status")]
-        public BeatmapSetOnlineStatus Status { get; set; }
 
         [JsonProperty(@"preview_url")]
         private string preview { get; set; }
@@ -45,6 +42,9 @@ namespace osu.Game.Online.API.Requests.Responses
         [JsonProperty(@"storyboard")]
         private bool hasStoryboard { get; set; }
 
+        [JsonProperty(@"status")]
+        private BeatmapSetOnlineStatus status { get; set; }
+
         [JsonProperty(@"submitted_date")]
         private DateTimeOffset submitted { get; set; }
 
@@ -57,7 +57,7 @@ namespace osu.Game.Online.API.Requests.Responses
         [JsonProperty(@"user_id")]
         private long creatorId
         {
-            set => Author.Id = value;
+            set { Author.Id = value; }
         }
 
         [JsonProperty(@"beatmaps")]
@@ -69,7 +69,6 @@ namespace osu.Game.Online.API.Requests.Responses
             {
                 OnlineBeatmapSetID = OnlineBeatmapSetID,
                 Metadata = this,
-                Status = Status,
                 OnlineInfo = new BeatmapSetOnlineInfo
                 {
                     Covers = covers,
@@ -77,7 +76,7 @@ namespace osu.Game.Online.API.Requests.Responses
                     PlayCount = playCount,
                     FavouriteCount = favouriteCount,
                     BPM = bpm,
-                    Status = Status,
+                    Status = status,
                     HasVideo = hasVideo,
                     HasStoryboard = hasStoryboard,
                     Submitted = submitted,

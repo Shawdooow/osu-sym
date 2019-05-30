@@ -1,10 +1,8 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
-using osu.Game.Rulesets.Judgements;
-using osu.Game.Rulesets.Mania.Judgements;
 using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Mania.Objects
@@ -57,7 +55,7 @@ namespace osu.Game.Rulesets.Mania.Objects
         /// <summary>
         /// The tail note of the hold.
         /// </summary>
-        public readonly TailNote Tail = new TailNote();
+        public readonly Note Tail = new Note();
 
         /// <summary>
         /// The time between ticks of this hold.
@@ -70,6 +68,9 @@ namespace osu.Game.Rulesets.Mania.Objects
 
             TimingControlPoint timingPoint = controlPointInfo.TimingPointAt(StartTime);
             tickSpacing = timingPoint.BeatLength / difficulty.SliderTickRate;
+
+            Head.ApplyDefaults(controlPointInfo, difficulty);
+            Tail.ApplyDefaults(controlPointInfo, difficulty);
         }
 
         protected override void CreateNestedHitObjects()
@@ -77,9 +78,6 @@ namespace osu.Game.Rulesets.Mania.Objects
             base.CreateNestedHitObjects();
 
             createTicks();
-
-            AddNested(Head);
-            AddNested(Tail);
         }
 
         private void createTicks()
@@ -96,7 +94,5 @@ namespace osu.Game.Rulesets.Mania.Objects
                 });
             }
         }
-
-        public override Judgement CreateJudgement() => new HoldNoteJudgement();
     }
 }

@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
@@ -14,9 +14,8 @@ using osu.Game.Rulesets.Mania.Objects.Drawables;
 using osu.Game.Rulesets.Mania.UI;
 using osu.Game.Rulesets.Mania.UI.Components;
 using osu.Game.Rulesets.UI.Scrolling;
-using osu.Game.Tests.Visual;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Mania.Tests
 {
@@ -49,8 +48,8 @@ namespace osu.Game.Rulesets.Mania.Tests
                 Spacing = new Vector2(20, 0),
                 Children = new[]
                 {
-                    createColumn(ScrollingDirection.Up, ManiaAction.Key1, 0),
-                    createColumn(ScrollingDirection.Down, ManiaAction.Key2, 1)
+                    createColumn(ScrollingDirection.Up, ManiaAction.Key1),
+                    createColumn(ScrollingDirection.Down, ManiaAction.Key2)
                 }
             };
         }
@@ -85,15 +84,16 @@ namespace osu.Game.Rulesets.Mania.Tests
             }
         }
 
-        private Drawable createColumn(ScrollingDirection direction, ManiaAction action, int index)
+        private Drawable createColumn(ScrollingDirection direction, ManiaAction action)
         {
-            var column = new Column(index)
+            var column = new Column
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Height = 0.85f,
                 AccentColour = Color4.OrangeRed,
                 Action = { Value = action },
+                VisibleTimeRange = { Value = 2000 }
             };
 
             columns.Add(column);
@@ -104,7 +104,6 @@ namespace osu.Game.Rulesets.Mania.Tests
                 Origin = Anchor.Centre,
                 AutoSizeAxes = Axes.X,
                 RelativeSizeAxes = Axes.Y,
-                TimeRange = 2000,
                 Child = column
             };
         }

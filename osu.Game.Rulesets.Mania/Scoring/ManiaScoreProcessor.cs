@@ -1,11 +1,11 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Mania.Judgements;
 using osu.Game.Rulesets.Mania.Objects;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 
@@ -97,20 +97,31 @@ namespace osu.Game.Rulesets.Mania.Scoring
         {
         }
 
-        protected override void ApplyBeatmap(Beatmap<ManiaHitObject> beatmap)
+        protected override void SimulateAutoplay(Beatmap<ManiaHitObject> beatmap)
         {
-            base.ApplyBeatmap(beatmap);
-
             BeatmapDifficulty difficulty = beatmap.BeatmapInfo.BaseDifficulty;
             hpMultiplier = BeatmapDifficulty.DifficultyRange(difficulty.DrainRate, hp_multiplier_min, hp_multiplier_mid, hp_multiplier_max);
             hpMissMultiplier = BeatmapDifficulty.DifficultyRange(difficulty.DrainRate, hp_multiplier_miss_min, hp_multiplier_miss_mid, hp_multiplier_miss_max);
-        }
 
-        protected override void SimulateAutoplay(Beatmap<ManiaHitObject> beatmap)
-        {
             while (true)
             {
-                base.SimulateAutoplay(beatmap);
+                foreach (var obj in beatmap.HitObjects)
+                {
+                    var holdNote = obj as HoldNote;
+
+                    if (holdNote != null)
+                    {
+                        // Head
+                        AddJudgement(new ManiaJudgement { Result = HitResult.Perfect });
+
+                        // Ticks
+                        int tickCount = holdNote.NestedHitObjects.OfType<HoldNoteTick>().Count();
+                        for (int i = 0; i < tickCount; i++)
+                            AddJudgement(new HoldNoteTickJudgement { Result = HitResult.Perfect });
+                    }
+
+                    AddJudgement(new ManiaJudgement { Result = HitResult.Perfect });
+                }
 
                 if (!HasFailed)
                     break;
@@ -122,20 +133,20 @@ namespace osu.Game.Rulesets.Mania.Scoring
             }
         }
 
-        protected override void ApplyResult(JudgementResult result)
+        protected override void OnNewJudgement(Judgement judgement)
         {
-            base.ApplyResult(result);
+            base.OnNewJudgement(judgement);
 
-            bool isTick = result.Judgement is HoldNoteTickJudgement;
+            bool isTick = judgement is HoldNoteTickJudgement;
 
             if (isTick)
             {
-                if (result.IsHit)
+                if (judgement.IsHit)
                     Health.Value += hpMultiplier * hp_increase_tick;
             }
             else
             {
-                switch (result.Type)
+                switch (judgement.Result)
                 {
                     case HitResult.Miss:
                         Health.Value += hpMissMultiplier * hp_increase_miss;
@@ -158,7 +169,5 @@ namespace osu.Game.Rulesets.Mania.Scoring
                 }
             }
         }
-
-        public override HitWindows CreateHitWindows() => new ManiaHitWindows();
     }
 }

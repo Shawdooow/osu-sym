@@ -1,10 +1,10 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using Humanizer;
 using Newtonsoft.Json;
-using osu.Game.Scoring;
+using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Online.API.Requests.Responses
 {

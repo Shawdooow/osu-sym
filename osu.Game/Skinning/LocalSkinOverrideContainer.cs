@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using osu.Framework.Allocation;
@@ -12,23 +12,12 @@ using osu.Game.Configuration;
 
 namespace osu.Game.Skinning
 {
-    /// <summary>
-    /// A container which overrides existing skin options with beatmap-local values.
-    /// </summary>
     public class LocalSkinOverrideContainer : Container, ISkinSource
     {
         public event Action SourceChanged;
 
-        private readonly Bindable<bool> beatmapSkins = new Bindable<bool>();
-        private readonly Bindable<bool> beatmapHitsounds = new Bindable<bool>();
-
-        private readonly ISkinSource source;
-        private ISkinSource fallbackSource;
-
-        public LocalSkinOverrideContainer(ISkinSource source)
-        {
-            this.source = source;
-        }
+        private Bindable<bool> beatmapSkins = new Bindable<bool>();
+        private Bindable<bool> beatmapHitsounds = new Bindable<bool>();
 
         public Drawable GetDrawableComponent(string componentName)
         {
@@ -54,14 +43,30 @@ namespace osu.Game.Skinning
             return fallbackSource?.GetSample(sampleName);
         }
 
-        public TValue GetValue<TConfiguration, TValue>(Func<TConfiguration, TValue> query) where TConfiguration : SkinConfiguration
+        public TValue? GetValue<TConfiguration, TValue>(Func<TConfiguration, TValue?> query) where TConfiguration : SkinConfiguration where TValue : struct
         {
-            TValue val;
+            TValue? val = null;
             if ((source as Skin)?.Configuration is TConfiguration conf)
-                if (beatmapSkins && (val = query.Invoke(conf)) != null)
-                    return val;
+                val = query?.Invoke(conf);
 
-            return fallbackSource == null ? default : fallbackSource.GetValue(query);
+            return val ?? fallbackSource?.GetValue(query);
+        }
+
+        public TValue GetValue<TConfiguration, TValue>(Func<TConfiguration, TValue> query) where TConfiguration : SkinConfiguration where TValue : class
+        {
+            TValue val = null;
+            if ((source as Skin)?.Configuration is TConfiguration conf)
+                val = query?.Invoke(conf);
+
+            return val ?? fallbackSource?.GetValue(query);
+        }
+
+        private readonly ISkinSource source;
+        private ISkinSource fallbackSource;
+
+        public LocalSkinOverrideContainer(ISkinSource source)
+        {
+            this.source = source;
         }
 
         private void onSourceChanged() => SourceChanged?.Invoke();
@@ -79,8 +84,13 @@ namespace osu.Game.Skinning
         [BackgroundDependencyLoader]
         private void load(OsuConfigManager config)
         {
-            config.BindWith(OsuSetting.BeatmapSkins, beatmapSkins);
-            config.BindWith(OsuSetting.BeatmapHitsounds, beatmapHitsounds);
+            beatmapSkins = config.GetBindable<bool>(OsuSetting.BeatmapSkins);
+            beatmapSkins.ValueChanged += val => onSourceChanged();
+            beatmapSkins.TriggerChange();
+
+            beatmapHitsounds = config.GetBindable<bool>(OsuSetting.BeatmapHitsounds);
+            beatmapHitsounds.ValueChanged += val => onSourceChanged();
+            beatmapHitsounds.TriggerChange();
         }
 
         protected override void LoadComplete()
@@ -89,9 +99,6 @@ namespace osu.Game.Skinning
 
             if (fallbackSource != null)
                 fallbackSource.SourceChanged += onSourceChanged;
-
-            beatmapSkins.BindValueChanged(_ => onSourceChanged());
-            beatmapHitsounds.BindValueChanged(_ => onSourceChanged(), true);
         }
 
         protected override void Dispose(bool isDisposing)

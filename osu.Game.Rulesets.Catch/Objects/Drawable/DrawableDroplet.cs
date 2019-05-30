@@ -1,11 +1,12 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Catch.Objects.Drawable.Pieces;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
+using osu.Game.Rulesets.Catch.Judgements;
 
 namespace osu.Game.Rulesets.Catch.Objects.Drawable
 {
@@ -22,6 +23,8 @@ namespace osu.Game.Rulesets.Catch.Objects.Drawable
             Size = new Vector2((float)CatchHitObject.OBJECT_RADIUS) / 4;
             Masking = false;
         }
+
+        protected override CatchJudgement CreateJudgement() => new CatchDropletJudgement();
 
         [BackgroundDependencyLoader]
         private void load()

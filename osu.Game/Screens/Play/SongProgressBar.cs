@@ -1,9 +1,9 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
@@ -112,6 +112,6 @@ namespace osu.Game.Screens.Play
             handleBase.X = xFill;
         }
 
-        protected override void OnUserChange(double value) => OnSeek?.Invoke(value);
+        protected override void OnUserChange() => OnSeek?.Invoke(Current);
     }
 }

@@ -1,13 +1,14 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
-using osu.Game.Database;
 
 namespace osu.Game.IO
 {
-    public class FileInfo : IHasPrimaryKey
+    public class FileInfo
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
 
         public string Hash { get; set; }

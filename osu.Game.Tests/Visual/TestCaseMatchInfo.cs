@@ -1,77 +1,56 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Game.Beatmaps;
 using osu.Game.Online.Multiplayer;
-using osu.Game.Online.Multiplayer.RoomStatuses;
 using osu.Game.Rulesets;
-using osu.Game.Screens.Multi.Match.Components;
+using osu.Game.Screens.Multi.Screens.Match;
 
 namespace osu.Game.Tests.Visual
 {
     [TestFixture]
-    public class TestCaseMatchInfo : MultiplayerTestCase
+    public class TestCaseMatchInfo : OsuTestCase
     {
-        public override IReadOnlyList<Type> RequiredTypes => new[]
-        {
-            typeof(Info),
-            typeof(HeaderButton),
-            typeof(ReadyButton),
-            typeof(ViewBeatmapButton)
-        };
-
         [BackgroundDependencyLoader]
         private void load(RulesetStore rulesets)
         {
-            Add(new Info());
+            Info info = new Info();
+            Add(info);
 
-            AddStep(@"set name", () => Room.Name.Value = @"Room Name?");
-            AddStep(@"set availability", () => Room.Availability.Value = RoomAvailability.FriendsOnly);
-            AddStep(@"set status", () => Room.Status.Value = new RoomStatusPlaying());
-            AddStep(@"set beatmap", () =>
+            AddStep(@"set name", () => info.Name = @"Room Name?");
+            AddStep(@"set availability", () => info.Availability = RoomAvailability.FriendsOnly);
+            AddStep(@"set status", () => info.Status = new RoomStatusPlaying());
+            AddStep(@"set beatmap", () => info.Beatmap = new BeatmapInfo
             {
-                Room.Playlist.Clear();
-                Room.Playlist.Add(new PlaylistItem
+                StarDifficulty = 2.4,
+                Ruleset = rulesets.GetRuleset(0),
+                Metadata = new BeatmapMetadata
                 {
-                    Beatmap = new BeatmapInfo
-                    {
-                        StarDifficulty = 2.4,
-                        Ruleset = rulesets.GetRuleset(0),
-                        Metadata = new BeatmapMetadata
-                        {
-                            Title = @"My Song",
-                            Artist = @"VisualTests",
-                            AuthorString = @"osu!lazer",
-                        },
-                    }
-                });
+                    Title = @"My Song",
+                    Artist = @"VisualTests",
+                    AuthorString = @"osu!lazer",
+                },
             });
 
-            AddStep(@"change name", () => Room.Name.Value = @"Room Name!");
-            AddStep(@"change availability", () => Room.Availability.Value = RoomAvailability.InviteOnly);
-            AddStep(@"change status", () => Room.Status.Value = new RoomStatusOpen());
-            AddStep(@"null beatmap", () => Room.Playlist.Clear());
-            AddStep(@"change beatmap", () =>
+            AddStep(@"set type", () => info.Type = new GameTypeTagTeam());
+
+            AddStep(@"change name", () => info.Name = @"Room Name!");
+            AddStep(@"change availability", () => info.Availability = RoomAvailability.InviteOnly);
+            AddStep(@"change status", () => info.Status = new RoomStatusOpen());
+            AddStep(@"null beatmap", () => info.Beatmap = null);
+            AddStep(@"change type", () => info.Type = new GameTypeTeamVersus());
+            AddStep(@"change beatmap", () => info.Beatmap = new BeatmapInfo
             {
-                Room.Playlist.Clear();
-                Room.Playlist.Add(new PlaylistItem
+                StarDifficulty = 4.2,
+                Ruleset = rulesets.GetRuleset(3),
+                Metadata = new BeatmapMetadata
                 {
-                    Beatmap = new BeatmapInfo
-                    {
-                        StarDifficulty = 4.2,
-                        Ruleset = rulesets.GetRuleset(3),
-                        Metadata = new BeatmapMetadata
-                        {
-                            Title = @"Your Song",
-                            Artist = @"Tester",
-                            AuthorString = @"Someone",
-                        },
-                    }
-                });
+                    Title = @"Your Song",
+                    Artist = @"Tester",
+                    AuthorString = @"Someone",
+                },
             });
         }
     }

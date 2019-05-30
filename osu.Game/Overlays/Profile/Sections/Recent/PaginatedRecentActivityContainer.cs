@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
@@ -12,8 +12,6 @@ namespace osu.Game.Overlays.Profile.Sections.Recent
 {
     public class PaginatedRecentActivityContainer : PaginatedContainer
     {
-        private GetUserRecentActivitiesRequest request;
-
         public PaginatedRecentActivityContainer(Bindable<User> user, string header, string missing)
             : base(user, header, missing)
         {
@@ -24,8 +22,9 @@ namespace osu.Game.Overlays.Profile.Sections.Recent
         {
             base.ShowMore();
 
-            request = new GetUserRecentActivitiesRequest(User.Value.Id, VisiblePages++ * ItemsPerPage);
-            request.Success += activities => Schedule(() =>
+            var req = new GetUserRecentActivitiesRequest(User.Value.Id, VisiblePages++ * ItemsPerPage);
+
+            req.Success += activities =>
             {
                 ShowMoreButton.FadeTo(activities.Count == ItemsPerPage ? 1 : 0);
                 ShowMoreLoading.Hide();
@@ -42,15 +41,9 @@ namespace osu.Game.Overlays.Profile.Sections.Recent
                 {
                     ItemsContainer.Add(new DrawableRecentActivity(activity));
                 }
-            });
+            };
 
-            Api.Queue(request);
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
-            request?.Cancel();
+            Api.Queue(req);
         }
     }
 }

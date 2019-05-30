@@ -1,16 +1,16 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using osu.Framework;
-using osu.Framework.Development;
-using osu.Framework.Logging;
 using osu.Framework.Platform;
 using osu.Game.IPC;
+
+#if NET_FRAMEWORK
+using System.Runtime;
+#endif
 
 namespace osu.Desktop
 {
@@ -19,13 +19,13 @@ namespace osu.Desktop
         [STAThread]
         public static int Main(string[] args)
         {
+            useMultiCoreJit();
+
             // Back up the cwd before DesktopGameHost changes it
             var cwd = Environment.CurrentDirectory;
 
             using (DesktopGameHost host = Host.GetSuitableHost(@"osu", true))
             {
-                host.ExceptionThrown += handleException;
-
                 if (!host.IsPrimaryInstance)
                 {
                     var importer = new ArchiveImportIPCChannel(host);
@@ -52,23 +52,13 @@ namespace osu.Desktop
             }
         }
 
-        private static int allowableExceptions = DebugUtils.IsDebugBuild ? 0 : 1;
-
-        /// <summary>
-        /// Allow a maximum of one unhandled exception, per second of execution.
-        /// </summary>
-        /// <param name="arg"></param>
-        /// <returns></returns>
-        private static bool handleException(Exception arg)
+        private static void useMultiCoreJit()
         {
-            bool continueExecution = Interlocked.Decrement(ref allowableExceptions) >= 0;
-
-            Logger.Log($"Unhandled exception has been {(continueExecution ? $"allowed with {allowableExceptions} more allowable exceptions" : "denied")} .");
-
-            // restore the stock of allowable exceptions after a short delay.
-            Task.Delay(1000).ContinueWith(_ => Interlocked.Increment(ref allowableExceptions));
-
-            return continueExecution;
+#if NET_FRAMEWORK
+            var directory = Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Profiles"));
+            ProfileOptimization.SetProfileRoot(directory.FullName);
+            ProfileOptimization.StartProfile("Startup.Profile");
+#endif
         }
     }
 }

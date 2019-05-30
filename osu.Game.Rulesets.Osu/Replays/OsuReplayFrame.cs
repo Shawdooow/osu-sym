@@ -1,12 +1,12 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Collections.Generic;
 using osu.Game.Beatmaps;
-using osu.Game.Replays.Legacy;
 using osu.Game.Rulesets.Replays;
+using osu.Game.Rulesets.Replays.Legacy;
 using osu.Game.Rulesets.Replays.Types;
-using osuTK;
+using OpenTK;
 
 namespace osu.Game.Rulesets.Osu.Replays
 {

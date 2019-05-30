@@ -1,12 +1,13 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Input.Events;
-using osuTK;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
+using OpenTK;
 using osu.Game.Screens.Play.PlayerSettings;
-using osuTK.Input;
+using OpenTK.Input;
 
 namespace osu.Game.Screens.Play.HUD
 {
@@ -50,22 +51,22 @@ namespace osu.Game.Screens.Play.HUD
         protected override void PopOut() => this.FadeOut(fade_duration);
 
         //We want to handle keyboard inputs all the time in order to trigger ToggleVisibility() when not visible
-        public override bool PropagateNonPositionalInputSubTree => true;
+        public override bool HandleKeyboardInput => true;
 
-        protected override bool OnKeyDown(KeyDownEvent e)
+        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (e.Repeat) return false;
+            if (args.Repeat) return false;
 
-            if (e.ControlPressed)
+            if (state.Keyboard.ControlPressed)
             {
-                if (e.Key == Key.H && ReplayLoaded)
+                if (args.Key == Key.H && ReplayLoaded)
                 {
                     ToggleVisibility();
                     return true;
                 }
             }
 
-            return base.OnKeyDown(e);
+            return base.OnKeyDown(state, args);
         }
     }
 }

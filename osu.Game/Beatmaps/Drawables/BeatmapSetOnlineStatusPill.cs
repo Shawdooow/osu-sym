@@ -1,11 +1,12 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
-using osuTK.Graphics;
+using OpenTK.Graphics;
 
 namespace osu.Game.Beatmaps.Drawables
 {
@@ -13,35 +14,20 @@ namespace osu.Game.Beatmaps.Drawables
     {
         private readonly OsuSpriteText statusText;
 
-        private BeatmapSetOnlineStatus status;
-
+        private BeatmapSetOnlineStatus status = BeatmapSetOnlineStatus.None;
         public BeatmapSetOnlineStatus Status
         {
-            get => status;
+            get { return status; }
             set
             {
-                if (status == value)
-                    return;
+                if (value == status) return;
                 status = value;
 
-                Alpha = value == BeatmapSetOnlineStatus.None ? 0 : 1;
-                statusText.Text = value.ToString().ToUpperInvariant();
+                statusText.Text = Enum.GetName(typeof(BeatmapSetOnlineStatus), Status)?.ToUpperInvariant();
             }
         }
 
-        public float TextSize
-        {
-            get => statusText.TextSize;
-            set => statusText.TextSize = value;
-        }
-
-        public MarginPadding TextPadding
-        {
-            get => statusText.Padding;
-            set => statusText.Padding = value;
-        }
-
-        public BeatmapSetOnlineStatusPill()
+        public BeatmapSetOnlineStatusPill(float textSize, MarginPadding textPadding)
         {
             AutoSizeAxes = Axes.Both;
             Masking = true;
@@ -59,10 +45,10 @@ namespace osu.Game.Beatmaps.Drawables
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     Font = @"Exo2.0-Bold",
+                    TextSize = textSize,
+                    Padding = textPadding,
                 },
             };
-
-            Status = BeatmapSetOnlineStatus.None;
         }
     }
 }

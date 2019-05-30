@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shaders;
 using osu.Game.Screens.Menu;
-using osuTK;
+using OpenTK;
 using osu.Framework.Screens;
-using osu.Game.Overlays;
 
 namespace osu.Game.Screens
 {
@@ -17,9 +16,7 @@ namespace osu.Game.Screens
     {
         private bool showDisclaimer;
 
-        public override bool HideOverlaysOnEnter => true;
-
-        public override OverlayActivation InitialOverlayActivationMode => OverlayActivation.Disabled;
+        protected override bool HideOverlaysOnEnter => true;
 
         protected override bool AllowBackButton => false;
 
@@ -55,11 +52,11 @@ namespace osu.Game.Screens
 
         protected virtual ShaderPrecompiler CreateShaderPrecompiler() => new ShaderPrecompiler();
 
-        public override void OnEntering(IScreen last)
+        protected override void OnEntering(Screen last)
         {
             base.OnEntering(last);
 
-            LoadComponentAsync(precompiler = CreateShaderPrecompiler(), AddInternal);
+            LoadComponentAsync(precompiler = CreateShaderPrecompiler(), Add);
             LoadComponentAsync(loadableScreen = CreateLoadableScreen());
 
             checkIfLoaded();
@@ -73,7 +70,7 @@ namespace osu.Game.Screens
                 return;
             }
 
-            this.Push(loadableScreen);
+            Push(loadableScreen);
         }
 
         [BackgroundDependencyLoader]

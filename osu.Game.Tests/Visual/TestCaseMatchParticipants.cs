@@ -1,22 +1,26 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using NUnit.Framework;
 using osu.Framework.Graphics;
-using osu.Game.Screens.Multi.Match.Components;
+using osu.Game.Screens.Multi.Screens.Match;
 using osu.Game.Users;
 
 namespace osu.Game.Tests.Visual
 {
     [TestFixture]
-    public class TestCaseMatchParticipants : MultiplayerTestCase
+    public class TestCaseMatchParticipants : OsuTestCase
     {
         public TestCaseMatchParticipants()
         {
-            Add(new Participants { RelativeSizeAxes = Axes.Both });
+            Participants participants;
+            Add(participants = new Participants
+            {
+                RelativeSizeAxes = Axes.Both,
+            });
 
-            AddStep(@"set max to null", () => Room.MaxParticipants.Value = null);
-            AddStep(@"set users", () => Room.Participants.Value = new[]
+            AddStep(@"set max to null", () => participants.Max = null);
+            AddStep(@"set users", () => participants.Users = new[]
             {
                 new User
                 {
@@ -44,9 +48,9 @@ namespace osu.Game.Tests.Visual
                 },
             });
 
-            AddStep(@"set max", () => Room.MaxParticipants.Value = 10);
-            AddStep(@"clear users", () => Room.Participants.Value = new User[] { });
-            AddStep(@"set max to null", () => Room.MaxParticipants.Value = null);
+            AddStep(@"set max", () => participants.Max = 10);
+            AddStep(@"clear users", () => participants.Users = new User[] { });
+            AddStep(@"set max to null", () => participants.Max = null);
         }
     }
 }

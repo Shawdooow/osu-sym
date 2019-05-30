@@ -1,14 +1,15 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using osuTK;
-using osuTK.Graphics;
-using osuTK.Input;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Input;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.Containers;
 
@@ -55,7 +56,7 @@ namespace osu.Game.Screens.Select
         private readonly Box box;
         private readonly Box light;
 
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => box.ReceivePositionalInputAt(screenSpacePos);
+        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => box.ReceiveMouseInputAt(screenSpacePos);
 
         public FooterButton()
         {
@@ -88,7 +89,7 @@ namespace osu.Game.Screens.Select
         public Action HoverLost;
         public Key? Hotkey;
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             Hovered?.Invoke();
             light.ScaleTo(new Vector2(1, 2), Footer.TRANSITION_LENGTH, Easing.OutQuint);
@@ -96,42 +97,42 @@ namespace osu.Game.Screens.Select
             return true;
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             HoverLost?.Invoke();
             light.ScaleTo(new Vector2(1, 1), Footer.TRANSITION_LENGTH, Easing.OutQuint);
             light.FadeColour(DeselectedColour, Footer.TRANSITION_LENGTH, Easing.OutQuint);
         }
 
-        protected override bool OnMouseDown(MouseDownEvent e)
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
         {
             box.FadeTo(0.3f, Footer.TRANSITION_LENGTH * 2, Easing.OutQuint);
-            return base.OnMouseDown(e);
+            return base.OnMouseDown(state, args);
         }
 
-        protected override bool OnMouseUp(MouseUpEvent e)
+        protected override bool OnMouseUp(InputState state, MouseUpEventArgs args)
         {
             box.FadeOut(Footer.TRANSITION_LENGTH, Easing.OutQuint);
-            return base.OnMouseUp(e);
+            return base.OnMouseUp(state, args);
         }
 
-        protected override bool OnClick(ClickEvent e)
+        protected override bool OnClick(InputState state)
         {
             box.ClearTransforms();
             box.Alpha = 1;
             box.FadeOut(Footer.TRANSITION_LENGTH * 3, Easing.OutQuint);
-            return base.OnClick(e);
+            return base.OnClick(state);
         }
 
-        protected override bool OnKeyDown(KeyDownEvent e)
+        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (!e.Repeat && e.Key == Hotkey)
+            if (!args.Repeat && args.Key == Hotkey)
             {
-                Click();
+                OnClick(state);
                 return true;
             }
 
-            return base.OnKeyDown(e);
+            return base.OnKeyDown(state, args);
         }
     }
 }

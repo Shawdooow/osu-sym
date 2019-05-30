@@ -1,13 +1,13 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
+using OpenTK;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
-using osu.Framework.Threading;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
@@ -30,21 +30,19 @@ namespace osu.Game.Screens.Edit.Components.Timelines.Summary.Parts
             Add(marker = new MarkerVisualisation());
         }
 
-        protected override bool OnDragStart(DragStartEvent e) => true;
-        protected override bool OnDragEnd(DragEndEvent e) => true;
-        protected override bool OnDrag(DragEvent e)
+        protected override bool OnDragStart(InputState state) => true;
+        protected override bool OnDragEnd(InputState state) => true;
+        protected override bool OnDrag(InputState state)
         {
-            seekToPosition(e.ScreenSpaceMousePosition);
+            seekToPosition(state.Mouse.NativeState.Position);
             return true;
         }
 
-        protected override bool OnMouseDown(MouseDownEvent e)
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
         {
-            seekToPosition(e.ScreenSpaceMousePosition);
+            seekToPosition(state.Mouse.NativeState.Position);
             return true;
         }
-
-        private ScheduledDelegate scheduledSeek;
 
         /// <summary>
         /// Seeks the <see cref="SummaryTimeline"/> to the time closest to a position on the screen relative to the <see cref="SummaryTimeline"/>.
@@ -52,15 +50,11 @@ namespace osu.Game.Screens.Edit.Components.Timelines.Summary.Parts
         /// <param name="screenPosition">The position in screen coordinates.</param>
         private void seekToPosition(Vector2 screenPosition)
         {
-            scheduledSeek?.Cancel();
-            scheduledSeek = Schedule(() =>
-            {
-                if (Beatmap.Value == null)
-                    return;
+            if (Beatmap.Value == null)
+                return;
 
-                float markerPos = MathHelper.Clamp(ToLocalSpace(screenPosition).X, 0, DrawWidth);
-                adjustableClock.Seek(markerPos / DrawWidth * Beatmap.Value.Track.Length);
-            });
+            float markerPos = MathHelper.Clamp(ToLocalSpace(screenPosition).X, 0, DrawWidth);
+            adjustableClock.Seek(markerPos / DrawWidth * Beatmap.Value.Track.Length);
         }
 
         protected override void Update()

@@ -1,8 +1,9 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
-using osuTK.Input;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Input;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
@@ -10,7 +11,8 @@ using osu.Game.Rulesets.Mods;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 
 namespace osu.Game.Overlays.Mods
 {
@@ -43,6 +45,7 @@ namespace osu.Game.Overlays.Mods
 
                     return new ModButton(m)
                     {
+                        SelectedColour = selectedColour,
                         SelectionChanged = Action,
                     };
                 }).ToArray();
@@ -54,16 +57,27 @@ namespace osu.Game.Overlays.Mods
 
         private ModButton[] buttons = { };
 
-        protected override bool OnKeyDown(KeyDownEvent e)
+        private Color4 selectedColour = Color4.White;
+        public Color4 SelectedColour
         {
-            if (ToggleKeys != null)
+            get => selectedColour;
+            set
             {
-                var index = Array.IndexOf(ToggleKeys, e.Key);
-                if (index > -1 && index < buttons.Length)
-                    buttons[index].SelectNext(e.ShiftPressed ? -1 : 1);
-            }
+                if (value == selectedColour) return;
+                selectedColour = value;
 
-            return base.OnKeyDown(e);
+                foreach (ModButton button in buttons)
+                    button.SelectedColour = value;
+            }
+        }
+
+        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
+        {
+            var index = Array.IndexOf(ToggleKeys, args.Key);
+            if (index > -1 && index < buttons.Length)
+                buttons[index].SelectNext(state.Keyboard.ShiftPressed ? -1 : 1);
+
+            return base.OnKeyDown(state, args);
         }
 
         public void DeselectAll() => DeselectTypes(buttons.Select(b => b.SelectedMod?.GetType()).Where(t => t != null));
@@ -111,10 +125,6 @@ namespace osu.Game.Overlays.Mods
         protected ModSection()
         {
             AutoSizeAxes = Axes.Y;
-            RelativeSizeAxes = Axes.X;
-
-            Origin = Anchor.TopCentre;
-            Anchor = Anchor.TopCentre;
 
             Children = new Drawable[]
             {

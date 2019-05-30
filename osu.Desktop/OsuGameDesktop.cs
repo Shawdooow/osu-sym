@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.IO;
@@ -10,20 +10,16 @@ using osu.Desktop.Overlays;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Platform;
 using osu.Game;
-using osuTK.Input;
+using OpenTK.Input;
 using Microsoft.Win32;
 using osu.Desktop.Updater;
-using osu.Framework;
 using osu.Framework.Platform.Windows;
-using osu.Framework.Screens;
-using osu.Game.Screens.Menu;
 
 namespace osu.Desktop
 {
     internal class OsuGameDesktop : OsuGame
     {
         private readonly bool noVersionOverlay;
-        private VersionManager versionManager;
 
         public OsuGameDesktop(string[] args = null)
             : base(args)
@@ -49,34 +45,17 @@ namespace osu.Desktop
 
             if (!noVersionOverlay)
             {
-                LoadComponentAsync(versionManager = new VersionManager { Depth = int.MinValue }, v =>
+                LoadComponentAsync(new VersionManager { Depth = int.MinValue }, v =>
                 {
                     Add(v);
                     v.State = Visibility.Visible;
                 });
 
-                if (RuntimeInfo.OS == RuntimeInfo.Platform.Windows)
-                    Add(new SquirrelUpdateManager());
-                else
-                    Add(new SimpleUpdateManager());
-            }
-        }
-
-        protected override void ScreenChanged(IScreen lastScreen, IScreen newScreen)
-        {
-            base.ScreenChanged(lastScreen, newScreen);
-
-            switch (newScreen)
-            {
-                case Intro _:
-                case MainMenu _:
-                    if (versionManager != null)
-                        versionManager.State = Visibility.Visible;
-                    break;
-                default:
-                    if (versionManager != null)
-                        versionManager.State = Visibility.Hidden;
-                    break;
+#if NET_FRAMEWORK
+                Add(new SquirrelUpdateManager());
+#else
+                Add(new SimpleUpdateManager());
+#endif
             }
         }
 
@@ -97,7 +76,7 @@ namespace osu.Desktop
 
         private void fileDrop(object sender, FileDropEventArgs e)
         {
-            var filePaths = e.FileNames;
+            var filePaths = new[] { e.FileName };
 
             var firstExtension = Path.GetExtension(filePaths.First());
 

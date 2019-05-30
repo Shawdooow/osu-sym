@@ -1,14 +1,14 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Framework.Platform;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Graphics.UserInterface
 {
@@ -37,19 +37,19 @@ namespace osu.Game.Graphics.UserInterface
             this.host = host;
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             InternalChild.FadeColour(hoverColour, 500, Easing.OutQuint);
-            return base.OnHover(e);
+            return base.OnHover(state);
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             InternalChild.FadeColour(Color4.White, 500, Easing.OutQuint);
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
         }
 
-        protected override bool OnClick(ClickEvent e)
+        protected override bool OnClick(InputState state)
         {
             if(Link != null)
                 host.OpenUrlExternally(Link);

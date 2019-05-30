@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Linq;
@@ -10,14 +10,14 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Drawables;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Overlays.BeatmapSet
 {
@@ -174,9 +174,9 @@ namespace osu.Game.Overlays.BeatmapSet
         {
             public Action OnLostHover;
 
-            protected override void OnHoverLost(HoverLostEvent e)
+            protected override void OnHoverLost(InputState state)
             {
-                base.OnHoverLost(e);
+                base.OnHoverLost(state);
                 OnLostHover?.Invoke();
             }
         }
@@ -241,24 +241,24 @@ namespace osu.Game.Overlays.BeatmapSet
                 };
             }
 
-            protected override bool OnHover(HoverEvent e)
+            protected override bool OnHover(InputState state)
             {
                 fadeIn();
                 OnHovered?.Invoke(Beatmap);
-                return base.OnHover(e);
+                return base.OnHover(state);
             }
 
-            protected override void OnHoverLost(HoverLostEvent e)
+            protected override void OnHoverLost(InputState state)
             {
                 if (State == DifficultySelectorState.NotSelected)
                     fadeOut();
-                base.OnHoverLost(e);
+                base.OnHoverLost(state);
             }
 
-            protected override bool OnClick(ClickEvent e)
+            protected override bool OnClick(InputState state)
             {
                 OnClicked?.Invoke(Beatmap);
-                return base.OnClick(e);
+                return base.OnClick(state);
             }
 
             private void fadeIn()

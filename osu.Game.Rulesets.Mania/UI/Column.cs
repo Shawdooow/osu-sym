@@ -1,31 +1,25 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using System.Linq;
-using osuTK.Graphics;
+using OpenTK.Graphics;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Objects.Drawables;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Mania.UI.Components;
 using osu.Game.Rulesets.UI.Scrolling;
-using osuTK;
 
 namespace osu.Game.Rulesets.Mania.UI
 {
-    public class Column : ScrollingPlayfield, IKeyBindingHandler<ManiaAction>, IHasAccentColour
+    public class Column : ManiaScrollingPlayfield, IKeyBindingHandler<ManiaAction>, IHasAccentColour
     {
         private const float column_width = 45;
         private const float special_column_width = 70;
-
-        /// <summary>
-        /// The index of this column as part of the whole playfield.
-        /// </summary>
-        public readonly int Index;
 
         public readonly Bindable<ManiaAction> Action = new Bindable<ManiaAction>();
 
@@ -36,10 +30,10 @@ namespace osu.Game.Rulesets.Mania.UI
         internal readonly Container TopLevelContainer;
         private readonly Container explosionContainer;
 
-        public Column(int index)
-        {
-            Index = index;
+        protected override Container<Drawable> Content => hitObjectArea;
 
+        public Column()
+        {
             RelativeSizeAxes = Axes.Y;
             Width = column_width;
 
@@ -60,10 +54,7 @@ namespace osu.Game.Rulesets.Mania.UI
                     RelativeSizeAxes = Axes.Both,
                     Children = new Drawable[]
                     {
-                        hitObjectArea = new ColumnHitObjectArea(HitObjectContainer)
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                        },
+                        hitObjectArea = new ColumnHitObjectArea { RelativeSizeAxes = Axes.Both },
                         explosionContainer = new Container
                         {
                             Name = "Hit explosions",
@@ -140,28 +131,19 @@ namespace osu.Game.Rulesets.Mania.UI
         public override void Add(DrawableHitObject hitObject)
         {
             hitObject.AccentColour = AccentColour;
-            hitObject.OnNewResult += OnNewResult;
+            hitObject.OnJudgement += OnJudgement;
 
-            HitObjectContainer.Add(hitObject);
+            HitObjects.Add(hitObject);
         }
 
-        public override bool Remove(DrawableHitObject h)
+        internal void OnJudgement(DrawableHitObject judgedObject, Judgement judgement)
         {
-            if (!base.Remove(h))
-                return false;
-
-            h.OnNewResult -= OnNewResult;
-            return true;
-        }
-
-        internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
-        {
-            if (!result.IsHit || !judgedObject.DisplayResult || !DisplayJudgements)
+            if (!judgement.IsHit || !judgedObject.DisplayJudgement || !DisplayJudgements)
                 return;
 
             explosionContainer.Add(new HitExplosion(judgedObject)
             {
-                Anchor = Direction.Value == ScrollingDirection.Up ? Anchor.TopCentre : Anchor.BottomCentre
+                Anchor = Direction == ScrollingDirection.Up ? Anchor.TopCentre : Anchor.BottomCentre
             });
         }
 
@@ -171,10 +153,10 @@ namespace osu.Game.Rulesets.Mania.UI
                 return false;
 
             var nextObject =
-                HitObjectContainer.AliveObjects.FirstOrDefault(h => h.HitObject.StartTime > Time.Current) ??
+                HitObjects.AliveObjects.FirstOrDefault(h => h.HitObject.StartTime > Time.Current) ??
                 // fallback to non-alive objects to find next off-screen object
-                HitObjectContainer.Objects.FirstOrDefault(h => h.HitObject.StartTime > Time.Current) ??
-                HitObjectContainer.Objects.LastOrDefault();
+                HitObjects.Objects.FirstOrDefault(h => h.HitObject.StartTime > Time.Current) ??
+                HitObjects.Objects.LastOrDefault();
 
             nextObject?.PlaySamples();
 
@@ -182,9 +164,5 @@ namespace osu.Game.Rulesets.Mania.UI
         }
 
         public bool OnReleased(ManiaAction action) => false;
-
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos)
-            // This probably shouldn't exist as is, but the columns in the stage are separated by a 1px border
-            => DrawRectangle.Inflate(new Vector2(ManiaStage.COLUMN_SPACING / 2, 0)).Contains(ToLocalSpace(screenSpacePos));
     }
 }

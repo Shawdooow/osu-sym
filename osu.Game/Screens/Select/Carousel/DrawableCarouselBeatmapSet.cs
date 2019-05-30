@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,8 @@ using osu.Game.Beatmaps.Drawables;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Screens.Select.Carousel
 {
@@ -38,8 +38,11 @@ namespace osu.Game.Screens.Select.Carousel
         }
 
         [BackgroundDependencyLoader(true)]
-        private void load(BeatmapManager manager, BeatmapSetOverlay beatmapOverlay, DialogOverlay overlay)
+        private void load(LocalisationEngine localisation, BeatmapManager manager, BeatmapSetOverlay beatmapOverlay, DialogOverlay overlay)
         {
+            if (localisation == null)
+                throw new ArgumentNullException(nameof(localisation));
+
             restoreHiddenRequested = s => s.Beatmaps.ForEach(manager.Restore);
             dialogOverlay = overlay;
             if (beatmapOverlay != null)
@@ -47,12 +50,12 @@ namespace osu.Game.Screens.Select.Carousel
 
             Children = new Drawable[]
             {
-                new DelayedLoadUnloadWrapper(() =>
+                new DelayedLoadWrapper(
                     new PanelBackground(manager.GetWorkingBeatmap(beatmapSet.Beatmaps.FirstOrDefault()))
                     {
                         RelativeSizeAxes = Axes.Both,
                         OnLoadComplete = d => d.FadeInFromZero(1000, Easing.OutQuint),
-                    }, 300, 5000
+                    }, 300
                 ),
                 new FillFlowContainer
                 {
@@ -64,39 +67,22 @@ namespace osu.Game.Screens.Select.Carousel
                         new OsuSpriteText
                         {
                             Font = @"Exo2.0-BoldItalic",
-                            Text = new LocalisedString((beatmapSet.Metadata.TitleUnicode, beatmapSet.Metadata.Title)),
+                            Current = localisation.GetUnicodePreference(beatmapSet.Metadata.TitleUnicode, beatmapSet.Metadata.Title),
                             TextSize = 22,
                             Shadow = true,
                         },
                         new OsuSpriteText
                         {
                             Font = @"Exo2.0-SemiBoldItalic",
-                            Text = new LocalisedString((beatmapSet.Metadata.ArtistUnicode, beatmapSet.Metadata.Artist)),
+                            Current = localisation.GetUnicodePreference(beatmapSet.Metadata.ArtistUnicode, beatmapSet.Metadata.Artist),
                             TextSize = 17,
                             Shadow = true,
                         },
-                        new FillFlowContainer
+                        new FillFlowContainer<FilterableDifficultyIcon>
                         {
-                            Direction = FillDirection.Horizontal,
-                            AutoSizeAxes = Axes.Both,
                             Margin = new MarginPadding { Top = 5 },
-                            Children = new Drawable[]
-                            {
-                                new BeatmapSetOnlineStatusPill
-                                {
-                                    Origin = Anchor.CentreLeft,
-                                    Anchor = Anchor.CentreLeft,
-                                    Margin = new MarginPadding { Right = 5 },
-                                    TextSize = 11,
-                                    TextPadding = new MarginPadding { Horizontal = 8, Vertical = 2 },
-                                    Status = beatmapSet.Status
-                                },
-                                new FillFlowContainer<FilterableDifficultyIcon>
-                                {
-                                    AutoSizeAxes = Axes.Both,
-                                    Children = ((CarouselBeatmapSet)Item).Beatmaps.Select(b => new FilterableDifficultyIcon(b)).ToList()
-                                },
-                            }
+                            AutoSizeAxes = Axes.Both,
+                            Children = ((CarouselBeatmapSet)Item).Beatmaps.Select(b => new FilterableDifficultyIcon(b)).ToList()
                         }
                     }
                 }
@@ -124,12 +110,10 @@ namespace osu.Game.Screens.Select.Carousel
             }
         }
 
-        private class PanelBackground : BufferedContainer
+        private class PanelBackground : Container
         {
             public PanelBackground(WorkingBeatmap working)
             {
-                CacheDrawnFrameBuffer = true;
-
                 Children = new Drawable[]
                 {
                     new BeatmapBackgroundSprite(working)

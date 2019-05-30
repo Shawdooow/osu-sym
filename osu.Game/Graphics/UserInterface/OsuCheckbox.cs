@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
@@ -8,9 +8,9 @@ using osu.Framework.Configuration;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Graphics.Sprites;
-using osuTK.Graphics;
+using OpenTK.Graphics;
 
 namespace osu.Game.Graphics.UserInterface
 {
@@ -95,18 +95,18 @@ namespace osu.Game.Graphics.UserInterface
             };
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             Nub.Glowing = true;
             Nub.Expanded = true;
-            return base.OnHover(e);
+            return base.OnHover(state);
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             Nub.Glowing = false;
             Nub.Expanded = false;
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
         }
 
         [BackgroundDependencyLoader]

@@ -1,9 +1,9 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
-using osuTK;
+using OpenTK;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Objects.Types;
 
@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Osu.Objects.Drawables.Connections
 
                     Vector2 distanceVector = endPosition - startPosition;
                     int distance = (int)distanceVector.Length;
-                    float rotation = (float)(Math.Atan2(distanceVector.Y, distanceVector.X) * (180 / Math.PI));
+                    float rotation = (float)Math.Atan2(distanceVector.Y, distanceVector.X);
                     double duration = endTime - startTime;
 
                     for (int d = (int)(PointDistance * 1.5); d < distance - PointDistance; d += PointDistance)

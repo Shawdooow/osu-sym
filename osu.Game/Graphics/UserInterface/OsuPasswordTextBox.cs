@@ -1,21 +1,21 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
-using osuTK.Graphics;
-using osuTK.Input;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Input;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Framework.Platform;
 
 namespace osu.Game.Graphics.UserInterface
 {
-    public class OsuPasswordTextBox : OsuTextBox, ISuppressKeyEventLogging
+    public class OsuPasswordTextBox : OsuTextBox
     {
         protected override Drawable GetDrawableCharacter(char c) => new PasswordMaskChar(CalculatedTextSize);
 
@@ -43,23 +43,23 @@ namespace osu.Game.Graphics.UserInterface
             this.host = host;
         }
 
-        protected override bool OnKeyDown(KeyDownEvent e)
+        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (e.Key == Key.CapsLock)
+            if (args.Key == Key.CapsLock)
                 updateCapsWarning(host.CapsLockEnabled);
-            return base.OnKeyDown(e);
+            return base.OnKeyDown(state, args);
         }
 
-        protected override void OnFocus(FocusEvent e)
+        protected override void OnFocus(InputState state)
         {
             updateCapsWarning(host.CapsLockEnabled);
-            base.OnFocus(e);
+            base.OnFocus(state);
         }
 
-        protected override void OnFocusLost(FocusLostEvent e)
+        protected override void OnFocusLost(InputState state)
         {
             updateCapsWarning(false);
-            base.OnFocusLost(e);
+            base.OnFocusLost(state);
         }
 
         private void updateCapsWarning(bool visible) => warning.FadeTo(visible ? 1 : 0, 250, Easing.OutQuint);

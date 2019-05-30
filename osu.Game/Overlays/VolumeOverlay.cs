@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
@@ -9,13 +9,13 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Framework.Threading;
 using osu.Game.Graphics;
 using osu.Game.Input.Bindings;
 using osu.Game.Overlays.Volume;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Overlays
 {
@@ -28,7 +28,7 @@ namespace osu.Game.Overlays
         private VolumeMeter volumeMeterMusic;
         private MuteButton muteButton;
 
-        protected override bool BlockPositionalInput => false;
+        protected override bool BlockPassThroughMouse => false;
 
         private readonly BindableDouble muteAdjustment = new BindableDouble();
 
@@ -143,23 +143,23 @@ namespace osu.Game.Overlays
             this.FadeOut(100);
         }
 
-        protected override bool OnMouseMove(MouseMoveEvent e)
+        protected override bool OnMouseMove(InputState state)
         {
             // keep the scheduled event correctly timed as long as we have movement.
             schedulePopOut();
-            return base.OnMouseMove(e);
+            return base.OnMouseMove(state);
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             schedulePopOut();
             return true;
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             schedulePopOut();
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
         }
 
         private void schedulePopOut()

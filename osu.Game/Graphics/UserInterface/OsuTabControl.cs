@@ -1,10 +1,10 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Linq;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions;
@@ -14,7 +14,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Framework.MathUtils;
 using osu.Game.Graphics.Sprites;
 
@@ -37,7 +37,7 @@ namespace osu.Game.Graphics.UserInterface
         {
             TabContainer.Spacing = new Vector2(10f, 0f);
 
-            AddInternal(strip = new Box
+            Add(strip = new Box
             {
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.BottomLeft,
@@ -53,7 +53,7 @@ namespace osu.Game.Graphics.UserInterface
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            if (accentColour == default)
+            if (accentColour == default(Color4))
                 AccentColour = colours.Blue;
         }
 
@@ -126,14 +126,14 @@ namespace osu.Game.Graphics.UserInterface
                 Text.FadeColour(AccentColour, transition_length, Easing.OutQuint);
             }
 
-            protected override bool OnHover(HoverEvent e)
+            protected override bool OnHover(InputState state)
             {
                 if (!Active)
                     fadeActive();
                 return true;
             }
 
-            protected override void OnHoverLost(HoverLostEvent e)
+            protected override void OnHoverLost(InputState state)
             {
                 if (!Active)
                     fadeInactive();
@@ -142,7 +142,7 @@ namespace osu.Game.Graphics.UserInterface
             [BackgroundDependencyLoader]
             private void load(OsuColour colours)
             {
-                if (accentColour == default)
+                if (accentColour == default(Color4))
                     AccentColour = colours.Blue;
             }
 
@@ -160,6 +160,7 @@ namespace osu.Game.Graphics.UserInterface
                         Anchor = Anchor.BottomLeft,
                         Text = (value as IHasDescription)?.Description ?? (value as Enum)?.GetDescription() ?? value.ToString(),
                         TextSize = 14,
+                        Font = @"Exo2.0-Bold", // Font should only turn bold when active?
                     },
                     Bar = new Box
                     {
@@ -172,8 +173,6 @@ namespace osu.Game.Graphics.UserInterface
                     },
                     new HoverClickSounds()
                 };
-
-                Active.BindValueChanged(val => Text.Font = val ? @"Exo2.0-Bold" : @"Exo2.0", true);
             }
 
             protected override void OnActivated() => fadeActive();
@@ -266,16 +265,16 @@ namespace osu.Game.Graphics.UserInterface
                     Padding = new MarginPadding { Left = 5, Right = 5 };
                 }
 
-                protected override bool OnHover(HoverEvent e)
+                protected override bool OnHover(InputState state)
                 {
                     Foreground.Colour = BackgroundColour;
-                    return base.OnHover(e);
+                    return base.OnHover(state);
                 }
 
-                protected override void OnHoverLost(HoverLostEvent e)
+                protected override void OnHoverLost(InputState state)
                 {
                     Foreground.Colour = BackgroundColourHover;
-                    base.OnHoverLost(e);
+                    base.OnHoverLost(state);
                 }
             }
         }

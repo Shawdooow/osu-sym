@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
@@ -13,8 +13,8 @@ using osu.Game.Beatmaps;
 using osu.Game.Configuration;
 using osu.Game.IO.Archives;
 using osu.Game.Screens.Backgrounds;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Game.Overlays;
 
 namespace osu.Game.Screens.Menu
@@ -28,16 +28,18 @@ namespace osu.Game.Screens.Menu
         /// </summary>
         public bool DidLoadMenu;
 
+        private readonly Bindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
+
         private MainMenu mainMenu;
         private SampleChannel welcome;
         private SampleChannel seeya;
 
-        public override bool HideOverlaysOnEnter => true;
-        public override OverlayActivation InitialOverlayActivationMode => OverlayActivation.Disabled;
+        protected override bool HideOverlaysOnEnter => true;
+        protected override OverlayActivation InitialOverlayActivationMode => OverlayActivation.Disabled;
 
         public override bool CursorVisible => false;
 
-        protected override BackgroundScreen CreateBackground() => new BackgroundScreenBlack();
+        protected override BackgroundScreen CreateBackground() => new BackgroundScreenEmpty();
 
         private Bindable<bool> menuVoice;
         private Bindable<bool> menuMusic;
@@ -45,8 +47,10 @@ namespace osu.Game.Screens.Menu
         private WorkingBeatmap introBeatmap;
 
         [BackgroundDependencyLoader]
-        private void load(AudioManager audio, OsuConfigManager config, BeatmapManager beatmaps, Framework.Game game)
+        private void load(AudioManager audio, OsuConfigManager config, BeatmapManager beatmaps, Framework.Game game, BindableBeatmap beatmap)
         {
+            this.beatmap.BindTo(beatmap);
+
             menuVoice = config.GetBindable<bool>(OsuSetting.MenuVoice);
             menuMusic = config.GetBindable<bool>(OsuSetting.MenuMusic);
 
@@ -91,7 +95,7 @@ namespace osu.Game.Screens.Menu
 
             if (!resuming)
             {
-                Beatmap.Value = introBeatmap;
+                beatmap.Value = introBeatmap;
 
                 if (menuVoice)
                     welcome.Play();
@@ -107,7 +111,7 @@ namespace osu.Game.Screens.Menu
                     Scheduler.AddDelayed(delegate
                     {
                         DidLoadMenu = true;
-                        this.Push(mainMenu);
+                        Push(mainMenu);
                     }, delay_step_one);
                 }, delay_step_two);
             }
@@ -141,21 +145,22 @@ namespace osu.Game.Screens.Menu
             }
         }
 
-        public override void OnSuspending(IScreen next)
+        protected override void OnSuspending(Screen next)
         {
-            this.FadeOut(300);
+            Content.FadeOut(300);
             base.OnSuspending(next);
         }
 
-        public override bool OnExiting(IScreen next)
+        protected override bool OnExiting(Screen next)
         {
             //cancel exiting if we haven't loaded the menu yet.
             return !DidLoadMenu;
         }
 
-        public override void OnResuming(IScreen last)
+        protected override void OnResuming(Screen last)
         {
-            this.FadeIn(300);
+            if (!(last is MainMenu))
+                Content.FadeIn(300);
 
             double fadeOutTime = EXIT_DELAY;
             //we also handle the exit transition.
@@ -164,7 +169,7 @@ namespace osu.Game.Screens.Menu
             else
                 fadeOutTime = 500;
 
-            Scheduler.AddDelayed(this.Exit, fadeOutTime);
+            Scheduler.AddDelayed(Exit, fadeOutTime);
 
             //don't want to fade out completely else we will stop running updates and shit will hit the fan.
             Game.FadeTo(0.01f, fadeOutTime);

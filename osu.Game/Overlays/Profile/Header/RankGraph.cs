@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Users;
-using osuTK;
+using OpenTK;
 
 namespace osu.Game.Overlays.Profile.Header
 {
@@ -74,7 +74,7 @@ namespace osu.Game.Overlays.Profile.Header
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomCentre,
                     RelativeSizeAxes = Axes.X,
-                    Height = 60,
+                    Height = 75,
                     Y = -secondary_textsize,
                     Alpha = 0,
                 }
@@ -137,25 +137,25 @@ namespace osu.Game.Overlays.Profile.Header
             relativeText.Text = dayIndex + 1 == ranks.Length ? "Now" : $"{ranked_days - ranks[dayIndex].Key} days ago";
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             if (ranks?.Length > 1)
             {
-                graph.UpdateBallPosition(e.MousePosition.X);
+                graph.UpdateBallPosition(state.Mouse.Position.X);
                 graph.ShowBall();
             }
-            return base.OnHover(e);
+            return base.OnHover(state);
         }
 
-        protected override bool OnMouseMove(MouseMoveEvent e)
+        protected override bool OnMouseMove(InputState state)
         {
             if (ranks?.Length > 1)
-                graph.UpdateBallPosition(e.MousePosition.X);
+                graph.UpdateBallPosition(state.Mouse.Position.X);
 
-            return base.OnMouseMove(e);
+            return base.OnMouseMove(state);
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             if (ranks?.Length > 1)
             {
@@ -163,7 +163,7 @@ namespace osu.Game.Overlays.Profile.Header
                 updateRankTexts();
             }
 
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
         }
 
         private class RankChartLineGraph : LineGraph

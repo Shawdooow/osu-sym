@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -10,8 +10,9 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.SearchableList;
-using osuTK;
-using osuTK.Graphics;
+using osu.Game.Screens.Multi.Screens;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Screens.Multi
 {
@@ -22,7 +23,7 @@ namespace osu.Game.Screens.Multi
         private readonly OsuSpriteText screenType;
         private readonly HeaderBreadcrumbControl breadcrumbs;
 
-        public Header(ScreenStack stack)
+        public Header(Screen initialScreen)
         {
             RelativeSizeAxes = Axes.X;
             Height = HEIGHT;
@@ -37,7 +38,7 @@ namespace osu.Game.Screens.Multi
                 new Container
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Padding = new MarginPadding { Horizontal = SearchableListOverlay.WIDTH_PADDING + OsuScreen.HORIZONTAL_OVERFLOW_PADDING },
+                    Padding = new MarginPadding { Horizontal = SearchableListOverlay.WIDTH_PADDING },
                     Children = new Drawable[]
                     {
                         new FillFlowContainer
@@ -75,7 +76,7 @@ namespace osu.Game.Screens.Multi
                                 },
                             },
                         },
-                        breadcrumbs = new HeaderBreadcrumbControl(stack)
+                        breadcrumbs = new HeaderBreadcrumbControl(initialScreen)
                         {
                             Anchor = Anchor.BottomLeft,
                             Origin = Anchor.BottomLeft,
@@ -85,12 +86,7 @@ namespace osu.Game.Screens.Multi
                 },
             };
 
-            breadcrumbs.Current.ValueChanged += s =>
-            {
-                if (s is IMultiplayerSubScreen mpScreen)
-                    screenType.Text = mpScreen.ShortTitle.ToLowerInvariant();
-            };
-
+            breadcrumbs.Current.ValueChanged += s => screenType.Text = ((MultiplayerScreen)s).Type.ToLowerInvariant();
             breadcrumbs.Current.TriggerChange();
         }
 
@@ -103,8 +99,7 @@ namespace osu.Game.Screens.Multi
 
         private class HeaderBreadcrumbControl : ScreenBreadcrumbControl
         {
-            public HeaderBreadcrumbControl(ScreenStack stack)
-                : base(stack)
+            public HeaderBreadcrumbControl(Screen initialScreen) : base(initialScreen)
             {
             }
 

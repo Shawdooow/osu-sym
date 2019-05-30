@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
@@ -9,8 +9,8 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Screens.Backgrounds;
 using osu.Game.Graphics.UserInterface;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Game.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Shapes;
@@ -30,7 +30,7 @@ namespace osu.Game.Screens
 
         protected override BackgroundScreen CreateBackground() => new BackgroundScreenCustom(@"Backgrounds/bg2");
 
-        public override void OnEntering(IScreen last)
+        protected override void OnEntering(Screen last)
         {
             base.OnEntering(last);
 
@@ -38,51 +38,51 @@ namespace osu.Game.Screens
             if (last != null)
                 popButton.Alpha = 1;
 
-            Alpha = 0;
+            Content.Alpha = 0;
             textContainer.Position = new Vector2(DrawSize.X / 16, 0);
 
             boxContainer.ScaleTo(0.2f);
             boxContainer.RotateTo(-20);
 
-            using (BeginDelayedSequence(300, true))
+            using (Content.BeginDelayedSequence(300, true))
             {
                 boxContainer.ScaleTo(1, transition_time, Easing.OutElastic);
                 boxContainer.RotateTo(0, transition_time / 2, Easing.OutQuint);
 
                 textContainer.MoveTo(Vector2.Zero, transition_time, Easing.OutExpo);
-                this.FadeIn(transition_time, Easing.OutExpo);
+                Content.FadeIn(transition_time, Easing.OutExpo);
             }
         }
 
-        public override bool OnExiting(IScreen next)
+        protected override bool OnExiting(Screen next)
         {
             textContainer.MoveTo(new Vector2(DrawSize.X / 16, 0), transition_time, Easing.OutExpo);
-            this.FadeOut(transition_time, Easing.OutExpo);
+            Content.FadeOut(transition_time, Easing.OutExpo);
 
             return base.OnExiting(next);
         }
 
-        public override void OnSuspending(IScreen next)
+        protected override void OnSuspending(Screen next)
         {
             base.OnSuspending(next);
 
             textContainer.MoveTo(new Vector2(-(DrawSize.X / 16), 0), transition_time, Easing.OutExpo);
-            this.FadeOut(transition_time, Easing.OutExpo);
+            Content.FadeOut(transition_time, Easing.OutExpo);
         }
 
-        public override void OnResuming(IScreen last)
+        protected override void OnResuming(Screen last)
         {
             base.OnResuming(last);
 
             textContainer.MoveTo(Vector2.Zero, transition_time, Easing.OutExpo);
-            this.FadeIn(transition_time, Easing.OutExpo);
+            Content.FadeIn(transition_time, Easing.OutExpo);
         }
 
         public ScreenWhiteBox()
         {
             FillFlowContainer childModeButtons;
 
-            InternalChildren = new Drawable[]
+            Children = new Drawable[]
             {
                 boxContainer = new Container
                 {
@@ -148,7 +148,7 @@ namespace osu.Game.Screens
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
                     Alpha = 0,
-                    Action = this.Exit
+                    Action = Exit
                 },
                 childModeButtons = new FillFlowContainer
                 {
@@ -171,7 +171,7 @@ namespace osu.Game.Screens
                         HoverColour = getColourFor(t).Lighten(0.2f),
                         Action = delegate
                         {
-                           this.Push(Activator.CreateInstance(t) as Screen);
+                            Push(Activator.CreateInstance(t) as Screen);
                         }
                     });
                 }

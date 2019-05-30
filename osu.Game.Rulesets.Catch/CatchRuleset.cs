@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
@@ -93,11 +93,13 @@ namespace osu.Game.Rulesets.Catch
                         new CatchModHidden(),
                         new CatchModFlashlight(),
                     };
-                case ModType.Automation:
+                case ModType.Special:
                     return new Mod[]
                     {
-                        new MultiMod(new CatchModAutoplay(), new ModCinema()),
                         new CatchModRelax(),
+                        null,
+                        null,
+                        new MultiMod(new CatchModAutoplay(), new ModCinema()),
                     };
                 default:
                     return new Mod[] { };

@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -10,30 +10,45 @@ namespace osu.Game.Graphics.UserInterface
     /// <summary>
     /// A <see cref="BreadcrumbControl"/> which follows the active screen (and allows navigation) in a <see cref="Screen"/> stack.
     /// </summary>
-    public class ScreenBreadcrumbControl : BreadcrumbControl<IScreen>
+    public class ScreenBreadcrumbControl : BreadcrumbControl<Screen>
     {
-        public ScreenBreadcrumbControl(ScreenStack stack)
+        private Screen last;
+
+        public ScreenBreadcrumbControl(Screen initialScreen)
         {
-            stack.ScreenPushed += onPushed;
-            stack.ScreenExited += onExited;
+            Current.ValueChanged += newScreen =>
+            {
+                if (last != newScreen && !newScreen.IsCurrentScreen)
+                    newScreen.MakeCurrent();
+            };
 
-            onPushed(null, stack.CurrentScreen);
-
-            Current.ValueChanged += newScreen => newScreen.MakeCurrent();
+            onPushed(initialScreen);
         }
 
-        private void onPushed(IScreen lastScreen, IScreen newScreen)
+        private void screenChanged(Screen newScreen)
         {
-            AddItem(newScreen);
+            if (newScreen == null) return;
+
+            if (last != null)
+            {
+                last.Exited -= screenChanged;
+                last.ModePushed -= onPushed;
+            }
+
+            last = newScreen;
+
+            newScreen.Exited += screenChanged;
+            newScreen.ModePushed += onPushed;
+
             Current.Value = newScreen;
         }
 
-        private void onExited(IScreen lastScreen, IScreen newScreen)
+        private void onPushed(Screen screen)
         {
-            if (newScreen != null)
-                Current.Value = newScreen;
+            Items.ToList().SkipWhile(i => i != Current.Value).Skip(1).ForEach(RemoveItem);
+            AddItem(screen);
 
-            Items.ToList().SkipWhile(s => s != Current.Value).Skip(1).ForEach(RemoveItem);
+            screenChanged(screen);
         }
     }
 }

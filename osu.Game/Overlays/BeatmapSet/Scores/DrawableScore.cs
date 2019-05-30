@@ -1,20 +1,20 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
+using OpenTK;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Online.API.Requests.Responses;
-using osu.Game.Online.Leaderboards;
 using osu.Game.Overlays.Profile.Sections.Ranks;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
+using osu.Game.Screens.Select.Leaderboards;
 using osu.Game.Users;
 
 namespace osu.Game.Overlays.BeatmapSet.Scores
@@ -26,7 +26,7 @@ namespace osu.Game.Overlays.BeatmapSet.Scores
 
         private readonly Box background;
 
-        public DrawableScore(int index, APIScoreInfo score)
+        public DrawableScore(int index, APIScore score)
         {
             ScoreModsContainer modsContainer;
 
@@ -125,18 +125,18 @@ namespace osu.Game.Overlays.BeatmapSet.Scores
             background.Colour = colours.Gray4;
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             background.FadeIn(fade_duration, Easing.OutQuint);
-            return base.OnHover(e);
+            return base.OnHover(state);
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             background.FadeOut(fade_duration, Easing.OutQuint);
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
         }
 
-        protected override bool OnClick(ClickEvent e) => true;
+        protected override bool OnClick(InputState state) => true;
     }
 }

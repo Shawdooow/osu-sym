@@ -1,11 +1,11 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Graphics.Containers;
@@ -13,7 +13,8 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Framework.Audio.Track;
 using System;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 
 namespace osu.Game.Graphics.UserInterface
 {
@@ -169,9 +170,9 @@ namespace osu.Game.Graphics.UserInterface
             }
         }
 
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => IconLayer.ReceivePositionalInputAt(screenSpacePos) || TextLayer.ReceivePositionalInputAt(screenSpacePos);
+        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => IconLayer.ReceiveMouseInputAt(screenSpacePos) || TextLayer.ReceiveMouseInputAt(screenSpacePos);
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             this.ResizeTo(SIZE_EXTENDED, transform_time, Easing.OutElastic);
             IconLayer.FadeColour(HoverColour, transform_time, Easing.OutElastic);
@@ -181,7 +182,7 @@ namespace osu.Game.Graphics.UserInterface
             return true;
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             this.ResizeTo(SIZE_RETRACTED, transform_time, Easing.OutElastic);
             IconLayer.FadeColour(TextLayer.Colour, transform_time, Easing.OutElastic);
@@ -189,12 +190,12 @@ namespace osu.Game.Graphics.UserInterface
             bouncingIcon.ScaleTo(1, transform_time, Easing.OutElastic);
         }
 
-        protected override bool OnMouseDown(MouseDownEvent e)
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
         {
             return true;
         }
 
-        protected override bool OnClick(ClickEvent e)
+        protected override bool OnClick(InputState state)
         {
             var flash = new Box
             {
@@ -208,7 +209,7 @@ namespace osu.Game.Graphics.UserInterface
             flash.FadeOut(500, Easing.OutQuint);
             flash.Expire();
 
-            return base.OnClick(e);
+            return base.OnClick(state);
         }
 
         private class BouncingIcon : BeatSyncedContainer

@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
@@ -16,20 +16,16 @@ namespace osu.Game.Rulesets.Catch.Objects
 
         public int IndexInBeatmap { get; set; }
 
-        public virtual FruitVisualRepresentation VisualRepresentation => (FruitVisualRepresentation)(ComboIndex % 4);
+        public virtual FruitVisualRepresentation VisualRepresentation => (FruitVisualRepresentation)(IndexInBeatmap % 4);
 
         public virtual bool NewCombo { get; set; }
-
-        public int ComboOffset { get; set; }
 
         public int IndexInCurrentCombo { get; set; }
 
         public int ComboIndex { get; set; }
 
         /// <summary>
-        /// Difference between the distance to the next object
-        /// and the distance that would have triggered a hyper dash.
-        /// A value close to 0 indicates a difficult jump (for difficulty calculation).
+        /// The distance for a fruit to to next hyper if it's not a hyper.
         /// </summary>
         public float DistanceToHyperDash { get; set; }
 

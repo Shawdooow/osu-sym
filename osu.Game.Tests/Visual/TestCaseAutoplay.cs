@@ -1,7 +1,6 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using System;
 using System.ComponentModel;
 using System.Linq;
 using osu.Game.Rulesets;
@@ -24,17 +23,11 @@ namespace osu.Game.Tests.Visual
             };
         }
 
-        protected override void AddCheckSteps(Func<Player> player)
-        {
-            base.AddCheckSteps(player);
-            AddUntilStep(() => ((ScoreAccessiblePlayer)player()).ScoreProcessor.TotalScore > 0, "score above zero");
-            AddUntilStep(() => ((ScoreAccessiblePlayer)player()).HUDOverlay.KeyCounter.Children.Any(kc => kc.CountPresses > 0), "key counter counted keys");
-        }
+        protected override bool ContinueCondition(Player player) => base.ContinueCondition(player) &&  ((ScoreAccessiblePlayer)player).ScoreProcessor.TotalScore > 0;
 
         private class ScoreAccessiblePlayer : Player
         {
             public new ScoreProcessor ScoreProcessor => base.ScoreProcessor;
-            public new HUDOverlay HUDOverlay => base.HUDOverlay;
         }
     }
 }

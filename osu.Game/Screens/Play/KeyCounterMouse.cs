@@ -1,9 +1,10 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Framework.Input.Events;
-using osuTK.Input;
-using osuTK;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
+using OpenTK.Input;
+using OpenTK;
 
 namespace osu.Game.Screens.Play
 {
@@ -16,7 +17,7 @@ namespace osu.Game.Screens.Play
             Button = button;
         }
 
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => true;
+        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => true;
 
         private static string getStringRepresentation(MouseButton button)
         {
@@ -31,16 +32,16 @@ namespace osu.Game.Screens.Play
             }
         }
 
-        protected override bool OnMouseDown(MouseDownEvent e)
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
         {
-            if (e.Button == Button) IsLit = true;
-            return base.OnMouseDown(e);
+            if (args.Button == Button) IsLit = true;
+            return base.OnMouseDown(state, args);
         }
 
-        protected override bool OnMouseUp(MouseUpEvent e)
+        protected override bool OnMouseUp(InputState state, MouseUpEventArgs args)
         {
-            if (e.Button == Button) IsLit = false;
-            return base.OnMouseUp(e);
+            if (args.Button == Button) IsLit = false;
+            return base.OnMouseUp(state, args);
         }
     }
 }

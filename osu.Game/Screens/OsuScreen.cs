@@ -1,6 +1,7 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
+using System;
 using Microsoft.EntityFrameworkCore.Internal;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
@@ -10,20 +11,19 @@ using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
+using osu.Game.Graphics.Containers;
 using osu.Game.Input.Bindings;
 using osu.Game.Rulesets;
 using osu.Game.Screens.Menu;
+using OpenTK;
 using osu.Game.Overlays;
+using osu.Framework.Graphics.Containers;
 
 namespace osu.Game.Screens
 {
-    public abstract class OsuScreen : Screen, IOsuScreen, IKeyBindingHandler<GlobalAction>, IHasDescription
+    public abstract class OsuScreen : Screen, IKeyBindingHandler<GlobalAction>, IHasDescription
     {
-        /// <summary>
-        /// The amount of negative padding that should be applied to game background content which touches both the left and right sides of the screen.
-        /// This allows for the game content to be pushed byt he options/notification overlays without causing black areas to appear.
-        /// </summary>
-        public const float HORIZONTAL_OVERFLOW_PADDING = 50;
+        public BackgroundScreen Background { get; private set; }
 
         /// <summary>
         /// A user-facing title for this screen.
@@ -34,74 +34,80 @@ namespace osu.Game.Screens
 
         protected virtual bool AllowBackButton => true;
 
-        public virtual bool AllowExternalScreenChange => false;
+        /// <summary>
+        /// Override to create a BackgroundMode for the current screen.
+        /// Note that the instance created may not be the used instance if it matches the BackgroundMode equality clause.
+        /// </summary>
+        protected virtual BackgroundScreen CreateBackground() => null;
+
+        private Action updateOverlayStates;
 
         /// <summary>
         /// Whether all overlays should be hidden when this screen is entered or resumed.
         /// </summary>
-        public virtual bool HideOverlaysOnEnter => false;
+        protected virtual bool HideOverlaysOnEnter => false;
+
+        protected readonly Bindable<OverlayActivation> OverlayActivationMode = new Bindable<OverlayActivation>();
 
         /// <summary>
         /// Whether overlays should be able to be opened once this screen is entered or resumed.
         /// </summary>
-        public virtual OverlayActivation InitialOverlayActivationMode => OverlayActivation.All;
+        protected virtual OverlayActivation InitialOverlayActivationMode => OverlayActivation.All;
 
+        /// <summary>
+        /// Whether this <see cref="OsuScreen"/> allows the cursor to be displayed.
+        /// </summary>
         public virtual bool CursorVisible => true;
 
         protected new OsuGameBase Game => base.Game as OsuGameBase;
 
+        private OsuLogo logo;
+
         /// <summary>
-        /// Whether to disallow changes to game-wise Beatmap/Ruleset bindables for this screen (and all children).
+        /// Whether the beatmap or ruleset should be allowed to be changed by the user or game.
+        /// Used to mark exclusive areas where this is strongly prohibited, like gameplay.
         /// </summary>
-        public virtual bool DisallowExternalBeatmapRulesetChanges => false;
+        public virtual bool AllowBeatmapRulesetChange => true;
+
+        protected readonly Bindable<WorkingBeatmap> Beatmap = new Bindable<WorkingBeatmap>();
+
+        protected virtual float BackgroundParallaxAmount => 1;
+
+        private ParallaxContainer backgroundParallaxContainer;
+
+        protected readonly Bindable<RulesetInfo> Ruleset = new Bindable<RulesetInfo>();
 
         private SampleChannel sampleExit;
 
-        public virtual float BackgroundParallaxAmount => 1;
-
-        public Bindable<WorkingBeatmap> Beatmap { get; set; }
-
-        public Bindable<RulesetInfo> Ruleset { get; set; }
-
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var deps = new OsuScreenDependencies(DisallowExternalBeatmapRulesetChanges, base.CreateChildDependencies(parent));
-
-            Beatmap = deps.Beatmap;
-            Ruleset = deps.Ruleset;
-
-            return deps;
-        }
-
-        protected BackgroundScreen Background => backgroundStack?.CurrentScreen as BackgroundScreen;
-
-        private BackgroundScreen localBackground;
-
-        [Resolved(canBeNull: true)]
-        private BackgroundScreenStack backgroundStack { get; set; }
-
-        [Resolved(canBeNull: true)]
-        private OsuLogo logo { get; set; }
-
-        protected OsuScreen()
-        {
-            Anchor = Anchor.Centre;
-            Origin = Anchor.Centre;
-        }
-
         [BackgroundDependencyLoader(true)]
-        private void load(OsuGame osu, AudioManager audio)
+        private void load(BindableBeatmap beatmap, OsuGame osu, AudioManager audio, Bindable<RulesetInfo> ruleset)
         {
+            Beatmap.BindTo(beatmap);
+            Ruleset.BindTo(ruleset);
+
+            if (osu != null)
+            {
+                OverlayActivationMode.BindTo(osu.OverlayActivationMode);
+
+                updateOverlayStates = () =>
+                {
+                    if (HideOverlaysOnEnter)
+                        osu.CloseAllOverlays();
+                    else
+                        osu.Toolbar.State = Visibility.Visible;
+                };
+            }
+
             sampleExit = audio.Sample.Get(@"UI/screen-back");
         }
 
         public virtual bool OnPressed(GlobalAction action)
         {
-            if (!this.IsCurrentScreen()) return false;
+            if (!IsCurrentScreen) return false;
 
             if (action == GlobalAction.Back && AllowBackButton)
             {
-                this.Exit();
+                Exit();
                 return true;
             }
 
@@ -110,7 +116,7 @@ namespace osu.Game.Screens
 
         public bool OnReleased(GlobalAction action) => action == GlobalAction.Back && AllowBackButton;
 
-        public override void OnResuming(IScreen last)
+        protected override void OnResuming(Screen last)
         {
             sampleExit?.Play();
             applyArrivingDefaults(true);
@@ -118,32 +124,72 @@ namespace osu.Game.Screens
             base.OnResuming(last);
         }
 
-        public override void OnSuspending(IScreen next)
+        protected override void OnSuspending(Screen next)
         {
             base.OnSuspending(next);
             onSuspendingLogo();
         }
 
-        public override void OnEntering(IScreen last)
+        protected override void OnEntering(Screen last)
         {
-            applyArrivingDefaults(false);
+            OsuScreen lastOsu = last as OsuScreen;
 
-            backgroundStack?.Push(localBackground = CreateBackground());
+            BackgroundScreen bg = CreateBackground();
+
+            if (lastOsu?.Background != null)
+            {
+                backgroundParallaxContainer = lastOsu.backgroundParallaxContainer;
+
+                if (bg == null || lastOsu.Background.Equals(bg))
+                    //we can keep the previous mode's background.
+                    Background = lastOsu.Background;
+                else
+                {
+                    lastOsu.Background.Push(Background = bg);
+                }
+            }
+            else if (bg != null)
+            {
+                // this makes up for the fact our padding changes when the global toolbar is visible.
+                bg.Scale = new Vector2(1.06f);
+
+                AddInternal(backgroundParallaxContainer = new ParallaxContainer
+                {
+                    Depth = float.MaxValue,
+                    Children = new[]
+                    {
+                        Background = bg
+                    }
+                });
+            }
+
+            if ((logo = lastOsu?.logo) == null)
+                LoadComponentAsync(logo = new OsuLogo { Alpha = 0 }, AddInternal);
+
+            applyArrivingDefaults(false);
 
             base.OnEntering(last);
         }
 
-        public override bool OnExiting(IScreen next)
+        protected override bool OnExiting(Screen next)
         {
             if (ValidForResume && logo != null)
                 onExitingLogo();
 
+            OsuScreen nextOsu = next as OsuScreen;
+
+            if (Background != null && !Background.Equals(nextOsu?.Background))
+            {
+                Background.Exit();
+
+                //We need to use MakeCurrent in case we are jumping up multiple game screens.
+                nextOsu?.Background?.MakeCurrent();
+            }
+
             if (base.OnExiting(next))
                 return true;
 
-            if (localBackground != null && backgroundStack?.CurrentScreen == localBackground)
-                backgroundStack?.Exit();
-
+            Beatmap.UnbindAll();
             return false;
         }
 
@@ -151,24 +197,6 @@ namespace osu.Game.Screens
         /// Fired when this screen was entered or resumed and the logo state is required to be adjusted.
         /// </summary>
         protected virtual void LogoArriving(OsuLogo logo, bool resuming)
-        {
-            ApplyLogoArrivingDefaults(logo);
-        }
-
-        private void applyArrivingDefaults(bool isResuming)
-        {
-            logo?.AppendAnimatingAction(() =>
-            {
-                if (this.IsCurrentScreen()) LogoArriving(logo, isResuming);
-            }, true);
-        }
-
-        /// <summary>
-        /// Applies default animations to an arriving logo.
-        /// Todo: This should not exist.
-        /// </summary>
-        /// <param name="logo">The logo to apply animations to.</param>
-        public static void ApplyLogoArrivingDefaults(OsuLogo logo)
         {
             logo.Action = null;
             logo.FadeOut(300, Easing.OutQuint);
@@ -180,9 +208,24 @@ namespace osu.Game.Screens
             logo.Ripple = true;
         }
 
+        private void applyArrivingDefaults(bool isResuming)
+        {
+            logo.AppendAnimatingAction(() =>
+            {
+                if (IsCurrentScreen) LogoArriving(logo, isResuming);
+            }, true);
+
+            if (backgroundParallaxContainer != null)
+                backgroundParallaxContainer.ParallaxAmount = ParallaxContainer.DEFAULT_PARALLAX_AMOUNT * BackgroundParallaxAmount;
+
+            OverlayActivationMode.Value = InitialOverlayActivationMode;
+
+            updateOverlayStates?.Invoke();
+        }
+
         private void onExitingLogo()
         {
-            logo?.AppendAnimatingAction(() => LogoExiting(logo), false);
+            logo.AppendAnimatingAction(() => { LogoExiting(logo); }, false);
         }
 
         /// <summary>
@@ -194,7 +237,7 @@ namespace osu.Game.Screens
 
         private void onSuspendingLogo()
         {
-            logo?.AppendAnimatingAction(() => LogoSuspending(logo), false);
+            logo.AppendAnimatingAction(() => { LogoSuspending(logo); }, false);
         }
 
         /// <summary>
@@ -203,11 +246,5 @@ namespace osu.Game.Screens
         protected virtual void LogoSuspending(OsuLogo logo)
         {
         }
-
-        /// <summary>
-        /// Override to create a BackgroundMode for the current screen.
-        /// Note that the instance created may not be the used instance if it matches the BackgroundMode equality clause.
-        /// </summary>
-        protected virtual BackgroundScreen CreateBackground() => null;
     }
 }

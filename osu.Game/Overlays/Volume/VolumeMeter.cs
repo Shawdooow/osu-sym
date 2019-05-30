@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Globalization;
@@ -11,12 +11,12 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Framework.MathUtils;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Overlays.Volume
 {
@@ -25,7 +25,7 @@ namespace osu.Game.Overlays.Volume
         private CircularProgress volumeCircle;
         private CircularProgress volumeCircleGlow;
 
-        public BindableDouble Bindable { get; } = new BindableDouble { MinValue = 0, MaxValue = 1, Precision = 0.01 };
+        public BindableDouble Bindable { get; } = new BindableDouble { MinValue = 0, MaxValue = 1 };
         private readonly float circleSize;
         private readonly Color4 meterColour;
         private readonly string name;
@@ -222,42 +222,38 @@ namespace osu.Game.Overlays.Volume
             private set => Bindable.Value = value;
         }
 
-        private const double adjust_step = 0.05;
+        private const float adjust_step = 0.05f;
 
         public void Increase(double amount = 1, bool isPrecise = false) => adjust(amount, isPrecise);
         public void Decrease(double amount = 1, bool isPrecise = false) => adjust(-amount, isPrecise);
 
         // because volume precision is set to 0.01, this local is required to keep track of more precise adjustments and only apply when possible.
-        private double scrollAccumulation;
+        private double adjustAccumulator;
 
         private void adjust(double delta, bool isPrecise)
         {
-            scrollAccumulation += delta * adjust_step * (isPrecise ? 0.1 : 1);
-
-            var precision = Bindable.Precision;
-
-            while (Precision.AlmostBigger(Math.Abs(scrollAccumulation), precision))
-            {
-                Volume += Math.Sign(scrollAccumulation) * precision;
-                scrollAccumulation = scrollAccumulation < 0 ? Math.Min(0, scrollAccumulation + precision) : Math.Max(0, scrollAccumulation - precision);
-            }
+            adjustAccumulator += delta * adjust_step * (isPrecise ? 0.1 : 1);
+            if (Math.Abs(adjustAccumulator) < Bindable.Precision)
+                return;
+            Volume += adjustAccumulator;
+            adjustAccumulator = 0;
         }
 
-        protected override bool OnScroll(ScrollEvent e)
+        protected override bool OnScroll(InputState state)
         {
-            adjust(e.ScrollDelta.Y, e.IsPrecise);
+            adjust(state.Mouse.ScrollDelta.Y, state.Mouse.HasPreciseScroll);
             return true;
         }
 
         private const float transition_length = 500;
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             this.ScaleTo(1.04f, transition_length, Easing.OutExpo);
             return false;
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             this.ScaleTo(1f, transition_length, Easing.OutExpo);
         }

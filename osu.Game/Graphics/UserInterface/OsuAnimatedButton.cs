@@ -1,14 +1,15 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Game.Graphics.Containers;
-using osuTK.Graphics;
+using OpenTK.Graphics;
 
 namespace osu.Game.Graphics.UserInterface
 {
@@ -76,34 +77,34 @@ namespace osu.Game.Graphics.UserInterface
             Enabled.BindValueChanged(enabled => this.FadeColour(enabled ? Color4.White : colours.Gray9, 200, Easing.OutQuint), true);
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             hover.FadeIn(500, Easing.OutQuint);
-            return base.OnHover(e);
+            return base.OnHover(state);
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             hover.FadeOut(500, Easing.OutQuint);
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
         }
 
-        protected override bool OnClick(ClickEvent e)
+        protected override bool OnClick(InputState state)
         {
             hover.FlashColour(FlashColour, 800, Easing.OutQuint);
-            return base.OnClick(e);
+            return base.OnClick(state);
         }
 
-        protected override bool OnMouseDown(MouseDownEvent e)
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
         {
             Content.ScaleTo(0.75f, 2000, Easing.OutQuint);
-            return base.OnMouseDown(e);
+            return base.OnMouseDown(state, args);
         }
 
-        protected override bool OnMouseUp(MouseUpEvent e)
+        protected override bool OnMouseUp(InputState state, MouseUpEventArgs args)
         {
             Content.ScaleTo(1, 1000, Easing.OutElastic);
-            return base.OnMouseUp(e);
+            return base.OnMouseUp(state, args);
         }
     }
 }

@@ -1,22 +1,23 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Game.Graphics;
 using osu.Framework.Allocation;
 using osu.Game.Graphics.UserInterface;
 using osu.Framework.Graphics.Shapes;
-using osuTK.Input;
+using OpenTK.Input;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Input.Bindings;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Game.Input.Bindings;
 
 namespace osu.Game.Screens.Play
@@ -27,9 +28,9 @@ namespace osu.Game.Screens.Play
         private const int button_height = 70;
         private const float background_alpha = 0.75f;
 
-        protected override bool BlockNonPositionalInput => true;
+        protected override bool BlockPassThroughKeyboard => true;
 
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => true;
+        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => true;
 
         public Action OnRetry;
         public Action OnQuit;
@@ -37,7 +38,7 @@ namespace osu.Game.Screens.Play
         /// <summary>
         /// Action that is invoked when <see cref="GlobalAction.Back"/> is triggered.
         /// </summary>
-        protected virtual Action BackAction => () => InternalButtons.Children.Last().Click();
+        protected virtual Action BackAction => () => InternalButtons.Children.Last().TriggerOnClick();
 
         public abstract string Header { get; }
         public abstract string Description { get; }
@@ -154,11 +155,11 @@ namespace osu.Game.Screens.Play
         protected override void PopOut() => this.FadeOut(transition_duration, Easing.In);
 
         // Don't let mouse down events through the overlay or people can click circles while paused.
-        protected override bool OnMouseDown(MouseDownEvent e) => true;
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args) => true;
 
-        protected override bool OnMouseUp(MouseUpEvent e) => true;
+        protected override bool OnMouseUp(InputState state, MouseUpEventArgs args) => true;
 
-        protected override bool OnMouseMove(MouseMoveEvent e) => true;
+        protected override bool OnMouseMove(InputState state) => true;
 
         protected void AddButton(string text, Color4 colour, Action action)
         {
@@ -203,11 +204,11 @@ namespace osu.Game.Screens.Play
             }
         }
 
-        protected override bool OnKeyDown(KeyDownEvent e)
+        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (!e.Repeat)
+            if (!args.Repeat)
             {
-                switch (e.Key)
+                switch (args.Key)
                 {
                     case Key.Up:
                         if (selectionIndex == -1 || selectionIndex == 0)
@@ -224,7 +225,7 @@ namespace osu.Game.Screens.Play
                 }
             }
 
-            return base.OnKeyDown(e);
+            return base.OnKeyDown(state, args);
         }
 
         public bool OnPressed(GlobalAction action)
@@ -282,20 +283,20 @@ namespace osu.Game.Screens.Play
 
         private class Button : DialogButton
         {
-            protected override bool OnHover(HoverEvent e) => true;
+            protected override bool OnHover(InputState state) => true;
 
-            protected override bool OnMouseMove(MouseMoveEvent e)
+            protected override bool OnMouseMove(InputState state)
             {
                 Selected.Value = true;
-                return base.OnMouseMove(e);
+                return base.OnMouseMove(state);
             }
 
-            protected override bool OnKeyDown(KeyDownEvent e)
+            protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
             {
-                if (e.Repeat || e.Key != Key.Enter || !Selected)
+                if (args.Repeat || args.Key != Key.Enter || !Selected)
                     return false;
 
-                Click();
+                OnClick(state);
                 return true;
             }
         }

@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Game.Audio;
 using System.Collections.Generic;
@@ -17,15 +17,9 @@ namespace osu.Game.Rulesets.Objects.Types
         int RepeatCount { get; }
 
         /// <summary>
-        /// The samples to be played when each node of the <see cref="IHasRepeats"/> is hit.<br />
-        /// 0: The first node.<br />
-        /// 1: The first repeat.<br />
-        /// 2: The second repeat.<br />
-        /// ...<br />
-        /// n-1: The last repeat.<br />
-        /// n: The last node.
+        /// The samples to be played when each repeat node is hit (0 -> first repeat node, 1 -> second repeat node, etc).
         /// </summary>
-        List<List<SampleInfo>> NodeSamples { get; }
+        List<List<SampleInfo>> RepeatSamples { get; }
     }
 
     public static class HasRepeatsExtensions

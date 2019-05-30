@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Linq;
 using osu.Framework.Configuration;
@@ -12,8 +12,6 @@ namespace osu.Game.Overlays.Profile.Sections.Historical
 {
     public class PaginatedMostPlayedBeatmapContainer : PaginatedContainer
     {
-        private GetUserMostPlayedBeatmapsRequest request;
-
         public PaginatedMostPlayedBeatmapContainer(Bindable<User> user)
             :base(user, "Most Played Beatmaps", "No records. :(")
         {
@@ -26,8 +24,9 @@ namespace osu.Game.Overlays.Profile.Sections.Historical
         {
             base.ShowMore();
 
-            request = new GetUserMostPlayedBeatmapsRequest(User.Value.Id, VisiblePages++ * ItemsPerPage);
-            request.Success += beatmaps => Schedule(() =>
+            var req = new GetUserMostPlayedBeatmapsRequest(User.Value.Id, VisiblePages++ * ItemsPerPage);
+
+            req.Success += beatmaps =>
             {
                 ShowMoreButton.FadeTo(beatmaps.Count == ItemsPerPage ? 1 : 0);
                 ShowMoreLoading.Hide();
@@ -44,15 +43,9 @@ namespace osu.Game.Overlays.Profile.Sections.Historical
                 {
                     ItemsContainer.Add(new DrawableMostPlayedRow(beatmap.GetBeatmapInfo(Rulesets), beatmap.PlayCount));
                 }
-            });
+            };
 
-            Api.Queue(request);
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
-            request?.Cancel();
+            Api.Queue(req);
         }
     }
 }

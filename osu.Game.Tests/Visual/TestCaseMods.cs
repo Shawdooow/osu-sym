@@ -1,25 +1,25 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
+using System.ComponentModel;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Overlays.Mods;
 using osu.Game.Rulesets;
 using osu.Game.Screens.Play.HUD;
-using osuTK;
+using OpenTK;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Osu.Mods;
 using System.Linq;
 using System.Collections.Generic;
-using NUnit.Framework;
-using osu.Framework.Configuration;
+using osu.Game.Rulesets.Osu;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Overlays.Mods.Sections;
+using osu.Game.Rulesets.Mania;
 using osu.Game.Rulesets.Mania.Mods;
 using osu.Game.Rulesets.UI;
-using osuTK.Graphics;
+using OpenTK.Graphics;
 
 namespace osu.Game.Tests.Visual
 {
@@ -36,9 +36,7 @@ namespace osu.Game.Tests.Visual
             typeof(ModButtonEmpty),
             typeof(DifficultyReductionSection),
             typeof(DifficultyIncreaseSection),
-            typeof(AutomationSection),
-            typeof(ConversionSection),
-            typeof(FunSection),
+            typeof(SpecialSection),
         };
 
         private RulesetStore rulesets;
@@ -49,6 +47,11 @@ namespace osu.Game.Tests.Visual
         private void load(RulesetStore rulesets)
         {
             this.rulesets = rulesets;
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
 
             Add(modSelect = new TestModSelectOverlay
             {
@@ -65,25 +68,34 @@ namespace osu.Game.Tests.Visual
                 Position = new Vector2(0, 25),
             });
 
-            modDisplay.Current.UnbindBindings();
             modDisplay.Current.BindTo(modSelect.SelectedMods);
 
+            AddStep("Toggle", modSelect.ToggleVisibility);
+            AddStep("Hide", modSelect.Hide);
             AddStep("Show", modSelect.Show);
-            AddStep("Toggle", modSelect.ToggleVisibility);
-            AddStep("Toggle", modSelect.ToggleVisibility);
+
+            foreach (var rulesetInfo in rulesets.AvailableRulesets)
+            {
+                Ruleset ruleset = rulesetInfo.CreateInstance();
+                AddStep($"switch to {ruleset.Description}", () => Ruleset.Value = rulesetInfo);
+
+                switch (ruleset)
+                {
+                    case OsuRuleset or:
+                        testOsuMods(or);
+                        break;
+                    case ManiaRuleset mr:
+                        testManiaMods(mr);
+                        break;
+                }
+            }
         }
 
-        [Test]
-        public void TestOsuMods()
+        private void testOsuMods(OsuRuleset ruleset)
         {
-            var ruleset = rulesets.AvailableRulesets.First(r => r.ID == 0);
-            AddStep("change ruleset", () => { Ruleset.Value = ruleset; });
-
-            var instance = ruleset.CreateInstance();
-
-            var easierMods = instance.GetModsFor(ModType.DifficultyReduction);
-            var harderMods = instance.GetModsFor(ModType.DifficultyIncrease);
-            var assistMods = instance.GetModsFor(ModType.Automation);
+            var easierMods = ruleset.GetModsFor(ModType.DifficultyReduction);
+            var harderMods = ruleset.GetModsFor(ModType.DifficultyIncrease);
+            var assistMods = ruleset.GetModsFor(ModType.Special);
 
             var noFailMod = easierMods.FirstOrDefault(m => m is OsuModNoFail);
             var hiddenMod = harderMods.FirstOrDefault(m => m is OsuModHidden);
@@ -105,40 +117,9 @@ namespace osu.Game.Tests.Visual
             testUnimplementedMod(autoPilotMod);
         }
 
-        [Test]
-        public void TestManiaMods()
+        private void testManiaMods(ManiaRuleset ruleset)
         {
-            var ruleset = rulesets.AvailableRulesets.First(r => r.ID == 3);
-            AddStep("change ruleset", () => { Ruleset.Value = ruleset; });
-
-            testRankedText(ruleset.CreateInstance().GetModsFor(ModType.Conversion).First(m => m is ManiaModRandom));
-        }
-
-        [Test]
-        public void TestRulesetChanges()
-        {
-            var rulesetOsu = rulesets.AvailableRulesets.First(r => r.ID == 0);
-            var rulesetMania = rulesets.AvailableRulesets.First(r => r.ID == 3);
-
-            AddStep("change ruleset to null", () => { Ruleset.Value = null; });
-
-            var instance = rulesetOsu.CreateInstance();
-            var easierMods = instance.GetModsFor(ModType.DifficultyReduction);
-            var noFailMod = easierMods.FirstOrDefault(m => m is OsuModNoFail);
-
-            AddStep("set mods externally", () => { modDisplay.Current.Value = new[] { noFailMod }; });
-
-            AddStep("change ruleset to osu", () => { Ruleset.Value = rulesetOsu; });
-
-            AddAssert("ensure mods still selected", () => modDisplay.Current.Value.Single(m => m is OsuModNoFail) != null);
-
-            AddStep("change ruleset to mania", () => { Ruleset.Value = rulesetMania; });
-
-            AddAssert("ensure mods not selected", () => !modDisplay.Current.Value.Any(m => m is OsuModNoFail));
-
-            AddStep("change ruleset to osu", () => { Ruleset.Value = rulesetOsu; });
-
-            AddAssert("ensure mods not selected", () => !modDisplay.Current.Value.Any());
+            testRankedText(ruleset.GetModsFor(ModType.Special).First(m => m is ManiaModRandom));
         }
 
         private void testSingleMod(Mod mod)
@@ -253,8 +234,6 @@ namespace osu.Game.Tests.Visual
 
         private class TestModSelectOverlay : ModSelectOverlay
         {
-            public new Bindable<IEnumerable<Mod>> SelectedMods => base.SelectedMods;
-
             public ModButton GetModButton(Mod mod)
             {
                 var section = ModSectionsContainer.Children.Single(s => s.ModType == mod.Type);

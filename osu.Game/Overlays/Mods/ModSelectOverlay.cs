@@ -1,8 +1,8 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.Color4Extensions;
@@ -21,8 +21,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Overlays.Mods.Sections;
-using osu.Game.Screens;
 
 namespace osu.Game.Overlays.Mods
 {
@@ -36,43 +34,13 @@ namespace osu.Game.Overlays.Mods
         protected readonly OsuSpriteText MultiplierLabel, UnrankedLabel;
         private readonly FillFlowContainer footerContainer;
 
-        protected override bool BlockNonPositionalInput => false;
+        protected override bool BlockPassThroughKeyboard => false;
 
         protected readonly FillFlowContainer<ModSection> ModSectionsContainer;
 
-        protected readonly Bindable<IEnumerable<Mod>> SelectedMods = new Bindable<IEnumerable<Mod>>(new Mod[] { });
+        public readonly Bindable<IEnumerable<Mod>> SelectedMods = new Bindable<IEnumerable<Mod>>();
 
-        protected readonly IBindable<RulesetInfo> Ruleset = new Bindable<RulesetInfo>();
-
-        [BackgroundDependencyLoader(true)]
-        private void load(OsuColour colours, IBindable<RulesetInfo> ruleset, AudioManager audio, Bindable<IEnumerable<Mod>> selectedMods)
-        {
-            LowMultiplierColour = colours.Red;
-            HighMultiplierColour = colours.Green;
-            UnrankedLabel.Colour = colours.Blue;
-
-            Ruleset.BindTo(ruleset);
-            if (selectedMods != null) SelectedMods.BindTo(selectedMods);
-
-            sampleOn = audio.Sample.Get(@"UI/check-on");
-            sampleOff = audio.Sample.Get(@"UI/check-off");
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            Ruleset.BindValueChanged(rulesetChanged, true);
-            SelectedMods.BindValueChanged(selectedModsChanged, true);
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
-
-            Ruleset.UnbindAll();
-            SelectedMods.UnbindAll();
-        }
+        public readonly IBindable<RulesetInfo> Ruleset = new Bindable<RulesetInfo>();
 
         private void rulesetChanged(RulesetInfo newRuleset)
         {
@@ -82,14 +50,31 @@ namespace osu.Game.Overlays.Mods
 
             foreach (ModSection section in ModSectionsContainer.Children)
                 section.Mods = instance.GetModsFor(section.ModType);
-
-            // attempt to re-select any already selected mods.
-            // this may be the first time we are receiving the ruleset, in which case they will still match.
-            selectedModsChanged(SelectedMods.Value);
-
-            // write the mods back to the SelectedMods bindable in the case a change was not applicable.
-            // this generally isn't required as the previous line will perform deselection; just here for safety.
             refreshSelectedMods();
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours, IBindable<RulesetInfo> ruleset, AudioManager audio)
+        {
+            SelectedMods.ValueChanged += selectedModsChanged;
+
+            LowMultiplierColour = colours.Red;
+            HighMultiplierColour = colours.Green;
+            UnrankedLabel.Colour = colours.Blue;
+
+            Ruleset.BindTo(ruleset);
+            Ruleset.BindValueChanged(rulesetChanged, true);
+
+            sampleOn = audio.Sample.Get(@"UI/check-on");
+            sampleOff = audio.Sample.Get(@"UI/check-off");
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            Ruleset.UnbindAll();
+            SelectedMods.UnbindAll();
         }
 
         private void selectedModsChanged(IEnumerable<Mod> obj)
@@ -172,6 +157,7 @@ namespace osu.Game.Overlays.Mods
                 section.DeselectTypes(modTypes, immediate);
         }
 
+
         private SampleChannel sampleOn, sampleOff;
 
         private void modButtonPressed(Mod selectedMod)
@@ -189,7 +175,10 @@ namespace osu.Game.Overlays.Mods
             refreshSelectedMods();
         }
 
-        private void refreshSelectedMods() => SelectedMods.Value = ModSectionsContainer.Children.SelectMany(s => s.SelectedMods).ToArray();
+        private void refreshSelectedMods()
+        {
+            SelectedMods.Value = ModSectionsContainer.Children.SelectMany(s => s.SelectedMods).ToArray();
+        }
 
         public ModSelectOverlay()
         {
@@ -199,8 +188,6 @@ namespace osu.Game.Overlays.Mods
             Waves.FourthWaveColour = OsuColour.FromHex(@"003a4e");
 
             Height = 510;
-            Padding = new MarginPadding { Horizontal = -OsuScreen.HORIZONTAL_OVERFLOW_PADDING };
-
             Children = new Drawable[]
             {
                 new Container
@@ -224,178 +211,178 @@ namespace osu.Game.Overlays.Mods
                         },
                     },
                 },
-                new GridContainer
+                new FillFlowContainer
                 {
-                    RelativeSizeAxes = Axes.Both,
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomCentre,
-                    RowDimensions = new[]
+                    Direction = FillDirection.Vertical,
+                    Spacing = new Vector2(0f, 10f),
+                    Children = new Drawable[]
                     {
-                        new Dimension(GridSizeMode.Absolute, 90),
-                        new Dimension(GridSizeMode.Distributed),
-                        new Dimension(GridSizeMode.Absolute, 70),
-                    },
-                    Content = new[]
-                    {
-                        new Drawable[]
+                        // Header
+                        new Container
                         {
-                            new Container
+                            RelativeSizeAxes = Axes.X,
+                            Height = 82,
+                            Origin = Anchor.TopCentre,
+                            Anchor = Anchor.TopCentre,
+                            Children = new Drawable[]
                             {
-                                RelativeSizeAxes = Axes.Both,
-                                Origin = Anchor.TopCentre,
-                                Anchor = Anchor.TopCentre,
-                                Children = new Drawable[]
+                                new Box
                                 {
-                                    new Box
-                                    {
-                                        RelativeSizeAxes = Axes.Both,
-                                        Colour = OsuColour.Gray(10).Opacity(100),
-                                    },
-                                    new FillFlowContainer
-                                    {
-                                        Origin = Anchor.Centre,
-                                        Anchor = Anchor.Centre,
-                                        RelativeSizeAxes = Axes.X,
-                                        AutoSizeAxes = Axes.Y,
-                                        Direction = FillDirection.Vertical,
-                                        Width = content_width,
-                                        Padding = new MarginPadding { Horizontal = OsuScreen.HORIZONTAL_OVERFLOW_PADDING },
-                                        Children = new Drawable[]
-                                        {
-                                            new OsuSpriteText
-                                            {
-                                                Font = @"Exo2.0-Bold",
-                                                Text = @"Gameplay Mods",
-                                                TextSize = 22,
-                                                Shadow = true,
-                                                Margin = new MarginPadding
-                                                {
-                                                    Bottom = 4,
-                                                },
-                                            },
-                                            new OsuTextFlowContainer(text =>
-                                            {
-                                                text.TextSize = 18;
-                                                text.Shadow = true;
-                                            })
-                                            {
-                                                RelativeSizeAxes = Axes.X,
-                                                AutoSizeAxes = Axes.Y,
-                                                Text = "Mods provide different ways to enjoy gameplay. Some have an effect on the score you can achieve during ranked play.\nOthers are just for fun.",
-                                            },
-                                        },
-                                    },
+                                    RelativeSizeAxes = Axes.Both,
+                                    Colour = OsuColour.Gray(10).Opacity(100),
                                 },
-                            },
-                        },
-                        new Drawable[]
-                        {
-                            // Body
-                            new OsuScrollContainer
-                            {
-                                ScrollbarVisible = false,
-                                Origin = Anchor.TopCentre,
-                                Anchor = Anchor.TopCentre,
-                                RelativeSizeAxes = Axes.Both,
-                                Padding = new MarginPadding
-                                {
-                                    Vertical = 10,
-                                    Horizontal = OsuScreen.HORIZONTAL_OVERFLOW_PADDING
-                                },
-                                Child = ModSectionsContainer = new FillFlowContainer<ModSection>
+                                new FillFlowContainer
                                 {
                                     Origin = Anchor.TopCentre,
                                     Anchor = Anchor.TopCentre,
                                     RelativeSizeAxes = Axes.X,
                                     AutoSizeAxes = Axes.Y,
-                                    Spacing = new Vector2(0f, 10f),
+                                    Direction = FillDirection.Vertical,
                                     Width = content_width,
-                                    Children = new ModSection[]
+                                    Padding = new MarginPadding
                                     {
-                                        new DifficultyReductionSection { Action = modButtonPressed },
-                                        new DifficultyIncreaseSection { Action = modButtonPressed },
-                                        new AutomationSection { Action = modButtonPressed },
-                                        new ConversionSection { Action = modButtonPressed },
-                                        new FunSection { Action = modButtonPressed },
-                                    }
+                                        Top = 10,
+                                        Bottom = 10,
+                                    },
+                                    Children = new Drawable[]
+                                    {
+                                        new OsuSpriteText
+                                        {
+                                            Font = @"Exo2.0-Bold",
+                                            Text = @"Gameplay Mods",
+                                            TextSize = 22,
+                                            Shadow = true,
+                                            Margin = new MarginPadding
+                                            {
+                                                Bottom = 4,
+                                            },
+                                        },
+                                        new OsuSpriteText
+                                        {
+                                            Text = @"Mods provide different ways to enjoy gameplay. Some have an effect on the score you can achieve during ranked play.",
+                                            TextSize = 18,
+                                            Shadow = true,
+                                        },
+                                        new OsuSpriteText
+                                        {
+                                            Text = @"Others are just for fun.",
+                                            TextSize = 18,
+                                            Shadow = true,
+                                        },
+                                    },
                                 },
                             },
                         },
-                        new Drawable[]
+                        // Body
+                        ModSectionsContainer = new FillFlowContainer<ModSection>
                         {
-                            // Footer
-                            new Container
+                            Origin = Anchor.TopCentre,
+                            Anchor = Anchor.TopCentre,
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y,
+                            Spacing = new Vector2(0f, 10f),
+                            Width = content_width,
+                            Children = new ModSection[]
                             {
-                                RelativeSizeAxes = Axes.Both,
-                                Origin = Anchor.TopCentre,
-                                Anchor = Anchor.TopCentre,
-                                Children = new Drawable[]
+                                new DifficultyReductionSection
                                 {
-                                    new Box
+                                    RelativeSizeAxes = Axes.X,
+                                    Origin = Anchor.TopCentre,
+                                    Anchor = Anchor.TopCentre,
+                                    Action = modButtonPressed,
+                                },
+                                new DifficultyIncreaseSection
+                                {
+                                    RelativeSizeAxes = Axes.X,
+                                    Origin = Anchor.TopCentre,
+                                    Anchor = Anchor.TopCentre,
+                                    Action = modButtonPressed,
+                                },
+                                new SpecialSection
+                                {
+                                    RelativeSizeAxes = Axes.X,
+                                    Origin = Anchor.TopCentre,
+                                    Anchor = Anchor.TopCentre,
+                                    Action = modButtonPressed,
+                                },
+                            }
+                        },
+                        // Footer
+                        new Container
+                        {
+                            RelativeSizeAxes = Axes.X,
+                            Height = 70,
+                            Origin = Anchor.TopCentre,
+                            Anchor = Anchor.TopCentre,
+                            Children = new Drawable[]
+                            {
+                                new Box
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Colour = new Color4(172, 20, 116, 255),
+                                    Alpha = 0.5f,
+                                },
+                                footerContainer = new FillFlowContainer
+                                {
+                                    Origin = Anchor.BottomCentre,
+                                    Anchor = Anchor.BottomCentre,
+                                    AutoSizeAxes = Axes.Y,
+                                    RelativeSizeAxes = Axes.X,
+                                    Width = content_width,
+                                    Direction = FillDirection.Horizontal,
+                                    Padding = new MarginPadding
                                     {
-                                        RelativeSizeAxes = Axes.Both,
-                                        Colour = new Color4(172, 20, 116, 255),
-                                        Alpha = 0.5f,
+                                        Vertical = 15
                                     },
-                                    footerContainer = new FillFlowContainer
+                                    Children = new Drawable[]
                                     {
-                                        Origin = Anchor.BottomCentre,
-                                        Anchor = Anchor.BottomCentre,
-                                        AutoSizeAxes = Axes.Y,
-                                        RelativeSizeAxes = Axes.X,
-                                        Width = content_width,
-                                        Direction = FillDirection.Horizontal,
-                                        Padding = new MarginPadding
+                                        DeselectAllButton = new TriangleButton
                                         {
-                                            Vertical = 15,
-                                            Horizontal = OsuScreen.HORIZONTAL_OVERFLOW_PADDING
+                                            Width = 180,
+                                            Text = "Deselect All",
+                                            Action = DeselectAll,
+                                            Margin = new MarginPadding
+                                            {
+                                                Right = 20
+                                            }
                                         },
-                                        Children = new Drawable[]
+                                        new OsuSpriteText
                                         {
-                                            DeselectAllButton = new TriangleButton
+                                            Text = @"Score Multiplier:",
+                                            TextSize = 30,
+                                            Margin = new MarginPadding
                                             {
-                                                Width = 180,
-                                                Text = "Deselect All",
-                                                Action = DeselectAll,
-                                                Margin = new MarginPadding
-                                                {
-                                                    Right = 20
-                                                }
-                                            },
-                                            new OsuSpriteText
+                                                Top = 5,
+                                                Right = 10
+                                            }
+                                        },
+                                        MultiplierLabel = new OsuSpriteText
+                                        {
+                                            Font = @"Exo2.0-Bold",
+                                            TextSize = 30,
+                                            Margin = new MarginPadding
                                             {
-                                                Text = @"Score Multiplier:",
-                                                TextSize = 30,
-                                                Margin = new MarginPadding
-                                                {
-                                                    Top = 5,
-                                                    Right = 10
-                                                }
-                                            },
-                                            MultiplierLabel = new OsuSpriteText
+                                                Top = 5
+                                            }
+                                        },
+                                        UnrankedLabel = new OsuSpriteText
+                                        {
+                                            Font = @"Exo2.0-Bold",
+                                            Text = @"(Unranked)",
+                                            TextSize = 30,
+                                            Margin = new MarginPadding
                                             {
-                                                Font = @"Exo2.0-Bold",
-                                                TextSize = 30,
-                                                Margin = new MarginPadding
-                                                {
-                                                    Top = 5
-                                                }
-                                            },
-                                            UnrankedLabel = new OsuSpriteText
-                                            {
-                                                Font = @"Exo2.0-Bold",
-                                                Text = @"(Unranked)",
-                                                TextSize = 30,
-                                                Margin = new MarginPadding
-                                                {
-                                                    Top = 5,
-                                                    Left = 10
-                                                }
+                                                Top = 5,
+                                                Left = 10
                                             }
                                         }
                                     }
-                                },
-                            }
+                                }
+                            },
                         },
                     },
                 },

@@ -1,14 +1,14 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
+using OpenTK;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Configuration;
-using osuTK.Input;
+using OpenTK.Input;
 using osu.Framework.MathUtils;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -17,7 +17,8 @@ using osu.Framework.Caching;
 using osu.Framework.Threading;
 using osu.Framework.Configuration;
 using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Cursor;
@@ -51,8 +52,8 @@ namespace osu.Game.Screens.Select
         /// </summary>
         public Action<BeatmapInfo> SelectionChanged;
 
-        public override bool HandleNonPositionalInput => AllowSelection;
-        public override bool HandlePositionalInput => AllowSelection;
+        public override bool HandleKeyboardInput => AllowSelection;
+        public override bool HandleMouseInput => AllowSelection;
 
         /// <summary>
         /// Used to avoid firing null selections before the initial beatmaps have been loaded via <see cref="BeatmapSets"/>.
@@ -63,36 +64,32 @@ namespace osu.Game.Screens.Select
 
         public IEnumerable<BeatmapSetInfo> BeatmapSets
         {
-            get => beatmapSets.Select(g => g.BeatmapSet);
-            set => loadBeatmapSets(() => value);
-        }
-
-        public void LoadBeatmapSetsFromManager(BeatmapManager manager) => loadBeatmapSets(manager.GetAllUsableBeatmapSetsEnumerable);
-
-        private void loadBeatmapSets(Func<IEnumerable<BeatmapSetInfo>> beatmapSets)
-        {
-            CarouselRoot newRoot = new CarouselRoot(this);
-
-            Task.Run(() =>
+            get { return beatmapSets.Select(g => g.BeatmapSet); }
+            set
             {
-                beatmapSets().Select(createCarouselSet).Where(g => g != null).ForEach(newRoot.AddChild);
-                newRoot.Filter(activeCriteria);
+                CarouselRoot newRoot = new CarouselRoot(this);
 
-                // preload drawables as the ctor overhead is quite high currently.
-                var _ = newRoot.Drawables;
-            }).ContinueWith(_ => Schedule(() =>
-            {
-                root = newRoot;
-                scrollableContent.Clear(false);
-                itemsCache.Invalidate();
-                scrollPositionCache.Invalidate();
-
-                Schedule(() =>
+                Task.Run(() =>
                 {
-                    BeatmapSetsChanged?.Invoke();
-                    initialLoadComplete = true;
-                });
-            }));
+                    value.Select(createCarouselSet).Where(g => g != null).ForEach(newRoot.AddChild);
+                    newRoot.Filter(activeCriteria);
+
+                    // preload drawables as the ctor overhead is quite high currently.
+                    var _ = newRoot.Drawables;
+                }).ContinueWith(_ => Schedule(() =>
+                {
+                    root = newRoot;
+                    scrollableContent.Clear(false);
+                    itemsCache.Invalidate();
+                    scrollPositionCache.Invalidate();
+
+                    Schedule(() =>
+                    {
+                        BeatmapSetsChanged?.Invoke();
+                        initialLoadComplete = true;
+                    });
+                }));
+            }
         }
 
         private readonly List<float> yPositions = new List<float>();
@@ -100,6 +97,7 @@ namespace osu.Game.Screens.Select
         private Cached scrollPositionCache = new Cached();
 
         private readonly Container<DrawableCarouselItem> scrollableContent;
+
 
         public Bindable<bool> RightClickScrollingEnabled = new Bindable<bool>();
 
@@ -332,13 +330,13 @@ namespace osu.Game.Screens.Select
 
         private FilterCriteria activeCriteria = new FilterCriteria();
 
-        protected ScheduledDelegate PendingFilter;
+        protected ScheduledDelegate FilterTask;
 
         public bool AllowSelection = true;
 
         public void FlushPendingFilterOperations()
         {
-            if (PendingFilter?.Completed == false)
+            if (FilterTask?.Completed == false)
             {
                 applyActiveCriteria(false, false);
                 Update();
@@ -359,18 +357,18 @@ namespace osu.Game.Screens.Select
 
             void perform()
             {
-                PendingFilter = null;
+                FilterTask = null;
 
                 root.Filter(activeCriteria);
                 itemsCache.Invalidate();
                 if (scroll) scrollPositionCache.Invalidate();
             }
 
-            PendingFilter?.Cancel();
-            PendingFilter = null;
+            FilterTask?.Cancel();
+            FilterTask = null;
 
             if (debounce)
-                PendingFilter = Scheduler.AddDelayed(perform, 250);
+                FilterTask = Scheduler.AddDelayed(perform, 250);
             else
                 perform();
         }
@@ -379,12 +377,12 @@ namespace osu.Game.Screens.Select
 
         public void ScrollToSelected() => scrollPositionCache.Invalidate();
 
-        protected override bool OnKeyDown(KeyDownEvent e)
+        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
             int direction = 0;
             bool skipDifficulties = false;
 
-            switch (e.Key)
+            switch (args.Key)
             {
                 case Key.Up:
                     direction = -1;
@@ -403,7 +401,7 @@ namespace osu.Game.Screens.Select
             }
 
             if (direction == 0)
-                return base.OnKeyDown(e);
+                return base.OnKeyDown(state, args);
 
             SelectNext(direction, skipDifficulties);
             return true;
@@ -482,15 +480,6 @@ namespace osu.Game.Screens.Select
             float halfHeight = drawHeight / 2;
             foreach (DrawableCarouselItem p in scrollableContent.Children)
                 updateItem(p, halfHeight);
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
-
-            // aggressively dispose "off-screen" items to reduce GC pressure.
-            foreach (var i in Items)
-                i.Dispose();
         }
 
         private CarouselBeatmapSet createCarouselSet(BeatmapSetInfo beatmapSet)

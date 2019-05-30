@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using Humanizer;
@@ -12,27 +12,14 @@ namespace osu.Game.Graphics
 {
     public class DrawableDate : OsuSpriteText, IHasTooltip
     {
-        private DateTimeOffset date;
-
-        public DateTimeOffset Date
-        {
-            get => date;
-            set
-            {
-                if (date == value)
-                    return;
-                date = value.ToLocalTime();
-
-                if (LoadState >= LoadState.Ready)
-                    updateTime();
-            }
-        }
+        protected readonly DateTimeOffset Date;
 
         public DrawableDate(DateTimeOffset date)
         {
+            AutoSizeAxes = Axes.Both;
             Font = "Exo2.0-RegularItalic";
 
-            Date = date;
+            Date = date.ToLocalTime();
         }
 
         [BackgroundDependencyLoader]
@@ -54,20 +41,22 @@ namespace osu.Game.Graphics
             var diffToNow = DateTimeOffset.Now.Subtract(Date);
 
             double timeUntilNextUpdate = 1000;
-            if (Math.Abs(diffToNow.TotalSeconds) > 120)
+            if (diffToNow.TotalSeconds > 60)
             {
                 timeUntilNextUpdate *= 60;
-                if (Math.Abs(diffToNow.TotalMinutes) > 120)
+                if (diffToNow.TotalMinutes > 60)
                 {
                     timeUntilNextUpdate *= 60;
 
-                    if (Math.Abs(diffToNow.TotalHours) > 48)
+                    if (diffToNow.TotalHours > 24)
                         timeUntilNextUpdate *= 24;
                 }
             }
 
             Scheduler.AddDelayed(updateTimeWithReschedule, timeUntilNextUpdate);
         }
+
+        public override bool HandleMouseInput => true;
 
         protected virtual string Format() => Date.Humanize();
 

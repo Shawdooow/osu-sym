@@ -1,15 +1,15 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Graphics;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Overlays.Profile.Sections
 {
@@ -105,20 +105,20 @@ namespace osu.Game.Overlays.Profile.Sections
             coloredBackground.Colour = underscoreLine.Colour = colour.Gray4;
         }
 
-        protected override bool OnClick(ClickEvent e) => true;
+        protected override bool OnClick(InputState state) => true;
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             background.FadeIn(fade_duration, Easing.OutQuint);
             underscoreLine.FadeOut(fade_duration, Easing.OutQuint);
             return true;
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             background.FadeOut(fade_duration, Easing.OutQuint);
             underscoreLine.FadeIn(fade_duration, Easing.OutQuint);
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
         }
     }
 }

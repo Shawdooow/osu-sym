@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,15 @@ namespace osu.Game.Beatmaps
                     Title = "no beatmaps available!"
                 },
                 BeatmapSet = new BeatmapSetInfo(),
-                BaseDifficulty = new BeatmapDifficulty(),
+                BaseDifficulty = new BeatmapDifficulty
+                {
+                    DrainRate = 0,
+                    CircleSize = 0,
+                    OverallDifficulty = 0,
+                    ApproachRate = 0,
+                    SliderMultiplier = 0,
+                    SliderTickRate = 0,
+                },
                 Ruleset = new DummyRulesetInfo()
             })
         {

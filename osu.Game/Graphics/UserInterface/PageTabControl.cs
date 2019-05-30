@@ -1,16 +1,16 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Graphics.Sprites;
 
 namespace osu.Game.Graphics.UserInterface
@@ -46,6 +46,7 @@ namespace osu.Game.Graphics.UserInterface
                         Anchor = Anchor.BottomLeft,
                         Text = (value as Enum)?.GetDescription() ?? value.ToString(),
                         TextSize = 14,
+                        Font = @"Exo2.0-Bold",
                     },
                     box = new Box
                     {
@@ -58,8 +59,6 @@ namespace osu.Game.Graphics.UserInterface
                     },
                     new HoverClickSounds()
                 };
-
-                Active.BindValueChanged(val => Text.Font = val ? @"Exo2.0-Bold" : @"Exo2.0", true);
             }
 
             [BackgroundDependencyLoader]
@@ -68,14 +67,14 @@ namespace osu.Game.Graphics.UserInterface
                 box.Colour = colours.Yellow;
             }
 
-            protected override bool OnHover(HoverEvent e)
+            protected override bool OnHover(InputState state)
             {
                 if (!Active)
                     slideActive();
                 return true;
             }
 
-            protected override void OnHoverLost(HoverLostEvent e)
+            protected override void OnHoverLost(InputState state)
             {
                 if (!Active)
                     slideInactive();

@@ -1,9 +1,9 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using osu.Framework;
-using osuTK;
+using OpenTK;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -118,9 +118,9 @@ namespace osu.Game.Overlays.MedalSplash
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, TextureStore textures, LargeTextureStore largeTextures)
+        private void load(OsuColour colours, TextureStore textures)
         {
-            medalSprite.Texture = largeTextures.Get(medal.ImageUrl);
+            medalSprite.Texture = textures.Get(medal.ImageUrl);
             medalGlow.Texture = textures.Get(@"MedalSplash/medal-glow");
             description.Colour = colours.BlueLight;
         }

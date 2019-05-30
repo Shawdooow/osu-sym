@@ -1,19 +1,10 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
-using osu.Game.Configuration;
-using osu.Game.Graphics.Containers;
-using osu.Game.Graphics.UserInterface;
-using osuTK.Graphics;
 
 namespace osu.Game.Overlays.Settings.Sections.Graphics
 {
@@ -21,61 +12,30 @@ namespace osu.Game.Overlays.Settings.Sections.Graphics
     {
         protected override string Header => "Layout";
 
-        private FillFlowContainer<SettingsSlider<float>> scalingSettings;
+        private FillFlowContainer letterboxSettings;
 
-        private Bindable<ScalingMode> scalingMode;
-        private Bindable<Size> sizeFullscreen;
-
-        private OsuGameBase game;
-        private SettingsDropdown<Size> resolutionDropdown;
-        private SettingsEnumDropdown<WindowMode> windowModeDropdown;
-
-        private Bindable<float> scalingPositionX;
-        private Bindable<float> scalingPositionY;
-        private Bindable<float> scalingSizeX;
-        private Bindable<float> scalingSizeY;
+        private Bindable<bool> letterboxing;
 
         private const int transition_duration = 400;
 
         [BackgroundDependencyLoader]
-        private void load(FrameworkConfigManager config, OsuConfigManager osuConfig, OsuGameBase game)
+        private void load(FrameworkConfigManager config)
         {
-            this.game = game;
-
-            scalingMode = osuConfig.GetBindable<ScalingMode>(OsuSetting.Scaling);
-            sizeFullscreen = config.GetBindable<Size>(FrameworkSetting.SizeFullscreen);
-            scalingSizeX = osuConfig.GetBindable<float>(OsuSetting.ScalingSizeX);
-            scalingSizeY = osuConfig.GetBindable<float>(OsuSetting.ScalingSizeY);
-            scalingPositionX = osuConfig.GetBindable<float>(OsuSetting.ScalingPositionX);
-            scalingPositionY = osuConfig.GetBindable<float>(OsuSetting.ScalingPositionY);
-
-            Container resolutionSettingsContainer;
+            letterboxing = config.GetBindable<bool>(FrameworkSetting.Letterboxing);
 
             Children = new Drawable[]
             {
-                windowModeDropdown = new SettingsEnumDropdown<WindowMode>
+                new SettingsEnumDropdown<WindowMode>
                 {
                     LabelText = "Screen mode",
                     Bindable = config.GetBindable<WindowMode>(FrameworkSetting.WindowMode),
                 },
-                resolutionSettingsContainer = new Container
+                new SettingsCheckbox
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y
+                    LabelText = "Letterboxing",
+                    Bindable = letterboxing,
                 },
-                new SettingsSlider<float, UIScaleSlider>
-                {
-                    LabelText = "UI Scaling",
-                    TransferValueOnCommit = true,
-                    Bindable = osuConfig.GetBindable<float>(OsuSetting.UIScale),
-                    KeyboardStep = 0.01f
-                },
-                new SettingsEnumDropdown<ScalingMode>
-                {
-                    LabelText = "Screen Scaling",
-                    Bindable = osuConfig.GetBindable<ScalingMode>(OsuSetting.Scaling),
-                },
-                scalingSettings = new FillFlowContainer<SettingsSlider<float>>
+                letterboxSettings = new FillFlowContainer
                 {
                     Direction = FillDirection.Vertical,
                     RelativeSizeAxes = Axes.X,
@@ -83,150 +43,34 @@ namespace osu.Game.Overlays.Settings.Sections.Graphics
                     AutoSizeDuration = transition_duration,
                     AutoSizeEasing = Easing.OutQuint,
                     Masking = true,
-                    Children = new []
+
+                    Children = new Drawable[]
                     {
-                        new SettingsSlider<float>
+                        new SettingsSlider<double>
                         {
                             LabelText = "Horizontal position",
-                            Bindable = scalingPositionX,
+                            Bindable = config.GetBindable<double>(FrameworkSetting.LetterboxPositionX),
                             KeyboardStep = 0.01f
                         },
-                        new SettingsSlider<float>
+                        new SettingsSlider<double>
                         {
                             LabelText = "Vertical position",
-                            Bindable = scalingPositionY,
-                            KeyboardStep = 0.01f
-                        },
-                        new SettingsSlider<float>
-                        {
-                            LabelText = "Horizontal scale",
-                            Bindable = scalingSizeX,
-                            KeyboardStep = 0.01f
-                        },
-                        new SettingsSlider<float>
-                        {
-                            LabelText = "Vertical scale",
-                            Bindable = scalingSizeY,
+                            Bindable = config.GetBindable<double>(FrameworkSetting.LetterboxPositionY),
                             KeyboardStep = 0.01f
                         },
                     }
                 },
             };
 
-            scalingSettings.ForEach(s => bindPreviewEvent(s.Bindable));
-
-            var resolutions = getResolutions();
-
-            if (resolutions.Count > 1)
+            letterboxing.ValueChanged += isVisible =>
             {
-                resolutionSettingsContainer.Child = resolutionDropdown = new ResolutionSettingsDropdown
-                {
-                    LabelText = "Resolution",
-                    ShowsDefaultIndicator = false,
-                    Items = resolutions,
-                    Bindable = sizeFullscreen
-                };
+                letterboxSettings.ClearTransforms();
+                letterboxSettings.AutoSizeAxes = isVisible ? Axes.Y : Axes.None;
 
-                windowModeDropdown.Bindable.BindValueChanged(windowMode =>
-                {
-                    if (windowMode == WindowMode.Fullscreen)
-                    {
-                        resolutionDropdown.Show();
-                        sizeFullscreen.TriggerChange();
-                    }
-                    else
-                        resolutionDropdown.Hide();
-                }, true);
-            }
-
-            scalingMode.BindValueChanged(mode =>
-            {
-                scalingSettings.ClearTransforms();
-                scalingSettings.AutoSizeAxes = mode != ScalingMode.Off ? Axes.Y : Axes.None;
-
-                if (mode == ScalingMode.Off)
-                    scalingSettings.ResizeHeightTo(0, transition_duration, Easing.OutQuint);
-
-                scalingSettings.ForEach(s => s.TransferValueOnCommit = mode == ScalingMode.Everything);
-            }, true);
-        }
-
-        /// <summary>
-        /// Create a delayed bindable which only updates when a condition is met.
-        /// </summary>
-        /// <param name="bindable">The config bindable.</param>
-        /// <returns>A bindable which will propagate updates with a delay.</returns>
-        private void bindPreviewEvent(Bindable<float> bindable)
-        {
-            bindable.ValueChanged += v =>
-            {
-                switch (scalingMode.Value)
-                {
-                    case ScalingMode.Gameplay:
-                        showPreview();
-                        break;
-                }
+                if (!isVisible)
+                    letterboxSettings.ResizeHeightTo(0, transition_duration, Easing.OutQuint);
             };
-        }
-
-        private Drawable preview;
-        private void showPreview()
-        {
-            if (preview?.IsAlive != true)
-                game.Add(preview = new ScalingPreview());
-
-            preview.FadeOutFromOne(1500);
-            preview.Expire();
-        }
-
-        private IReadOnlyList<Size> getResolutions()
-        {
-            var resolutions = new List<Size> { new Size(9999, 9999) };
-
-            if (game.Window != null)
-            {
-                resolutions.AddRange(game.Window.AvailableResolutions
-                                         .Where(r => r.Width >= 800 && r.Height >= 600)
-                                         .OrderByDescending(r => r.Width)
-                                         .ThenByDescending(r => r.Height)
-                                         .Select(res => new Size(res.Width, res.Height))
-                                         .Distinct());
-            }
-
-            return resolutions;
-        }
-
-        private class ScalingPreview : ScalingContainer
-        {
-            public ScalingPreview()
-            {
-                Child = new Box
-                {
-                    Colour = Color4.White,
-                    RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.5f,
-                };
-            }
-        }
-
-        private class UIScaleSlider : OsuSliderBar<float>
-        {
-            public override string TooltipText => base.TooltipText + "x";
-        }
-
-        private class ResolutionSettingsDropdown : SettingsDropdown<Size>
-        {
-            protected override OsuDropdown<Size> CreateDropdown() => new ResolutionDropdownControl { Items = Items };
-
-            private class ResolutionDropdownControl : DropdownControl
-            {
-                protected override string GenerateItemText(Size item)
-                {
-                    if (item == new Size(9999, 9999))
-                        return "Default";
-                    return $"{item.Width}x{item.Height}";
-                }
-            }
+            letterboxing.TriggerChange();
         }
     }
 }

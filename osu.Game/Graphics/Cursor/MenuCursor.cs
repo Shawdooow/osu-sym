@@ -1,7 +1,7 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
+using OpenTK;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
 using osu.Framework.Graphics;
@@ -12,8 +12,9 @@ using osu.Game.Configuration;
 using System;
 using JetBrains.Annotations;
 using osu.Framework.Graphics.Textures;
-using osu.Framework.Input.Events;
-using osuTK.Input;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
+using OpenTK.Input;
 
 namespace osu.Game.Graphics.Cursor
 {
@@ -39,11 +40,11 @@ namespace osu.Game.Graphics.Cursor
                 screenshotCursorVisibility.BindTo(screenshotManager.CursorVisibility);
         }
 
-        protected override bool OnMouseMove(MouseMoveEvent e)
+        protected override bool OnMouseMove(InputState state)
         {
             if (dragRotationState != DragRotationState.NotDragging)
             {
-                var position = e.MousePosition;
+                var position = state.Mouse.Position;
                 var distance = Vector2Extensions.Distance(position, positionMouseDown);
                 // don't start rotating until we're moved a minimum distance away from the mouse down location,
                 // else it can have an annoying effect.
@@ -52,7 +53,7 @@ namespace osu.Game.Graphics.Cursor
                 // don't rotate when distance is zero to avoid NaN
                 if (dragRotationState == DragRotationState.Rotating && distance > 0)
                 {
-                    Vector2 offset = e.MousePosition - positionMouseDown;
+                    Vector2 offset = state.Mouse.Position - positionMouseDown;
                     float degrees = (float)MathHelper.RadiansToDegrees(Math.Atan2(-offset.X, offset.Y)) + 24.3f;
 
                     // Always rotate in the direction of least distance
@@ -65,13 +66,13 @@ namespace osu.Game.Graphics.Cursor
                 }
             }
 
-            return base.OnMouseMove(e);
+            return base.OnMouseMove(state);
         }
 
-        protected override bool OnMouseDown(MouseDownEvent e)
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
         {
             // only trigger animation for main mouse buttons
-            if (e.Button <= MouseButton.Right)
+            if (args.Button <= MouseButton.Right)
             {
                 activeCursor.Scale = new Vector2(1);
                 activeCursor.ScaleTo(0.90f, 800, Easing.OutQuint);
@@ -80,29 +81,29 @@ namespace osu.Game.Graphics.Cursor
                 activeCursor.AdditiveLayer.FadeInFromZero(800, Easing.OutQuint);
             }
 
-            if (e.Button == MouseButton.Left && cursorRotate)
+            if (args.Button == MouseButton.Left && cursorRotate)
             {
                 dragRotationState = DragRotationState.DragStarted;
-                positionMouseDown = e.MousePosition;
+                positionMouseDown = state.Mouse.Position;
             }
-            return base.OnMouseDown(e);
+            return base.OnMouseDown(state, args);
         }
 
-        protected override bool OnMouseUp(MouseUpEvent e)
+        protected override bool OnMouseUp(InputState state, MouseUpEventArgs args)
         {
-            if (!e.IsPressed(MouseButton.Left) && !e.IsPressed(MouseButton.Right))
+            if (!state.Mouse.HasMainButtonPressed)
             {
                 activeCursor.AdditiveLayer.FadeOutFromOne(500, Easing.OutQuint);
                 activeCursor.ScaleTo(1, 500, Easing.OutElastic);
             }
 
-            if (e.Button == MouseButton.Left)
+            if (args.Button == MouseButton.Left)
             {
                 if (dragRotationState == DragRotationState.Rotating)
                     activeCursor.RotateTo(0, 600 * (1 + Math.Abs(activeCursor.Rotation / 720)), Easing.OutElasticHalf);
                 dragRotationState = DragRotationState.NotDragging;
             }
-            return base.OnMouseUp(e);
+            return base.OnMouseUp(state, args);
         }
 
         protected override void PopIn()

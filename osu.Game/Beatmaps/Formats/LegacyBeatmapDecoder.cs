@@ -1,11 +1,10 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using osu.Framework.IO.File;
 using osu.Game.Beatmaps.Timing;
 using osu.Game.Rulesets.Objects.Legacy;
 using osu.Game.Beatmaps.ControlPoints;
@@ -59,7 +58,7 @@ namespace osu.Game.Beatmaps.Formats
                 hitObject.ApplyDefaults(this.beatmap.ControlPointInfo, this.beatmap.BeatmapInfo.BaseDifficulty);
         }
 
-        protected override bool ShouldSkipLine(string line) => base.ShouldSkipLine(line) || line.StartsWith(" ", StringComparison.Ordinal) || line.StartsWith("_", StringComparison.Ordinal);
+        protected override bool ShouldSkipLine(string line) => base.ShouldSkipLine(line) || line.StartsWith(" ") || line.StartsWith("_");
 
         protected override void ParseLine(Beatmap beatmap, Section section, string line)
         {
@@ -101,7 +100,7 @@ namespace osu.Game.Beatmaps.Formats
             switch (pair.Key)
             {
                 case @"AudioFilename":
-                    metadata.AudioFile = FileSafety.PathStandardise(pair.Value);
+                    metadata.AudioFile = pair.Value;
                     break;
                 case @"AudioLeadIn":
                     beatmap.BeatmapInfo.AudioLeadIn = int.Parse(pair.Value);
@@ -127,16 +126,16 @@ namespace osu.Game.Beatmaps.Formats
                     switch (beatmap.BeatmapInfo.RulesetID)
                     {
                         case 0:
-                            parser = new Rulesets.Objects.Legacy.Osu.ConvertHitObjectParser(getOffsetTime(), FormatVersion);
+                            parser = new Rulesets.Objects.Legacy.Osu.ConvertHitObjectParser();
                             break;
                         case 1:
-                            parser = new Rulesets.Objects.Legacy.Taiko.ConvertHitObjectParser(getOffsetTime(), FormatVersion);
+                            parser = new Rulesets.Objects.Legacy.Taiko.ConvertHitObjectParser();
                             break;
                         case 2:
-                            parser = new Rulesets.Objects.Legacy.Catch.ConvertHitObjectParser(getOffsetTime(), FormatVersion);
+                            parser = new Rulesets.Objects.Legacy.Catch.ConvertHitObjectParser();
                             break;
                         case 3:
-                            parser = new Rulesets.Objects.Legacy.Mania.ConvertHitObjectParser(getOffsetTime(), FormatVersion);
+                            parser = new Rulesets.Objects.Legacy.Mania.ConvertHitObjectParser();
                             break;
                     }
 
@@ -257,7 +256,7 @@ namespace osu.Game.Beatmaps.Formats
             {
                 case EventType.Background:
                     string filename = split[2].Trim('"');
-                    beatmap.BeatmapInfo.Metadata.BackgroundFile = FileSafety.PathStandardise(filename);
+                    beatmap.BeatmapInfo.Metadata.BackgroundFile = filename;
                     break;
                 case EventType.Break:
                     var breakEvent = new BreakPeriod
@@ -319,12 +318,12 @@ namespace osu.Game.Beatmaps.Formats
 
                 if (timingChange)
                 {
-                    var controlPoint = CreateTimingControlPoint();
-                    controlPoint.Time = time;
-                    controlPoint.BeatLength = beatLength;
-                    controlPoint.TimeSignature = timeSignature;
-
-                    handleTimingControlPoint(controlPoint);
+                    handleTimingControlPoint(new TimingControlPoint
+                    {
+                        Time = time,
+                        BeatLength = beatLength,
+                        TimeSignature = timeSignature
+                    });
                 }
 
                 handleDifficultyControlPoint(new DifficultyControlPoint
@@ -340,12 +339,12 @@ namespace osu.Game.Beatmaps.Formats
                     OmitFirstBarLine = omitFirstBarSignature
                 });
 
-                handleSampleControlPoint(new LegacySampleControlPoint
+                handleSampleControlPoint(new SampleControlPoint
                 {
                     Time = time,
                     SampleBank = stringSampleSet,
                     SampleVolume = sampleVolume,
-                    CustomSampleBank = customSampleBank
+                    SampleSuffix = customSampleBank
                 });
             }
             catch (FormatException e)
@@ -355,11 +354,6 @@ namespace osu.Game.Beatmaps.Formats
 
         private void handleTimingControlPoint(TimingControlPoint newPoint)
         {
-            var existing = beatmap.ControlPointInfo.TimingPointAt(newPoint.Time);
-
-            if (existing.Time == newPoint.Time)
-                beatmap.ControlPointInfo.TimingPoints.Remove(existing);
-
             beatmap.ControlPointInfo.TimingPoints.Add(newPoint);
         }
 
@@ -370,9 +364,7 @@ namespace osu.Game.Beatmaps.Formats
             if (newPoint.EquivalentTo(existing))
                 return;
 
-            if (existing.Time == newPoint.Time)
-                beatmap.ControlPointInfo.DifficultyPoints.Remove(existing);
-
+            beatmap.ControlPointInfo.DifficultyPoints.RemoveAll(x => x.Time == newPoint.Time);
             beatmap.ControlPointInfo.DifficultyPoints.Add(newPoint);
         }
 
@@ -382,9 +374,6 @@ namespace osu.Game.Beatmaps.Formats
 
             if (newPoint.EquivalentTo(existing))
                 return;
-
-            if (existing.Time == newPoint.Time)
-                beatmap.ControlPointInfo.EffectPoints.Remove(existing);
 
             beatmap.ControlPointInfo.EffectPoints.Add(newPoint);
         }
@@ -396,9 +385,6 @@ namespace osu.Game.Beatmaps.Formats
             if (newPoint.EquivalentTo(existing))
                 return;
 
-            if (existing.Time == newPoint.Time)
-                beatmap.ControlPointInfo.SamplePoints.Remove(existing);
-
             beatmap.ControlPointInfo.SamplePoints.Add(newPoint);
         }
 
@@ -406,11 +392,14 @@ namespace osu.Game.Beatmaps.Formats
         {
             // If the ruleset wasn't specified, assume the osu!standard ruleset.
             if (parser == null)
-                parser = new Rulesets.Objects.Legacy.Osu.ConvertHitObjectParser(getOffsetTime(), FormatVersion);
+                parser = new Rulesets.Objects.Legacy.Osu.ConvertHitObjectParser();
 
-            var obj = parser.Parse(line);
+            var obj = parser.Parse(line, getOffsetTime());
+
             if (obj != null)
+            {
                 beatmap.HitObjects.Add(obj);
+            }
         }
 
         private int getOffsetTime(int time) => time + (ApplyOffsets ? offset : 0);
@@ -418,8 +407,6 @@ namespace osu.Game.Beatmaps.Formats
         private double getOffsetTime() => ApplyOffsets ? offset : 0;
 
         private double getOffsetTime(double time) => time + (ApplyOffsets ? offset : 0);
-
-        protected virtual TimingControlPoint CreateTimingControlPoint() => new TimingControlPoint();
 
         [Flags]
         internal enum EffectFlags

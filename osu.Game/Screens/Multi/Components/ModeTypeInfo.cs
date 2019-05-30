@@ -1,65 +1,83 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Drawables;
 using osu.Game.Online.Multiplayer;
-using osuTK;
+using OpenTK;
 
 namespace osu.Game.Screens.Multi.Components
 {
-    public class ModeTypeInfo : MultiplayerComposite
+    public class ModeTypeInfo : Container
     {
         private const float height = 30;
         private const float transition_duration = 100;
 
-        private Container rulesetContainer;
+        private readonly Container rulesetContainer, gameTypeContainer;
+
+        public BeatmapInfo Beatmap
+        {
+            set
+            {
+                if (value != null)
+                {
+                    rulesetContainer.FadeIn(transition_duration);
+                    rulesetContainer.Children = new[]
+                    {
+                        new DifficultyIcon(value)
+                        {
+                            Size = new Vector2(height),
+                        },
+                    };
+                }
+                else
+                {
+                    rulesetContainer.FadeOut(transition_duration);
+                }
+            }
+        }
+
+        public GameType Type
+        {
+            set
+            {
+                gameTypeContainer.Children = new[]
+                {
+                    new DrawableGameType(value)
+                    {
+                        Size = new Vector2(height),
+                    },
+                };
+            }
+        }
 
         public ModeTypeInfo()
         {
             AutoSizeAxes = Axes.Both;
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            Container gameTypeContainer;
-
-            InternalChild = new FillFlowContainer
+            Children = new[]
             {
-                AutoSizeAxes = Axes.Both,
-                Direction = FillDirection.Horizontal,
-                Spacing = new Vector2(5f, 0f),
-                LayoutDuration = 100,
-                Children = new[]
+                new FillFlowContainer
                 {
-                    rulesetContainer = new Container
+                    AutoSizeAxes = Axes.Both,
+                    Direction = FillDirection.Horizontal,
+                    Spacing = new Vector2(5f, 0f),
+                    LayoutDuration = 100,
+                    Children = new[]
                     {
-                        AutoSizeAxes = Axes.Both,
-                    },
-                    gameTypeContainer = new Container
-                    {
-                        AutoSizeAxes = Axes.Both,
+                        rulesetContainer = new Container
+                        {
+                            AutoSizeAxes = Axes.Both,
+                        },
+                        gameTypeContainer = new Container
+                        {
+                            AutoSizeAxes = Axes.Both,
+                        },
                     },
                 },
             };
-
-            CurrentItem.BindValueChanged(updateBeatmap, true);
-
-            Type.BindValueChanged(v => gameTypeContainer.Child = new DrawableGameType(v) { Size = new Vector2(height) }, true);
-        }
-
-        private void updateBeatmap(PlaylistItem item)
-        {
-            if (item?.Beatmap != null)
-            {
-                rulesetContainer.FadeIn(transition_duration);
-                rulesetContainer.Child = new DifficultyIcon(item.Beatmap, item.Ruleset) { Size = new Vector2(height) };
-            }
-            else
-                rulesetContainer.FadeOut(transition_duration);
         }
     }
 }

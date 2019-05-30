@@ -1,10 +1,8 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
-using osu.Game.Rulesets.Judgements;
-using osu.Game.Rulesets.Osu.Judgements;
 
 namespace osu.Game.Rulesets.Osu.Objects
 {
@@ -28,7 +26,5 @@ namespace osu.Game.Rulesets.Osu.Objects
 
             TimePreempt = (StartTime - SpanStartTime) / 2 + offset;
         }
-
-        public override Judgement CreateJudgement() => new OsuJudgement();
     }
 }

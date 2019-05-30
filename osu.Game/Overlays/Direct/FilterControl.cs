@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
@@ -10,8 +10,8 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Online.API.Requests;
 using osu.Game.Overlays.SearchableList;
 using osu.Game.Rulesets;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Overlays.Direct
 {
@@ -73,8 +73,8 @@ namespace osu.Game.Overlays.Direct
                 iconContainer.FadeTo(Ruleset.ID == obj?.ID ? 1f : 0.5f, 100);
             }
 
-            public override bool HandleNonPositionalInput => !bindable.Disabled && base.HandleNonPositionalInput;
-            public override bool HandlePositionalInput => !bindable.Disabled && base.HandlePositionalInput;
+            public override bool HandleKeyboardInput => !bindable.Disabled && base.HandleKeyboardInput;
+            public override bool HandleMouseInput => !bindable.Disabled && base.HandleMouseInput;
 
             public RulesetToggleButton(Bindable<RulesetInfo> bindable, RulesetInfo ruleset)
             {

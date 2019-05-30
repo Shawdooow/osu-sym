@@ -1,7 +1,8 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +19,6 @@ using osu.Game.Configuration;
 using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Overlays.Notifications;
-using SixLabors.ImageSharp;
 
 namespace osu.Game.Graphics
 {
@@ -71,7 +71,7 @@ namespace osu.Game.Graphics
 
         private volatile int screenShotTasks;
 
-        public Task TakeScreenshotAsync() => Task.Run(async () =>
+        public async Task TakeScreenshotAsync() => await Task.Run(async () =>
         {
             Interlocked.Increment(ref screenShotTasks);
 
@@ -90,7 +90,7 @@ namespace osu.Game.Graphics
                 waitDelegate.Cancel();
             }
 
-            using (var image = await host.TakeScreenshotAsync())
+            using (var bitmap = await host.TakeScreenshotAsync())
             {
                 Interlocked.Decrement(ref screenShotTasks);
 
@@ -102,10 +102,10 @@ namespace osu.Game.Graphics
                 switch (screenshotFormat.Value)
                 {
                     case ScreenshotFormat.Png:
-                        image.SaveAsPng(stream);
+                        bitmap.Save(stream, ImageFormat.Png);
                         break;
                     case ScreenshotFormat.Jpg:
-                        image.SaveAsJpeg(stream);
+                        bitmap.Save(stream, ImageFormat.Jpeg);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(screenshotFormat));

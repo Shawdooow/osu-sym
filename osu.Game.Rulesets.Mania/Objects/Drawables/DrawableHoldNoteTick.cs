@@ -1,12 +1,13 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Mania.Judgements;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Scoring;
 
@@ -71,17 +72,29 @@ namespace osu.Game.Rulesets.Mania.Objects.Drawables
             }
         }
 
-        protected override void CheckForResult(bool userTriggered, double timeOffset)
+        protected override void CheckForJudgements(bool userTriggered, double timeOffset)
         {
+            if (!userTriggered)
+                return;
+
             if (Time.Current < HitObject.StartTime)
                 return;
 
-            var startTime = HoldStartTime?.Invoke();
+            if (HoldStartTime?.Invoke() > HitObject.StartTime)
+                return;
 
-            if (startTime == null || startTime > HitObject.StartTime)
-                ApplyResult(r => r.Type = HitResult.Miss);
-            else
-                ApplyResult(r => r.Type = HitResult.Perfect);
+            AddJudgement(new HoldNoteTickJudgement { Result = HitResult.Perfect });
+        }
+
+        protected override void Update()
+        {
+            if (AllJudged)
+                return;
+
+            if (HoldStartTime?.Invoke() == null)
+                return;
+
+            UpdateJudgement(true);
         }
     }
 }

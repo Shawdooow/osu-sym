@@ -1,65 +1,17 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Configuration;
 using osu.Framework.Lists;
-using osu.Game.Users;
 
 namespace osu.Game.Online.Chat
 {
     public class Channel
     {
-        public readonly int MaxHistory = 300;
-
-        /// <summary>
-        /// Contains every joined user except the current logged in user. Currently only returned for PM channels.
-        /// </summary>
-        public readonly ObservableCollection<User> Users = new ObservableCollection<User>();
-
-        [JsonProperty(@"users")]
-        private long[] userIds
-        {
-            set
-            {
-                foreach (var id in value)
-                    Users.Add(new User { Id = id });
-            }
-        }
-
-        /// <summary>
-        /// Contains all the messages send in the channel.
-        /// </summary>
-        public readonly SortedList<Message> Messages = new SortedList<Message>(Comparer<Message>.Default);
-
-        /// <summary>
-        /// Contains all the messages that are still pending for submission to the server.
-        /// </summary>
-        private readonly List<LocalEchoMessage> pendingMessages = new List<LocalEchoMessage>();
-
-        /// <summary>
-        /// An event that fires when new messages arrived.
-        /// </summary>
-        public event Action<IEnumerable<Message>> NewMessagesArrived;
-
-        /// <summary>
-        /// An event that fires when a pending message gets resolved.
-        /// </summary>
-        public event Action<LocalEchoMessage, Message> PendingMessageResolved;
-
-        /// <summary>
-        /// An event that fires when a pending message gets removed.
-        /// </summary>
-        public event Action<Message> MessageRemoved;
-
-        public bool ReadOnly => false; //todo not yet used.
-
-        public override string ToString() => Name;
-
         [JsonProperty(@"name")]
         public string Name;
 
@@ -67,18 +19,18 @@ namespace osu.Game.Online.Chat
         public string Topic;
 
         [JsonProperty(@"type")]
-        public ChannelType Type;
+        public string Type;
 
         [JsonProperty(@"channel_id")]
-        public long Id;
+        public int Id;
 
-        [JsonProperty(@"last_message_id")]
-        public long? LastMessageId;
+        public readonly SortedList<Message> Messages = new SortedList<Message>(Comparer<Message>.Default);
 
-        /// <summary>
-        /// Signalles if the current user joined this channel or not. Defaults to false.
-        /// </summary>
+        private readonly List<LocalEchoMessage> pendingMessages = new List<LocalEchoMessage>();
+
         public Bindable<bool> Joined = new Bindable<bool>();
+
+        public bool ReadOnly => false;
 
         public const int MAX_HISTORY = 300;
 
@@ -87,21 +39,10 @@ namespace osu.Game.Online.Chat
         {
         }
 
-        /// <summary>
-        /// Create a private messaging channel with the specified user.
-        /// </summary>
-        /// <param name="user">The user to create the private conversation with.</param>
-        public Channel(User user)
-        {
-            Type = ChannelType.PM;
-            Users.Add(user);
-            Name = user.Username;
-        }
+        public event Action<IEnumerable<Message>> NewMessagesArrived;
+        public event Action<LocalEchoMessage, Message> PendingMessageResolved;
+        public event Action<Message> MessageRemoved;
 
-        /// <summary>
-        /// Adds the argument message as a local echo. When this local echo is resolved <see cref="PendingMessageResolved"/> will get called.
-        /// </summary>
-        /// <param name="message"></param>
         public void AddLocalEcho(LocalEchoMessage message)
         {
             pendingMessages.Add(message);
@@ -110,27 +51,23 @@ namespace osu.Game.Online.Chat
             NewMessagesArrived?.Invoke(new[] { message });
         }
 
-        public bool MessagesLoaded;
-
-        /// <summary>
-        /// Adds new messages to the channel and purges old messages. Triggers the <see cref="NewMessagesArrived"/> event.
-        /// </summary>
-        /// <param name="messages"></param>
         public void AddNewMessages(params Message[] messages)
         {
             messages = messages.Except(Messages).ToArray();
 
-            if (messages.Length == 0) return;
-
             Messages.AddRange(messages);
-
-            var maxMessageId = messages.Max(m => m.Id);
-            if (maxMessageId > LastMessageId)
-                LastMessageId = maxMessageId;
 
             purgeOldMessages();
 
             NewMessagesArrived?.Invoke(messages);
+        }
+
+        private void purgeOldMessages()
+        {
+            // never purge local echos
+            int messageCount = Messages.Count - pendingMessages.Count;
+            if (messageCount > MAX_HISTORY)
+                Messages.RemoveRange(0, messageCount - MAX_HISTORY);
         }
 
         /// <summary>
@@ -152,18 +89,17 @@ namespace osu.Game.Online.Chat
             }
 
             if (Messages.Contains(final))
-                throw new InvalidOperationException("Attempted to add the same message again");
+            {
+                // message already inserted, so let's throw away this update.
+                // we may want to handle this better in the future, but for the time being api requests are single-threaded so order is assumed.
+                MessageRemoved?.Invoke(echo);
+                return;
+            }
 
             Messages.Add(final);
             PendingMessageResolved?.Invoke(echo, final);
         }
 
-        private void purgeOldMessages()
-        {
-            // never purge local echos
-            int messageCount = Messages.Count - pendingMessages.Count;
-            if (messageCount > MaxHistory)
-                Messages.RemoveRange(0, messageCount - MaxHistory);
-        }
+        public override string ToString() => Name;
     }
 }

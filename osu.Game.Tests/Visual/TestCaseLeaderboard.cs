@@ -1,19 +1,18 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Scoring;
 using osu.Game.Screens.Select.Leaderboards;
 using osu.Game.Users;
 using osu.Framework.Allocation;
-using osuTK;
+using OpenTK;
 using System.Linq;
 using osu.Game.Beatmaps;
-using osu.Game.Online.Leaderboards;
 using osu.Game.Rulesets;
-using osu.Game.Scoring;
 
 namespace osu.Game.Tests.Visual
 {
@@ -37,7 +36,7 @@ namespace osu.Game.Tests.Visual
                 Origin = Anchor.Centre,
                 Anchor = Anchor.Centre,
                 Size = new Vector2(550f, 450f),
-                Scope = BeatmapLeaderboardScope.Global,
+                Scope = LeaderboardScope.Global,
             });
 
             AddStep(@"New Scores", newScores);
@@ -59,7 +58,7 @@ namespace osu.Game.Tests.Visual
         {
             var scores = new[]
             {
-                new ScoreInfo
+                new Score
                 {
                     Rank = ScoreRank.XH,
                     Accuracy = 1,
@@ -77,7 +76,7 @@ namespace osu.Game.Tests.Visual
                         },
                     },
                 },
-                new ScoreInfo
+                new Score
                 {
                     Rank = ScoreRank.X,
                     Accuracy = 1,
@@ -95,7 +94,7 @@ namespace osu.Game.Tests.Visual
                         },
                     },
                 },
-                new ScoreInfo
+                new Score
                 {
                     Rank = ScoreRank.SH,
                     Accuracy = 1,
@@ -113,7 +112,7 @@ namespace osu.Game.Tests.Visual
                         },
                     },
                 },
-                new ScoreInfo
+                new Score
                 {
                     Rank = ScoreRank.S,
                     Accuracy = 1,
@@ -131,7 +130,7 @@ namespace osu.Game.Tests.Visual
                         },
                     },
                 },
-                new ScoreInfo
+                new Score
                 {
                     Rank = ScoreRank.A,
                     Accuracy = 1,
@@ -149,7 +148,7 @@ namespace osu.Game.Tests.Visual
                         },
                     },
                 },
-                new ScoreInfo
+                new Score
                 {
                     Rank = ScoreRank.B,
                     Accuracy = 0.9826,
@@ -167,7 +166,7 @@ namespace osu.Game.Tests.Visual
                         },
                     },
                 },
-                new ScoreInfo
+                new Score
                 {
                     Rank = ScoreRank.C,
                     Accuracy = 0.9654,
@@ -185,7 +184,7 @@ namespace osu.Game.Tests.Visual
                         },
                     },
                 },
-                new ScoreInfo
+                new Score
                 {
                     Rank = ScoreRank.F,
                     Accuracy = 0.6025,
@@ -203,7 +202,7 @@ namespace osu.Game.Tests.Visual
                         },
                     },
                 },
-                new ScoreInfo
+                new Score
                 {
                     Rank = ScoreRank.F,
                     Accuracy = 0.5140,
@@ -221,7 +220,7 @@ namespace osu.Game.Tests.Visual
                         },
                     },
                 },
-                new ScoreInfo
+                new Score
                 {
                     Rank = ScoreRank.F,
                     Accuracy = 0.4222,
@@ -276,7 +275,7 @@ namespace osu.Game.Tests.Visual
             };
         }
 
-        private class FailableLeaderboard : BeatmapLeaderboard
+        private class FailableLeaderboard : Leaderboard
         {
             public void SetRetrievalState(PlaceholderState state)
             {

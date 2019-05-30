@@ -1,10 +1,10 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
-using osuTK;
+using OpenTK;
 
 namespace osu.Game.Screens.Play.Break
 {
@@ -31,30 +31,23 @@ namespace osu.Game.Screens.Play.Break
             RelativeSizeAxes = Axes.Both;
             InternalChildren = new Drawable[]
             {
-                new ParallaxContainer
+                leftGlowIcon = new GlowIcon
                 {
-                    ParallaxAmount = -0.01f,
-                    Children = new Drawable[]
-                    {
-                        leftGlowIcon = new GlowIcon
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.CentreRight,
-                            X = -glow_icon_offscreen_offset,
-                            Icon = Graphics.FontAwesome.fa_chevron_right,
-                            BlurSigma = new Vector2(glow_icon_blur_sigma),
-                            Size = new Vector2(glow_icon_size),
-                        },
-                        rightGlowIcon = new GlowIcon
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.CentreLeft,
-                            X = glow_icon_offscreen_offset,
-                            Icon = Graphics.FontAwesome.fa_chevron_left,
-                            BlurSigma = new Vector2(glow_icon_blur_sigma),
-                            Size = new Vector2(glow_icon_size),
-                        },
-                    }
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.CentreRight,
+                    X = -glow_icon_offscreen_offset,
+                    Icon = Graphics.FontAwesome.fa_chevron_right,
+                    BlurSigma = new Vector2(glow_icon_blur_sigma),
+                    Size = new Vector2(glow_icon_size),
+                },
+                rightGlowIcon = new GlowIcon
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.CentreLeft,
+                    X = glow_icon_offscreen_offset,
+                    Icon = Graphics.FontAwesome.fa_chevron_left,
+                    BlurSigma = new Vector2(glow_icon_blur_sigma),
+                    Size = new Vector2(glow_icon_size),
                 },
                 new ParallaxContainer
                 {

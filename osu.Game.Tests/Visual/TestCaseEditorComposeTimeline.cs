@@ -1,20 +1,20 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
-using osuTK;
+using OpenTK;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
-using osu.Game.Screens.Edit.Compose.Components.Timeline;
-using osuTK.Graphics;
+using osu.Game.Screens.Edit.Screens.Compose.Timeline;
+using OpenTK.Graphics;
 
 namespace osu.Game.Tests.Visual
 {
@@ -85,7 +85,7 @@ namespace osu.Game.Tests.Visual
             }
 
             [BackgroundDependencyLoader]
-            private void load(IAdjustableClock adjustableClock, IBindable<WorkingBeatmap> beatmap)
+            private void load(IAdjustableClock adjustableClock, IBindableBeatmap beatmap)
             {
                 this.adjustableClock = adjustableClock;
                 this.beatmap.BindTo(beatmap);

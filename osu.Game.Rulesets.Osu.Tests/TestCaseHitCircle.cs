@@ -1,14 +1,16 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Osu.Objects;
 using osu.Game.Rulesets.Osu.Objects.Drawables;
 using osu.Game.Tests.Visual;
-using osuTK;
+using OpenTK;
+using osu.Game.Rulesets.Osu.Judgements;
 using System.Collections.Generic;
 using System;
 using osu.Game.Rulesets.Mods;
@@ -85,7 +87,7 @@ namespace osu.Game.Rulesets.Osu.Tests
             }
         }
 
-        protected class TestDrawableHitCircle : DrawableHitCircle
+        private class TestDrawableHitCircle : DrawableHitCircle
         {
             private readonly bool auto;
 
@@ -94,17 +96,19 @@ namespace osu.Game.Rulesets.Osu.Tests
                 this.auto = auto;
             }
 
-            public void TriggerJudgement() => UpdateResult(true);
-
-            protected override void CheckForResult(bool userTriggered, double timeOffset)
+            protected override void CheckForJudgements(bool userTriggered, double timeOffset)
             {
                 if (auto && !userTriggered && timeOffset > 0)
                 {
                     // force success
-                    ApplyResult(r => r.Type = HitResult.Great);
+                    AddJudgement(new OsuJudgement
+                    {
+                        Result = HitResult.Great
+                    });
+                    State.Value = ArmedState.Hit;
                 }
                 else
-                    base.CheckForResult(userTriggered, timeOffset);
+                    base.CheckForJudgements(userTriggered, timeOffset);
             }
         }
     }

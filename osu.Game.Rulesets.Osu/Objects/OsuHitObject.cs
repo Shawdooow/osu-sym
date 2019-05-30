@@ -1,28 +1,38 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Framework.Configuration;
+using System;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects;
-using osuTK;
+using OpenTK;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Edit.Types;
 
 namespace osu.Game.Rulesets.Osu.Objects
 {
-    public abstract class OsuHitObject : HitObject, IHasComboInformation, IHasPosition
+    public abstract class OsuHitObject : HitObject, IHasComboInformation, IHasEditablePosition
     {
         public const double OBJECT_RADIUS = 64;
+
+        public event Action<Vector2> PositionChanged;
 
         public double TimePreempt = 600;
         public double TimeFadeIn = 400;
 
-        public readonly Bindable<Vector2> PositionBindable = new Bindable<Vector2>();
+        private Vector2 position;
 
-        public virtual Vector2 Position
+        public Vector2 Position
         {
-            get => PositionBindable;
-            set => PositionBindable.Value = value;
+            get => position;
+            set
+            {
+                if (position == value)
+                    return;
+                position = value;
+
+                PositionChanged?.Invoke(value);
+            }
         }
 
         public float X => Position.X;
@@ -34,29 +44,15 @@ namespace osu.Game.Rulesets.Osu.Objects
 
         public Vector2 StackedEndPosition => EndPosition + StackOffset;
 
-        public readonly Bindable<int> StackHeightBindable = new Bindable<int>();
-
-        public int StackHeight
-        {
-            get => StackHeightBindable;
-            set => StackHeightBindable.Value = value;
-        }
+        public virtual int StackHeight { get; set; }
 
         public Vector2 StackOffset => new Vector2(StackHeight * Scale * -6.4f);
 
         public double Radius => OBJECT_RADIUS * Scale;
 
-        public readonly Bindable<float> ScaleBindable = new Bindable<float>(1);
-
-        public float Scale
-        {
-            get => ScaleBindable;
-            set => ScaleBindable.Value = value;
-        }
+        public float Scale { get; set; } = 1;
 
         public virtual bool NewCombo { get; set; }
-
-        public int ComboOffset { get; set; }
 
         public virtual int IndexInCurrentCombo { get; set; }
 
@@ -73,6 +69,8 @@ namespace osu.Game.Rulesets.Osu.Objects
 
             Scale = (1.0f - 0.7f * (difficulty.CircleSize - 5) / 5) / 2;
         }
+
+        public virtual void OffsetPosition(Vector2 offset) => Position += offset;
 
         protected override HitWindows CreateHitWindows() => new OsuHitWindows();
     }

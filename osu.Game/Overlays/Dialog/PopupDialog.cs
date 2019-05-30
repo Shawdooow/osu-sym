@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Collections.Generic;
 using System.Linq;
@@ -7,14 +7,17 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Backgrounds;
 using osu.Game.Graphics.Containers;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Input.Bindings;
-using osuTK;
-using osuTK.Graphics;
-using osuTK.Input;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Input;
 
 namespace osu.Game.Overlays.Dialog
 {
@@ -23,7 +26,7 @@ namespace osu.Game.Overlays.Dialog
         public static readonly float ENTER_DURATION = 500;
         public static readonly float EXIT_DURATION = 200;
 
-        protected override bool BlockPositionalInput => false;
+        protected override bool BlockPassThroughMouse => false;
 
         private readonly Vector2 ringSize = new Vector2(100f);
         private readonly Vector2 ringMinifiedSize = new Vector2(20f);
@@ -33,7 +36,7 @@ namespace osu.Game.Overlays.Dialog
         private readonly Container ring;
         private readonly FillFlowContainer<PopupDialogButton> buttonsContainer;
         private readonly SpriteIcon icon;
-        private readonly TextFlowContainer header;
+        private readonly SpriteText header;
         private readonly TextFlowContainer body;
 
         private bool actionInvoked;
@@ -44,19 +47,10 @@ namespace osu.Game.Overlays.Dialog
             set => icon.Icon = value;
         }
 
-        private string text;
-
         public string HeaderText
         {
-            get => text;
-            set
-            {
-                if (text == value)
-                    return;
-                text = value;
-
-                header.Text = value;
-            }
+            get => header.Text;
+            set => header.Text = value;
         }
 
         public string BodyText
@@ -171,20 +165,18 @@ namespace osu.Game.Overlays.Dialog
                                         },
                                     },
                                 },
-                                header = new OsuTextFlowContainer(t => t.TextSize = 25)
+                                header = new OsuSpriteText
                                 {
                                     Origin = Anchor.TopCentre,
                                     Anchor = Anchor.TopCentre,
-                                    RelativeSizeAxes = Axes.X,
-                                    AutoSizeAxes = Axes.Y,
-                                    Padding = new MarginPadding(15),
-                                    TextAnchor = Anchor.TopCentre,
+                                    TextSize = 25,
+                                    Shadow = true,
                                 },
                                 body = new OsuTextFlowContainer(t => t.TextSize = 18)
                                 {
+                                    Padding = new MarginPadding(15),
                                     RelativeSizeAxes = Axes.X,
                                     AutoSizeAxes = Axes.Y,
-                                    Padding = new MarginPadding(15),
                                     TextAnchor = Anchor.TopCentre,
                                 },
                             },
@@ -207,19 +199,19 @@ namespace osu.Game.Overlays.Dialog
             switch (action)
             {
                 case GlobalAction.Select:
-                    Buttons.OfType<PopupDialogOkButton>().FirstOrDefault()?.Click();
+                    Buttons.OfType<PopupDialogOkButton>().FirstOrDefault()?.TriggerOnClick();
                     return true;
             }
 
             return base.OnPressed(action);
         }
 
-        protected override bool OnKeyDown(KeyDownEvent e)
+        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
-            if (e.Repeat) return false;
+            if (args.Repeat) return false;
 
             // press button at number if 1-9 on number row or keypad are pressed
-            var k = e.Key;
+            var k = args.Key;
             if (k >= Key.Number1 && k <= Key.Number9)
             {
                 pressButtonAtIndex(k - Key.Number1);
@@ -232,7 +224,7 @@ namespace osu.Game.Overlays.Dialog
                 return true;
             }
 
-            return base.OnKeyDown(e);
+            return base.OnKeyDown(state, args);
         }
 
         protected override void PopIn()
@@ -260,7 +252,7 @@ namespace osu.Game.Overlays.Dialog
             if (!actionInvoked)
                 // In the case a user did not choose an action before a hide was triggered, press the last button.
                 // This is presumed to always be a sane default "cancel" action.
-                buttonsContainer.Last().Click();
+                buttonsContainer.Last().TriggerOnClick();
 
             base.PopOut();
             content.FadeOut(EXIT_DURATION, Easing.InSine);
@@ -269,7 +261,7 @@ namespace osu.Game.Overlays.Dialog
         private void pressButtonAtIndex(int index)
         {
             if (index < Buttons.Count())
-                Buttons.Skip(index).First().Click();
+                Buttons.Skip(index).First().TriggerOnClick();
         }
     }
 }

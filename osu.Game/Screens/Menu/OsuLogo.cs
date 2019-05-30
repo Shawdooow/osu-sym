@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using osu.Framework.Allocation;
@@ -11,15 +11,16 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Framework.MathUtils;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Backgrounds;
 using osu.Game.Graphics.Containers;
-using osuTK;
-using osuTK.Graphics;
-using osuTK.Input;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Input;
 
 namespace osu.Game.Screens.Menu
 {
@@ -67,7 +68,7 @@ namespace osu.Game.Screens.Menu
 
         public bool BeatMatching = true;
 
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => logoContainer.ReceivePositionalInputAt(screenSpacePos);
+        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => logoContainer.ReceiveMouseInputAt(screenSpacePos);
 
         public bool Ripple
         {
@@ -79,13 +80,18 @@ namespace osu.Game.Screens.Menu
 
         private readonly Container impactContainer;
 
-        private const double early_activation = 60;
+        private const float default_size = 480;
 
-        public override bool IsPresent => base.IsPresent || Scheduler.HasPendingTasks;
+        private const double early_activation = 60;
 
         public OsuLogo()
         {
+            // Required to make Schedule calls run in OsuScreen even when we are not visible.
+            AlwaysPresent = true;
+
             EarlyActivationMilliseconds = early_activation;
+
+            Size = new Vector2(default_size);
 
             Origin = Anchor.Centre;
 
@@ -337,25 +343,25 @@ namespace osu.Game.Screens.Menu
             }
         }
 
-        public override bool HandlePositionalInput => base.HandlePositionalInput && Action != null && Alpha > 0.2f;
+        public override bool HandleMouseInput => base.HandleMouseInput && Action != null && Alpha > 0.2f;
 
-        protected override bool OnMouseDown(MouseDownEvent e)
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
         {
-            if (e.Button != MouseButton.Left) return false;
+            if (args.Button != MouseButton.Left) return false;
 
             logoBounceContainer.ScaleTo(0.9f, 1000, Easing.Out);
             return true;
         }
 
-        protected override bool OnMouseUp(MouseUpEvent e)
+        protected override bool OnMouseUp(InputState state, MouseUpEventArgs args)
         {
-            if (e.Button != MouseButton.Left) return false;
+            if (args.Button != MouseButton.Left) return false;
 
             logoBounceContainer.ScaleTo(1f, 500, Easing.OutElastic);
             return true;
         }
 
-        protected override bool OnClick(ClickEvent e)
+        protected override bool OnClick(InputState state)
         {
             if (Action?.Invoke() ?? true)
                 sampleClick.Play();
@@ -366,13 +372,13 @@ namespace osu.Game.Screens.Menu
             return true;
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             logoHoverContainer.ScaleTo(1.1f, 500, Easing.OutElastic);
             return true;
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             logoHoverContainer.ScaleTo(1, 500, Easing.OutElastic);
         }

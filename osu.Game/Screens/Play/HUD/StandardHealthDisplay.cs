@@ -1,15 +1,14 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Judgements;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Scoring;
 
@@ -93,16 +92,9 @@ namespace osu.Game.Screens.Play.HUD
             };
         }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        public void Flash(Judgement judgement)
         {
-            AccentColour = colours.BlueLighter;
-            GlowColour = colours.BlueDarker;
-        }
-
-        public void Flash(JudgementResult result)
-        {
-            if (result.Type == HitResult.Miss)
+            if (judgement.Result == HitResult.Miss)
                 return;
 
             fill.FadeEdgeEffectTo(Math.Min(1, fill.EdgeEffect.Colour.Linear.A + (1f - base_glow_opacity) / glow_max_hits), 50, Easing.OutQuint)

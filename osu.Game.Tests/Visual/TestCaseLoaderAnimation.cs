@@ -1,13 +1,12 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Screens;
 using osu.Game.Screens;
 using osu.Game.Screens.Menu;
-using osuTK.Graphics;
+using OpenTK.Graphics;
 
 namespace osu.Game.Tests.Visual
 {
@@ -58,7 +57,7 @@ namespace osu.Game.Tests.Visual
             public OsuLogo Logo;
             private TestScreen screen;
 
-            public bool ScreenLoaded => screen.IsCurrentScreen();
+            public bool ScreenLoaded => screen.IsCurrentScreen;
 
             public TestLoader(double delay)
             {
@@ -97,7 +96,7 @@ namespace osu.Game.Tests.Visual
             {
                 public TestScreen()
                 {
-                    InternalChild = new Box
+                    Child = new Box
                     {
                         RelativeSizeAxes = Axes.Both,
                         Colour = Color4.DarkSlateGray,
@@ -108,7 +107,7 @@ namespace osu.Game.Tests.Visual
                 protected override void LogoArriving(OsuLogo logo, bool resuming)
                 {
                     base.LogoArriving(logo, resuming);
-                    InternalChild.FadeInFromZero(200);
+                    Child.FadeInFromZero(200);
                 }
             }
         }

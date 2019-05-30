@@ -1,11 +1,9 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using osu.Framework;
 using osu.Framework.Allocation;
-using osu.Framework.Audio;
-using osu.Framework.Audio.Sample;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Threading;
@@ -13,12 +11,13 @@ using osu.Framework.Timing;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Screens.Ranking;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Framework.Input.Bindings;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Game.Input.Bindings;
 
 namespace osu.Game.Screens.Play
@@ -36,8 +35,8 @@ namespace osu.Game.Screens.Play
         private FadeContainer fadeContainer;
         private double displayTime;
 
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => true;
-        protected override bool BlockPositionalInput => false;
+        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => true;
+        protected override bool BlockPassThroughMouse => false;
 
         public SkipOverlay(double startTime)
         {
@@ -46,10 +45,10 @@ namespace osu.Game.Screens.Play
             State = Visibility.Visible;
 
             RelativePositionAxes = Axes.Both;
-            RelativeSizeAxes = Axes.X;
+            RelativeSizeAxes = Axes.Both;
 
             Position = new Vector2(0.5f, 0.7f);
-            Size = new Vector2(1, 100);
+            Size = new Vector2(1, 0.14f);
 
             Origin = Anchor.Centre;
         }
@@ -128,11 +127,11 @@ namespace osu.Game.Screens.Play
             remainingTimeBox.ResizeWidthTo((float)Math.Max(0, 1 - (Time.Current - displayTime) / (beginFadeTime - displayTime)), 120, Easing.OutQuint);
         }
 
-        protected override bool OnMouseMove(MouseMoveEvent e)
+        protected override bool OnMouseMove(InputState state)
         {
-            if (!e.HasAnyButtonPressed)
+            if (!state.Mouse.HasAnyButtonPressed)
                 fadeContainer.State = Visibility.Visible;
-            return base.OnMouseMove(e);
+            return base.OnMouseMove(state);
         }
 
         public bool OnPressed(GlobalAction action)
@@ -140,7 +139,7 @@ namespace osu.Game.Screens.Play
             switch (action)
             {
                 case GlobalAction.SkipCutscene:
-                    button.Click();
+                    button.TriggerOnClick();
                     return true;
             }
 
@@ -193,16 +192,16 @@ namespace osu.Game.Screens.Play
                 State = Visibility.Visible;
             }
 
-            protected override bool OnMouseDown(MouseDownEvent e)
+            protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
             {
                 scheduledHide?.Cancel();
-                return base.OnMouseDown(e);
+                return base.OnMouseDown(state, args);
             }
 
-            protected override bool OnMouseUp(MouseUpEvent e)
+            protected override bool OnMouseUp(InputState state, MouseUpEventArgs args)
             {
                 State = Visibility.Visible;
-                return base.OnMouseUp(e);
+                return base.OnMouseUp(state, args);
             }
         }
 
@@ -215,20 +214,16 @@ namespace osu.Game.Screens.Play
             private Box background;
             private AspectContainer aspect;
 
-            private SampleChannel sampleConfirm;
-
             public Button()
             {
                 RelativeSizeAxes = Axes.Both;
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colours, AudioManager audio)
+            private void load(OsuColour colours)
             {
                 colourNormal = colours.Yellow;
                 colourHover = colours.YellowDark;
-
-                sampleConfirm = audio.Sample.Get(@"SongSelect/confirm-selection");
 
                 Children = new Drawable[]
                 {
@@ -283,7 +278,7 @@ namespace osu.Game.Screens.Play
                 };
             }
 
-            protected override bool OnHover(HoverEvent e)
+            protected override bool OnHover(InputState state)
             {
                 flow.TransformSpacingTo(new Vector2(5), 500, Easing.OutQuint);
                 box.FadeColour(colourHover, 500, Easing.OutQuint);
@@ -291,37 +286,35 @@ namespace osu.Game.Screens.Play
                 return true;
             }
 
-            protected override void OnHoverLost(HoverLostEvent e)
+            protected override void OnHoverLost(InputState state)
             {
                 flow.TransformSpacingTo(new Vector2(0), 500, Easing.OutQuint);
                 box.FadeColour(colourNormal, 500, Easing.OutQuint);
                 background.FadeTo(0.2f, 500, Easing.OutQuint);
-                base.OnHoverLost(e);
+                base.OnHoverLost(state);
             }
 
-            protected override bool OnMouseDown(MouseDownEvent e)
+            protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
             {
                 aspect.ScaleTo(0.75f, 2000, Easing.OutQuint);
-                return base.OnMouseDown(e);
+                return base.OnMouseDown(state, args);
             }
 
-            protected override bool OnMouseUp(MouseUpEvent e)
+            protected override bool OnMouseUp(InputState state, MouseUpEventArgs args)
             {
                 aspect.ScaleTo(1, 1000, Easing.OutElastic);
-                return base.OnMouseUp(e);
+                return base.OnMouseUp(state, args);
             }
 
-            protected override bool OnClick(ClickEvent e)
+            protected override bool OnClick(InputState state)
             {
                 if (!Enabled)
                     return false;
 
-                sampleConfirm.Play();
-
                 box.FlashColour(Color4.White, 500, Easing.OutQuint);
                 aspect.ScaleTo(1.2f, 2000, Easing.OutQuint);
 
-                bool result = base.OnClick(e);
+                bool result = base.OnClick(state);
 
                 // for now, let's disable the skip button after the first press.
                 // this will likely need to be contextual in the future (bound from external components).

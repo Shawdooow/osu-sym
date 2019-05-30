@@ -1,20 +1,20 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using osuTK.Graphics;
+using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Framework.Localisation;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
-using osuTK;
+using OpenTK;
 
 namespace osu.Game.Overlays.Music
 {
@@ -27,9 +27,9 @@ namespace osu.Game.Overlays.Music
 
         private SpriteIcon handle;
         private TextFlowContainer text;
-        private IEnumerable<Drawable> titleSprites;
-        private ILocalisedBindableString titleBind;
-        private ILocalisedBindableString artistBind;
+        private IEnumerable<SpriteText> titleSprites;
+        private UnicodeBindableString titleBind;
+        private UnicodeBindableString artistBind;
 
         public readonly BeatmapSetInfo BeatmapSetInfo;
 
@@ -37,16 +37,16 @@ namespace osu.Game.Overlays.Music
 
         public bool IsDraggable { get; private set; }
 
-        protected override bool OnMouseDown(MouseDownEvent e)
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args)
         {
             IsDraggable = handle.IsHovered;
-            return base.OnMouseDown(e);
+            return base.OnMouseDown(state, args);
         }
 
-        protected override bool OnMouseUp(MouseUpEvent e)
+        protected override bool OnMouseUp(InputState state, MouseUpEventArgs args)
         {
             IsDraggable = false;
-            return base.OnMouseUp(e);
+            return base.OnMouseUp(state, args);
         }
 
         private bool selected;
@@ -59,7 +59,7 @@ namespace osu.Game.Overlays.Music
                 selected = value;
 
                 FinishTransforms(true);
-                foreach (Drawable s in titleSprites)
+                foreach (SpriteText s in titleSprites)
                     s.FadeColour(Selected ? hoverColour : Color4.White, fade_duration);
             }
         }
@@ -74,7 +74,7 @@ namespace osu.Game.Overlays.Music
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, LocalisationManager localisation)
+        private void load(OsuColour colours, LocalisationEngine localisation)
         {
             hoverColour = colours.Yellow;
             artistColour = colours.Gray9;
@@ -97,10 +97,11 @@ namespace osu.Game.Overlays.Music
                 },
             };
 
-            titleBind = localisation.GetLocalisedString(new LocalisedString((metadata.TitleUnicode, metadata.Title)));
-            artistBind = localisation.GetLocalisedString(new LocalisedString((metadata.ArtistUnicode, metadata.Artist)));
+            titleBind = localisation.GetUnicodePreference(metadata.TitleUnicode, metadata.Title);
+            artistBind = localisation.GetUnicodePreference(metadata.ArtistUnicode, metadata.Artist);
 
-            artistBind.BindValueChanged(newText => recreateText(), true);
+            artistBind.ValueChanged += newText => recreateText();
+            artistBind.TriggerChange();
         }
 
         private void recreateText()
@@ -112,7 +113,7 @@ namespace osu.Game.Overlays.Music
             {
                 sprite.TextSize = 16;
                 sprite.Font = @"Exo2.0-Regular";
-            }).OfType<SpriteText>();
+            });
 
             text.AddText(artistBind.Value, sprite =>
             {
@@ -123,19 +124,19 @@ namespace osu.Game.Overlays.Music
             });
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             handle.FadeIn(fade_duration);
 
-            return base.OnHover(e);
+            return base.OnHover(state);
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             handle.FadeOut(fade_duration);
         }
 
-        protected override bool OnClick(ClickEvent e)
+        protected override bool OnClick(InputState state)
         {
             OnSelect?.Invoke(BeatmapSetInfo);
             return true;
@@ -169,8 +170,6 @@ namespace osu.Game.Overlays.Music
                 Alpha = 0f;
                 Margin = new MarginPadding { Left = 5, Top = 2 };
             }
-
-            public override bool HandlePositionalInput => IsPresent;
         }
     }
 

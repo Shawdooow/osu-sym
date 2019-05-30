@@ -1,16 +1,17 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Screens.Play.PlayerSettings
 {
@@ -127,27 +128,6 @@ namespace osu.Game.Screens.Play.PlayerSettings
             };
         }
 
-        private const float fade_duration = 800;
-        private const float inactive_alpha = 0.5f;
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            this.Delay(600).FadeTo(inactive_alpha, fade_duration, Easing.OutQuint);
-        }
-
-        protected override bool OnHover(HoverEvent e)
-        {
-            this.FadeIn(fade_duration, Easing.OutQuint);
-            return true;
-        }
-
-        protected override void OnHoverLost(HoverLostEvent e)
-        {
-            this.FadeTo(inactive_alpha, fade_duration, Easing.OutQuint);
-            base.OnHoverLost(e);
-        }
-
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
@@ -160,6 +140,7 @@ namespace osu.Game.Screens.Play.PlayerSettings
 
         protected override Container<Drawable> Content => content;
 
-        protected override bool OnMouseDown(MouseDownEvent e) => true;
+        protected override bool OnHover(InputState state) => true;
+        protected override bool OnMouseDown(InputState state, MouseDownEventArgs args) => true;
     }
 }

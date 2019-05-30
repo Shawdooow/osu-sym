@@ -1,5 +1,5 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using osu.Game.Beatmaps.ControlPoints;
@@ -18,14 +18,9 @@ namespace osu.Game.Rulesets.Timing
         public double StartTime;
 
         /// <summary>
-        /// The aggregate multiplier which this <see cref="MultiplierControlPoint"/> provides.
+        /// The multiplier which this <see cref="MultiplierControlPoint"/> provides.
         /// </summary>
-        public double Multiplier => Velocity * DifficultyPoint.SpeedMultiplier * 1000 / TimingPoint.BeatLength;
-
-        /// <summary>
-        /// The velocity multiplier.
-        /// </summary>
-        public double Velocity = 1;
+        public double Multiplier => 1000 / TimingPoint.BeatLength * DifficultyPoint.SpeedMultiplier;
 
         /// <summary>
         /// The <see cref="TimingControlPoint"/> that provides the timing information for this <see cref="MultiplierControlPoint"/>.
@@ -51,6 +46,18 @@ namespace osu.Game.Rulesets.Timing
         public MultiplierControlPoint(double startTime)
         {
             StartTime = startTime;
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MultiplierControlPoint"/> by copying another <see cref="MultiplierControlPoint"/>.
+        /// </summary>
+        /// <param name="startTime">The start time of this <see cref="MultiplierControlPoint"/>.</param>
+        /// <param name="other">The <see cref="MultiplierControlPoint"/> to copy.</param>
+        public MultiplierControlPoint(double startTime, MultiplierControlPoint other)
+            : this(startTime)
+        {
+            TimingPoint = other.TimingPoint;
+            DifficultyPoint = other.DifficultyPoint;
         }
 
         // ReSharper disable once ImpureMethodCallOnReadonlyValueField

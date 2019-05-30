@@ -1,15 +1,15 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Linq;
 using osu.Framework;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Framework.Threading;
 using osu.Game.Overlays.Toolbar;
 
@@ -55,25 +55,25 @@ namespace osu.Game.Overlays.Settings
         private ScheduledDelegate expandEvent;
         private ExpandedState state;
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             queueExpandIfHovering();
             return true;
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             expandEvent?.Cancel();
             lastHoveredButton = null;
             State = ExpandedState.Contracted;
 
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
         }
 
-        protected override bool OnMouseMove(MouseMoveEvent e)
+        protected override bool OnMouseMove(InputState state)
         {
             queueExpandIfHovering();
-            return base.OnMouseMove(e);
+            return base.OnMouseMove(state);
         }
 
         private class SidebarScrollContainer : ScrollContainer

@@ -1,23 +1,22 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 
 namespace osu.Game.Overlays.Settings
 {
-    public class SidebarButton : Button
+    public class SidebarButton : OsuButton
     {
         private readonly SpriteIcon drawableIcon;
         private readonly SpriteText headerText;
@@ -98,8 +97,7 @@ namespace osu.Game.Overlays.Settings
                     Width = 5,
                     Anchor = Anchor.CentreRight,
                     Origin = Anchor.CentreRight,
-                },
-                new HoverClickSounds(HoverSampleSet.Loud),
+                }
             });
         }
 
@@ -109,22 +107,22 @@ namespace osu.Game.Overlays.Settings
             selectionIndicator.Colour = colours.Yellow;
         }
 
-        protected override bool OnClick(ClickEvent e)
+        protected override bool OnClick(InputState state)
         {
             Action?.Invoke(section);
-            return base.OnClick(e);
+            return base.OnClick(state);
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             Background.FadeTo(0.4f, 200);
-            return base.OnHover(e);
+            return base.OnHover(state);
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             Background.FadeTo(0, 200);
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
         }
     }
 }

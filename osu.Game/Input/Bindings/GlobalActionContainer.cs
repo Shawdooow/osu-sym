@@ -1,5 +1,5 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,7 +43,6 @@ namespace osu.Game.Input.Bindings
 
             new KeyBinding(InputKey.Space, GlobalAction.Select),
             new KeyBinding(InputKey.Enter, GlobalAction.Select),
-            new KeyBinding(InputKey.KeypadEnter, GlobalAction.Select),
         };
 
         public IEnumerable<KeyBinding> InGameKeyBindings => new[]
@@ -72,17 +71,17 @@ namespace osu.Game.Input.Bindings
         ToggleSettings,
         [Description("Toggle osu!direct")]
         ToggleDirect,
-        [Description("Increase volume")]
+        [Description("Increase Volume")]
         IncreaseVolume,
-        [Description("Decrease volume")]
+        [Description("Decrease Volume")]
         DecreaseVolume,
         [Description("Toggle mute")]
         ToggleMute,
 
         // In-Game Keybindings
-        [Description("Skip cutscene")]
+        [Description("Skip Cutscene")]
         SkipCutscene,
-        [Description("Quick retry (hold)")]
+        [Description("Quick Retry (Hold)")]
         QuickRetry,
 
         [Description("Take screenshot")]

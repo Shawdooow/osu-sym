@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Osu.Tests
                 this.auto = auto;
             }
 
-            protected override void CheckForResult(bool userTriggered, double timeOffset)
+            protected override void CheckForJudgements(bool userTriggered, double timeOffset)
             {
                 if (auto && !userTriggered && Time.Current > Spinner.StartTime + Spinner.Duration / 2 && Progress < 1)
                 {
@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Osu.Tests
                     auto = false;
                 }
 
-                base.CheckForResult(userTriggered, timeOffset);
+                base.CheckForJudgements(userTriggered, timeOffset);
             }
         }
     }

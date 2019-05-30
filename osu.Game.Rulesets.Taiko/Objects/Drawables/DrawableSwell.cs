@@ -1,9 +1,7 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -11,21 +9,25 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Taiko.Objects.Drawables.Pieces;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Rulesets.Taiko.Judgements;
 using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Rulesets.Taiko.Objects.Drawables
 {
     public class DrawableSwell : DrawableTaikoHitObject<Swell>
     {
+        /// <summary>
+        /// A judgement is only displayed when the user has complete the swell (either a hit or miss).
+        /// </summary>
+        public override bool DisplayJudgement => AllJudged;
+
         private const float target_ring_thick_border = 1.4f;
         private const float target_ring_thin_border = 1f;
         private const float target_ring_scale = 5f;
         private const float inner_ring_alpha = 0.65f;
-
-        private readonly List<DrawableSwellTick> ticks = new List<DrawableSwellTick>();
 
         private readonly Container bodyContainer;
         private readonly CircularContainer targetRing;
@@ -104,15 +106,6 @@ namespace osu.Game.Rulesets.Taiko.Objects.Drawables
             });
 
             MainPiece.Add(symbol = new SwellSymbolPiece());
-
-            foreach (var tick in HitObject.NestedHitObjects.OfType<SwellTick>())
-            {
-                var vis = new DrawableSwellTick(tick);
-
-                ticks.Add(vis);
-                AddInternal(vis);
-                AddNested(vis);
-            }
         }
 
         [BackgroundDependencyLoader]
@@ -131,17 +124,13 @@ namespace osu.Game.Rulesets.Taiko.Objects.Drawables
             Width *= Parent.RelativeChildSize.X;
         }
 
-        protected override void CheckForResult(bool userTriggered, double timeOffset)
+        protected override void CheckForJudgements(bool userTriggered, double timeOffset)
         {
             if (userTriggered)
             {
-                var nextTick = ticks.Find(j => !j.IsHit);
+                AddJudgement(new TaikoIntermediateSwellJudgement());
 
-                nextTick?.TriggerResult(HitResult.Great);
-
-                var numHits = ticks.Count(r => r.IsHit);
-
-                var completion = (float)numHits / HitObject.RequiredHits;
+                var completion = (float)Judgements.Count / HitObject.RequiredHits;
 
                 expandingRing
                     .FadeTo(expandingRing.Alpha + MathHelper.Clamp(completion / 16, 0.1f, 0.6f), 50)
@@ -152,30 +141,18 @@ namespace osu.Game.Rulesets.Taiko.Objects.Drawables
 
                 expandingRing.ScaleTo(1f + Math.Min(target_ring_scale - 1f, (target_ring_scale - 1f) * completion * 1.3f), 260, Easing.OutQuint);
 
-                if (numHits == HitObject.RequiredHits)
-                    ApplyResult(r => r.Type = HitResult.Great);
+                if (Judgements.Count == HitObject.RequiredHits)
+                    AddJudgement(new TaikoJudgement { Result = HitResult.Great });
             }
             else
             {
                 if (timeOffset < 0)
                     return;
 
-                int numHits = 0;
-
-                foreach (var tick in ticks)
-                {
-                    if (tick.IsHit)
-                    {
-                        numHits++;
-                        continue;
-                    }
-
-                    tick.TriggerResult(HitResult.Miss);
-                }
-
-                var hitResult = numHits > HitObject.RequiredHits / 2 ? HitResult.Good : HitResult.Miss;
-
-                ApplyResult(r => r.Type = hitResult);
+                //TODO: THIS IS SHIT AND CAN'T EXIST POST-TAIKO WORLD CUP
+                AddJudgement(Judgements.Count > HitObject.RequiredHits / 2
+                    ? new TaikoJudgement { Result = HitResult.Good }
+                    : new TaikoJudgement { Result = HitResult.Miss });
             }
         }
 
@@ -231,7 +208,7 @@ namespace osu.Game.Rulesets.Taiko.Objects.Drawables
                 return false;
             lastWasCentre = isCentre;
 
-            UpdateResult(true);
+            UpdateJudgement(true);
 
             return true;
         }

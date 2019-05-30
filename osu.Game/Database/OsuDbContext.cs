@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Configuration;
 using osu.Game.IO;
 using osu.Game.Rulesets;
-using osu.Game.Scoring;
 using DatabasedKeyBinding = osu.Game.Input.Bindings.DatabasedKeyBinding;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 using osu.Game.Skinning;
@@ -28,7 +27,6 @@ namespace osu.Game.Database
         public DbSet<FileInfo> FileInfo { get; set; }
         public DbSet<RulesetInfo> RulesetInfo { get; set; }
         public DbSet<SkinInfo> SkinInfo { get; set; }
-        public DbSet<ScoreInfo> ScoreInfo { get; set; }
 
         private readonly string connectionString;
 
@@ -77,13 +75,6 @@ namespace osu.Game.Database
             }
         }
 
-        ~OsuDbContext()
-        {
-            // DbContext does not contain a finalizer (https://github.com/aspnet/EntityFrameworkCore/issues/8872)
-            // This is used to clean up previous contexts when fresh contexts are exposed via DatabaseContextFactory
-            Dispose();
-        }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -107,9 +98,6 @@ namespace osu.Game.Database
             modelBuilder.Entity<BeatmapSetInfo>().HasIndex(b => b.DeletePending);
             modelBuilder.Entity<BeatmapSetInfo>().HasIndex(b => b.Hash).IsUnique();
 
-            modelBuilder.Entity<SkinInfo>().HasIndex(b => b.Hash).IsUnique();
-            modelBuilder.Entity<SkinInfo>().HasIndex(b => b.DeletePending);
-
             modelBuilder.Entity<DatabasedKeyBinding>().HasIndex(b => new { b.RulesetID, b.Variant });
             modelBuilder.Entity<DatabasedKeyBinding>().HasIndex(b => b.IntAction);
 
@@ -122,8 +110,6 @@ namespace osu.Game.Database
             modelBuilder.Entity<RulesetInfo>().HasIndex(b => b.ShortName).IsUnique();
 
             modelBuilder.Entity<BeatmapInfo>().HasOne(b => b.BaseDifficulty);
-
-            modelBuilder.Entity<ScoreInfo>().HasIndex(b => b.OnlineScoreID).IsUnique();
         }
 
         private class OsuDbLoggerFactory : ILoggerFactory

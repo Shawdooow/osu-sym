@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
@@ -49,6 +49,7 @@ namespace osu.Game.Tests.Visual
 
             manager.UnreadCount.ValueChanged += count => { displayedCount.Text = $"displayed count: {count}"; };
 
+
             setState(Visibility.Visible);
             AddStep(@"simple #1", sendHelloNotification);
             AddStep(@"simple #2", sendAmazingNotification);
@@ -73,6 +74,7 @@ namespace osu.Game.Tests.Visual
             AddWaitStep(10);
 
             checkProgressingCount(0);
+
 
             setState(Visibility.Visible);
 
@@ -109,7 +111,7 @@ namespace osu.Game.Tests.Visual
 
             if (progressingNotifications.Count(n => n.State == ProgressNotificationState.Active) < 3)
             {
-                var p = progressingNotifications.Find(n => n.State == ProgressNotificationState.Queued);
+                var p = progressingNotifications.FirstOrDefault(n => n.State == ProgressNotificationState.Queued);
                 if (p != null)
                     p.State = ProgressNotificationState.Active;
             }

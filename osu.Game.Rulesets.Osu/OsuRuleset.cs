@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using osu.Framework.Graphics;
 using osu.Game.Overlays.Settings;
 using osu.Framework.Input.Bindings;
+using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.Osu.Edit;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Osu.Replays;
@@ -19,7 +20,6 @@ using osu.Game.Beatmaps.Legacy;
 using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Osu.Beatmaps;
 using osu.Game.Rulesets.Osu.Difficulty;
-using osu.Game.Scoring;
 
 namespace osu.Game.Rulesets.Osu
 {
@@ -31,8 +31,8 @@ namespace osu.Game.Rulesets.Osu
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
-            new KeyBinding(InputKey.Z, OsuAction.LeftButton),
-            new KeyBinding(InputKey.X, OsuAction.RightButton),
+            new KeyBinding(InputKey.A, OsuAction.LeftButton),
+            new KeyBinding(InputKey.S, OsuAction.RightButton),
             new KeyBinding(InputKey.MouseLeft, OsuAction.LeftButton),
             new KeyBinding(InputKey.MouseRight, OsuAction.RightButton),
         };
@@ -82,9 +82,6 @@ namespace osu.Game.Rulesets.Osu
 
             if (mods.HasFlag(LegacyMods.Target))
                 yield return new OsuModTarget();
-
-            if (mods.HasFlag(LegacyMods.TouchDevice))
-                yield return new OsuModTouchDevice();
         }
 
         public override IEnumerable<Mod> GetModsFor(ModType type)
@@ -97,7 +94,6 @@ namespace osu.Game.Rulesets.Osu
                         new OsuModEasy(),
                         new OsuModNoFail(),
                         new MultiMod(new OsuModHalfTime(), new OsuModDaycore()),
-                        new OsuModSpunOut(),
                     };
                 case ModType.DifficultyIncrease:
                     return new Mod[]
@@ -106,24 +102,16 @@ namespace osu.Game.Rulesets.Osu
                         new MultiMod(new OsuModSuddenDeath(), new OsuModPerfect()),
                         new MultiMod(new OsuModDoubleTime(), new OsuModNightcore()),
                         new OsuModHidden(),
-                        new MultiMod(new OsuModFlashlight(), new OsuModBlinds()),
+                        new OsuModFlashlight(),
                     };
-                case ModType.Conversion:
+                case ModType.Special:
                     return new Mod[]
                     {
-                        new OsuModTarget(),
-                    };
-                case ModType.Automation:
-                    return new Mod[]
-                    {
-                        new MultiMod(new OsuModAutoplay(), new ModCinema()),
                         new OsuModRelax(),
                         new OsuModAutopilot(),
-                    };
-                case ModType.Fun:
-                    return new Mod[] {
-                        new OsuModTransform(),
-                        new OsuModWiggle(),
+                        new OsuModSpunOut(),
+                        new MultiMod(new OsuModAutoplay(), new ModCinema()),
+                        new OsuModTarget(),
                     };
                 default:
                     return new Mod[] { };
@@ -134,7 +122,7 @@ namespace osu.Game.Rulesets.Osu
 
         public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new OsuDifficultyCalculator(this, beatmap);
 
-        public override PerformanceCalculator CreatePerformanceCalculator(WorkingBeatmap beatmap, ScoreInfo score) => new OsuPerformanceCalculator(this, beatmap, score);
+        public override PerformanceCalculator CreatePerformanceCalculator(WorkingBeatmap beatmap, Score score) => new OsuPerformanceCalculator(this, beatmap, score);
 
         public override HitObjectComposer CreateHitObjectComposer() => new OsuHitObjectComposer(this);
 

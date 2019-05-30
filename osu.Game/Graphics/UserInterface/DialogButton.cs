@@ -1,8 +1,8 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Shapes;
@@ -13,7 +13,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Graphics.Containers;
 using osu.Framework.Configuration;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 
 namespace osu.Game.Graphics.UserInterface
 {
@@ -211,9 +211,9 @@ namespace osu.Game.Graphics.UserInterface
             }
         }
 
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => backgroundContainer.ReceivePositionalInputAt(screenSpacePos);
+        public override bool ReceiveMouseInputAt(Vector2 screenSpacePos) => backgroundContainer.ReceiveMouseInputAt(screenSpacePos);
 
-        protected override bool OnClick(ClickEvent e)
+        protected override bool OnClick(InputState state)
         {
             colourContainer.ResizeTo(new Vector2(1.5f, 1f), click_duration, Easing.In);
             flash();
@@ -225,20 +225,20 @@ namespace osu.Game.Graphics.UserInterface
                 glowContainer.FadeOut();
             });
 
-            return base.OnClick(e);
+            return base.OnClick(state);
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
-            base.OnHover(e);
+            base.OnHover(state);
 
             Selected.Value = true;
             return true;
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
             Selected.Value = false;
         }
 

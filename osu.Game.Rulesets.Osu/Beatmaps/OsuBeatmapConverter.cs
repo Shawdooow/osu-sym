@@ -1,7 +1,7 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
+using OpenTK;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Osu.Objects;
@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Osu.UI;
 
 namespace osu.Game.Rulesets.Osu.Beatmaps
 {
-    public class OsuBeatmapConverter : BeatmapConverter<OsuHitObject>
+    internal class OsuBeatmapConverter : BeatmapConverter<OsuHitObject>
     {
         public OsuBeatmapConverter(IBeatmap beatmap)
             : base(beatmap)
@@ -35,16 +35,14 @@ namespace osu.Game.Rulesets.Osu.Beatmaps
                 {
                     StartTime = original.StartTime,
                     Samples = original.Samples,
-                    Path = curveData.Path,
-                    NodeSamples = curveData.NodeSamples,
+                    ControlPoints = curveData.ControlPoints,
+                    CurveType = curveData.CurveType,
+                    Distance = curveData.Distance,
+                    RepeatSamples = curveData.RepeatSamples,
                     RepeatCount = curveData.RepeatCount,
                     Position = positionData?.Position ?? Vector2.Zero,
                     NewCombo = comboData?.NewCombo ?? false,
-                    ComboOffset = comboData?.ComboOffset ?? 0,
-                    LegacyLastTickOffset = legacyOffset?.LegacyLastTickOffset,
-                    // prior to v8, speed multipliers don't adjust for how many ticks are generated over the same distance.
-                    // this results in more (or less) ticks being generated in <v8 maps for the same time duration.
-                    TickDistanceMultiplier = beatmap.BeatmapInfo.BeatmapVersion < 8 ? 1f / beatmap.ControlPointInfo.DifficultyPointAt(original.StartTime).SpeedMultiplier : 1
+                    LegacyLastTickOffset = legacyOffset?.LegacyLastTickOffset
                 };
             }
             else if (endTimeData != null)
@@ -54,9 +52,7 @@ namespace osu.Game.Rulesets.Osu.Beatmaps
                     StartTime = original.StartTime,
                     Samples = original.Samples,
                     EndTime = endTimeData.EndTime,
-                    Position = positionData?.Position ?? OsuPlayfield.BASE_SIZE / 2,
-                    NewCombo = comboData?.NewCombo ?? false,
-                    ComboOffset = comboData?.ComboOffset ?? 0,
+                    Position = positionData?.Position ?? OsuPlayfield.BASE_SIZE / 2
                 };
             }
             else
@@ -66,8 +62,7 @@ namespace osu.Game.Rulesets.Osu.Beatmaps
                     StartTime = original.StartTime,
                     Samples = original.Samples,
                     Position = positionData?.Position ?? Vector2.Zero,
-                    NewCombo = comboData?.NewCombo ?? false,
-                    ComboOffset = comboData?.ComboOffset ?? 0,
+                    NewCombo = comboData?.NewCombo ?? false
                 };
             }
         }

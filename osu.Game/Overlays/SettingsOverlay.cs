@@ -1,17 +1,17 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
@@ -177,10 +177,10 @@ namespace osu.Game.Overlays
 
         public override bool AcceptsFocus => true;
 
-        protected override void OnFocus(FocusEvent e)
+        protected override void OnFocus(InputState state)
         {
-            searchTextBox.TakeFocus();
-            base.OnFocus(e);
+            GetContainingInputManager().ChangeFocus(searchTextBox);
+            base.OnFocus(state);
         }
 
         protected override void UpdateAfterChildren()

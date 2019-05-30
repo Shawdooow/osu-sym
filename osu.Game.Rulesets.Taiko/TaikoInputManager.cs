@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.ComponentModel;
 using osu.Framework.Input.Bindings;
@@ -17,13 +17,13 @@ namespace osu.Game.Rulesets.Taiko
 
     public enum TaikoAction
     {
-        [Description("Left (rim)")]
+        [Description("Left (Rim)")]
         LeftRim,
-        [Description("Left (centre)")]
+        [Description("Left (Centre)")]
         LeftCentre,
-        [Description("Right (centre)")]
+        [Description("Right (Centre)")]
         RightCentre,
-        [Description("Right (rim)")]
+        [Description("Right (Rim)")]
         RightRim
     }
 }

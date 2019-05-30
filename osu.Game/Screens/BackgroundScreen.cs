@@ -1,22 +1,18 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
+using System.Threading;
 using osu.Framework.Screens;
 using osu.Framework.Graphics;
-using osu.Framework.Input.Events;
-using osuTK;
+using osu.Framework.Input.EventArgs;
+using osu.Framework.Input.States;
+using OpenTK;
 
 namespace osu.Game.Screens
 {
     public abstract class BackgroundScreen : Screen, IEquatable<BackgroundScreen>
     {
-        protected BackgroundScreen()
-        {
-            Anchor = Anchor.Centre;
-            Origin = Anchor.Centre;
-        }
-
         public virtual bool Equals(BackgroundScreen other)
         {
             return other?.GetType() == GetType();
@@ -25,46 +21,70 @@ namespace osu.Game.Screens
         private const float transition_length = 500;
         private const float x_movement_amount = 50;
 
-        protected override bool OnKeyDown(KeyDownEvent e)
+        protected override bool OnKeyDown(InputState state, KeyDownEventArgs args)
         {
             //we don't want to handle escape key.
             return false;
         }
 
+        public override void Push(Screen screen)
+        {
+            // When trying to push a non-loaded screen, load it asynchronously and re-invoke Push
+            // once it's done.
+            if (screen.LoadState == LoadState.NotLoaded)
+            {
+                LoadComponentAsync(screen, d => Push((BackgroundScreen)d));
+                return;
+            }
+
+            // Make sure the in-progress loading is complete before pushing the screen.
+            while (screen.LoadState < LoadState.Ready)
+                Thread.Sleep(1);
+
+            try
+            {
+                base.Push(screen);
+            }
+            catch (ScreenAlreadyExitedException)
+            {
+                // screen may have exited before the push was successful.
+            }
+        }
+
         protected override void Update()
         {
             base.Update();
-            Scale = new Vector2(1 + x_movement_amount / DrawSize.X * 2);
+            Content.Scale = new Vector2(1 + x_movement_amount / DrawSize.X * 2);
         }
 
-        public override void OnEntering(IScreen last)
+        protected override void OnEntering(Screen last)
         {
-            this.FadeOut();
-            this.MoveToX(x_movement_amount);
+            Content.FadeOut();
+            Content.MoveToX(x_movement_amount);
 
-            this.FadeIn(transition_length, Easing.InOutQuart);
-            this.MoveToX(0, transition_length, Easing.InOutQuart);
+            Content.FadeIn(transition_length, Easing.InOutQuart);
+            Content.MoveToX(0, transition_length, Easing.InOutQuart);
 
             base.OnEntering(last);
         }
 
-        public override void OnSuspending(IScreen next)
+        protected override void OnSuspending(Screen next)
         {
-            this.MoveToX(-x_movement_amount, transition_length, Easing.InOutQuart);
+            Content.MoveToX(-x_movement_amount, transition_length, Easing.InOutQuart);
             base.OnSuspending(next);
         }
 
-        public override bool OnExiting(IScreen next)
+        protected override bool OnExiting(Screen next)
         {
-            this.FadeOut(transition_length, Easing.OutExpo);
-            this.MoveToX(x_movement_amount, transition_length, Easing.OutExpo);
+            Content.FadeOut(transition_length, Easing.OutExpo);
+            Content.MoveToX(x_movement_amount, transition_length, Easing.OutExpo);
 
             return base.OnExiting(next);
         }
 
-        public override void OnResuming(IScreen last)
+        protected override void OnResuming(Screen last)
         {
-            this.MoveToX(0, transition_length, Easing.OutExpo);
+            Content.MoveToX(0, transition_length, Easing.OutExpo);
             base.OnResuming(last);
         }
     }

@@ -1,17 +1,17 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Osu.Objects.Drawables.Pieces;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Game.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Allocation;
-using osu.Framework.Configuration;
+using osu.Game.Rulesets.Osu.Judgements;
 using osu.Game.Screens.Ranking;
 using osu.Game.Rulesets.Scoring;
 
@@ -36,8 +36,6 @@ namespace osu.Game.Rulesets.Osu.Objects.Drawables
 
         private readonly Color4 baseColour = OsuColour.FromHex(@"002c3c");
         private readonly Color4 fillColour = OsuColour.FromHex(@"005b7c");
-
-        private readonly IBindable<Vector2> positionBindable = new Bindable<Vector2>();
 
         private Color4 normalColour;
         private Color4 completeColour;
@@ -117,26 +115,9 @@ namespace osu.Game.Rulesets.Osu.Objects.Drawables
             };
         }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            normalColour = baseColour;
-
-            Background.AccentColour = normalColour;
-
-            completeColour = colours.YellowLight.Opacity(0.75f);
-
-            Disc.AccentColour = fillColour;
-            circle.Colour = colours.BlueDark;
-            glow.Colour = colours.BlueDark;
-
-            positionBindable.BindValueChanged(v => Position = v);
-            positionBindable.BindTo(HitObject.PositionBindable);
-        }
-
         public float Progress => MathHelper.Clamp(Disc.RotationAbsolute / 360 / Spinner.SpinsRequired, 0, 1);
 
-        protected override void CheckForResult(bool userTriggered, double timeOffset)
+        protected override void CheckForJudgements(bool userTriggered, double timeOffset)
         {
             if (Time.Current < HitObject.StartTime) return;
 
@@ -155,25 +136,36 @@ namespace osu.Game.Rulesets.Osu.Objects.Drawables
                 glow.FadeColour(completeColour, duration);
             }
 
-            if (userTriggered || Time.Current < Spinner.EndTime)
-                return;
-
-            ApplyResult(r =>
+            if (!userTriggered && Time.Current >= Spinner.EndTime)
             {
                 if (Progress >= 1)
-                    r.Type = HitResult.Great;
+                    AddJudgement(new OsuJudgement { Result = HitResult.Great });
                 else if (Progress > .9)
-                    r.Type = HitResult.Good;
+                    AddJudgement(new OsuJudgement { Result = HitResult.Good });
                 else if (Progress > .75)
-                    r.Type = HitResult.Meh;
+                    AddJudgement(new OsuJudgement { Result = HitResult.Meh });
                 else if (Time.Current >= Spinner.EndTime)
-                    r.Type = HitResult.Miss;
-            });
+                    AddJudgement(new OsuJudgement { Result = HitResult.Miss });
+            }
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
+        {
+            normalColour = baseColour;
+
+            Background.AccentColour = normalColour;
+
+            completeColour = colours.YellowLight.Opacity(0.75f);
+
+            Disc.AccentColour = fillColour;
+            circle.Colour = colours.BlueDark;
+            glow.Colour = colours.BlueDark;
         }
 
         protected override void Update()
         {
-            Disc.Tracking = OsuActionInputManager?.PressedActions.Any(x => x == OsuAction.LeftButton || x == OsuAction.RightButton) ?? false;
+            Disc.Tracking = OsuActionInputManager.PressedActions.Any(x => x == OsuAction.LeftButton || x == OsuAction.RightButton);
             if (!spmCounter.IsPresent && Disc.Tracking)
                 spmCounter.FadeIn(HitObject.TimeFadeIn);
 
@@ -217,9 +209,6 @@ namespace osu.Game.Rulesets.Osu.Objects.Drawables
 
             switch (state)
             {
-                case ArmedState.Idle:
-                    Expire(true);
-                    break;
                 case ArmedState.Hit:
                     sequence.ScaleTo(Scale * 1.2f, 320, Easing.Out);
                     break;

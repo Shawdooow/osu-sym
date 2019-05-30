@@ -1,8 +1,6 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osu.Framework.Allocation;
-using osu.Framework.Graphics;
 using osu.Framework.Screens;
 using osu.Game.Screens;
 
@@ -13,25 +11,38 @@ namespace osu.Game.Tests.Visual
     /// </summary>
     public abstract class ScreenTestCase : OsuTestCase
     {
-        private readonly ScreenStack stack;
-
-        [Cached]
-        private BackgroundScreenStack backgroundStack;
+        private readonly TestOsuScreen baseScreen;
 
         protected ScreenTestCase()
         {
-            Children = new Drawable[]
-            {
-                backgroundStack = new BackgroundScreenStack { RelativeSizeAxes = Axes.Both },
-                stack = new ScreenStack { RelativeSizeAxes = Axes.Both }
-            };
+            Add(baseScreen = new TestOsuScreen());
         }
 
-        protected void LoadScreen(OsuScreen screen)
+        protected void LoadScreen(OsuScreen screen) => baseScreen.LoadScreen(screen);
+
+        public class TestOsuScreen : OsuScreen
         {
-            if (stack.CurrentScreen != null)
-                stack.Exit();
-            stack.Push(screen);
+            private OsuScreen nextScreen;
+
+            public void LoadScreen(OsuScreen screen) => Schedule(() =>
+            {
+                nextScreen = screen;
+
+                if (IsCurrentScreen)
+                {
+                    Push(screen);
+                    nextScreen = null;
+                }
+                else
+                    MakeCurrent();
+            });
+
+            protected override void OnResuming(Screen last)
+            {
+                base.OnResuming(last);
+                if (nextScreen != null)
+                    LoadScreen(nextScreen);
+            }
         }
     }
 }

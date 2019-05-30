@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System;
 using osu.Framework.Allocation;
@@ -10,14 +10,13 @@ using osu.Game.Configuration;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Online.API;
-using osuTK;
+using OpenTK;
 using osu.Game.Users;
 using System.ComponentModel;
 using osu.Game.Graphics;
-using osuTK.Graphics;
+using OpenTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
-using osu.Framework.Input.Events;
-using osu.Game.Graphics.Containers;
+using osu.Framework.Input.States;
 using RectangleF = osu.Framework.Graphics.Primitives.RectangleF;
 using Container = osu.Framework.Graphics.Containers.Container;
 
@@ -80,36 +79,29 @@ namespace osu.Game.Overlays.Settings.Sections.General
                             Margin = new MarginPadding { Bottom = 5 },
                             Font = @"Exo2.0-Black",
                         },
-                        form = new LoginForm
-                        {
-                            RequestHide = RequestHide
-                        }
+                        form = new LoginForm()
                     };
                     break;
                 case APIState.Failing:
-                case APIState.Connecting:
-                    LinkFlowContainer linkFlow;
-
                     Children = new Drawable[]
                     {
-                        new LoadingAnimation
+                        new OsuSpriteText
                         {
-                            State = Visibility.Visible,
-                            Anchor = Anchor.TopCentre,
-                            Origin = Anchor.TopCentre,
+                            Text = "Connection failing :(",
                         },
-                        linkFlow = new LinkFlowContainer
+                    };
+                    break;
+                case APIState.Connecting:
+                    Children = new Drawable[]
+                    {
+                        new OsuSpriteText
                         {
-                            Anchor = Anchor.TopCentre,
-                            Origin = Anchor.TopCentre,
-                            TextAnchor = Anchor.TopCentre,
-                            AutoSizeAxes = Axes.Both,
-                            Text = state == APIState.Failing ? "Connection is failing, will attempt to reconnect... " : "Attempting to connect... ",
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Text = "Connecting...",
                             Margin = new MarginPadding { Top = 10, Bottom = 10 },
                         },
                     };
-
-                    linkFlow.AddLink("cancel", api.Logout, string.Empty);
                     break;
                 case APIState.Online:
                     Children = new Drawable[]
@@ -183,12 +175,12 @@ namespace osu.Game.Overlays.Settings.Sections.General
 
         public override bool AcceptsFocus => true;
 
-        protected override bool OnClick(ClickEvent e) => true;
+        protected override bool OnClick(InputState state) => true;
 
-        protected override void OnFocus(FocusEvent e)
+        protected override void OnFocus(InputState state)
         {
             if (form != null) GetContainingInputManager().ChangeFocus(form);
-            base.OnFocus(e);
+            base.OnFocus(state);
         }
 
         private class LoginForm : FillFlowContainer
@@ -197,8 +189,6 @@ namespace osu.Game.Overlays.Settings.Sections.General
             private TextBox password;
             private APIAccess api;
 
-            public Action RequestHide;
-
             private void performLogin()
             {
                 if (!string.IsNullOrEmpty(username.Text) && !string.IsNullOrEmpty(password.Text))
@@ -206,7 +196,7 @@ namespace osu.Game.Overlays.Settings.Sections.General
             }
 
             [BackgroundDependencyLoader(permitNulls: true)]
-            private void load(APIAccess api, OsuConfigManager config, AccountCreationOverlay accountCreation)
+            private void load(APIAccess api, OsuConfigManager config)
             {
                 this.api = api;
                 Direction = FillDirection.Vertical;
@@ -217,14 +207,14 @@ namespace osu.Game.Overlays.Settings.Sections.General
                 {
                     username = new OsuTextBox
                     {
-                        PlaceholderText = "email address",
+                        PlaceholderText = "Email address",
                         RelativeSizeAxes = Axes.X,
                         Text = api?.ProvidedUsername ?? string.Empty,
                         TabbableContentContainer = this
                     },
                     password = new OsuPasswordTextBox
                     {
-                        PlaceholderText = "password",
+                        PlaceholderText = "Password",
                         RelativeSizeAxes = Axes.X,
                         TabbableContentContainer = this,
                         OnCommit = (sender, newText) => performLogin()
@@ -247,20 +237,16 @@ namespace osu.Game.Overlays.Settings.Sections.General
                     new SettingsButton
                     {
                         Text = "Register",
-                        Action = () =>
-                        {
-                            RequestHide();
-                            accountCreation.Show();
-                        }
+                        //Action = registerLink
                     }
                 };
             }
 
             public override bool AcceptsFocus => true;
 
-            protected override bool OnClick(ClickEvent e) => true;
+            protected override bool OnClick(InputState state) => true;
 
-            protected override void OnFocus(FocusEvent e)
+            protected override void OnFocus(InputState state)
             {
                 Schedule(() => { GetContainingInputManager().ChangeFocus(string.IsNullOrEmpty(username.Text) ? username : password); });
             }
@@ -336,10 +322,12 @@ namespace osu.Game.Overlays.Settings.Sections.General
                 public const float LABEL_LEFT_MARGIN = 20;
 
                 private readonly SpriteIcon statusIcon;
-
                 public Color4 StatusColour
                 {
-                    set { statusIcon.FadeColour(value, 500, Easing.OutQuint); }
+                    set
+                    {
+                        statusIcon.FadeColour(value, 500, Easing.OutQuint);
+                    }
                 }
 
                 public UserDropdownHeader()
@@ -380,13 +368,10 @@ namespace osu.Game.Overlays.Settings.Sections.General
         private enum UserAction
         {
             Online,
-
             [Description(@"Do not disturb")]
             DoNotDisturb,
-
             [Description(@"Appear offline")]
             AppearOffline,
-
             [Description(@"Sign out")]
             SignOut,
         }

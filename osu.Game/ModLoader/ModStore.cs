@@ -17,7 +17,7 @@ namespace osu.Game.ModLoader
         {
             loadedAssemblies = new Dictionary<Assembly, Type>();
 
-            foreach (string file in Directory.GetFiles(Environment.CurrentDirectory, "osu.Core.dll"))
+            foreach (string file in Directory.GetFiles(Environment.CurrentDirectory, "Symcol.osu.Core.dll"))
             {
                 var filename = Path.GetFileNameWithoutExtension(file);
 

@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
@@ -8,24 +8,28 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
-using osuTK.Graphics;
+using OpenTK.Graphics;
 
 namespace osu.Game.Rulesets.Mania.UI.Components
 {
-    public class ColumnHitObjectArea : CompositeDrawable, IHasAccentColour
+    public class ColumnHitObjectArea : Container, IHasAccentColour
     {
         private const float hit_target_height = 10;
         private const float hit_target_bar_height = 2;
 
+        private Container<Drawable> content;
+        protected override Container<Drawable> Content => content;
+
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 
-        private readonly Container hitTargetLine;
-        private readonly Drawable hitTargetBar;
+        private Container hitTargetLine;
 
-        public ColumnHitObjectArea(HitObjectContainer hitObjectContainer)
+        [BackgroundDependencyLoader]
+        private void load(IScrollingInfo scrollingInfo)
         {
+            Drawable hitTargetBar;
+
             InternalChildren = new[]
             {
                 hitTargetBar = new Box
@@ -41,13 +45,13 @@ namespace osu.Game.Rulesets.Mania.UI.Components
                     Masking = true,
                     Child = new Box { RelativeSizeAxes = Axes.Both }
                 },
-                hitObjectContainer
+                content = new Container
+                {
+                    Name = "Hit objects",
+                    RelativeSizeAxes = Axes.Both,
+                },
             };
-        }
 
-        [BackgroundDependencyLoader]
-        private void load(IScrollingInfo scrollingInfo)
-        {
             direction.BindTo(scrollingInfo.Direction);
             direction.BindValueChanged(direction =>
             {

@@ -1,23 +1,22 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Online.API.Requests.Responses;
-using osu.Game.Online.Leaderboards;
 using osu.Game.Overlays.Profile.Sections.Ranks;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
-using osu.Game.Scoring;
+using osu.Game.Screens.Select.Leaderboards;
 using osu.Game.Users;
 
 namespace osu.Game.Overlays.BeatmapSet.Scores
@@ -43,8 +42,8 @@ namespace osu.Game.Overlays.BeatmapSet.Scores
         private readonly InfoColumn statistics;
         private readonly ScoreModsContainer modsContainer;
 
-        private APIScoreInfo score;
-        public APIScoreInfo Score
+        private APIScore score;
+        public APIScore Score
         {
             get { return score; }
             set
@@ -185,16 +184,16 @@ namespace osu.Game.Overlays.BeatmapSet.Scores
             BorderColour = rankText.Colour = colours.Yellow;
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnHover(InputState state)
         {
             background.FadeIn(fade_duration, Easing.OutQuint);
-            return base.OnHover(e);
+            return base.OnHover(state);
         }
 
-        protected override void OnHoverLost(HoverLostEvent e)
+        protected override void OnHoverLost(InputState state)
         {
             background.FadeOut(fade_duration, Easing.OutQuint);
-            base.OnHoverLost(e);
+            base.OnHoverLost(state);
         }
 
         private class InfoColumn : FillFlowContainer

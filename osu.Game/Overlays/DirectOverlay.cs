@@ -1,5 +1,5 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +18,8 @@ using osu.Game.Online.API.Requests;
 using osu.Game.Overlays.Direct;
 using osu.Game.Overlays.SearchableList;
 using osu.Game.Rulesets;
-using osuTK;
-using osuTK.Graphics;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace osu.Game.Overlays
 {
@@ -240,15 +240,6 @@ namespace osu.Game.Overlays
             });
         }
 
-        protected override void PopIn()
-        {
-            base.PopIn();
-
-            // Queries are allowed to be run only on the first pop-in
-            if (getSetsRequest == null)
-                Scheduler.AddOnce(updateSearch);
-        }
-
         private SearchBeatmapSetsRequest getSetsRequest;
 
         private readonly Bindable<string> currentQuery = new Bindable<string>();
@@ -260,22 +251,16 @@ namespace osu.Game.Overlays
         {
             queryChangedDebounce?.Cancel();
 
-            if (!IsLoaded)
-                return;
-
-            if (State == Visibility.Hidden)
-                return;
+            if (!IsLoaded) return;
 
             BeatmapSets = null;
             ResultAmounts = null;
 
             getSetsRequest?.Cancel();
 
-            if (api == null)
-                return;
+            if (api == null) return;
 
-            if (Header.Tabs.Current.Value == DirectTab.Search && (Filter.Search.Text == string.Empty || currentQuery == string.Empty))
-                return;
+            if (Header.Tabs.Current.Value == DirectTab.Search && (Filter.Search.Text == string.Empty || currentQuery == string.Empty)) return;
 
             previewTrackManager.StopAnyPlaying(this);
 
@@ -288,7 +273,7 @@ namespace osu.Game.Overlays
             {
                 Task.Run(() =>
                 {
-                    var sets = response.BeatmapSets.Select(r => r.ToBeatmapSet(rulesets)).ToList();
+                    var sets = response.Select(r => r.ToBeatmapSet(rulesets)).ToList();
 
                     // may not need scheduling; loads async internally.
                     Schedule(() =>

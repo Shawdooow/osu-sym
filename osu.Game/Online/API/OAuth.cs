@@ -1,8 +1,7 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Diagnostics;
-using System.Net.Http;
 using osu.Framework.Configuration;
 using osu.Framework.IO.Network;
 
@@ -41,7 +40,7 @@ namespace osu.Game.Online.API
             using (var req = new AccessTokenRequestPassword(username, password)
             {
                 Url = $@"{endpoint}/oauth/token",
-                Method = HttpMethod.Post,
+                Method = HttpMethod.POST,
                 ClientId = clientId,
                 ClientSecret = clientSecret
             })
@@ -67,7 +66,7 @@ namespace osu.Game.Online.API
                 using (var req = new AccessTokenRequestRefresh(refresh)
                 {
                     Url = $@"{endpoint}/oauth/token",
-                    Method = HttpMethod.Post,
+                    Method = HttpMethod.POST,
                     ClientId = clientId,
                     ClientSecret = clientSecret
                 })
@@ -178,7 +177,6 @@ namespace osu.Game.Online.API
                 AddParameter("grant_type", GrantType);
                 AddParameter("client_id", ClientId);
                 AddParameter("client_secret", ClientSecret);
-                AddParameter("scope", "*");
 
                 base.PrePerform();
             }

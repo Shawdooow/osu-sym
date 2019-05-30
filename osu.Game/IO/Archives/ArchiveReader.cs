@@ -1,9 +1,8 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+﻿// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using osu.Framework.IO.Stores;
 
 namespace osu.Game.IO.Archives
@@ -29,9 +28,7 @@ namespace osu.Game.IO.Archives
 
         public abstract IEnumerable<string> Filenames { get; }
 
-        public virtual byte[] Get(string name) => GetAsync(name).Result;
-
-        public async Task<byte[]> GetAsync(string name)
+        public virtual byte[] Get(string name)
         {
             using (Stream input = GetStream(name))
             {
@@ -39,7 +36,7 @@ namespace osu.Game.IO.Archives
                     return null;
 
                 byte[] buffer = new byte[input.Length];
-                await input.ReadAsync(buffer, 0, buffer.Length);
+                input.Read(buffer, 0, buffer.Length);
                 return buffer;
             }
         }

@@ -1,7 +1,7 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
-// See the LICENCE file in the repository root for full licence text.
+// Copyright (c) 2007-2018 ppy Pty Ltd <contact@ppy.sh>.
+// Licensed under the MIT Licence - https://raw.githubusercontent.com/ppy/osu/master/LICENCE
 
-using osuTK.Graphics;
+using OpenTK.Graphics;
 using osu.Framework.Allocation;
 using osu.Framework.Audio.Track;
 using osu.Framework.Configuration;
@@ -19,6 +19,9 @@ namespace osu.Game.Screens.Menu
 {
     public class MenuSideFlashes : BeatSyncedContainer
     {
+        public override bool HandleKeyboardInput => false;
+        public override bool HandleMouseInput => false;
+
         private readonly IBindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
 
         private Box leftBox;
@@ -42,7 +45,7 @@ namespace osu.Game.Screens.Menu
         }
 
         [BackgroundDependencyLoader]
-        private void load(IBindable<WorkingBeatmap> beatmap, OsuColour colours)
+        private void load(IBindableBeatmap beatmap, OsuColour colours)
         {
             this.beatmap.BindTo(beatmap);
 
@@ -58,7 +61,6 @@ namespace osu.Game.Screens.Menu
                     Origin = Anchor.CentreLeft,
                     RelativeSizeAxes = Axes.Y,
                     Width = box_width * 2,
-                    Height = 1.5f,
                     // align off-screen to make sure our edges don't become visible during parallax.
                     X = -box_width,
                     Alpha = 0,
@@ -71,7 +73,6 @@ namespace osu.Game.Screens.Menu
                     Origin = Anchor.CentreRight,
                     RelativeSizeAxes = Axes.Y,
                     Width = box_width * 2,
-                    Height = 1.5f,
                     X = box_width,
                     Alpha = 0,
                     Blending = BlendingMode.Additive,
