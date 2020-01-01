@@ -717,6 +717,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                 Team = Team,
                 Dummy = true,
                 SliderType = SliderType.Straight,
+                Distance = 1000,
                 
             }, VitaruPlayfield){ Position = Position });
             b.Untuned = Untuned;
