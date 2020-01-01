@@ -17,7 +17,7 @@
         {
             "[WIP] ChapterSets Reborn",
             "[WIP] Brought back base vitaru to be given a whole new set of patterns focused on movement "
-            + "(or rather keeping the player moving to the beat, new patterns can be tested in Touhosu when \"Experimental\" mode is on). "
+            + "(or rather keeping the player moving to the beat, new patterns can be tested in Touhosu when enabled in debug mode). "
             + "Touhosu will not use the new patterns and instead keep the old ones once the vitaru gamemode is up and running "
             + "(Dodge also might get killed since vitaru will be a straight upgrade in most ways).",
             "Scoring V3",
@@ -47,7 +47,7 @@
             "Made shooting more responsive (now it will always fire when you click, and if you hold it will auto fire on half beats)",
             "Brought back some old wiki sections on mapping and multiplayer",
             "Small optimizations to bullets and enemies",
-            "Editor is now locked behind \"Experimental\" mode (its buggy, crashy and useless. if you really want to poke it I won't stop you)",
+            "Editor is now locked behind an option in debug mode (its buggy, crashy and useless. if you really want to poke it though, I won't stop you)",
         };
 
         protected override string[] Fixes => new[]
