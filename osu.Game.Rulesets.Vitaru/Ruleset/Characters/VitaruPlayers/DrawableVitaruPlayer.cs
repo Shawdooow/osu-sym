@@ -78,8 +78,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
 
         protected bool HealthHacks { get; private set; }
 
-        protected bool BoundryHacks { get; private set; }
-
         //Is reset after healing applied
         public double HealingMultiplier = 1;
 
@@ -508,7 +506,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
             if (Actions[VitaruAction.Right])
                 playerPosition.X += (float)xTranslationDistance;
 
-            if (!BoundryHacks)
+            if (!VitaruPlayfield.BOUNDLESS)
             {
                 playerPosition = Vector2.ComponentMin(playerPosition, ChapterSet.PlayfieldBounds.Zw);
                 playerPosition = Vector2.ComponentMax(playerPosition, ChapterSet.PlayfieldBounds.Xy);
