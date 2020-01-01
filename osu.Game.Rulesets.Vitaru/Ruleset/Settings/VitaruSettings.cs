@@ -34,10 +34,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
 
         private const int transition_duration = 400;
 
-        public static bool Experimental => experimental.Value;
+        public static bool Editor => editor.Value;
+        public static bool Patterns => patterns.Value;
         public static GraphicsOptions BulletGraphics => bulletGraphics.Value;
 
-        private static Bindable<bool> experimental;
+        private static Bindable<bool> editor;
+        private static Bindable<bool> patterns;
         private static Bindable<GraphicsOptions> bulletGraphics;
 
         [BackgroundDependencyLoader]
@@ -65,7 +67,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                 Items = gamemodeItems.Distinct().ToList(),
             };
 
-            experimental = VitaruConfigManager.GetBindable<bool>(VitaruSetting.Experimental);
+            editor = VitaruConfigManager.GetBindable<bool>(VitaruSetting.Editor);
+            patterns = VitaruConfigManager.GetBindable<bool>(VitaruSetting.Patterns);
             bulletGraphics = VitaruConfigManager.GetBindable<GraphicsOptions>(VitaruSetting.BulletVisuals);
 
             Children = new Drawable[]
@@ -158,6 +161,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                     {
                         new SettingsCheckbox
                         {
+                            LabelText = "Enable Editor",
+                            Bindable = editor
+                        },
+                        new SettingsCheckbox
+                        {
                             LabelText = "Show Boss in Editor",
                             Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.EditorBoss)
                         },
@@ -171,11 +179,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                             LabelText = "Disable Projectiles",
                             Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DisableBullets)
                         },
-                        new SettingsCheckbox
-                        {
-                            LabelText = "Experimental Mode",
-                            Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.Experimental)
-                        },
                         new SettingsEnumDropdown<DebugConfiguration>
                         {
                             LabelText = "Debug Tools Configuration",
@@ -185,7 +188,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                         {
                             LabelText = "Auto Type",
                             Bindable = VitaruConfigManager.GetBindable<AutoType>(VitaruSetting.AutoType)
-                        }
+                        },
+                        new SettingsCheckbox
+                        {
+                            LabelText = "Enable Experimental Patterns",
+                            Bindable = patterns
+                        },
                     }
                 },
             };

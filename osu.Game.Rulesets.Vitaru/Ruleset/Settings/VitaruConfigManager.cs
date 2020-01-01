@@ -35,10 +35,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
             Set(VitaruSetting.ComboFire, true);
 
             Set(VitaruSetting.DebugMode, false);
+            Set(VitaruSetting.Editor, false);
             Set(VitaruSetting.EditorBoss, false);
             Set(VitaruSetting.DisableBullets, false);
             Set(VitaruSetting.RankedFilter, false);
-            Set(VitaruSetting.Experimental, false);
+            Set(VitaruSetting.Patterns, false);
             Set(VitaruSetting.DebugConfiguration, DebugConfiguration.General);
             Set(VitaruSetting.AutoType, AutoType.New);
 
@@ -68,10 +69,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
         ComboFire,
 
         DebugMode,
+        Editor,
         EditorBoss,
         DisableBullets,
         RankedFilter,
-        Experimental,
+        Patterns,
         DebugConfiguration,
         AutoType,
 

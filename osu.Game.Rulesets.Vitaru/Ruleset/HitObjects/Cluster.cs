@@ -287,7 +287,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
                 case "normal" when info.Name == "hitwhistle":
                     return 2;
                 case "normal" when info.Name == "hitfinish":
-                    return 7;
+                    return 5;
                 case "normal" when info.Name == "hitclap":
                     return 5;
                 case "drum" when info.Name == "hitnormal":
@@ -303,7 +303,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects
                 case "soft" when info.Name == "hitwhistle":
                     return 2;
                 case "soft" when info.Name == "hitfinish":
-                    return 7;
+                    return 4;
                 case "soft" when info.Name == "hitclap":
                     return 5;
             }

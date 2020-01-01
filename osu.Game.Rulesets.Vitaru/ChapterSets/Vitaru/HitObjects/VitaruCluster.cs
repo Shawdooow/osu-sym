@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects
 
         protected override List<Projectile> GetConvertCluster(Vector2 pos, int id)
         {
-            if (!VitaruSettings.Experimental) return base.GetConvertCluster(pos, id);
+            if (!VitaruSettings.Patterns) return base.GetConvertCluster(pos, id);
 
             switch (id)
             {
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects
 
         protected override int GetConvertPatternID(SampleInfo info)
         {
-            if (!VitaruSettings.Experimental) return base.GetConvertPatternID(info);
+            if (!VitaruSettings.Patterns) return base.GetConvertPatternID(info);
 
             if (IsSpinner) return 6;
 
