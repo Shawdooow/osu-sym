@@ -179,6 +179,11 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                             LabelText = "Disable Projectiles",
                             Bindable = VitaruConfigManager.GetBindable<bool>(VitaruSetting.DisableBullets)
                         },
+                        new SettingsCheckbox
+                        {
+                            LabelText = "Enable Experimental Patterns",
+                            Bindable = patterns
+                        },
                         new SettingsEnumDropdown<DebugConfiguration>
                         {
                             LabelText = "Debug Tools Configuration",
@@ -188,11 +193,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Settings
                         {
                             LabelText = "Auto Type",
                             Bindable = VitaruConfigManager.GetBindable<AutoType>(VitaruSetting.AutoType)
-                        },
-                        new SettingsCheckbox
-                        {
-                            LabelText = "Enable Experimental Patterns",
-                            Bindable = patterns
                         },
                     }
                 },
