@@ -240,9 +240,14 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         private readonly List<Cluster> unloadedClusters = new List<Cluster>();
         private readonly List<Cluster> loadedClusters = new List<Cluster>();
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+            if (BOUNDLESS) border.Alpha = 0;
+        }
+
         private DrawableCluster add(Cluster p)
         {
-            if (BOUNDLESS) border.Alpha = 0;
             p.Hidden = HIDDEN;
             p.TrueHidden = TRUEHIDDEN;
             p.Flashlight = FLASHLIGHT;
