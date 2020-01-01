@@ -180,6 +180,7 @@ namespace osu.Game.Rulesets.Vitaru
                     return new Mod[]
                     {
                         new MultiMod(new VitaruModAccel(), new VitaruModDeccel()),
+                        new VitaruModBoundless(),
                     };
                 default: return new Mod[] { };
             }

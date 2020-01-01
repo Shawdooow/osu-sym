@@ -274,11 +274,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Characters.VitaruPlayers
                             HITDETECTION = !HITDETECTION;
                             VitaruPlayfield.Cheated = true;
                         }) { Text = "Toggle BulletParsing" });
-                        DebugToolkit.GeneralDebugItems.Add(new DebugAction(() => {
-                            BoundryHacks = !BoundryHacks;
-                            DrawableBullet.BoundryHacks = !DrawableBullet.BoundryHacks;
-                            VitaruPlayfield.Cheated = true;
-                        }) { Text = "Boundry Hacks" });
                         DebugToolkit.GeneralDebugItems.Add(new DebugAction(() =>
                         {
                             HealthHacks = !HealthHacks;

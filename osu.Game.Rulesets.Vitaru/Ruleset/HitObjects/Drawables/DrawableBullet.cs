@@ -25,8 +25,6 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
 
         private readonly GraphicsOptions graphics = VitaruSettings.BulletGraphics;
 
-        public static bool BoundryHacks;
-
         public new readonly Bullet HitObject;
 
         private BulletPiece bulletPiece;
@@ -94,7 +92,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.HitObjects.Drawables
                     Alpha = (float)GetFLAlpha(distance);
                 }
 
-                if (HitObject.ObeyBoundries && (Position.Y <= ChapterSet.PlayfieldBounds.Y - 10 || Position.X <= ChapterSet.PlayfieldBounds.X - 10 || Position.Y >= ChapterSet.PlayfieldBounds.W + 10 || Position.X >= ChapterSet.PlayfieldBounds.Z + 10) && !BoundryHacks)
+                if (HitObject.ObeyBoundries && (Position.Y <= ChapterSet.PlayfieldBounds.Y - 10 || Position.X <= ChapterSet.PlayfieldBounds.X - 10 || Position.Y >= ChapterSet.PlayfieldBounds.W + 10 || Position.X >= ChapterSet.PlayfieldBounds.Z + 10) && !VitaruPlayfield.BOUNDLESS)
                     End();
             }
         }

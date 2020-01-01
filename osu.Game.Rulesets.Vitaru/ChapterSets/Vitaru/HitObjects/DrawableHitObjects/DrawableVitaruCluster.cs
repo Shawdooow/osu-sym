@@ -135,7 +135,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects.DrawableHitObje
                 {
                     if (o is Bullet b)
                     {
-                        if (DrawableBullet.BoundryHacks || ChapterSet is DodgeChapterSet)
+                        if (VitaruPlayfield.BOUNDLESS || ChapterSet is DodgeChapterSet)
                         {
                             b.Angle += getPlayerAngle() - (float)Math.PI / 2;
                             b.SliderType = b.SliderType;
@@ -149,7 +149,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Vitaru.HitObjects.DrawableHitObje
                     }
                     else if (o is Laser l)
                     {
-                        if (DrawableBullet.BoundryHacks || ChapterSet is DodgeChapterSet)
+                        if (VitaruPlayfield.BOUNDLESS || ChapterSet is DodgeChapterSet)
                             l.Angle += getPlayerAngle() - (float)Math.PI / 2;
 
                         DrawableLaser drawableLaser = ChapterSet.GetDrawableLaser(l, VitaruPlayfield);

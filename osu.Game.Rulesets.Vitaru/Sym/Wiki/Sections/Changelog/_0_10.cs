@@ -21,6 +21,7 @@
             + "Touhosu will not use the new patterns and instead keep the old ones once the vitaru gamemode is up and running "
             + "(Dodge also might get killed since vitaru will be a straight upgrade in most ways).",
             "Scoring V3",
+            "New \"Boundless\" mod that removes the playfield borders and makes the enemies target you.",
             "[Experimental] New bullet visuals (TO BE REMOVED!)",
             //"Added classic enemy visuals",
 
@@ -55,6 +56,7 @@
             "Fix the really bad memory leak when not in editor (where pretty much nothing was getting claimed by the GC, this should help in low RAM situations greatly)",
             "Fix ComboColors not working basically at all",
             "Fix a number of smaller bugs resulting from the ChapterSets changes and optimizations to memory usage",
+            "Fix player bullets not shooting as far as they should",
         };
     }
 }

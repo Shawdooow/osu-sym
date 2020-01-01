@@ -54,6 +54,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         public static bool HIDDEN;
         public static bool TRUEHIDDEN;
         public static bool FLASHLIGHT;
+        public static bool BOUNDLESS;
 
         public static Action<JudgementResult> OnResult;
 
@@ -98,6 +99,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         private const int enemyTeam = 0;
         private const int playerTeam = 1;
 
+        private Container border;
+
         protected OsuNetworkingHandler OsuNetworkingHandler { get; private set; }
 
         /// <summary>
@@ -117,9 +120,9 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             HIDDEN = false;
             TRUEHIDDEN = false;
             FLASHLIGHT = false;
+            BOUNDLESS = false;
 
             BulletPiece.ExclusiveTestingHax = false;
-            DrawableBullet.BoundryHacks = false;
 
             Size = chapterSet.PlayfieldSize;
 
@@ -157,7 +160,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             DebugToolkit.GeneralDebugItems.Add(returnedJudgementCount = new DebugStat<int>(new Bindable<int>()) { Text = "Returned Judge Count" });
 
             if (playfieldBorder)
-                AddDrawable(new Container
+                AddDrawable(border = new Container
                 {
                     Name = "Border",
                     RelativeSizeAxes = Axes.Both,
@@ -239,6 +242,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         private DrawableCluster add(Cluster p)
         {
+            if (BOUNDLESS) border.Alpha = 0;
             p.Hidden = HIDDEN;
             p.TrueHidden = TRUEHIDDEN;
             p.Flashlight = FLASHLIGHT;

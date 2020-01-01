@@ -255,6 +255,20 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
         }
     }
 
+    public class VitaruModBoundless : Mod, IApplicableToDrawableHitObjects
+    {
+        public override string Name => "Boundless";
+        public override string Acronym => "BL";
+        public override string Description => "No walls, but the enemies target you...";
+        public override double ScoreMultiplier => 1;
+        public override bool Ranked => false;
+
+        public void ApplyToDrawableHitObjects(IEnumerable<DrawableHitObject> drawables)
+        {
+            VitaruPlayfield.BOUNDLESS = true;
+        }
+    }
+
     public class VitaruModHidden : ModHidden
     {
         public override Type[] IncompatibleMods => new[]
