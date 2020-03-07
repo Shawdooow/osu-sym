@@ -51,6 +51,18 @@
             "Editor is now locked behind an option in debug mode (its buggy, crashy and useless. if you really want to poke it though, I won't stop you)",
         };
 
+        protected override string[] Balances => new[]
+        {
+            @"Nerfed Ryukoy:
+        -Health reduced to 50 from 60
+        -EnergyCost increased to 0.5 from 0.25
+        -Player Drain Multiplier increased to 2.5 from 0.5
+        -Enemy Drain Multiplier increased to 0.5 from 0.25
+        -Boss Drain Multiplier increased to 5 from 1
+
+     Now she is no longer invincible, she is just god tier.",
+        };
+
         protected override string[] Fixes => new[]
         {
             "Fix the really bad memory leak when not in editor (where pretty much nothing was getting claimed by the GC, this should help in low RAM situations greatly)",
