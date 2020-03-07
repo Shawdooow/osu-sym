@@ -43,6 +43,18 @@ namespace osu.Core.Containers.SymcolToolbar
                 },
                 new FillFlowContainer
                 {
+                    Anchor = Anchor.TopCentre,
+                    Origin = Anchor.TopCentre,
+                    Direction = FillDirection.Horizontal,
+                    RelativeSizeAxes = Axes.Y,
+                    AutoSizeAxes = Axes.X,
+                    Children = new Drawable[]
+                    {
+                        new ToolbarSystemClock(),
+                    }
+                },
+                new FillFlowContainer
+                {
                     Anchor = Anchor.TopRight,
                     Origin = Anchor.TopRight,
                     Direction = FillDirection.Horizontal,
@@ -50,7 +62,6 @@ namespace osu.Core.Containers.SymcolToolbar
                     AutoSizeAxes = Axes.X,
                     Children = new Drawable[]
                     {
-                        new ToolbarSystemClock(),
                         new ToolBarWikiButton(), 
                         new ToolbarDirectButton(),
                         new ToolbarChatButton(),
