@@ -11,11 +11,11 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Worship.Characte
     {
         public override string Name => "Ryukoy Hakurei";
 
-        public override double MaxHealth => 60;
+        public override double MaxHealth => 50;
 
         public override double MaxEnergy => 20;
 
-        public override double EnergyCost => 0.25;
+        public override double EnergyCost => 5;
 
         public override double EnergyDrainRate => 0;
 
@@ -33,11 +33,11 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Worship.Characte
                                                "\n-Enemy drain: " + ENEMY_DRAIN_MULTIPLIER +
                                                "\n-Boss drain: " + BOSS_DRAIN_MULTIPLIER;
 
-        public const double PLAYER_DRAIN_MULTIPLIER = 0.5d;
+        public const double PLAYER_DRAIN_MULTIPLIER = 2.5d;
 
-        public const double ENEMY_DRAIN_MULTIPLIER = 0.25d;
+        public const double ENEMY_DRAIN_MULTIPLIER = 0.5d;
 
-        public const double BOSS_DRAIN_MULTIPLIER = 1d;
+        public const double BOSS_DRAIN_MULTIPLIER = 5d;
 
         #endregion
 
