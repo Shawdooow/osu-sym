@@ -165,15 +165,15 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Worship.Characte
             if (action == VitaruAction.Pull)
             {
                 restart:
-                foreach (Drawable draw in Untuned ? VitaruPlayfield.Gamefield : VitaruPlayfield.VitaruInputManager.BlurredPlayfield)
+                foreach (Drawable draw in !Untuned ? VitaruPlayfield.Gamefield : VitaruPlayfield.VitaruInputManager.BlurredPlayfield)
                     if (draw is ITuneable tunable && draw.Alpha > 0)
                     {
                         Vector2 drawPos = Cursor.ToSpaceOfOtherDrawable(Vector2.Zero, draw);
                         float distance = (float)Math.Sqrt(Math.Pow(drawPos.X, 2) + Math.Pow(drawPos.Y, 2));
 
-                        if (80 >= distance && Energy >= TouhosuPlayer.EnergyCost)
+                        if (80 >= distance && Energy >= Ryukoy.BULLET_ENERGY_COST)
                         {
-                            Drain(TouhosuPlayer.EnergyCost);
+                            Drain(Ryukoy.BULLET_ENERGY_COST);
                             tunable.Untuned = !tunable.Untuned;
                             goto restart;
                         }

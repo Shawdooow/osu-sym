@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Worship.Characte
 
         public override double MaxEnergy => 20;
 
-        public override double EnergyCost => 5;
+        public override double EnergyCost => 10;
 
         public override double EnergyDrainRate => 0;
 
@@ -33,9 +33,11 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Worship.Characte
                                                "\n-Enemy drain: " + ENEMY_DRAIN_MULTIPLIER +
                                                "\n-Boss drain: " + BOSS_DRAIN_MULTIPLIER;
 
-        public const double PLAYER_DRAIN_MULTIPLIER = 2.5d;
+        public const double PLAYER_DRAIN_MULTIPLIER = 5d;
 
-        public const double ENEMY_DRAIN_MULTIPLIER = 0.5d;
+        public const double BULLET_ENERGY_COST = 2.5d;
+
+        public const double ENEMY_DRAIN_MULTIPLIER = 1d;
 
         public const double BOSS_DRAIN_MULTIPLIER = 5d;
 
