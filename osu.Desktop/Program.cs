@@ -22,7 +22,7 @@ namespace osu.Desktop
             // Back up the cwd before DesktopGameHost changes it
             var cwd = Environment.CurrentDirectory;
 
-            using (DesktopGameHost host = Host.GetSuitableHost(@"osu", true))
+            using (DesktopGameHost host = Host.GetSuitableHost(@"osusym", true))
             {
                 host.ExceptionThrown += handleException;
 
