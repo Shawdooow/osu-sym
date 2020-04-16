@@ -10,7 +10,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Vitaru.Ruleset
 {
-    public class Patterns
+    public static class Patterns
     {
         public static List<Projectile> Wave(float speed, float diameter, float damage, Vector2 position, double startTime, int team, float complexity = 1, float angle = (float)Math.PI / 2)
         {
