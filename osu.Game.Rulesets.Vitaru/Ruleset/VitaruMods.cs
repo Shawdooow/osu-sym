@@ -251,7 +251,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset
 
         public void ApplyToDrawableHitObjects(IEnumerable<DrawableHitObject> drawables)
         {
-            //VitaruPlayfield.DECCEL = true;
+            VitaruPlayfield.DECCEL = true;
         }
     }
 

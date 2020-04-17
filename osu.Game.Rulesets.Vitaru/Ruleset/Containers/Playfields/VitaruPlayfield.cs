@@ -49,6 +49,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
         public static bool CHARGED;
         public static bool ACCEL;
+        public static bool DECCEL;
         //For Sakuya only pretty much
         public static double ACCELMULTIPLIER = 1;
         public static bool HIDDEN;
@@ -116,6 +117,7 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
             //Reset crap
             CHARGED = false;
             ACCEL = false;
+            DECCEL = false;
             ACCELMULTIPLIER = 1;
             HIDDEN = false;
             TRUEHIDDEN = false;
@@ -303,6 +305,8 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
 
             if (ACCEL)
                 applyToClock(workingBeatmap.Value.Track, (getAccelSpeed(Current) < 0.75f ? 0.75f : getAccelSpeed(Current)) * ACCELMULTIPLIER);
+            if (DECCEL)
+                applyToClock(workingBeatmap.Value.Track, (getDeccelSpeed(Current) > 1.5f ? 1.5f : getDeccelSpeed(Current)) * ACCELMULTIPLIER);
 
             for (int i = 0; i < unloadedClusters.Count; i++)
             {
@@ -337,6 +341,12 @@ namespace osu.Game.Rulesets.Vitaru.Ruleset.Containers.Playfields
         {
             double scale = (1.5 - 0.75) / (endTime - startTime);
             return 0.75 + (value - startTime) * scale;
+        }
+
+        private double getDeccelSpeed(double value)
+        {
+            double scale = (0.75 - 1.5) / (endTime - startTime);
+            return 1.5 + (value - startTime) * scale;
         }
 
         private void applyToClock(IAdjustableClock clock, double speed)

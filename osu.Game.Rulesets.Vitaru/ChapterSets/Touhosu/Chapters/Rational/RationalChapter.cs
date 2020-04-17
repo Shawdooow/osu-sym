@@ -1,6 +1,8 @@
 ﻿#region usings
 
 using osu.Game.Rulesets.Vitaru.ChapterSets.Chapters;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Media;
+using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Media.Drawables;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Rational.Characters;
 using osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Rational.Characters.Drawables;
 using osu.Game.Rulesets.Vitaru.Ruleset.Characters.TouhosuPlayers;
@@ -17,6 +19,7 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Rational
         public override TouhosuPlayer[] GetTouhosuPlayers() => new TouhosuPlayer[]
         {
             new Marisa(),
+            new Aya(), 
         };
 
         public override DrawableTouhosuPlayer GetDrawableTouhosuPlayer(VitaruPlayfield playfield, TouhosuPlayer player)
@@ -28,6 +31,8 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Rational
 
                 case "Marisa Kirisame":
                     return new DrawableMarisa(playfield);
+                case "Aya Shameimaru":
+                    return new DrawableAya(playfield);
             }
         }
     }

@@ -1,12 +1,19 @@
 ﻿#region usings
 
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using osu.Framework.Allocation;
+using osu.Framework.Configuration;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Configuration;
+using osuTK.Graphics;
 
 #endregion
 
@@ -21,13 +28,11 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Abilities
 
         private readonly Box area;
 
-        /*
         private static int img_count;
         private int imgCount;
 
         private static ResourceStore<byte[]> img_resources;
         private static TextureStore img_textures;
-        */
 
         public ScreenSnap(Box area)
         {
@@ -41,17 +46,16 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Abilities
         {
             this.host = host;
 
-            //snap(storage, config.GetBindable<ScreenshotFormat>(OsuSetting.ScreenshotFormat));
+            snap(storage, config.GetBindable<ScreenshotFormat>(OsuSetting.ScreenshotFormat));
         }
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
 
-            //Texture = img_textures?.Get("snapshot" + imgCount + ".png") ?? img_textures?.Get("snapshot" + imgCount + ".jpeg");
+            Texture = img_textures?.Get("snapshot" + imgCount + ".png") ?? img_textures?.Get("snapshot" + imgCount + ".jpeg");
         }
 
-        /*
         private async Task snap(Storage storage, Bindable<ScreenshotFormat> screenshotFormat) => await Task.Run(async () =>
         {
             Rectangle rect = new Rectangle(new Point(0, 0), new Size((int)area.ScreenSpaceDrawQuad.Width, (int)area.ScreenSpaceDrawQuad.Height));
@@ -110,7 +114,6 @@ namespace osu.Game.Rulesets.Vitaru.ChapterSets.Touhosu.Chapters.Abilities
 
             return bitmap;
         }
-        */
     }
 }
 #pragma warning restore 4014
